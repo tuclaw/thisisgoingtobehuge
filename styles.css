@@ -695,6 +695,35 @@ img.portrait.photo {
     linear-gradient(180deg, rgba(196, 90, 18, 0.14), rgba(10, 8, 6, 0.7));
 }
 
+.pos-filled {
+  color: #8ee8d8;
+  border: 1px solid rgba(14, 107, 107, 0.55);
+  background:
+    linear-gradient(180deg, rgba(14, 107, 107, 0.16), rgba(10, 8, 6, 0.7));
+}
+
+.pos-cash {
+  color: var(--sand);
+  border: 1px solid rgba(196, 165, 116, 0.35);
+  background:
+    linear-gradient(180deg, rgba(61, 46, 36, 0.45), rgba(18, 12, 8, 0.75));
+}
+
+.pos-blocked {
+  color: #ffb27a;
+  border: 1px dashed rgba(196, 90, 18, 0.55);
+  background:
+    linear-gradient(180deg, rgba(196, 90, 18, 0.12), rgba(10, 8, 6, 0.7));
+}
+
+.pos-intended-note {
+  flex-basis: 100%;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--sand);
+  letter-spacing: 0.01em;
+}
+
 .cast-intent {
   display: flex;
   justify-content: center;

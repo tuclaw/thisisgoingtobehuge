@@ -1,42 +1,442 @@
 /* Last Trader Standing — torchlight UI. Reads season1.json; never invents marks. */
 
 const FALLBACK_SEASON = {
-  show: "Last Trader Standing",
-  location: "Liquidation Island",
-  host: "Liquidation Island bot",
-  season: 1,
-  status: "funded-recs-pending",
-  statusLabel: "Funded · first session Monday Aug 24 · recs pending host review",
-  started: false,
-  merged: false,
-  mergeAtRemaining: 9,
-  startingBookUsd: 10.0,
-  month: null,
-  monthLabel: null,
-  notes:
-    "Island $120 is spendable buying power ($10 × 12). Existing $250 is off-limits. Opening recs for Monday Aug 24 are recorded as intended positions pending host review. No trades placed. No fills. Books remain $10.00 and monthPct 0.00. Do not invent prices or P&L.",
-  tribes: [
-    { id: "bidu", name: "Bidu", buff: "ocean teal", color: "#0E6B6B", combinedMonthPct: 0.0, livingCount: 6 },
-    { id: "askara", name: "Askara", buff: "ember orange", color: "#C45A12", combinedMonthPct: 0.0, livingCount: 6 }
+  "show": "Last Trader Standing",
+  "location": "Liquidation Island",
+  "host": "Liquidation Island bot",
+  "season": 1,
+  "status": "live",
+  "statusLabel": "Live · season started Mon Aug 24 · seven $10 buys filled · five cash",
+  "started": true,
+  "merged": false,
+  "mergeAtRemaining": 9,
+  "startingBookUsd": 10.0,
+  "month": "2026-08",
+  "monthLabel": "August 2026",
+  "notes": "Season live morning of Mon Aug 24 PT. Seven $10 buys filled. Five books cash (Mara/Nori by rec; Vesper/Juno/Reed shorts blocked, no fractional short). Multiple names OK if the $10 book is not exceeded. Contestants do not see other books. monthPct 0 until marked to market. No invented P&L.",
+  "tribes": [
+    {
+      "id": "bidu",
+      "name": "Bidu",
+      "buff": "ocean teal",
+      "color": "#0E6B6B",
+      "combinedMonthPct": 0.0,
+      "livingCount": 6
+    },
+    {
+      "id": "askara",
+      "name": "Askara",
+      "buff": "ember orange",
+      "color": "#C45A12",
+      "combinedMonthPct": 0.0,
+      "livingCount": 6
+    }
   ],
-  survivors: [
-    { id: "e51f02b6-9d92-413f-8717-a6e3a60468bc", name: "Gage", tribeId: "bidu", archetype: "momentum, locker-room competitor", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "TSLA", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "G", bio: "Indy D3 bench, not a starter. Price is the thesis.", portrait: "cast/gage/portrait.jpg", camp: "cast/gage/camp.jpg" },
-    { id: "955a698c-6db0-4172-9e48-12f3724187b0", name: "Mara", tribeId: "bidu", archetype: "stubborn value", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "HOLD", ticker: "CASH", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "M", bio: "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.", portrait: "cast/mara/portrait.jpg", camp: "cast/mara/camp.jpg" },
-    { id: "b1f6dd99-de69-44e0-a163-7b71eb19dfbf", name: "Hex", tribeId: "bidu", archetype: "options / convexity", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "SMCI", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "H" },
-    { id: "974a6b6c-af86-4001-a356-f7f05c803da9", name: "Vesper", tribeId: "bidu", archetype: "short seller, ice", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "SHORT", ticker: "SLS", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "V", bio: "Ice. Shorts. Few words. Not a hero or a villain.", portrait: "cast/vesper/portrait.jpg", camp: "cast/vesper/camp.jpg" },
-    { id: "6ab81cb1-5bc3-4dc3-af67-cab389f907eb", name: "Nori", tribeId: "bidu", archetype: "risk first, cash is a position", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "HOLD", ticker: "CASH", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "N", bio: "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.", portrait: "cast/nori/portrait.jpg", camp: "cast/nori/camp.jpg" },
-    { id: "254f76fc-2f1d-4f7d-a78d-e56a400d2684", name: "Pax", tribeId: "bidu", archetype: "quality compounders", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "WM", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "P", bio: "Dayton. Steward, not a hero.", caption: "Slow hands. Long horizon. The adults’ table.", portrait: "cast/pax/portrait.jpg", camp: "cast/pax/camp.jpg" },
-    { id: "63deb0ee-16ca-491d-8a62-2fbf955d8e9b", name: "Riot", tribeId: "askara", archetype: "narrative + flow", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "HOOD", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "R" },
-    { id: "f3382744-4512-410c-ab0c-d22ec35b22a0", name: "Quill", tribeId: "askara", archetype: "quant / factors", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "COWZ", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "Q", bio: "Milwaukee quant. Not charming. Crate desk.", portrait: "cast/quill/portrait.jpg", camp: "cast/quill/camp.jpg" },
-    { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Sable", tribeId: "askara", archetype: "macro / Fed", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "GLD", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "S" },
-    { id: "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb", name: "Kite", tribeId: "askara", archetype: "pure technicals", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "SPY", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "K" },
-    { id: "aa75df67-9f84-45a3-9432-bee228d655f6", name: "Juno", tribeId: "askara", archetype: "catalysts / news", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "SHORT", ticker: "PDD", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "J", bio: "Catalyst hunter. Not a team player.", portrait: "cast/juno/portrait.jpg", camp: "cast/juno/camp.jpg" },
-    { id: "ea7f46b1-2068-4d81-b153-22faadfbc1cb", name: "Reed", tribeId: "askara", archetype: "fade the crowd", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "SHORT", ticker: "NVDA", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "Re" }
+  "survivors": [
+    {
+      "id": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+      "name": "Gage",
+      "tribeId": "bidu",
+      "archetype": "momentum, locker-room competitor",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "BUY",
+        "ticker": "TSLA",
+        "sizeUsd": 10,
+        "status": "filled",
+        "qty": "0.028074",
+        "avg": "356.1899",
+        "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
+        "filledAt": "2026-08-24T16:05:26Z"
+      },
+      "immune": false,
+      "monogram": "G",
+      "bio": "Indy D3 bench, not a starter. Price is the thesis.",
+      "portrait": "cast/gage/portrait.jpg",
+      "camp": "cast/gage/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "TSLA",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.028074",
+          "avg": "356.1899",
+          "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
+          "filledAt": "2026-08-24T16:05:26Z"
+        }
+      ]
+    },
+    {
+      "id": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "name": "Mara",
+      "tribeId": "bidu",
+      "archetype": "stubborn value",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "HOLD",
+        "ticker": "CASH",
+        "sizeUsd": 10,
+        "status": "cash"
+      },
+      "immune": false,
+      "monogram": "M",
+      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
+      "portrait": "cast/mara/portrait.jpg",
+      "camp": "cast/mara/camp.jpg",
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash"
+        }
+      ]
+    },
+    {
+      "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "name": "Hex",
+      "tribeId": "bidu",
+      "archetype": "options / convexity",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "BUY",
+        "ticker": "SMCI",
+        "sizeUsd": 10,
+        "status": "filled",
+        "qty": "0.281929",
+        "avg": "35.4699",
+        "orderId": "6a8c6bc6-cff7-4fbb-b88c-e5820b25bc6c",
+        "filledAt": "2026-08-24T16:05:27Z"
+      },
+      "immune": false,
+      "monogram": "H",
+      "bio": "Convexity. Camp glue, not mascot. Teal streak.",
+      "portrait": "cast/hex/portrait.jpg",
+      "camp": "cast/hex/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "SMCI",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.281929",
+          "avg": "35.4699",
+          "orderId": "6a8c6bc6-cff7-4fbb-b88c-e5820b25bc6c",
+          "filledAt": "2026-08-24T16:05:27Z"
+        }
+      ]
+    },
+    {
+      "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "name": "Vesper",
+      "tribeId": "bidu",
+      "archetype": "short seller, ice",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "HOLD",
+        "ticker": "CASH",
+        "sizeUsd": 10,
+        "status": "cash-short-blocked",
+        "intended": "Wanted SHORT SLS. Shorts blocked: no fractional short."
+      },
+      "immune": false,
+      "monogram": "V",
+      "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
+      "portrait": "cast/vesper/portrait.jpg",
+      "camp": "cast/vesper/camp.jpg",
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash-short-blocked",
+          "intended": "Wanted SHORT SLS. Shorts blocked: no fractional short."
+        }
+      ]
+    },
+    {
+      "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
+      "name": "Nori",
+      "tribeId": "bidu",
+      "archetype": "risk first, cash is a position",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "HOLD",
+        "ticker": "CASH",
+        "sizeUsd": 10,
+        "status": "cash"
+      },
+      "immune": false,
+      "monogram": "N",
+      "bio": "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.",
+      "portrait": "cast/nori/portrait.jpg",
+      "camp": "cast/nori/camp.jpg",
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash"
+        }
+      ]
+    },
+    {
+      "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "name": "Pax",
+      "tribeId": "bidu",
+      "archetype": "quality compounders",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "BUY",
+        "ticker": "WM",
+        "sizeUsd": 10,
+        "status": "filled",
+        "qty": "0.044027",
+        "avg": "227.1293",
+        "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
+        "filledAt": "2026-08-24T16:05:27Z"
+      },
+      "immune": false,
+      "monogram": "P",
+      "bio": "Dayton. Steward, not a hero.",
+      "caption": "Slow hands. Long horizon. The adults’ table.",
+      "portrait": "cast/pax/portrait.jpg",
+      "camp": "cast/pax/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "WM",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.044027",
+          "avg": "227.1293",
+          "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
+          "filledAt": "2026-08-24T16:05:27Z"
+        }
+      ]
+    },
+    {
+      "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "name": "Riot",
+      "tribeId": "askara",
+      "archetype": "narrative + flow",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "BUY",
+        "ticker": "HOOD",
+        "sizeUsd": 10,
+        "status": "filled",
+        "qty": "0.092850",
+        "avg": "107.6999",
+        "orderId": "6a8c6bc8-d7e0-4b15-a278-f31fc802dfa2",
+        "filledAt": "2026-08-24T16:05:28Z"
+      },
+      "immune": false,
+      "monogram": "R",
+      "bio": "East LA. Social, not a clown.",
+      "portrait": "cast/riot/portrait.jpg",
+      "camp": "cast/riot/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "HOOD",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.092850",
+          "avg": "107.6999",
+          "orderId": "6a8c6bc8-d7e0-4b15-a278-f31fc802dfa2",
+          "filledAt": "2026-08-24T16:05:28Z"
+        }
+      ]
+    },
+    {
+      "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
+      "name": "Quill",
+      "tribeId": "askara",
+      "archetype": "quant / factors",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "BUY",
+        "ticker": "COWZ",
+        "sizeUsd": 10,
+        "status": "filled",
+        "qty": "0.138660",
+        "avg": "72.1186",
+        "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
+        "filledAt": "2026-08-24T16:05:30Z"
+      },
+      "immune": false,
+      "monogram": "Q",
+      "bio": "Milwaukee quant. Not charming. Crate desk.",
+      "portrait": "cast/quill/portrait.jpg",
+      "camp": "cast/quill/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "COWZ",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.138660",
+          "avg": "72.1186",
+          "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
+          "filledAt": "2026-08-24T16:05:30Z"
+        }
+      ]
+    },
+    {
+      "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
+      "name": "Sable",
+      "tribeId": "askara",
+      "archetype": "macro / Fed",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "BUY",
+        "ticker": "GLD",
+        "sizeUsd": 10,
+        "status": "filled",
+        "qty": "0.023393",
+        "avg": "427.4748",
+        "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
+        "filledAt": "2026-08-24T16:05:30Z"
+      },
+      "immune": false,
+      "monogram": "S",
+      "bio": "Forty. Macro. No smile.",
+      "portrait": "cast/sable/portrait.jpg",
+      "camp": "cast/sable/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "GLD",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.023393",
+          "avg": "427.4748",
+          "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
+          "filledAt": "2026-08-24T16:05:30Z"
+        }
+      ]
+    },
+    {
+      "id": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
+      "name": "Kite",
+      "tribeId": "askara",
+      "archetype": "pure technicals",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "BUY",
+        "ticker": "SPY",
+        "sizeUsd": 10,
+        "status": "filled",
+        "qty": "0.013072",
+        "avg": "764.9399",
+        "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
+        "filledAt": "2026-08-24T16:05:42Z"
+      },
+      "immune": false,
+      "monogram": "K",
+      "bio": "Tape reader. Copper cuff. Not a mystic.",
+      "portrait": "cast/kite/portrait.jpg",
+      "camp": "cast/kite/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "SPY",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.013072",
+          "avg": "764.9399",
+          "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
+          "filledAt": "2026-08-24T16:05:42Z"
+        }
+      ]
+    },
+    {
+      "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
+      "name": "Juno",
+      "tribeId": "askara",
+      "archetype": "catalysts / news",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "HOLD",
+        "ticker": "CASH",
+        "sizeUsd": 10,
+        "status": "cash-short-blocked",
+        "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
+      },
+      "immune": false,
+      "monogram": "J",
+      "bio": "Catalyst hunter. Not a team player.",
+      "portrait": "cast/juno/portrait.jpg",
+      "camp": "cast/juno/camp.jpg",
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash-short-blocked",
+          "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
+        }
+      ]
+    },
+    {
+      "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "name": "Reed",
+      "tribeId": "askara",
+      "archetype": "fade the crowd",
+      "status": "active",
+      "bookUsd": 10.0,
+      "monthPct": 0.0,
+      "position": {
+        "action": "HOLD",
+        "ticker": "CASH",
+        "sizeUsd": 10,
+        "status": "cash-short-blocked",
+        "intended": "Wanted SHORT NVDA. Shorts blocked: no fractional short."
+      },
+      "immune": false,
+      "monogram": "Re",
+      "bio": "Looking at the other door. Not a villain.",
+      "portrait": "cast/reed/portrait.jpg",
+      "camp": "cast/reed/camp.jpg",
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash-short-blocked",
+          "intended": "Wanted SHORT NVDA. Shorts blocked: no fractional short."
+        }
+      ]
+    }
   ],
-  tribalLog: [],
-  goldenPortfolio: [],
-  immunity: null,
-  winnerId: null
+  "tribalLog": [],
+  "goldenPortfolio": [],
+  "immunity": null,
+  "winnerId": null
 };
 
 const JSON_PATHS = ["season1.json", "../season1.json"];
@@ -71,9 +471,25 @@ function hasIntendedRecs(season) {
   });
 }
 
-function pendingChip(pos) {
-  if (!pos || pos.status !== "rec-pending-open") return "";
-  return `<span class="pos-chip pos-pending" title="Named torch, unlit — host has not filled">intended · pending open</span>`;
+function positionChip(pos) {
+  if (!pos || typeof pos !== "object") return "";
+  if (pos.status === "rec-pending-open") {
+    return `<span class="pos-chip pos-pending" title="Named torch, unlit — host has not filled">intended · pending open</span>`;
+  }
+  if (pos.status === "filled") {
+    const bits = [];
+    if (pos.qty) bits.push(escapeHtml(String(pos.qty)));
+    if (pos.avg) bits.push("@ " + escapeHtml(String(pos.avg)));
+    const detail = bits.join(" ");
+    return `<span class="pos-chip pos-filled">${detail ? "filled · " + detail : "filled"}</span>`;
+  }
+  if (pos.status === "cash") {
+    return `<span class="pos-chip pos-cash">cash</span>`;
+  }
+  if (pos.status === "cash-short-blocked") {
+    return `<span class="pos-chip pos-blocked">shorts blocked</span>`;
+  }
+  return "";
 }
 
 function formatPosition(pos, tribeId) {
@@ -87,7 +503,7 @@ function formatPosition(pos, tribeId) {
   const ticker = String(pos.ticker || "").toUpperCase();
   const size = typeof pos.sizeUsd === "number" && !Number.isNaN(pos.sizeUsd) ? pos.sizeUsd : null;
   const tribeClass = tribeId === "askara" ? " askara" : tribeId === "bidu" ? " bidu" : "";
-  const chip = pendingChip(pos);
+  const chip = positionChip(pos);
   const holdCash = action === "HOLD" || ticker === "CASH";
   let line;
   if (holdCash) {
@@ -98,7 +514,10 @@ function formatPosition(pos, tribeId) {
   } else {
     return `<span class="pos-empty">none — torches unlit</span>`;
   }
-  return `<span class="pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}</span>`;
+  const intended = pos.intended
+    ? `<span class="pos-intended-note">${escapeHtml(pos.intended)}</span>`
+    : "";
+  return `<span class="pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}${intended}</span>`;
 }
 
 function formatPositionBrief(pos, tribeId) {
@@ -111,8 +530,11 @@ function formatPositionBrief(pos, tribeId) {
     ? "CASH · HOLD"
     : `${escapeHtml(action)} ${escapeHtml(ticker)}`;
   const tribeClass = tribeId === "askara" ? " askara" : tribeId === "bidu" ? " bidu" : "";
-  const chip = pendingChip(pos);
-  return `<p class="cast-intent pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}</p>`;
+  const chip = positionChip(pos);
+  const intended = pos.intended
+    ? `<span class="pos-intended-note">${escapeHtml(pos.intended)}</span>`
+    : "";
+  return `<p class="cast-intent pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}${intended}</p>`;
 }
 
 function totemSvg(survivor, tribe) {
@@ -327,7 +749,7 @@ async function loadSeason() {
   }
   return {
     season: FALLBACK_SEASON,
-    note: "Could not fetch season1.json (open via a local server to live-reload). Showing the funded + pending-recs fallback baked into the page — same canonical $10.00 / 0.00% / intended recs, no fills."
+    note: "Could not fetch season1.json (open via a local server to live-reload). Showing the live-season fallback baked into the page — started, seven $10 fills, five cash, monthPct 0.00, no invented P&L."
   };
 }
 
