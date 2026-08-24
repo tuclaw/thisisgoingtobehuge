@@ -459,6 +459,14 @@ h2 {
     0 12px 28px rgba(0, 0, 0, 0.35);
 }
 
+.cast-card.has-art.askara {
+  border: 1px solid #C45A12;
+  border-top: 3px solid #C45A12;
+  box-shadow:
+    inset 0 0 0 1px rgba(196, 90, 18, 0.55),
+    0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
 .portrait {
   width: 86px;
   height: 86px;
@@ -472,6 +480,10 @@ img.portrait.photo {
   border: 2px solid #0E6B6B;
   border-radius: 2px;
   box-shadow: 0 0 0 1px rgba(232, 213, 176, 0.18);
+}
+
+.cast-card.askara img.portrait.photo {
+  border-color: #C45A12;
 }
 
 .cast-card h3 {
