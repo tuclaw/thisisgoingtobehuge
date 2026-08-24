@@ -25,9 +25,9 @@ const FALLBACK_SEASON = {
     { id: "b1f6dd99-de69-44e0-a163-7b71eb19dfbf", name: "Hex", tribeId: "bidu", archetype: "options / convexity", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "SMCI", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "H" },
     { id: "974a6b6c-af86-4001-a356-f7f05c803da9", name: "Vesper", tribeId: "bidu", archetype: "short seller, ice", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "SHORT", ticker: "SLS", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "V", bio: "Ice. Shorts. Few words. Not a hero or a villain.", portrait: "cast/vesper/portrait.jpg", camp: "cast/vesper/camp.jpg" },
     { id: "6ab81cb1-5bc3-4dc3-af67-cab389f907eb", name: "Nori", tribeId: "bidu", archetype: "risk first, cash is a position", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "HOLD", ticker: "CASH", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "N", bio: "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.", portrait: "cast/nori/portrait.jpg", camp: "cast/nori/camp.jpg" },
-    { id: "254f76fc-2f1d-4f7d-a78d-e56a400d2684", name: "Pax", tribeId: "bidu", archetype: "quality compounders", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "WM", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "P" },
+    { id: "254f76fc-2f1d-4f7d-a78d-e56a400d2684", name: "Pax", tribeId: "bidu", archetype: "quality compounders", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "WM", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "P", bio: "Dayton. Steward, not a hero.", caption: "Slow hands. Long horizon. The adults’ table.", portrait: "cast/pax/portrait.jpg", camp: "cast/pax/camp.jpg" },
     { id: "63deb0ee-16ca-491d-8a62-2fbf955d8e9b", name: "Riot", tribeId: "askara", archetype: "narrative + flow", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "HOOD", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "R" },
-    { id: "f3382744-4512-410c-ab0c-d22ec35b22a0", name: "Quill", tribeId: "askara", archetype: "quant / factors", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "COWZ", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "Q" },
+    { id: "f3382744-4512-410c-ab0c-d22ec35b22a0", name: "Quill", tribeId: "askara", archetype: "quant / factors", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "COWZ", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "Q", bio: "Milwaukee quant. Not charming. Crate desk.", portrait: "cast/quill/portrait.jpg", camp: "cast/quill/camp.jpg" },
     { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Sable", tribeId: "askara", archetype: "macro / Fed", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "GLD", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "S" },
     { id: "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb", name: "Kite", tribeId: "askara", archetype: "pure technicals", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "SPY", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "K" },
     { id: "aa75df67-9f84-45a3-9432-bee228d655f6", name: "Juno", tribeId: "askara", archetype: "catalysts / news", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "SHORT", ticker: "PDD", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "J", bio: "Catalyst hunter. Not a team player.", portrait: "cast/juno/portrait.jpg", camp: "cast/juno/camp.jpg" },
@@ -171,6 +171,7 @@ function renderCast(season) {
       const face = hasPortrait
         ? `<img class="portrait photo" src="${escapeHtml(s.portrait)}" alt="${escapeHtml(s.name)}">`
         : totemSvg(s, tribe);
+      const caption = s.caption ? `<p class="cast-caption">${escapeHtml(s.caption)}</p>` : "";
       const bio = s.bio ? `<p class="cast-bio">${escapeHtml(s.bio)}</p>` : "";
       const artClass = hasPortrait || hasCamp ? " has-art" : "";
       const campStyle = hasCamp
@@ -178,6 +179,7 @@ function renderCast(season) {
         : "";
       return `<article class="cast-card ${s.tribeId}${artClass}"${campStyle}>
         ${face}
+        ${caption}
         <h3>${s.name}</h3>
         <p class="archetype">${s.archetype}</p>
         ${bio}
