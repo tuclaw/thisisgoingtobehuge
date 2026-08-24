@@ -482,6 +482,16 @@ img.portrait.photo {
   box-shadow: 0 0 0 1px rgba(232, 213, 176, 0.18);
 }
 
+.cast-caption {
+  text-align: center;
+  font-style: italic;
+  color: var(--parchment);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin: -0.45rem auto 0.7rem;
+  max-width: 15.5rem;
+}
+
 .cast-card.askara img.portrait.photo {
   border-color: #C45A12;
 }
