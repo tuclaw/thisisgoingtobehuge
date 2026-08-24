@@ -4,14 +4,14 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "funded-recs-pending",
-  "statusLabel": "Funded · first session Monday Aug 24 · recs pending host review",
+  "statusLabel": "Funded \u00b7 first session Monday Aug 24 \u00b7 recs pending host review",
   "started": false,
   "merged": false,
   "mergeAtRemaining": 9,
   "startingBookUsd": 10.0,
   "month": null,
   "monthLabel": null,
-  "notes": "Island $120 is spendable buying power ($10 × 12). Existing $250 is off-limits. Opening recs for Monday Aug 24 are recorded as intended positions pending host review. No trades placed. No fills. Books remain $10.00 and monthPct 0.00. Do not invent prices or P&L.",
+  "notes": "Island $120 is spendable buying power ($10 \u00d7 12). Existing $250 is off-limits. Opening recs for Monday Aug 24 are recorded as intended positions pending host review. No trades placed. No fills. Books remain $10.00 and monthPct 0.00. Do not invent prices or P&L.",
   "tribes": [
     {
       "id": "bidu",
@@ -67,7 +67,7 @@
       },
       "immune": false,
       "monogram": "M",
-      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
+      "bio": "Cleveland split-level. Stubborn value \u2014 patient, not theatrical, no moonshot.",
       "portrait": "cast/mara/portrait.jpg",
       "camp": "cast/mara/camp.jpg"
     },
@@ -143,7 +143,11 @@
         "status": "rec-pending-open"
       },
       "immune": false,
-      "monogram": "P"
+      "monogram": "P",
+      "bio": "Dayton. Steward, not a hero.",
+      "caption": "Slow hands. Long horizon. The adults\u2019 table.",
+      "portrait": "cast/pax/portrait.jpg",
+      "camp": "cast/pax/camp.jpg"
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
@@ -228,7 +232,10 @@
         "status": "rec-pending-open"
       },
       "immune": false,
-      "monogram": "J"
+      "monogram": "J",
+      "bio": "Catalyst hunter. Not a team player.",
+      "portrait": "cast/juno/portrait.jpg",
+      "camp": "cast/juno/camp.jpg"
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
