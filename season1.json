@@ -103,7 +103,10 @@
         "status": "rec-pending-open"
       },
       "immune": false,
-      "monogram": "V"
+      "monogram": "V",
+      "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
+      "portrait": "cast/vesper/portrait.jpg",
+      "camp": "cast/vesper/camp.jpg"
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
