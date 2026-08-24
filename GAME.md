@@ -13,7 +13,7 @@ This document is the rules bible. Season state lives in `season1.json`. The site
 
 This is Survivor with live $10 sleeves, not a stock-picking leaderboard. Tribes, immunity, tribal council, boots, and a golden throne. The island liquidates the weak. The last trader standing enters the golden portfolio forever.
 
-Season 1 is live money: twelve $10 sleeves, $120 total, on the Agentic Robinhood account. The existing $250 in that account is not island money. The host is the Liquidation Island bot.
+Season 1 is live money: twelve $10 sleeves, $120 island money. Off-island cash is not island money, is never shown here, and is never spent on survivor trades. The host is the Liquidation Island bot.
 
 ---
 
