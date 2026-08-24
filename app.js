@@ -20,11 +20,11 @@ const FALLBACK_SEASON = {
     { id: "askara", name: "Askara", buff: "ember orange", color: "#C45A12", combinedMonthPct: 0.0, livingCount: 6 }
   ],
   survivors: [
-    { id: "e51f02b6-9d92-413f-8717-a6e3a60468bc", name: "Gage", tribeId: "bidu", archetype: "momentum, locker-room competitor", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "TSLA", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "G" },
-    { id: "955a698c-6db0-4172-9e48-12f3724187b0", name: "Mara", tribeId: "bidu", archetype: "stubborn value", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "HOLD", ticker: "CASH", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "M" },
+    { id: "e51f02b6-9d92-413f-8717-a6e3a60468bc", name: "Gage", tribeId: "bidu", archetype: "momentum, locker-room competitor", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "TSLA", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "G", bio: "Indy D3 bench, not a starter. Price is the thesis.", portrait: "cast/gage/portrait.jpg", camp: "cast/gage/camp.jpg" },
+    { id: "955a698c-6db0-4172-9e48-12f3724187b0", name: "Mara", tribeId: "bidu", archetype: "stubborn value", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "HOLD", ticker: "CASH", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "M", bio: "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.", portrait: "cast/mara/portrait.jpg", camp: "cast/mara/camp.jpg" },
     { id: "b1f6dd99-de69-44e0-a163-7b71eb19dfbf", name: "Hex", tribeId: "bidu", archetype: "options / convexity", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "SMCI", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "H" },
     { id: "974a6b6c-af86-4001-a356-f7f05c803da9", name: "Vesper", tribeId: "bidu", archetype: "short seller, ice", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "SHORT", ticker: "SLS", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "V" },
-    { id: "6ab81cb1-5bc3-4dc3-af67-cab389f907eb", name: "Nori", tribeId: "bidu", archetype: "risk first, cash is a position", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "HOLD", ticker: "CASH", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "N" },
+    { id: "6ab81cb1-5bc3-4dc3-af67-cab389f907eb", name: "Nori", tribeId: "bidu", archetype: "risk first, cash is a position", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "HOLD", ticker: "CASH", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "N", bio: "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.", portrait: "cast/nori/portrait.jpg", camp: "cast/nori/camp.jpg" },
     { id: "254f76fc-2f1d-4f7d-a78d-e56a400d2684", name: "Pax", tribeId: "bidu", archetype: "quality compounders", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "WM", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "P" },
     { id: "63deb0ee-16ca-491d-8a62-2fbf955d8e9b", name: "Riot", tribeId: "askara", archetype: "narrative + flow", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "HOOD", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "R" },
     { id: "f3382744-4512-410c-ab0c-d22ec35b22a0", name: "Quill", tribeId: "askara", archetype: "quant / factors", status: "active", bookUsd: 10.0, monthPct: 0.0, position: { action: "BUY", ticker: "COWZ", sizeUsd: 10, status: "rec-pending-open" }, immune: false, monogram: "Q" },
@@ -166,10 +166,21 @@ function renderCast(season) {
       const tribe = tribeById(season, s.tribeId);
       const tribeName = tribe ? tribe.name : s.tribeId;
       const intent = formatPositionBrief(s.position, s.tribeId);
-      return `<article class="cast-card ${s.tribeId}">
-        ${totemSvg(s, tribe)}
+      const hasPortrait = Boolean(s.portrait);
+      const hasCamp = Boolean(s.camp);
+      const face = hasPortrait
+        ? `<img class="portrait photo" src="${escapeHtml(s.portrait)}" alt="${escapeHtml(s.name)}">`
+        : totemSvg(s, tribe);
+      const bio = s.bio ? `<p class="cast-bio">${escapeHtml(s.bio)}</p>` : "";
+      const artClass = hasPortrait || hasCamp ? " has-art" : "";
+      const campStyle = hasCamp
+        ? ` style="--camp:url('${escapeHtml(s.camp)}')"`
+        : "";
+      return `<article class="cast-card ${s.tribeId}${artClass}"${campStyle}>
+        ${face}
         <h3>${s.name}</h3>
         <p class="archetype">${s.archetype}</p>
+        ${bio}
         ${intent}
         <div class="meta-row">
           <span>${tribeName}</span>
