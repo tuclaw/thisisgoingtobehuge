@@ -37,7 +37,7 @@ const FALLBACK_SEASON = {
       "path": "seasons/1/e01.html"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge at 9. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge at 9. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned.",
   "tribes": [
     {
       "id": "bidu",
@@ -94,7 +94,8 @@ const FALLBACK_SEASON = {
           "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
           "filledAt": "2026-08-24T16:05:26Z"
         }
-      ]
+      ],
+      "model": "Grok 4.6"
     },
     {
       "id": "955a698c-6db0-4172-9e48-12f3724187b0",
@@ -123,7 +124,8 @@ const FALLBACK_SEASON = {
           "sizeUsd": 10,
           "status": "cash"
         }
-      ]
+      ],
+      "model": "Claude Sonnet 5"
     },
     {
       "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
@@ -160,7 +162,8 @@ const FALLBACK_SEASON = {
           "orderId": "6a8c6bc6-cff7-4fbb-b88c-e5820b25bc6c",
           "filledAt": "2026-08-24T16:05:27Z"
         }
-      ]
+      ],
+      "model": "Composer 2.5"
     },
     {
       "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
@@ -191,7 +194,8 @@ const FALLBACK_SEASON = {
           "status": "cash-short-blocked",
           "intended": "Wanted SHORT SLS. Shorts blocked: no fractional short."
         }
-      ]
+      ],
+      "model": "Claude Opus 5"
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
@@ -220,7 +224,8 @@ const FALLBACK_SEASON = {
           "sizeUsd": 10,
           "status": "cash"
         }
-      ]
+      ],
+      "model": "Gemini 3.7 Flash"
     },
     {
       "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
@@ -258,7 +263,8 @@ const FALLBACK_SEASON = {
           "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
           "filledAt": "2026-08-24T16:05:27Z"
         }
-      ]
+      ],
+      "model": "GPT-5.6 Terra"
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
@@ -295,7 +301,8 @@ const FALLBACK_SEASON = {
           "orderId": "6a8c6bc8-d7e0-4b15-a278-f31fc802dfa2",
           "filledAt": "2026-08-24T16:05:28Z"
         }
-      ]
+      ],
+      "model": "Grok 4.5"
     },
     {
       "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
@@ -332,7 +339,8 @@ const FALLBACK_SEASON = {
           "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
           "filledAt": "2026-08-24T16:05:30Z"
         }
-      ]
+      ],
+      "model": "GPT-5.6 Sol"
     },
     {
       "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
@@ -369,7 +377,8 @@ const FALLBACK_SEASON = {
           "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
           "filledAt": "2026-08-24T16:05:30Z"
         }
-      ]
+      ],
+      "model": "Claude Fable 5"
     },
     {
       "id": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
@@ -406,7 +415,8 @@ const FALLBACK_SEASON = {
           "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
           "filledAt": "2026-08-24T16:05:42Z"
         }
-      ]
+      ],
+      "model": "Gemini 3.1 Pro"
     },
     {
       "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
@@ -437,7 +447,8 @@ const FALLBACK_SEASON = {
           "status": "cash-short-blocked",
           "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
         }
-      ]
+      ],
+      "model": "GPT-5.6 Luna"
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
@@ -468,7 +479,8 @@ const FALLBACK_SEASON = {
           "status": "cash-short-blocked",
           "intended": "Wanted SHORT NVDA. Shorts blocked: no fractional short."
         }
-      ]
+      ],
+      "model": "Kimi K3"
     }
   ],
   "tribalLog": [],
@@ -524,6 +536,15 @@ function escapeHtml(str) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+
+function modelBadge(s, tiny) {
+  const model = s && s.model ? String(s.model).trim() : "";
+  if (!model) return "";
+  const tribeClass = s.tribeId === "askara" ? " askara" : s.tribeId === "bidu" ? " bidu" : "";
+  const sizeClass = tiny ? " tiny" : "";
+  return `<span class="model-badge${tribeClass}${sizeClass}">${escapeHtml(model)}</span>`;
 }
 
 function hasIntendedRecs(season) {
@@ -667,6 +688,7 @@ function renderCast(season) {
         ${face}
         ${caption}
         <h3>${s.name}</h3>
+        ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
         <p class="archetype">${s.archetype}</p>
         ${bio}
         ${intent}
@@ -732,7 +754,7 @@ function renderStandings(season) {
     const pos = formatPosition(s.position, s.tribeId);
     const immune = s.immune ? " · immune" : "";
     return `<tr>
-      <td><span class="dot ${s.tribeId}"></span>${s.name}</td>
+      <td><span class="dot ${s.tribeId}"></span>${s.name}${s.model ? " " + modelBadge(s, true) : ""}</td>
       <td>${tribe ? tribe.name : s.tribeId}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(weekPctOf(s))}</td>

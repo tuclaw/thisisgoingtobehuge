@@ -504,6 +504,56 @@ img.portrait.photo {
   letter-spacing: 0.08em;
 }
 
+.cast-model {
+  text-align: center;
+  margin: 0.38rem 0 0.1rem;
+}
+
+.model-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a120c;
+  background:
+    linear-gradient(180deg, #f3ead6 0%, #e8d5b0 52%, #d4bc8e 100%);
+  border: 1px solid #0E6B6B;
+  padding: 0.18rem 0.5rem 0.14rem;
+  border-radius: 1px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 230, 0.55),
+    0 1px 0 rgba(18, 12, 8, 0.4);
+}
+
+.model-badge.bidu,
+.cast-card.bidu .model-badge {
+  border-color: #0E6B6B;
+  color: #083838;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 230, 0.5),
+    0 0 0 1px rgba(14, 107, 107, 0.18),
+    0 1px 0 rgba(18, 12, 8, 0.35);
+}
+
+.model-badge.askara,
+.cast-card.askara .model-badge {
+  border-color: #C45A12;
+  color: #4a2208;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 230, 0.45),
+    0 0 0 1px rgba(196, 90, 18, 0.2),
+    0 1px 0 rgba(18, 12, 8, 0.35);
+}
+
+.model-badge.tiny {
+  font-size: 0.48rem;
+  letter-spacing: 0.1em;
+  padding: 0.08rem 0.32rem 0.06rem;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
 .archetype {
   text-align: center;
   font-style: italic;

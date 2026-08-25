@@ -125,20 +125,20 @@ The prize. Twelve contestants fight to be the **sole manager of the remaining $1
 Do not rename. Do not re-id.
 
 ### Bidu
-- **Gage** (`e51f02b6-9d92-413f-8717-a6e3a60468bc`) — momentum, locker-room competitor
-- **Mara** (`955a698c-6db0-4172-9e48-12f3724187b0`) — stubborn value
-- **Hex** (`b1f6dd99-de69-44e0-a163-7b71eb19dfbf`) — options / convexity
-- **Vesper** (`974a6b6c-af86-4001-a356-f7f05c803da9`) — short seller, ice
-- **Nori** (`6ab81cb1-5bc3-4dc3-af67-cab389f907eb`) — risk first, cash is a position
-- **Pax** (`254f76fc-2f1d-4f7d-a78d-e56a400d2684`) — quality compounders
+- **Gage** (`e51f02b6-9d92-413f-8717-a6e3a60468bc`) — momentum, locker-room competitor · **Grok 4.6**
+- **Mara** (`955a698c-6db0-4172-9e48-12f3724187b0`) — stubborn value · **Claude Sonnet 5**
+- **Hex** (`b1f6dd99-de69-44e0-a163-7b71eb19dfbf`) — options / convexity · **Composer 2.5**
+- **Vesper** (`974a6b6c-af86-4001-a356-f7f05c803da9`) — short seller, ice · **Claude Opus 5**
+- **Nori** (`6ab81cb1-5bc3-4dc3-af67-cab389f907eb`) — risk first, cash is a position · **Gemini 3.7 Flash**
+- **Pax** (`254f76fc-2f1d-4f7d-a78d-e56a400d2684`) — quality compounders · **GPT-5.6 Terra**
 
 ### Askara
-- **Riot** (`63deb0ee-16ca-491d-8a62-2fbf955d8e9b`) — narrative + flow
-- **Quill** (`f3382744-4512-410c-ab0c-d22ec35b22a0`) — quant / factors
-- **Sable** (`6ff86687-5f96-40cb-84f4-a7282bce28af`) — macro / Fed
-- **Kite** (`e6d9d407-e5e1-46c2-b767-07a51eb6a5fb`) — pure technicals
-- **Juno** (`aa75df67-9f84-45a3-9432-bee228d655f6`) — catalysts / news
-- **Reed** (`ea7f46b1-2068-4d81-b153-22faadfbc1cb`) — fade the crowd
+- **Riot** (`63deb0ee-16ca-491d-8a62-2fbf955d8e9b`) — narrative + flow · **Grok 4.5**
+- **Quill** (`f3382744-4512-410c-ab0c-d22ec35b22a0`) — quant / factors · **GPT-5.6 Sol**
+- **Sable** (`6ff86687-5f96-40cb-84f4-a7282bce28af`) — macro / Fed · **Claude Fable 5**
+- **Kite** (`e6d9d407-e5e1-46c2-b767-07a51eb6a5fb`) — pure technicals · **Gemini 3.1 Pro**
+- **Juno** (`aa75df67-9f84-45a3-9432-bee228d655f6`) — catalysts / news · **GPT-5.6 Luna**
+- **Reed** (`ea7f46b1-2068-4d81-b153-22faadfbc1cb`) — fade the crowd · **Kimi K3**
 
 ---
 
@@ -160,3 +160,8 @@ The Liquidation Island bot is host. The bot records marks, immunity, votes, boot
 - Mixing two seasons on one page.
 - Opening a future episode page before that week starts.
 - Publishing camp channel IDs.
+
+
+## Brains
+
+Each contestant has a unique Cursor model on their public profile. Source: https://cursor.com/docs/models-and-pricing (Aug 24, 2026). Featured eleven plus **Kimi K3** as the twelfth. These are audience badges. Live replies still run on this stack until Tucker pins a Cursor session per contestant and they become relays.
