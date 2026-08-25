@@ -53,7 +53,7 @@ const FALLBACK_SEASON = {
       "tease": "Torches unlit \u00b7 After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Hex sold SMCI 0.104575 @ 38.3001 and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Riot sold HOOD 0.046425 @ 110.4536 from the island lot only and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Vesper bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat.",
   "tribes": [
     {
       "id": "bidu",
@@ -153,14 +153,11 @@ const FALLBACK_SEASON = {
       "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
-        "action": "BUY",
-        "ticker": "SMCI",
+        "action": "HOLD",
+        "ticker": "SMCI / SOXL",
         "sizeUsd": 10,
         "status": "filled",
-        "qty": "0.281929",
-        "avg": "35.4699",
-        "orderId": "6a8c6bc6-cff7-4fbb-b88c-e5820b25bc6c",
-        "filledAt": "2026-08-24T16:05:27Z"
+        "note": "SMCI 0.177354 @ 35.4699 + SOXL 0.034595 @ 115.6232. Tue sell SMCI 0.104575 @ 38.3001"
       },
       "immune": false,
       "monogram": "H",
@@ -169,14 +166,23 @@ const FALLBACK_SEASON = {
       "camp": "cast/hex/camp.jpg",
       "positions": [
         {
-          "action": "BUY",
+          "action": "HOLD",
           "ticker": "SMCI",
-          "sizeUsd": 10,
+          "sizeUsd": 6,
           "status": "filled",
-          "qty": "0.281929",
+          "qty": "0.177354",
           "avg": "35.4699",
-          "orderId": "6a8c6bc6-cff7-4fbb-b88c-e5820b25bc6c",
-          "filledAt": "2026-08-24T16:05:27Z"
+          "note": "remainder after Tue sell 0.104575 @ 38.3001"
+        },
+        {
+          "action": "BUY",
+          "ticker": "SOXL",
+          "sizeUsd": 4,
+          "status": "filled",
+          "qty": "0.034595",
+          "avg": "115.6232",
+          "orderId": "6a8dadb2-5cc1-4774-a272-1cb2a3c42fb8",
+          "filledAt": "2026-08-25T14:58:58Z"
         }
       ],
       "model": "Composer 2.5"
@@ -192,10 +198,10 @@ const FALLBACK_SEASON = {
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
-        "ticker": "CASH",
+        "ticker": "QID / BTAL / CASH",
         "sizeUsd": 10,
-        "status": "cash-short-blocked",
-        "intended": "Wanted SHORT SLS. Shorts blocked: no fractional short."
+        "status": "filled",
+        "note": "QID 0.413795 @ 14.4999 + BTAL 0.165701 @ 12.0699 + cash $2"
       },
       "immune": false,
       "monogram": "V",
@@ -204,11 +210,30 @@ const FALLBACK_SEASON = {
       "camp": "cast/vesper/camp.jpg",
       "positions": [
         {
+          "action": "BUY",
+          "ticker": "QID",
+          "sizeUsd": 6,
+          "status": "filled",
+          "qty": "0.413795",
+          "avg": "14.4999",
+          "orderId": "6a8dad83-b4c0-4151-a560-c429b721c13c",
+          "filledAt": "2026-08-25T14:58:11Z"
+        },
+        {
+          "action": "BUY",
+          "ticker": "BTAL",
+          "sizeUsd": 2,
+          "status": "filled",
+          "qty": "0.165701",
+          "avg": "12.0699",
+          "orderId": "6a8dad84-59d9-4cb0-9d3e-af2d14c9a0b6",
+          "filledAt": "2026-08-25T14:58:12Z"
+        },
+        {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 10,
-          "status": "cash-short-blocked",
-          "intended": "Wanted SHORT SLS. Shorts blocked: no fractional short."
+          "sizeUsd": 2,
+          "status": "cash"
         }
       ],
       "model": "Claude Opus 5"
@@ -292,14 +317,11 @@ const FALLBACK_SEASON = {
       "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
-        "action": "BUY",
-        "ticker": "HOOD",
+        "action": "HOLD",
+        "ticker": "HOOD / COIN / SOFI",
         "sizeUsd": 10,
         "status": "filled",
-        "qty": "0.092850",
-        "avg": "107.6999",
-        "orderId": "6a8c6bc8-d7e0-4b15-a278-f31fc802dfa2",
-        "filledAt": "2026-08-24T16:05:28Z"
+        "note": "HOOD 0.046425 @ 107.6999 + COIN 0.016067 @ 186.7169 + SOFI 0.105888 @ 18.8878. Tue sell HOOD 0.046425 @ 110.4536 island lot"
       },
       "immune": false,
       "monogram": "R",
@@ -308,14 +330,33 @@ const FALLBACK_SEASON = {
       "camp": "cast/riot/camp.jpg",
       "positions": [
         {
-          "action": "BUY",
+          "action": "HOLD",
           "ticker": "HOOD",
-          "sizeUsd": 10,
+          "sizeUsd": 5,
           "status": "filled",
-          "qty": "0.092850",
+          "qty": "0.046425",
           "avg": "107.6999",
-          "orderId": "6a8c6bc8-d7e0-4b15-a278-f31fc802dfa2",
-          "filledAt": "2026-08-24T16:05:28Z"
+          "note": "remainder after Tue sell 0.046425 @ 110.4536 island lot"
+        },
+        {
+          "action": "BUY",
+          "ticker": "COIN",
+          "sizeUsd": 3,
+          "status": "filled",
+          "qty": "0.016067",
+          "avg": "186.7169",
+          "orderId": "6a8dadb3-5232-4f23-84fc-1a2610148ef5",
+          "filledAt": "2026-08-25T14:59:00Z"
+        },
+        {
+          "action": "BUY",
+          "ticker": "SOFI",
+          "sizeUsd": 2,
+          "status": "filled",
+          "qty": "0.105888",
+          "avg": "18.8878",
+          "orderId": "6a8dadb3-6257-41ee-b42e-398c1ed209bd",
+          "filledAt": "2026-08-25T14:58:59Z"
         }
       ],
       "model": "Grok 4.5"
@@ -502,7 +543,8 @@ const FALLBACK_SEASON = {
   "tribalLog": [],
   "goldenPortfolio": [],
   "immunity": null,
-  "winnerId": null
+  "winnerId": null,
+  "mergeSecret": true
 };
 
 const JSON_PATHS = ["season1.json", "../season1.json", "../../season1.json"];
@@ -602,20 +644,35 @@ function formatPosition(pos, tribeId) {
   const size = typeof pos.sizeUsd === "number" && !Number.isNaN(pos.sizeUsd) ? pos.sizeUsd : null;
   const tribeClass = tribeId === "askara" ? " askara" : tribeId === "bidu" ? " bidu" : "";
   const chip = positionChip(pos);
-  const holdCash = action === "HOLD" || ticker === "CASH";
+  const isCash = ticker === "CASH" || pos.status === "cash" || pos.status === "cash-short-blocked";
   let line;
-  if (holdCash) {
-    line = "CASH · HOLD";
+  if (isCash) {
+    line = size != null && size !== 10 ? "CASH · HOLD · $" + size : "CASH · HOLD";
   } else if (action && ticker) {
     line = `${escapeHtml(action)} ${escapeHtml(ticker)}`;
     if (size != null) line += ` · $${size}`;
   } else {
     return `<span class="pos-empty">none — torches unlit</span>`;
   }
-  const intended = pos.intended
-    ? `<span class="pos-intended-note">${escapeHtml(pos.intended)}</span>`
+  const extra = pos.note || pos.intended || "";
+  const extraHtml = extra
+    ? `<span class="pos-intended-note">${escapeHtml(extra)}</span>`
     : "";
-  return `<span class="pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}${intended}</span>`;
+  return `<span class="pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}${extraHtml}</span>`;
+}
+
+function bookLegs(s) {
+  if (s && Array.isArray(s.positions) && s.positions.length) return s.positions;
+  if (s && s.position) return [s.position];
+  return [];
+}
+
+function formatBook(s) {
+  const legs = bookLegs(s);
+  const tribeId = s && s.tribeId;
+  if (!legs.length) return formatPosition(null, tribeId);
+  if (legs.length === 1) return formatPosition(legs[0], tribeId);
+  return `<span class="pos-book">${legs.map((p) => formatPosition(p, tribeId)).join("")}</span>`;
 }
 
 function totemSvg(survivor, tribe) {
@@ -772,7 +829,7 @@ function renderSurvivor(season) {
     : totemSvg(s, tribe);
   const caption = s.caption ? `<p class="survivor-caption">${escapeHtml(s.caption)}</p>` : "";
   const bio = s.bio ? `<p class="survivor-bio">${escapeHtml(s.bio)}</p>` : "";
-  const book = formatPosition(s.position, s.tribeId);
+  const book = formatBook(s);
   const mates = (season.survivors || []).filter((x) => x.tribeId === s.tribeId && x.name !== s.name);
   const mateHtml = mates
     .map((m) => {
@@ -841,7 +898,7 @@ function renderStandings(season) {
   body.innerHTML = (season.survivors || [])
     .map((s) => {
       const tribe = tribeById(season, s.tribeId);
-      const pos = formatPosition(s.position, s.tribeId);
+      const pos = formatBook(s);
       const immune = s.immune ? " · immune" : "";
       return `<tr>
       <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
@@ -883,7 +940,7 @@ function renderEpisode(season) {
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(weekPctOf(s))}</td>
       <td class="num">${pct(s.monthPct)}</td>
-      <td>${formatPosition(s.position, s.tribeId)}</td>
+      <td>${formatBook(s)}</td>
       <td>${escapeHtml(s.status)}${immune}</td>
     </tr>`;
       })

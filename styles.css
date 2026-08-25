@@ -695,6 +695,13 @@ img.portrait.photo {
 }
 
 
+.pos-book {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.42rem;
+}
+
 .pos-empty {
   color: var(--smoke);
   font-style: italic;
@@ -1541,6 +1548,10 @@ a.brand:hover {
 .survivor-book p {
   margin: 0.35rem 0;
   color: var(--sand);
+}
+
+.survivor-book .pos-book {
+  margin: 0.35rem 0;
 }
 
 .survivor-stats {
