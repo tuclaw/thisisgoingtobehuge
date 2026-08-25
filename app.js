@@ -685,7 +685,7 @@ function renderSurvivor(season) {
   const slug = document.documentElement.getAttribute("data-survivor");
   const s = (season.survivors || []).find((x) => survivorSlug(x.name) === slug);
   if (!s) {
-    root.innerHTML = `<section class="episode-hero"><div class="hero-inner"><h1>Unknown torch</h1><p class="lede">This name is not on the island.</p></div></section>`;
+    root.innerHTML = `<section class="episode-hero"><div class="hero-inner"><h1>Unknown torch</h1><p class="lede">That name is not on this island.</p></div></section>`;
     return;
   }
   const tribe = tribeById(season, s.tribeId);
@@ -729,7 +729,6 @@ function renderSurvivor(season) {
       ${caption}
       <div class="survivor-book">
         <h3>The book</h3>
-        <p>Audience board. Contestants do not see other books. This is the recorded public book — real fills only. weekPct and monthPct stay 0 until marked from real prices.</p>
         <p>${book}</p>
         <div class="survivor-stats">
           <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
@@ -823,7 +822,7 @@ function renderEpisode(season) {
       <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
       <div class="council-empty">
         <h3>Not yet</h3>
-        <p>Friday 7pm PT Aug 28. Pre-merge, the losing tribe (worst combined week %) votes — and that tribe's best week % cannot be snuffed.</p>
+        <p>Friday night. Losing tribe walks in. Their best book is safe.</p>
       </div>`;
     } else {
       const items = log
@@ -894,7 +893,7 @@ function renderSeasonHub(season) {
       </div>`;
       }
       const href = episodeFileHref(ep);
-      const status = ep.status === "live" ? "Now playing · live" : ep.status || "cut";
+      const status = ep.status === "live" ? "Now playing" : ep.status || "cut";
       const liveClass = ep.status === "live" ? " live" : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(status)}</p>
@@ -935,7 +934,7 @@ async function loadSeason() {
   }
   return {
     season: FALLBACK_SEASON,
-    note: "Could not fetch season1.json (open via a local server to live-reload). Showing the live-season fallback baked into the page — started, Season 1 Episode 1, seven $10 fills, five cash, weekPct 0.00, no invented P&L."
+    note: "Could not fetch the live board. Showing the baked-in week."
   };
 }
 
