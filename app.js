@@ -9,7 +9,7 @@ const FALLBACK_SEASON = {
   "statusLabel": "Live \u00b7 S1E01 \u00b7 Friday tribal Aug 28",
   "started": true,
   "merged": false,
-  "mergeAtRemaining": 9,
+  "mergeAtRemaining": null,
   "startingBookUsd": 10.0,
   "month": "2026-08",
   "monthLabel": "August 2026",
@@ -53,7 +53,7 @@ const FALLBACK_SEASON = {
       "tease": "Torches unlit \u00b7 After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge at 9. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned.",
   "tribes": [
     {
       "id": "bidu",
@@ -822,7 +822,7 @@ function renderEpisode(season) {
       <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
       <div class="council-empty">
         <h3>Not yet</h3>
-        <p>Friday night. Losing tribe walks in. Their best book is safe.</p>
+        <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
       </div>`;
     } else {
       const items = log
