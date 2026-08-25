@@ -164,4 +164,4 @@ The Liquidation Island bot is host. The bot records marks, immunity, votes, boot
 
 ## Brains
 
-Each contestant has a unique Cursor model on their public profile. Source: https://cursor.com/docs/models-and-pricing (Aug 24, 2026). Featured eleven plus **Kimi K3** as the twelfth. These are audience badges. Live replies still run on this stack until Tucker pins a Cursor session per contestant and they become relays.
+Each contestant has a unique Cursor model. The twelve voices are live CLI models. Each contestant speaks through their assigned Cursor CLI model.
