@@ -878,3 +878,240 @@ footer strong {
 .hidden {
   display: none;
 }
+
+/* —— Season / episode broadcast —— */
+a.brand {
+  color: var(--gold-bright);
+}
+
+a.brand:hover {
+  color: var(--parchment);
+}
+
+.nav-links a[aria-current="page"] {
+  color: var(--gold-bright);
+  box-shadow: inset 0 -1px 0 var(--gold);
+}
+
+.now-playing {
+  margin: 0 0 1.6rem;
+  padding: 1.5rem 1.4rem 1.4rem;
+  border: 1px solid rgba(212, 160, 23, 0.35);
+  background:
+    linear-gradient(180deg, rgba(212, 160, 23, 0.1), rgba(18, 12, 8, 0.55)),
+    #16110c;
+  text-align: center;
+}
+
+.now-playing h2 {
+  margin-bottom: 0.4rem;
+}
+
+.now-playing p {
+  margin: 0 auto 1.1rem;
+  max-width: 36rem;
+  color: var(--sand);
+}
+
+.audience-cut {
+  font-family: var(--font-display);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  color: var(--worn);
+  margin: 0 0 0.55rem;
+}
+
+.episode-hero {
+  position: relative;
+  z-index: 1;
+  min-height: auto;
+  display: grid;
+  place-items: center;
+  padding: 3rem 1.25rem 2.4rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.episode-hero .hero-inner {
+  position: relative;
+  max-width: 52rem;
+}
+
+.episode-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  line-height: 1.05;
+  margin: 0;
+  color: var(--parchment);
+  text-shadow:
+    0 0 40px rgba(232, 93, 4, 0.25),
+    0 2px 0 #3a2410;
+}
+
+.episode-hero h1 span {
+  display: block;
+  font-size: 0.38em;
+  letter-spacing: 0.22em;
+  font-weight: 400;
+  margin-top: 0.55rem;
+  color: var(--gold-bright);
+}
+
+.episode-page .wrap,
+.season-page .wrap {
+  padding-bottom: 3rem;
+}
+
+.week-spine {
+  list-style: none;
+  margin: 0 0 1.6rem;
+  padding: 0.9rem 0.2rem 0.2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+}
+
+@media (max-width: 720px) {
+  .week-spine {
+    grid-template-columns: 1fr;
+  }
+}
+
+.week-spine li {
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(232, 213, 176, 0.14);
+  background: rgba(18, 12, 8, 0.55);
+  color: var(--parchment);
+  font-size: 0.98rem;
+}
+
+.week-spine span {
+  display: block;
+  font-family: var(--font-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.beat {
+  margin: 0 0 1.35rem;
+  padding: 1.5rem 1.4rem 1.45rem;
+  border: 1px solid rgba(232, 213, 176, 0.16);
+  background:
+    linear-gradient(180deg, rgba(232, 213, 176, 0.07), rgba(18, 12, 8, 0.55)),
+    #16110c;
+}
+
+.beat h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.beat > p {
+  color: var(--sand);
+  max-width: 42rem;
+}
+
+.beat-dark {
+  background:
+    radial-gradient(ellipse at 50% 80%, rgba(90, 20, 10, 0.35), transparent 50%),
+    linear-gradient(180deg, #0a0708, #12080a 60%, #0d0806);
+  border-color: rgba(140, 70, 30, 0.35);
+}
+
+.beat-dark h2 {
+  color: #e8c48a;
+}
+
+.beat-gold {
+  border-color: rgba(212, 160, 23, 0.4);
+  background:
+    linear-gradient(180deg, rgba(212, 160, 23, 0.1), rgba(10, 8, 6, 0.3));
+  box-shadow: 0 0 80px rgba(212, 160, 23, 0.08);
+}
+
+.empty-cut {
+  margin-top: 0.8rem;
+  padding: 1.3rem 1rem 1.2rem;
+  border: 1px dashed rgba(196, 165, 116, 0.32);
+  background: rgba(10, 8, 6, 0.35);
+  text-align: center;
+}
+
+.empty-cut p {
+  margin: 0;
+  font-style: italic;
+  color: var(--smoke);
+}
+
+.empty-cut-sub {
+  margin-top: 0.45rem !important;
+  font-size: 0.95rem;
+  color: var(--worn) !important;
+  font-style: normal !important;
+}
+
+.camp-split {
+  margin-top: 1.1rem;
+}
+
+.episode-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.episode-card {
+  display: block;
+  padding: 1.4rem 1.3rem 1.3rem;
+  border: 1px solid rgba(212, 160, 23, 0.32);
+  background:
+    linear-gradient(180deg, rgba(212, 160, 23, 0.08), rgba(18, 12, 8, 0.6)),
+    #16110c;
+  color: var(--parchment);
+}
+
+.episode-card:hover {
+  color: var(--bone);
+  border-color: var(--gold-bright);
+}
+
+.episode-card.live {
+  box-shadow: inset 0 0 0 1px rgba(14, 107, 107, 0.35), 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.ep-kicker {
+  font-family: var(--font-display);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  color: var(--gold);
+  margin: 0 0 0.4rem;
+}
+
+.episode-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  margin: 0 0 0.4rem;
+  color: var(--parchment);
+}
+
+.episode-card p {
+  margin: 0;
+  color: var(--sand);
+}
+
+.beat .council-stage {
+  min-height: 0;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.beat .council-stage p {
+  margin: 0;
+  max-width: 40rem;
+  color: var(--sand);
+}

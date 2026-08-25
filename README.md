@@ -8,6 +8,8 @@ GitHub Pages deploys from `main` (repository root) via GitHub Actions. Until DNS
 
 Canonical season state is `season1.json`. Do not invent P&L.
 
+The broadcast is cut by **season**, then **weekly episode**. Live: [Season 1](/seasons/1/) · [Episode 1](/seasons/1/e01.html).
+
 ## DNS
 
 Tucker must set these records at the domain registrar for apex `thisisgoingtobehuge.com`.

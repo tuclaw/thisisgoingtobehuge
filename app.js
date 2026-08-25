@@ -6,20 +6,45 @@ const FALLBACK_SEASON = {
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · Friday tribals · campfire nights · seven fills · five cash",
+  "statusLabel": "Live · S1E01 · Friday tribal Aug 28",
   "started": true,
   "merged": false,
   "mergeAtRemaining": 9,
   "startingBookUsd": 10.0,
   "month": "2026-08",
   "monthLabel": "August 2026",
-  "notes": "Season live 9:05 AM PT Aug 24. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Twelve contestants fight to be sole manager of the original $120 island stake. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Winner enters the golden portfolio and keeps managing that money. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct stays 0 until marked to market. Do not invent P&L.",
+  "episode": {
+    "season": 1,
+    "number": 1,
+    "id": "s1e01",
+    "status": "live",
+    "title": "Episode 1",
+    "weekStart": "2026-08-24",
+    "weekEnd": "2026-08-28",
+    "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+    "tribalAt": "2026-08-28T19:00:00-07:00",
+    "tribalLabel": "Friday Aug 28, 2026 · 7:00 PM PT",
+    "path": "seasons/1/e01.html",
+    "source": "episodes/s1e01.md"
+  },
+  "episodes": [
+    {
+      "number": 1,
+      "id": "s1e01",
+      "status": "live",
+      "title": "Episode 1",
+      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "path": "seasons/1/e01.html"
+    }
+  ],
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Twelve contestants fight to be sole manager of the original $120 island stake. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Winner enters the golden portfolio and keeps managing that money. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
+      "combinedWeekPct": 0.0,
       "combinedMonthPct": 0.0,
       "livingCount": 6
     },
@@ -28,6 +53,7 @@ const FALLBACK_SEASON = {
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
+      "combinedWeekPct": 0.0,
       "combinedMonthPct": 0.0,
       "livingCount": 6
     }
@@ -40,6 +66,7 @@ const FALLBACK_SEASON = {
       "archetype": "momentum, locker-room competitor",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -76,6 +103,7 @@ const FALLBACK_SEASON = {
       "archetype": "stubborn value",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -104,6 +132,7 @@ const FALLBACK_SEASON = {
       "archetype": "options / convexity",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -140,6 +169,7 @@ const FALLBACK_SEASON = {
       "archetype": "short seller, ice",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -170,6 +200,7 @@ const FALLBACK_SEASON = {
       "archetype": "risk first, cash is a position",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -198,6 +229,7 @@ const FALLBACK_SEASON = {
       "archetype": "quality compounders",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -235,6 +267,7 @@ const FALLBACK_SEASON = {
       "archetype": "narrative + flow",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -271,6 +304,7 @@ const FALLBACK_SEASON = {
       "archetype": "quant / factors",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -307,6 +341,7 @@ const FALLBACK_SEASON = {
       "archetype": "macro / Fed",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -343,6 +378,7 @@ const FALLBACK_SEASON = {
       "archetype": "pure technicals",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -379,6 +415,7 @@ const FALLBACK_SEASON = {
       "archetype": "catalysts / news",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -409,6 +446,7 @@ const FALLBACK_SEASON = {
       "archetype": "fade the crowd",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -439,7 +477,31 @@ const FALLBACK_SEASON = {
   "winnerId": null
 };
 
-const JSON_PATHS = ["season1.json", "../season1.json"];
+const JSON_PATHS = ["season1.json", "../season1.json", "../../season1.json"];
+
+function assetBase() {
+  const raw = document.documentElement.getAttribute("data-base");
+  return raw == null ? "" : raw;
+}
+
+function assetUrl(path) {
+  if (!path) return "";
+  if (/^https?:/i.test(String(path))) return path;
+  return assetBase() + path;
+}
+
+function weekPctOf(obj) {
+  if (obj && typeof obj.weekPct === "number" && !Number.isNaN(obj.weekPct)) return obj.weekPct;
+  return 0;
+}
+
+function combinedWeekPctOf(tribe) {
+  if (tribe && typeof tribe.combinedWeekPct === "number" && !Number.isNaN(tribe.combinedWeekPct)) {
+    return tribe.combinedWeekPct;
+  }
+  return 0;
+}
+
 
 function tribeById(season, id) {
   return season.tribes.find((t) => t.id === id);
@@ -572,6 +634,7 @@ function torchSvg(lit) {
 function renderLandingNames(season) {
   const bidu = document.getElementById("bidu-names");
   const askara = document.getElementById("askara-names");
+  if (!bidu || !askara) return;
   bidu.innerHTML = "";
   askara.innerHTML = "";
   season.survivors.forEach((s) => {
@@ -583,6 +646,7 @@ function renderLandingNames(season) {
 
 function renderCast(season) {
   const grid = document.getElementById("cast-grid");
+  if (!grid) return;
   grid.innerHTML = season.survivors
     .map((s) => {
       const tribe = tribeById(season, s.tribeId);
@@ -591,13 +655,13 @@ function renderCast(season) {
       const hasPortrait = Boolean(s.portrait);
       const hasCamp = Boolean(s.camp);
       const face = hasPortrait
-        ? `<img class="portrait photo" src="${escapeHtml(s.portrait)}" alt="${escapeHtml(s.name)}">`
+        ? `<img class="portrait photo" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
         : totemSvg(s, tribe);
       const caption = s.caption ? `<p class="cast-caption">${escapeHtml(s.caption)}</p>` : "";
       const bio = s.bio ? `<p class="cast-bio">${escapeHtml(s.bio)}</p>` : "";
       const artClass = hasPortrait || hasCamp ? " has-art" : "";
       const campStyle = hasCamp
-        ? ` style="--camp:url('${escapeHtml(s.camp)}')"`
+        ? ` style="--camp:url('${escapeHtml(assetUrl(s.camp))}')"`
         : "";
       return `<article class="cast-card ${s.tribeId}${artClass}"${campStyle}>
         ${face}
@@ -636,28 +700,33 @@ function renderStandings(season) {
   const pill = document.getElementById("status-pill");
   const label = season.statusLabel || "Pre-season · torches unlit";
   const intended = hasIntendedRecs(season);
-  if (season.started) {
-    banner.textContent = label;
-  } else if (intended) {
-    banner.textContent =
-      label + " · every book $10.00 even · 0.00% until marks · intended recs pending host review";
-  } else {
-    banner.textContent = label + " · every book $10.00 · no positions · 0.00%";
+  if (pill) pill.textContent = label;
+  if (banner) {
+    if (season.started) {
+      banner.textContent = label;
+    } else if (intended) {
+      banner.textContent =
+        label + " · every book $10.00 even · 0.00% until marks · intended recs pending host review";
+    } else {
+      banner.textContent = label + " · every book $10.00 · no positions · 0.00%";
+    }
   }
-  pill.textContent = label;
 
   const totals = document.getElementById("tribe-totals");
-  totals.innerHTML = season.tribes
-    .map((t) => {
-      return `<div class="total-card ${t.id}">
+  if (totals) {
+    totals.innerHTML = season.tribes
+      .map((t) => {
+        return `<div class="total-card ${t.id}">
         <h3>${t.name}</h3>
-        <p class="pct">${pct(t.combinedMonthPct)}</p>
-        <p>${t.livingCount} standing · combined month %</p>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week %</p>
       </div>`;
-    })
-    .join("");
+      })
+      .join("");
+  }
 
   const body = document.getElementById("books-body");
+  if (!body) return;
   const rows = season.survivors.map((s) => {
     const tribe = tribeById(season, s.tribeId);
     const pos = formatPosition(s.position, s.tribeId);
@@ -666,6 +735,7 @@ function renderStandings(season) {
       <td><span class="dot ${s.tribeId}"></span>${s.name}</td>
       <td>${tribe ? tribe.name : s.tribeId}</td>
       <td class="num">${money(s.bookUsd)}</td>
+      <td class="num">${pct(weekPctOf(s))}</td>
       <td class="num">${pct(s.monthPct)}</td>
       <td>${pos}</td>
       <td>${s.status}${immune}</td>
@@ -676,6 +746,7 @@ function renderStandings(season) {
 
 function renderCouncil(season) {
   const stage = document.getElementById("council-stage");
+  if (!stage) return;
   const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
   if (log.length === 0) {
     stage.innerHTML = `
@@ -688,7 +759,7 @@ function renderCouncil(season) {
   }
   const items = log
     .map((entry) => {
-      const title = entry.title || `Month ${entry.month || "?"}`;
+      const title = entry.title || entry.weekLabel || "Tribal";
       const boot = entry.bootName || entry.bootId || "—";
       const votes = entry.votes ? JSON.stringify(entry.votes) : "recorded";
       return `<li><strong>${title}</strong> — boot: ${boot}. ${entry.summary || votes}</li>`;
@@ -701,6 +772,7 @@ function renderCouncil(season) {
 
 function renderGolden(season) {
   const throne = document.getElementById("throne");
+  if (!throne) return;
   const winners = Array.isArray(season.goldenPortfolio) ? season.goldenPortfolio : [];
   if (!season.winnerId && winners.length === 0) {
     throne.innerHTML = `
@@ -719,6 +791,91 @@ function renderGolden(season) {
   throne.innerHTML = `<h3>Inscribed forever</h3><ul class="winners">${names}</ul>`;
 }
 
+
+function episodeFileHref(ep) {
+  const path = (ep && ep.path) || "seasons/1/e01.html";
+  const parts = String(path).split("/");
+  return parts[parts.length - 1] || "e01.html";
+}
+
+function renderEpisode(season) {
+  const root = document.getElementById("episode-root");
+  if (!root) return;
+  const totals = document.getElementById("episode-tribe-totals");
+  if (totals) {
+    totals.innerHTML = (season.tribes || [])
+      .map((t) => {
+        return `<div class="total-card ${t.id}">
+        <h3>${escapeHtml(t.name)}</h3>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week %</p>
+      </div>`;
+      })
+      .join("");
+  }
+  const body = document.getElementById("episode-marks-body");
+  if (body) {
+    body.innerHTML = (season.survivors || [])
+      .map((s) => {
+        const tribe = tribeById(season, s.tribeId);
+        return `<tr>
+      <td><span class="dot ${s.tribeId}"></span>${escapeHtml(s.name)}</td>
+      <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
+      <td class="num">${pct(weekPctOf(s))}</td>
+      <td class="num">${pct(s.monthPct)}</td>
+      <td>${formatPosition(s.position, s.tribeId)}</td>
+    </tr>`;
+      })
+      .join("");
+  }
+  const tribal = document.getElementById("episode-tribal");
+  if (tribal) {
+    const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+    if (log.length === 0) {
+      tribal.innerHTML = `
+      <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
+      <div class="council-empty">
+        <h3>Not yet</h3>
+        <p>Friday 7pm PT Aug 28. Pre-merge, the losing tribe (worst combined week %) votes — and that tribe's best week % cannot be snuffed.</p>
+      </div>`;
+    }
+  }
+}
+
+function renderSeasonHub(season) {
+  const list = document.getElementById("episode-list");
+  if (!list) return;
+  const episodes = Array.isArray(season.episodes) ? season.episodes : [];
+  if (episodes.length === 0) return;
+  list.innerHTML = episodes
+    .map((ep) => {
+      const href = episodeFileHref(ep);
+      const status = ep.status === "live" ? "Now playing · live" : ep.status || "cut";
+      const liveClass = ep.status === "live" ? " live" : "";
+      const label = ep.weekLabel || "";
+      return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
+        <p class="ep-kicker">${escapeHtml(status)}</p>
+        <h3>${escapeHtml(ep.title || "Episode " + ep.number)}</h3>
+        <p>${escapeHtml(label)}</p>
+      </a>`;
+    })
+    .join("");
+}
+
+function renderNowPlaying(season) {
+  const el = document.getElementById("now-playing");
+  if (!el || !season.episode) return;
+  const ep = season.episode;
+  const href = ep.path || "seasons/1/e01.html";
+  const title = "Season " + (ep.season || 1) + " · " + (ep.title || "Episode 1");
+  const week = ep.weekLabel || "Monday Aug 24 – Friday Aug 28, 2026";
+  el.innerHTML = `
+      <p class="section-kicker">Now cutting</p>
+      <h2>${escapeHtml(title)}</h2>
+      <p>${escapeHtml(week)}. The story lives on the episode page.</p>
+      <a class="btn teal" href="${escapeHtml(href)}">Open Episode 1</a>`;
+}
+
 function render(season, sourceNote) {
   renderLandingNames(season);
   renderHero(season);
@@ -726,7 +883,11 @@ function render(season, sourceNote) {
   renderStandings(season);
   renderCouncil(season);
   renderGolden(season);
+  renderNowPlaying(season);
+  renderSeasonHub(season);
+  renderEpisode(season);
   const miss = document.getElementById("json-miss");
+  if (!miss) return;
   if (sourceNote) {
     miss.textContent = sourceNote;
     miss.classList.remove("hidden");
@@ -749,7 +910,7 @@ async function loadSeason() {
   }
   return {
     season: FALLBACK_SEASON,
-    note: "Could not fetch season1.json (open via a local server to live-reload). Showing the live-season fallback baked into the page — started, seven $10 fills, five cash, monthPct 0.00, no invented P&L."
+    note: "Could not fetch season1.json (open via a local server to live-reload). Showing the live-season fallback baked into the page — started, Season 1 Episode 1, seven $10 fills, five cash, weekPct 0.00, no invented P&L."
   };
 }
 

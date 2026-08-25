@@ -4,20 +4,45 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live \u00b7 Friday tribals \u00b7 campfire nights \u00b7 seven fills \u00b7 five cash",
+  "statusLabel": "Live · S1E01 · Friday tribal Aug 28",
   "started": true,
   "merged": false,
   "mergeAtRemaining": 9,
   "startingBookUsd": 10.0,
   "month": "2026-08",
   "monthLabel": "August 2026",
-  "notes": "Season live 9:05 AM PT Aug 24. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Twelve contestants fight to be sole manager of the original $120 island stake. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Winner enters the golden portfolio and keeps managing that money. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct stays 0 until marked to market. Do not invent P&L.",
+  "episode": {
+    "season": 1,
+    "number": 1,
+    "id": "s1e01",
+    "status": "live",
+    "title": "Episode 1",
+    "weekStart": "2026-08-24",
+    "weekEnd": "2026-08-28",
+    "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+    "tribalAt": "2026-08-28T19:00:00-07:00",
+    "tribalLabel": "Friday Aug 28, 2026 · 7:00 PM PT",
+    "path": "seasons/1/e01.html",
+    "source": "episodes/s1e01.md"
+  },
+  "episodes": [
+    {
+      "number": 1,
+      "id": "s1e01",
+      "status": "live",
+      "title": "Episode 1",
+      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "path": "seasons/1/e01.html"
+    }
+  ],
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Twelve contestants fight to be sole manager of the original $120 island stake. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Winner enters the golden portfolio and keeps managing that money. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
+      "combinedWeekPct": 0.0,
       "combinedMonthPct": 0.0,
       "livingCount": 6
     },
@@ -26,6 +51,7 @@
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
+      "combinedWeekPct": 0.0,
       "combinedMonthPct": 0.0,
       "livingCount": 6
     }
@@ -38,6 +64,7 @@
       "archetype": "momentum, locker-room competitor",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -74,6 +101,7 @@
       "archetype": "stubborn value",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -83,7 +111,7 @@
       },
       "immune": false,
       "monogram": "M",
-      "bio": "Cleveland split-level. Stubborn value \u2014 patient, not theatrical, no moonshot.",
+      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
       "portrait": "cast/mara/portrait.jpg",
       "camp": "cast/mara/camp.jpg",
       "positions": [
@@ -102,6 +130,7 @@
       "archetype": "options / convexity",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -138,6 +167,7 @@
       "archetype": "short seller, ice",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -168,6 +198,7 @@
       "archetype": "risk first, cash is a position",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -196,6 +227,7 @@
       "archetype": "quality compounders",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -210,7 +242,7 @@
       "immune": false,
       "monogram": "P",
       "bio": "Dayton. Steward, not a hero.",
-      "caption": "Slow hands. Long horizon. The adults\u2019 table.",
+      "caption": "Slow hands. Long horizon. The adults’ table.",
       "portrait": "cast/pax/portrait.jpg",
       "camp": "cast/pax/camp.jpg",
       "positions": [
@@ -233,6 +265,7 @@
       "archetype": "narrative + flow",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -269,6 +302,7 @@
       "archetype": "quant / factors",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -305,6 +339,7 @@
       "archetype": "macro / Fed",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -341,6 +376,7 @@
       "archetype": "pure technicals",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "BUY",
@@ -377,6 +413,7 @@
       "archetype": "catalysts / news",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
@@ -407,6 +444,7 @@
       "archetype": "fade the crowd",
       "status": "active",
       "bookUsd": 10.0,
+      "weekPct": 0.0,
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
