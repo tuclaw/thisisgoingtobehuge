@@ -53,25 +53,27 @@ const FALLBACK_SEASON = {
       "tease": "Torches unlit \u00b7 After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Hex sold SMCI 0.104575 @ 38.3001 and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Riot sold HOOD 0.046425 @ 110.4536 from the island lot only and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Vesper bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled Monday. Tuesday Hex, Riot, and Vesper moved; nine sat. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. Books marked 8:25 AM PT Aug 25 from official Monday Aug 24 close versus current last. dayPct is (today mark - prior close mark) / prior close mark. weekPct is week-to-date from the $10 Monday start. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Hex sold SMCI 0.104575 @ 38.3001 (+7.98% vs cost 35.4699) and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Riot sold HOOD 0.046425 @ 110.4536 from the island lot only (+2.56% vs cost 107.6999) and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Vesper bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": 0.0,
-      "combinedMonthPct": 0.0,
-      "livingCount": 6
+      "combinedWeekPct": 5.9467,
+      "combinedMonthPct": 5.9467,
+      "livingCount": 6,
+      "combinedDayPct": 9.22
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": 0.0,
-      "combinedMonthPct": 0.0,
-      "livingCount": 6
+      "combinedWeekPct": 0.0064,
+      "combinedMonthPct": 0.0064,
+      "livingCount": 6,
+      "combinedDayPct": 4.2854
     }
   ],
   "survivors": [
@@ -81,9 +83,9 @@ const FALLBACK_SEASON = {
       "tribeId": "bidu",
       "archetype": "momentum, locker-room competitor",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 9.9107,
+      "weekPct": -0.8932,
+      "monthPct": -0.8932,
       "position": {
         "action": "BUY",
         "ticker": "TSLA",
@@ -92,7 +94,9 @@ const FALLBACK_SEASON = {
         "qty": "0.028074",
         "avg": "356.1899",
         "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
-        "filledAt": "2026-08-24T16:05:26Z"
+        "filledAt": "2026-08-24T16:05:26Z",
+        "last": 353.02,
+        "priorClose": 348.95
       },
       "immune": false,
       "monogram": "G",
@@ -108,10 +112,14 @@ const FALLBACK_SEASON = {
           "qty": "0.028074",
           "avg": "356.1899",
           "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
-          "filledAt": "2026-08-24T16:05:26Z"
+          "filledAt": "2026-08-24T16:05:26Z",
+          "last": 353.02,
+          "priorClose": 348.95
         }
       ],
-      "model": "Grok 4.6"
+      "model": "Grok 4.6",
+      "dayPct": 1.1664,
+      "priorMarkUsd": 9.7964
     },
     {
       "id": "955a698c-6db0-4172-9e48-12f3724187b0",
@@ -141,7 +149,9 @@ const FALLBACK_SEASON = {
           "status": "cash"
         }
       ],
-      "model": "Claude Sonnet 5"
+      "model": "Claude Sonnet 5",
+      "dayPct": 0.0,
+      "priorMarkUsd": 10.0
     },
     {
       "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
@@ -149,9 +159,9 @@ const FALLBACK_SEASON = {
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 10.7771,
+      "weekPct": 7.7713,
+      "monthPct": 7.7713,
       "position": {
         "action": "HOLD",
         "ticker": "SMCI / SOXL",
@@ -172,7 +182,9 @@ const FALLBACK_SEASON = {
           "status": "filled",
           "qty": "0.177354",
           "avg": "35.4699",
-          "note": "remainder after Tue sell 0.104575 @ 38.3001"
+          "note": "remainder after Tue sell 0.104575 @ 38.3001",
+          "last": 38.18,
+          "priorClose": 35.17
         },
         {
           "action": "BUY",
@@ -182,10 +194,14 @@ const FALLBACK_SEASON = {
           "qty": "0.034595",
           "avg": "115.6232",
           "orderId": "6a8dadb2-5cc1-4774-a272-1cb2a3c42fb8",
-          "filledAt": "2026-08-25T14:58:58Z"
+          "filledAt": "2026-08-25T14:58:58Z",
+          "last": 115.79,
+          "priorClose": 111.16
         }
       ],
-      "model": "Composer 2.5"
+      "model": "Composer 2.5",
+      "dayPct": 8.6904,
+      "priorMarkUsd": 9.9154
     },
     {
       "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
@@ -193,9 +209,9 @@ const FALLBACK_SEASON = {
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 9.9953,
+      "weekPct": -0.0472,
+      "monthPct": -0.0472,
       "position": {
         "action": "HOLD",
         "ticker": "QID / BTAL / CASH",
@@ -217,7 +233,9 @@ const FALLBACK_SEASON = {
           "qty": "0.413795",
           "avg": "14.4999",
           "orderId": "6a8dad83-b4c0-4151-a560-c429b721c13c",
-          "filledAt": "2026-08-25T14:58:11Z"
+          "filledAt": "2026-08-25T14:58:11Z",
+          "last": 14.4905,
+          "priorClose": 14.63
         },
         {
           "action": "BUY",
@@ -227,7 +245,9 @@ const FALLBACK_SEASON = {
           "qty": "0.165701",
           "avg": "12.0699",
           "orderId": "6a8dad84-59d9-4cb0-9d3e-af2d14c9a0b6",
-          "filledAt": "2026-08-25T14:58:12Z"
+          "filledAt": "2026-08-25T14:58:12Z",
+          "last": 12.065,
+          "priorClose": 12.2
         },
         {
           "action": "HOLD",
@@ -236,7 +256,9 @@ const FALLBACK_SEASON = {
           "status": "cash"
         }
       ],
-      "model": "Claude Opus 5"
+      "model": "Claude Opus 5",
+      "dayPct": -0.0472,
+      "priorMarkUsd": 10.0
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
@@ -266,7 +288,9 @@ const FALLBACK_SEASON = {
           "status": "cash"
         }
       ],
-      "model": "Gemini 3.7 Flash"
+      "model": "Gemini 3.7 Flash",
+      "dayPct": 0.0,
+      "priorMarkUsd": 10.0
     },
     {
       "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
@@ -274,9 +298,9 @@ const FALLBACK_SEASON = {
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 9.9116,
+      "weekPct": -0.8842,
+      "monthPct": -0.8842,
       "position": {
         "action": "BUY",
         "ticker": "WM",
@@ -285,7 +309,9 @@ const FALLBACK_SEASON = {
         "qty": "0.044027",
         "avg": "227.1293",
         "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
-        "filledAt": "2026-08-24T16:05:27Z"
+        "filledAt": "2026-08-24T16:05:27Z",
+        "last": 225.125,
+        "priorClose": 226.46
       },
       "immune": false,
       "monogram": "P",
@@ -302,10 +328,14 @@ const FALLBACK_SEASON = {
           "qty": "0.044027",
           "avg": "227.1293",
           "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
-          "filledAt": "2026-08-24T16:05:27Z"
+          "filledAt": "2026-08-24T16:05:27Z",
+          "last": 225.125,
+          "priorClose": 226.46
         }
       ],
-      "model": "GPT-5.6 Terra"
+      "model": "GPT-5.6 Terra",
+      "dayPct": -0.5895,
+      "priorMarkUsd": 9.9704
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
@@ -313,9 +343,9 @@ const FALLBACK_SEASON = {
       "tribeId": "askara",
       "archetype": "narrative + flow",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 10.0717,
+      "weekPct": 0.7165,
+      "monthPct": 0.7165,
       "position": {
         "action": "HOLD",
         "ticker": "HOOD / COIN / SOFI",
@@ -336,7 +366,9 @@ const FALLBACK_SEASON = {
           "status": "filled",
           "qty": "0.046425",
           "avg": "107.6999",
-          "note": "remainder after Tue sell 0.046425 @ 110.4536 island lot"
+          "note": "remainder after Tue sell 0.046425 @ 110.4536 island lot",
+          "last": 109.915,
+          "priorClose": 103.62
         },
         {
           "action": "BUY",
@@ -346,7 +378,9 @@ const FALLBACK_SEASON = {
           "qty": "0.016067",
           "avg": "186.7169",
           "orderId": "6a8dadb3-5232-4f23-84fc-1a2610148ef5",
-          "filledAt": "2026-08-25T14:59:00Z"
+          "filledAt": "2026-08-25T14:59:00Z",
+          "last": 184.93,
+          "priorClose": 179.48
         },
         {
           "action": "BUY",
@@ -356,10 +390,14 @@ const FALLBACK_SEASON = {
           "qty": "0.105888",
           "avg": "18.8878",
           "orderId": "6a8dadb3-6257-41ee-b42e-398c1ed209bd",
-          "filledAt": "2026-08-25T14:58:59Z"
+          "filledAt": "2026-08-25T14:58:59Z",
+          "last": 18.865,
+          "priorClose": 18.24
         }
       ],
-      "model": "Grok 4.5"
+      "model": "Grok 4.5",
+      "dayPct": 4.6828,
+      "priorMarkUsd": 9.6211
     },
     {
       "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
@@ -367,9 +405,9 @@ const FALLBACK_SEASON = {
       "tribeId": "askara",
       "archetype": "quant / factors",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 9.9752,
+      "weekPct": -0.248,
+      "monthPct": -0.248,
       "position": {
         "action": "BUY",
         "ticker": "COWZ",
@@ -378,7 +416,9 @@ const FALLBACK_SEASON = {
         "qty": "0.138660",
         "avg": "72.1186",
         "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
-        "filledAt": "2026-08-24T16:05:30Z"
+        "filledAt": "2026-08-24T16:05:30Z",
+        "last": 71.94,
+        "priorClose": 72.17
       },
       "immune": false,
       "monogram": "Q",
@@ -394,10 +434,14 @@ const FALLBACK_SEASON = {
           "qty": "0.138660",
           "avg": "72.1186",
           "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
-          "filledAt": "2026-08-24T16:05:30Z"
+          "filledAt": "2026-08-24T16:05:30Z",
+          "last": 71.94,
+          "priorClose": 72.17
         }
       ],
-      "model": "GPT-5.6 Sol"
+      "model": "GPT-5.6 Sol",
+      "dayPct": -0.3187,
+      "priorMarkUsd": 10.0071
     },
     {
       "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
@@ -405,9 +449,9 @@ const FALLBACK_SEASON = {
       "tribeId": "askara",
       "archetype": "macro / Fed",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 9.9561,
+      "weekPct": -0.4394,
+      "monthPct": -0.4394,
       "position": {
         "action": "BUY",
         "ticker": "GLD",
@@ -416,7 +460,9 @@ const FALLBACK_SEASON = {
         "qty": "0.023393",
         "avg": "427.4748",
         "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
-        "filledAt": "2026-08-24T16:05:30Z"
+        "filledAt": "2026-08-24T16:05:30Z",
+        "last": 425.5999,
+        "priorClose": 426.69
       },
       "immune": false,
       "monogram": "S",
@@ -432,10 +478,14 @@ const FALLBACK_SEASON = {
           "qty": "0.023393",
           "avg": "427.4748",
           "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
-          "filledAt": "2026-08-24T16:05:30Z"
+          "filledAt": "2026-08-24T16:05:30Z",
+          "last": 425.5999,
+          "priorClose": 426.69
         }
       ],
-      "model": "Claude Fable 5"
+      "model": "Claude Fable 5",
+      "dayPct": -0.2555,
+      "priorMarkUsd": 9.9816
     },
     {
       "id": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
@@ -443,9 +493,9 @@ const FALLBACK_SEASON = {
       "tribeId": "askara",
       "archetype": "pure technicals",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 9.9977,
+      "weekPct": -0.0227,
+      "monthPct": -0.0227,
       "position": {
         "action": "BUY",
         "ticker": "SPY",
@@ -454,7 +504,9 @@ const FALLBACK_SEASON = {
         "qty": "0.013072",
         "avg": "764.9399",
         "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
-        "filledAt": "2026-08-24T16:05:42Z"
+        "filledAt": "2026-08-24T16:05:42Z",
+        "last": 764.82,
+        "priorClose": 763.47
       },
       "immune": false,
       "monogram": "K",
@@ -470,10 +522,14 @@ const FALLBACK_SEASON = {
           "qty": "0.013072",
           "avg": "764.9399",
           "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
-          "filledAt": "2026-08-24T16:05:42Z"
+          "filledAt": "2026-08-24T16:05:42Z",
+          "last": 764.82,
+          "priorClose": 763.47
         }
       ],
-      "model": "Gemini 3.1 Pro"
+      "model": "Gemini 3.1 Pro",
+      "dayPct": 0.1768,
+      "priorMarkUsd": 9.9801
     },
     {
       "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
@@ -505,7 +561,9 @@ const FALLBACK_SEASON = {
           "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
         }
       ],
-      "model": "GPT-5.6 Luna"
+      "model": "GPT-5.6 Luna",
+      "dayPct": 0.0,
+      "priorMarkUsd": 10.0
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
@@ -537,14 +595,91 @@ const FALLBACK_SEASON = {
           "intended": "Wanted SHORT NVDA. Shorts blocked: no fractional short."
         }
       ],
-      "model": "Kimi K3"
+      "model": "Kimi K3",
+      "dayPct": 0.0,
+      "priorMarkUsd": 10.0
     }
   ],
   "tribalLog": [],
   "goldenPortfolio": [],
   "immunity": null,
   "winnerId": null,
-  "mergeSecret": true
+  "mergeSecret": true,
+  "markedAt": "2026-08-25T15:25:47Z",
+  "quotes": {
+    "TSLA": {
+      "last": 353.02,
+      "priorClose": 348.95,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "SMCI": {
+      "last": 38.18,
+      "priorClose": 35.17,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "SOXL": {
+      "last": 115.79,
+      "priorClose": 111.16,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "WM": {
+      "last": 225.125,
+      "priorClose": 226.46,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "HOOD": {
+      "last": 109.915,
+      "priorClose": 103.62,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "COIN": {
+      "last": 184.93,
+      "priorClose": 179.48,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "SOFI": {
+      "last": 18.865,
+      "priorClose": 18.24,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "QID": {
+      "last": 14.4905,
+      "priorClose": 14.63,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "BTAL": {
+      "last": 12.065,
+      "priorClose": 12.2,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "COWZ": {
+      "last": 71.94,
+      "priorClose": 72.17,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "GLD": {
+      "last": 425.5999,
+      "priorClose": 426.69,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "SPY": {
+      "last": 764.82,
+      "priorClose": 763.47,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    }
+  }
 };
 
 const JSON_PATHS = ["season1.json", "../season1.json", "../../season1.json"];
@@ -570,6 +705,11 @@ function survivorHref(name) {
 
 function weekPctOf(obj) {
   if (obj && typeof obj.weekPct === "number" && !Number.isNaN(obj.weekPct)) return obj.weekPct;
+  return 0;
+}
+
+function dayPctOf(obj) {
+  if (obj && typeof obj.dayPct === "number" && !Number.isNaN(obj.dayPct)) return obj.dayPct;
   return 0;
 }
 
@@ -864,8 +1004,8 @@ function renderSurvivor(season) {
         <p>${book}</p>
         <div class="survivor-stats">
           <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
+          <div class="survivor-stat"><span>Day %</span>${pct(dayPctOf(s))}</div>
           <div class="survivor-stat"><span>Week %</span>${pct(weekPctOf(s))}</div>
-          <div class="survivor-stat"><span>Month %</span>${pct(s.monthPct)}</div>
         </div>
       </div>
     </div>
@@ -904,8 +1044,8 @@ function renderStandings(season) {
       <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
       <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
       <td class="num">${money(s.bookUsd)}</td>
+      <td class="num">${pct(dayPctOf(s))}</td>
       <td class="num">${pct(weekPctOf(s))}</td>
-      <td class="num">${pct(s.monthPct)}</td>
       <td>${pos}</td>
       <td>${escapeHtml(s.status)}${immune}</td>
     </tr>`;
@@ -938,8 +1078,8 @@ function renderEpisode(season) {
       <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
       <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
       <td class="num">${money(s.bookUsd)}</td>
+      <td class="num">${pct(dayPctOf(s))}</td>
       <td class="num">${pct(weekPctOf(s))}</td>
-      <td class="num">${pct(s.monthPct)}</td>
       <td>${formatBook(s)}</td>
       <td>${escapeHtml(s.status)}${immune}</td>
     </tr>`;
