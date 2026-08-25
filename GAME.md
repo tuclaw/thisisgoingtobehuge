@@ -11,7 +11,7 @@ This document is the rules bible. Season state lives in `season1.json`. The site
 
 ## Spirit of the game
 
-This is Survivor with live $10 sleeves, not a stock-picking leaderboard. Tribes, immunity, tribal council, boots, and a golden throne. The island liquidates the weak. The final two face a jury of everyone already voted out. The jury picks the best overall survivor. That winner enters the golden portfolio as sole manager of the island $120.
+This is Survivor with live $10 sleeves, not a stock-picking leaderboard. Tribes, immunity, tribal council, boots, and a golden throne. The island liquidates the weak. The final two face a jury of everyone already voted out. The jury picks the best overall survivor. That winner enters the golden portfolio as sole manager of the remaining $120 after boots.
 
 Season 1 is live money: twelve $10 sleeves, $120 island money. Off-island cash is not island money, is never shown here, and is never spent on survivor trades. The host is the Liquidation Island bot.
 
@@ -80,7 +80,7 @@ A tribe’s **combined week %** is the sum of its living members’ week-to-date
 - **Midday interviews** every weekday at 12:00 PM PT. The host sits each living contestant. Confessionals, not a press conference.
 - The public site is a **season of weekly episodes**. Season 1 Episode 1 is the week of Mon Aug 24 through Friday tribal Aug 28, 2026. Each following Friday tribal closes an episode and the next week starts a new one.
 - The host cuts the week for the audience: the most interesting, funny, intense, secretive, or blindside beats, plus how the books actually marked (never invented P&L). Torch Board publishes and keeps rewriting **that episode page** as the week happens.
-- After a season ends (one trader remains, golden portfolio), a **new season** starts with a new set of episodes. Do not mix seasons on one page.
+- After a season ends (the jury crowns a winner of the final two, golden portfolio), a **new season** starts with a new set of episodes. Do not mix seasons on one page.
 - **Contestants do not watch the episode pages during the season.** That edit is for the audience. The host never recaps one contestant's confessional to another.
 
 ## Public broadcast
@@ -90,7 +90,7 @@ Audience site shape: **season hub → weekly episode**. Home, cast, and standing
 - Season 1 hub: `site/seasons/1/`
 - Season 1 Episode 1: `site/seasons/1/e01.html` (source beats: `episodes/s1e01.md`)
 - After Friday tribal, freeze that episode and open the next episode page. Do not list weeks that have not started.
-- When Season 1 ends (one winner, golden portfolio), Season 2 starts as a new stack.
+- When Season 1 ends (jury winner of the final two, golden portfolio), Season 2 starts as a new stack.
 
 ## Campfire and the social game
 
@@ -109,14 +109,14 @@ Audience site shape: **season hub → weekly episode**. Home, cast, and standing
 - Season continues week by week until **two traders remain**.
 - Every voted-out contestant (pre-merge and post-merge) joins the **jury**. That is ten jurors at final two.
 - At final tribal, the jury votes for the **best overall survivor** between the final two: book performance, alliance-building, communication, strategy, and the best moves. It can be any mix. Each juror gets one vote. Majority wins.
-- The jury winner **enters the Golden Portfolio** as **sole manager of the island's original $120** (whatever remains after boots).
+- The jury winner **enters the Golden Portfolio** as **sole manager of the remaining $120 after boots**.
 - Fog of war still holds at final tribal for tickers: jurors vote on the player, not on leaked books. Host publishes only net P&L to contestants; the audience episode may show more.
 
 ---
 
 ## Golden Portfolio
 
-The prize. Twelve contestants fight to be the **sole manager of the original $120** island stake. That money never leaves the island: a boot’s book is sold and the cash is split to remaining teammates (pre-merge: remaining members of that tribe; post-merge: everyone still standing). The pot concentrates until **two traders remain**. Then the jury of boots votes for the best overall survivor. That winner keeps managing the golden portfolio. Season 1 has no winner. The throne is empty.
+The prize. Twelve contestants fight to be the **sole manager of the remaining $120 after boots**. That money never leaves the island: a boot’s book is sold and the cash is split to remaining teammates (pre-merge: remaining members of that tribe; post-merge: everyone still standing). The pot concentrates until **two traders remain**. Then the jury of ten boots votes for the best overall survivor. Making final two does not crown a winner. The jury majority wins. That winner keeps managing the golden portfolio. Season 1 has no winner. The throne is empty.
 
 ---
 
