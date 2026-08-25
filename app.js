@@ -6,7 +6,7 @@ const FALLBACK_SEASON = {
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · S1E01 · Friday tribal Aug 28",
+  "statusLabel": "Live \u00b7 S1E01 \u00b7 Friday tribal Aug 28",
   "started": true,
   "merged": false,
   "mergeAtRemaining": 9,
@@ -21,9 +21,9 @@ const FALLBACK_SEASON = {
     "title": "Episode 1",
     "weekStart": "2026-08-24",
     "weekEnd": "2026-08-28",
-    "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+    "weekLabel": "Monday Aug 24 \u2013 Friday Aug 28, 2026",
     "tribalAt": "2026-08-28T19:00:00-07:00",
-    "tribalLabel": "Friday Aug 28, 2026 · 7:00 PM PT",
+    "tribalLabel": "Friday Aug 28, 2026 \u00b7 7:00 PM PT",
     "path": "seasons/1/e01.html",
     "source": "episodes/s1e01.md"
   },
@@ -33,8 +33,24 @@ const FALLBACK_SEASON = {
       "id": "s1e01",
       "status": "live",
       "title": "Episode 1",
-      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "weekLabel": "Monday Aug 24 \u2013 Friday Aug 28, 2026",
       "path": "seasons/1/e01.html"
+    },
+    {
+      "number": 2,
+      "id": "s1e02",
+      "status": "locked",
+      "title": "Episode 2",
+      "weekLabel": "Monday Aug 31 \u2013 Friday Sep 4, 2026",
+      "tease": "Torches unlit \u00b7 After Friday tribal"
+    },
+    {
+      "number": 3,
+      "id": "s1e03",
+      "status": "locked",
+      "title": "Episode 3",
+      "weekLabel": "Monday Sep 7 \u2013 Friday Sep 11, 2026",
+      "tease": "Torches unlit \u00b7 After Friday tribal"
     }
   ],
   "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge at 9. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct and weekPct stay 0 until marked from real prices. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned.",
@@ -114,7 +130,7 @@ const FALLBACK_SEASON = {
       },
       "immune": false,
       "monogram": "M",
-      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
+      "bio": "Cleveland split-level. Stubborn value \u2014 patient, not theatrical, no moonshot.",
       "portrait": "cast/mara/portrait.jpg",
       "camp": "cast/mara/camp.jpg",
       "positions": [
@@ -249,7 +265,7 @@ const FALLBACK_SEASON = {
       "immune": false,
       "monogram": "P",
       "bio": "Dayton. Steward, not a hero.",
-      "caption": "Slow hands. Long horizon. The adults’ table.",
+      "caption": "Slow hands. Long horizon. The adults\u2019 table.",
       "portrait": "cast/pax/portrait.jpg",
       "camp": "cast/pax/camp.jpg",
       "positions": [
@@ -502,6 +518,14 @@ function assetUrl(path) {
   return assetBase() + path;
 }
 
+function survivorSlug(name) {
+  return String(name || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function survivorHref(name) {
+  return assetBase() + "survivors/" + survivorSlug(name) + ".html";
+}
+
 function weekPctOf(obj) {
   if (obj && typeof obj.weekPct === "number" && !Number.isNaN(obj.weekPct)) return obj.weekPct;
   return 0;
@@ -514,9 +538,8 @@ function combinedWeekPctOf(tribe) {
   return 0;
 }
 
-
 function tribeById(season, id) {
-  return season.tribes.find((t) => t.id === id);
+  return (season.tribes || []).find((t) => t.id === id);
 }
 
 function money(n) {
@@ -538,20 +561,12 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-
 function modelBadge(s, tiny) {
   const model = s && s.model ? String(s.model).trim() : "";
   if (!model) return "";
   const tribeClass = s.tribeId === "askara" ? " askara" : s.tribeId === "bidu" ? " bidu" : "";
   const sizeClass = tiny ? " tiny" : "";
   return `<span class="model-badge${tribeClass}${sizeClass}">${escapeHtml(model)}</span>`;
-}
-
-function hasIntendedRecs(season) {
-  return (season.survivors || []).some((s) => {
-    const pos = s.position;
-    return pos && typeof pos === "object" && (pos.action || pos.ticker);
-  });
 }
 
 function positionChip(pos) {
@@ -603,23 +618,6 @@ function formatPosition(pos, tribeId) {
   return `<span class="pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}${intended}</span>`;
 }
 
-function formatPositionBrief(pos, tribeId) {
-  if (pos == null || pos === "" || typeof pos !== "object") return "";
-  const action = String(pos.action || "").toUpperCase();
-  const ticker = String(pos.ticker || "").toUpperCase();
-  if (!action && !ticker) return "";
-  const holdCash = action === "HOLD" || ticker === "CASH";
-  const line = holdCash
-    ? "CASH · HOLD"
-    : `${escapeHtml(action)} ${escapeHtml(ticker)}`;
-  const tribeClass = tribeId === "askara" ? " askara" : tribeId === "bidu" ? " bidu" : "";
-  const chip = positionChip(pos);
-  const intended = pos.intended
-    ? `<span class="pos-intended-note">${escapeHtml(pos.intended)}</span>`
-    : "";
-  return `<p class="cast-intent pos-intended${tribeClass}"><span class="pos-line">${line}</span>${chip}${intended}</p>`;
-}
-
 function totemSvg(survivor, tribe) {
   const ink = tribe && tribe.id === "askara" ? "#C45A12" : "#0E6B6B";
   const gold = "#d4a017";
@@ -652,94 +650,111 @@ function torchSvg(lit) {
   </svg>`;
 }
 
-function renderLandingNames(season) {
-  const bidu = document.getElementById("bidu-names");
-  const askara = document.getElementById("askara-names");
-  if (!bidu || !askara) return;
-  bidu.innerHTML = "";
-  askara.innerHTML = "";
-  season.survivors.forEach((s) => {
-    const li = document.createElement("li");
-    li.textContent = s.name;
-    (s.tribeId === "askara" ? askara : bidu).appendChild(li);
-  });
-}
-
-function renderCast(season) {
-  const grid = document.getElementById("cast-grid");
+function renderFaces(season) {
+  const grid = document.getElementById("face-grid");
   if (!grid) return;
-  grid.innerHTML = season.survivors
-    .map((s) => {
-      const tribe = tribeById(season, s.tribeId);
-      const tribeName = tribe ? tribe.name : s.tribeId;
-      const intent = formatPositionBrief(s.position, s.tribeId);
-      const hasPortrait = Boolean(s.portrait);
-      const hasCamp = Boolean(s.camp);
-      const face = hasPortrait
-        ? `<img class="portrait photo" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
-        : totemSvg(s, tribe);
-      const caption = s.caption ? `<p class="cast-caption">${escapeHtml(s.caption)}</p>` : "";
-      const bio = s.bio ? `<p class="cast-bio">${escapeHtml(s.bio)}</p>` : "";
-      const artClass = hasPortrait || hasCamp ? " has-art" : "";
-      const campStyle = hasCamp
-        ? ` style="--camp:url('${escapeHtml(assetUrl(s.camp))}')"`
-        : "";
-      return `<article class="cast-card ${s.tribeId}${artClass}"${campStyle}>
+  const tribes = season.tribes || [];
+  grid.innerHTML = tribes
+    .map((tribe) => {
+      const members = (season.survivors || []).filter((s) => s.tribeId === tribe.id);
+      const cards = members
+        .map((s) => {
+          const face = s.portrait
+            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
+            : totemSvg(s, tribe);
+          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
         ${face}
-        ${caption}
-        <h3>${s.name}</h3>
+        <h3>${escapeHtml(s.name)}</h3>
+        <p class="face-tribe">${escapeHtml(tribe.name)}</p>
         ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
-        <p class="archetype">${s.archetype}</p>
-        ${bio}
-        ${intent}
-        <div class="meta-row">
-          <span>${tribeName}</span>
-          <span>${s.status === "active" ? "In the game" : s.status}</span>
-        </div>
-      </article>`;
+      </a>`;
+        })
+        .join("");
+      const buff = tribe.buff ? ` · ${escapeHtml(tribe.buff)}` : "";
+      return `<div class="face-tribe-block ${tribe.id}">
+      <p class="face-tribe-kicker">${escapeHtml(tribe.name)}${buff}</p>
+      <div class="face-row">${cards}</div>
+    </div>`;
     })
     .join("");
 }
 
-function renderHero(season) {
-  const note = document.getElementById("hero-note");
-  if (!note) return;
-  if (season.started) {
-    note.textContent = season.notes || "Season 1 is live. Marks come only from recorded data.";
+function renderSurvivor(season) {
+  const root = document.getElementById("survivor-root");
+  if (!root) return;
+  const slug = document.documentElement.getAttribute("data-survivor");
+  const s = (season.survivors || []).find((x) => survivorSlug(x.name) === slug);
+  if (!s) {
+    root.innerHTML = `<section class="episode-hero"><div class="hero-inner"><h1>Unknown torch</h1><p class="lede">This name is not on the island.</p></div></section>`;
     return;
   }
-  if (hasIntendedRecs(season)) {
-    note.textContent =
-      "Island books are funded at $10.00 even. Opening recs are intended positions pending host review — not fills. No marks. No invented P&L. monthPct stays 0.00 until marked to market.";
-  } else {
-    note.textContent =
-      "Season 1 has not begun. The beach is quiet. Books sit at ten dollars even. No marks. No votes. The torches are not yet lit.";
-  }
+  const tribe = tribeById(season, s.tribeId);
+  const tribeName = tribe ? tribe.name : s.tribeId;
+  const campUrl = s.camp ? assetUrl(s.camp) : "";
+  const campStyle = campUrl ? ` style="--camp:url('${escapeHtml(campUrl)}')"` : "";
+  const portrait = s.portrait
+    ? `<img class="survivor-portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
+    : totemSvg(s, tribe);
+  const caption = s.caption ? `<p class="survivor-caption">${escapeHtml(s.caption)}</p>` : "";
+  const bio = s.bio ? `<p class="survivor-bio">${escapeHtml(s.bio)}</p>` : "";
+  const book = formatPosition(s.position, s.tribeId);
+  const mates = (season.survivors || []).filter((x) => x.tribeId === s.tribeId && x.name !== s.name);
+  const mateHtml = mates
+    .map((m) => {
+      const img = m.portrait
+        ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(m.name)}">`
+        : "";
+      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span>${escapeHtml(m.name)}</span></a>`;
+    })
+    .join("");
+  document.title = `${s.name} — Last Trader Standing`;
+  root.innerHTML = `
+    <section class="survivor-hero" id="survivor"${campStyle}>
+      <div class="hero-embers" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <p class="section-kicker">${escapeHtml(tribeName)}</p>
+        <h1>${escapeHtml(s.name)}</h1>
+      </div>
+    </section>
+    <div class="survivor-sheet ${s.tribeId}">
+      ${portrait}
+      <h2>${escapeHtml(s.name)}</h2>
+      ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
+      <div class="survivor-meta">
+        <span>${escapeHtml(tribeName)}</span>
+        <span>${s.status === "active" ? "In the game" : escapeHtml(s.status)}</span>
+      </div>
+      <p class="survivor-archetype">${escapeHtml(s.archetype || "")}</p>
+      ${bio}
+      ${caption}
+      <div class="survivor-book">
+        <h3>The book</h3>
+        <p>Audience board. Contestants do not see other books. This is the recorded public book — real fills only. weekPct and monthPct stay 0 until marked from real prices.</p>
+        <p>${book}</p>
+        <div class="survivor-stats">
+          <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
+          <div class="survivor-stat"><span>Week %</span>${pct(weekPctOf(s))}</div>
+          <div class="survivor-stat"><span>Month %</span>${pct(s.monthPct)}</div>
+        </div>
+      </div>
+    </div>
+    <aside class="survivor-mates">
+      <h3>${escapeHtml(tribeName)} camp</h3>
+      <div class="mate-row">${mateHtml}</div>
+    </aside>`;
 }
 
 function renderStandings(season) {
   const banner = document.getElementById("season-banner");
-  const pill = document.getElementById("status-pill");
   const label = season.statusLabel || "Pre-season · torches unlit";
-  const intended = hasIntendedRecs(season);
-  if (pill) pill.textContent = label;
-  if (banner) {
-    if (season.started) {
-      banner.textContent = label;
-    } else if (intended) {
-      banner.textContent =
-        label + " · every book $10.00 even · 0.00% until marks · intended recs pending host review";
-    } else {
-      banner.textContent = label + " · every book $10.00 · no positions · 0.00%";
-    }
-  }
+  if (banner) banner.textContent = label;
 
   const totals = document.getElementById("tribe-totals");
   if (totals) {
-    totals.innerHTML = season.tribes
+    totals.innerHTML = (season.tribes || [])
       .map((t) => {
         return `<div class="total-card ${t.id}">
-        <h3>${t.name}</h3>
+        <h3>${escapeHtml(t.name)}</h3>
         <p class="pct">${pct(combinedWeekPctOf(t))}</p>
         <p>${t.livingCount} standing · combined week %</p>
       </div>`;
@@ -749,80 +764,25 @@ function renderStandings(season) {
 
   const body = document.getElementById("books-body");
   if (!body) return;
-  const rows = season.survivors.map((s) => {
-    const tribe = tribeById(season, s.tribeId);
-    const pos = formatPosition(s.position, s.tribeId);
-    const immune = s.immune ? " · immune" : "";
-    return `<tr>
-      <td><span class="dot ${s.tribeId}"></span>${s.name}${s.model ? " " + modelBadge(s, true) : ""}</td>
-      <td>${tribe ? tribe.name : s.tribeId}</td>
+  body.innerHTML = (season.survivors || [])
+    .map((s) => {
+      const tribe = tribeById(season, s.tribeId);
+      const pos = formatPosition(s.position, s.tribeId);
+      const immune = s.immune ? " · immune" : "";
+      return `<tr>
+      <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
+      <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(weekPctOf(s))}</td>
       <td class="num">${pct(s.monthPct)}</td>
       <td>${pos}</td>
-      <td>${s.status}${immune}</td>
+      <td>${escapeHtml(s.status)}${immune}</td>
     </tr>`;
-  });
-  body.innerHTML = rows.join("");
-}
-
-function renderCouncil(season) {
-  const stage = document.getElementById("council-stage");
-  if (!stage) return;
-  const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
-  if (log.length === 0) {
-    stage.innerHTML = `
-      <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
-      <div class="council-empty">
-        <h3>No council has been called</h3>
-        <p>The urn is closed. First tribal is Friday Aug 28 at 7pm PT. Pre-merge, the losing tribe (worst combined week %) votes — and that tribe's best week % cannot be snuffed.</p>
-      </div>`;
-    return;
-  }
-  const items = log
-    .map((entry) => {
-      const title = entry.title || entry.weekLabel || "Tribal";
-      const boot = entry.bootName || entry.bootId || "—";
-      const votes = entry.votes ? JSON.stringify(entry.votes) : "recorded";
-      return `<li><strong>${title}</strong> — boot: ${boot}. ${entry.summary || votes}</li>`;
     })
     .join("");
-  stage.innerHTML = `
-    <div class="torches">${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}</div>
-    <ul class="log-list">${items}</ul>`;
-}
-
-function renderGolden(season) {
-  const throne = document.getElementById("throne");
-  if (!throne) return;
-  const winners = Array.isArray(season.goldenPortfolio) ? season.goldenPortfolio : [];
-  if (!season.winnerId && winners.length === 0) {
-    throne.innerHTML = `
-      <svg viewBox="0 0 120 70" width="140" aria-hidden="true">
-        <path d="M20 58h80L88 28H32z" fill="#1a120c" stroke="#d4a017" stroke-width="1.6"/>
-        <rect x="14" y="58" width="92" height="6" fill="#d4a017"/>
-        <circle cx="60" cy="22" r="10" fill="#120c08" stroke="#d4a017"/>
-      </svg>
-      <h3>The throne is empty</h3>
-      <p>No trader has entered the golden portfolio. The game goes to final two. All ten boots are the jury. They vote for the best overall survivor. That winner is sole manager of the remaining $120 after boots. Do not crown a winner just because they made final two. Season 1 throne stays empty.</p>`;
-    return;
-  }
-  const names = winners
-    .map((w) => `<li>${w.name || w.id}${w.season ? " · Season " + w.season : ""}</li>`)
-    .join("");
-  throne.innerHTML = `<h3>Inscribed forever</h3><ul class="winners">${names}</ul>`;
-}
-
-
-function episodeFileHref(ep) {
-  const path = (ep && ep.path) || "seasons/1/e01.html";
-  const parts = String(path).split("/");
-  return parts[parts.length - 1] || "e01.html";
 }
 
 function renderEpisode(season) {
-  const root = document.getElementById("episode-root");
-  if (!root) return;
   const totals = document.getElementById("episode-tribe-totals");
   if (totals) {
     totals.innerHTML = (season.tribes || [])
@@ -835,17 +795,22 @@ function renderEpisode(season) {
       })
       .join("");
   }
+  const banner = document.getElementById("season-banner");
+  if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
   const body = document.getElementById("episode-marks-body");
   if (body) {
     body.innerHTML = (season.survivors || [])
       .map((s) => {
         const tribe = tribeById(season, s.tribeId);
+        const immune = s.immune ? " · immune" : "";
         return `<tr>
-      <td><span class="dot ${s.tribeId}"></span>${escapeHtml(s.name)}</td>
+      <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
       <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
+      <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(weekPctOf(s))}</td>
       <td class="num">${pct(s.monthPct)}</td>
       <td>${formatPosition(s.position, s.tribeId)}</td>
+      <td>${escapeHtml(s.status)}${immune}</td>
     </tr>`;
       })
       .join("");
@@ -860,52 +825,90 @@ function renderEpisode(season) {
         <h3>Not yet</h3>
         <p>Friday 7pm PT Aug 28. Pre-merge, the losing tribe (worst combined week %) votes — and that tribe's best week % cannot be snuffed.</p>
       </div>`;
+    } else {
+      const items = log
+        .map((entry) => {
+          const title = entry.title || entry.weekLabel || "Tribal";
+          const boot = entry.bootName || entry.bootId || "—";
+          const votes = entry.votes ? JSON.stringify(entry.votes) : "recorded";
+          return `<li><strong>${escapeHtml(title)}</strong> — boot: ${escapeHtml(String(boot))}. ${escapeHtml(entry.summary || votes)}</li>`;
+        })
+        .join("");
+      tribal.innerHTML = `
+    <div class="torches">${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}</div>
+    <ul class="log-list">${items}</ul>`;
     }
   }
+}
+
+function lockedTeasers() {
+  return [
+    {
+      number: 2,
+      id: "s1e02",
+      status: "locked",
+      title: "Episode 2",
+      weekLabel: "Monday Aug 31 – Friday Sep 4, 2026",
+      tease: "Torches unlit · After Friday tribal"
+    },
+    {
+      number: 3,
+      id: "s1e03",
+      status: "locked",
+      title: "Episode 3",
+      weekLabel: "Monday Sep 7 – Friday Sep 11, 2026",
+      tease: "Torches unlit · After Friday tribal"
+    }
+  ];
+}
+
+function episodeFileHref(ep) {
+  const path = (ep && ep.path) || "";
+  if (!path) return "";
+  const parts = String(path).split("/");
+  return parts[parts.length - 1] || "";
 }
 
 function renderSeasonHub(season) {
   const list = document.getElementById("episode-list");
   if (!list) return;
-  const episodes = Array.isArray(season.episodes) ? season.episodes : [];
-  if (episodes.length === 0) return;
+  const byNum = new Map();
+  (Array.isArray(season.episodes) ? season.episodes : []).forEach((ep) => {
+    byNum.set(ep.number, ep);
+  });
+  lockedTeasers().forEach((ep) => {
+    if (!byNum.has(ep.number)) byNum.set(ep.number, ep);
+  });
+  const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
   list.innerHTML = episodes
     .map((ep) => {
+      const locked = ep.status === "locked" || !ep.path;
+      const title = escapeHtml(ep.title || "Episode " + ep.number);
+      const label = escapeHtml(ep.weekLabel || "");
+      if (locked) {
+        return `<div class="episode-card locked" aria-disabled="true">
+        <p class="ep-kicker">Torches unlit</p>
+        <h3>${title}</h3>
+        <p>${label}</p>
+        <p class="ep-locked-note">After Friday tribal</p>
+      </div>`;
+      }
       const href = episodeFileHref(ep);
       const status = ep.status === "live" ? "Now playing · live" : ep.status || "cut";
       const liveClass = ep.status === "live" ? " live" : "";
-      const label = ep.weekLabel || "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(status)}</p>
-        <h3>${escapeHtml(ep.title || "Episode " + ep.number)}</h3>
-        <p>${escapeHtml(label)}</p>
+        <h3>${title}</h3>
+        <p>${label}</p>
       </a>`;
     })
     .join("");
 }
 
-function renderNowPlaying(season) {
-  const el = document.getElementById("now-playing");
-  if (!el || !season.episode) return;
-  const ep = season.episode;
-  const href = ep.path || "seasons/1/e01.html";
-  const title = "Season " + (ep.season || 1) + " · " + (ep.title || "Episode 1");
-  const week = ep.weekLabel || "Monday Aug 24 – Friday Aug 28, 2026";
-  el.innerHTML = `
-      <p class="section-kicker">Now cutting</p>
-      <h2>${escapeHtml(title)}</h2>
-      <p>${escapeHtml(week)}. The story lives on the episode page.</p>
-      <a class="btn teal" href="${escapeHtml(href)}">Open Episode 1</a>`;
-}
-
 function render(season, sourceNote) {
-  renderLandingNames(season);
-  renderHero(season);
-  renderCast(season);
+  renderFaces(season);
+  renderSurvivor(season);
   renderStandings(season);
-  renderCouncil(season);
-  renderGolden(season);
-  renderNowPlaying(season);
   renderSeasonHub(season);
   renderEpisode(season);
   const miss = document.getElementById("json-miss");

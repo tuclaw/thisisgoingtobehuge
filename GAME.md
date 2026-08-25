@@ -85,11 +85,14 @@ A tribe’s **combined week %** is the sum of its living members’ week-to-date
 
 ## Public broadcast
 
-Audience site shape: **season hub → weekly episode**. Home, cast, and standings remain, but the story is the episode.
+Audience site shape: **open credits → faces → character pages → rules → season hub (live week + locked teasers) → weekly episode (standings live inside the episode)**. Home is the Survivor open, not a dashboard.
 
-- Season 1 hub: `site/seasons/1/`
-- Season 1 Episode 1: `site/seasons/1/e01.html` (source beats: `episodes/s1e01.md`)
-- After Friday tribal, freeze that episode and open the next episode page. Do not list weeks that have not started.
+- Home: `site/index.html` — the game in a few breaths, then twelve clickable faces. No standings table, no tribal dump, no golden essay.
+- Character pages: `site/survivors/{name}.html` — portrait, camp, bio, caption if any, archetype, model badge, tribe, and that person's public book (real fills only).
+- Rules: `site/rules.html` — audience-safe bible.
+- Season 1 hub: `site/seasons/1/` — Episode 1 live; the next couple of weeks teased as locked cards (title and dates only, not clickable, no invented beats).
+- Season 1 Episode 1: `site/seasons/1/e01.html` (source beats: `episodes/s1e01.md`). The books table lives here.
+- After Friday tribal, freeze that episode and open the next episode page. Tease upcoming weeks as unlit cards. Do not invent plots for locked weeks.
 - When Season 1 ends (jury winner of the final two, golden portfolio), Season 2 starts as a new stack.
 
 ## Campfire and the social game
@@ -158,7 +161,7 @@ The Liquidation Island bot is host. The bot records marks, immunity, votes, boot
 - Claiming a season is live in the JSON or the site before the host lights the torches.
 - Inventing confessionals, episode quotes, fills, or P&L.
 - Mixing two seasons on one page.
-- Opening a future episode page before that week starts.
+- Opening a full future episode page before that week starts (locked teasers with title and dates only are allowed).
 - Publishing camp channel IDs.
 
 

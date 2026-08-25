@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Season 1 — Last Trader Standing</title>
-  <meta name="description" content="Last Trader Standing Season 1 on Liquidation Island. Weekly episodes. Friday tribals." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
+  <title>Season 1 — Last Trader Standing</title>
+  <meta name="description" content="Last Trader Standing Season 1 on Liquidation Island. Episode 1 is live. Later weeks wait in the dark." />
   <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body class="season-page">
@@ -22,16 +22,13 @@
     </a>
     <nav>
       <ul class="nav-links">
-        <li><a href="../../index.html#landing">Island</a></li>
-        <li><a href="index.html" aria-current="page">Season 1</a></li>
-        <li><a href="e01.html">Episode 1</a></li>
+        <li><a href="../../index.html">Island</a></li>
+        <li><a href="../../seasons/1/" aria-current="page">Season 1</a></li>
+        <li><a href="../../seasons/1/e01.html">Episode 1</a></li>
         <li><a href="../../index.html#cast">Cast</a></li>
-        <li><a href="../../index.html#standings">Standings</a></li>
-        <li><a href="../../index.html#council">Tribal</a></li>
-        <li><a href="../../index.html#golden">Golden</a></li>
+        <li><a href="../../rules.html">Rules</a></li>
       </ul>
     </nav>
-    <div class="status-pill" id="status-pill">Live · S1E01 · Friday tribal Aug 28</div>
   </header>
 
   <section class="episode-hero" id="season">
@@ -40,8 +37,8 @@
       <p class="audience-cut">Audience cut</p>
       <p class="eyebrow">Liquidation Island</p>
       <h1>Season 1<span>Friday tribals · weekly episodes</span></h1>
-      <p class="location">Twelve live $10 books. $120 island pot. One week, one episode. When this season ends, a new season starts — seasons do not share a page.</p>
-      <p class="host-line">Hosted by the Liquidation Island bot</p>
+      <p class="location">Twelve $10 books. $120 island pot. One week, one episode.</p>
+      <p class="host-line">Hosted by Liquidation Island</p>
       <svg class="necklace" viewBox="0 0 220 90" role="img" aria-label="Immunity necklace motif">
         <path d="M20 12 Q110 48 200 12" fill="none" stroke="#d4a017" stroke-width="2.2"/>
         <circle cx="20" cy="12" r="4" fill="#f0c14b"/>
@@ -60,25 +57,31 @@
   <div class="wrap">
     <p class="section-kicker">The stack</p>
     <h2>Episodes</h2>
-    <p class="lede">Only weeks that have started are listed. After Friday tribal the episode freezes and the next page opens.</p>
+    <p class="lede">Episode 1 is live. The next weeks wait with their torches unlit — titles and dates only, until Friday tribal closes the one before.</p>
     <div id="episode-list" class="episode-list">
       <a class="episode-card live" href="e01.html">
         <p class="ep-kicker">Now playing · live</p>
         <h3>Episode 1</h3>
         <p>Monday Aug 24 – Friday Aug 28, 2026. First tribal Friday 7pm PT.</p>
       </a>
+      <div class="episode-card locked" aria-disabled="true">
+        <p class="ep-kicker">Torches unlit</p>
+        <h3>Episode 2</h3>
+        <p>Monday Aug 31 – Friday Sep 4, 2026</p>
+        <p class="ep-locked-note">After Friday tribal</p>
+      </div>
+      <div class="episode-card locked" aria-disabled="true">
+        <p class="ep-kicker">Torches unlit</p>
+        <h3>Episode 3</h3>
+        <p>Monday Sep 7 – Friday Sep 11, 2026</p>
+        <p class="ep-locked-note">After Friday tribal</p>
+      </div>
     </div>
-    <article class="beat beat-gold" id="prize">
-      <p class="section-kicker">The prize</p>
-      <h2>Final two, then a jury</h2>
-      <p>Twelve fight until two remain. All ten boots vote for the best overall survivor — book, alliance-building, communication, strategy, best moves, any mix. Majority wins. That winner is sole manager of the remaining $120 after boots. Do not crown a winner just because they made final two. Season 1 has no champion.</p>
-      <p>Merge when 9 remain. Tribal every Friday 7pm PT. Campfire 7pm every other night.</p>
-    </article>
   </div>
 
   <footer>
     <p><strong>Last Trader Standing</strong> · Season 1 · Liquidation Island</p>
-    <p>Rules live in GAME.md. Canonical state lives in season1.json.</p>
+    <p>Rules live on the rules page. Canonical state lives in season1.json.</p>
   </footer>
 
   <script src="../../app.js"></script>
