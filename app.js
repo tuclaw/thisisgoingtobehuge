@@ -6,14 +6,14 @@ const FALLBACK_SEASON = {
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · season started Mon Aug 24 · seven $10 buys filled · five cash",
+  "statusLabel": "Live · Friday tribals · campfire nights · seven fills · five cash",
   "started": true,
   "merged": false,
   "mergeAtRemaining": 9,
   "startingBookUsd": 10.0,
   "month": "2026-08",
   "monthLabel": "August 2026",
-  "notes": "Season live morning of Mon Aug 24 PT. Seven $10 buys filled. Five books cash (Mara/Nori by rec; Vesper/Juno/Reed shorts blocked, no fractional short). Multiple names OK if the $10 book is not exceeded. Contestants do not see other books. monthPct 0 until marked to market. No invented P&L.",
+  "notes": "Season live 9:05 AM PT Aug 24. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Twelve contestants fight to be sole manager of the original $120 island stake. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Winner enters the golden portfolio and keeps managing that money. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct stays 0 until marked to market. Do not invent P&L.",
   "tribes": [
     {
       "id": "bidu",
@@ -624,7 +624,7 @@ function renderHero(season) {
   }
   if (hasIntendedRecs(season)) {
     note.textContent =
-      "Island books are funded at $10.00 even. Opening recs are intended positions pending host review — not fills. No marks. No invented P&L. Combined month percent stays 0.00 until real data.";
+      "Island books are funded at $10.00 even. Opening recs are intended positions pending host review — not fills. No marks. No invented P&L. monthPct stays 0.00 until marked to market.";
   } else {
     note.textContent =
       "Season 1 has not begun. The beach is quiet. Books sit at ten dollars even. No marks. No votes. The torches are not yet lit.";
@@ -682,7 +682,7 @@ function renderCouncil(season) {
       <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
       <div class="council-empty">
         <h3>No council has been called</h3>
-        <p>The urn is closed. The losing tribe has not walked in. Pre-merge, only the tribe with the worst combined month percent votes — and their best book cannot be snuffed.</p>
+        <p>The urn is closed. First tribal is Friday Aug 28 at 7pm PT. Pre-merge, the losing tribe (worst combined week %) votes — and that tribe's best week % cannot be snuffed.</p>
       </div>`;
     return;
   }
@@ -710,7 +710,7 @@ function renderGolden(season) {
         <circle cx="60" cy="22" r="10" fill="#120c08" stroke="#d4a017"/>
       </svg>
       <h3>The throne is empty</h3>
-      <p>No trader has entered the golden portfolio. The winner of Season 1 will sit here forever.</p>`;
+      <p>No trader has entered the golden portfolio. Twelve contestants fight to be sole manager of the original $120 island stake. The winner keeps managing that money.</p>`;
     return;
   }
   const names = winners

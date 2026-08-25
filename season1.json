@@ -4,14 +4,14 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · season started Mon Aug 24 · seven $10 buys filled · five cash",
+  "statusLabel": "Live \u00b7 Friday tribals \u00b7 campfire nights \u00b7 seven fills \u00b7 five cash",
   "started": true,
   "merged": false,
   "mergeAtRemaining": 9,
   "startingBookUsd": 10.0,
   "month": "2026-08",
   "monthLabel": "August 2026",
-  "notes": "Season live morning of Mon Aug 24 PT. Seven $10 buys filled. Five books cash (Mara/Nori by rec; Vesper/Juno/Reed shorts blocked, no fractional short). Multiple names OK if the $10 book is not exceeded. Contestants do not see other books. monthPct 0 until marked to market. No invented P&L.",
+  "notes": "Season live 9:05 AM PT Aug 24. Seven $10 buys filled. Five cash. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Twelve contestants fight to be sole manager of the original $120 island stake. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Winner enters the golden portfolio and keeps managing that money. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. monthPct stays 0 until marked to market. Do not invent P&L.",
   "tribes": [
     {
       "id": "bidu",
@@ -83,7 +83,7 @@
       },
       "immune": false,
       "monogram": "M",
-      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
+      "bio": "Cleveland split-level. Stubborn value \u2014 patient, not theatrical, no moonshot.",
       "portrait": "cast/mara/portrait.jpg",
       "camp": "cast/mara/camp.jpg",
       "positions": [
@@ -210,7 +210,7 @@
       "immune": false,
       "monogram": "P",
       "bio": "Dayton. Steward, not a hero.",
-      "caption": "Slow hands. Long horizon. The adults’ table.",
+      "caption": "Slow hands. Long horizon. The adults\u2019 table.",
       "portrait": "cast/pax/portrait.jpg",
       "camp": "cast/pax/camp.jpg",
       "positions": [
