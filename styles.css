@@ -821,8 +821,8 @@ img.portrait.photo {
 }
 
 .torch {
-  width: 18px;
-  height: 72px;
+  width: 22px;
+  height: 80px;
 }
 
 .council-empty h3 {
@@ -1639,4 +1639,196 @@ a.brand:hover {
 
 .books a:hover {
   color: var(--gold-bright);
+}
+
+/* Liquidation Island — living fire
+   Drop into styles.css (or link after it).
+   Palette matches site tokens: --flame --ember --gold --gold-bright --snuffed --smoke */
+
+/* —— Header mark —— */
+.flame-mark {
+  width: 22px;
+  height: 28px;
+  display: block;
+  overflow: visible;
+  filter:
+    drop-shadow(0 0 3px rgba(232, 93, 4, 0.7))
+    drop-shadow(0 1px 5px rgba(240, 193, 75, 0.28));
+  animation: fm-glow 1.6s ease-in-out infinite;
+}
+
+.brand:hover .flame-mark {
+  filter:
+    drop-shadow(0 0 6px rgba(232, 93, 4, 0.95))
+    drop-shadow(0 2px 8px rgba(240, 193, 75, 0.45));
+}
+
+.flame-mark .fm-sway,
+.torch-lit .fm-sway {
+  transform-box: fill-box;
+  transform-origin: 50% 92%;
+  animation: fm-sway 1.15s ease-in-out infinite;
+}
+
+.flame-mark .fm-outer,
+.torch-lit .fm-outer {
+  transform-box: fill-box;
+  transform-origin: 50% 88%;
+  animation: fm-flicker 0.72s ease-in-out infinite;
+}
+
+.flame-mark .fm-mid,
+.torch-lit .fm-mid {
+  transform-box: fill-box;
+  transform-origin: 48% 90%;
+  animation: fm-flicker 0.58s ease-in-out infinite reverse;
+  animation-delay: -0.2s;
+}
+
+.flame-mark .fm-inner,
+.torch-lit .fm-inner {
+  transform-box: fill-box;
+  transform-origin: 50% 85%;
+  animation: fm-core 0.9s ease-in-out infinite;
+}
+
+.flame-mark .fm-hot,
+.torch-lit .fm-hot {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: fm-pulse 1.1s ease-in-out infinite;
+}
+
+.flame-mark .fm-lick,
+.torch-lit .fm-lick {
+  transform-box: fill-box;
+  transform-origin: 80% 100%;
+  animation: fm-lick 0.64s ease-in-out infinite;
+}
+
+/* —— Player / tribal torches —— */
+.torch {
+  width: 22px;
+  height: 80px;
+  display: block;
+  overflow: visible;
+}
+
+.torch-lit {
+  filter:
+    drop-shadow(0 0 4px rgba(232, 93, 4, 0.45))
+    drop-shadow(0 -2px 8px rgba(240, 193, 75, 0.18));
+}
+
+.torch-snuffed {
+  opacity: 0.92;
+}
+
+.torch-snuffed .st-wisp {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.torch-snuffed .st-wisp-a {
+  animation: st-smoke 2.6s ease-out infinite;
+}
+
+.torch-snuffed .st-wisp-b {
+  animation: st-smoke 3.1s ease-out infinite;
+  animation-delay: -1.1s;
+}
+
+.torch-snuffed .st-wisp-c {
+  animation: st-smoke 2.2s ease-out infinite;
+  animation-delay: -0.5s;
+}
+
+.torch-snuffed .st-coil {
+  transform-box: fill-box;
+  transform-origin: 50% 80%;
+  animation: st-coil 3.4s ease-in-out infinite;
+}
+
+/* Desync a row of tribal torches */
+.torches .torch-lit:nth-child(2) .fm-sway { animation-delay: -0.38s; }
+.torches .torch-lit:nth-child(3) .fm-sway { animation-delay: -0.72s; }
+.torches .torch-lit:nth-child(2) .fm-outer { animation-delay: -0.15s; }
+.torches .torch-lit:nth-child(3) .fm-outer { animation-delay: -0.4s; }
+.torches .torch-snuffed:nth-child(2) .st-wisp-a { animation-delay: -0.8s; }
+.torches .torch-snuffed:nth-child(3) .st-wisp-a { animation-delay: -1.6s; }
+
+@keyframes fm-sway {
+  0%, 100% { transform: rotate(-3.5deg) scale(1, 1); }
+  30% { transform: rotate(2.2deg) scale(1.04, 1.07); }
+  58% { transform: rotate(4.4deg) scale(0.97, 1.02); }
+  78% { transform: rotate(-1.2deg) scale(1.03, 1.09); }
+}
+
+@keyframes fm-flicker {
+  0%, 100% { transform: scale(1, 1) translate(0, 0); }
+  35% { transform: scale(1.07, 0.93) translate(0.35px, 0.5px); }
+  68% { transform: scale(0.94, 1.1) translate(-0.3px, -0.45px); }
+}
+
+@keyframes fm-core {
+  0%, 100% { transform: scale(1, 1); opacity: 0.96; }
+  50% { transform: scale(0.86, 1.14); opacity: 1; }
+}
+
+@keyframes fm-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.18, 0.92); opacity: 1; }
+}
+
+@keyframes fm-lick {
+  0%, 100% { transform: rotate(0deg) scale(1, 1); opacity: 0.8; }
+  40% { transform: rotate(-12deg) scale(1.15, 1.2); opacity: 1; }
+  70% { transform: rotate(8deg) scale(0.8, 0.9); opacity: 0.55; }
+}
+
+@keyframes fm-glow {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 3px rgba(232, 93, 4, 0.65))
+      drop-shadow(0 1px 5px rgba(240, 193, 75, 0.22));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 6px rgba(232, 93, 4, 0.9))
+      drop-shadow(0 2px 8px rgba(240, 193, 75, 0.4));
+  }
+}
+
+@keyframes st-smoke {
+  0% { transform: translate(0, 3px) scale(0.55, 0.7); opacity: 0; }
+  12% { opacity: 0.42; }
+  55% { opacity: 0.28; }
+  100% { transform: translate(3px, -22px) scale(1.25, 1.4); opacity: 0; }
+}
+
+@keyframes st-coil {
+  0%, 100% { transform: translate(0, 0) scaleX(1); opacity: 0.35; }
+  50% { transform: translate(1.5px, -6px) scaleX(1.15); opacity: 0.18; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame-mark,
+  .flame-mark .fm-sway,
+  .flame-mark .fm-outer,
+  .flame-mark .fm-mid,
+  .flame-mark .fm-inner,
+  .flame-mark .fm-hot,
+  .flame-mark .fm-lick,
+  .torch-lit .fm-sway,
+  .torch-lit .fm-outer,
+  .torch-lit .fm-mid,
+  .torch-lit .fm-inner,
+  .torch-lit .fm-hot,
+  .torch-lit .fm-lick,
+  .torch-snuffed .st-wisp-a,
+  .torch-snuffed .st-wisp-b,
+  .torch-snuffed .st-wisp-c,
+  .torch-snuffed .st-coil {
+    animation: none;
+  }
 }

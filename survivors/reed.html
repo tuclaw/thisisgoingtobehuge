@@ -14,9 +14,31 @@
   <a class="skip" href="#survivor">Skip to Reed</a>
   <header class="torch-nav">
     <a class="brand" href="../index.html">
-      <svg class="flame-mark" viewBox="0 0 22 28" aria-hidden="true">
-        <path fill="#e85d04" d="M11 1c2 5-3 7-1 12 4-3 8 1 8 7 0 6-4 8-8 8s-8-2-8-8c0-5 3-8 6-11-2 3 0 6 2 6 0-5 1-10 1-14z"/>
-        <path fill="#f0c14b" d="M11 12c1.2 2.2-.4 3.4.2 5.6 1.6-1 3.3.3 3.3 2.8 0 2.4-1.6 3.4-3.5 3.4S7.6 22.8 7.6 20.4c0-2 1.2-3.2 2.4-4.4-.6 1.2.2 2.4 1 2.4 0-2 .2-4.2 0-6.4z"/>
+      <svg class="flame-mark" viewBox="0 0 32 40" aria-hidden="true">
+        <defs>
+          <linearGradient id="fm-body" x1="16" y1="4" x2="16" y2="39" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ff9a1f"/>
+            <stop offset="0.45" stop-color="#e85d04"/>
+            <stop offset="1" stop-color="#c45a12"/>
+          </linearGradient>
+          <linearGradient id="fm-midg" x1="16" y1="12" x2="16" y2="36" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ffd36a"/>
+            <stop offset="0.55" stop-color="#f0c14b"/>
+            <stop offset="1" stop-color="#e85d04"/>
+          </linearGradient>
+          <radialGradient id="fm-coreg" cx="16" cy="30" r="8" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff6d6"/>
+            <stop offset="0.45" stop-color="#f0c14b"/>
+            <stop offset="1" stop-color="#e85d04" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g class="fm-sway">
+          <path class="fm-outer" fill="url(#fm-body)" d="M16.2 1.6c2.8 6.6-3.6 9.2-1.4 16 5.2-4 10.6 1.2 10.6 9.2 0 8-5.2 11-9.4 11s-9.4-3-9.4-11c0-6.6 4-10.4 7.8-14.2-2.6 4 0 8 2.6 8 0-6.6 1.2-13.2 0-18.8z"/>
+          <path class="fm-lick" fill="#e85d04" d="M11.2 13.5c-1.8 4.2-4.2 6.4-3.2 10.2 1.6-3.6 4.4-4.4 5.2-7.6-.8 1.6-1.2 3.2-.2 3.4-.2-2.4-.6-4.4-1.8-6z"/>
+          <path class="fm-mid" fill="url(#fm-midg)" d="M16 12.2c1.6 3-.6 4.6.2 7.6 2.2-1.4 4.6.4 4.6 3.8 0 3.2-2.2 4.6-4.8 4.6s-4.8-1.4-4.8-4.6c0-2.6 1.6-4.2 3.2-5.8-.8 1.6.2 3.2 1.4 3.2 0-2.6.2-5.6.2-8.8z"/>
+          <path class="fm-inner" fill="#fff1b8" d="M16 19.4c.9 1.6-.3 2.5.15 4.1 1.2-.75 2.4.2 2.4 2.05 0 1.7-1.15 2.45-2.55 2.45S13.45 27.25 13.45 25.55c0-1.45.85-2.3 1.7-3.15-.45.85.15 1.7.7 1.7 0-1.45.15-3.05.15-4.7z"/>
+          <ellipse class="fm-hot" cx="16" cy="28.6" rx="2.6" ry="3.2" fill="url(#fm-coreg)"/>
+        </g>
       </svg>
       Last Trader Standing
     </a>

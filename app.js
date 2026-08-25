@@ -639,16 +639,91 @@ function totemSvg(survivor, tribe) {
   </svg>`;
 }
 
+const TORCH_LIT = `<svg class="torch torch-lit" viewBox="0 0 32 100" aria-hidden="true">
+  <defs>
+    <linearGradient id="lt-body" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff9a1f"/>
+      <stop offset="0.5" stop-color="#e85d04"/>
+      <stop offset="1" stop-color="#c45a12"/>
+    </linearGradient>
+    <linearGradient id="lt-midg" x1="16" y1="10" x2="16" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd36a"/>
+      <stop offset="1" stop-color="#e85d04"/>
+    </linearGradient>
+    <linearGradient id="lt-wood" x1="12" y1="40" x2="22" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a2618"/>
+      <stop offset="0.35" stop-color="#6b4530"/>
+      <stop offset="0.55" stop-color="#8a5a38"/>
+      <stop offset="1" stop-color="#3d2a1c"/>
+    </linearGradient>
+    <linearGradient id="lt-wrap" x1="10" y1="36" x2="22" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5a3a22"/>
+      <stop offset="0.5" stop-color="#c45a12"/>
+      <stop offset="1" stop-color="#3a2416"/>
+    </linearGradient>
+  </defs>
+  <!-- shaft -->
+  <path fill="url(#lt-wood)" d="M13.2 42c.2-1.4 1.4-2 2.8-2s2.6.6 2.8 2l1.4 46.5c.1 1.6-1.1 3-2.8 3.2h-2.8c-1.7-.2-2.9-1.6-2.8-3.2z"/>
+  <path fill="#8a5a38" opacity=".45" d="M15.1 41.2h1.3l1.1 47.2h-1.1z"/>
+  <!-- foot -->
+  <path fill="#2a1a12" d="M11.4 90.2h9.2l1.2 5.4H10.2z"/>
+  <rect x="10.6" y="89.4" width="10.8" height="1.6" rx=".4" fill="#4a3222"/>
+  <!-- bowl + wrap -->
+  <path fill="#2a1c12" d="M10 38.5c0-1.6 2.6-3.2 6-3.2s6 1.6 6 3.2v3.4c0 1.4-2.6 2.6-6 2.6s-6-1.2-6-2.6z"/>
+  <path fill="url(#lt-wrap)" d="M9.6 37.6c0-1.2 2.8-2.2 6.4-2.2s6.4 1 6.4 2.2v2.2c0 1-2.8 1.8-6.4 1.8s-6.4-.8-6.4-1.8z"/>
+  <path fill="none" stroke="#1a120c" stroke-width=".7" d="M10.4 38.4h11.2M11.2 40.2h9.6"/>
+  <!-- flame -->
+  <g class="fm-sway" transform="translate(0,4)">
+    <path class="fm-outer" fill="url(#lt-body)" d="M16.1 2.2c2.1 4.8-2.6 6.6-1 11.4 3.8-2.8 7.6.8 7.6 6.6 0 5.6-3.8 7.8-6.7 7.8s-6.7-2.2-6.7-7.8c0-4.6 2.8-7.4 5.5-10-1.8 2.8 0 5.6 1.8 5.6 0-4.6.8-9.4.5-13.6z"/>
+    <path class="fm-lick" fill="#e85d04" d="M12.4 10.4c-1.3 3-3 4.6-2.3 7.2 1.2-2.6 3.1-3.2 3.7-5.4-.6 1.1-.8 2.2 0 2.4-.2-1.7-.5-3.1-1.4-4.2z"/>
+    <path class="fm-mid" fill="url(#lt-midg)" d="M16 9.6c1.2 2.2-.4 3.4.2 5.6 1.6-1 3.3.3 3.3 2.8 0 2.4-1.6 3.4-3.5 3.4S12.4 20.4 12.4 18c0-2 1.2-3.2 2.4-4.4-.6 1.2.2 2.4 1 2.4 0-2 .2-4.2.2-6.4z"/>
+    <path class="fm-inner" fill="#fff1b8" d="M16 15.2c.65 1.15-.2 1.8.1 2.95.85-.55 1.7.15 1.7 1.45 0 1.2-.8 1.75-1.8 1.75s-1.8-.55-1.8-1.75c0-1 .6-1.65 1.2-2.25-.3.6.1 1.2.5 1.2 0-1 .1-2.15.1-3.35z"/>
+    <ellipse class="fm-hot" cx="16" cy="22.4" rx="2" ry="2.4" fill="#fff6d6" opacity=".9"/>
+  </g>
+</svg>`;
+
+const TORCH_SNUFFED = `<svg class="torch torch-snuffed" viewBox="0 0 32 100" aria-hidden="true">
+  <defs>
+    <linearGradient id="st-wood" x1="12" y1="40" x2="22" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2a1c14"/>
+      <stop offset="0.4" stop-color="#4a3426"/>
+      <stop offset="0.6" stop-color="#5a4030"/>
+      <stop offset="1" stop-color="#2a1c14"/>
+    </linearGradient>
+    <linearGradient id="st-char" x1="16" y1="32" x2="16" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a120c"/>
+      <stop offset="0.6" stop-color="#3d2e24"/>
+      <stop offset="1" stop-color="#2a1c14"/>
+    </linearGradient>
+  </defs>
+  <!-- shaft, colder wood -->
+  <path fill="url(#st-wood)" d="M13.2 42c.2-1.4 1.4-2 2.8-2s2.6.6 2.8 2l1.4 46.5c.1 1.6-1.1 3-2.8 3.2h-2.8c-1.7-.2-2.9-1.6-2.8-3.2z"/>
+  <path fill="#3d2e24" opacity=".5" d="M15.1 41.2h1.3l1.1 47.2h-1.1z"/>
+  <path fill="#1e140e" d="M11.4 90.2h9.2l1.2 5.4H10.2z"/>
+  <rect x="10.6" y="89.4" width="10.8" height="1.6" rx=".4" fill="#2a1c14"/>
+  <!-- charred bowl -->
+  <path fill="url(#st-char)" d="M10 38.5c0-1.6 2.6-3.2 6-3.2s6 1.6 6 3.2v3.4c0 1.4-2.6 2.6-6 2.6s-6-1.2-6-2.6z"/>
+  <path fill="#1a120c" d="M9.8 37.4c0-1 2.8-1.8 6.2-1.8s6.2.8 6.2 1.8v1.8c0 .8-2.8 1.5-6.2 1.5s-6.2-.7-6.2-1.5z"/>
+  <!-- dead wick / ash -->
+  <ellipse cx="16" cy="36.4" rx="2.1" ry="1.2" fill="#2a2118"/>
+  <path fill="#3d2e24" d="M15.3 33.2h1.4v3.2h-1.4z"/>
+  <ellipse cx="16" cy="33" rx="1.1" ry=".7" fill="#1a120c"/>
+  <!-- last warmth in the charcoal -->
+  <ellipse cx="16.4" cy="37.2" rx="1.2" ry=".55" fill="#c45a12" opacity=".5"/>
+  <!-- smoke -->
+  <g fill="#6b5c4a">
+    <ellipse class="st-wisp st-wisp-a" cx="15.2" cy="26" rx="2.8" ry="6.2" opacity=".55"/>
+    <ellipse class="st-wisp st-wisp-b" cx="18.4" cy="22.5" rx="2.2" ry="5.2" opacity=".45"/>
+    <ellipse class="st-wisp st-wisp-c" cx="13.6" cy="23.8" rx="2.0" ry="4.6" opacity=".4"/>
+  </g>
+  <path class="st-coil" fill="none" stroke="#8a7355" stroke-width="1.15" stroke-linecap="round" opacity=".35"
+        d="M16 32c-1.6-3 1.8-5-0.4-8 1.8-2.4-1.2-4.2.6-6.8"/>
+</svg>`;
+
 function torchSvg(lit) {
-  const flame = lit
-    ? `<path fill="#e85d04" d="M9 0c1.4 3.2-2 4.6-.6 8 2.6-2 5.2.6 5.2 4.6 0 4-2.6 5.4-5.4 5.4S2.8 16.6 2.8 12.6c0-3.2 2-5.2 4-7.2-1.4 2 0 4 1.2 4C8 6 8.6 2.8 9 0z"/>`
-    : `<path fill="#3d2e24" d="M9 4c.6 1.6-1 2.2-.3 4 1.3-1 2.6.3 2.6 2.2 0 2-1.3 2.6-2.6 2.6S6.1 12.2 6.1 10.2c0-1.6 1-2.6 2-3.6-.7 1 0 2 .6 2C8.6 7 8.8 5.4 9 4z"/>`;
-  return `<svg class="torch" viewBox="0 0 18 72" aria-hidden="true">
-    <g transform="translate(0,8)">${flame}</g>
-    <rect x="7" y="26" width="4" height="38" fill="#5a4030"/>
-    <rect x="5.5" y="64" width="7" height="6" fill="#3a2a20"/>
-  </svg>`;
+  return lit ? TORCH_LIT : TORCH_SNUFFED;
 }
+
 
 function renderFaces(season) {
   const grid = document.getElementById("face-grid");
