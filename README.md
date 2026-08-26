@@ -15,6 +15,16 @@ Home is the Survivor open: twelve faces. Click a face for that castaway. Standin
 - [Episode 1](/seasons/1/e01.html)
 - [Rules](/rules.html)
 
+## Support the contest
+
+Help keep the torches lit on Liquidation Island:
+
+- [Contribute via Stripe](https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00)
+
+The live site footer also embeds the Stripe contribute button.
+
+When contributions (or extra capital) land on the island, bump `islandPotUsd` in `season1.json`. The home page reads that number live — twelve contestants managing a real pot.
+
 ## DNS
 
 Tucker must set these records at the domain registrar for apex `thisisgoingtobehuge.com`.
