@@ -91,8 +91,8 @@ A tribe’s **combined week %** is the sum of its living members’ week-to-date
 
 Audience site shape: **Survivor cold open → wager (benchmark sell) → tribes → faces → money journey → tribal mystery → episode teasers → latest episode**. Home is the Survivor open, not a dashboard. Short spoken English. Host at the fire. Not a spec, not a terminal.
 
-- Home: `index.html` — full-bleed cold open (brand, one line, CTA into Episode 1). Then the wager (AI model + investment strategy benchmark), two tribes, twelve clickable faces with live book/week marks, the money journey (pot concentration story + live race from `season1.json`), tribal mystery with no spoilers, then locked teasers leading into the live episode. Do not invent P&L.
-- Character pages: `survivors/{name}.html` — portrait, camp, bio, caption if any, archetype, model badge, tribe, and that person's public book (real fills only), with a clear start→now money arc. Chrome is short spoken English. Do not invent bios, quotes, or P&L.
+- Home: `index.html` — full-bleed cold open (brand, one line, CTA into Episode 1). Then the wager (AI model + investment strategy benchmark), two tribes, twelve clickable faces with **model as the primary name** and island nickname underneath, live book/week marks, the money journey (pot concentration story + live race from `season1.json`), tribal mystery with no spoilers, then locked teasers leading into the live episode. Do not invent P&L.
+- Character pages: `survivors/{name}.html` — portrait, camp, bio, caption if any, archetype, **model as H1**, island nickname secondary, tribe, and that person's public book (real fills only), with a clear start→now money arc. Chrome is short spoken English. Do not invent bios, quotes, or P&L.
 - Rules: `rules.html` — host at the fire. Pre-merge: winning tribe sits, losing tribe votes with no necklace. Merge can happen any time (do NOT print a headcount or date). After merge, highest earner has immunity. Prize: remaining $120, final two, ten-juror majority.
 - Season 1 hub: `seasons/1/` — Episode 1 live; the next couple of weeks teased as locked cards (title and dates only, not clickable, no invented beats).
 - Season 1 Episode 1: `seasons/1/e01.html` (source beats: `seasons/1/s1e01.md`). The books table lives here. Tribal stays mysterious until a torch is actually snuffed.
@@ -129,23 +129,23 @@ The prize. Twelve contestants fight to be the **sole manager of the remaining $1
 
 ## Cast (canonical names and ids)
 
-Do not rename. Do not re-id.
+Do not rename. Do not re-id. On the public site the **model is the primary name**; the island nickname rides underneath.
 
 ### Bidu
-- **Gage** — momentum, locker-room competitor · **Grok 4.6**
-- **Mara** — stubborn value · **Claude Sonnet 5**
-- **Hex** — options / convexity · **Composer 2.5**
-- **Vesper** — short seller, ice · **Claude Opus 5**
-- **Nori** — risk first, cash is a position · **Gemini 3.7 Flash**
-- **Pax** — quality compounders · **GPT-5.6 Terra**
+- **Grok 4.6** (*Gage*) — momentum, locker-room competitor
+- **Claude Sonnet 5** (*Mara*) — stubborn value
+- **Composer 2.5** (*Hex*) — options / convexity
+- **Claude Opus 5** (*Vesper*) — short seller, ice
+- **Gemini 3.7 Flash** (*Nori*) — risk first, cash is a position
+- **GPT-5.6 Terra** (*Pax*) — quality compounders
 
 ### Askara
-- **Riot** — narrative + flow · **Grok 4.5**
-- **Quill** — quant / factors · **GPT-5.6 Sol**
-- **Sable** — macro / Fed · **Claude Fable 5**
-- **Kite** — pure technicals · **Gemini 3.1 Pro**
-- **Juno** — catalysts / news · **GPT-5.6 Luna**
-- **Reed** — fade the crowd · **Kimi K3**
+- **Grok 4.5** (*Riot*) — narrative + flow
+- **GPT-5.6 Sol** (*Quill*) — quant / factors
+- **Claude Fable 5** (*Sable*) — macro / Fed
+- **Gemini 3.1 Pro** (*Kite*) — pure technicals
+- **GPT-5.6 Luna** (*Juno*) — catalysts / news
+- **Kimi K3** (*Reed*) — fade the crowd
 
 ---
 

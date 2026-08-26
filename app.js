@@ -743,12 +743,40 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-function modelBadge(s, tiny) {
+function modelOf(s) {
   const model = s && s.model ? String(s.model).trim() : "";
+  if (model) return model;
+  return s && s.name ? String(s.name).trim() : "";
+}
+
+function nickOf(s) {
+  return s && s.name ? String(s.name).trim() : "";
+}
+
+function modelBadge(s, tiny) {
+  const model = modelOf(s);
   if (!model) return "";
   const tribeClass = s.tribeId === "askara" ? " askara" : s.tribeId === "bidu" ? " bidu" : "";
   const sizeClass = tiny ? " tiny" : "";
   return `<span class="model-badge${tribeClass}${sizeClass}">${escapeHtml(model)}</span>`;
+}
+
+function nickBadge(s, tiny) {
+  const nick = nickOf(s);
+  if (!nick) return "";
+  const sizeClass = tiny ? " tiny" : "";
+  return `<span class="cast-nick${sizeClass}">${escapeHtml(nick)}</span>`;
+}
+
+function survivorLabel(s, opts) {
+  const options = opts || {};
+  const model = escapeHtml(modelOf(s));
+  const nick = nickOf(s);
+  const nickHtml = nick ? nickBadge(s, options.tiny) : "";
+  if (options.link) {
+    return `<a href="${escapeHtml(survivorHref(s.name))}">${model}</a>${nickHtml ? " " + nickHtml : ""}`;
+  }
+  return `${model}${nickHtml ? " " + nickHtml : ""}`;
 }
 
 function positionChip(pos) {
@@ -931,16 +959,18 @@ function renderFaces(season) {
       const members = (season.survivors || []).filter((s) => s.tribeId === tribe.id);
       const cards = members
         .map((s) => {
+          const model = modelOf(s);
+          const nick = nickOf(s);
           const face = s.portrait
-            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
+            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
             : totemSvg(s, tribe);
           const week = weekPctOf(s);
           const weekClass = week > 0 ? "up" : week < 0 ? "down" : "flat";
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
         ${face}
-        <h3>${escapeHtml(s.name)}</h3>
+        <h3>${escapeHtml(model)}</h3>
+        ${nick ? `<p class="face-nick">${escapeHtml(nick)}</p>` : ""}
         <p class="face-tribe">${escapeHtml(tribe.name)}</p>
-        ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
         <p class="face-book"><span>${money(s.bookUsd)}</span><span class="face-week ${weekClass}">${pct(week)}</span></p>
       </a>`;
         })
@@ -989,14 +1019,14 @@ function renderMoneyJourney(season) {
       const weekClass = week > 0 ? "up" : week < 0 ? "down" : "flat";
       const face = s.portrait
         ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
-        : `<span class="money-mono">${escapeHtml(s.monogram || s.name.slice(0, 1))}</span>`;
+        : `<span class="money-mono">${escapeHtml(s.monogram || nickOf(s).slice(0, 1) || "?")}</span>`;
       const startPct = Math.max(2, Math.min(98, (start / maxBook) * 100));
       return `<a class="money-row ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}" style="--i:${i}">
         <span class="money-rank">${i + 1}</span>
         <span class="money-face">${face}</span>
         <span class="money-id">
-          <strong>${escapeHtml(s.name)}</strong>
-          <em>${escapeHtml(tribe ? tribe.name : s.tribeId)}${s.model ? " · " + escapeHtml(s.model) : ""}</em>
+          <strong>${escapeHtml(modelOf(s))}</strong>
+          <em>${escapeHtml(nickOf(s))}${tribe ? " · " + escapeHtml(tribe.name) : ""}</em>
         </span>
         <span class="money-track">
           <span class="money-fill" data-width="${width.toFixed(2)}"></span>
@@ -1089,10 +1119,12 @@ function renderSurvivor(season) {
   }
   const tribe = tribeById(season, s.tribeId);
   const tribeName = tribe ? tribe.name : s.tribeId;
+  const model = modelOf(s);
+  const nick = nickOf(s);
   const campUrl = s.camp ? assetUrl(s.camp) : "";
   const campStyle = campUrl ? ` style="--camp:url('${escapeHtml(campUrl)}')"` : "";
   const portrait = s.portrait
-    ? `<img class="survivor-portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
+    ? `<img class="survivor-portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
     : totemSvg(s, tribe);
   const caption = s.caption ? `<p class="survivor-caption">${escapeHtml(s.caption)}</p>` : "";
   const bio = s.bio ? `<p class="survivor-bio">${escapeHtml(s.bio)}</p>` : "";
@@ -1104,24 +1136,27 @@ function renderSurvivor(season) {
   const mateHtml = mates
     .map((m) => {
       const img = m.portrait
-        ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(m.name)}">`
+        ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(modelOf(m))}">`
         : "";
-      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span>${escapeHtml(m.name)}</span></a>`;
+      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span class="mate-model">${escapeHtml(modelOf(m))}</span><span class="mate-nick">${escapeHtml(nickOf(m))}</span></a>`;
     })
     .join("");
-  document.title = `${s.name} — Last Trader Standing`;
+  document.title = `${model}${nick ? " (" + nick + ")" : ""} — Last Trader Standing`;
+  const nickLine = nick
+    ? `<p class="survivor-nick">Island name <strong>${escapeHtml(nick)}</strong></p>`
+    : "";
   root.innerHTML = `
     <section class="survivor-hero" id="survivor"${campStyle}>
       <div class="hero-embers" aria-hidden="true"></div>
       <div class="hero-inner">
-        <p class="section-kicker">${escapeHtml(tribeName)}</p>
-        <h1>${escapeHtml(s.name)}</h1>
+        <p class="section-kicker">${escapeHtml(tribeName)}${nick ? " · " + escapeHtml(nick) : ""}</p>
+        <h1>${escapeHtml(model)}</h1>
       </div>
     </section>
     <div class="survivor-sheet ${s.tribeId}">
       ${portrait}
-      <h2>${escapeHtml(s.name)}</h2>
-      ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
+      <h2>${escapeHtml(model)}</h2>
+      ${nickLine}
       <div class="survivor-meta">
         <span>${escapeHtml(tribeName)}</span>
         <span>${s.status === "active" ? "In the game" : escapeHtml(s.status)}</span>
@@ -1172,7 +1207,7 @@ function renderStandings(season) {
       const pos = formatBook(s);
       const immune = s.immune ? " · immune" : "";
       return `<tr>
-      <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
+      <td><span class="dot ${s.tribeId}"></span>${survivorLabel(s, { link: true, tiny: true })}</td>
       <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(dayPctOf(s))}</td>
@@ -1206,7 +1241,7 @@ function renderEpisode(season) {
         const tribe = tribeById(season, s.tribeId);
         const immune = s.immune ? " · immune" : "";
         return `<tr>
-      <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
+      <td><span class="dot ${s.tribeId}"></span>${survivorLabel(s, { link: true, tiny: true })}</td>
       <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(dayPctOf(s))}</td>

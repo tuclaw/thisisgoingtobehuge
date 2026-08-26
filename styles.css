@@ -1183,18 +1183,26 @@ a.brand:hover {
 
 .booth h3 {
   font-family: var(--font-display);
-  font-size: 1.35rem;
-  letter-spacing: 0.08em;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.2rem;
+  color: var(--gold-bright);
+}
+
+.booth-nick {
   margin: 0 0 0.7rem;
+  font-style: italic;
+  color: var(--sand);
+  font-size: 1rem;
 }
 
 .booth.bidu .booth-tribe,
-.booth.bidu h3 {
+.booth.bidu .booth-nick {
   color: #8ee8d8;
 }
 
 .booth.askara .booth-tribe,
-.booth.askara h3 {
+.booth.askara .booth-nick {
   color: #ffb27a;
 }
 
@@ -1716,9 +1724,20 @@ a.brand:hover {
 
 .face-card h3 {
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   margin: 0;
+  line-height: 1.25;
+  padding: 0 0.35rem;
+  color: var(--gold-bright);
+}
+
+.face-nick {
+  margin: 0.28rem 0 0;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--parchment);
 }
 
 .face-tribe {
@@ -1740,6 +1759,29 @@ a.brand:hover {
 
 .face-card .cast-model {
   margin: 0.15rem 0 0;
+}
+
+.cast-nick {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.95em;
+  color: var(--sand);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.cast-nick.tiny {
+  font-size: 0.85em;
+  opacity: 0.9;
+}
+
+.cast-nick.tiny::before {
+  content: "(";
+}
+
+.cast-nick.tiny::after {
+  content: ")";
 }
 
 .face-book {
@@ -1855,7 +1897,7 @@ a.brand:hover {
 
 .money-row {
   display: grid;
-  grid-template-columns: 1.6rem 2.2rem minmax(7rem, 11rem) 1fr minmax(5.5rem, 7rem);
+  grid-template-columns: 1.6rem 2.2rem minmax(9rem, 14rem) 1fr minmax(5.5rem, 7rem);
   gap: 0.65rem;
   align-items: center;
   padding: 0.45rem 0.55rem;
@@ -1936,18 +1978,20 @@ a.brand:hover {
 .money-id strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 0.92rem;
-  letter-spacing: 0.06em;
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+  line-height: 1.25;
 }
 
 .money-id em {
   display: block;
-  font-style: normal;
-  font-family: var(--font-display);
-  font-size: 0.55rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--worn);
+  font-style: italic;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--sand);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2259,8 +2303,21 @@ a.brand:hover {
 }
 
 .survivor-sheet h2 {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: clamp(1.6rem, 3.8vw, 2.35rem);
   margin-bottom: 0.35rem;
+  color: var(--gold-bright);
+}
+
+.survivor-nick {
+  margin: 0.15rem 0 0.55rem;
+  color: var(--sand);
+  font-style: italic;
+}
+
+.survivor-nick strong {
+  color: var(--parchment);
+  font-style: italic;
+  font-weight: 400;
 }
 
 .survivor-meta {
@@ -2393,15 +2450,26 @@ a.brand:hover {
   border: 1px solid rgba(196, 165, 116, 0.2);
 }
 
-.mate-card span {
+.mate-card .mate-model {
   display: block;
   font-family: var(--font-display);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  margin-top: 0.3rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  margin-top: 0.35rem;
+  color: var(--gold-bright);
+  line-height: 1.25;
 }
 
-/* —— Locked teasers —— */
+.mate-card .mate-nick {
+  display: block;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  letter-spacing: 0;
+  margin-top: 0.15rem;
+  color: var(--sand);
+}
+
 .episode-card.locked {
   border-style: dashed;
   border-color: rgba(196, 165, 116, 0.28);
