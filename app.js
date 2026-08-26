@@ -1284,33 +1284,46 @@ function dayCardHtml(s, tribe, opts) {
     : opts.tag
       ? `<span class="day-tag">${escapeHtml(opts.tag)}</span>`
       : "";
-  return `<a class="day-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
+  let deltaHtml = "";
+  if (typeof opts.priorMarkUsd === "number" && typeof opts.bookUsd === "number") {
+    const delta = opts.bookUsd - opts.priorMarkUsd;
+    const dClass = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
+    const sign = delta > 0 ? "+" : "";
+    deltaHtml = `<span><i>Δ day</i><b class="${dClass}">${sign}${delta.toFixed(2)}</b></span>`;
+  }
+  return `<article class="day-card ${s.tribeId}">
     <div class="day-card-top">
-      ${face ? `<span class="day-face">${face}</span>` : ""}
-      <span class="day-id">
+      ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s.name))}">${face}</a>` : ""}
+      <a class="day-id" href="${escapeHtml(survivorHref(s.name))}">
         <strong>${model}</strong>
         <em>${escapeHtml(nick)}${tribe ? " · " + escapeHtml(tribe.name) : ""}</em>
-      </span>
+      </a>
       ${moved}
     </div>
     <div class="day-book">${bookHtml || formatPosition(null, s.tribeId)}</div>
     <div class="day-nums">
       <span><i>Book</i>${money(opts.bookUsd)}</span>
-      ${day != null ? `<span><i>Day</i><b class="${dayClass}">${pct(day)}</b></span>` : ""}
-      ${week != null ? `<span><i>Week</i><b class="${weekClass}">${pct(week)}</b></span>` : ""}
+      ${deltaHtml}
+      ${day != null ? `<span><i>Day %</i><b class="${dayClass}">${pct(day)}</b></span>` : ""}
+      ${week != null ? `<span><i>Week %</i><b class="${weekClass}">${pct(week)}</b></span>` : ""}
     </div>
-  </a>`;
+  </article>`;
 }
 
 function renderEpisodeDays(season) {
   const monday = document.getElementById("day-monday");
   const tuesday = document.getElementById("day-tuesday");
-  if (!monday && !tuesday) return;
+  const tueTribes = document.getElementById("day-tuesday-tribes");
+  if (!monday && !tuesday && !tueTribes) return;
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const survivors = season.survivors || [];
 
   if (monday) {
-    monday.innerHTML = survivors
+    const ordered = [...survivors].sort((a, b) => {
+      if (a.tribeId !== b.tribeId) return a.tribeId < b.tribeId ? -1 : 1;
+      return modelOf(a).localeCompare(modelOf(b));
+    });
+    monday.innerHTML = ordered
       .map((s) => {
         const tribe = tribeById(season, s.tribeId);
         const snap = mondayOpening(s, start);
@@ -1324,14 +1337,31 @@ function renderEpisodeDays(season) {
       .join("");
   }
 
+  if (tueTribes) {
+    tueTribes.innerHTML = (season.tribes || [])
+      .map((t) => {
+        return `<div class="total-card ${t.id}">
+        <h3>${escapeHtml(t.name)}</h3>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week % · Tue snapshot</p>
+      </div>`;
+      })
+      .join("");
+  }
+
   if (tuesday) {
     const ranked = [...survivors].sort((a, b) => dayPctOf(b) - dayPctOf(a));
     tuesday.innerHTML = ranked
       .map((s) => {
         const tribe = tribeById(season, s.tribeId);
         const moved = legsOnDay(s, "2026-08-25").length > 0;
+        const prior =
+          typeof s.priorMarkUsd === "number" && !Number.isNaN(s.priorMarkUsd)
+            ? s.priorMarkUsd
+            : start;
         return dayCardHtml(s, tribe, {
           bookUsd: s.bookUsd,
+          priorMarkUsd: prior,
           legs: bookLegs(s),
           dayPct: dayPctOf(s),
           weekPct: weekPctOf(s),

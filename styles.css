@@ -1236,6 +1236,65 @@ a.brand:hover {
   margin-top: 1.25rem;
 }
 
+.day-rail {
+  position: sticky;
+  top: 3.4rem;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  margin: 0 0 1.6rem;
+  padding: 0.55rem;
+  background: rgba(8, 5, 4, 0.92);
+  border: 1px solid rgba(212, 160, 23, 0.22);
+  backdrop-filter: blur(8px);
+}
+
+.day-rail a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.55rem 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--parchment);
+  border: 1px solid transparent;
+  text-align: center;
+}
+
+.day-rail a span {
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  color: var(--worn);
+}
+
+.day-rail a:hover {
+  color: var(--gold-bright);
+  border-color: rgba(212, 160, 23, 0.35);
+}
+
+.beat-note {
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(196, 165, 116, 0.14);
+}
+
+.beat-note p {
+  margin: 0 0 0.65rem;
+  color: var(--sand);
+  font-size: 1.02rem;
+}
+
+.beat-note strong {
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
 .day-card {
   display: block;
   padding: 0.9rem 0.95rem 1rem;
@@ -1246,7 +1305,6 @@ a.brand:hover {
 }
 
 .day-card:hover {
-  color: var(--bone);
   transform: translateY(-2px);
 }
 
@@ -1274,6 +1332,15 @@ a.brand:hover {
   object-fit: cover;
   object-position: center 18%;
   display: block;
+}
+
+.day-id {
+  color: inherit;
+  min-width: 0;
+}
+
+.day-id:hover {
+  color: var(--bone);
 }
 
 .day-id strong {
