@@ -6,7 +6,7 @@ const FALLBACK_SEASON = {
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live \u00b7 S1E01 \u00b7 Friday tribal Aug 28",
+  "statusLabel": "Live · S1E01 · Friday tribal Aug 28",
   "started": true,
   "merged": false,
   "mergeAtRemaining": null,
@@ -22,9 +22,9 @@ const FALLBACK_SEASON = {
     "title": "Episode 1",
     "weekStart": "2026-08-24",
     "weekEnd": "2026-08-28",
-    "weekLabel": "Monday Aug 24 \u2013 Friday Aug 28, 2026",
+    "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
     "tribalAt": "2026-08-28T19:00:00-07:00",
-    "tribalLabel": "Friday Aug 28, 2026 \u00b7 7:00 PM PT",
+    "tribalLabel": "Friday Aug 28, 2026 · 7:00 PM PT",
     "path": "seasons/1/e01.html",
     "source": "episodes/s1e01.md"
   },
@@ -34,7 +34,7 @@ const FALLBACK_SEASON = {
       "id": "s1e01",
       "status": "live",
       "title": "Episode 1",
-      "weekLabel": "Monday Aug 24 \u2013 Friday Aug 28, 2026",
+      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
       "path": "seasons/1/e01.html"
     },
     {
@@ -42,29 +42,29 @@ const FALLBACK_SEASON = {
       "id": "s1e02",
       "status": "locked",
       "title": "Episode 2",
-      "weekLabel": "Monday Aug 31 \u2013 Friday Sep 4, 2026",
-      "tease": "Torches unlit \u00b7 After Friday tribal"
+      "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
+      "tease": "Torches unlit · After Friday tribal"
     },
     {
       "number": 3,
       "id": "s1e03",
       "status": "locked",
       "title": "Episode 3",
-      "weekLabel": "Monday Sep 7 \u2013 Friday Sep 11, 2026",
-      "tease": "Torches unlit \u00b7 After Friday tribal"
+      "weekLabel": "Monday Sep 7 – Friday Sep 11, 2026",
+      "tease": "Torches unlit · After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled Monday. Tuesday Hex, Riot, and Vesper moved; nine sat. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. Books marked 8:25 AM PT Aug 25 from official Monday Aug 24 close versus current last. dayPct is (today mark - prior close mark) / prior close mark. weekPct is week-to-date from the $10 Monday start. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Hex sold SMCI 0.104575 @ 38.3001 (+7.98% vs cost 35.4699) and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Riot sold HOOD 0.046425 @ 110.4536 from the island lot only (+2.56% vs cost 107.6999) and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Vesper bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled Monday. Tuesday Hex, Riot, and Vesper moved; nine sat. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. Books marked 8:25 AM PT Aug 25 from official Monday Aug 24 close versus current last. dayPct is (today mark - prior close mark) / prior close mark. weekPct is week-to-date from the $10 Monday start. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Hex sold SMCI 0.104575 @ 38.3001 (+7.98% vs cost 35.4699) and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Riot sold HOOD 0.046425 @ 110.4536 from the island lot only (+2.56% vs cost 107.6999) and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Vesper bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat. Wednesday Aug 26 recorded fills: Vesper sold BTAL 0.165701 @ 12.0501 (-0.16% vs cost 12.0699); book now QID 0.413795 @ 14.4999 + cash about $4. Reed bought NVDA 0.014196 @ 211.3199 ($3), MSFT 0.004037 @ 495.3041 ($2), COST 0.002092 @ 955.8499 ($2), cash $3. Ten others sat. Vesper and Reed weekPct 0 until marked from a real last.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": 5.9467,
-      "combinedMonthPct": 5.9467,
+      "combinedWeekPct": 5.9939,
+      "combinedMonthPct": 5.9939,
       "livingCount": 6,
-      "combinedDayPct": 9.22
+      "combinedDayPct": 9.2673
     },
     {
       "id": "askara",
@@ -139,7 +139,7 @@ const FALLBACK_SEASON = {
       },
       "immune": false,
       "monogram": "M",
-      "bio": "Cleveland split-level. Stubborn value \u2014 patient, not theatrical, no moonshot.",
+      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
       "portrait": "cast/mara/portrait.jpg",
       "camp": "cast/mara/camp.jpg",
       "positions": [
@@ -210,15 +210,15 @@ const FALLBACK_SEASON = {
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 9.9953,
-      "weekPct": -0.0472,
-      "monthPct": -0.0472,
+      "bookUsd": 10.0,
+      "weekPct": 0.0,
+      "monthPct": 0.0,
       "position": {
         "action": "HOLD",
-        "ticker": "QID / BTAL / CASH",
+        "ticker": "QID / CASH",
         "sizeUsd": 10,
         "status": "filled",
-        "note": "QID 0.413795 @ 14.4999 + BTAL 0.165701 @ 12.0699 + cash $2"
+        "note": "QID 0.413795 @ 14.4999 + cash about $4 after selling BTAL 0.165701 @ 12.0501"
       },
       "immune": false,
       "monogram": "V",
@@ -234,31 +234,18 @@ const FALLBACK_SEASON = {
           "qty": "0.413795",
           "avg": "14.4999",
           "orderId": "6a8dad83-b4c0-4151-a560-c429b721c13c",
-          "filledAt": "2026-08-25T14:58:11Z",
-          "last": 14.4905,
-          "priorClose": 14.63
-        },
-        {
-          "action": "BUY",
-          "ticker": "BTAL",
-          "sizeUsd": 2,
-          "status": "filled",
-          "qty": "0.165701",
-          "avg": "12.0699",
-          "orderId": "6a8dad84-59d9-4cb0-9d3e-af2d14c9a0b6",
-          "filledAt": "2026-08-25T14:58:12Z",
-          "last": 12.065,
-          "priorClose": 12.2
+          "filledAt": "2026-08-25T14:58:11Z"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 2,
-          "status": "cash"
+          "sizeUsd": 4,
+          "status": "cash",
+          "note": "sold BTAL 0.165701 @ 12.0501 on 2026-08-26"
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": -0.0472,
+      "dayPct": 0.0,
       "priorMarkUsd": 10.0
     },
     {
@@ -317,7 +304,7 @@ const FALLBACK_SEASON = {
       "immune": false,
       "monogram": "P",
       "bio": "Dayton. Steward, not a hero.",
-      "caption": "Slow hands. Long horizon. The adults\u2019 table.",
+      "caption": "Slow hands. Long horizon. The adults’ table.",
       "portrait": "cast/pax/portrait.jpg",
       "camp": "cast/pax/camp.jpg",
       "positions": [
@@ -577,10 +564,10 @@ const FALLBACK_SEASON = {
       "monthPct": 0.0,
       "position": {
         "action": "HOLD",
-        "ticker": "CASH",
+        "ticker": "NVDA / MSFT / COST / CASH",
         "sizeUsd": 10,
-        "status": "cash-short-blocked",
-        "intended": "Wanted SHORT NVDA. Shorts blocked: no fractional short."
+        "status": "filled",
+        "note": "NVDA 0.014196 @ 211.3199 ($3) + MSFT 0.004037 @ 495.3041 ($2) + COST 0.002092 @ 955.8499 ($2) + cash $3"
       },
       "immune": false,
       "monogram": "Re",
@@ -589,11 +576,40 @@ const FALLBACK_SEASON = {
       "camp": "cast/reed/camp.jpg",
       "positions": [
         {
+          "action": "BUY",
+          "ticker": "NVDA",
+          "sizeUsd": 3,
+          "status": "filled",
+          "qty": "0.014196",
+          "avg": "211.3199",
+          "orderId": "6a8efeaa-c0ab-4949-aba1-322f3e001aea",
+          "filledAt": "2026-08-26T14:56:42Z"
+        },
+        {
+          "action": "BUY",
+          "ticker": "MSFT",
+          "sizeUsd": 2,
+          "status": "filled",
+          "qty": "0.004037",
+          "avg": "495.3041",
+          "orderId": "6a8efeab-aa2f-4ac7-8027-25ac10131311",
+          "filledAt": "2026-08-26T14:56:43Z"
+        },
+        {
+          "action": "BUY",
+          "ticker": "COST",
+          "sizeUsd": 2,
+          "status": "filled",
+          "qty": "0.002092",
+          "avg": "955.8499",
+          "orderId": "6a8efeac-5a94-4546-9492-25ab890f47bb",
+          "filledAt": "2026-08-26T14:56:44Z"
+        },
+        {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 10,
-          "status": "cash-short-blocked",
-          "intended": "Wanted SHORT NVDA. Shorts blocked: no fractional short."
+          "sizeUsd": 3,
+          "status": "cash"
         }
       ],
       "model": "Kimi K3",
@@ -682,8 +698,6 @@ const FALLBACK_SEASON = {
     }
   }
 };
-
-const JSON_PATHS = ["season1.json", "../season1.json", "../../season1.json"];
 
 function assetBase() {
   const raw = document.documentElement.getAttribute("data-base");
@@ -1447,9 +1461,11 @@ function renderEpisode(season) {
       .join("");
   }
   const tribal = document.getElementById("episode-tribal");
+  const tribalHeading = document.querySelector("#tribal > h2");
   if (tribal) {
     const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
     if (log.length === 0) {
+      if (tribalHeading) tribalHeading.textContent = "Not yet";
       tribal.innerHTML = `
       <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
       <div class="council-empty">
@@ -1457,18 +1473,71 @@ function renderEpisode(season) {
         <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
       </div>`;
     } else {
-      const items = log
-        .map((entry) => {
-          const title = entry.title || entry.weekLabel || "Tribal";
-          const boot = entry.bootName || entry.bootId || "—";
-          const votes = entry.votes ? JSON.stringify(entry.votes) : "recorded";
-          return `<li><strong>${escapeHtml(title)}</strong> — boot: ${escapeHtml(String(boot))}. ${escapeHtml(entry.summary || votes)}</li>`;
-        })
-        .join("");
+      if (tribalHeading) tribalHeading.textContent = "The vote";
+      const items = log.map((entry) => formatTribalEntry(entry)).join("");
       tribal.innerHTML = `
     <div class="torches">${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}</div>
-    <ul class="log-list">${items}</ul>`;
+    ${wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`)}`;
+      bindTribalSpoilers(tribal);
     }
+  }
+}
+
+function formatTribalVotes(votes) {
+  if (votes == null) return "";
+  if (typeof votes === "string") return votes;
+  if (Array.isArray(votes)) {
+    return votes
+      .map((v) => {
+        if (v == null) return "";
+        if (typeof v === "string") return v;
+        if (typeof v === "object") {
+          const from = v.from || v.voter || v.by || "";
+          const forName = v.for || v.boot || v.target || v.vote || "";
+          if (from && forName) return `${from} → ${forName}`;
+          if (forName) return String(forName);
+          return JSON.stringify(v);
+        }
+        return String(v);
+      })
+      .filter(Boolean)
+      .join("; ");
+  }
+  if (typeof votes === "object") {
+    return Object.entries(votes)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join("; ");
+  }
+  return String(votes);
+}
+
+function formatTribalEntry(entry) {
+  const title = entry.title || entry.weekLabel || "Tribal";
+  const boot = entry.bootName || entry.bootId || "—";
+  const voteText = formatTribalVotes(entry.votes);
+  const detail = entry.summary || voteText || "Votes recorded.";
+  return `<li>
+    <strong>${escapeHtml(title)}</strong>
+    <p class="boot-line">Voted off: <strong>${escapeHtml(String(boot))}</strong></p>
+    <p class="vote-detail">${escapeHtml(detail)}</p>
+  </li>`;
+}
+
+function wrapTribalSpoiler(innerHtml) {
+  return `<div class="tribal-spoiler">
+    <div class="tribal-spoiler-result" id="tribal-spoiler-result" aria-hidden="true">${innerHtml}</div>
+    <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="tribal-spoiler-result">
+      <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
+      <span class="visually-hidden">Spoiler alert: tribal results. Click to burn and reveal the vote.</span>
+    </button>
+    <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
+  </div>`;
+}
+
+function bindTribalSpoilers(root) {
+  if (!root) return;
+  if (typeof window.initTribalSpoilerBurns === "function") {
+    window.initTribalSpoilerBurns(root);
   }
 }
 
@@ -1636,5 +1705,32 @@ function initContribute() {
   }
 }
 
+function applyDemoTribal(season) {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("demoTribal") !== "1") return season;
+  } catch {
+    return season;
+  }
+  const demo = {
+    ...season,
+    tribalLog: [
+      {
+        title: "Episode 1 Tribal",
+        weekLabel: season.episode && season.episode.weekLabel,
+        bootName: "Demo Boot",
+        summary: "Demo tally for spoiler UI — not a real council.",
+        votes: [
+          { from: "Reed", for: "Demo Boot" },
+          { from: "Hex", for: "Demo Boot" },
+          { from: "Mara", for: "Demo Boot" },
+          { from: "Nori", for: "Someone Else" }
+        ]
+      }
+    ]
+  };
+  return demo;
+}
+
 initContribute();
-loadSeason().then(({ season, note }) => render(season, note));
+loadSeason().then(({ season, note }) => render(applyDemoTribal(season), note));
