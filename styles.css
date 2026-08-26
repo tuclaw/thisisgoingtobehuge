@@ -1971,11 +1971,44 @@ img.portrait.photo {
 .tribal-spoiler .burn {
   z-index: 3;
   pointer-events: none;
+  opacity: 0;
+  background-color: transparent;
 }
 
 .tribal-spoiler .highlight {
   z-index: 0;
   pointer-events: none;
+  opacity: 0;
+}
+
+.tribal-spoiler.is-burning .burn,
+.tribal-spoiler.is-burning .highlight {
+  opacity: 1;
+}
+
+.tribal-spoiler.is-burning .spoiler-burn-page {
+  animation: 6s spoiler-burn-mask linear forwards;
+}
+
+@keyframes spoiler-burn-mask {
+  0% {
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 0px, #000 1px);
+    mask-image: radial-gradient(circle at 50% 50%, transparent 0px, #000 1px);
+  }
+  60% {
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 175px, #000 178px);
+    mask-image: radial-gradient(circle at 50% 50%, transparent 175px, #000 178px);
+  }
+  85% {
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 70%, #000 71%);
+    mask-image: radial-gradient(circle at 50% 50%, transparent 70%, #000 71%);
+    opacity: 1;
+  }
+  100% {
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 100%, #000 101%);
+    mask-image: radial-gradient(circle at 50% 50%, transparent 100%, #000 101%);
+    opacity: 0;
+  }
 }
 
 .tribal-spoiler.is-burning .spoiler-burn-stage {

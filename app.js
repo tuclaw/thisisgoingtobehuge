@@ -1233,14 +1233,17 @@ function bindTribalSpoilers(root) {
       btn.setAttribute("aria-expanded", "true");
       if (result) result.removeAttribute("aria-hidden");
       const stage = wrap.querySelector(".spoiler-burn-stage");
+      let done = false;
       const finish = (event) => {
+        if (done) return;
         if (event && event.animationName && event.animationName !== "spoiler-content-shift") return;
+        done = true;
+        window.clearTimeout(fallback);
         reveal();
       };
+      const fallback = window.setTimeout(() => finish(null), 6200);
       if (stage) {
         stage.addEventListener("animationend", finish);
-      } else {
-        window.setTimeout(reveal, 6000);
       }
     });
   });
