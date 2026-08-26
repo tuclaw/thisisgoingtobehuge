@@ -699,6 +699,8 @@ const FALLBACK_SEASON = {
   }
 };
 
+const JSON_PATHS = ["season1.json", "../season1.json", "../../season1.json"];
+
 function assetBase() {
   const raw = document.documentElement.getAttribute("data-base");
   return raw == null ? "" : raw;
@@ -1528,6 +1530,11 @@ function wrapTribalSpoiler(innerHtml) {
     <div class="tribal-spoiler-result" id="tribal-spoiler-result" aria-hidden="true">${innerHtml}</div>
     <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="tribal-spoiler-result">
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
+      <span class="tribal-spoiler-cover-fallback">
+        <span class="spoiler-kicker">Spoiler alert</span>
+        <span class="spoiler-title">Tribal results</span>
+        <span class="spoiler-copy">Click to burn and reveal the vote — and who gets snuffed.</span>
+      </span>
       <span class="visually-hidden">Spoiler alert: tribal results. Click to burn and reveal the vote.</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
@@ -1536,6 +1543,26 @@ function wrapTribalSpoiler(innerHtml) {
 
 function bindTribalSpoilers(root) {
   if (!root) return;
+  root.querySelectorAll(".tribal-spoiler").forEach((wrap) => {
+    const btn = wrap.querySelector(".tribal-spoiler-cover");
+    const result = wrap.querySelector(".tribal-spoiler-result");
+    if (!btn || btn.dataset.fallbackBound === "1") return;
+    btn.dataset.fallbackBound = "1";
+
+    const revealFallback = () => {
+      wrap.classList.add("is-revealed");
+      wrap.classList.remove("is-burning");
+      if (result) result.removeAttribute("aria-hidden");
+      btn.remove();
+    };
+
+    btn.addEventListener("click", () => {
+      if (wrap.classList.contains("is-revealed") || wrap.dataset.burnInit === "1") return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        revealFallback();
+      }
+    });
+  });
   if (typeof window.initTribalSpoilerBurns === "function") {
     window.initTribalSpoilerBurns(root);
   }
@@ -1733,4 +1760,9 @@ function applyDemoTribal(season) {
 }
 
 initContribute();
-loadSeason().then(({ season, note }) => render(applyDemoTribal(season), note));
+loadSeason()
+  .then(({ season, note }) => render(applyDemoTribal(season), note))
+  .catch((err) => {
+    console.error("Failed to load season data:", err);
+    render(applyDemoTribal(FALLBACK_SEASON), "Could not fetch the live board. Showing the baked-in week.");
+  });

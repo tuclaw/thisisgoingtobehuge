@@ -148,15 +148,10 @@ void main() {
     ctx.textAlign = "center";
     ctx.fillStyle = "#2a1408";
     ctx.font = '600 22px "Cinzel", Georgia, serif';
-    ctx.letterSpacing = "0.28em";
     ctx.fillText("SPOILER ALERT", TEX_W / 2, TEX_H * 0.34);
 
     ctx.font = '700 44px "Cinzel", Georgia, serif';
-    ctx.letterSpacing = "0.1em";
     ctx.fillText("TRIBAL RESULTS", TEX_W / 2, TEX_H * 0.48);
-
-    ctx.font = '400 22px "Source Serif 4", Georgia, serif';
-    ctx.letterSpacing = "0";
     ctx.fillStyle = "#3a1f0f";
     const copy = "Click to burn and reveal the vote — and who gets snuffed.";
     wrapText(ctx, copy, TEX_W / 2, TEX_H * 0.62, TEX_W * 0.72, 30);
@@ -202,7 +197,13 @@ void main() {
       this.done = false;
 
       if (!this.btn || !this.canvas || !this.result) return;
-      this.initGl();
+      this.wrap.dataset.burnInit = "1";
+      try {
+        this.initGl();
+      } catch (err) {
+        console.error("Tribal spoiler burn init failed:", err);
+        this.gl = null;
+      }
       this.btn.addEventListener("click", () => this.onClick());
       this.onResize = () => this.resizeParticles();
       window.addEventListener("resize", this.onResize);
@@ -230,12 +231,16 @@ void main() {
       const prog = gl.createProgram();
       const vs = mkShader(VS, gl.VERTEX_SHADER);
       const fs = mkShader(FS, gl.FRAGMENT_SHADER);
-      if (!vs || !fs) return;
+      if (!vs || !fs) {
+        this.gl = null;
+        return;
+      }
       gl.attachShader(prog, vs);
       gl.attachShader(prog, fs);
       gl.linkProgram(prog);
       if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
         console.error("Spoiler program:", gl.getProgramInfoLog(prog));
+        this.gl = null;
         return;
       }
       gl.useProgram(prog);
@@ -273,6 +278,9 @@ void main() {
       this.tex = tex;
 
       this.resizeCanvas();
+      if (this.canvas.width > 1 && this.canvas.height > 1) {
+        this.wrap.classList.add("tribal-spoiler--ready");
+      }
     }
 
     resizeCanvas() {
@@ -426,7 +434,7 @@ void main() {
         this.emitEmbers();
       }
 
-      if (this.gl) {
+      if (this.gl && this.U) {
         this.resizeCanvas();
         const gl = this.gl;
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
@@ -446,8 +454,8 @@ void main() {
 
   window.initTribalSpoilerBurns = function initTribalSpoilerBurns(root) {
     if (!root) return;
-    root.querySelectorAll(".tribal-spoiler:not([data-burn-init])").forEach((wrap) => {
-      wrap.dataset.burnInit = "1";
+    root.querySelectorAll(".tribal-spoiler:not([data-burn-bound])").forEach((wrap) => {
+      wrap.dataset.burnBound = "1";
       new TribalSpoilerBurn(wrap);
     });
   };
