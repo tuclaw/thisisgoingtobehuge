@@ -1234,17 +1234,20 @@ function bindTribalSpoilers(root) {
       if (result) result.removeAttribute("aria-hidden");
       const stage = wrap.querySelector(".spoiler-burn-stage");
       let done = false;
-      const finish = (event) => {
+      const complete = () => {
         if (done) return;
-        if (event && event.animationName && event.animationName !== "spoiler-content-shift") return;
         done = true;
         window.clearTimeout(fallback);
+        if (stage) stage.removeEventListener("animationend", onAnimEnd);
         reveal();
       };
-      const fallback = window.setTimeout(() => finish(null), 6200);
-      if (stage) {
-        stage.addEventListener("animationend", finish);
-      }
+      const onAnimEnd = (event) => {
+        if (event.target !== stage) return;
+        if (event.animationName !== "spoiler-content-shift") return;
+        complete();
+      };
+      const fallback = window.setTimeout(complete, 6200);
+      if (stage) stage.addEventListener("animationend", onAnimEnd);
     });
   });
 }
