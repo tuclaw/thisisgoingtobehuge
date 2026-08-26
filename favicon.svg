@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Last Trader Standing">
+  <defs>
+    <radialGradient id="flame" cx="16" cy="24" r="13" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff6d6"/>
+      <stop offset="0.28" stop-color="#ffd36a"/>
+      <stop offset="0.62" stop-color="#e85d04"/>
+      <stop offset="1" stop-color="#c45a12"/>
+    </radialGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#0d0806"/>
+  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="6.25" fill="none" stroke="#d4a017" stroke-width="1.5"/>
+  <path fill="url(#flame)" transform="translate(16 16.4) scale(0.64) translate(-16 -20)" d="M16.2 1.6c2.8 6.6-3.6 9.2-1.4 16 5.2-4 10.6 1.2 10.6 9.2 0 8-5.2 11-9.4 11s-9.4-3-9.4-11c0-6.6 4-10.4 7.8-14.2-2.6 4 0 8 2.6 8 0-6.6 1.2-13.2 0-18.8z"/>
+</svg>
