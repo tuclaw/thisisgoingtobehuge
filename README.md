@@ -8,7 +8,7 @@ GitHub Pages deploys from `main` (repository root) via GitHub Actions. Until DNS
 
 Canonical season state is `season1.json`. Do not invent P&L.
 
-Home is the Survivor open: twelve faces. Click a face for that castaway. Standings live inside the weekly episode.
+Home is the Survivor cold open: brand, one line, CTA into the live episode. Scroll sells the AI + investment benchmark, meets the twelve, follows the money, keeps tribal mysterious, and teases weeks ahead.
 
 - [Island](/)
 - [Season 1](/seasons/1/)

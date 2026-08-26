@@ -934,21 +934,148 @@ function renderFaces(season) {
           const face = s.portrait
             ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
             : totemSvg(s, tribe);
+          const week = weekPctOf(s);
+          const weekClass = week > 0 ? "up" : week < 0 ? "down" : "flat";
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
         ${face}
         <h3>${escapeHtml(s.name)}</h3>
         <p class="face-tribe">${escapeHtml(tribe.name)}</p>
         ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
+        <p class="face-book"><span>${money(s.bookUsd)}</span><span class="face-week ${weekClass}">${pct(week)}</span></p>
       </a>`;
         })
         .join("");
       const buff = tribe.buff ? ` · ${escapeHtml(tribe.buff)}` : "";
-      return `<div class="face-tribe-block ${tribe.id}">
+      return `<div class="face-tribe-block ${tribe.id} reveal">
       <p class="face-tribe-kicker">${escapeHtml(tribe.name)}${buff}</p>
       <div class="face-row">${cards}</div>
     </div>`;
     })
     .join("");
+}
+
+function renderMoneyJourney(season) {
+  const race = document.getElementById("money-race");
+  const totals = document.getElementById("home-tribe-totals");
+  const banner = document.getElementById("money-banner");
+  if (banner && season.statusLabel) {
+    banner.textContent = season.statusLabel;
+  }
+  if (totals) {
+    totals.innerHTML = (season.tribes || [])
+      .map((t) => {
+        return `<div class="total-card ${t.id}">
+        <h3>${escapeHtml(t.name)}</h3>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week %</p>
+      </div>`;
+      })
+      .join("");
+  }
+  if (!race) return;
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const ranked = [...(season.survivors || [])].sort((a, b) => {
+    const bw = weekPctOf(b) - weekPctOf(a);
+    if (bw !== 0) return bw;
+    return (b.bookUsd || 0) - (a.bookUsd || 0);
+  });
+  const maxBook = Math.max(start, ...ranked.map((s) => (typeof s.bookUsd === "number" ? s.bookUsd : start)));
+  race.innerHTML = ranked
+    .map((s, i) => {
+      const tribe = tribeById(season, s.tribeId);
+      const book = typeof s.bookUsd === "number" ? s.bookUsd : start;
+      const width = Math.max(8, Math.min(100, (book / maxBook) * 100));
+      const week = weekPctOf(s);
+      const weekClass = week > 0 ? "up" : week < 0 ? "down" : "flat";
+      const face = s.portrait
+        ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
+        : `<span class="money-mono">${escapeHtml(s.monogram || s.name.slice(0, 1))}</span>`;
+      const startPct = Math.max(2, Math.min(98, (start / maxBook) * 100));
+      return `<a class="money-row ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}" style="--i:${i}">
+        <span class="money-rank">${i + 1}</span>
+        <span class="money-face">${face}</span>
+        <span class="money-id">
+          <strong>${escapeHtml(s.name)}</strong>
+          <em>${escapeHtml(tribe ? tribe.name : s.tribeId)}${s.model ? " · " + escapeHtml(s.model) : ""}</em>
+        </span>
+        <span class="money-track">
+          <span class="money-fill" data-width="${width.toFixed(2)}"></span>
+          <span class="money-start" style="left:${startPct.toFixed(2)}%" title="Started at ${money(start)}"></span>
+        </span>
+        <span class="money-nums">
+          <span class="money-book">${money(book)}</span>
+          <span class="money-week ${weekClass}">${pct(week)}</span>
+        </span>
+      </a>`;
+    })
+    .join("");
+  requestAnimationFrame(() => {
+    race.querySelectorAll(".money-fill").forEach((el) => {
+      el.style.width = el.getAttribute("data-width") + "%";
+    });
+  });
+}
+
+function renderHomeEpisodes(season) {
+  const root = document.getElementById("home-episodes");
+  if (!root) return;
+  const byNum = new Map();
+  (Array.isArray(season.episodes) ? season.episodes : []).forEach((ep) => {
+    byNum.set(ep.number, ep);
+  });
+  lockedTeasers().forEach((ep) => {
+    if (!byNum.has(ep.number)) byNum.set(ep.number, ep);
+  });
+  const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
+  root.innerHTML = episodes
+    .map((ep) => {
+      const locked = ep.status === "locked" || !ep.path;
+      const title = escapeHtml(ep.title || "Episode " + ep.number);
+      const label = escapeHtml(ep.weekLabel || "");
+      const tease = escapeHtml(ep.tease || "Torches unlit · After Friday tribal");
+      if (locked) {
+        return `<div class="journey-ep locked reveal" aria-disabled="true">
+          <p class="ep-kicker">Coming</p>
+          <h3>${title}</h3>
+          <p>${label}</p>
+          <p class="ep-locked-note">${tease}</p>
+        </div>`;
+      }
+      const href = assetBase() + (ep.path || "seasons/1/e01.html");
+      const live = ep.status === "live";
+      return `<a class="journey-ep${live ? " live" : ""} reveal" href="${escapeHtml(href)}">
+        <p class="ep-kicker">${live ? "Now burning" : escapeHtml(ep.status || "Cut")}</p>
+        <h3>${title}</h3>
+        <p>${label}</p>
+        <p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>
+      </a>`;
+    })
+    .join("");
+}
+
+function initReveals() {
+  const nodes = document.querySelectorAll(".reveal");
+  if (!nodes.length) return;
+  if (!("IntersectionObserver" in window)) {
+    nodes.forEach((n) => n.classList.add("is-in"));
+    return;
+  }
+  const hero = document.querySelectorAll(".open-hero .reveal");
+  hero.forEach((n) => n.classList.add("is-in"));
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        io.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+  );
+  nodes.forEach((n) => {
+    if (n.closest(".open-hero")) return;
+    io.observe(n);
+  });
 }
 
 function renderSurvivor(season) {
@@ -970,6 +1097,9 @@ function renderSurvivor(season) {
   const caption = s.caption ? `<p class="survivor-caption">${escapeHtml(s.caption)}</p>` : "";
   const bio = s.bio ? `<p class="survivor-bio">${escapeHtml(s.bio)}</p>` : "";
   const book = formatBook(s);
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const delta = typeof s.bookUsd === "number" ? s.bookUsd - start : 0;
+  const deltaClass = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
   const mates = (season.survivors || []).filter((x) => x.tribeId === s.tribeId && x.name !== s.name);
   const mateHtml = mates
     .map((m) => {
@@ -1000,7 +1130,8 @@ function renderSurvivor(season) {
       ${bio}
       ${caption}
       <div class="survivor-book">
-        <h3>The book</h3>
+        <h3>The money</h3>
+        <p class="survivor-money-arc">Started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week.</p>
         <p>${book}</p>
         <div class="survivor-stats">
           <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
@@ -1182,6 +1313,9 @@ function render(season, sourceNote) {
   renderStandings(season);
   renderSeasonHub(season);
   renderEpisode(season);
+  renderMoneyJourney(season);
+  renderHomeEpisodes(season);
+  initReveals();
   const miss = document.getElementById("json-miss");
   if (!miss) return;
   if (sourceNote) {
