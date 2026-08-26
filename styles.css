@@ -860,6 +860,139 @@ img.portrait.photo {
   border-bottom: 1px solid rgba(196, 165, 116, 0.12);
 }
 
+
+/* —— Tribal spoiler (Balatro card burn) —— */
+.tribal-spoiler {
+  position: relative;
+  isolation: isolate;
+  margin-top: 0.4rem;
+  min-height: 280px;
+}
+
+.council-stage:has(.tribal-spoiler) {
+  position: relative;
+}
+
+.tribal-spoiler-result {
+  min-height: 280px;
+  padding: 1.4rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tribal-spoiler-result .tribal-vote-list {
+  width: min(36rem, 100%);
+}
+
+.tribal-spoiler-result .tribal-vote-list li {
+  text-align: center;
+}
+
+.tribal-spoiler-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.tribal-spoiler-cover:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+
+.tribal-spoiler-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+}
+
+.tribal-spoiler-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tribal-spoiler.is-burning .tribal-spoiler-cover {
+  filter: drop-shadow(0 0 28px rgba(255, 120, 0, 0.55))
+    drop-shadow(0 0 56px rgba(255, 50, 0, 0.25));
+}
+
+.tribal-spoiler.is-revealed .tribal-spoiler-cover,
+.tribal-spoiler.is-revealed .tribal-spoiler-particles {
+  display: none;
+}
+
+.tribal-spoiler.is-revealed .tribal-spoiler-result {
+  animation: spoiler-result-in 0.55s ease both;
+}
+
+@keyframes spoiler-result-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.tribal-vote-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tribal-vote-list li {
+  padding: 0.95rem 0;
+  border-bottom: 1px solid rgba(196, 165, 116, 0.14);
+}
+
+.tribal-vote-list li:last-child {
+  border-bottom: 0;
+}
+
+.tribal-vote-list .boot-line {
+  margin: 0.35rem 0 0;
+  color: var(--parchment);
+}
+
+.tribal-vote-list .vote-detail {
+  margin: 0.35rem 0 0;
+  color: var(--sand);
+  font-size: 0.95rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tribal-spoiler.is-burning .tribal-spoiler-cover {
+    filter: none;
+  }
+  .tribal-spoiler.is-revealed .tribal-spoiler-result {
+    animation: none;
+  }
+}
+
 /* —— Golden portfolio —— */
 #golden {
   background:
