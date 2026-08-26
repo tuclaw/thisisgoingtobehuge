@@ -964,14 +964,11 @@ function renderFaces(season) {
           const face = s.portrait
             ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
             : totemSvg(s, tribe);
-          const week = weekPctOf(s);
-          const weekClass = week > 0 ? "up" : week < 0 ? "down" : "flat";
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
         ${face}
         <h3>${escapeHtml(model)}</h3>
         ${nick ? `<p class="face-nick">${escapeHtml(nick)}</p>` : ""}
         <p class="face-tribe">${escapeHtml(tribe.name)}</p>
-        <p class="face-book"><span>${money(s.bookUsd)}</span><span class="face-week ${weekClass}">${pct(week)}</span></p>
       </a>`;
         })
         .join("");
@@ -1219,7 +1216,135 @@ function renderStandings(season) {
     .join("");
 }
 
+function dayKey(iso) {
+  if (!iso) return "";
+  return String(iso).slice(0, 10);
+}
+
+function legsOnDay(s, ymd) {
+  return bookLegs(s).filter((p) => dayKey(p.filledAt) === ymd);
+}
+
+function cashLegs(s) {
+  return bookLegs(s).filter((p) => {
+    const ticker = String(p.ticker || "").toUpperCase();
+    return p.status === "cash" || p.status === "cash-short-blocked" || ticker === "CASH";
+  });
+}
+
+function mondayOpening(s, start) {
+  const mon = legsOnDay(s, "2026-08-24");
+  const tue = legsOnDay(s, "2026-08-25");
+  const cash = cashLegs(s);
+  if (mon.length) {
+    return { bookUsd: start, legs: mon, tag: "Opened Monday", moved: false };
+  }
+  if (tue.length) {
+    return {
+      bookUsd: start,
+      legs: [{ action: "HOLD", ticker: "CASH", sizeUsd: start, status: "cash" }],
+      tag: "Cash Monday",
+      moved: false
+    };
+  }
+  if (cash.length) {
+    const blocked = cash.some((p) => p.status === "cash-short-blocked");
+    return {
+      bookUsd: start,
+      legs: cash,
+      tag: blocked ? "Shorts blocked" : "Held cash",
+      moved: false
+    };
+  }
+  const undated = bookLegs(s).filter((p) => !p.filledAt && String(p.ticker || "").toUpperCase() !== "CASH");
+  if (undated.length) {
+    return { bookUsd: start, legs: undated, tag: "Opened Monday", moved: false };
+  }
+  return {
+    bookUsd: start,
+    legs: [{ action: "HOLD", ticker: "CASH", sizeUsd: start, status: "cash" }],
+    tag: "Cash",
+    moved: false
+  };
+}
+
+function dayCardHtml(s, tribe, opts) {
+  const model = escapeHtml(modelOf(s));
+  const nick = nickOf(s);
+  const face = s.portrait
+    ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
+    : "";
+  const day = typeof opts.dayPct === "number" ? opts.dayPct : null;
+  const week = typeof opts.weekPct === "number" ? opts.weekPct : null;
+  const dayClass = day == null ? "flat" : day > 0 ? "up" : day < 0 ? "down" : "flat";
+  const weekClass = week == null ? "flat" : week > 0 ? "up" : week < 0 ? "down" : "flat";
+  const bookHtml = (opts.legs || []).map((p) => formatPosition(p, s.tribeId)).join("");
+  const moved = opts.moved
+    ? `<span class="day-tag moved">Moved</span>`
+    : opts.tag
+      ? `<span class="day-tag">${escapeHtml(opts.tag)}</span>`
+      : "";
+  return `<a class="day-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
+    <div class="day-card-top">
+      ${face ? `<span class="day-face">${face}</span>` : ""}
+      <span class="day-id">
+        <strong>${model}</strong>
+        <em>${escapeHtml(nick)}${tribe ? " · " + escapeHtml(tribe.name) : ""}</em>
+      </span>
+      ${moved}
+    </div>
+    <div class="day-book">${bookHtml || formatPosition(null, s.tribeId)}</div>
+    <div class="day-nums">
+      <span><i>Book</i>${money(opts.bookUsd)}</span>
+      ${day != null ? `<span><i>Day</i><b class="${dayClass}">${pct(day)}</b></span>` : ""}
+      ${week != null ? `<span><i>Week</i><b class="${weekClass}">${pct(week)}</b></span>` : ""}
+    </div>
+  </a>`;
+}
+
+function renderEpisodeDays(season) {
+  const monday = document.getElementById("day-monday");
+  const tuesday = document.getElementById("day-tuesday");
+  if (!monday && !tuesday) return;
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const survivors = season.survivors || [];
+
+  if (monday) {
+    monday.innerHTML = survivors
+      .map((s) => {
+        const tribe = tribeById(season, s.tribeId);
+        const snap = mondayOpening(s, start);
+        return dayCardHtml(s, tribe, {
+          bookUsd: snap.bookUsd,
+          legs: snap.legs,
+          tag: snap.tag,
+          moved: false
+        });
+      })
+      .join("");
+  }
+
+  if (tuesday) {
+    const ranked = [...survivors].sort((a, b) => dayPctOf(b) - dayPctOf(a));
+    tuesday.innerHTML = ranked
+      .map((s) => {
+        const tribe = tribeById(season, s.tribeId);
+        const moved = legsOnDay(s, "2026-08-25").length > 0;
+        return dayCardHtml(s, tribe, {
+          bookUsd: s.bookUsd,
+          legs: bookLegs(s),
+          dayPct: dayPctOf(s),
+          weekPct: weekPctOf(s),
+          tag: moved ? "" : "Sat",
+          moved
+        });
+      })
+      .join("");
+  }
+}
+
 function renderEpisode(season) {
+  renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
   if (totals) {
     totals.innerHTML = (season.tribes || [])

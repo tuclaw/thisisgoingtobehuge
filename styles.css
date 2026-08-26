@@ -1226,32 +1226,124 @@ a.brand:hover {
 }
 
 .camp-comic {
-  margin: 1.15rem 0 0;
-  padding: 0;
-  border: 1px solid rgba(232, 93, 4, 0.28);
-  background:
-    radial-gradient(ellipse at 50% 100%, rgba(232, 93, 4, 0.18), transparent 48%),
-    #0b0809;
-  box-shadow: 0 0 48px rgba(232, 93, 4, 0.08);
+  display: none;
 }
 
-.camp-comic img {
+.day-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.day-card {
   display: block;
-  width: 100%;
-  height: auto;
+  padding: 0.9rem 0.95rem 1rem;
+  color: var(--parchment);
+  border: 1px solid rgba(196, 165, 116, 0.16);
+  background: rgba(10, 8, 6, 0.4);
+  transition: border-color 0.18s ease, transform 0.18s ease;
 }
 
-.camp-comic figcaption {
-  margin: 0;
-  padding: 0.85rem 1rem 0.95rem;
+.day-card:hover {
+  color: var(--bone);
+  transform: translateY(-2px);
+}
+
+.day-card.bidu:hover { border-color: rgba(14, 107, 107, 0.5); }
+.day-card.askara:hover { border-color: rgba(196, 90, 18, 0.5); }
+
+.day-card-top {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.55rem;
+  align-items: center;
+  margin-bottom: 0.65rem;
+}
+
+.day-face {
+  width: 2.2rem;
+  height: 2.2rem;
+  overflow: hidden;
+  border: 1px solid rgba(212, 160, 23, 0.25);
+}
+
+.day-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+.day-id strong {
+  display: block;
   font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  color: var(--gold-bright);
+  line-height: 1.25;
+}
+
+.day-id em {
+  display: block;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--sand);
+}
+
+.day-tag {
+  font-family: var(--font-display);
+  font-size: 0.52rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-size: 0.72rem;
-  text-align: center;
-  color: var(--gold-bright);
-  border-top: 1px solid rgba(196, 90, 18, 0.28);
+  color: var(--worn);
+  border: 1px solid rgba(196, 165, 116, 0.25);
+  padding: 0.25rem 0.4rem;
+  white-space: nowrap;
 }
+
+.day-tag.moved {
+  color: var(--gold-bright);
+  border-color: rgba(232, 93, 4, 0.45);
+}
+
+.day-book {
+  margin-bottom: 0.65rem;
+  font-size: 0.92rem;
+}
+
+.day-book .pos-book {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.day-nums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.day-nums i {
+  display: block;
+  font-style: normal;
+  font-family: var(--font-display);
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--worn);
+  margin-bottom: 0.15rem;
+}
+
+.day-nums b {
+  font-weight: 500;
+}
+
+.day-nums .up { color: #8ee8d8; }
+.day-nums .down { color: #ff9a6a; }
+.day-nums .flat { color: var(--worn); }
 
 .episode-list {
   display: grid;
@@ -1352,29 +1444,39 @@ a.brand:hover {
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 110%, rgba(232, 93, 4, 0.28), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 15% 40%, rgba(14, 107, 107, 0.16), transparent 60%),
+    radial-gradient(ellipse 40% 35% at 85% 35%, rgba(196, 90, 18, 0.14), transparent 60%),
+    linear-gradient(180deg, #1a100a 0%, #0d0806 55%, #080504 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  width: 70vmin;
+  height: 45vmin;
+  margin-left: -35vmin;
+  background: radial-gradient(ellipse at 50% 60%, rgba(255, 154, 31, 0.35), rgba(232, 93, 4, 0.12) 45%, transparent 70%);
+  filter: blur(8px);
+  animation: hero-pulse 7s ease-in-out infinite alternate;
+}
+
+@keyframes hero-pulse {
+  from { opacity: 0.7; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.08); }
 }
 
 .hero-still {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 40%;
-  transform: scale(1.08);
-  animation: hero-drift 28s ease-in-out infinite alternate;
-  filter: saturate(0.92) contrast(1.05);
-}
-
-@keyframes hero-drift {
-  from { transform: scale(1.08) translate3d(0, 0, 0); }
-  to { transform: scale(1.14) translate3d(-1.5%, -1%, 0); }
+  display: none;
 }
 
 .hero-veil {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(8, 5, 4, 0.55) 0%, rgba(8, 5, 4, 0.2) 35%, rgba(8, 5, 4, 0.72) 68%, #0d0806 100%),
-    radial-gradient(ellipse 70% 45% at 50% 70%, rgba(232, 93, 4, 0.22), transparent 60%);
+    linear-gradient(180deg, rgba(8, 5, 4, 0.35) 0%, rgba(8, 5, 4, 0.15) 40%, rgba(8, 5, 4, 0.72) 72%, #0d0806 100%);
 }
 
 .open-hero .hero-embers {
@@ -2215,7 +2317,7 @@ a.brand:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .hero-still,
+  .hero-glow,
   .open-hero .hero-embers,
   .scroll-cue span,
   .tribal-torch.lit::before,
