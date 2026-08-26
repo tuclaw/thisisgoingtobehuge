@@ -23,6 +23,8 @@ Help keep the torches lit on Liquidation Island:
 
 The live site footer also embeds the Stripe contribute button.
 
+When contributions (or extra capital) land on the island, bump `islandPotUsd` in `season1.json`. The home page reads that number live — twelve contestants managing a real pot.
+
 ## DNS
 
 Tucker must set these records at the domain registrar for apex `thisisgoingtobehuge.com`.

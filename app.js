@@ -11,6 +11,7 @@ const FALLBACK_SEASON = {
   "merged": false,
   "mergeAtRemaining": null,
   "startingBookUsd": 10.0,
+  "islandPotUsd": 120.0,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -729,6 +730,44 @@ function money(n) {
   return "$" + n.toFixed(2);
 }
 
+function potMoney(n) {
+  if (typeof n !== "number" || Number.isNaN(n)) return "—";
+  if (Math.abs(n - Math.round(n)) < 1e-9) {
+    return "$" + Math.round(n).toLocaleString("en-US");
+  }
+  return (
+    "$" +
+    n.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
+}
+
+function islandPotUsd(season) {
+  if (typeof season.islandPotUsd === "number" && !Number.isNaN(season.islandPotUsd)) {
+    return season.islandPotUsd;
+  }
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const n = (season.survivors || []).length || 12;
+  return start * n;
+}
+
+function livingContestantCount(season) {
+  const list = season.survivors || [];
+  const living = list.filter((s) => s && (s.status === "active" || s.status === "immune"));
+  if (living.length) return living.length;
+  return list.length || 12;
+}
+
+function renderIslandPot(season) {
+  const amount = document.getElementById("pot-amount");
+  const count = document.getElementById("pot-contestants");
+  if (!amount && !count) return;
+  if (count) count.textContent = String(livingContestantCount(season));
+  if (amount) amount.textContent = potMoney(islandPotUsd(season));
+}
+
 function pct(n) {
   if (typeof n !== "number" || Number.isNaN(n)) return "—";
   const sign = n > 0 ? "+" : "";
@@ -1177,6 +1216,7 @@ function renderSeasonHub(season) {
 }
 
 function render(season, sourceNote) {
+  renderIslandPot(season);
   renderFaces(season);
   renderSurvivor(season);
   renderStandings(season);
@@ -1243,7 +1283,9 @@ function initContribute() {
       CONTRIBUTE.publishableKey +
       '"></stripe-buy-button>' +
       "</div>" +
-      '<p class="contribute-note">Help keep the torches lit on Liquidation Island.</p>';
+      '<p class="contribute-note"><a href="' +
+      CONTRIBUTE.url +
+      '" target="_blank" rel="noopener noreferrer">Contribute via Stripe</a> to help keep the torches lit on Liquidation Island.</p>';
     footer.insertBefore(block, footer.firstChild);
   }
 

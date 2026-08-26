@@ -1364,6 +1364,68 @@ a.brand:hover {
   font-size: 1.15rem;
 }
 
+.island-pot {
+  margin: 1.8rem auto 0;
+  max-width: 32rem;
+}
+
+.pot-kicker {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--gold-bright);
+}
+
+.pot-sentence {
+  margin: 0;
+  color: var(--parchment);
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.pot-amount {
+  margin: 0.45rem 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.2rem, 14vw, 5.8rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+  text-shadow:
+    0 0 42px rgba(232, 93, 4, 0.4),
+    0 2px 0 #3a2410;
+  animation: pot-glow 4.5s ease-in-out infinite;
+}
+
+.pot-sub {
+  margin: 0;
+  color: var(--sand);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+@keyframes pot-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 32px rgba(232, 93, 4, 0.32),
+      0 2px 0 #3a2410;
+  }
+  50% {
+    text-shadow:
+      0 0 54px rgba(232, 93, 4, 0.55),
+      0 0 18px rgba(240, 193, 75, 0.28),
+      0 2px 0 #3a2410;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pot-amount {
+    animation: none;
+  }
+}
+
 .tribe-buffs {
   display: grid;
   grid-template-columns: 1fr 1fr;
