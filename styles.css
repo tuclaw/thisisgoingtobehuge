@@ -36,6 +36,16 @@ html {
   scroll-behavior: smooth;
 }
 
+html:has(body.episode-page) {
+  scroll-padding-top: 8.4rem;
+}
+
+@media (max-width: 720px) {
+  html:has(body.episode-page) {
+    scroll-padding-top: 11.2rem;
+  }
+}
+
 body {
   margin: 0;
   color: var(--bone);
@@ -1856,7 +1866,8 @@ a.brand:hover {
   color: var(--worn);
 }
 
-.day-rail a:hover {
+.day-rail a:hover,
+.day-rail a[aria-current="location"] {
   color: var(--gold-bright);
   border-color: rgba(212, 160, 23, 0.35);
 }

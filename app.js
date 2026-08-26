@@ -1124,11 +1124,27 @@ function openFoldForTarget(target) {
   if (fold) fold.open = true;
 }
 
+function syncDayRail() {
+  const hash = (window.location.hash || "#week-board").replace(/^#/, "") || "week-board";
+  const target = document.getElementById(hash);
+  document.querySelectorAll(".day-rail a").forEach((a) => {
+    const id = (a.getAttribute("href") || "").replace(/^#/, "");
+    const section = id ? document.getElementById(id) : null;
+    const on =
+      id === hash ||
+      (section && target && (section === target || section.contains(target) || target.contains(section)));
+    if (on) a.setAttribute("aria-current", "location");
+    else a.removeAttribute("aria-current");
+  });
+}
+
 function openFoldForHash() {
   const hash = (window.location.hash || "").replace(/^#/, "");
-  if (!hash) return;
-  const el = document.getElementById(hash);
-  if (el) openFoldForTarget(el);
+  if (hash) {
+    const el = document.getElementById(hash);
+    if (el) openFoldForTarget(el);
+  }
+  syncDayRail();
 }
 
 function initDayFolds() {
