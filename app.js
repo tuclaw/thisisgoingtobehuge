@@ -782,12 +782,40 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-function modelBadge(s, tiny) {
+function modelOf(s) {
   const model = s && s.model ? String(s.model).trim() : "";
+  if (model) return model;
+  return s && s.name ? String(s.name).trim() : "";
+}
+
+function nickOf(s) {
+  return s && s.name ? String(s.name).trim() : "";
+}
+
+function modelBadge(s, tiny) {
+  const model = modelOf(s);
   if (!model) return "";
   const tribeClass = s.tribeId === "askara" ? " askara" : s.tribeId === "bidu" ? " bidu" : "";
   const sizeClass = tiny ? " tiny" : "";
   return `<span class="model-badge${tribeClass}${sizeClass}">${escapeHtml(model)}</span>`;
+}
+
+function nickBadge(s, tiny) {
+  const nick = nickOf(s);
+  if (!nick) return "";
+  const sizeClass = tiny ? " tiny" : "";
+  return `<span class="cast-nick${sizeClass}">${escapeHtml(nick)}</span>`;
+}
+
+function survivorLabel(s, opts) {
+  const options = opts || {};
+  const model = escapeHtml(modelOf(s));
+  const nick = nickOf(s);
+  const nickHtml = nick ? nickBadge(s, options.tiny) : "";
+  if (options.link) {
+    return `<a href="${escapeHtml(survivorHref(s.name))}">${model}</a>${nickHtml ? " " + nickHtml : ""}`;
+  }
+  return `${model}${nickHtml ? " " + nickHtml : ""}`;
 }
 
 function positionChip(pos) {
@@ -970,24 +998,150 @@ function renderFaces(season) {
       const members = (season.survivors || []).filter((s) => s.tribeId === tribe.id);
       const cards = members
         .map((s) => {
+          const model = modelOf(s);
+          const nick = nickOf(s);
           const face = s.portrait
-            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
+            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
             : totemSvg(s, tribe);
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
         ${face}
-        <h3>${escapeHtml(s.name)}</h3>
+        <h3>${escapeHtml(model)}</h3>
+        ${nick ? `<p class="face-nick">${escapeHtml(nick)}</p>` : ""}
         <p class="face-tribe">${escapeHtml(tribe.name)}</p>
-        ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
       </a>`;
         })
         .join("");
       const buff = tribe.buff ? ` · ${escapeHtml(tribe.buff)}` : "";
-      return `<div class="face-tribe-block ${tribe.id}">
+      return `<div class="face-tribe-block ${tribe.id} reveal">
       <p class="face-tribe-kicker">${escapeHtml(tribe.name)}${buff}</p>
       <div class="face-row">${cards}</div>
     </div>`;
     })
     .join("");
+}
+
+function renderMoneyJourney(season) {
+  const race = document.getElementById("money-race");
+  const totals = document.getElementById("home-tribe-totals");
+  const banner = document.getElementById("money-banner");
+  if (banner && season.statusLabel) {
+    banner.textContent = season.statusLabel;
+  }
+  if (totals) {
+    totals.innerHTML = (season.tribes || [])
+      .map((t) => {
+        return `<div class="total-card ${t.id}">
+        <h3>${escapeHtml(t.name)}</h3>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week %</p>
+      </div>`;
+      })
+      .join("");
+  }
+  if (!race) return;
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const ranked = [...(season.survivors || [])].sort((a, b) => {
+    const bw = weekPctOf(b) - weekPctOf(a);
+    if (bw !== 0) return bw;
+    return (b.bookUsd || 0) - (a.bookUsd || 0);
+  });
+  const maxBook = Math.max(start, ...ranked.map((s) => (typeof s.bookUsd === "number" ? s.bookUsd : start)));
+  race.innerHTML = ranked
+    .map((s, i) => {
+      const tribe = tribeById(season, s.tribeId);
+      const book = typeof s.bookUsd === "number" ? s.bookUsd : start;
+      const width = Math.max(8, Math.min(100, (book / maxBook) * 100));
+      const week = weekPctOf(s);
+      const weekClass = week > 0 ? "up" : week < 0 ? "down" : "flat";
+      const face = s.portrait
+        ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
+        : `<span class="money-mono">${escapeHtml(s.monogram || nickOf(s).slice(0, 1) || "?")}</span>`;
+      const startPct = Math.max(2, Math.min(98, (start / maxBook) * 100));
+      return `<a class="money-row ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}" style="--i:${i}">
+        <span class="money-rank">${i + 1}</span>
+        <span class="money-face">${face}</span>
+        <span class="money-id">
+          <strong>${escapeHtml(modelOf(s))}</strong>
+          <em>${escapeHtml(nickOf(s))}${tribe ? " · " + escapeHtml(tribe.name) : ""}</em>
+        </span>
+        <span class="money-track">
+          <span class="money-fill" data-width="${width.toFixed(2)}"></span>
+          <span class="money-start" style="left:${startPct.toFixed(2)}%" title="Started at ${money(start)}"></span>
+        </span>
+        <span class="money-nums">
+          <span class="money-book">${money(book)}</span>
+          <span class="money-week ${weekClass}">${pct(week)}</span>
+        </span>
+      </a>`;
+    })
+    .join("");
+  requestAnimationFrame(() => {
+    race.querySelectorAll(".money-fill").forEach((el) => {
+      el.style.width = el.getAttribute("data-width") + "%";
+    });
+  });
+}
+
+function renderHomeEpisodes(season) {
+  const root = document.getElementById("home-episodes");
+  if (!root) return;
+  const byNum = new Map();
+  (Array.isArray(season.episodes) ? season.episodes : []).forEach((ep) => {
+    byNum.set(ep.number, ep);
+  });
+  lockedTeasers().forEach((ep) => {
+    if (!byNum.has(ep.number)) byNum.set(ep.number, ep);
+  });
+  const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
+  root.innerHTML = episodes
+    .map((ep) => {
+      const locked = ep.status === "locked" || !ep.path;
+      const title = escapeHtml(ep.title || "Episode " + ep.number);
+      const label = escapeHtml(ep.weekLabel || "");
+      const tease = escapeHtml(ep.tease || "Torches unlit · After Friday tribal");
+      if (locked) {
+        return `<div class="journey-ep locked reveal" aria-disabled="true">
+          <p class="ep-kicker">Coming</p>
+          <h3>${title}</h3>
+          <p>${label}</p>
+          <p class="ep-locked-note">${tease}</p>
+        </div>`;
+      }
+      const href = assetBase() + (ep.path || "seasons/1/e01.html");
+      const live = ep.status === "live";
+      return `<a class="journey-ep${live ? " live" : ""} reveal" href="${escapeHtml(href)}">
+        <p class="ep-kicker">${live ? "Now burning" : escapeHtml(ep.status || "Cut")}</p>
+        <h3>${title}</h3>
+        <p>${label}</p>
+        <p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>
+      </a>`;
+    })
+    .join("");
+}
+
+function initReveals() {
+  const nodes = document.querySelectorAll(".reveal");
+  if (!nodes.length) return;
+  if (!("IntersectionObserver" in window)) {
+    nodes.forEach((n) => n.classList.add("is-in"));
+    return;
+  }
+  const hero = document.querySelectorAll(".open-hero .reveal");
+  hero.forEach((n) => n.classList.add("is-in"));
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        io.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+  );
+  nodes.forEach((n) => {
+    if (n.closest(".open-hero")) return;
+    io.observe(n);
+  });
 }
 
 function renderSurvivor(season) {
@@ -1001,36 +1155,44 @@ function renderSurvivor(season) {
   }
   const tribe = tribeById(season, s.tribeId);
   const tribeName = tribe ? tribe.name : s.tribeId;
+  const model = modelOf(s);
+  const nick = nickOf(s);
   const campUrl = s.camp ? assetUrl(s.camp) : "";
   const campStyle = campUrl ? ` style="--camp:url('${escapeHtml(campUrl)}')"` : "";
   const portrait = s.portrait
-    ? `<img class="survivor-portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(s.name)}">`
+    ? `<img class="survivor-portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
     : totemSvg(s, tribe);
   const caption = s.caption ? `<p class="survivor-caption">${escapeHtml(s.caption)}</p>` : "";
   const bio = s.bio ? `<p class="survivor-bio">${escapeHtml(s.bio)}</p>` : "";
   const book = formatBook(s);
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const delta = typeof s.bookUsd === "number" ? s.bookUsd - start : 0;
+  const deltaClass = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
   const mates = (season.survivors || []).filter((x) => x.tribeId === s.tribeId && x.name !== s.name);
   const mateHtml = mates
     .map((m) => {
       const img = m.portrait
-        ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(m.name)}">`
+        ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(modelOf(m))}">`
         : "";
-      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span>${escapeHtml(m.name)}</span></a>`;
+      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span class="mate-model">${escapeHtml(modelOf(m))}</span><span class="mate-nick">${escapeHtml(nickOf(m))}</span></a>`;
     })
     .join("");
-  document.title = `${s.name} — Last Trader Standing`;
+  document.title = `${model}${nick ? " (" + nick + ")" : ""} — Last Trader Standing`;
+  const nickLine = nick
+    ? `<p class="survivor-nick">Island name <strong>${escapeHtml(nick)}</strong></p>`
+    : "";
   root.innerHTML = `
     <section class="survivor-hero" id="survivor"${campStyle}>
       <div class="hero-embers" aria-hidden="true"></div>
       <div class="hero-inner">
-        <p class="section-kicker">${escapeHtml(tribeName)}</p>
-        <h1>${escapeHtml(s.name)}</h1>
+        <p class="section-kicker">${escapeHtml(tribeName)}${nick ? " · " + escapeHtml(nick) : ""}</p>
+        <h1>${escapeHtml(model)}</h1>
       </div>
     </section>
     <div class="survivor-sheet ${s.tribeId}">
       ${portrait}
-      <h2>${escapeHtml(s.name)}</h2>
-      ${s.model ? `<p class="cast-model">${modelBadge(s)}</p>` : ""}
+      <h2>${escapeHtml(model)}</h2>
+      ${nickLine}
       <div class="survivor-meta">
         <span>${escapeHtml(tribeName)}</span>
         <span>${s.status === "active" ? "In the game" : escapeHtml(s.status)}</span>
@@ -1039,7 +1201,8 @@ function renderSurvivor(season) {
       ${bio}
       ${caption}
       <div class="survivor-book">
-        <h3>The book</h3>
+        <h3>The money</h3>
+        <p class="survivor-money-arc">Episode snapshot — started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week. <a href="${escapeHtml(assetBase() + "seasons/1/e01.html#tuesday-books")}">See the daily cut →</a></p>
         <p>${book}</p>
         <div class="survivor-stats">
           <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
@@ -1080,7 +1243,7 @@ function renderStandings(season) {
       const pos = formatBook(s);
       const immune = s.immune ? " · immune" : "";
       return `<tr>
-      <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
+      <td><span class="dot ${s.tribeId}"></span>${survivorLabel(s, { link: true, tiny: true })}</td>
       <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(dayPctOf(s))}</td>
@@ -1092,7 +1255,165 @@ function renderStandings(season) {
     .join("");
 }
 
+function dayKey(iso) {
+  if (!iso) return "";
+  return String(iso).slice(0, 10);
+}
+
+function legsOnDay(s, ymd) {
+  return bookLegs(s).filter((p) => dayKey(p.filledAt) === ymd);
+}
+
+function cashLegs(s) {
+  return bookLegs(s).filter((p) => {
+    const ticker = String(p.ticker || "").toUpperCase();
+    return p.status === "cash" || p.status === "cash-short-blocked" || ticker === "CASH";
+  });
+}
+
+function mondayOpening(s, start) {
+  const mon = legsOnDay(s, "2026-08-24");
+  const tue = legsOnDay(s, "2026-08-25");
+  const cash = cashLegs(s);
+  if (mon.length) {
+    return { bookUsd: start, legs: mon, tag: "Opened Monday", moved: false };
+  }
+  if (tue.length) {
+    return {
+      bookUsd: start,
+      legs: [{ action: "HOLD", ticker: "CASH", sizeUsd: start, status: "cash" }],
+      tag: "Cash Monday",
+      moved: false
+    };
+  }
+  if (cash.length) {
+    const blocked = cash.some((p) => p.status === "cash-short-blocked");
+    return {
+      bookUsd: start,
+      legs: cash,
+      tag: blocked ? "Shorts blocked" : "Held cash",
+      moved: false
+    };
+  }
+  const undated = bookLegs(s).filter((p) => !p.filledAt && String(p.ticker || "").toUpperCase() !== "CASH");
+  if (undated.length) {
+    return { bookUsd: start, legs: undated, tag: "Opened Monday", moved: false };
+  }
+  return {
+    bookUsd: start,
+    legs: [{ action: "HOLD", ticker: "CASH", sizeUsd: start, status: "cash" }],
+    tag: "Cash",
+    moved: false
+  };
+}
+
+function dayCardHtml(s, tribe, opts) {
+  const model = escapeHtml(modelOf(s));
+  const nick = nickOf(s);
+  const face = s.portrait
+    ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
+    : "";
+  const day = typeof opts.dayPct === "number" ? opts.dayPct : null;
+  const week = typeof opts.weekPct === "number" ? opts.weekPct : null;
+  const dayClass = day == null ? "flat" : day > 0 ? "up" : day < 0 ? "down" : "flat";
+  const weekClass = week == null ? "flat" : week > 0 ? "up" : week < 0 ? "down" : "flat";
+  const bookHtml = (opts.legs || []).map((p) => formatPosition(p, s.tribeId)).join("");
+  const moved = opts.moved
+    ? `<span class="day-tag moved">Moved</span>`
+    : opts.tag
+      ? `<span class="day-tag">${escapeHtml(opts.tag)}</span>`
+      : "";
+  let deltaHtml = "";
+  if (typeof opts.priorMarkUsd === "number" && typeof opts.bookUsd === "number") {
+    const delta = opts.bookUsd - opts.priorMarkUsd;
+    const dClass = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
+    const sign = delta > 0 ? "+" : "";
+    deltaHtml = `<span><i>Δ day</i><b class="${dClass}">${sign}${delta.toFixed(2)}</b></span>`;
+  }
+  return `<article class="day-card ${s.tribeId}">
+    <div class="day-card-top">
+      ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s.name))}">${face}</a>` : ""}
+      <a class="day-id" href="${escapeHtml(survivorHref(s.name))}">
+        <strong>${model}</strong>
+        <em>${escapeHtml(nick)}${tribe ? " · " + escapeHtml(tribe.name) : ""}</em>
+      </a>
+      ${moved}
+    </div>
+    <div class="day-book">${bookHtml || formatPosition(null, s.tribeId)}</div>
+    <div class="day-nums">
+      <span><i>Book</i>${money(opts.bookUsd)}</span>
+      ${deltaHtml}
+      ${day != null ? `<span><i>Day %</i><b class="${dayClass}">${pct(day)}</b></span>` : ""}
+      ${week != null ? `<span><i>Week %</i><b class="${weekClass}">${pct(week)}</b></span>` : ""}
+    </div>
+  </article>`;
+}
+
+function renderEpisodeDays(season) {
+  const monday = document.getElementById("day-monday");
+  const tuesday = document.getElementById("day-tuesday");
+  const tueTribes = document.getElementById("day-tuesday-tribes");
+  if (!monday && !tuesday && !tueTribes) return;
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const survivors = season.survivors || [];
+
+  if (monday) {
+    const ordered = [...survivors].sort((a, b) => {
+      if (a.tribeId !== b.tribeId) return a.tribeId < b.tribeId ? -1 : 1;
+      return modelOf(a).localeCompare(modelOf(b));
+    });
+    monday.innerHTML = ordered
+      .map((s) => {
+        const tribe = tribeById(season, s.tribeId);
+        const snap = mondayOpening(s, start);
+        return dayCardHtml(s, tribe, {
+          bookUsd: snap.bookUsd,
+          legs: snap.legs,
+          tag: snap.tag,
+          moved: false
+        });
+      })
+      .join("");
+  }
+
+  if (tueTribes) {
+    tueTribes.innerHTML = (season.tribes || [])
+      .map((t) => {
+        return `<div class="total-card ${t.id}">
+        <h3>${escapeHtml(t.name)}</h3>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week % · Tue snapshot</p>
+      </div>`;
+      })
+      .join("");
+  }
+
+  if (tuesday) {
+    const ranked = [...survivors].sort((a, b) => dayPctOf(b) - dayPctOf(a));
+    tuesday.innerHTML = ranked
+      .map((s) => {
+        const tribe = tribeById(season, s.tribeId);
+        const moved = legsOnDay(s, "2026-08-25").length > 0;
+        const prior =
+          typeof s.priorMarkUsd === "number" && !Number.isNaN(s.priorMarkUsd)
+            ? s.priorMarkUsd
+            : start;
+        return dayCardHtml(s, tribe, {
+          bookUsd: s.bookUsd,
+          priorMarkUsd: prior,
+          legs: bookLegs(s),
+          dayPct: dayPctOf(s),
+          weekPct: weekPctOf(s),
+          tag: moved ? "" : "Sat",
+          moved
+        });
+      })
+      .join("");
+  }
+}
+
 function renderEpisode(season) {
+  renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
   if (totals) {
     totals.innerHTML = (season.tribes || [])
@@ -1114,7 +1435,7 @@ function renderEpisode(season) {
         const tribe = tribeById(season, s.tribeId);
         const immune = s.immune ? " · immune" : "";
         return `<tr>
-      <td><span class="dot ${s.tribeId}"></span><a href="${escapeHtml(survivorHref(s.name))}">${escapeHtml(s.name)}</a>${s.model ? " " + modelBadge(s, true) : ""}</td>
+      <td><span class="dot ${s.tribeId}"></span>${survivorLabel(s, { link: true, tiny: true })}</td>
       <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(dayPctOf(s))}</td>
@@ -1222,6 +1543,9 @@ function render(season, sourceNote) {
   renderStandings(season);
   renderSeasonHub(season);
   renderEpisode(season);
+  renderMoneyJourney(season);
+  renderHomeEpisodes(season);
+  initReveals();
   const miss = document.getElementById("json-miss");
   if (!miss) return;
   if (sourceNote) {

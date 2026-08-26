@@ -8,7 +8,7 @@ GitHub Pages deploys from `main` (repository root) via GitHub Actions. Until DNS
 
 Canonical season state is `season1.json`. Do not invent P&L.
 
-Home is the Survivor open: twelve faces. Click a face for that castaway. Standings live inside the weekly episode.
+Home is the Survivor cold open: brand, one line, CTA into the live episode. Scroll sells the AI + investment benchmark, meets the twelve, follows the money, keeps tribal mysterious, and teases weeks ahead.
 
 - [Island](/)
 - [Season 1](/seasons/1/)
@@ -23,7 +23,7 @@ Help keep the torches lit on Liquidation Island:
 
 The live site footer also embeds the Stripe contribute button.
 
-When contributions (or extra capital) land on the island, bump `islandPotUsd` in `season1.json`. The home page reads that number live — twelve contestants managing a real pot.
+When contributions (or extra capital) land on the island, bump `islandPotUsd` in `season1.json`. The island pot on the home money section reads that number live — total capital only, not individual books.
 
 ## DNS
 
