@@ -1898,7 +1898,19 @@ img.portrait.photo {
 
 .tribal-spoiler-result {
   min-height: 280px;
-  padding: 0.2rem 0 0;
+  padding: 1.4rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tribal-spoiler-result .tribal-vote-list {
+  width: min(36rem, 100%);
+}
+
+.tribal-spoiler-result .tribal-vote-list li {
+  text-align: center;
 }
 
 .tribal-spoiler-cover {
@@ -1931,7 +1943,13 @@ img.portrait.photo {
 
 .tribal-spoiler .spoiler-burn-text {
   z-index: 1;
-  max-width: 28rem;
+  left: 50%;
+  top: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  width: min(28rem, calc(100% - 3rem));
+  text-align: center;
   color: #1a1008;
   pointer-events: none;
 }
@@ -1986,6 +2004,58 @@ img.portrait.photo {
   opacity: 1;
 }
 
+/* Keep the fire rim; do not paint an opaque ash disc over the reveal hole. */
+.tribal-spoiler.is-burning .burn {
+  background-color: transparent !important;
+  animation: 6s spoiler-burn-ring linear forwards;
+}
+
+@keyframes spoiler-burn-ring {
+  0% {
+    opacity: 1;
+    height: 0;
+    width: 0;
+    top: 50%;
+    right: 50%;
+    border: 3px solid #fffb5c;
+    box-shadow:
+      0 0 6px 2px #fffb5c,
+      0 0 15px 10px rgba(241, 124, 4, 0.55),
+      inset 0 0 10px 4px rgba(255, 251, 92, 0.35);
+  }
+  60% {
+    height: 350px;
+    width: 350px;
+    top: calc(50% - 175px);
+    right: calc(50% - 175px);
+    border: 3px solid #fffb5c;
+    box-shadow:
+      0 0 6px 2px #fffb5c,
+      0 0 15px 10px rgba(241, 124, 4, 0.55),
+      inset 0 0 10px 4px rgba(255, 251, 92, 0.35);
+  }
+  66% {
+    opacity: 1;
+    border-color: rgb(49, 22, 1);
+    box-shadow:
+      0 0 8px 4px rgba(64, 29, 2, 0.55),
+      inset 0 0 8px 3px rgb(52, 21, 0);
+  }
+  75% {
+    opacity: 1;
+    height: 350px;
+    width: 350px;
+    top: calc(50% - 175px);
+    right: calc(50% - 175px);
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .tribal-spoiler.is-burning .spoiler-burn-page {
   animation: 6s spoiler-burn-mask linear forwards;
 }
@@ -2013,10 +2083,6 @@ img.portrait.photo {
 
 .tribal-spoiler.is-burning .spoiler-burn-stage {
   animation: spoiler-content-shift 6s linear forwards;
-}
-
-.tribal-spoiler.is-burning .burn {
-  animation: 6s spoiler-burn-grow linear forwards;
 }
 
 .tribal-spoiler.is-burning .highlight {

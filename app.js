@@ -1201,8 +1201,8 @@ function wrapTribalSpoiler(innerHtml) {
             <span class="spoiler-title">Tribal results</span>
             <span class="spoiler-copy">Click to burn through and reveal the vote — and who gets snuffed.</span>
           </span>
-          <span class="burn" aria-hidden="true">${flames}</span>
         </span>
+        <span class="burn" aria-hidden="true">${flames}</span>
       </span>
     </button>
   </div>`;
