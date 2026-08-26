@@ -1189,67 +1189,21 @@ function formatTribalEntry(entry) {
 }
 
 function wrapTribalSpoiler(innerHtml) {
-  const flames = Array.from({ length: 10 }, () => '<span class="flame"></span>').join("");
   return `<div class="tribal-spoiler">
     <div class="tribal-spoiler-result" id="tribal-spoiler-result" aria-hidden="true">${innerHtml}</div>
     <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="tribal-spoiler-result">
-      <span class="spoiler-burn-stage">
-        <span class="spoiler-burn-page">
-          <span class="highlight" aria-hidden="true"></span>
-          <span class="spoiler-burn-text">
-            <span class="spoiler-kicker">Spoiler alert</span>
-            <span class="spoiler-title">Tribal results</span>
-            <span class="spoiler-copy">Click to burn through and reveal the vote — and who gets snuffed.</span>
-          </span>
-        </span>
-        <span class="burn" aria-hidden="true">${flames}</span>
-      </span>
+      <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
+      <span class="visually-hidden">Spoiler alert: tribal results. Click to burn and reveal the vote.</span>
     </button>
+    <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;
 }
 
 function bindTribalSpoilers(root) {
   if (!root) return;
-  root.querySelectorAll(".tribal-spoiler").forEach((wrap) => {
-    const btn = wrap.querySelector(".tribal-spoiler-cover");
-    const result = wrap.querySelector(".tribal-spoiler-result");
-    if (!btn || btn.dataset.bound === "1") return;
-    btn.dataset.bound = "1";
-
-    const reveal = () => {
-      wrap.classList.add("is-revealed");
-      wrap.classList.remove("is-burning");
-      if (result) result.removeAttribute("aria-hidden");
-      btn.remove();
-    };
-
-    btn.addEventListener("click", () => {
-      if (wrap.classList.contains("is-burning") || wrap.classList.contains("is-revealed")) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        reveal();
-        return;
-      }
-      wrap.classList.add("is-burning");
-      btn.setAttribute("aria-expanded", "true");
-      if (result) result.removeAttribute("aria-hidden");
-      const stage = wrap.querySelector(".spoiler-burn-stage");
-      let done = false;
-      const complete = () => {
-        if (done) return;
-        done = true;
-        window.clearTimeout(fallback);
-        if (stage) stage.removeEventListener("animationend", onAnimEnd);
-        reveal();
-      };
-      const onAnimEnd = (event) => {
-        if (event.target !== stage) return;
-        if (event.animationName !== "spoiler-content-shift") return;
-        complete();
-      };
-      const fallback = window.setTimeout(complete, 6200);
-      if (stage) stage.addEventListener("animationend", onAnimEnd);
-    });
-  });
+  if (typeof window.initTribalSpoilerBurns === "function") {
+    window.initTribalSpoilerBurns(root);
+  }
 }
 
 function lockedTeasers() {
