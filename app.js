@@ -11,6 +11,7 @@ const FALLBACK_SEASON = {
   "merged": false,
   "mergeAtRemaining": null,
   "startingBookUsd": 10.0,
+  "islandPotUsd": 120.0,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -729,6 +730,44 @@ function money(n) {
   return "$" + n.toFixed(2);
 }
 
+function potMoney(n) {
+  if (typeof n !== "number" || Number.isNaN(n)) return "—";
+  if (Math.abs(n - Math.round(n)) < 1e-9) {
+    return "$" + Math.round(n).toLocaleString("en-US");
+  }
+  return (
+    "$" +
+    n.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
+}
+
+function islandPotUsd(season) {
+  if (typeof season.islandPotUsd === "number" && !Number.isNaN(season.islandPotUsd)) {
+    return season.islandPotUsd;
+  }
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const n = (season.survivors || []).length || 12;
+  return start * n;
+}
+
+function livingContestantCount(season) {
+  const list = season.survivors || [];
+  const living = list.filter((s) => s && (s.status === "active" || s.status === "immune"));
+  if (living.length) return living.length;
+  return list.length || 12;
+}
+
+function renderIslandPot(season) {
+  const amount = document.getElementById("pot-amount");
+  const count = document.getElementById("pot-contestants");
+  if (!amount && !count) return;
+  if (count) count.textContent = String(livingContestantCount(season));
+  if (amount) amount.textContent = potMoney(islandPotUsd(season));
+}
+
 function pct(n) {
   if (typeof n !== "number" || Number.isNaN(n)) return "—";
   const sign = n > 0 ? "+" : "";
@@ -1163,7 +1202,7 @@ function renderSurvivor(season) {
       ${caption}
       <div class="survivor-book">
         <h3>The money</h3>
-        <p class="survivor-money-arc">Started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week.</p>
+        <p class="survivor-money-arc">Episode snapshot — started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week. <a href="${escapeHtml(assetBase() + "seasons/1/e01.html#tuesday-books")}">See the daily cut →</a></p>
         <p>${book}</p>
         <div class="survivor-stats">
           <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
@@ -1498,6 +1537,7 @@ function renderSeasonHub(season) {
 }
 
 function render(season, sourceNote) {
+  renderIslandPot(season);
   renderFaces(season);
   renderSurvivor(season);
   renderStandings(season);
@@ -1534,4 +1574,67 @@ async function loadSeason() {
   };
 }
 
+const CONTRIBUTE = {
+  url: "https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00",
+  buyButtonId: "buy_btn_1U8ZoTCE93DBZfRIsfo7VX3P",
+  publishableKey: "pk_live_sbH7i2tYMmt7NkfHtGrU1FNL"
+};
+
+const ROBINHOOD = {
+  url: "https://join.robinhood.com/tuckerh138"
+};
+
+function initContribute() {
+  const nav = document.querySelector(".nav-links");
+  if (nav && !nav.querySelector("[data-contribute]")) {
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = CONTRIBUTE.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.dataset.contribute = "true";
+    link.textContent = "Contribute";
+    item.appendChild(link);
+    nav.appendChild(item);
+  }
+
+  const footer = document.querySelector("footer");
+  if (footer && !footer.querySelector(".contribute-block")) {
+    const block = document.createElement("div");
+    block.className = "contribute-block";
+    block.innerHTML =
+      '<p class="contribute-kicker">Support the contest</p>' +
+      '<div class="stripe-buy-wrap">' +
+      '<stripe-buy-button buy-button-id="' +
+      CONTRIBUTE.buyButtonId +
+      '" publishable-key="' +
+      CONTRIBUTE.publishableKey +
+      '"></stripe-buy-button>' +
+      "</div>" +
+      '<p class="contribute-note"><a href="' +
+      CONTRIBUTE.url +
+      '" target="_blank" rel="noopener noreferrer">Contribute via Stripe</a> to help keep the torches lit on Liquidation Island.</p>';
+    footer.insertBefore(block, footer.firstChild);
+  }
+
+  if (footer && !footer.querySelector(".robinhood-block")) {
+    const rh = document.createElement("div");
+    rh.className = "robinhood-block";
+    rh.innerHTML =
+      '<p class="robinhood-credit">Made possible by the Robinhood MCP.</p>' +
+      '<p class="robinhood-referral"><a href="' +
+      ROBINHOOD.url +
+      '" target="_blank" rel="noopener noreferrer">Sign up for Robinhood with my link and we\'ll both pick our own gift stock \uD83C\uDF81</a></p>';
+    footer.appendChild(rh);
+  }
+
+  if (!document.querySelector('script[src*="buy-button.js"]')) {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://js.stripe.com/v3/buy-button.js";
+    document.head.appendChild(script);
+  }
+}
+
+initContribute();
 loadSeason().then(({ season, note }) => render(season, note));

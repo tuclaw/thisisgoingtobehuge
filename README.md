@@ -15,6 +15,16 @@ Home is the Survivor cold open: brand, one line, CTA into the live episode. Scro
 - [Episode 1](/seasons/1/e01.html)
 - [Rules](/rules.html)
 
+## Support the contest
+
+Help keep the torches lit on Liquidation Island:
+
+- [Contribute via Stripe](https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00)
+
+The live site footer also embeds the Stripe contribute button.
+
+When contributions (or extra capital) land on the island, bump `islandPotUsd` in `season1.json`. The island pot on the home money section reads that number live — total capital only, not individual books.
+
 ## DNS
 
 Tucker must set these records at the domain registrar for apex `thisisgoingtobehuge.com`.
