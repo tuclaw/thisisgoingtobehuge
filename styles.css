@@ -1399,6 +1399,11 @@ a.brand:hover {
   animation: pot-glow 4.5s ease-in-out infinite;
 }
 
+.pot-fuel {
+  display: inline-block;
+  margin: 0.55rem 0 0.7rem;
+}
+
 .pot-sub {
   margin: 0;
   color: var(--sand);
