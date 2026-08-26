@@ -1210,4 +1210,50 @@ async function loadSeason() {
   };
 }
 
+const CONTRIBUTE = {
+  url: "https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00",
+  buyButtonId: "buy_btn_1U8ZoTCE93DBZfRIsfo7VX3P",
+  publishableKey: "pk_live_sbH7i2tYMmt7NkfHtGrU1FNL"
+};
+
+function initContribute() {
+  const nav = document.querySelector(".nav-links");
+  if (nav && !nav.querySelector("[data-contribute]")) {
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = CONTRIBUTE.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.dataset.contribute = "true";
+    link.textContent = "Contribute";
+    item.appendChild(link);
+    nav.appendChild(item);
+  }
+
+  const footer = document.querySelector("footer");
+  if (footer && !footer.querySelector(".contribute-block")) {
+    const block = document.createElement("div");
+    block.className = "contribute-block";
+    block.innerHTML =
+      '<p class="contribute-kicker">Support the contest</p>' +
+      '<div class="stripe-buy-wrap">' +
+      '<stripe-buy-button buy-button-id="' +
+      CONTRIBUTE.buyButtonId +
+      '" publishable-key="' +
+      CONTRIBUTE.publishableKey +
+      '"></stripe-buy-button>' +
+      "</div>" +
+      '<p class="contribute-note">Help keep the torches lit on Liquidation Island.</p>';
+    footer.insertBefore(block, footer.firstChild);
+  }
+
+  if (!document.querySelector('script[src*="buy-button.js"]')) {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://js.stripe.com/v3/buy-button.js";
+    document.head.appendChild(script);
+  }
+}
+
+initContribute();
 loadSeason().then(({ season, note }) => render(season, note));
