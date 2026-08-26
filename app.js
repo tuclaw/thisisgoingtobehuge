@@ -1126,9 +1126,11 @@ function renderEpisode(season) {
       .join("");
   }
   const tribal = document.getElementById("episode-tribal");
+  const tribalHeading = document.querySelector("#tribal > h2");
   if (tribal) {
     const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
     if (log.length === 0) {
+      if (tribalHeading) tribalHeading.textContent = "Not yet";
       tribal.innerHTML = `
       <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
       <div class="council-empty">
@@ -1136,19 +1138,112 @@ function renderEpisode(season) {
         <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
       </div>`;
     } else {
-      const items = log
-        .map((entry) => {
-          const title = entry.title || entry.weekLabel || "Tribal";
-          const boot = entry.bootName || entry.bootId || "—";
-          const votes = entry.votes ? JSON.stringify(entry.votes) : "recorded";
-          return `<li><strong>${escapeHtml(title)}</strong> — boot: ${escapeHtml(String(boot))}. ${escapeHtml(entry.summary || votes)}</li>`;
-        })
-        .join("");
+      if (tribalHeading) tribalHeading.textContent = "The vote";
+      const items = log.map((entry) => formatTribalEntry(entry)).join("");
       tribal.innerHTML = `
     <div class="torches">${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}</div>
-    <ul class="log-list">${items}</ul>`;
+    ${wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`)}`;
+      bindTribalSpoilers(tribal);
     }
   }
+}
+
+function formatTribalVotes(votes) {
+  if (votes == null) return "";
+  if (typeof votes === "string") return votes;
+  if (Array.isArray(votes)) {
+    return votes
+      .map((v) => {
+        if (v == null) return "";
+        if (typeof v === "string") return v;
+        if (typeof v === "object") {
+          const from = v.from || v.voter || v.by || "";
+          const forName = v.for || v.boot || v.target || v.vote || "";
+          if (from && forName) return `${from} → ${forName}`;
+          if (forName) return String(forName);
+          return JSON.stringify(v);
+        }
+        return String(v);
+      })
+      .filter(Boolean)
+      .join("; ");
+  }
+  if (typeof votes === "object") {
+    return Object.entries(votes)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join("; ");
+  }
+  return String(votes);
+}
+
+function formatTribalEntry(entry) {
+  const title = entry.title || entry.weekLabel || "Tribal";
+  const boot = entry.bootName || entry.bootId || "—";
+  const voteText = formatTribalVotes(entry.votes);
+  const detail = entry.summary || voteText || "Votes recorded.";
+  return `<li>
+    <strong>${escapeHtml(title)}</strong>
+    <p class="boot-line">Voted off: <strong>${escapeHtml(String(boot))}</strong></p>
+    <p class="vote-detail">${escapeHtml(detail)}</p>
+  </li>`;
+}
+
+function wrapTribalSpoiler(innerHtml) {
+  const flames = Array.from({ length: 10 }, () => '<span class="flame"></span>').join("");
+  return `<div class="tribal-spoiler">
+    <div class="tribal-spoiler-result" id="tribal-spoiler-result" aria-hidden="true">${innerHtml}</div>
+    <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="tribal-spoiler-result">
+      <span class="spoiler-burn-stage">
+        <span class="spoiler-burn-page">
+          <span class="highlight" aria-hidden="true"></span>
+          <span class="spoiler-burn-text">
+            <span class="spoiler-kicker">Spoiler alert</span>
+            <span class="spoiler-title">Tribal results</span>
+            <span class="spoiler-copy">Click to burn through and reveal the vote — and who gets snuffed.</span>
+          </span>
+          <span class="burn" aria-hidden="true">${flames}</span>
+        </span>
+      </span>
+    </button>
+  </div>`;
+}
+
+function bindTribalSpoilers(root) {
+  if (!root) return;
+  root.querySelectorAll(".tribal-spoiler").forEach((wrap) => {
+    const btn = wrap.querySelector(".tribal-spoiler-cover");
+    const result = wrap.querySelector(".tribal-spoiler-result");
+    if (!btn || btn.dataset.bound === "1") return;
+    btn.dataset.bound = "1";
+
+    const reveal = () => {
+      wrap.classList.add("is-revealed");
+      wrap.classList.remove("is-burning");
+      if (result) result.removeAttribute("aria-hidden");
+      btn.remove();
+    };
+
+    btn.addEventListener("click", () => {
+      if (wrap.classList.contains("is-burning") || wrap.classList.contains("is-revealed")) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        reveal();
+        return;
+      }
+      wrap.classList.add("is-burning");
+      btn.setAttribute("aria-expanded", "true");
+      if (result) result.removeAttribute("aria-hidden");
+      const stage = wrap.querySelector(".spoiler-burn-stage");
+      const finish = (event) => {
+        if (event && event.animationName && event.animationName !== "spoiler-content-shift") return;
+        reveal();
+      };
+      if (stage) {
+        stage.addEventListener("animationend", finish);
+      } else {
+        window.setTimeout(reveal, 6000);
+      }
+    });
+  });
 }
 
 function lockedTeasers() {
@@ -1297,5 +1392,32 @@ function initContribute() {
   }
 }
 
+function applyDemoTribal(season) {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("demoTribal") !== "1") return season;
+  } catch {
+    return season;
+  }
+  const demo = {
+    ...season,
+    tribalLog: [
+      {
+        title: "Episode 1 Tribal",
+        weekLabel: season.episode && season.episode.weekLabel,
+        bootName: "Demo Boot",
+        summary: "Demo tally for spoiler UI — not a real council.",
+        votes: [
+          { from: "Reed", for: "Demo Boot" },
+          { from: "Hex", for: "Demo Boot" },
+          { from: "Mara", for: "Demo Boot" },
+          { from: "Nori", for: "Someone Else" }
+        ]
+      }
+    ]
+  };
+  return demo;
+}
+
 initContribute();
-loadSeason().then(({ season, note }) => render(season, note));
+loadSeason().then(({ season, note }) => render(applyDemoTribal(season), note));
