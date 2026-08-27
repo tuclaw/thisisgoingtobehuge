@@ -898,6 +898,271 @@ function formatBook(s) {
   return `<span class="pos-book">${legs.map((p) => formatPosition(p, tribeId)).join("")}</span>`;
 }
 
+const TICKER_NAMES = {
+  TSLA: "Tesla",
+  SMCI: "Super Micro Computer",
+  SOXL: "Direxion Daily Semiconductor Bull 3X",
+  QID: "ProShares UltraShort QQQ",
+  BTAL: "AGF U.S. Market Neutral Anti-Beta",
+  WM: "Waste Management",
+  HOOD: "Robinhood Markets",
+  COIN: "Coinbase",
+  SOFI: "SoFi Technologies",
+  COWZ: "Pacer US Cash Cows 100",
+  GLD: "SPDR Gold Shares",
+  SPY: "SPDR S&P 500",
+  NVDA: "NVIDIA",
+  MSFT: "Microsoft",
+  COST: "Costco Wholesale",
+  CASH: "Cash"
+};
+
+function tickerOf(pos) {
+  return String((pos && pos.ticker) || "").toUpperCase().split("/")[0].trim();
+}
+
+function isCashLeg(pos) {
+  if (!pos) return false;
+  const ticker = tickerOf(pos);
+  return ticker === "CASH" || pos.status === "cash" || pos.status === "cash-short-blocked";
+}
+
+function tickerName(ticker) {
+  const key = String(ticker || "").toUpperCase();
+  if (TICKER_NAMES[key]) return TICKER_NAMES[key];
+  return key || "Position";
+}
+
+function qtyOf(pos) {
+  const q = parseFloat(pos && pos.qty);
+  return Number.isFinite(q) ? q : null;
+}
+
+function avgOf(pos) {
+  const a = parseFloat(pos && pos.avg);
+  return Number.isFinite(a) ? a : null;
+}
+
+function quoteFor(season, ticker) {
+  const quotes = season && season.quotes;
+  if (!quotes || !ticker) return null;
+  return quotes[ticker] || null;
+}
+
+function lastOf(pos, season) {
+  if (pos && typeof pos.last === "number" && !Number.isNaN(pos.last)) return pos.last;
+  const q = quoteFor(season, tickerOf(pos));
+  if (q && typeof q.last === "number" && !Number.isNaN(q.last)) return q.last;
+  return null;
+}
+
+function priorCloseOf(pos, season) {
+  if (pos && typeof pos.priorClose === "number" && !Number.isNaN(pos.priorClose)) return pos.priorClose;
+  const q = quoteFor(season, tickerOf(pos));
+  if (q && typeof q.priorClose === "number" && !Number.isNaN(q.priorClose)) return q.priorClose;
+  return null;
+}
+
+function markedEquity(pos, season) {
+  if (isCashLeg(pos) && typeof pos.sizeUsd === "number") return pos.sizeUsd;
+  const qty = qtyOf(pos);
+  const last = lastOf(pos, season);
+  if (qty != null && last != null) return qty * last;
+  return null;
+}
+
+function tickerDayPct(pos, season) {
+  const last = lastOf(pos, season);
+  const prior = priorCloseOf(pos, season);
+  if (last == null || prior == null || prior === 0) return null;
+  return ((last - prior) / prior) * 100;
+}
+
+function chgClass(n) {
+  if (typeof n !== "number" || Number.isNaN(n) || n === 0) return "flat";
+  return n > 0 ? "up" : "down";
+}
+
+function formatMarkedAt(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short"
+    }).format(d);
+  } catch {
+    return String(iso);
+  }
+}
+
+function holdChips(legs) {
+  const tickers = [];
+  const seen = new Set();
+  (legs || []).forEach((p) => {
+    const ticker = isCashLeg(p) ? "CASH" : tickerOf(p);
+    if (!ticker || seen.has(ticker)) return;
+    seen.add(ticker);
+    tickers.push(ticker);
+  });
+  if (!tickers.length) return "";
+  return `<div class="hold-chips">${tickers
+    .map((t) => `<span class="hold-chip${t === "CASH" ? " cash" : ""}">${escapeHtml(t)}</span>`)
+    .join("")}</div>`;
+}
+
+function holdLegHtml(pos, season, tribeId) {
+  const cash = isCashLeg(pos);
+  const ticker = cash ? "CASH" : tickerOf(pos) || "—";
+  const name = cash
+    ? pos && pos.status === "cash-short-blocked"
+      ? "Cash · shorts blocked"
+      : "Cash"
+    : tickerName(ticker);
+  const qty = qtyOf(pos);
+  const avg = avgOf(pos);
+  const equity = markedEquity(pos, season);
+  const day = cash ? 0 : tickerDayPct(pos, season);
+  const marked = equity != null && (cash || day != null || lastOf(pos, season) != null);
+  const value = marked ? money(equity) : typeof pos.sizeUsd === "number" ? money(pos.sizeUsd) : "—";
+  const valueNote = marked ? "" : typeof pos.sizeUsd === "number" ? "cost" : "";
+  let sub = name;
+  if (!cash && qty != null && avg != null) {
+    sub = `${name} · ${qty} @ ${avg}`;
+  } else if (cash && typeof pos.sizeUsd === "number") {
+    sub = name;
+  }
+  const extra = pos && pos.intended ? `<span class="hold-note">${escapeHtml(pos.intended)}</span>` : "";
+  let chg;
+  if (cash) {
+    chg = `<b class="flat">0.00%</b>`;
+  } else if (day != null) {
+    chg = `<b class="${chgClass(day)}">${pct(day)}</b>`;
+  } else {
+    chg = `<b class="flat">unmarked</b>`;
+  }
+  const badge = ticker.length > 4 ? ticker.slice(0, 4) : ticker;
+  return `<div class="hold-leg">
+    <span class="hold-sym ${tribeId || ""} ${cash ? "cash" : ""}" aria-hidden="true">${escapeHtml(badge)}</span>
+    <div class="hold-leg-id">
+      <strong>${escapeHtml(ticker)}</strong>
+      <em>${escapeHtml(sub)}</em>
+      ${extra}
+    </div>
+    <div class="hold-mark">
+      <span class="val">${value}${valueNote ? `<i>${valueNote}</i>` : ""}</span>
+      ${chg}
+    </div>
+  </div>`;
+}
+
+function holdBookHtml(s, tribe, season, rank) {
+  const legs = bookLegs(s);
+  const week = weekPctOf(s);
+  const day = dayPctOf(s);
+  const model = escapeHtml(modelOf(s));
+  const nick = nickOf(s);
+  const tribeName = tribe ? tribe.name : s.tribeId;
+  const face = s.portrait
+    ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
+    : "";
+  const pad = rank < 10 ? "0" + rank : String(rank);
+  const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
+  return `<article class="hold-book ${s.tribeId}">
+    <a class="hold-head" href="${escapeHtml(survivorHref(s.name))}">
+      <span class="hold-rank">${pad}</span>
+      <span class="hold-face">${face}</span>
+      <span class="hold-id">
+        <strong>${model}</strong>
+        <em>${escapeHtml(nick)}${tribeName ? " · " + escapeHtml(tribeName) : ""}</em>
+      </span>
+      <span class="hold-mark">
+        <span class="val">${money(s.bookUsd)}</span>
+        <b class="${chgClass(week)}">${pct(week)} week</b>
+        <b class="day ${chgClass(day)}">${pct(day)} today</b>
+      </span>
+      ${immune}
+    </a>
+    ${holdChips(legs)}
+    <div class="hold-legs">${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
+  </article>`;
+}
+
+function renderEpisodeHoldings(season) {
+  const root = document.getElementById("episode-holdings");
+  if (!root) return;
+  const ranked = [...(season.survivors || [])].sort((a, b) => {
+    const w = weekPctOf(b) - weekPctOf(a);
+    if (w !== 0) return w;
+    return modelOf(a).localeCompare(modelOf(b));
+  });
+  root.innerHTML = ranked
+    .map((s, i) => holdBookHtml(s, tribeById(season, s.tribeId), season, i + 1))
+    .join("");
+  const kicker = document.getElementById("holdings-kicker");
+  if (kicker) {
+    const when = formatMarkedAt(season.markedAt);
+    kicker.textContent = when
+      ? `Ranked by week %. Tickers as of ${when}.`
+      : "Ranked by week %. Tickers as they stood at the last recorded update.";
+  }
+}
+
+function openFoldForTarget(target) {
+  if (!target) return;
+  const fold = target.classList && target.classList.contains("day-fold")
+    ? target
+    : target.closest
+      ? target.closest(".day-fold")
+      : null;
+  if (fold) fold.open = true;
+}
+
+function syncDayRail() {
+  const hash = (window.location.hash || "#week-board").replace(/^#/, "") || "week-board";
+  const target = document.getElementById(hash);
+  document.querySelectorAll(".day-rail a").forEach((a) => {
+    const id = (a.getAttribute("href") || "").replace(/^#/, "");
+    const section = id ? document.getElementById(id) : null;
+    const on =
+      id === hash ||
+      (section && target && (section === target || section.contains(target) || target.contains(section)));
+    if (on) a.setAttribute("aria-current", "location");
+    else a.removeAttribute("aria-current");
+  });
+}
+
+function openFoldForHash() {
+  const hash = (window.location.hash || "").replace(/^#/, "");
+  if (hash) {
+    const el = document.getElementById(hash);
+    if (el) openFoldForTarget(el);
+  }
+  syncDayRail();
+}
+
+function initDayFolds() {
+  if (!document.querySelector(".day-fold")) return;
+  openFoldForHash();
+  if (initDayFolds.bound) return;
+  initDayFolds.bound = true;
+  window.addEventListener("hashchange", openFoldForHash);
+  document.querySelectorAll(".day-rail a").forEach((a) => {
+    a.addEventListener("click", () => {
+      const href = a.getAttribute("href") || "";
+      const id = href.charAt(0) === "#" ? href.slice(1) : "";
+      const el = id ? document.getElementById(id) : null;
+      if (el) openFoldForTarget(el);
+    });
+  });
+}
+
 function totemSvg(survivor, tribe) {
   const ink = tribe && tribe.id === "askara" ? "#C45A12" : "#0E6B6B";
   const gold = "#d4a017";
@@ -1218,7 +1483,7 @@ function renderSurvivor(season) {
       ${caption}
       <div class="survivor-book">
         <h3>The money</h3>
-        <p class="survivor-money-arc">Episode snapshot — started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week. <a href="${escapeHtml(assetBase() + "seasons/1/e01.html#tuesday-books")}">See the daily cut →</a></p>
+        <p class="survivor-money-arc">Episode snapshot — started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week. <a href="${escapeHtml(assetBase() + "seasons/1/e01.html#week-board")}">See the week board →</a></p>
         <p>${book}</p>
         <div class="survivor-stats">
           <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
@@ -1444,6 +1709,7 @@ function renderEpisode(season) {
   }
   const banner = document.getElementById("season-banner");
   if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
+  renderEpisodeHoldings(season);
   const body = document.getElementById("episode-marks-body");
   if (body) {
     body.innerHTML = (season.survivors || [])
@@ -1463,7 +1729,7 @@ function renderEpisode(season) {
       .join("");
   }
   const tribal = document.getElementById("episode-tribal");
-  const tribalHeading = document.querySelector("#tribal > h2");
+  const tribalHeading = document.querySelector("#tribal-cut > h2, #tribal > h2");
   if (tribal) {
     const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
     if (log.length === 0) {
@@ -1641,6 +1907,7 @@ function render(season, sourceNote) {
   renderEpisode(season);
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
+  initDayFolds();
   initReveals();
   const miss = document.getElementById("json-miss");
   if (!miss) return;

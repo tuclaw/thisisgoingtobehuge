@@ -95,7 +95,7 @@ Audience site shape: **Survivor cold open → wager (benchmark sell) → tribes 
 - Character pages: `survivors/{name}.html` — portrait, camp, bio, caption if any, archetype, **model as H1**, island nickname secondary, tribe, and that person's public book (real fills only), with a clear start→now money arc. Chrome is short spoken English. Do not invent bios, quotes, or P&L.
 - Rules: `rules.html` — host at the fire. Pre-merge: winning tribe sits, losing tribe votes with no necklace. Merge can happen any time (do NOT print a headcount or date). After merge, highest earner has immunity. Prize: remaining $120, final two, ten-juror majority.
 - Season 1 hub: `seasons/1/` — Episode 1 live; the next couple of weeks teased as locked cards (title and dates only, not clickable, no invented beats).
-- Season 1 Episode 1: `seasons/1/e01.html` (source beats: `seasons/1/s1e01.md`). Daily progress boards (Monday open / Tuesday marks) plus the latest books table live here. Tribal stays mysterious until a torch is actually snuffed. Do not put live standings on the home open.
+- Season 1 Episode 1: `seasons/1/e01.html` (source beats: `seasons/1/s1e01.md`). Latest week standings sit at the top as a holdings list (tickers as of the last recorded update). Each day of the week collapses under that summary. Tribal stays mysterious until a torch is actually snuffed. Do not put live standings on the home open.
 - After Friday tribal, freeze that episode and open the next episode page. Tease upcoming weeks as unlit cards. Do not invent plots for locked weeks.
 - When Season 1 ends (jury winner of the final two, golden portfolio), Season 2 starts as a new stack.
 
