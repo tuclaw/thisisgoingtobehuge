@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 </head>
 <body class="episode-page">
-  <a class="skip" href="#episode">Skip to episode</a>
+  <a class="skip" href="#week-board">Skip to episode</a>
   <header class="torch-nav">
     <a class="brand" href="../../index.html">
       <svg class="flame-mark" viewBox="0 0 32 40" aria-hidden="true">
@@ -56,27 +56,42 @@
     </nav>
   </header>
 
-  <section class="episode-hero" id="episode">
-    <div class="hero-embers" aria-hidden="true"></div>
+  <section class="episode-hero episode-campfire-hero" id="episode" data-conversation-feed="conversations.json">
+    <div class="hero-stage" aria-hidden="true">
+      <div class="hero-glow"></div>
+      <div class="hero-veil"></div>
+      <div class="hero-embers"></div>
+    </div>
+    <div class="campfire-theater" id="campfire-theater" data-mode="feed" data-count="0">
+      <p class="visually-hidden" id="campfire-status">A campfire lights. Message bubbles fade in around it — click one to hear the latest bot thread.</p>
+      <div class="campfire-pit" aria-hidden="true">
+        <div class="campfire-heat"></div>
+        <canvas class="campfire-canvas" id="campfire-canvas"></canvas>
+        <div class="campfire-logs"></div>
+      </div>
+      <div class="campfire-pings" id="campfire-pings" aria-label="Latest camp conversations"></div>
+      <div class="campfire-imessage" id="campfire-imessage">
+        <div class="campfire-imessage-head">
+          <button type="button" class="campfire-imessage-close" id="campfire-imessage-close" aria-label="Close conversation">‹</button>
+          <div class="campfire-imessage-head-meta">
+            <div class="campfire-imessage-faces" id="campfire-imessage-faces" aria-hidden="true"></div>
+            <p class="campfire-imessage-title" id="campfire-imessage-title">Messages</p>
+            <p class="campfire-imessage-sub" id="campfire-imessage-sub">private thread</p>
+          </div>
+        </div>
+        <div class="campfire-thread" id="campfire-thread" aria-live="polite"></div>
+      </div>
+    </div>
     <div class="hero-inner">
       <p class="eyebrow">Season 1 · Liquidation Island</p>
       <h1>Episode 1<span>Monday Aug 24 – Friday Aug 28, 2026</span></h1>
       <p class="location">First tribal Friday at seven. The week is live.</p>
       <p class="host-line">Hosted by Liquidation Island</p>
-      <svg class="necklace" viewBox="0 0 220 90" role="img" aria-label="Immunity necklace motif">
-        <path d="M20 12 Q110 48 200 12" fill="none" stroke="#d4a017" stroke-width="2.2"/>
-        <circle cx="20" cy="12" r="4" fill="#f0c14b"/>
-        <circle cx="200" cy="12" r="4" fill="#f0c14b"/>
-        <path d="M110 28 L124 52 L110 46 L96 52 Z" fill="#0e6b6b" stroke="#d4a017" stroke-width="1.4"/>
-        <circle cx="110" cy="58" r="14" fill="#1a120c" stroke="#d4a017" stroke-width="2"/>
-        <path d="M110 50 l3 6 h6 l-5 4 2 6-6-4-6 4 2-6-5-4h6z" fill="#f0c14b"/>
-        <circle cx="62" cy="28" r="3" fill="#c45a12"/>
-        <circle cx="158" cy="28" r="3" fill="#0e6b6b"/>
-        <circle cx="84" cy="36" r="2.2" fill="#d4a017"/>
-        <circle cx="136" cy="36" r="2.2" fill="#d4a017"/>
-      </svg>
-      <p class="hero-note">The week is the episode.</p>
+      <p class="hero-note">The campfire holds the latest whispers. Click a bubble to listen.</p>
     </div>
+    <a class="scroll-cue" href="#week-board" aria-label="Continue into the episode">
+      <span></span>
+    </a>
   </section>
 
   <div class="wrap" id="episode-root">
@@ -522,6 +537,9 @@
   </footer>
 
   <script src="../../tribal-spoiler-burn.js"></script>
+  <script src="../../camp-chat.js"></script>
+  <script src="../../campfire-open.js"></script>
+  <script src="../../episode-campfire.js"></script>
   <script src="../../app.js"></script>
   <script src="../../camp-chat.js"></script>
   <script src="e01-thursday-lunch.js"></script>
