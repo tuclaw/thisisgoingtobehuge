@@ -1,0 +1,478 @@
+/* Camp chat — iMessage-style spectator playback for Liquidation Island */
+
+.camp-chat-demo {
+  --im-bg: #f2f2f7;
+  --im-header: #f9f9f9;
+  --im-border: rgba(60, 60, 67, 0.18);
+  --im-text: #1c1c1e;
+  --im-sub: rgba(60, 60, 67, 0.6);
+  --im-blue: #007aff;
+  --im-gray: #e9e9eb;
+  --im-gray-text: #1c1c1e;
+  --im-shadow: 0 18px 48px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --bubble-teal: #0e6b6b;
+  --bubble-ember: #c45a12;
+}
+
+.camp-chat-page .demo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 980px) {
+  .camp-chat-page .demo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.camp-scene {
+  position: relative;
+  min-height: 320px;
+  padding: 1.4rem 1.2rem 1.6rem;
+  border: 1px solid rgba(232, 213, 176, 0.14);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232, 93, 4, 0.12), transparent 55%),
+    linear-gradient(165deg, rgba(232, 213, 176, 0.06), rgba(18, 12, 8, 0.65)),
+    #14100c;
+  overflow: hidden;
+}
+
+.camp-scene.bidu {
+  box-shadow: inset 0 0 0 1px rgba(14, 107, 107, 0.35);
+}
+
+.camp-scene.askara {
+  box-shadow: inset 0 0 0 1px rgba(196, 90, 18, 0.4);
+}
+
+.camp-scene.mixed {
+  box-shadow: inset 0 0 0 1px rgba(212, 160, 23, 0.28);
+}
+
+.camp-scene-kicker {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.58rem;
+  color: var(--gold);
+}
+
+.camp-scene h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--parchment);
+}
+
+.camp-scene-desc {
+  margin: 0;
+  color: var(--sand);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  max-width: 28rem;
+}
+
+.camp-scene-embers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 95%, rgba(232, 93, 4, 0.18), transparent 42%);
+  opacity: 0.7;
+}
+
+.camp-scene-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* —— Floating trigger bubble —— */
+.camp-chat-trigger-wrap {
+  position: absolute;
+  right: 1rem;
+  bottom: 1.1rem;
+  z-index: 3;
+}
+
+.camp-chat-trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.85rem 0.55rem 0.65rem;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(145deg, #34c759, #248a3d);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+  animation: camp-bubble-float 3.2s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.camp-chat-trigger:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.camp-chat-trigger:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+
+.camp-chat-trigger.is-open {
+  animation: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.85);
+}
+
+.camp-chat-trigger.is-read .camp-chat-trigger-pulse {
+  opacity: 0;
+  transform: scale(0);
+  animation: none;
+  pointer-events: none;
+}
+
+@keyframes camp-bubble-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.camp-chat-trigger-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.camp-chat-trigger-pulse {
+  position: absolute;
+  right: -0.15rem;
+  top: -0.15rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: #ff3b30;
+  border: 2px solid #248a3d;
+  animation: camp-pulse 1.8s ease-in-out infinite;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.camp-chat-trigger-pulse.is-hidden,
+.camp-chat-trigger.is-read .camp-chat-trigger-pulse {
+  opacity: 0;
+  transform: scale(0);
+  animation: none;
+  pointer-events: none;
+}
+
+@keyframes camp-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.75; }
+}
+
+/* —— Chat panel (iMessage phone frame) —— */
+.camp-chat-panel {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  z-index: 5;
+  width: min(100%, 280px);
+  max-height: min(420px, calc(100% - 1rem));
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--im-bg);
+  box-shadow: var(--im-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.92);
+  transform-origin: bottom right;
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.35s;
+  pointer-events: none;
+}
+
+.camp-chat-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.camp-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem 0.55rem;
+  background: var(--im-header);
+  border-bottom: 1px solid var(--im-border);
+}
+
+.camp-chat-back {
+  border: 0;
+  background: transparent;
+  color: var(--im-blue);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+}
+
+.camp-chat-back:focus-visible {
+  outline: 2px solid var(--im-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.camp-chat-header-meta {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  padding-right: 1.5rem;
+}
+
+.camp-chat-title {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--im-text);
+  letter-spacing: -0.01em;
+}
+
+.camp-chat-subtitle {
+  margin: 0.1rem 0 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.68rem;
+  color: var(--im-sub);
+}
+
+.camp-chat-thread {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.75rem 0.65rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  scroll-behavior: smooth;
+}
+
+.camp-chat-day {
+  align-self: center;
+  margin: 0.25rem 0 0.45rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: var(--im-sub);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.camp-chat-row {
+  display: flex;
+  flex-direction: column;
+  max-width: 88%;
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+}
+
+.camp-chat-row.is-visible {
+  animation: camp-msg-in 0.88s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes camp-msg-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.camp-chat-row.from-left {
+  align-self: flex-start;
+}
+
+.camp-chat-row.from-right {
+  align-self: flex-end;
+}
+
+.camp-chat-sender {
+  margin: 0 0 0.15rem 0.45rem;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--im-sub);
+}
+
+.camp-chat-row.from-right .camp-chat-sender {
+  text-align: right;
+  margin-right: 0.45rem;
+  margin-left: 0;
+}
+
+.camp-chat-sender.teal { color: var(--bubble-teal); }
+.camp-chat-sender.ember { color: var(--bubble-ember); }
+.camp-chat-sender.blue { color: var(--im-blue); }
+
+.camp-chat-bubble {
+  position: relative;
+  padding: 0.48rem 0.72rem;
+  border-radius: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  word-wrap: break-word;
+}
+
+.camp-chat-row.from-left .camp-chat-bubble {
+  background: var(--im-gray);
+  color: var(--im-gray-text);
+  border-bottom-left-radius: 4px;
+}
+
+.camp-chat-row.from-right .camp-chat-bubble {
+  background: var(--im-blue);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.camp-chat-bubble.teal {
+  background: linear-gradient(145deg, #0e6b6b, #0a4a4a);
+  color: #e8fff8;
+}
+
+.camp-chat-bubble.ember {
+  background: linear-gradient(145deg, #c45a12, #8a3a0c);
+  color: #fff4e8;
+}
+
+.camp-chat-typing {
+  align-self: flex-start;
+  display: flex;
+  gap: 0.28rem;
+  padding: 0.55rem 0.7rem;
+  margin-top: 0.15rem;
+  background: var(--im-gray);
+  border-radius: 18px;
+  border-bottom-left-radius: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.camp-chat-typing.is-active {
+  animation: camp-msg-in 0.65s ease forwards;
+}
+
+.camp-chat-typing span {
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: rgba(60, 60, 67, 0.45);
+  animation: camp-typing-dot 1.1s ease-in-out infinite;
+}
+
+.camp-chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.camp-chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes camp-typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+
+.camp-chat-footer {
+  padding: 0.45rem 0.65rem 0.55rem;
+  border-top: 1px solid var(--im-border);
+  background: var(--im-header);
+}
+
+.camp-chat-replay {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--im-blue);
+  background: rgba(0, 122, 255, 0.1);
+  cursor: pointer;
+}
+
+.camp-chat-replay:hover {
+  background: rgba(0, 122, 255, 0.16);
+}
+
+.camp-chat-replay:focus-visible {
+  outline: 2px solid var(--im-blue);
+  outline-offset: 2px;
+}
+
+.camp-chat-replay:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.camp-chat-host-note {
+  margin: 2rem 0 0;
+  padding: 1rem 1.1rem;
+  border: 1px dashed rgba(212, 160, 23, 0.4);
+  background: rgba(212, 160, 23, 0.06);
+  color: var(--sand);
+  font-size: 0.98rem;
+}
+
+.camp-chat-host-note strong {
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camp-chat-trigger,
+  .camp-chat-trigger-pulse,
+  .camp-chat-row.is-visible,
+  .camp-chat-typing.is-active,
+  .camp-chat-typing span {
+    animation: none !important;
+  }
+
+  .camp-chat-trigger {
+    transform: none;
+  }
+
+  .camp-chat-panel {
+    transition: none;
+  }
+
+  .camp-chat-row {
+    opacity: 1;
+    transform: none;
+  }
+
+  .camp-chat-typing.is-active {
+    opacity: 1;
+    transform: none;
+  }
+}

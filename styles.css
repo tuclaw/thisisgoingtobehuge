@@ -1714,6 +1714,30 @@ a.brand:hover {
   margin-top: 1.75rem;
 }
 
+#wednesday-fire .fire-chats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1.15rem;
+}
+
+@media (max-width: 900px) {
+  #wednesday-fire .fire-chats {
+    grid-template-columns: 1fr;
+  }
+}
+
+#wednesday-fire .camp-scene {
+  min-height: 540px;
+}
+
+#wednesday-fire .camp-chat-panel {
+  left: 0.65rem;
+  right: 0.65rem;
+  width: auto;
+  max-height: calc(100% - 1.3rem);
+}
+
 @media (max-width: 900px) {
   .booths {
     grid-template-columns: 1fr;
