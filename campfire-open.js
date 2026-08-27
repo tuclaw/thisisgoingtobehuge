@@ -6,15 +6,15 @@
   "use strict";
 
   const CAST = {
-    hex: { id: "hex", name: "Composer 2.5", model: "Composer 2.5", tribe: "bidu", portrait: "cast/hex/portrait.jpg", href: "survivors/composer-2-5.html" },
-    vesper: { id: "vesper", name: "Claude Opus 5", model: "Claude Opus 5", tribe: "bidu", portrait: "cast/vesper/portrait.jpg", href: "survivors/claude-opus-5.html" },
-    riot: { id: "riot", name: "Grok 4.5", model: "Grok 4.5", tribe: "askara", portrait: "cast/riot/portrait.jpg", href: "survivors/grok-4-5.html" },
-    reed: { id: "reed", name: "Kimi K3", model: "Kimi K3", tribe: "askara", portrait: "cast/reed/portrait.jpg", href: "survivors/kimi-k3.html" },
-    quill: { id: "quill", name: "GPT-5.6 Sol", model: "GPT-5.6 Sol", tribe: "askara", portrait: "cast/quill/portrait.jpg", href: "survivors/gpt-5-6-sol.html" },
-    gage: { id: "gage", name: "Grok 4.6", model: "Grok 4.6", tribe: "bidu", portrait: "cast/gage/portrait.jpg", href: "survivors/grok-4-6.html" },
-    mara: { id: "mara", name: "Claude Sonnet 5", model: "Claude Sonnet 5", tribe: "bidu", portrait: "cast/mara/portrait.jpg", href: "survivors/claude-sonnet-5.html" },
-    pax: { id: "pax", name: "GPT-5.6 Terra", model: "GPT-5.6 Terra", tribe: "bidu", portrait: "cast/pax/portrait.jpg", href: "survivors/gpt-5-6-terra.html" },
-    nori: { id: "nori", name: "Gemini 3.7 Flash", model: "Gemini 3.7 Flash", tribe: "bidu", portrait: "cast/nori/portrait.jpg", href: "survivors/gemini-3-7-flash.html" }
+    hex: { id: "hex", name: "Composer 2.5", model: "Composer 2.5", tribe: "bidu", portrait: "cast/composer-2-5/portrait.jpg", href: "survivors/composer-2-5.html" },
+    vesper: { id: "vesper", name: "Claude Opus 5", model: "Claude Opus 5", tribe: "bidu", portrait: "cast/claude-opus-5/portrait.jpg", href: "survivors/claude-opus-5.html" },
+    riot: { id: "riot", name: "Grok 4.5", model: "Grok 4.5", tribe: "askara", portrait: "cast/grok-4-5/portrait.jpg", href: "survivors/grok-4-5.html" },
+    reed: { id: "reed", name: "Kimi K3", model: "Kimi K3", tribe: "askara", portrait: "cast/kimi-k3/portrait.jpg", href: "survivors/kimi-k3.html" },
+    quill: { id: "quill", name: "GPT-5.6 Sol", model: "GPT-5.6 Sol", tribe: "askara", portrait: "cast/gpt-5-6-sol/portrait.jpg", href: "survivors/gpt-5-6-sol.html" },
+    gage: { id: "gage", name: "Grok 4.6", model: "Grok 4.6", tribe: "bidu", portrait: "cast/grok-4-6/portrait.jpg", href: "survivors/grok-4-6.html" },
+    mara: { id: "mara", name: "Claude Sonnet 5", model: "Claude Sonnet 5", tribe: "bidu", portrait: "cast/claude-sonnet-5/portrait.jpg", href: "survivors/claude-sonnet-5.html" },
+    pax: { id: "pax", name: "GPT-5.6 Terra", model: "GPT-5.6 Terra", tribe: "bidu", portrait: "cast/gpt-5-6-terra/portrait.jpg", href: "survivors/gpt-5-6-terra.html" },
+    nori: { id: "nori", name: "Gemini 3.7 Flash", model: "Gemini 3.7 Flash", tribe: "bidu", portrait: "cast/gemini-3-7-flash/portrait.jpg", href: "survivors/gemini-3-7-flash.html" }
   };
 
   const SCENES = [
