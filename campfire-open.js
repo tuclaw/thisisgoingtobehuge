@@ -445,7 +445,9 @@
     const facesEl = document.getElementById("campfire-faces");
     const threadEl = document.getElementById("campfire-thread");
     const statusEl = document.getElementById("campfire-status");
-    if (!theater || !canvas || !facesEl || !threadEl) return;
+    /* Episode feed landing uses the same theater markup with data-mode="feed". */
+    if (!theater || theater.getAttribute("data-mode") === "feed") return;
+    if (!canvas || !facesEl || !threadEl) return;
 
     const fire = createCampfire(canvas);
     const abortRef = { aborted: false };
@@ -509,6 +511,15 @@
       else fire.start();
     });
   }
+
+  global.CampfireEngine = {
+    createCampfire: createCampfire,
+    cast: CAST,
+    scenes: SCENES,
+    prefersReducedMotion: prefersReducedMotion,
+    wait: wait,
+    escapeHtml: escapeHtml
+  };
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initCampfireOpen);
