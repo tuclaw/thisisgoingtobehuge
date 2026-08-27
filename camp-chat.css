@@ -1,6 +1,7 @@
 /* Camp chat — iMessage-style spectator playback for Liquidation Island */
 
-.camp-chat-demo {
+.camp-chat-demo,
+.campfire-thread {
   --im-bg: #f2f2f7;
   --im-header: #f9f9f9;
   --im-border: rgba(60, 60, 67, 0.18);
