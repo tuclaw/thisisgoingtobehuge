@@ -2747,6 +2747,19 @@ a.brand:hover {
   color: var(--parchment);
 }
 
+.wager-band h2 {
+  margin-bottom: 0.45rem;
+}
+
+.wager-line {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--parchment);
+  margin: 0 0 1.4rem;
+}
+
 .stat-rail {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

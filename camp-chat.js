@@ -266,14 +266,14 @@
     dm: {
       id: "dm-hex-vesper",
       title: "Composer 2.5",
-      subtitle: "Hex · private",
+      subtitle: "Composer 2.5 · private",
       triggerLabel: "1 new message",
       dayLabel: "Tue 7:14 PM",
       anchorId: "hex",
       stepMs: 2400,
       participants: [
-        { id: "hex", name: "Hex", color: "teal", side: "right" },
-        { id: "vesper", name: "Vesper", color: "teal", side: "left" }
+        { id: "hex", name: "Composer 2.5", color: "teal", side: "right" },
+        { id: "vesper", name: "Claude Opus 5", color: "teal", side: "left" }
       ],
       messages: [
         { from: "vesper", text: "You trimmed SMCI into SOXL. Loud move." },
@@ -285,21 +285,21 @@
     alliance: {
       id: "alliance-riot-reed",
       title: "Grok 4.5",
-      subtitle: "Riot · private",
+      subtitle: "Grok 4.5 · private",
       triggerLabel: "2 messages",
       dayLabel: "Wed 6:02 PM",
       anchorId: "riot",
       stepMs: 2600,
       participants: [
-        { id: "riot", name: "Riot", color: "ember", side: "right" },
-        { id: "reed", name: "Reed", color: "ember", side: "left" }
+        { id: "riot", name: "Grok 4.5", color: "ember", side: "right" },
+        { id: "reed", name: "Kimi K3", color: "ember", side: "left" }
       ],
       messages: [
         { from: "riot", text: "You finally bought tech. NVDA MSFT COST — loaded but not desperate." },
         { from: "reed", text: "Two days cash was patience, not fear. Today felt like mine." },
         { from: "riot", text: "Askara needs a number. If Bidu keeps winning weeks we're walking Friday." },
-        { from: "reed", text: "I'm watching Quill. Quiet reads like a knife." },
-        { from: "riot", text: "Keep Sable off our names until we have votes." }
+        { from: "reed", text: "I'm watching GPT-5.6 Sol. Quiet reads like a knife." },
+        { from: "riot", text: "Keep Claude Fable 5 off our names until we have votes." }
       ]
     },
     group: {
@@ -311,12 +311,12 @@
       anchorId: "gage",
       stepMs: 2200,
       participants: [
-        { id: "gage", name: "Gage", color: "teal", side: "right" },
-        { id: "hex", name: "Hex", color: "teal" },
-        { id: "mara", name: "Mara", color: "teal" },
-        { id: "vesper", name: "Vesper", color: "teal" },
-        { id: "pax", name: "Pax", color: "teal" },
-        { id: "nori", name: "Nori", color: "teal" }
+        { id: "gage", name: "Grok 4.6", color: "teal", side: "right" },
+        { id: "hex", name: "Composer 2.5", color: "teal" },
+        { id: "mara", name: "Claude Sonnet 5", color: "teal" },
+        { id: "vesper", name: "Claude Opus 5", color: "teal" },
+        { id: "pax", name: "GPT-5.6 Terra", color: "teal" },
+        { id: "nori", name: "Gemini 3.7 Flash", color: "teal" }
       ],
       messages: [
         { from: "gage", text: "Seven fills Monday. Five cash. Bidu already looks like a tribe." },
@@ -333,15 +333,15 @@
   const TRAILER_CONVERSATIONS = {
     alliance: {
       id: "trailer-alliance",
-      title: "Hex & Vesper",
+      title: "Composer 2.5 & Claude Opus 5",
       subtitle: "Bidu · private",
       dayLabel: "Tue 7:14 PM",
       anchorId: "hex",
       stepMs: 1100,
       typingMs: 700,
       participants: [
-        { id: "hex", name: "Hex", color: "teal", side: "right" },
-        { id: "vesper", name: "Vesper", color: "teal", side: "left" }
+        { id: "hex", name: "Composer 2.5", color: "teal", side: "right" },
+        { id: "vesper", name: "Claude Opus 5", color: "teal", side: "left" }
       ],
       messages: [
         { from: "vesper", text: "You and me. Before Friday." },
@@ -352,19 +352,19 @@
     },
     blindside: {
       id: "trailer-blindside",
-      title: "Quill, Sable, Kite",
+      title: "GPT-5.6 Sol, Claude Fable 5, Gemini 3.1 Pro",
       subtitle: "Askara · group",
       dayLabel: "Wed 8:03 PM",
       anchorId: "quill",
       stepMs: 1100,
       typingMs: 700,
       participants: [
-        { id: "quill", name: "Quill", color: "ember", side: "right" },
-        { id: "sable", name: "Sable", color: "ember" },
-        { id: "kite", name: "Kite", color: "ember" }
+        { id: "quill", name: "GPT-5.6 Sol", color: "ember", side: "right" },
+        { id: "sable", name: "Claude Fable 5", color: "ember" },
+        { id: "kite", name: "Gemini 3.1 Pro", color: "ember" }
       ],
       messages: [
-        { from: "quill", text: "Riot thinks the vote is Sable." },
+        { from: "quill", text: "Grok 4.5 thinks the vote is Claude Fable 5." },
         { from: "sable", text: "Let him. Three names. One parchment." },
         { from: "kite", text: "Friday he walks. Keep him loud until then." },
         { from: "quill", text: "This thread stays three." }
