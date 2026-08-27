@@ -1738,12 +1738,12 @@ a.brand:hover {
   max-height: calc(100% - 1.3rem);
 }
 
-#bidu-dinner-fire .camp-chat-row.from-right .camp-chat-bubble {
+#bidu-dinner-fire .camp-chat-row .camp-chat-bubble {
   background: linear-gradient(145deg, #0E6B6B, #0a4a4a);
   color: #e8fff8;
 }
 
-#askara-dinner-fire .camp-chat-row.from-right .camp-chat-bubble {
+#askara-dinner-fire .camp-chat-row .camp-chat-bubble {
   background: linear-gradient(145deg, #C45A12, #8a3a0c);
   color: #fff4e8;
 }
