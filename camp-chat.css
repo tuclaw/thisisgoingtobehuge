@@ -137,6 +137,13 @@
   transform: scale(0.85);
 }
 
+.camp-chat-trigger.is-read .camp-chat-trigger-pulse {
+  opacity: 0;
+  transform: scale(0);
+  animation: none;
+  pointer-events: none;
+}
+
 @keyframes camp-bubble-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
@@ -163,6 +170,15 @@
   background: #ff3b30;
   border: 2px solid #248a3d;
   animation: camp-pulse 1.8s ease-in-out infinite;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.camp-chat-trigger-pulse.is-hidden,
+.camp-chat-trigger.is-read .camp-chat-trigger-pulse {
+  opacity: 0;
+  transform: scale(0);
+  animation: none;
+  pointer-events: none;
 }
 
 @keyframes camp-pulse {
@@ -282,7 +298,7 @@
 }
 
 .camp-chat-row.is-visible {
-  animation: camp-msg-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: camp-msg-in 0.88s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes camp-msg-in {
@@ -365,7 +381,7 @@
 }
 
 .camp-chat-typing.is-active {
-  animation: camp-msg-in 0.3s ease forwards;
+  animation: camp-msg-in 0.65s ease forwards;
 }
 
 .camp-chat-typing span {

@@ -5,8 +5,9 @@
 (function (global) {
   "use strict";
 
-  const DEFAULT_STEP_MS = 1100;
-  const TYPING_MS = 650;
+  const DEFAULT_STEP_MS = 2200;
+  const TYPING_MS = 1400;
+  const MSG_ANIM_MS = 880;
 
   function escapeHtml(str) {
     return String(str)
@@ -51,6 +52,7 @@
       this.subtitleEl = root.querySelector(".camp-chat-subtitle");
       this.replayBtn = root.querySelector(".camp-chat-replay");
       this.backBtn = root.querySelector(".camp-chat-back");
+      this.pulse = root.querySelector(".camp-chat-trigger-pulse");
 
       this.bind();
       this.applyMeta();
@@ -84,9 +86,15 @@
       }
     }
 
+    clearUnread() {
+      if (this.trigger) this.trigger.classList.add("is-read");
+      if (this.pulse) this.pulse.classList.add("is-hidden");
+    }
+
     open() {
       if (this.isOpen) return;
       this.isOpen = true;
+      this.clearUnread();
       if (this.trigger) {
         this.trigger.classList.add("is-open");
         this.trigger.setAttribute("aria-expanded", "true");
@@ -167,6 +175,9 @@
         requestAnimationFrame(() => row.classList.add("is-visible"));
         this.thread.scrollTop = this.thread.scrollHeight;
 
+        await this.wait(MSG_ANIM_MS, token);
+        if (token !== this.abortToken) return;
+
         const delay = typeof msg.delay === "number" ? msg.delay : stepMs;
         if (showTyping || i < c.messages.length - 1) {
           await this.wait(delay, token);
@@ -205,7 +216,7 @@
       triggerLabel: "1 new message",
       dayLabel: "Tue 7:14 PM",
       anchorId: "hex",
-      stepMs: 1200,
+      stepMs: 2400,
       participants: [
         { id: "hex", name: "Hex", color: "teal", side: "right" },
         { id: "vesper", name: "Vesper", color: "teal", side: "left" }
@@ -224,7 +235,7 @@
       triggerLabel: "2 messages",
       dayLabel: "Wed 6:02 PM",
       anchorId: "riot",
-      stepMs: 1300,
+      stepMs: 2600,
       participants: [
         { id: "riot", name: "Riot", color: "ember", side: "right" },
         { id: "reed", name: "Reed", color: "ember", side: "left" }
@@ -244,7 +255,7 @@
       triggerLabel: "Camp thread",
       dayLabel: "Mon 9:48 PM · campfire",
       anchorId: "gage",
-      stepMs: 1100,
+      stepMs: 2200,
       participants: [
         { id: "gage", name: "Gage", color: "teal", side: "right" },
         { id: "hex", name: "Hex", color: "teal" },
