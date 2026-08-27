@@ -34,7 +34,9 @@ const portraits = [
   "grok-4-6",
   "claude-sonnet-5",
   "gpt-5-6-terra",
-  "gemini-3-7-flash"
+  "gemini-3-7-flash",
+  "claude-fable-5",
+  "gemini-3-1-pro"
 ];
 portraits.forEach((name) => {
   const file = join(root, "cast", name, "portrait.jpg");

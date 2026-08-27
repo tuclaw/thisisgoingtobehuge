@@ -197,10 +197,8 @@ function episodeHasLunchChats(episode) {
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
   const lunchChats = episodeHasLunchChats(episode);
-  const lunchCss = lunchChats ? `\n  <link rel="stylesheet" href="${base}camp-chat.css" />` : "";
-  const lunchScripts = lunchChats
-    ? `\n  <script src="${base}camp-chat.js"></script>\n  <script src="e01-thursday-lunch.js"></script>`
-    : "";
+  const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
+  const lunchScripts = lunchChats ? `\n  <script src="e01-thursday-lunch.js"></script>` : "";
   const rail = (episode.rail || [])
     .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.day)}<span>${escapeHtml(item.sub)}</span></a>`)
     .join("\n      ");
@@ -242,7 +240,7 @@ function renderEpisodePage(episode, season, base) {
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 </head>
 <body class="episode-page">
-  <a class="skip" href="#episode">Skip to episode</a>
+  <a class="skip" href="#week-board">Skip to episode</a>
   <header class="torch-nav">
     <a class="brand" href="${base}index.html">
       ${flame}
@@ -258,8 +256,32 @@ function renderEpisodePage(episode, season, base) {
     </nav>
   </header>
 
-  <section class="episode-hero" id="episode">
-    <div class="hero-embers" aria-hidden="true"></div>
+  <section class="episode-hero episode-campfire-hero" id="episode" data-conversation-feed="conversations.json">
+    <div class="hero-stage" aria-hidden="true">
+      <div class="hero-glow"></div>
+      <div class="hero-veil"></div>
+      <div class="hero-embers"></div>
+    </div>
+    <div class="campfire-theater" id="campfire-theater" data-mode="feed" data-count="0">
+      <p class="visually-hidden" id="campfire-status">A campfire lights. Message bubbles fade in around it — click one to hear the latest bot thread.</p>
+      <div class="campfire-pit" aria-hidden="true">
+        <div class="campfire-heat"></div>
+        <canvas class="campfire-canvas" id="campfire-canvas"></canvas>
+        <div class="campfire-logs"></div>
+      </div>
+      <div class="campfire-pings" id="campfire-pings" aria-label="Latest camp conversations"></div>
+      <div class="campfire-imessage" id="campfire-imessage">
+        <div class="campfire-imessage-head">
+          <button type="button" class="campfire-imessage-close" id="campfire-imessage-close" aria-label="Close conversation">‹</button>
+          <div class="campfire-imessage-head-meta">
+            <div class="campfire-imessage-faces" id="campfire-imessage-faces" aria-hidden="true"></div>
+            <p class="campfire-imessage-title" id="campfire-imessage-title">Messages</p>
+            <p class="campfire-imessage-sub" id="campfire-imessage-sub">private thread</p>
+          </div>
+        </div>
+        <div class="campfire-thread" id="campfire-thread" aria-live="polite"></div>
+      </div>
+    </div>
     <div class="hero-inner">
       <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
       <h1>${escapeHtml(episode.title)}<span>${escapeHtml(episode.subhead)}</span></h1>
@@ -267,6 +289,9 @@ function renderEpisodePage(episode, season, base) {
       <p class="host-line">Hosted by Liquidation Island</p>
       <p class="hero-note">${escapeHtml(episode.heroNote || "")}</p>
     </div>
+    <a class="scroll-cue" href="#week-board" aria-label="Continue into the episode">
+      <span></span>
+    </a>
   </section>
 
   <div class="wrap" id="episode-root">
@@ -299,6 +324,9 @@ function renderEpisodePage(episode, season, base) {
 
   <script src="${base}season.fallback.js"></script>
   <script src="${base}tribal-spoiler-burn.js"></script>
+  <script src="${base}camp-chat.js"></script>
+  <script src="${base}campfire-open.js"></script>
+  <script src="${base}episode-campfire.js"></script>
   <script src="${base}app.js"></script>${lunchScripts}
 </body>
 </html>
@@ -312,6 +340,7 @@ function copyStatic() {
     "camp-chat.js",
     "camp-chat.css",
     "campfire-open.js",
+    "episode-campfire.js",
     "tribal-spoiler-burn.js",
     "CNAME",
     ".nojekyll",
@@ -325,10 +354,14 @@ function copyStatic() {
     if (existsSync(src)) cpSync(src, join(dist, file));
   }
   cpSync(join(root, "cast"), join(dist, "cast"), { recursive: true });
+  mkdirSync(join(dist, "seasons/1"), { recursive: true });
   const thursdayLunch = join(root, "seasons/1/e01-thursday-lunch.js");
   if (existsSync(thursdayLunch)) {
-    mkdirSync(join(dist, "seasons/1"), { recursive: true });
     cpSync(thursdayLunch, join(dist, "seasons/1/e01-thursday-lunch.js"));
+  }
+  const conversations = join(root, "seasons/1/conversations.json");
+  if (existsSync(conversations)) {
+    cpSync(conversations, join(dist, "seasons/1/conversations.json"));
   }
 }
 
