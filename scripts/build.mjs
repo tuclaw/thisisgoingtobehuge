@@ -138,6 +138,50 @@ function beatHtml(beat, base) {
           </div>
         </article>`;
   }
+  if (beat.type === "lunch-chats") {
+    const audience = beat.audienceCut ? `<p class="audience-cut">${escapeHtml(beat.audienceCut)}</p>` : "";
+    const threads = (beat.threads || [])
+      .map((thread) => {
+        return `<article class="camp-scene ${escapeHtml(thread.tribeId)}" id="${escapeHtml(thread.id)}">
+              <div class="camp-scene-embers" aria-hidden="true"></div>
+              <div class="camp-scene-body">
+                <p class="camp-scene-kicker">Audience only</p>
+                <h3>${escapeHtml(thread.heading)}</h3>
+                <p class="camp-scene-desc">${escapeHtml(thread.desc)}</p>
+              </div>
+              <div class="camp-chat-trigger-wrap">
+                <button type="button" class="camp-chat-trigger" aria-expanded="false" aria-controls="${escapeHtml(thread.panelId)}">
+                  <span class="camp-chat-trigger-icon" aria-hidden="true">💬</span>
+                  <span class="camp-chat-trigger-label">${escapeHtml(thread.triggerLabel)}</span>
+                  <span class="camp-chat-trigger-pulse" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="camp-chat-panel" id="${escapeHtml(thread.panelId)}" role="dialog" aria-label="${escapeHtml(thread.ariaLabel)}">
+                <div class="camp-chat-header">
+                  <button type="button" class="camp-chat-back" aria-label="Close thread">‹</button>
+                  <div class="camp-chat-header-meta">
+                    <p class="camp-chat-title">${escapeHtml(thread.title)}</p>
+                    <p class="camp-chat-subtitle">${escapeHtml(thread.subtitle)}</p>
+                  </div>
+                </div>
+                <div class="camp-chat-thread"></div>
+                <div class="camp-chat-footer">
+                  <button type="button" class="camp-chat-replay">Replay thread</button>
+                </div>
+              </div>
+            </article>`;
+      })
+      .join("\n\n            ");
+    return `<article class="beat"${id}>
+          ${audience}
+          ${kicker}
+          ${title}
+          ${body}
+          <div class="camp-chat-demo lunch-chats">
+            ${threads}
+          </div>
+        </article>`;
+  }
   return `<article class="beat"${id}>
           ${kicker}
           ${title}
@@ -146,8 +190,17 @@ function beatHtml(beat, base) {
         </article>`;
 }
 
+function episodeHasLunchChats(episode) {
+  return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.type === "lunch-chats"));
+}
+
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
+  const lunchChats = episodeHasLunchChats(episode);
+  const lunchCss = lunchChats ? `\n  <link rel="stylesheet" href="${base}camp-chat.css" />` : "";
+  const lunchScripts = lunchChats
+    ? `\n  <script src="${base}camp-chat.js"></script>\n  <script src="e01-thursday-lunch.js"></script>`
+    : "";
   const rail = (episode.rail || [])
     .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.day)}<span>${escapeHtml(item.sub)}</span></a>`)
     .join("\n      ");
@@ -183,7 +236,7 @@ function renderEpisodePage(episode, season, base) {
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <title>Season ${episode.season || season.season} ${escapeHtml(episode.title)} — Last Trader Standing</title>
   <meta name="description" content="${escapeHtml(episode.description || episode.location || "")}" />
-  <link rel="stylesheet" href="${base}styles.css" />
+  <link rel="stylesheet" href="${base}styles.css" />${lunchCss}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -246,7 +299,7 @@ function renderEpisodePage(episode, season, base) {
 
   <script src="${base}season.fallback.js"></script>
   <script src="${base}tribal-spoiler-burn.js"></script>
-  <script src="${base}app.js"></script>
+  <script src="${base}app.js"></script>${lunchScripts}
 </body>
 </html>
 `;
@@ -272,6 +325,11 @@ function copyStatic() {
     if (existsSync(src)) cpSync(src, join(dist, file));
   }
   cpSync(join(root, "cast"), join(dist, "cast"), { recursive: true });
+  const thursdayLunch = join(root, "seasons/1/e01-thursday-lunch.js");
+  if (existsSync(thursdayLunch)) {
+    mkdirSync(join(dist, "seasons/1"), { recursive: true });
+    cpSync(thursdayLunch, join(dist, "seasons/1/e01-thursday-lunch.js"));
+  }
 }
 
 function render404(cast) {
