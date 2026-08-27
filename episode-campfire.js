@@ -14,9 +14,10 @@
     { left: "50%", top: "18%" }
   ];
 
-  const FADE_IN_STAGGER_MS = 720;
-  const BUBBLE_HOLD_MS = 5200;
-  const BUBBLE_GAP_MS = 900;
+  const FADE_IN_STAGGER_MS = 780;
+  const BUBBLE_HOLD_MS = 32000;
+  const BUBBLE_GAP_MS = 1100;
+  const MAX_PING_FACES = 3;
   const FEED_PATHS = [
     "conversations.json",
     "./conversations.json",
@@ -48,6 +49,40 @@
   function assetBase() {
     const raw = document.documentElement.getAttribute("data-base");
     return raw == null ? "" : raw;
+  }
+
+  function castMap() {
+    return (global.CampfireEngine && global.CampfireEngine.cast) || {};
+  }
+
+  function portraitFor(participant) {
+    if (!participant) return "";
+    if (participant.portrait) {
+      const p = String(participant.portrait);
+      if (/^https?:/i.test(p) || p.indexOf(assetBase()) === 0 || p.indexOf("../") === 0) return p;
+      return assetBase() + p;
+    }
+    const person = castMap()[participant.id];
+    if (person && person.portrait) return assetBase() + person.portrait;
+    if (participant.id) return assetBase() + "cast/" + participant.id + "/portrait.jpg";
+    return "";
+  }
+
+  function tribeFor(participant) {
+    if (participant && participant.tribe) return participant.tribe;
+    const person = castMap()[participant && participant.id];
+    return (person && person.tribe) || "";
+  }
+
+  function enrichConversation(conversation) {
+    const c = Object.assign({}, conversation);
+    c.participants = (conversation.participants || []).map((p) => {
+      const next = Object.assign({}, p);
+      next.portrait = portraitFor(p);
+      next.tribe = tribeFor(p);
+      return next;
+    });
+    return c;
   }
 
   function resolveFeedPaths() {
@@ -90,6 +125,48 @@
     return { conversations: [] };
   }
 
+  function facesMarkup(participants) {
+    const list = participants || [];
+    const shown = list.slice(0, MAX_PING_FACES);
+    const extra = list.length - shown.length;
+    const faces = shown
+      .map((p, i) => {
+        const src = portraitFor(p);
+        const tribe = tribeFor(p);
+        const name = p.name || p.id || "Contestant";
+        if (!src) {
+          return (
+            '<span class="campfire-ping-face fallback ' +
+            escapeHtml(tribe) +
+            '" style="--f:' +
+            i +
+            '" title="' +
+            escapeHtml(name) +
+            '">' +
+            escapeHtml((name || "?").slice(0, 1)) +
+            "</span>"
+          );
+        }
+        return (
+          '<img class="campfire-ping-face ' +
+          escapeHtml(tribe) +
+          '" style="--f:' +
+          i +
+          '" src="' +
+          escapeHtml(src) +
+          '" alt="' +
+          escapeHtml(name) +
+          '" decoding="async" />'
+        );
+      })
+      .join("");
+    const more =
+      extra > 0
+        ? '<span class="campfire-ping-more" aria-hidden="true">+' + extra + "</span>"
+        : "";
+    return faces + more;
+  }
+
   function createBubbleButton(conversation, index) {
     const slot = typeof conversation.slot === "number" ? conversation.slot : index;
     const pos = SLOT_POSITIONS[slot % SLOT_POSITIONS.length];
@@ -100,30 +177,38 @@
     btn.style.top = pos.top;
     btn.style.setProperty("--i", String(index));
     btn.dataset.id = conversation.id || ("thread-" + index);
+    const names = (conversation.participants || []).map((p) => p.name || p.id).filter(Boolean);
     btn.setAttribute(
       "aria-label",
       (conversation.triggerLabel || "New messages") +
         ". " +
-        (conversation.subtitle || conversation.title || "Camp thread") +
+        (names.join(", ") || conversation.subtitle || conversation.title || "Camp thread") +
         (conversation.dayLabel ? ". " + conversation.dayLabel : "")
     );
 
     const unread = conversation.unread !== false;
+    const count = (conversation.participants || []).length;
     btn.innerHTML =
-      '<span class="campfire-ping-icon" aria-hidden="true">' +
-      '<svg viewBox="0 0 32 32" width="18" height="18" focusable="false">' +
+      '<span class="campfire-ping-stack' +
+      (count > 2 ? " is-group" : "") +
+      '" aria-hidden="true">' +
+      facesMarkup(conversation.participants) +
+      '<span class="campfire-ping-badge">' +
+      '<svg viewBox="0 0 32 32" width="12" height="12" focusable="false">' +
       '<path fill="currentColor" d="M6 7.5c0-1.4 1.1-2.5 2.5-2.5h15c1.4 0 2.5 1.1 2.5 2.5v11c0 1.4-1.1 2.5-2.5 2.5H14.2L9 24.8c-.55.4-1.3-.05-1.2-.7l.55-3.1H8.5C7.1 21 6 19.9 6 18.5v-11z"/>' +
       "</svg>" +
       '<span class="campfire-ping-pulse' +
       (unread ? "" : " is-hidden") +
       '"></span>' +
       "</span>" +
+      "</span>" +
       '<span class="campfire-ping-meta">' +
       '<span class="campfire-ping-time">' +
       escapeHtml(conversation.dayLabel || "") +
       "</span>" +
       '<span class="campfire-ping-who">' +
-      escapeHtml(conversation.title || "Thread") +
+      escapeHtml(names.slice(0, 2).join(" · ") || conversation.title || "Thread") +
+      (names.length > 2 ? " +" + (names.length - 2) : "") +
       "</span>" +
       "</span>";
 
@@ -134,10 +219,14 @@
   function setPanelMeta(conversation) {
     const titleEl = document.getElementById("campfire-imessage-title");
     const subEl = document.getElementById("campfire-imessage-sub");
+    const facesEl = document.getElementById("campfire-imessage-faces");
     if (titleEl) titleEl.textContent = conversation.title || "Messages";
     if (subEl) {
       const stamp = conversation.dayLabel ? " · " + conversation.dayLabel : "";
       subEl.textContent = (conversation.subtitle || "private thread") + stamp;
+    }
+    if (facesEl) {
+      facesEl.innerHTML = facesMarkup(conversation.participants);
     }
   }
 
@@ -167,6 +256,7 @@
     let cycleToken = 0;
     let openId = null;
     let cycling = true;
+    let rotation = 0;
 
     function onResize() {
       fire.resize();
@@ -218,6 +308,7 @@
       });
       cycling = true;
       if (!reduce) startPingCycle();
+      else setPingVisibility(conversations.map((c) => c.id));
     }
 
     async function openConversation(conversation, btn) {
@@ -228,15 +319,13 @@
       openId = conversation.id;
       cycling = false;
 
-      /* Keep the chosen bubble lit while the rest dim. */
-      setPingVisibility([conversation.id]);
-
+      /* Keep every present bubble; dim non-active via CSS while reading. */
       pingsEl.querySelectorAll(".campfire-ping").forEach((el) => {
         el.classList.toggle("is-active", el === btn);
         el.setAttribute("aria-expanded", el === btn ? "true" : "false");
       });
 
-      btn.classList.add("is-read");
+      btn.classList.add("is-read", "is-in");
       const pulse = btn.querySelector(".campfire-ping-pulse");
       if (pulse) pulse.classList.add("is-hidden");
       conversation.unread = false;
@@ -307,12 +396,13 @@
       const maxVisible = Math.min(4, conversations.length);
 
       while (cycling && !openId && token === cycleToken) {
-        const start = Math.floor(Math.random() * conversations.length);
         const next = [];
         for (let i = 0; i < maxVisible; i += 1) {
-          next.push(conversations[(start + i) % conversations.length].id);
+          next.push(conversations[(rotation + i) % conversations.length].id);
         }
+        rotation = (rotation + 1) % conversations.length;
 
+        /* Soft clear only when rotating to a new set */
         setPingVisibility([]);
         await wait(BUBBLE_GAP_MS);
         if (!cycling || openId || token !== cycleToken) break;
@@ -324,11 +414,9 @@
         }
         if (!cycling || openId || token !== cycleToken) break;
 
+        /* Stay present until clicked or ~30s+ passes */
         await wait(BUBBLE_HOLD_MS);
         if (!cycling || openId || token !== cycleToken) break;
-
-        setPingVisibility([]);
-        await wait(1100);
       }
     }
 
@@ -339,7 +427,7 @@
     });
 
     loadFeed().then((feed) => {
-      conversations = (feed.conversations || []).slice();
+      conversations = (feed.conversations || []).map(enrichConversation);
       if (!conversations.length) {
         if (statusEl) statusEl.textContent = "Campfire is lit. No threads yet.";
         return;

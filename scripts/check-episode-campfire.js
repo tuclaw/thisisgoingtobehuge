@@ -16,7 +16,8 @@ const requiredIds = [
   "campfire-pings",
   "campfire-thread",
   "campfire-imessage",
-  "campfire-imessage-close"
+  "campfire-imessage-close",
+  "campfire-imessage-faces"
 ];
 requiredIds.forEach((id) => {
   if (!episodeHtml.includes('id="' + id + '"')) {
@@ -45,6 +46,12 @@ if (!openJs.includes("CampfireEngine")) {
 }
 if (!episodeJs.includes("data-mode") || !episodeJs.includes("campfire-ping")) {
   throw new Error("episode-campfire.js missing feed mode / ping UI");
+}
+if (!episodeJs.includes("campfire-ping-face") || !episodeJs.includes("32000")) {
+  throw new Error("episode-campfire.js missing portrait faces or 30s hold");
+}
+if (!fs.readFileSync(path.join(root, "camp-chat.js"), "utf8").includes("camp-chat-avatar")) {
+  throw new Error("camp-chat.js missing contestant avatar bubbles");
 }
 
 if (!Array.isArray(feed.conversations) || feed.conversations.length < 1) {

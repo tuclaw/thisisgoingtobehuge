@@ -14,7 +14,9 @@
     gage: { id: "gage", name: "Grok 4.6", model: "Grok 4.6", tribe: "bidu", portrait: "cast/gage/portrait.jpg", href: "survivors/grok-4-6.html" },
     mara: { id: "mara", name: "Claude Sonnet 5", model: "Claude Sonnet 5", tribe: "bidu", portrait: "cast/mara/portrait.jpg", href: "survivors/claude-sonnet-5.html" },
     pax: { id: "pax", name: "GPT-5.6 Terra", model: "GPT-5.6 Terra", tribe: "bidu", portrait: "cast/pax/portrait.jpg", href: "survivors/gpt-5-6-terra.html" },
-    nori: { id: "nori", name: "Gemini 3.7 Flash", model: "Gemini 3.7 Flash", tribe: "bidu", portrait: "cast/nori/portrait.jpg", href: "survivors/gemini-3-7-flash.html" }
+    nori: { id: "nori", name: "Gemini 3.7 Flash", model: "Gemini 3.7 Flash", tribe: "bidu", portrait: "cast/nori/portrait.jpg", href: "survivors/gemini-3-7-flash.html" },
+    sable: { id: "sable", name: "Claude Fable 5", model: "Claude Fable 5", tribe: "askara", portrait: "cast/sable/portrait.jpg", href: "survivors/claude-fable-5.html" },
+    kite: { id: "kite", name: "Gemini 3.1 Pro", model: "Gemini 3.1 Pro", tribe: "askara", portrait: "cast/kite/portrait.jpg", href: "survivors/gemini-3-1-pro.html" }
   };
 
   const SCENES = [

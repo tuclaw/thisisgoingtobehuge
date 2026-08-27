@@ -298,6 +298,39 @@
   transform: translateY(8px) scale(0.96);
 }
 
+.camp-chat-row.has-avatar {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.35rem;
+  max-width: 94%;
+}
+
+.camp-chat-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.camp-chat-row.has-avatar.from-left .camp-chat-body {
+  align-items: flex-start;
+}
+
+.camp-chat-row.has-avatar.from-right .camp-chat-body {
+  align-items: flex-end;
+}
+
+.camp-chat-avatar {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  flex-shrink: 0;
+  background: #ddd;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
 .camp-chat-row.is-visible {
   animation: camp-msg-in 0.88s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
@@ -331,7 +364,10 @@
   margin-left: 0;
 }
 
-.camp-chat-sender.teal { color: var(--bubble-teal); }
+.camp-chat-row.has-avatar .camp-chat-sender {
+  margin-left: 0.15rem;
+  margin-right: 0.15rem;
+}
 .camp-chat-sender.ember { color: var(--bubble-ember); }
 .camp-chat-sender.blue { color: var(--im-blue); }
 

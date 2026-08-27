@@ -2747,49 +2747,110 @@ a.brand:hover {
 }
 
 .campfire-theater.is-reading .campfire-ping:not(.is-active) {
-  opacity: 0.18;
-  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0.22;
+  transform: translate(-50%, -50%) scale(0.92);
   pointer-events: none;
 }
 
-.campfire-ping-icon {
+.campfire-ping-stack {
   position: relative;
-  width: 2.85rem;
-  height: 2.85rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #fff;
-  background: linear-gradient(145deg, #34c759, #248a3d);
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.14),
-    0 0 20px rgba(52, 199, 89, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.35rem;
+  padding: 0.15rem 0.35rem 0.35rem;
   animation: campfire-ping-float 3.4s ease-in-out infinite;
 }
 
-.campfire-ping.is-active .campfire-ping-icon,
-.campfire-ping.is-read .campfire-ping-icon {
-  background: linear-gradient(145deg, #5ac8fa, #0a84ff);
+.campfire-ping-face {
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 16%;
+  border: 2px solid rgba(240, 193, 75, 0.55);
   box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.14),
-    0 0 18px rgba(10, 132, 255, 0.28);
+    0 0 0 3px rgba(8, 5, 4, 0.55),
+    0 8px 18px rgba(0, 0, 0, 0.45);
+  background: #140f0b;
+  display: grid;
+  place-items: center;
 }
 
-.campfire-ping:hover .campfire-ping-icon {
-  transform: scale(1.06);
+.campfire-ping-face + .campfire-ping-face,
+.campfire-ping-face + .campfire-ping-more {
+  margin-left: -0.85rem;
 }
 
-.campfire-ping:focus-visible .campfire-ping-icon {
+.campfire-ping-stack.is-group .campfire-ping-face {
+  width: 2.45rem;
+  height: 2.45rem;
+}
+
+.campfire-ping-face.bidu {
+  border-color: rgba(26, 154, 138, 0.75);
+}
+
+.campfire-ping-face.askara {
+  border-color: rgba(196, 90, 18, 0.85);
+}
+
+.campfire-ping-face.fallback {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--gold-bright);
+  background: #1a120c;
+}
+
+.campfire-ping-more {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  color: var(--parchment);
+  background: rgba(20, 14, 10, 0.92);
+  border: 2px solid rgba(240, 193, 75, 0.4);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+.campfire-ping-badge {
+  position: absolute;
+  right: -0.05rem;
+  bottom: 0.05rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(145deg, #34c759, #248a3d);
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.4),
+    0 0 0 2px rgba(8, 5, 4, 0.85);
+}
+
+.campfire-ping.is-active .campfire-ping-badge,
+.campfire-ping.is-read .campfire-ping-badge {
+  background: linear-gradient(145deg, #5ac8fa, #0a84ff);
+}
+
+.campfire-ping:hover .campfire-ping-stack {
+  transform: scale(1.05);
+}
+
+.campfire-ping:focus-visible .campfire-ping-stack {
   outline: 2px solid var(--gold-bright);
-  outline-offset: 3px;
+  outline-offset: 4px;
+  border-radius: 999px;
 }
 
 .campfire-ping-pulse {
   position: absolute;
-  right: -0.05rem;
-  top: -0.05rem;
+  right: -0.18rem;
+  top: -0.18rem;
   width: 0.72rem;
   height: 0.72rem;
   border-radius: 50%;
@@ -2806,12 +2867,38 @@ a.brand:hover {
   animation: none;
 }
 
+.campfire-imessage-faces {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.28rem;
+  min-height: 1.7rem;
+}
+
+.campfire-imessage-faces .campfire-ping-face {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-width: 1.5px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.campfire-imessage-faces .campfire-ping-face + .campfire-ping-face,
+.campfire-imessage-faces .campfire-ping-face + .campfire-ping-more {
+  margin-left: -0.45rem;
+}
+
+.campfire-imessage-faces .campfire-ping-more {
+  width: 1.45rem;
+  height: 1.45rem;
+  font-size: 0.52rem;
+}
+
 .campfire-ping-meta {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.08rem;
-  max-width: 7.5rem;
+  max-width: 8.5rem;
   opacity: 0.92;
 }
 
@@ -2841,9 +2928,13 @@ a.brand:hover {
   .episode-campfire-hero .campfire-theater {
     bottom: 13.5rem;
   }
-  .campfire-ping-icon {
-    width: 2.55rem;
-    height: 2.55rem;
+  .campfire-ping-face {
+    width: 2.45rem;
+    height: 2.45rem;
+  }
+  .campfire-ping-stack.is-group .campfire-ping-face {
+    width: 2.15rem;
+    height: 2.15rem;
   }
   .campfire-ping-who {
     font-size: 0.56rem;
@@ -2871,7 +2962,7 @@ a.brand:hover {
     transition: none;
   }
   .campfire-ping,
-  .campfire-ping-icon,
+  .campfire-ping-stack,
   .campfire-ping-pulse,
   .episode-campfire-hero .hero-embers {
     transition: none;
