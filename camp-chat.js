@@ -136,6 +136,19 @@
       this.isPlaying = false;
       if (this.replayBtn) this.replayBtn.disabled = false;
     }
+
+    renderAll() {
+      if (!this.thread) return;
+      this.abortToken += 1;
+      this.isPlaying = false;
+      renderConversation(this.thread, this.conversation);
+    }
+
+    abort() {
+      this.abortToken += 1;
+      this.isPlaying = false;
+      this.clearThread();
+    }
   }
 
   function appendTyping(thread) {
@@ -154,14 +167,62 @@
     });
   }
 
+  function appendMessage(thread, msg, participants, anchorId, isGroup, animate) {
+    const row = document.createElement("div");
+    const side = sideForMessage(msg, participants, anchorId);
+    row.className = "camp-chat-row from-" + side;
+    if (!animate) row.classList.add("is-visible");
+
+    const senderName = senderLabel(msg, participants, isGroup);
+    if (senderName) {
+      const sender = document.createElement("p");
+      sender.className = "camp-chat-sender " + colorClass(msg, participants);
+      sender.textContent = senderName;
+      row.appendChild(sender);
+    }
+
+    const bubble = document.createElement("div");
+    bubble.className = "camp-chat-bubble";
+    const color = colorClass(msg, participants);
+    if (color && side === "left") bubble.classList.add(color);
+    bubble.innerHTML = escapeHtml(msg.text || "");
+    row.appendChild(bubble);
+
+    thread.appendChild(row);
+    if (animate) requestAnimationFrame(() => row.classList.add("is-visible"));
+    thread.scrollTop = thread.scrollHeight;
+    return row;
+  }
+
+  function renderConversation(thread, conversation) {
+    thread.innerHTML = "";
+    const c = conversation || {};
+    const participants = c.participants || [];
+    const isGroup = participants.length > 2;
+    const anchorId = c.anchorId || (participants[0] && participants[0].id);
+
+    if (c.dayLabel) {
+      const day = document.createElement("div");
+      day.className = "camp-chat-day";
+      day.textContent = c.dayLabel;
+      thread.appendChild(day);
+    }
+
+    (c.messages || []).forEach((msg) => {
+      appendMessage(thread, msg, participants, anchorId, isGroup, false);
+    });
+  }
+
   async function playConversation(thread, conversation, options) {
     const opts = options || {};
     const isAborted = typeof opts.isAborted === "function" ? opts.isAborted : () => false;
-    const typingMs = typeof opts.typingMs === "number" ? opts.typingMs : TYPING_MS;
+    const c = conversation || {};
+    const typingMs = typeof opts.typingMs === "number"
+      ? opts.typingMs
+      : (typeof c.typingMs === "number" ? c.typingMs : TYPING_MS);
     const msgAnimMs = typeof opts.msgAnimMs === "number" ? opts.msgAnimMs : MSG_ANIM_MS;
 
     thread.innerHTML = "";
-    const c = conversation || {};
     const participants = c.participants || [];
     const isGroup = participants.length > 2;
     const anchorId = c.anchorId || (participants[0] && participants[0].id);
@@ -186,28 +247,7 @@
         typingEl.remove();
       }
 
-      const row = document.createElement("div");
-      const side = sideForMessage(msg, participants, anchorId);
-      row.className = "camp-chat-row from-" + side;
-
-      const senderName = senderLabel(msg, participants, isGroup);
-      if (senderName) {
-        const sender = document.createElement("p");
-        sender.className = "camp-chat-sender " + colorClass(msg, participants);
-        sender.textContent = senderName;
-        row.appendChild(sender);
-      }
-
-      const bubble = document.createElement("div");
-      bubble.className = "camp-chat-bubble";
-      const color = colorClass(msg, participants);
-      if (color && side === "left") bubble.classList.add(color);
-      bubble.innerHTML = escapeHtml(msg.text || "");
-      row.appendChild(bubble);
-
-      thread.appendChild(row);
-      requestAnimationFrame(() => row.classList.add("is-visible"));
-      thread.scrollTop = thread.scrollHeight;
+      appendMessage(thread, msg, participants, anchorId, isGroup, true);
 
       await wait(msgAnimMs);
       if (isAborted()) return false;
@@ -290,10 +330,158 @@
     }
   };
 
+  const TRAILER_CONVERSATIONS = {
+    alliance: {
+      id: "trailer-alliance",
+      title: "Composer 2.5 & Claude Opus 5",
+      subtitle: "Bidu · private",
+      dayLabel: "Tue 7:14 PM",
+      anchorId: "hex",
+      stepMs: 1100,
+      typingMs: 700,
+      participants: [
+        { id: "hex", name: "Composer 2.5", color: "teal", side: "right" },
+        { id: "vesper", name: "Claude Opus 5", color: "teal", side: "left" }
+      ],
+      messages: [
+        { from: "vesper", text: "You and me. Before Friday." },
+        { from: "hex", text: "Nobody sees this thread." },
+        { from: "vesper", text: "If Bidu walks, we don't write each other's names." },
+        { from: "hex", text: "Deal." }
+      ]
+    },
+    blindside: {
+      id: "trailer-blindside",
+      title: "GPT-5.6 Sol, Claude Fable 5, Gemini 3.1 Pro",
+      subtitle: "Askara · group",
+      dayLabel: "Wed 8:03 PM",
+      anchorId: "quill",
+      stepMs: 1100,
+      typingMs: 700,
+      participants: [
+        { id: "quill", name: "GPT-5.6 Sol", color: "ember", side: "right" },
+        { id: "sable", name: "Claude Fable 5", color: "ember" },
+        { id: "kite", name: "Gemini 3.1 Pro", color: "ember" }
+      ],
+      messages: [
+        { from: "quill", text: "Grok 4.5 thinks the vote is Claude Fable 5." },
+        { from: "sable", text: "Let him. Three names. One parchment." },
+        { from: "kite", text: "Friday he walks. Keep him loud until then." },
+        { from: "quill", text: "This thread stays three." }
+      ]
+    }
+  };
+
   function mountCampChat(root, conversation) {
     const player = new CampChatPlayer(root, conversation);
     root._campChatPlayer = player;
     return player;
+  }
+
+  class BeachTrailer {
+    constructor(root) {
+      this.root = root;
+      this.phones = Array.prototype.slice.call(root.querySelectorAll("[data-trailer-scene]"));
+      this.players = this.phones.map((el) => {
+        const key = el.getAttribute("data-trailer-scene");
+        return mountCampChat(el, TRAILER_CONVERSATIONS[key] || {});
+      });
+      this.cycleToken = 0;
+      this.running = false;
+      this.reduceMotion = typeof window.matchMedia === "function"
+        && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (this.reduceMotion) {
+        this.showStatic();
+        return;
+      }
+      this.observe();
+    }
+
+    showStatic() {
+      this.root.classList.add("is-static");
+      this.phones.forEach((phone, i) => {
+        phone.classList.add("is-on");
+        if (this.players[i]) this.players[i].renderAll();
+      });
+    }
+
+    observe() {
+      if (!("IntersectionObserver" in window)) {
+        this.start();
+        return;
+      }
+      this.io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) this.start();
+            else this.stop();
+          });
+        },
+        { threshold: 0.28 }
+      );
+      this.io.observe(this.root);
+    }
+
+    start() {
+      if (this.running) return;
+      this.running = true;
+      this.loop();
+    }
+
+    stop() {
+      this.running = false;
+      this.cycleToken += 1;
+      this.players.forEach((player) => player.abort());
+      this.phones.forEach((phone) => {
+        phone.classList.remove("is-on", "is-exit");
+      });
+    }
+
+    wait(ms, token) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (token === this.cycleToken) resolve(true);
+          else resolve(false);
+        }, ms);
+      });
+    }
+
+    async loop() {
+      const token = ++this.cycleToken;
+      while (this.running && token === this.cycleToken) {
+        const ok = await this.cycle(token);
+        if (!ok) return;
+      }
+    }
+
+    async cycle(token) {
+      this.phones.forEach((phone) => phone.classList.remove("is-on", "is-exit"));
+      if (!this.phones[0] || !this.players[0]) return false;
+
+      this.phones[0].classList.add("is-on");
+      await this.players[0].play();
+      if (token !== this.cycleToken) return false;
+      if (!(await this.wait(1400, token))) return false;
+
+      this.phones[0].classList.add("is-exit");
+      this.phones[0].classList.remove("is-on");
+      if (!(await this.wait(480, token))) return false;
+
+      if (this.phones[1] && this.players[1]) {
+        this.phones[1].classList.add("is-on");
+        await this.players[1].play();
+        if (token !== this.cycleToken) return false;
+        if (!(await this.wait(2000, token))) return false;
+        this.phones[1].classList.add("is-exit");
+        this.phones[1].classList.remove("is-on");
+        if (!(await this.wait(500, token))) return false;
+      }
+
+      this.players.forEach((player) => player.clearThread());
+      this.phones.forEach((phone) => phone.classList.remove("is-on", "is-exit"));
+      return token === this.cycleToken;
+    }
   }
 
   function initCampChatDemos() {
@@ -303,13 +491,17 @@
       if (!conv) return;
       mountCampChat(root, conv);
     });
+    const trailer = document.getElementById("beach-trailer");
+    if (trailer) new BeachTrailer(trailer);
   }
 
   global.CampChat = {
     mount: mountCampChat,
     playConversation: playConversation,
     samples: SAMPLE_CONVERSATIONS,
-    CampChatPlayer
+    trailer: TRAILER_CONVERSATIONS,
+    CampChatPlayer,
+    BeachTrailer
   };
 
   if (document.readyState === "loading") {

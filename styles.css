@@ -2737,6 +2737,16 @@ a.brand:hover {
   max-width: 38rem;
 }
 
+.story-band .lede a {
+  color: var(--gold-bright);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.story-band .lede a:hover {
+  color: var(--parchment);
+}
+
 .wager-band h2 {
   margin-bottom: 0.45rem;
 }
@@ -2787,10 +2797,34 @@ a.brand:hover {
   color: var(--worn);
 }
 
-.tribes-band {
+.beach-band {
+  background:
+    radial-gradient(ellipse 50% 70% at 50% 100%, rgba(232, 93, 4, 0.14), transparent 55%),
+    radial-gradient(ellipse 40% 50% at 20% 40%, rgba(14, 107, 107, 0.1), transparent 50%),
+    radial-gradient(ellipse 40% 50% at 80% 40%, rgba(196, 90, 18, 0.1), transparent 50%);
+}
+
+.beach-band h2 {
+  max-width: 18em;
+}
+
+.tribes-band,
+.open-cast {
   background:
     radial-gradient(ellipse 45% 60% at 0% 50%, rgba(14, 107, 107, 0.18), transparent 55%),
     radial-gradient(ellipse 45% 60% at 100% 50%, rgba(196, 90, 18, 0.16), transparent 55%);
+}
+
+.cast-tribe-split {
+  margin: 2rem 0 0.4rem;
+}
+
+.cast-tribe-lede {
+  margin: 0 0 1.4rem;
+  max-width: 40rem;
+  color: var(--sand);
+  font-size: 1.12rem;
+  line-height: 1.55;
 }
 
 .tribe-duel {
@@ -2798,7 +2832,7 @@ a.brand:hover {
   grid-template-columns: 1fr auto 1fr;
   gap: 1.2rem;
   align-items: stretch;
-  margin-top: 2.4rem;
+  margin-top: 0;
 }
 
 @media (max-width: 760px) {
@@ -3032,7 +3066,7 @@ a.brand:hover {
 
 .pot-story {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin: 2.4rem 0 3rem;
 }
