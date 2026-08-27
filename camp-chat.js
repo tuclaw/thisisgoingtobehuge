@@ -173,8 +173,19 @@
     row.className = "camp-chat-row from-" + side;
     if (!animate) row.classList.add("is-visible");
 
-    const participant = participants.find((x) => x.id === msg.from);
-    const portrait = participant && participant.portrait;
+    const participant = participants.find((x) => x.id === msg.from) || { id: msg.from };
+    let portrait = participant.portrait || "";
+    if (!portrait && global.CampfireEngine && global.CampfireEngine.cast) {
+      const person = global.CampfireEngine.cast[participant.id || msg.from];
+      if (person && person.portrait) {
+        const base = document.documentElement.getAttribute("data-base");
+        portrait = (base == null ? "" : base) + person.portrait;
+      }
+    }
+    if (!portrait && (participant.id || msg.from)) {
+      const base = document.documentElement.getAttribute("data-base");
+      portrait = (base == null ? "" : base) + "cast/" + (participant.id || msg.from) + "/portrait.jpg";
+    }
     const senderName = senderLabel(msg, participants, isGroup);
 
     const body = document.createElement("div");
@@ -198,7 +209,7 @@
       const avatar = document.createElement("img");
       avatar.className = "camp-chat-avatar";
       avatar.src = portrait;
-      avatar.alt = "";
+      avatar.alt = participant.name || msg.from || "";
       avatar.decoding = "async";
       if (side === "left") {
         row.appendChild(avatar);
