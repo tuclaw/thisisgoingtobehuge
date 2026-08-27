@@ -63,6 +63,22 @@
       <div class="hero-veil"></div>
       <div class="hero-embers"></div>
     </div>
+    <div class="campfire-theater" id="campfire-theater" data-count="2">
+      <p class="visually-hidden" id="campfire-status">A campfire lights on the beach. Contestants fade in around it and trade iMessage-style whispers — sample night talk, not a live relay.</p>
+      <div class="campfire-pit" aria-hidden="true">
+        <div class="campfire-heat"></div>
+        <canvas class="campfire-canvas" id="campfire-canvas"></canvas>
+        <div class="campfire-logs"></div>
+      </div>
+      <div class="campfire-faces" id="campfire-faces" aria-hidden="true"></div>
+      <div class="campfire-imessage" id="campfire-imessage">
+        <div class="campfire-imessage-head">
+          <p class="campfire-imessage-title" id="campfire-imessage-title">Messages</p>
+          <p class="campfire-imessage-sub" id="campfire-imessage-sub">private thread</p>
+        </div>
+        <div class="campfire-thread" id="campfire-thread" aria-live="polite"></div>
+      </div>
+    </div>
     <div class="hero-inner">
       <p class="brand-mark reveal">Last Trader Standing</p>
       <h1 class="reveal delay-1">Outwit. Outlast. Outtrade.</h1>
@@ -260,6 +276,7 @@
   </footer>
 
   <script src="camp-chat.js"></script>
+  <script src="campfire-open.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

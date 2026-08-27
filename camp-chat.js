@@ -128,43 +128,11 @@
       this.isPlaying = true;
       if (this.replayBtn) this.replayBtn.disabled = true;
 
-      this.clearThread();
-      const c = this.conversation;
-      const participants = c.participants || [];
-      const isGroup = participants.length > 2;
-      const anchorId = c.anchorId || (participants[0] && participants[0].id);
-      const stepMs = typeof c.stepMs === "number" ? c.stepMs : DEFAULT_STEP_MS;
-      const typingMs = typeof c.typingMs === "number" ? c.typingMs : TYPING_MS;
+      const finished = await playConversation(this.thread, this.conversation, {
+        isAborted: () => token !== this.abortToken
+      });
 
-      if (c.dayLabel) {
-        const day = document.createElement("div");
-        day.className = "camp-chat-day";
-        day.textContent = c.dayLabel;
-        this.thread.appendChild(day);
-      }
-
-      for (let i = 0; i < (c.messages || []).length; i += 1) {
-        if (token !== this.abortToken) return;
-
-        const msg = c.messages[i];
-        const showTyping = msg.typing !== false && i < c.messages.length - 1;
-        const typingEl = this.appendTyping();
-        await this.wait(typingMs, token);
-        if (token !== this.abortToken) return;
-        typingEl.remove();
-
-        this.appendMessage(msg, participants, anchorId, isGroup, true);
-
-        await this.wait(MSG_ANIM_MS, token);
-        if (token !== this.abortToken) return;
-
-        const delay = typeof msg.delay === "number" ? msg.delay : stepMs;
-        if (showTyping || i < c.messages.length - 1) {
-          await this.wait(delay, token);
-        }
-      }
-
-      if (token !== this.abortToken) return;
+      if (!finished) return;
       this.isPlaying = false;
       if (this.replayBtn) this.replayBtn.disabled = false;
     }
@@ -173,47 +141,7 @@
       if (!this.thread) return;
       this.abortToken += 1;
       this.isPlaying = false;
-      this.clearThread();
-      const c = this.conversation;
-      const participants = c.participants || [];
-      const isGroup = participants.length > 2;
-      const anchorId = c.anchorId || (participants[0] && participants[0].id);
-      if (c.dayLabel) {
-        const day = document.createElement("div");
-        day.className = "camp-chat-day";
-        day.textContent = c.dayLabel;
-        this.thread.appendChild(day);
-      }
-      (c.messages || []).forEach((msg) => {
-        this.appendMessage(msg, participants, anchorId, isGroup, false);
-      });
-    }
-
-    appendMessage(msg, participants, anchorId, isGroup, animate) {
-      const row = document.createElement("div");
-      const side = sideForMessage(msg, participants, anchorId);
-      row.className = "camp-chat-row from-" + side;
-      if (!animate) row.classList.add("is-visible");
-
-      const senderName = senderLabel(msg, participants, isGroup);
-      if (senderName) {
-        const sender = document.createElement("p");
-        sender.className = "camp-chat-sender " + colorClass(msg, participants);
-        sender.textContent = senderName;
-        row.appendChild(sender);
-      }
-
-      const bubble = document.createElement("div");
-      bubble.className = "camp-chat-bubble";
-      const color = colorClass(msg, participants);
-      if (color && side === "left") bubble.classList.add(color);
-      bubble.innerHTML = escapeHtml(msg.text || "");
-      row.appendChild(bubble);
-
-      this.thread.appendChild(row);
-      if (animate) requestAnimationFrame(() => row.classList.add("is-visible"));
-      this.thread.scrollTop = this.thread.scrollHeight;
-      return row;
+      renderConversation(this.thread, this.conversation);
     }
 
     abort() {
@@ -221,22 +149,117 @@
       this.isPlaying = false;
       this.clearThread();
     }
+  }
 
-    appendTyping() {
-      const el = document.createElement("div");
-      el.className = "camp-chat-typing";
-      el.innerHTML = "<span></span><span></span><span></span>";
-      this.thread.appendChild(el);
-      requestAnimationFrame(() => el.classList.add("is-active"));
-      this.thread.scrollTop = this.thread.scrollHeight;
-      return el;
+  function appendTyping(thread) {
+    const el = document.createElement("div");
+    el.className = "camp-chat-typing";
+    el.innerHTML = "<span></span><span></span><span></span>";
+    thread.appendChild(el);
+    requestAnimationFrame(() => el.classList.add("is-active"));
+    thread.scrollTop = thread.scrollHeight;
+    return el;
+  }
+
+  function wait(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  function appendMessage(thread, msg, participants, anchorId, isGroup, animate) {
+    const row = document.createElement("div");
+    const side = sideForMessage(msg, participants, anchorId);
+    row.className = "camp-chat-row from-" + side;
+    if (!animate) row.classList.add("is-visible");
+
+    const senderName = senderLabel(msg, participants, isGroup);
+    if (senderName) {
+      const sender = document.createElement("p");
+      sender.className = "camp-chat-sender " + colorClass(msg, participants);
+      sender.textContent = senderName;
+      row.appendChild(sender);
     }
 
-    wait(ms) {
-      return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-      });
+    const bubble = document.createElement("div");
+    bubble.className = "camp-chat-bubble";
+    const color = colorClass(msg, participants);
+    if (color && side === "left") bubble.classList.add(color);
+    bubble.innerHTML = escapeHtml(msg.text || "");
+    row.appendChild(bubble);
+
+    thread.appendChild(row);
+    if (animate) requestAnimationFrame(() => row.classList.add("is-visible"));
+    thread.scrollTop = thread.scrollHeight;
+    return row;
+  }
+
+  function renderConversation(thread, conversation) {
+    thread.innerHTML = "";
+    const c = conversation || {};
+    const participants = c.participants || [];
+    const isGroup = participants.length > 2;
+    const anchorId = c.anchorId || (participants[0] && participants[0].id);
+
+    if (c.dayLabel) {
+      const day = document.createElement("div");
+      day.className = "camp-chat-day";
+      day.textContent = c.dayLabel;
+      thread.appendChild(day);
     }
+
+    (c.messages || []).forEach((msg) => {
+      appendMessage(thread, msg, participants, anchorId, isGroup, false);
+    });
+  }
+
+  async function playConversation(thread, conversation, options) {
+    const opts = options || {};
+    const isAborted = typeof opts.isAborted === "function" ? opts.isAborted : () => false;
+    const c = conversation || {};
+    const typingMs = typeof opts.typingMs === "number"
+      ? opts.typingMs
+      : (typeof c.typingMs === "number" ? c.typingMs : TYPING_MS);
+    const msgAnimMs = typeof opts.msgAnimMs === "number" ? opts.msgAnimMs : MSG_ANIM_MS;
+
+    thread.innerHTML = "";
+    const participants = c.participants || [];
+    const isGroup = participants.length > 2;
+    const anchorId = c.anchorId || (participants[0] && participants[0].id);
+    const stepMs = typeof c.stepMs === "number" ? c.stepMs : DEFAULT_STEP_MS;
+
+    if (c.dayLabel) {
+      const day = document.createElement("div");
+      day.className = "camp-chat-day";
+      day.textContent = c.dayLabel;
+      thread.appendChild(day);
+    }
+
+    for (let i = 0; i < (c.messages || []).length; i += 1) {
+      if (isAborted()) return false;
+
+      const msg = c.messages[i];
+      const showTyping = msg.typing !== false;
+      const typingEl = showTyping ? appendTyping(thread) : null;
+      if (showTyping) {
+        await wait(typingMs);
+        if (isAborted()) return false;
+        typingEl.remove();
+      }
+
+      appendMessage(thread, msg, participants, anchorId, isGroup, true);
+
+      await wait(msgAnimMs);
+      if (isAborted()) return false;
+
+      const delay = typeof msg.delay === "number" ? msg.delay : stepMs;
+      if (i < c.messages.length - 1) {
+        await wait(delay);
+        if (isAborted()) return false;
+      }
+    }
+
+    return !isAborted();
   }
 
   const SAMPLE_CONVERSATIONS = {
@@ -474,6 +497,7 @@
 
   global.CampChat = {
     mount: mountCampChat,
+    playConversation: playConversation,
     samples: SAMPLE_CONVERSATIONS,
     trailer: TRAILER_CONVERSATIONS,
     CampChatPlayer,
