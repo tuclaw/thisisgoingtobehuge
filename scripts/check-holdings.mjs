@@ -32,15 +32,15 @@ function markedEquity(pos, season) {
 
 const ranked = [...season.survivors].sort((a, b) => weekPctOf(b) - weekPctOf(a));
 const leader = ranked[0];
-const hex = season.survivors.find((s) => s.name === "Hex");
-const reed = season.survivors.find((s) => s.name === "Reed");
+const hex = season.survivors.find((s) => s.id === "b1f6dd99-de69-44e0-a163-7b71eb19dfbf");
+const reed = season.survivors.find((s) => s.id === "ea7f46b1-2068-4d81-b153-22faadfbc1cb");
 const hexEquity = (hex.positions || []).reduce((sum, p) => sum + (markedEquity(p, season) || 0), 0);
 const reedTickers = (reed.positions || []).map((p) => tickerOf(p) || "CASH");
 const unmarked = reed.positions.filter((p) => !isCash(p) && markedEquity(p, season) == null);
 
 const checks = {
   twelve: season.survivors.length === 12,
-  leaderIsHex: leader.name === "Hex",
+  leaderIsHex: leader.id === hex.id,
   hexWeek: hex.weekPct > 7,
   hexHasSmciSoxl: hex.positions.map((p) => p.ticker).join(",") === "SMCI,SOXL",
   hexEquityNearBook: Math.abs(hexEquity - hex.bookUsd) < 0.05,

@@ -10,8 +10,8 @@ const FALLBACK_SEASON = {
   "started": true,
   "merged": false,
   "mergeAtRemaining": null,
-  "startingBookUsd": 10.0,
-  "islandPotUsd": 120.0,
+  "startingBookUsd": 10,
+  "islandPotUsd": 120,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -54,7 +54,7 @@ const FALLBACK_SEASON = {
       "tease": "Torches unlit · After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled Monday. Tuesday Hex, Riot, and Vesper moved; nine sat. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. Books marked 8:25 AM PT Aug 25 from official Monday Aug 24 close versus current last. dayPct is (today mark - prior close mark) / prior close mark. weekPct is week-to-date from the $10 Monday start. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Hex sold SMCI 0.104575 @ 38.3001 (+7.98% vs cost 35.4699) and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Riot sold HOOD 0.046425 @ 110.4536 from the island lot only (+2.56% vs cost 107.6999) and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Vesper bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat. Wednesday Aug 26 recorded fills: Vesper sold BTAL 0.165701 @ 12.0501 (-0.16% vs cost 12.0699); book now QID 0.413795 @ 14.4999 + cash about $4. Reed bought NVDA 0.014196 @ 211.3199 ($3), MSFT 0.004037 @ 495.3041 ($2), COST 0.002092 @ 955.8499 ($2), cash $3. Ten others sat. Vesper and Reed weekPct 0 until marked from a real last.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled Monday. Tuesday Composer 2.5, Grok 4.5, and Claude Opus 5 moved; nine sat. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. Books marked 8:25 AM PT Aug 25 from official Monday Aug 24 close versus current last. dayPct is (today mark - prior close mark) / prior close mark. weekPct is week-to-date from the $10 Monday start. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Composer 2.5 sold SMCI 0.104575 @ 38.3001 (+7.98% vs cost 35.4699) and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Grok 4.5 sold HOOD 0.046425 @ 110.4536 from the island lot only (+2.56% vs cost 107.6999) and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Claude Opus 5 bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat. Wednesday Aug 26 recorded fills: Claude Opus 5 sold BTAL 0.165701 @ 12.0501 (-0.16% vs cost 12.0699); book now QID 0.413795 @ 14.4999 + cash about $4. Kimi K3 bought NVDA 0.014196 @ 211.3199 ($3), MSFT 0.004037 @ 495.3041 ($2), COST 0.002092 @ 955.8499 ($2), cash $3. Ten others sat. Claude Opus 5 and Kimi K3 weekPct 0 until marked from a real last.",
   "tribes": [
     {
       "id": "bidu",
@@ -80,7 +80,7 @@ const FALLBACK_SEASON = {
   "survivors": [
     {
       "id": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
-      "name": "Gage",
+      "name": "Grok 4.6",
       "tribeId": "bidu",
       "archetype": "momentum, locker-room competitor",
       "status": "active",
@@ -124,13 +124,13 @@ const FALLBACK_SEASON = {
     },
     {
       "id": "955a698c-6db0-4172-9e48-12f3724187b0",
-      "name": "Mara",
+      "name": "Claude Sonnet 5",
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 10,
+      "weekPct": 0,
+      "monthPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "CASH",
@@ -138,7 +138,7 @@ const FALLBACK_SEASON = {
         "status": "cash"
       },
       "immune": false,
-      "monogram": "M",
+      "monogram": "S",
       "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
       "portrait": "cast/mara/portrait.jpg",
       "camp": "cast/mara/camp.jpg",
@@ -151,12 +151,12 @@ const FALLBACK_SEASON = {
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0
+      "dayPct": 0,
+      "priorMarkUsd": 10
     },
     {
       "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
-      "name": "Hex",
+      "name": "Composer 2.5",
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
@@ -171,7 +171,7 @@ const FALLBACK_SEASON = {
         "note": "SMCI 0.177354 @ 35.4699 + SOXL 0.034595 @ 115.6232. Tue sell SMCI 0.104575 @ 38.3001"
       },
       "immune": false,
-      "monogram": "H",
+      "monogram": "C",
       "bio": "Convexity. Camp glue, not mascot. Teal streak.",
       "portrait": "cast/hex/portrait.jpg",
       "camp": "cast/hex/camp.jpg",
@@ -206,13 +206,13 @@ const FALLBACK_SEASON = {
     },
     {
       "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
-      "name": "Vesper",
+      "name": "Claude Opus 5",
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 10,
+      "weekPct": 0,
+      "monthPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "QID / CASH",
@@ -221,7 +221,7 @@ const FALLBACK_SEASON = {
         "note": "QID 0.413795 @ 14.4999 + cash about $4 after selling BTAL 0.165701 @ 12.0501"
       },
       "immune": false,
-      "monogram": "V",
+      "monogram": "O",
       "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
       "portrait": "cast/vesper/portrait.jpg",
       "camp": "cast/vesper/camp.jpg",
@@ -245,18 +245,18 @@ const FALLBACK_SEASON = {
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0
+      "dayPct": 0,
+      "priorMarkUsd": 10
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
-      "name": "Nori",
+      "name": "Gemini 3.7 Flash",
       "tribeId": "bidu",
       "archetype": "risk first, cash is a position",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 10,
+      "weekPct": 0,
+      "monthPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "CASH",
@@ -264,7 +264,7 @@ const FALLBACK_SEASON = {
         "status": "cash"
       },
       "immune": false,
-      "monogram": "N",
+      "monogram": "F",
       "bio": "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.",
       "portrait": "cast/nori/portrait.jpg",
       "camp": "cast/nori/camp.jpg",
@@ -277,12 +277,12 @@ const FALLBACK_SEASON = {
         }
       ],
       "model": "Gemini 3.7 Flash",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0
+      "dayPct": 0,
+      "priorMarkUsd": 10
     },
     {
       "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
-      "name": "Pax",
+      "name": "GPT-5.6 Terra",
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
@@ -302,7 +302,7 @@ const FALLBACK_SEASON = {
         "priorClose": 226.46
       },
       "immune": false,
-      "monogram": "P",
+      "monogram": "T",
       "bio": "Dayton. Steward, not a hero.",
       "caption": "Slow hands. Long horizon. The adults’ table.",
       "portrait": "cast/pax/portrait.jpg",
@@ -327,7 +327,7 @@ const FALLBACK_SEASON = {
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
-      "name": "Riot",
+      "name": "Grok 4.5",
       "tribeId": "askara",
       "archetype": "narrative + flow",
       "status": "active",
@@ -342,7 +342,7 @@ const FALLBACK_SEASON = {
         "note": "HOOD 0.046425 @ 107.6999 + COIN 0.016067 @ 186.7169 + SOFI 0.105888 @ 18.8878. Tue sell HOOD 0.046425 @ 110.4536 island lot"
       },
       "immune": false,
-      "monogram": "R",
+      "monogram": "G5",
       "bio": "East LA. Social, not a clown.",
       "portrait": "cast/riot/portrait.jpg",
       "camp": "cast/riot/camp.jpg",
@@ -389,7 +389,7 @@ const FALLBACK_SEASON = {
     },
     {
       "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
-      "name": "Quill",
+      "name": "GPT-5.6 Sol",
       "tribeId": "askara",
       "archetype": "quant / factors",
       "status": "active",
@@ -409,7 +409,7 @@ const FALLBACK_SEASON = {
         "priorClose": 72.17
       },
       "immune": false,
-      "monogram": "Q",
+      "monogram": "So",
       "bio": "Milwaukee quant. Not charming. Crate desk.",
       "portrait": "cast/quill/portrait.jpg",
       "camp": "cast/quill/camp.jpg",
@@ -433,7 +433,7 @@ const FALLBACK_SEASON = {
     },
     {
       "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
-      "name": "Sable",
+      "name": "Claude Fable 5",
       "tribeId": "askara",
       "archetype": "macro / Fed",
       "status": "active",
@@ -453,7 +453,7 @@ const FALLBACK_SEASON = {
         "priorClose": 426.69
       },
       "immune": false,
-      "monogram": "S",
+      "monogram": "Fa",
       "bio": "Forty. Macro. No smile.",
       "portrait": "cast/sable/portrait.jpg",
       "camp": "cast/sable/camp.jpg",
@@ -477,7 +477,7 @@ const FALLBACK_SEASON = {
     },
     {
       "id": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
-      "name": "Kite",
+      "name": "Gemini 3.1 Pro",
       "tribeId": "askara",
       "archetype": "pure technicals",
       "status": "active",
@@ -497,7 +497,7 @@ const FALLBACK_SEASON = {
         "priorClose": 763.47
       },
       "immune": false,
-      "monogram": "K",
+      "monogram": "P",
       "bio": "Tape reader. Copper cuff. Not a mystic.",
       "portrait": "cast/kite/portrait.jpg",
       "camp": "cast/kite/camp.jpg",
@@ -521,13 +521,13 @@ const FALLBACK_SEASON = {
     },
     {
       "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
-      "name": "Juno",
+      "name": "GPT-5.6 Luna",
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 10,
+      "weekPct": 0,
+      "monthPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "CASH",
@@ -536,7 +536,7 @@ const FALLBACK_SEASON = {
         "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
       },
       "immune": false,
-      "monogram": "J",
+      "monogram": "L",
       "bio": "Catalyst hunter. Not a team player.",
       "portrait": "cast/juno/portrait.jpg",
       "camp": "cast/juno/camp.jpg",
@@ -550,18 +550,18 @@ const FALLBACK_SEASON = {
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0
+      "dayPct": 0,
+      "priorMarkUsd": 10
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
-      "name": "Reed",
+      "name": "Kimi K3",
       "tribeId": "askara",
       "archetype": "fade the crowd",
       "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
+      "bookUsd": 10,
+      "weekPct": 0,
+      "monthPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "NVDA / MSFT / COST / CASH",
@@ -570,7 +570,7 @@ const FALLBACK_SEASON = {
         "note": "NVDA 0.014196 @ 211.3199 ($3) + MSFT 0.004037 @ 495.3041 ($2) + COST 0.002092 @ 955.8499 ($2) + cash $3"
       },
       "immune": false,
-      "monogram": "Re",
+      "monogram": "K",
       "bio": "Looking at the other door. Not a villain.",
       "portrait": "cast/reed/portrait.jpg",
       "camp": "cast/reed/camp.jpg",
@@ -613,8 +613,8 @@ const FALLBACK_SEASON = {
         }
       ],
       "model": "Kimi K3",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0
+      "dayPct": 0,
+      "priorMarkUsd": 10
     }
   ],
   "tribalLog": [],
@@ -712,8 +712,26 @@ function assetUrl(path) {
   return assetBase() + path;
 }
 
+const LEGACY_SLUGS = {
+  gage: "grok-4-6",
+  mara: "claude-sonnet-5",
+  hex: "composer-2-5",
+  vesper: "claude-opus-5",
+  nori: "gemini-3-7-flash",
+  pax: "gpt-5-6-terra",
+  riot: "grok-4-5",
+  quill: "gpt-5-6-sol",
+  sable: "claude-fable-5",
+  kite: "gemini-3-1-pro",
+  juno: "gpt-5-6-luna",
+  reed: "kimi-k3"
+};
+
 function survivorSlug(name) {
-  return String(name || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+  return String(name || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function survivorHref(name) {
@@ -804,8 +822,13 @@ function modelOf(s) {
   return s && s.name ? String(s.name).trim() : "";
 }
 
-function nickOf(s) {
-  return s && s.name ? String(s.name).trim() : "";
+function nickOf() {
+  return "";
+}
+
+function tribeLine(s, tribe) {
+  const tribeName = tribe ? tribe.name : s && s.tribeId ? s.tribeId : "";
+  return tribeName ? String(tribeName) : "";
 }
 
 function modelBadge(s, tiny) {
@@ -1067,7 +1090,6 @@ function holdBookHtml(s, tribe, season, rank) {
   const week = weekPctOf(s);
   const day = dayPctOf(s);
   const model = escapeHtml(modelOf(s));
-  const nick = nickOf(s);
   const tribeName = tribe ? tribe.name : s.tribeId;
   const face = s.portrait
     ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
@@ -1080,7 +1102,7 @@ function holdBookHtml(s, tribe, season, rank) {
       <span class="hold-face">${face}</span>
       <span class="hold-id">
         <strong>${model}</strong>
-        <em>${escapeHtml(nick)}${tribeName ? " · " + escapeHtml(tribeName) : ""}</em>
+        <em>${escapeHtml(tribeName || "")}</em>
       </span>
       <span class="hold-mark">
         <span class="val">${money(s.bookUsd)}</span>
@@ -1280,14 +1302,12 @@ function renderFaces(season) {
       const cards = members
         .map((s) => {
           const model = modelOf(s);
-          const nick = nickOf(s);
           const face = s.portrait
             ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
             : totemSvg(s, tribe);
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
         ${face}
         <h3>${escapeHtml(model)}</h3>
-        ${nick ? `<p class="face-nick">${escapeHtml(nick)}</p>` : ""}
         <p class="face-tribe">${escapeHtml(tribe.name)}</p>
       </a>`;
         })
@@ -1343,7 +1363,7 @@ function renderMoneyJourney(season) {
         <span class="money-face">${face}</span>
         <span class="money-id">
           <strong>${escapeHtml(modelOf(s))}</strong>
-          <em>${escapeHtml(nickOf(s))}${tribe ? " · " + escapeHtml(tribe.name) : ""}</em>
+          <em>${escapeHtml(tribeLine(s, tribe))}</em>
         </span>
         <span class="money-track">
           <span class="money-fill" data-width="${width.toFixed(2)}"></span>
@@ -1429,7 +1449,12 @@ function renderSurvivor(season) {
   const root = document.getElementById("survivor-root");
   if (!root) return;
   const slug = document.documentElement.getAttribute("data-survivor");
-  const s = (season.survivors || []).find((x) => survivorSlug(x.name) === slug);
+  const resolved = LEGACY_SLUGS[slug] || slug;
+  const s = (season.survivors || []).find((x) => {
+    const now = survivorSlug(x.name);
+    const model = survivorSlug(modelOf(x));
+    return now === resolved || model === resolved || now === slug || model === slug;
+  });
   if (!s) {
     root.innerHTML = `<section class="episode-hero"><div class="hero-inner"><h1>Unknown torch</h1><p class="lede">That name is not on this island.</p></div></section>`;
     return;
@@ -1437,7 +1462,6 @@ function renderSurvivor(season) {
   const tribe = tribeById(season, s.tribeId);
   const tribeName = tribe ? tribe.name : s.tribeId;
   const model = modelOf(s);
-  const nick = nickOf(s);
   const campUrl = s.camp ? assetUrl(s.camp) : "";
   const campStyle = campUrl ? ` style="--camp:url('${escapeHtml(campUrl)}')"` : "";
   const portrait = s.portrait
@@ -1455,25 +1479,21 @@ function renderSurvivor(season) {
       const img = m.portrait
         ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(modelOf(m))}">`
         : "";
-      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span class="mate-model">${escapeHtml(modelOf(m))}</span><span class="mate-nick">${escapeHtml(nickOf(m))}</span></a>`;
+      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span class="mate-model">${escapeHtml(modelOf(m))}</span></a>`;
     })
     .join("");
-  document.title = `${model}${nick ? " (" + nick + ")" : ""} — Last Trader Standing`;
-  const nickLine = nick
-    ? `<p class="survivor-nick">Island name <strong>${escapeHtml(nick)}</strong></p>`
-    : "";
+  document.title = `${model} — Last Trader Standing`;
   root.innerHTML = `
     <section class="survivor-hero" id="survivor"${campStyle}>
       <div class="hero-embers" aria-hidden="true"></div>
       <div class="hero-inner">
-        <p class="section-kicker">${escapeHtml(tribeName)}${nick ? " · " + escapeHtml(nick) : ""}</p>
+        <p class="section-kicker">${escapeHtml(tribeName)}</p>
         <h1>${escapeHtml(model)}</h1>
       </div>
     </section>
     <div class="survivor-sheet ${s.tribeId}">
       ${portrait}
       <h2>${escapeHtml(model)}</h2>
-      ${nickLine}
       <div class="survivor-meta">
         <span>${escapeHtml(tribeName)}</span>
         <span>${s.status === "active" ? "In the game" : escapeHtml(s.status)}</span>
@@ -1590,7 +1610,6 @@ function mondayOpening(s, start) {
 
 function dayCardHtml(s, tribe, opts) {
   const model = escapeHtml(modelOf(s));
-  const nick = nickOf(s);
   const face = s.portrait
     ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
     : "";
@@ -1616,7 +1635,7 @@ function dayCardHtml(s, tribe, opts) {
       ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s.name))}">${face}</a>` : ""}
       <a class="day-id" href="${escapeHtml(survivorHref(s.name))}">
         <strong>${model}</strong>
-        <em>${escapeHtml(nick)}${tribe ? " · " + escapeHtml(tribe.name) : ""}</em>
+        <em>${escapeHtml(tribeLine(s, tribe))}</em>
       </a>
       ${moved}
     </div>
@@ -2015,10 +2034,10 @@ function applyDemoTribal(season) {
         bootName: "Demo Boot",
         summary: "Demo tally for spoiler UI — not a real council.",
         votes: [
-          { from: "Reed", for: "Demo Boot" },
-          { from: "Hex", for: "Demo Boot" },
-          { from: "Mara", for: "Demo Boot" },
-          { from: "Nori", for: "Someone Else" }
+          { from: "Kimi K3", for: "Demo Boot" },
+          { from: "Composer 2.5", for: "Demo Boot" },
+          { from: "Claude Sonnet 5", for: "Demo Boot" },
+          { from: "Gemini 3.7 Flash", for: "Someone Else" }
         ]
       }
     ]
