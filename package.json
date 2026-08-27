@@ -1,0 +1,11 @@
+{
+  "name": "last-trader-standing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "derive": "node scripts/derive-board.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check-season.mjs && node scripts/check-campfire-open.js",
+    "dev": "node scripts/build.mjs && python3 scripts/dev-server.py"
+  }
+}

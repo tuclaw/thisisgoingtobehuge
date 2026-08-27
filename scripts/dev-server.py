@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Static dev server with live reload for Last Trader Standing."""
+"""Serve dist/ with live reload. Rebuilds when source files change."""
 
 from __future__ import annotations
 
 import hashlib
 import os
+import subprocess
 import sys
 import threading
 import time
@@ -12,11 +13,12 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DIST = os.path.join(ROOT, "dist")
 PORT = int(os.environ.get("PORT", "8000"))
-WATCH_EXTENSIONS = {".html", ".css", ".js", ".json", ".svg"}
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".cursor"}
+WATCH_EXTENSIONS = {".html", ".css", ".js", ".json", ".svg", ".mjs"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".cursor", "dist"}
 
-LIVEReload_SCRIPT = """
+LIVERELOAD_SCRIPT = """
 <script>
 (function () {
   var last = null;
@@ -37,6 +39,7 @@ LIVEReload_SCRIPT = """
 
 _revision_lock = threading.Lock()
 _revision_token = ""
+_build_lock = threading.Lock()
 
 
 def compute_revision_token() -> str:
@@ -59,12 +62,22 @@ def compute_revision_token() -> str:
     return digest[:16]
 
 
+def run_build() -> None:
+    with _build_lock:
+        subprocess.run([sys.executable.replace("python3", "node") if False else "node", os.path.join(ROOT, "scripts", "build.mjs")], check=False, cwd=ROOT)
+
+
 def watch_files() -> None:
     global _revision_token
+    last = ""
     while True:
         token = compute_revision_token()
-        with _revision_lock:
-            _revision_token = token
+        if token != last:
+            if last:
+                run_build()
+            last = token
+            with _revision_lock:
+                _revision_token = token
         time.sleep(0.35)
 
 
@@ -78,15 +91,15 @@ def inject_live_reload(body: bytes) -> bytes:
     marker = b"</body>"
     idx = lower.rfind(marker)
     if idx == -1:
-        return body + LIVEReload_SCRIPT.encode("utf-8")
-    snippet = LIVEReload_SCRIPT.encode("utf-8")
+        return body + LIVERELOAD_SCRIPT.encode("utf-8")
+    snippet = LIVERELOAD_SCRIPT.encode("utf-8")
     return body[:idx] + snippet + body[idx:]
 
 
 def resolve_html_path(path: str) -> str | None:
     cleaned = unquote(path.split("?", 1)[0])
-    fs_path = os.path.abspath(os.path.join(ROOT, cleaned.lstrip("/")))
-    if not fs_path.startswith(ROOT):
+    fs_path = os.path.abspath(os.path.join(DIST, cleaned.lstrip("/")))
+    if not fs_path.startswith(DIST):
         return None
     if os.path.isdir(fs_path):
         for index_name in ("index.html", "index.htm"):
@@ -101,7 +114,7 @@ def resolve_html_path(path: str) -> str | None:
 
 class DevHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=ROOT, **kwargs)
+        super().__init__(*args, directory=DIST, **kwargs)
 
     def log_message(self, format: str, *args) -> None:
         if args and isinstance(args[0], str) and "/__livereload__" in args[0]:
@@ -138,6 +151,8 @@ class DevHandler(SimpleHTTPRequestHandler):
 
 def main() -> int:
     os.chdir(ROOT)
+    if not os.path.isdir(DIST):
+        run_build()
     global _revision_token
     _revision_token = compute_revision_token()
 
@@ -146,7 +161,7 @@ def main() -> int:
 
     server = ThreadingHTTPServer(("127.0.0.1", PORT), DevHandler)
     print(f"Dev server with live reload: http://127.0.0.1:{PORT}/")
-    print("Watching .html, .css, .js, .json, .svg — save a file to auto-refresh.")
+    print("Serving dist/. Source changes rebuild the site.")
     print("Press Ctrl+C to stop.")
     try:
         server.serve_forever()
