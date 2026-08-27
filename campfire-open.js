@@ -134,10 +134,10 @@
         x: cx + (Math.random() - 0.5) * spread,
         y: fromBase ? baseY + Math.random() * 8 : baseY + 10,
         vx: (Math.random() - 0.5) * 0.35,
-        vy: -(1.1 + Math.random() * 2.4),
+        vy: -(1.6 + Math.random() * 3.2),
         life: 1,
         decay: 0.007 + Math.random() * 0.014,
-        size: 14 + Math.random() * 28,
+        size: 22 + Math.random() * 38,
         wobble: Math.random() * Math.PI * 2,
         wobbleSpeed: 0.04 + Math.random() * 0.08,
         heat: 0.55 + Math.random() * 0.45
@@ -179,7 +179,7 @@
       flames = [];
       embers = [];
       sparks = [];
-      const n = Math.floor(70 + width / 8);
+      const n = Math.floor(110 + width / 5);
       for (let i = 0; i < n; i += 1) {
         const p = spawnFlame(true);
         p.life = Math.random();
@@ -228,9 +228,9 @@
       const cy = height * 0.8;
       const pulse = 0.82 + Math.sin(last * 0.0032) * 0.1 + Math.sin(last * 0.007) * 0.06;
       const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, width * 0.55);
-      g.addColorStop(0, "rgba(255, 220, 120, " + (0.55 * pulse) + ")");
-      g.addColorStop(0.22, "rgba(255, 140, 30, " + (0.28 * pulse) + ")");
-      g.addColorStop(0.55, "rgba(232, 93, 4, " + (0.1 * pulse) + ")");
+      g.addColorStop(0, "rgba(255, 236, 170, " + (0.85 * pulse) + ")");
+      g.addColorStop(0.18, "rgba(255, 154, 31, " + (0.45 * pulse) + ")");
+      g.addColorStop(0.48, "rgba(232, 93, 4, " + (0.18 * pulse) + ")");
       g.addColorStop(1, "rgba(232, 93, 4, 0)");
       ctx.save();
       ctx.globalCompositeOperation = "lighter";
@@ -240,11 +240,11 @@
     }
 
     function step(dt) {
-      const target = Math.floor(64 + width / 7);
+      const target = Math.floor(110 + width / 4);
       while (flames.length < target) flames.push(spawnFlame(true));
-      if (Math.random() < 0.35) flames.push(spawnFlame(true));
-      if (Math.random() < 0.22) embers.push(spawnEmber());
-      if (Math.random() < 0.08) sparks.push(spawnSpark());
+      if (Math.random() < 0.55) flames.push(spawnFlame(true));
+      if (Math.random() < 0.32) embers.push(spawnEmber());
+      if (Math.random() < 0.14) sparks.push(spawnSpark());
 
       const scale = dt / 16.67;
       for (let i = flames.length - 1; i >= 0; i -= 1) {
@@ -273,7 +273,7 @@
         s.life -= s.decay * scale;
         if (s.life <= 0) sparks.splice(i, 1);
       }
-      if (flames.length > 180) flames.length = 180;
+      if (flames.length > 260) flames.length = 260;
       if (embers.length > 50) embers.length = 50;
       if (sparks.length > 24) sparks.length = 24;
     }
@@ -475,8 +475,12 @@
     if (io) io.observe(theater);
     else fire.start();
 
+    const hero = theater.closest(".open-hero");
     theater.classList.add("is-ready");
     requestAnimationFrame(() => theater.classList.add("is-lit"));
+    window.setTimeout(() => {
+      if (hero) hero.classList.add("is-copy-in");
+    }, prefersReducedMotion() ? 80 : 900);
 
     async function loop() {
       if (prefersReducedMotion()) {
@@ -484,7 +488,7 @@
         return;
       }
 
-      await wait(1100);
+      await wait(1400);
       while (looping && !abortRef.aborted) {
         const scene = SCENES[sceneIndex % SCENES.length];
         if (statusEl) {

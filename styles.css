@@ -2095,9 +2095,11 @@ a.brand:hover {
   isolation: isolate;
   min-height: 100vh;
   min-height: 100dvh;
-  display: grid;
-  place-items: end center;
-  padding: 0 1.25rem 5.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 1.25rem 1.6rem;
   overflow: hidden;
   text-align: center;
 }
@@ -2165,13 +2167,24 @@ a.brand:hover {
   position: relative;
   z-index: 3;
   max-width: 42rem;
-  padding-bottom: 0.5rem;
+  padding: 0.4rem 0 2.6rem;
+  opacity: 0;
+  transform: translateY(0.6rem);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.open-hero.is-copy-in .hero-inner {
+  opacity: 1;
+  transform: none;
 }
 
 /* —— Landing campfire theater —— */
 .campfire-theater {
   position: absolute;
-  inset: 0;
+  top: 4.4rem;
+  left: 0;
+  right: 0;
+  bottom: 11.5rem;
   z-index: 2;
   pointer-events: none;
   opacity: 0;
@@ -2186,19 +2199,19 @@ a.brand:hover {
 .campfire-pit {
   position: absolute;
   left: 50%;
-  top: 46%;
-  width: min(42vw, 340px);
-  height: min(52vw, 420px);
-  transform: translate(-50%, -58%);
+  top: 58%;
+  width: min(56vw, 420px);
+  height: min(68vw, 520px);
+  transform: translate(-50%, -52%);
   opacity: 0;
-  filter: blur(8px);
+  filter: blur(10px);
   transition: opacity 1.6s ease, filter 1.8s ease, transform 1.6s ease;
 }
 
 .campfire-theater.is-lit .campfire-pit {
   opacity: 1;
   filter: none;
-  transform: translate(-50%, -58%) scale(1);
+  transform: translate(-50%, -52%) scale(1);
 }
 
 .campfire-heat {
@@ -2324,19 +2337,19 @@ a.brand:hover {
 }
 
 /* Two: left / right of the fire */
-.campfire-theater[data-count="2"] .campfire-face:nth-child(1) { left: 18%; top: 42%; }
-.campfire-theater[data-count="2"] .campfire-face:nth-child(2) { left: 82%; top: 42%; }
+.campfire-theater[data-count="2"] .campfire-face:nth-child(1) { left: 16%; top: 48%; }
+.campfire-theater[data-count="2"] .campfire-face:nth-child(2) { left: 84%; top: 48%; }
 
 /* Three: triangle around the fire */
-.campfire-theater[data-count="3"] .campfire-face:nth-child(1) { left: 50%; top: 16%; }
-.campfire-theater[data-count="3"] .campfire-face:nth-child(2) { left: 14%; top: 52%; }
-.campfire-theater[data-count="3"] .campfire-face:nth-child(3) { left: 86%; top: 52%; }
+.campfire-theater[data-count="3"] .campfire-face:nth-child(1) { left: 50%; top: 12%; }
+.campfire-theater[data-count="3"] .campfire-face:nth-child(2) { left: 13%; top: 58%; }
+.campfire-theater[data-count="3"] .campfire-face:nth-child(3) { left: 87%; top: 58%; }
 
 /* Four: corners around the fire */
-.campfire-theater[data-count="4"] .campfire-face:nth-child(1) { left: 16%; top: 20%; }
-.campfire-theater[data-count="4"] .campfire-face:nth-child(2) { left: 84%; top: 20%; }
-.campfire-theater[data-count="4"] .campfire-face:nth-child(3) { left: 16%; top: 62%; }
-.campfire-theater[data-count="4"] .campfire-face:nth-child(4) { left: 84%; top: 62%; }
+.campfire-theater[data-count="4"] .campfire-face:nth-child(1) { left: 14%; top: 16%; }
+.campfire-theater[data-count="4"] .campfire-face:nth-child(2) { left: 86%; top: 16%; }
+.campfire-theater[data-count="4"] .campfire-face:nth-child(3) { left: 14%; top: 72%; }
+.campfire-theater[data-count="4"] .campfire-face:nth-child(4) { left: 86%; top: 72%; }
 
 .campfire-imessage {
   --im-bg: #f2f2f7;
@@ -2352,10 +2365,10 @@ a.brand:hover {
   --bubble-ember: #c45a12;
   position: absolute;
   left: 50%;
-  top: 18%;
+  top: 10%;
   z-index: 4;
-  width: min(22rem, calc(100vw - 2.4rem));
-  max-height: min(36vh, 300px);
+  width: min(20.5rem, calc(100vw - 2.4rem));
+  max-height: min(28vh, 240px);
   transform: translate(-50%, -12px) scale(0.94);
   display: flex;
   flex-direction: column;
@@ -2412,13 +2425,13 @@ a.brand:hover {
 }
 
 .campfire-theater[data-count="2"] .campfire-imessage {
-  top: 16%;
+  top: 8%;
 }
 
 .campfire-theater[data-count="3"] .campfire-imessage,
 .campfire-theater[data-count="4"] .campfire-imessage {
-  top: 34%;
-  width: min(20.5rem, calc(100vw - 10rem));
+  top: 22%;
+  width: min(19.5rem, calc(100vw - 10rem));
 }
 
 @keyframes campfire-heat {
@@ -2458,6 +2471,12 @@ a.brand:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .open-hero .hero-inner,
+  .open-hero.is-copy-in .hero-inner {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
   .campfire-theater,
   .campfire-pit,
   .campfire-face,
@@ -2473,7 +2492,7 @@ a.brand:hover {
     opacity: 1;
     visibility: visible;
     filter: none;
-    transform: translate(-50%, -58%);
+    transform: translate(-50%, -52%);
   }
   .campfire-faces.is-in .campfire-face {
     opacity: 1;
