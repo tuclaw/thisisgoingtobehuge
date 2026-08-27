@@ -9,8 +9,8 @@
   "terminals": [
     {
       "name": "web",
-      "command": "python3 -m http.server 8000 --bind 0.0.0.0",
-      "description": "Static dev server for the site. Serves the repo root (index.html, season1.json, styles.css, app.js, and all pages) at http://localhost:8000, mirroring the GitHub Pages deploy."
+      "command": "py scripts/dev-server.py",
+      "description": "Dev server with live reload at http://localhost:8000. Auto-refreshes the browser when HTML, CSS, JS, or JSON changes."
     }
   ]
 }
