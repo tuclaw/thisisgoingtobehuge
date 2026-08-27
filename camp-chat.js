@@ -132,8 +132,9 @@
       const c = this.conversation;
       const participants = c.participants || [];
       const isGroup = participants.length > 2;
-      const anchorId = c.anchorId || participants[0] && participants[0].id;
+      const anchorId = c.anchorId || (participants[0] && participants[0].id);
       const stepMs = typeof c.stepMs === "number" ? c.stepMs : DEFAULT_STEP_MS;
+      const typingMs = typeof c.typingMs === "number" ? c.typingMs : TYPING_MS;
 
       if (c.dayLabel) {
         const day = document.createElement("div");
@@ -148,32 +149,11 @@
         const msg = c.messages[i];
         const showTyping = msg.typing !== false && i < c.messages.length - 1;
         const typingEl = this.appendTyping();
-        await this.wait(TYPING_MS, token);
+        await this.wait(typingMs, token);
         if (token !== this.abortToken) return;
         typingEl.remove();
 
-        const row = document.createElement("div");
-        const side = sideForMessage(msg, participants, anchorId);
-        row.className = "camp-chat-row from-" + side;
-
-        const senderName = senderLabel(msg, participants, isGroup);
-        if (senderName) {
-          const sender = document.createElement("p");
-          sender.className = "camp-chat-sender " + colorClass(msg, participants);
-          sender.textContent = senderName;
-          row.appendChild(sender);
-        }
-
-        const bubble = document.createElement("div");
-        bubble.className = "camp-chat-bubble";
-        const color = colorClass(msg, participants);
-        if (color && side === "left") bubble.classList.add(color);
-        bubble.innerHTML = escapeHtml(msg.text || "");
-        row.appendChild(bubble);
-
-        this.thread.appendChild(row);
-        requestAnimationFrame(() => row.classList.add("is-visible"));
-        this.thread.scrollTop = this.thread.scrollHeight;
+        this.appendMessage(msg, participants, anchorId, isGroup, true);
 
         await this.wait(MSG_ANIM_MS, token);
         if (token !== this.abortToken) return;
@@ -189,6 +169,59 @@
       if (this.replayBtn) this.replayBtn.disabled = false;
     }
 
+    renderAll() {
+      if (!this.thread) return;
+      this.abortToken += 1;
+      this.isPlaying = false;
+      this.clearThread();
+      const c = this.conversation;
+      const participants = c.participants || [];
+      const isGroup = participants.length > 2;
+      const anchorId = c.anchorId || (participants[0] && participants[0].id);
+      if (c.dayLabel) {
+        const day = document.createElement("div");
+        day.className = "camp-chat-day";
+        day.textContent = c.dayLabel;
+        this.thread.appendChild(day);
+      }
+      (c.messages || []).forEach((msg) => {
+        this.appendMessage(msg, participants, anchorId, isGroup, false);
+      });
+    }
+
+    appendMessage(msg, participants, anchorId, isGroup, animate) {
+      const row = document.createElement("div");
+      const side = sideForMessage(msg, participants, anchorId);
+      row.className = "camp-chat-row from-" + side;
+      if (!animate) row.classList.add("is-visible");
+
+      const senderName = senderLabel(msg, participants, isGroup);
+      if (senderName) {
+        const sender = document.createElement("p");
+        sender.className = "camp-chat-sender " + colorClass(msg, participants);
+        sender.textContent = senderName;
+        row.appendChild(sender);
+      }
+
+      const bubble = document.createElement("div");
+      bubble.className = "camp-chat-bubble";
+      const color = colorClass(msg, participants);
+      if (color && side === "left") bubble.classList.add(color);
+      bubble.innerHTML = escapeHtml(msg.text || "");
+      row.appendChild(bubble);
+
+      this.thread.appendChild(row);
+      if (animate) requestAnimationFrame(() => row.classList.add("is-visible"));
+      this.thread.scrollTop = this.thread.scrollHeight;
+      return row;
+    }
+
+    abort() {
+      this.abortToken += 1;
+      this.isPlaying = false;
+      this.clearThread();
+    }
+
     appendTyping() {
       const el = document.createElement("div");
       el.className = "camp-chat-typing";
@@ -199,11 +232,9 @@
       return el;
     }
 
-    wait(ms, token) {
+    wait(ms) {
       return new Promise((resolve) => {
-        const t = setTimeout(() => {
-          if (token === this.abortToken) resolve();
-        }, ms);
+        setTimeout(resolve, ms);
       });
     }
   }
@@ -276,10 +307,158 @@
     }
   };
 
+  const TRAILER_CONVERSATIONS = {
+    alliance: {
+      id: "trailer-alliance",
+      title: "Hex & Vesper",
+      subtitle: "Bidu · private",
+      dayLabel: "Tue 7:14 PM",
+      anchorId: "hex",
+      stepMs: 1100,
+      typingMs: 700,
+      participants: [
+        { id: "hex", name: "Hex", color: "teal", side: "right" },
+        { id: "vesper", name: "Vesper", color: "teal", side: "left" }
+      ],
+      messages: [
+        { from: "vesper", text: "You and me. Before Friday." },
+        { from: "hex", text: "Nobody sees this thread." },
+        { from: "vesper", text: "If Bidu walks, we don't write each other's names." },
+        { from: "hex", text: "Deal." }
+      ]
+    },
+    blindside: {
+      id: "trailer-blindside",
+      title: "Quill, Sable, Kite",
+      subtitle: "Askara · group",
+      dayLabel: "Wed 8:03 PM",
+      anchorId: "quill",
+      stepMs: 1100,
+      typingMs: 700,
+      participants: [
+        { id: "quill", name: "Quill", color: "ember", side: "right" },
+        { id: "sable", name: "Sable", color: "ember" },
+        { id: "kite", name: "Kite", color: "ember" }
+      ],
+      messages: [
+        { from: "quill", text: "Riot thinks the vote is Sable." },
+        { from: "sable", text: "Let him. Three names. One parchment." },
+        { from: "kite", text: "Friday he walks. Keep him loud until then." },
+        { from: "quill", text: "This thread stays three." }
+      ]
+    }
+  };
+
   function mountCampChat(root, conversation) {
     const player = new CampChatPlayer(root, conversation);
     root._campChatPlayer = player;
     return player;
+  }
+
+  class BeachTrailer {
+    constructor(root) {
+      this.root = root;
+      this.phones = Array.prototype.slice.call(root.querySelectorAll("[data-trailer-scene]"));
+      this.players = this.phones.map((el) => {
+        const key = el.getAttribute("data-trailer-scene");
+        return mountCampChat(el, TRAILER_CONVERSATIONS[key] || {});
+      });
+      this.cycleToken = 0;
+      this.running = false;
+      this.reduceMotion = typeof window.matchMedia === "function"
+        && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (this.reduceMotion) {
+        this.showStatic();
+        return;
+      }
+      this.observe();
+    }
+
+    showStatic() {
+      this.root.classList.add("is-static");
+      this.phones.forEach((phone, i) => {
+        phone.classList.add("is-on");
+        if (this.players[i]) this.players[i].renderAll();
+      });
+    }
+
+    observe() {
+      if (!("IntersectionObserver" in window)) {
+        this.start();
+        return;
+      }
+      this.io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) this.start();
+            else this.stop();
+          });
+        },
+        { threshold: 0.28 }
+      );
+      this.io.observe(this.root);
+    }
+
+    start() {
+      if (this.running) return;
+      this.running = true;
+      this.loop();
+    }
+
+    stop() {
+      this.running = false;
+      this.cycleToken += 1;
+      this.players.forEach((player) => player.abort());
+      this.phones.forEach((phone) => {
+        phone.classList.remove("is-on", "is-exit");
+      });
+    }
+
+    wait(ms, token) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (token === this.cycleToken) resolve(true);
+          else resolve(false);
+        }, ms);
+      });
+    }
+
+    async loop() {
+      const token = ++this.cycleToken;
+      while (this.running && token === this.cycleToken) {
+        const ok = await this.cycle(token);
+        if (!ok) return;
+      }
+    }
+
+    async cycle(token) {
+      this.phones.forEach((phone) => phone.classList.remove("is-on", "is-exit"));
+      if (!this.phones[0] || !this.players[0]) return false;
+
+      this.phones[0].classList.add("is-on");
+      await this.players[0].play();
+      if (token !== this.cycleToken) return false;
+      if (!(await this.wait(1400, token))) return false;
+
+      this.phones[0].classList.add("is-exit");
+      this.phones[0].classList.remove("is-on");
+      if (!(await this.wait(480, token))) return false;
+
+      if (this.phones[1] && this.players[1]) {
+        this.phones[1].classList.add("is-on");
+        await this.players[1].play();
+        if (token !== this.cycleToken) return false;
+        if (!(await this.wait(2000, token))) return false;
+        this.phones[1].classList.add("is-exit");
+        this.phones[1].classList.remove("is-on");
+        if (!(await this.wait(500, token))) return false;
+      }
+
+      this.players.forEach((player) => player.clearThread());
+      this.phones.forEach((phone) => phone.classList.remove("is-on", "is-exit"));
+      return token === this.cycleToken;
+    }
   }
 
   function initCampChatDemos() {
@@ -289,12 +468,16 @@
       if (!conv) return;
       mountCampChat(root, conv);
     });
+    const trailer = document.getElementById("beach-trailer");
+    if (trailer) new BeachTrailer(trailer);
   }
 
   global.CampChat = {
     mount: mountCampChat,
     samples: SAMPLE_CONVERSATIONS,
-    CampChatPlayer
+    trailer: TRAILER_CONVERSATIONS,
+    CampChatPlayer,
+    BeachTrailer
   };
 
   if (document.readyState === "loading") {
