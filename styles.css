@@ -168,6 +168,57 @@ img {
   background: rgba(212, 160, 23, 0.08);
 }
 
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0.14rem 0.45rem 0.12rem;
+  border: 1px solid rgba(224, 32, 32, 0.55);
+  border-radius: 3px;
+  background: rgba(224, 32, 32, 0.1);
+  color: #ff6b6b;
+  font-family: var(--font-display);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.live-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e02020;
+  flex-shrink: 0;
+}
+
+.nav-links .live-badge {
+  margin-left: 0.3rem;
+  padding: 0.1rem 0.38rem 0.08rem;
+  font-size: 0.48rem;
+  vertical-align: 0.05em;
+}
+
+.episode-hero .live-badge {
+  font-size: 0.62rem;
+  padding: 0.18rem 0.55rem 0.15rem;
+}
+
+.episode-hero .live-badge-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.ep-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
 /* —— Hero —— */
 .hero {
   position: relative;
@@ -1249,13 +1300,25 @@ a.brand:hover {
     0 2px 0 #3a2410;
 }
 
-.episode-hero h1 span {
+.episode-hero h1 > span:not(.ep-hero-title) {
   display: block;
   font-size: 0.38em;
   letter-spacing: 0.22em;
   font-weight: 400;
   margin-top: 0.55rem;
   color: var(--gold-bright);
+}
+
+.episode-hero .ep-hero-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-shadow: inherit;
 }
 
 .episode-page .wrap,
@@ -2041,7 +2104,8 @@ a.brand:hover {
   margin: 0 0 0.4rem;
 }
 
-.episode-card h3 {
+.episode-card h3,
+.episode-card .ep-title-row {
   font-family: var(--font-display);
   font-size: 1.7rem;
   margin: 0 0 0.4rem;
@@ -3372,7 +3436,8 @@ a.brand:hover {
   color: var(--gold);
 }
 
-.journey-ep h3 {
+.journey-ep h3,
+.journey-ep .ep-title-row {
   margin: 0 0 0.45rem;
   font-family: var(--font-display);
   font-size: 1.35rem;

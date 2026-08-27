@@ -1392,7 +1392,7 @@ function renderHomeEpisodes(season) {
       const live = ep.status === "live";
       return `<a class="journey-ep${live ? " live" : ""} reveal" href="${escapeHtml(href)}">
         <p class="ep-kicker">${live ? "Now burning" : escapeHtml(ep.status || "Cut")}</p>
-        <h3>${title}</h3>
+        <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
         <p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>
       </a>`;
@@ -1693,6 +1693,28 @@ function renderEpisodeDays(season) {
   }
 }
 
+function renderEpisodeLiveIndicator(season) {
+  if (document.documentElement.dataset.page !== "episode") return;
+  const epNum = Number(document.documentElement.dataset.episode);
+  if (!epNum) return;
+  const live = getLiveEpisode(season);
+  if (!live || live.number !== epNum) return;
+  const h1 = document.querySelector(".episode-hero h1");
+  if (!h1 || h1.querySelector(".live-badge")) return;
+  const dateSpan = h1.querySelector(":scope > span");
+  const titleRow = document.createElement("span");
+  titleRow.className = "ep-title-row ep-hero-title";
+  const textNode = h1.firstChild;
+  if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+    const titleSpan = document.createElement("span");
+    titleSpan.textContent = textNode.textContent.trim();
+    titleRow.appendChild(titleSpan);
+    h1.removeChild(textNode);
+  }
+  titleRow.insertAdjacentHTML("beforeend", liveIndicatorHtml());
+  h1.insertBefore(titleRow, dateSpan || null);
+}
+
 function renderEpisode(season) {
   renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
@@ -1709,6 +1731,7 @@ function renderEpisode(season) {
   }
   const banner = document.getElementById("season-banner");
   if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
+  renderEpisodeLiveIndicator(season);
   renderEpisodeHoldings(season);
   const body = document.getElementById("episode-marks-body");
   if (body) {
@@ -1855,6 +1878,35 @@ function lockedTeasers() {
   ];
 }
 
+function getLiveEpisode(season) {
+  const episodes = Array.isArray(season.episodes) ? season.episodes : [];
+  return episodes.find((ep) => ep.status === "live") || null;
+}
+
+function liveIndicatorHtml() {
+  return (
+    '<span class="live-badge" aria-label="Live now">' +
+    '<span class="live-badge-dot" aria-hidden="true"></span>LIVE</span>'
+  );
+}
+
+function isSeasonOneNavLink(href) {
+  if (!href) return false;
+  const path = href.split("#")[0].split("?")[0].replace(/\/+$/, "");
+  return path === "seasons/1" || path.endsWith("/seasons/1");
+}
+
+function renderNavLiveIndicators(season) {
+  const live = getLiveEpisode(season);
+  if (!live) return;
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    if (!isSeasonOneNavLink(href)) return;
+    if (link.querySelector(".live-badge")) return;
+    link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
+  });
+}
+
 function episodeFileHref(ep) {
   const path = (ep && ep.path) || "";
   if (!path) return "";
@@ -1889,9 +1941,10 @@ function renderSeasonHub(season) {
       const href = episodeFileHref(ep);
       const status = ep.status === "live" ? "Now playing" : ep.status || "cut";
       const liveClass = ep.status === "live" ? " live" : "";
+      const live = ep.status === "live";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(status)}</p>
-        <h3>${title}</h3>
+        <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
       </a>`;
     })
@@ -1907,6 +1960,7 @@ function render(season, sourceNote) {
   renderEpisode(season);
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
+  renderNavLiveIndicators(season);
   initDayFolds();
   initReveals();
   const miss = document.getElementById("json-miss");
