@@ -469,7 +469,7 @@
               else fire.stop();
             });
           },
-          { threshold: 0.12 }
+          { threshold: 0, rootMargin: "80px 0px 80px 0px" }
         )
       : null;
     if (io) io.observe(theater);
