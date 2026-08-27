@@ -13,8 +13,8 @@
     stepMs: 4800,
     participants: [
       { id: "mara", name: "Mara", color: "teal" },
-      { id: "vesper", name: "Vesper", color: "teal" },
-      { id: "nori", name: "Nori", color: "teal" }
+      { id: "vesper", name: "Vesper", color: "teal", side: "right" },
+      { id: "nori", name: "Nori", color: "teal", side: "left" }
     ],
     messages: [
       {
@@ -39,9 +39,9 @@
     anchorId: "quill",
     stepMs: 4800,
     participants: [
-      { id: "quill", name: "Quill", color: "ember" },
-      { id: "sable", name: "Sable", color: "ember" },
-      { id: "kite", name: "Kite", color: "ember" }
+      { id: "quill", name: "Quill", color: "ember", side: "right" },
+      { id: "sable", name: "Sable", color: "ember", side: "left" },
+      { id: "kite", name: "Kite", color: "ember", side: "left" }
     ],
     messages: [
       {
