@@ -450,6 +450,155 @@
   letter-spacing: 0.06em;
 }
 
+/* —— Homepage beach trailer —— */
+.beach-trailer {
+  --im-bg: #f2f2f7;
+  --im-header: #f9f9f9;
+  --im-border: rgba(60, 60, 67, 0.18);
+  --im-text: #1c1c1e;
+  --im-sub: rgba(60, 60, 67, 0.6);
+  --im-blue: #007aff;
+  --im-gray: #e9e9eb;
+  --im-gray-text: #1c1c1e;
+  --im-shadow: 0 22px 56px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  margin-top: 2.4rem;
+}
+
+.trailer-stage {
+  position: relative;
+  min-height: 520px;
+}
+
+.trailer-phone {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(320px, 92vw);
+  opacity: 0;
+  transform: translate(-50%, 18px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.trailer-phone.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  z-index: 2;
+}
+
+.trailer-phone.is-exit {
+  opacity: 0;
+  transform: translate(-50%, -12px) scale(0.97);
+  z-index: 1;
+}
+
+@media (min-width: 721px) {
+  .trailer-phone[data-trailer-scene="alliance"].is-on {
+    transform: translate(calc(-50% - 2.5rem), 0) scale(1);
+  }
+
+  .trailer-phone[data-trailer-scene="alliance"].is-exit {
+    transform: translate(calc(-50% - 2.5rem), -12px) scale(0.97);
+  }
+
+  .trailer-phone[data-trailer-scene="blindside"].is-on {
+    transform: translate(calc(-50% + 6.5rem), 0) scale(1);
+  }
+
+  .trailer-phone[data-trailer-scene="blindside"].is-exit {
+    transform: translate(calc(-50% + 6.5rem), -12px) scale(0.97);
+  }
+}
+
+@media (max-width: 720px) {
+  .trailer-stage {
+    min-height: 500px;
+  }
+}
+
+.trailer-phone .camp-chat-panel.trailer-frame {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  height: 430px;
+  max-height: 430px;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: none;
+  border-radius: 26px;
+}
+
+.trailer-header {
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 0.75rem 0.65rem;
+}
+
+.trailer-header .camp-chat-header-meta {
+  padding-right: 0;
+}
+
+.trailer-avatars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trailer-avatars img {
+  width: 2.15rem;
+  height: 2.15rem;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 50%;
+  border: 2px solid #f9f9f9;
+  background: #ddd;
+}
+
+.trailer-avatars img + img {
+  margin-left: -0.55rem;
+}
+
+.trailer-avatars.stacked img {
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.trailer-caption {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sand);
+}
+
+.beach-trailer.is-static .trailer-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  min-height: 0;
+  place-items: start center;
+}
+
+.beach-trailer.is-static .trailer-phone {
+  position: relative;
+  left: auto;
+  opacity: 1;
+  transform: none;
+  width: min(320px, 100%);
+}
+
+@media (max-width: 760px) {
+  .beach-trailer.is-static .trailer-stage {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .camp-chat-trigger,
   .camp-chat-trigger-pulse,
@@ -475,5 +624,9 @@
   .camp-chat-typing.is-active {
     opacity: 1;
     transform: none;
+  }
+
+  .trailer-phone {
+    transition: none;
   }
 }

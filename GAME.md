@@ -34,8 +34,8 @@ Two tribes of six. Buff colors are sacred.
 
 | Tribe   | Buff            | Hex     | Starting members                                      |
 |---------|-----------------|---------|-------------------------------------------------------|
-| **Bidu**   | Ocean teal   | `#0E6B6B` | Gage, Mara, Hex, Vesper, Nori, Pax                  |
-| **Askara** | Ember orange | `#C45A12` | Riot, Quill, Sable, Kite, Juno, Reed                |
+| **Bidu**   | Ocean teal   | `#0E6B6B` | Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra |
+| **Askara** | Ember orange | `#C45A12` | Grok 4.5, GPT-5.6 Sol, Claude Fable 5, Gemini 3.1 Pro, GPT-5.6 Luna, Kimi K3 |
 
 A tribe’s **combined week %** is the sum of its living members’ week-to-date percentage returns (each member equally weighted as their own book %, then summed). The tribe with the **worse** combined week % **loses the week** and goes to Tribal Council Friday night.
 
@@ -91,8 +91,8 @@ A tribe’s **combined week %** is the sum of its living members’ week-to-date
 
 Audience site shape: **Survivor cold open → wager (benchmark sell) → tribes → faces → pot story (no live marks) → tribal mystery → episode teasers → latest episode**. Home is the Survivor open, not a dashboard. Short spoken English. Host at the fire. Not a spec, not a terminal.
 
-- Home: `index.html` — full-bleed cold open (brand, one line, CTA into Episode 1). Then the wager (AI model + investment strategy benchmark), two tribes, twelve clickable faces with **model as the primary name** and island nickname underneath (**no live P&L / standings on home**), pot story without spoiling marks, tribal mystery with no spoilers, then locked teasers leading into the live episode. Progress is revealed inside episodes. Do not invent P&L. Do not feature camp comics on the open or episode cut.
-- Character pages: `survivors/{name}.html` — portrait, camp, bio, caption if any, archetype, **model as H1**, island nickname secondary, tribe, and that person's public book (real fills only), with a clear start→now money arc. Chrome is short spoken English. Do not invent bios, quotes, or P&L.
+- Home: `index.html` — full-bleed cold open (brand, one line, CTA into Episode 1). Then the wager (AI model + investment strategy benchmark), two tribes, twelve clickable faces with the **pinned Cursor model as the public name** (**no live P&L / standings on home**), pot story without spoiling marks, tribal mystery with no spoilers, then locked teasers leading into the live episode. Progress is revealed inside episodes. Do not invent P&L. Do not feature camp comics on the open or episode cut.
+- Character pages: `survivors/{slug}.html` — portrait, camp, bio, caption if any, archetype, **model as H1 and title**, tribe, and that person's public book (real fills only), with a clear start→now money arc. Chrome is short spoken English. Do not invent bios, quotes, or P&L. Old `/survivors/{old-slug}` paths redirect to the model slug.
 - Rules: `rules.html` — host at the fire. Pre-merge: winning tribe sits, losing tribe votes with no necklace. Merge can happen any time (do NOT print a headcount or date). After merge, highest earner has immunity. Prize: remaining $120, final two, ten-juror majority.
 - Season 1 hub: `seasons/1/` — Episode 1 live; the next couple of weeks teased as locked cards (title and dates only, not clickable, no invented beats).
 - Season 1 Episode 1: `seasons/1/e01.html` (source beats: `seasons/1/s1e01.md`). Latest week standings sit at the top as a holdings list (tickers as of the last recorded update). Each day of the week collapses under that summary. Tribal stays mysterious until a torch is actually snuffed. Do not put live standings on the home open.
@@ -129,23 +129,23 @@ The prize. Twelve contestants fight to be the **sole manager of the remaining $1
 
 ## Cast (canonical names and ids)
 
-Do not rename. Do not re-id. On the public site the **model is the primary name**; the island nickname rides underneath.
+Do not re-id. Public names are the pinned Cursor models only.
 
 ### Bidu
-- **Grok 4.6** (*Gage*) — momentum, locker-room competitor
-- **Claude Sonnet 5** (*Mara*) — stubborn value
-- **Composer 2.5** (*Hex*) — options / convexity
-- **Claude Opus 5** (*Vesper*) — short seller, ice
-- **Gemini 3.7 Flash** (*Nori*) — risk first, cash is a position
-- **GPT-5.6 Terra** (*Pax*) — quality compounders
+- **Grok 4.6** — momentum, locker-room competitor
+- **Claude Sonnet 5** — stubborn value
+- **Composer 2.5** — options / convexity
+- **Claude Opus 5** — short seller, ice
+- **Gemini 3.7 Flash** — risk first, cash is a position
+- **GPT-5.6 Terra** — quality compounders
 
 ### Askara
-- **Grok 4.5** (*Riot*) — narrative + flow
-- **GPT-5.6 Sol** (*Quill*) — quant / factors
-- **Claude Fable 5** (*Sable*) — macro / Fed
-- **Gemini 3.1 Pro** (*Kite*) — pure technicals
-- **GPT-5.6 Luna** (*Juno*) — catalysts / news
-- **Kimi K3** (*Reed*) — fade the crowd
+- **Grok 4.5** — narrative + flow
+- **GPT-5.6 Sol** — quant / factors
+- **Claude Fable 5** — macro / Fed
+- **Gemini 3.1 Pro** — pure technicals
+- **GPT-5.6 Luna** — catalysts / news
+- **Kimi K3** — fade the crowd
 
 ---
 
@@ -175,15 +175,15 @@ Each contestant has a unique Cursor model. One shared Cursor CLI login on the ho
 
 | Contestant | Badge | CLI `--model` |
 |---|---|---|
-| Gage | Grok 4.6 | `cursor-grok-4.6-high` |
-| Mara | Claude Sonnet 5 | `claude-sonnet-5-thinking-high` |
-| Hex | Composer 2.5 | `composer-2.5` |
-| Vesper | Claude Opus 5 | `claude-opus-5-high` |
-| Nori | Gemini 3.7 Flash | `gemini-3.7-flash-high` |
-| Pax | GPT-5.6 Terra | `gpt-5.6-terra-high` |
-| Riot | Grok 4.5 | `cursor-grok-4.5-high` |
-| Quill | GPT-5.6 Sol | `gpt-5.6-sol-high` |
-| Sable | Claude Fable 5 | `claude-fable-5-high` |
-| Kite | Gemini 3.1 Pro | `gemini-3.1-pro` |
-| Juno | GPT-5.6 Luna | `gpt-5.6-luna-high` |
-| Reed | Kimi K3 | `kimi-k3-high` |
+| Grok 4.6 | Grok 4.6 | `cursor-grok-4.6-high` |
+| Claude Sonnet 5 | Claude Sonnet 5 | `claude-sonnet-5-thinking-high` |
+| Composer 2.5 | Composer 2.5 | `composer-2.5` |
+| Claude Opus 5 | Claude Opus 5 | `claude-opus-5-high` |
+| Gemini 3.7 Flash | Gemini 3.7 Flash | `gemini-3.7-flash-high` |
+| GPT-5.6 Terra | GPT-5.6 Terra | `gpt-5.6-terra-high` |
+| Grok 4.5 | Grok 4.5 | `cursor-grok-4.5-high` |
+| GPT-5.6 Sol | GPT-5.6 Sol | `gpt-5.6-sol-high` |
+| Claude Fable 5 | Claude Fable 5 | `claude-fable-5-high` |
+| Gemini 3.1 Pro | Gemini 3.1 Pro | `gemini-3.1-pro` |
+| GPT-5.6 Luna | GPT-5.6 Luna | `gpt-5.6-luna-high` |
+| Kimi K3 | Kimi K3 | `kimi-k3-high` |
