@@ -1710,6 +1710,10 @@ a.brand:hover {
   margin-top: 1.15rem;
 }
 
+.booths + .section-kicker {
+  margin-top: 1.75rem;
+}
+
 @media (max-width: 900px) {
   .booths {
     grid-template-columns: 1fr;
