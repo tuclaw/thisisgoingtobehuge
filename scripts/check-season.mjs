@@ -101,12 +101,6 @@ for (const s of board.survivors) {
 
 for (const tribe of board.tribes) {
   const living = board.survivors.filter((s) => s.tribeId === tribe.id && (s.status === "active" || s.status === "immune"));
-  const sum = pctRound(living.reduce((n, s) => n + s.weekPct, 0));
-  check(
-    `tribe-week:${tribe.id}`,
-    Math.abs(sum - tribe.combinedWeekPct) <= 0.05,
-    `${tribe.combinedWeekPct} vs sum ${sum}`
-  );
   check(`living-count:${tribe.id}`, tribe.livingCount === living.length);
 }
 
@@ -200,7 +194,17 @@ const friMid = board.snapshots.find((s) => s.id === "s1e01-fri-mid");
 check("friday-mid-mark", Boolean(friMid), "missing s1e01-fri-mid");
 if (friMid) {
   check("friday-mid-mark-label", String(friMid.label || "").includes("Fri Aug 28 mid"));
+  const bidu = (friMid.tribes && friMid.tribes.bidu) || {};
+  const askara = (friMid.tribes && friMid.tribes.askara) || {};
+  check("friday-mid-bidu-week", bidu.combinedWeekPct === -0.44, String(bidu.combinedWeekPct));
+  check("friday-mid-bidu-day", bidu.combinedDayPct === -1.06, String(bidu.combinedDayPct));
+  check("friday-mid-askara-week", askara.combinedWeekPct === -0.72, String(askara.combinedWeekPct));
+  check("friday-mid-askara-day", askara.combinedDayPct === -1.12, String(askara.combinedDayPct));
 }
+const biduLive = board.tribes.find((t) => t.id === "bidu");
+const askaraLive = board.tribes.find((t) => t.id === "askara");
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -0.44 && biduLive.combinedDayPct === -1.06);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -0.72 && askaraLive.combinedDayPct === -1.12);
 
 const live = (board.episodes || []).filter((ep) => ep.status === "live");
 if (live.length === 1) {

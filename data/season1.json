@@ -1262,14 +1262,16 @@
       },
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -2.63,
-          "combinedMonthPct": -2.63,
-          "combinedDayPct": -6.36
+          "combinedWeekPct": -0.44,
+          "combinedMonthPct": -0.44,
+          "combinedDayPct": -1.06,
+          "livingCount": 6
         },
         "askara": {
-          "combinedWeekPct": -4.3,
-          "combinedMonthPct": -4.3,
-          "combinedDayPct": -6.74
+          "combinedWeekPct": -0.72,
+          "combinedMonthPct": -0.72,
+          "combinedDayPct": -1.12,
+          "livingCount": 6
         }
       }
     }
