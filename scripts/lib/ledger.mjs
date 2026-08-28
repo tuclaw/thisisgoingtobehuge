@@ -80,7 +80,10 @@ export function emptyBook(member, startingBookUsd) {
 function positionsFromLots(book, lots, cash, startingBookUsd) {
   const positions = lots.map(cloneLot);
   if (!positions.length) {
-    return [cashPosition(book, startingBookUsd)];
+    const sizeUsd = round(typeof cash === "number" && Number.isFinite(cash) ? Math.max(cash, 0) : startingBookUsd, 4);
+    const cashPos = cashPosition(book, sizeUsd);
+    if (book.cashNote) cashPos.note = book.cashNote;
+    return [cashPos];
   }
   if (cash > 0.049) {
     const cashPos = {

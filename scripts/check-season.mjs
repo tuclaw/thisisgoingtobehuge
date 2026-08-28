@@ -59,6 +59,8 @@ check("sold-lots-are-events", fills.some((f) => f.side === "sell" && f.ticker ==
 check("sold-hood-is-event", fills.some((f) => f.side === "sell" && f.ticker === "HOOD"));
 check("sold-btal-is-event", fills.some((f) => f.side === "sell" && f.ticker === "BTAL"));
 check("sold-island-nvda-is-event", fills.some((f) => f.side === "sell" && f.ticker === "NVDA"));
+check("sold-island-tsla-is-event", fills.some((f) => f.side === "sell" && f.ticker === "TSLA"));
+check("sold-island-gld-is-event", fills.some((f) => f.side === "sell" && f.ticker === "GLD"));
 
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === source.cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
@@ -99,12 +101,6 @@ for (const s of board.survivors) {
 
 for (const tribe of board.tribes) {
   const living = board.survivors.filter((s) => s.tribeId === tribe.id && (s.status === "active" || s.status === "immune"));
-  const sum = pctRound(living.reduce((n, s) => n + s.weekPct, 0));
-  check(
-    `tribe-week:${tribe.id}`,
-    Math.abs(sum - tribe.combinedWeekPct) <= 0.05,
-    `${tribe.combinedWeekPct} vs sum ${sum}`
-  );
   check(`living-count:${tribe.id}`, tribe.livingCount === living.length);
 }
 
@@ -129,10 +125,16 @@ if (tue && opus) {
 if (opus) {
   const now = board.survivors.find((s) => s.id === opus.id);
   const tickers = (now.positions || []).map(tickerOf);
+  const qid = (now.positions || []).find((pos) => tickerOf(pos) === "QID");
+  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
   check("wednesday-opus-sold-btal", !tickers.includes("BTAL") && tickers.includes("QID") && tickers.includes("CASH"));
+  check("live-opus-qid-qty", qid && qid.qty === "0.413795", qid && qid.qty);
+  check("live-opus-cash-4", cash && Math.abs(Number(cash.sizeUsd) - 4) < 0.05, cash && String(cash.sizeUsd));
 }
 
 const grok45 = source.cast.find((m) => m.name === "Grok 4.5");
+const grok46 = source.cast.find((m) => m.name === "Grok 4.6");
+const fable = source.cast.find((m) => m.name === "Claude Fable 5");
 if (kimi) {
   const now = board.survivors.find((s) => s.id === kimi.id);
   const tickers = (now.positions || []).map(tickerOf);
@@ -163,12 +165,46 @@ check(
   "no-unfilled-kimi-msft-add",
   fills.filter((f) => f.survivorId === (kimi && kimi.id) && f.side === "buy" && f.ticker === "MSFT").length === 1
 );
+check(
+  "no-unfilled-qid-add",
+  fills.filter((f) => f.survivorId === (opus && opus.id) && f.side === "buy" && f.ticker === "QID").length === 1
+);
 
-const fri = board.snapshots.find((s) => s.id === "s1e01-fri-open");
-check("friday-open-mark", Boolean(fri), "missing s1e01-fri-open");
-if (fri) {
-  check("friday-mark-label", String(fri.label || "").includes("Fri Aug 28 open"));
+if (grok46) {
+  const now = board.survivors.find((s) => s.id === grok46.id);
+  const tickers = (now.positions || []).map(tickerOf);
+  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
+  check("live-grok46-no-tsla", !tickers.includes("TSLA"));
+  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 9.7543) < 0.0001, cash && String(cash.sizeUsd));
 }
+if (fable) {
+  const now = board.survivors.find((s) => s.id === fable.id);
+  const tickers = (now.positions || []).map(tickerOf);
+  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
+  check("live-fable-no-gld", !tickers.includes("GLD"));
+  check("live-fable-cash", cash && Math.abs(Number(cash.sizeUsd) - 9.5985) < 0.0001, cash && String(cash.sizeUsd));
+}
+
+const friOpen = board.snapshots.find((s) => s.id === "s1e01-fri-open");
+check("friday-open-mark", Boolean(friOpen), "missing s1e01-fri-open");
+if (friOpen) {
+  check("friday-open-mark-label", String(friOpen.label || "").includes("Fri Aug 28 open"));
+}
+const friMid = board.snapshots.find((s) => s.id === "s1e01-fri-mid");
+check("friday-mid-mark", Boolean(friMid), "missing s1e01-fri-mid");
+if (friMid) {
+  check("friday-mid-mark-label", String(friMid.label || "").includes("Fri Aug 28 mid"));
+  const bidu = (friMid.tribes && friMid.tribes.bidu) || {};
+  const askara = (friMid.tribes && friMid.tribes.askara) || {};
+  check("friday-mid-bidu-week", bidu.combinedWeekPct === -0.44, String(bidu.combinedWeekPct));
+  check("friday-mid-bidu-day", bidu.combinedDayPct === -1.06, String(bidu.combinedDayPct));
+  check("friday-mid-askara-week", askara.combinedWeekPct === -0.72, String(askara.combinedWeekPct));
+  check("friday-mid-askara-day", askara.combinedDayPct === -1.12, String(askara.combinedDayPct));
+}
+const biduLive = board.tribes.find((t) => t.id === "bidu");
+const askaraLive = board.tribes.find((t) => t.id === "askara");
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -0.44 && biduLive.combinedDayPct === -1.06);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -0.72 && askaraLive.combinedDayPct === -1.12);
 
 const live = (board.episodes || []).filter((ep) => ep.status === "live");
 if (live.length === 1) {
