@@ -2329,7 +2329,7 @@ body.is-titles {
 }
 
 .open-titles.is-descent .open-sky {
-  transform: translate3d(0, -42%, 0);
+  transform: translate3d(0, -36%, 0);
 }
 
 .open-sky-canvas {
@@ -2376,7 +2376,10 @@ body.is-titles {
 
 .open-titles.is-descent .open-finale {
   opacity: 0;
-  transform: translate3d(0, -38vh, 0) scale(0.42);
+  transform: translate3d(0, -6vh, 0) scale(0.5);
+  transition:
+    opacity 0.85s ease 1.85s,
+    transform 2.85s cubic-bezier(0.45, 0.05, 0.25, 1);
 }
 
 .open-finale-title {
@@ -2425,7 +2428,7 @@ body.is-titles {
 }
 
 .open-titles.is-descent {
-  transform: translate3d(0, -12vh, 0);
+  transform: translate3d(0, -22vh, 0);
   pointer-events: none;
 }
 

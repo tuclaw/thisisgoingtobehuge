@@ -831,12 +831,12 @@
     async function runDescent() {
       /* Paint title + slogan at full size first, then animate the shrink/scroll. */
       overlay.classList.add("is-sky", "is-finale", "is-slogan", "is-instant");
-      await wait(64);
+      await wait(220);
       if (skipRef.finished) return;
       overlay.classList.remove("is-instant");
       void overlay.offsetWidth;
       overlay.classList.add("is-descent");
-      await beat(2850);
+      await beat(3000);
     }
 
     try {
@@ -943,8 +943,18 @@
     const skipBtn = document.getElementById("open-titles-skip");
     const skipLink = document.getElementById("skip-titles");
     if (overlay) overlay.addEventListener("click", skip);
-    if (skipBtn) skipBtn.addEventListener("click", skip);
-    if (skipLink) skipLink.addEventListener("click", skip);
+    if (skipBtn) {
+      skipBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        skip();
+      });
+    }
+    if (skipLink) {
+      skipLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        skip();
+      });
+    }
     function onKey(event) {
       if (event.key === "Escape") {
         event.preventDefault();
