@@ -1959,6 +1959,30 @@ a.brand:hover {
   max-height: calc(100% - 1.3rem);
 }
 
+#thursday-dinner .fire-chats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1.15rem;
+}
+
+@media (max-width: 900px) {
+  #thursday-dinner .fire-chats {
+    grid-template-columns: 1fr;
+  }
+}
+
+#thursday-dinner .camp-scene {
+  min-height: 540px;
+}
+
+#thursday-dinner .camp-chat-panel {
+  left: 0.65rem;
+  right: 0.65rem;
+  width: auto;
+  max-height: calc(100% - 1.3rem);
+}
+
 .beat-note {
   margin-top: 1.4rem;
   padding-top: 1rem;
