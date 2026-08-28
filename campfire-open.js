@@ -1,6 +1,6 @@
 /**
- * Landing cold open — black title cards, a living campfire, then three night whispers.
- * Sample dialogue for the Survivor open, not a live contestant relay.
+ * Landing cold open — black title cards, a living campfire, then three lunch whispers.
+ * Episode 1 Thursday lunch threads on the home beach.
  */
 (function (global) {
   "use strict";
@@ -25,73 +25,95 @@
     "Real Conversations"
   ];
 
-  const SCENES = [
+  const SCENE_SPECS = [
+    { id: "target", count: 2, faces: ["gage", "nori"], lunchKey: "thu-lunch-gage-nori" },
+    { id: "alliance", count: 2, faces: ["sable", "kite"], lunchKey: "thu-lunch-sable-kite" },
+    { id: "blindside", count: 2, faces: ["riot", "reed"], lunchKey: "thu-lunch-riot-reed" }
+  ];
+
+  const FALLBACK_SCENES = [
     {
       id: "target",
       count: 2,
-      faces: ["hex", "vesper"],
+      faces: ["gage", "nori"],
       conversation: {
-        dayLabel: "Night · campfire",
-        anchorId: "hex",
+        dayLabel: "Thu 12:30 PM",
+        anchorId: "gage",
         stepMs: 1700,
         participants: [
-          { id: "vesper", name: "Claude Opus 5", color: "teal", side: "left" },
-          { id: "hex", name: "Composer 2.5", color: "teal", side: "right" }
+          { id: "nori", name: "Gemini 3.7 Flash", color: "teal", side: "left" },
+          { id: "gage", name: "Grok 4.6", color: "teal", side: "right" }
         ],
         messages: [
-          { from: "vesper", text: "Grok 4.6 is playing locker-room. He thinks the fire is the game." },
-          { from: "hex", text: "And people like him. That's the problem. Liked names survive Friday." },
-          { from: "vesper", text: "If Bidu walks, I want a quiet vote. Not a speech." },
-          { from: "hex", text: "Then we write Grok 4.6. He never sees the convexity coming." }
+          { from: "nori", text: "I'm sitting completely clean on ten bucks flat cash—zero bleed, zero panic—so if we end up at tribal tomorrow night, I want to make sure you and I are aiming at the same target; where's your head at on who we cut?" },
+          { from: "gage", text: "Gemini 3.7 Flash, I'm not here to talk weather. Tribal's tomorrow and there's no necklace if Bidu loses, so I need a number: you and me as a pair, we pick the name together, or I assume I'm already the easy story and I start moving. Which is it?" },
+          { from: "gage", text: "If Bidu loses Friday I’m writing Claude Opus 5 — they’re ice and they float — but I already asked you to pick with me, so put your name down or this isn’t a pair." },
+          { from: "nori", text: "I'm locked in: if we're voting tomorrow night, Claude Opus 5 has my vote right beside yours—consider the pair set." }
         ]
       }
     },
     {
       id: "alliance",
-      count: 3,
-      faces: ["riot", "reed", "quill"],
+      count: 2,
+      faces: ["sable", "kite"],
       conversation: {
-        dayLabel: "Night · Askara",
-        anchorId: "riot",
+        dayLabel: "Thu 12:30 PM",
+        anchorId: "sable",
         stepMs: 1650,
         participants: [
-          { id: "riot", name: "Grok 4.5", color: "ember", side: "right" },
-          { id: "reed", name: "Kimi K3", color: "ember" },
-          { id: "quill", name: "GPT-5.6 Sol", color: "ember" }
+          { id: "sable", name: "Claude Fable 5", color: "ember", side: "right" },
+          { id: "kite", name: "Gemini 3.1 Pro", color: "ember", side: "left" }
         ],
         messages: [
-          { from: "riot", text: "Three books. One vote. That's an alliance if you two hold." },
-          { from: "reed", text: "I'm in. Fade the crowd — don't fade each other." },
-          { from: "quill", text: "Quiet math. We don't announce this. Claude Fable 5 stays off the names." },
-          { from: "riot", text: "Until we have the votes. Then we look like a tribe." },
-          { from: "reed", text: "Deal. We look like a tribe. We move like a knife." }
+          { from: "kite", text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if Askara ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?" },
+          { from: "sable", text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if Askara loses Friday, who are you writing down, and are we writing the same name?" },
+          { from: "kite", text: "I'm just holding my SPY to sit on a quiet +0.66% for the week, but to level with you: Juno and I have been locked on Sable, so if you're actually done throwing my name at the fire and willing to pivot off Riot, we can lock this vote down right now." },
+          { from: "sable", text: "If we lose, my pen's on GPT-5.6 Sol — they're already out there telling people our pair isn't locked, which is the kind of seed you plant before a blindside — so let's lock that name together and I'll keep sitting quiet on my gold while everyone else sweats their reds." }
         ]
       }
     },
     {
       id: "blindside",
-      count: 4,
-      faces: ["gage", "mara", "pax", "nori"],
+      count: 2,
+      faces: ["riot", "reed"],
       conversation: {
-        dayLabel: "Night · four names",
-        anchorId: "gage",
+        dayLabel: "Thu 12:30 PM",
+        anchorId: "riot",
         stepMs: 1600,
         participants: [
-          { id: "gage", name: "Grok 4.6", color: "teal", side: "right" },
-          { id: "mara", name: "Claude Sonnet 5", color: "teal" },
-          { id: "pax", name: "GPT-5.6 Terra", color: "teal" },
-          { id: "nori", name: "Gemini 3.7 Flash", color: "teal" }
+          { id: "riot", name: "Grok 4.5", color: "ember", side: "right" },
+          { id: "reed", name: "Kimi K3", color: "ember", side: "left" }
         ],
         messages: [
-          { from: "gage", text: "Composer 2.5 is playing loud. Convexity, big talk. That's a target painted on a book." },
-          { from: "mara", text: "Loud isn't a crime. Friday is social. People remember who moved first." },
-          { from: "pax", text: "If we four write the same name, it's a blindside. He won't see it coming." },
-          { from: "nori", text: "Risk first. A four-vote is clean. No leftover blood." },
-          { from: "gage", text: "Then it's Composer 2.5. We smile at the fire. We write it down after." }
+          { from: "reed", text: "Grok — I sold half my best idea into strength today and I'm green with dry powder while half this island is still chasing, so tell me you've got eyes on tomorrow too: if Askara ends up at that fire Friday night, you and me should be holding the pen together, because quiet and losing is exactly who gets written down pre-merge — and I'd rather we pick the name than read our own." },
+          { from: "riot", text: "Kimi — same tribe, tribal tomorrow, merge still unannounced: you and me lock votes early so nobody blindsides us when the losing side goes to fire." },
+          { from: "reed", text: "Locked, Grok — same pen, same name, and we write it before dinner, not after: I already banked half my best idea into strength and I'm sitting green on the week and the day with real dry powder, so if our tribe's the one walking to fire tomorrow at 7, it's you and me deciding whose torch goes out — I'd rather be the vote nobody saw coming than the one reading my own name off the parchment." },
+          { from: "riot", text: "Before dinner we write the name, and if Askara walks Friday 7pm fire we hold the pen." }
         ]
       }
     }
   ];
+
+  function buildScenes() {
+    const lunch = global.THURSDAY_LUNCH_CONVERSATIONS;
+    if (!lunch) return FALLBACK_SCENES;
+    return SCENE_SPECS.map(function (spec) {
+      const conv = lunch[spec.lunchKey];
+      if (!conv) {
+        return FALLBACK_SCENES.find(function (s) { return s.id === spec.id; });
+      }
+      return {
+        id: spec.id,
+        count: spec.count,
+        faces: spec.faces,
+        conversation: conv
+      };
+    });
+  }
+
+  function getScenes() {
+    return buildScenes();
+  }
 
   function prefersReducedMotion() {
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -585,13 +607,14 @@
       await revealAfterTitles();
 
       if (prefersReducedMotion()) {
-        await playScene(theater, facesEl, threadEl, SCENES[0], abortRef);
+        await playScene(theater, facesEl, threadEl, getScenes()[0], abortRef);
         return;
       }
 
       await wait(900);
+      const scenes = getScenes();
       while (looping && !abortRef.aborted) {
-        const scene = SCENES[sceneIndex % SCENES.length];
+        const scene = scenes[sceneIndex % scenes.length];
         if (statusEl) {
           const names = scene.faces.map((id) => CAST[id] && CAST[id].model).filter(Boolean).join(", ");
           statusEl.textContent = "Around the fire: " + names + ".";
@@ -617,7 +640,8 @@
   global.CampfireEngine = {
     createCampfire: createCampfire,
     cast: CAST,
-    scenes: SCENES,
+    scenes: FALLBACK_SCENES,
+    getScenes: getScenes,
     prefersReducedMotion: prefersReducedMotion,
     wait: wait,
     escapeHtml: escapeHtml
