@@ -2389,7 +2389,7 @@ body.is-titles {
   font-weight: 700;
   /* Same face as the cards — just larger. */
   font-size: clamp(2.15rem, 7.2vw, 4.1rem);
-  line-height: 1.14;
+  line-height: 1.18;
   letter-spacing: 0.06em;
   color: #fff;
   text-shadow:
