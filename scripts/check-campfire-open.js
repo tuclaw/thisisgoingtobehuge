@@ -88,11 +88,13 @@ if (!css.includes('.campfire-trade[data-slot="right"]') || !css.includes('.campf
   "Playing a Survivor-like game",
   "With real money",
   "Having real conversations",
-  "Yes, they really are investing my money",
-  "Yes, they really are privately chatting"
+  "Yes, they really are investing my money"
 ].forEach((card) => {
   if (!js.includes('"' + card + '"')) throw new Error("missing title card " + card);
 });
+if (js.includes("Yes, they really are privately chatting")) {
+  throw new Error("title card still says Yes, they really are privately chatting");
+}
 if (js.includes("Real time conversations")) {
   throw new Error("title card still says Real time conversations");
 }
