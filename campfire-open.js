@@ -513,6 +513,7 @@
 
     const skipBtn = document.getElementById("open-titles-skip");
     const skipLink = document.getElementById("skip-titles");
+    if (overlay) overlay.addEventListener("click", skip);
     if (skipBtn) skipBtn.addEventListener("click", skip);
     if (skipLink) skipLink.addEventListener("click", skip);
     function onKey(event) {
