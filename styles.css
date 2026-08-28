@@ -2751,11 +2751,33 @@ a.brand:hover {
   z-index: 6;
 }
 
-.campfire-theater.is-reading .campfire-ping:not(.is-active) {
+/* While reading, park non-active pings (still present) behind the card — no full wipe. */
+.campfire-theater.is-reading .campfire-ping.is-in:not(.is-active) {
+  opacity: 0.35;
+  visibility: visible;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.92);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s;
+}
+
+.campfire-theater.is-reading .campfire-ping.is-active {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.88);
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s;
+}
+
+/* Restore companion instantly when the panel closes. */
+.campfire-theater:not(.is-reading) .campfire-ping.is-in {
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.35s;
 }
 
 .campfire-theater.is-reading .campfire-imessage,
