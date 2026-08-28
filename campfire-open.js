@@ -1,5 +1,5 @@
 /**
- * Landing cold open — a living campfire, then three night whispers.
+ * Landing cold open — black title cards, a living campfire, then three night whispers.
  * Sample dialogue for the Survivor open, not a live contestant relay.
  */
 (function (global) {
@@ -18,6 +18,12 @@
     sable: { id: "sable", name: "Claude Fable 5", model: "Claude Fable 5", tribe: "askara", portrait: "cast/sable/portrait.jpg", href: "survivors/claude-fable-5.html" },
     kite: { id: "kite", name: "Gemini 3.1 Pro", model: "Gemini 3.1 Pro", tribe: "askara", portrait: "cast/kite/portrait.jpg", href: "survivors/gemini-3-1-pro.html" }
   };
+
+  const TITLE_CARDS = [
+    "The latest frontier models",
+    "Real money",
+    "Real time conversations"
+  ];
 
   const SCENES = [
     {
@@ -431,6 +437,92 @@
     return finished;
   }
 
+  function shouldSkipOpenTitles() {
+    if (prefersReducedMotion()) return true;
+    const hash = (window.location.hash || "").replace(/^#/, "");
+    return Boolean(hash && hash !== "landing");
+  }
+
+  function finishOpenTitles() {
+    document.body.classList.remove("is-titles");
+    const overlay = document.getElementById("open-titles");
+    if (overlay) overlay.setAttribute("aria-hidden", "true");
+    const hash = (window.location.hash || "").replace(/^#/, "");
+    if (hash && hash !== "landing") {
+      const target = document.getElementById(hash);
+      if (target) requestAnimationFrame(() => target.scrollIntoView());
+    }
+  }
+
+  async function playOpenTitles() {
+    const overlay = document.getElementById("open-titles");
+    const wordEl = document.getElementById("open-titles-word");
+    if (!overlay || !wordEl || !document.body.classList.contains("is-titles")) {
+      finishOpenTitles();
+      return;
+    }
+
+    if (shouldSkipOpenTitles()) {
+      finishOpenTitles();
+      return;
+    }
+
+    wordEl.setAttribute("role", "status");
+    wordEl.setAttribute("aria-live", "polite");
+
+    const skipRef = { skipped: false };
+    let skipResolve = function () {};
+    const skipped = new Promise((resolve) => {
+      skipResolve = resolve;
+    });
+    function skip() {
+      if (skipRef.skipped) return;
+      skipRef.skipped = true;
+      wordEl.classList.remove("is-in");
+      finishOpenTitles();
+      skipResolve();
+    }
+    function beat(ms) {
+      return Promise.race([wait(ms), skipped]);
+    }
+
+    const skipBtn = document.getElementById("open-titles-skip");
+    const skipLink = document.getElementById("skip-titles");
+    if (skipBtn) skipBtn.addEventListener("click", skip);
+    if (skipLink) skipLink.addEventListener("click", skip);
+    overlay.addEventListener("click", (event) => {
+      if (event.target === skipBtn) return;
+      skip();
+    });
+    function onKey(event) {
+      if (event.key === "Escape" || event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        skip();
+      }
+    }
+    window.addEventListener("keydown", onKey);
+
+    try {
+      await beat(700);
+      for (let i = 0; i < TITLE_CARDS.length; i += 1) {
+        if (skipRef.skipped) return;
+        wordEl.textContent = TITLE_CARDS[i];
+        await beat(40);
+        if (skipRef.skipped) return;
+        wordEl.classList.add("is-in");
+        await beat(2200);
+        if (skipRef.skipped) return;
+        wordEl.classList.remove("is-in");
+        await beat(1000);
+      }
+      if (skipRef.skipped) return;
+      await beat(280);
+    } finally {
+      window.removeEventListener("keydown", onKey);
+      if (!skipRef.skipped) finishOpenTitles();
+    }
+  }
+
   async function fadeSceneOut(facesEl, threadEl, abortRef) {
     facesEl.classList.remove("is-in");
     const card = document.getElementById("campfire-imessage");
@@ -448,8 +540,14 @@
     const threadEl = document.getElementById("campfire-thread");
     const statusEl = document.getElementById("campfire-status");
     /* Episode feed landing uses the same theater markup with data-mode="feed". */
-    if (!theater || theater.getAttribute("data-mode") === "feed") return;
-    if (!canvas || !facesEl || !threadEl) return;
+    if (!theater || theater.getAttribute("data-mode") === "feed") {
+      finishOpenTitles();
+      return;
+    }
+    if (!canvas || !facesEl || !threadEl) {
+      finishOpenTitles();
+      return;
+    }
 
     const fire = createCampfire(canvas);
     const abortRef = { aborted: false };
@@ -479,17 +577,23 @@
     const hero = theater.closest(".open-hero");
     theater.classList.add("is-ready");
     requestAnimationFrame(() => theater.classList.add("is-lit"));
-    window.setTimeout(() => {
-      if (hero) hero.classList.add("is-copy-in");
-    }, prefersReducedMotion() ? 80 : 900);
+
+    async function revealAfterTitles() {
+      await playOpenTitles();
+      window.setTimeout(() => {
+        if (hero) hero.classList.add("is-copy-in");
+      }, prefersReducedMotion() ? 80 : 900);
+    }
 
     async function loop() {
+      await revealAfterTitles();
+
       if (prefersReducedMotion()) {
         await playScene(theater, facesEl, threadEl, SCENES[0], abortRef);
         return;
       }
 
-      await wait(1400);
+      await wait(900);
       while (looping && !abortRef.aborted) {
         const scene = SCENES[sceneIndex % SCENES.length];
         if (statusEl) {

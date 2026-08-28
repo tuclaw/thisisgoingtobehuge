@@ -2155,6 +2155,99 @@ a.brand:hover {
 
 
 /* —— Open credits landing —— */
+body.is-titles {
+  overflow: hidden;
+}
+
+.open-titles {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 1.25rem 4.5rem;
+  background: #000;
+  color: #fff;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.55s ease, visibility 1.55s ease;
+}
+
+.open-page:not(.is-titles) .open-titles {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.open-titles-word {
+  margin: 0;
+  max-width: 16ch;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 6vw, 3.25rem);
+  line-height: 1.18;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.72),
+    0 0 36px rgba(255, 255, 255, 0.38),
+    0 0 72px rgba(255, 255, 255, 0.18);
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.95s ease, transform 1.05s ease;
+}
+
+.open-titles-word.is-in {
+  opacity: 1;
+  transform: none;
+  animation: title-glow 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes title-glow {
+  from {
+    text-shadow:
+      0 0 14px rgba(255, 255, 255, 0.55),
+      0 0 32px rgba(255, 255, 255, 0.28),
+      0 0 64px rgba(255, 255, 255, 0.12);
+  }
+  to {
+    text-shadow:
+      0 0 22px rgba(255, 255, 255, 0.9),
+      0 0 48px rgba(255, 255, 255, 0.48),
+      0 0 88px rgba(255, 255, 255, 0.22);
+  }
+}
+
+.open-titles-skip {
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.42);
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.4rem 0.2rem;
+}
+
+.open-titles-skip:hover,
+.open-titles-skip:focus-visible {
+  color: rgba(255, 255, 255, 0.88);
+  outline: none;
+}
+
+.open-hero .btn-live {
+  max-width: 22rem;
+  line-height: 1.45;
+  letter-spacing: 0.1em;
+  text-wrap: balance;
+}
+
 .open-page .torch-nav {
   background: linear-gradient(180deg, rgba(8, 5, 4, 0.82), rgba(18, 12, 8, 0.2));
   border-bottom-color: rgba(212, 160, 23, 0.12);
@@ -2593,6 +2686,23 @@ a.brand:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body.is-titles {
+    overflow: auto;
+  }
+  .open-titles,
+  .open-page:not(.is-titles) .open-titles {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: none;
+  }
+  .open-titles-word,
+  .open-titles-word.is-in {
+    opacity: 0;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
   .open-hero .hero-inner,
   .open-hero.is-copy-in .hero-inner {
     opacity: 1;
