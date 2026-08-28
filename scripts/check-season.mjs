@@ -227,6 +227,11 @@ check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -2.16 &&
 check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -5.18 && askaraLive.combinedDayPct === -7.62);
 check("live-mark-label", String(board.markLabel || "").includes("Fri Aug 28 last-hour"));
 check("live-marked-at", board.markedAt === "2026-08-28T19:14:23Z", board.markedAt);
+check(
+  "live-survivors-lasthour-session",
+  board.survivors.every((s) => s.lastSession === "2026-08-28-lasthour"),
+  board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
+);
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
 check("live-composer-lead", composerLive && composerLive.bookUsd === 10.4553 && composerLive.weekPct === 4.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);

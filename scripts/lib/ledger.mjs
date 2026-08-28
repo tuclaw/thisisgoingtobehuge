@@ -280,9 +280,9 @@ export function tribeTotals(cast, books) {
   return totals;
 }
 
-function publicSurvivor(member, book) {
+function publicSurvivor(member, book, lastSession) {
   const slug = member.slug || slugify(member.model || member.name);
-  return {
+  const out = {
     id: member.id,
     name: member.name,
     slug,
@@ -303,6 +303,8 @@ function publicSurvivor(member, book) {
     model: member.model || member.name,
     positions: book.positions
   };
+  if (lastSession) out.lastSession = lastSession;
+  return out;
 }
 
 export function latestMark(events) {
@@ -384,7 +386,10 @@ export function deriveSeason(source) {
     };
   });
 
-  const survivors = cast.map((member) => publicSurvivor(member, marked.get(member.id)));
+  const lastSession =
+    (lastMark && lastMark.lastSession) ||
+    Object.values(quotes).find((quote) => quote && quote.lastSession)?.lastSession;
+  const survivors = cast.map((member) => publicSurvivor(member, marked.get(member.id), lastSession));
   const liveEpisode = (source.episodes || []).find((ep) => ep.status === "live") || source.episode || null;
 
   return {
