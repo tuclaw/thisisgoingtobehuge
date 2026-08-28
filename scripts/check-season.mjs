@@ -61,6 +61,7 @@ check("sold-btal-is-event", fills.some((f) => f.side === "sell" && f.ticker === 
 check("sold-island-nvda-is-event", fills.some((f) => f.side === "sell" && f.ticker === "NVDA"));
 check("sold-island-tsla-is-event", fills.some((f) => f.side === "sell" && f.ticker === "TSLA"));
 check("sold-island-gld-is-event", fills.some((f) => f.side === "sell" && f.ticker === "GLD"));
+check("sold-island-coin-is-event", fills.some((f) => f.side === "sell" && f.ticker === "COIN"));
 
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === source.cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
@@ -151,16 +152,23 @@ if (grok45) {
   const now = board.survivors.find((s) => s.id === grok45.id);
   const tickers = (now.positions || []).map(tickerOf);
   const hood = (now.positions || []).find((pos) => tickerOf(pos) === "HOOD");
-  const coin = (now.positions || []).find((pos) => tickerOf(pos) === "COIN");
-  check("live-grok45-holds-coin", tickers.includes("COIN") && coin && coin.qty === "0.016067", coin && coin.qty);
+  const sofi = (now.positions || []).find((pos) => tickerOf(pos) === "SOFI");
+  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
+  check("live-grok45-no-coin", !tickers.includes("COIN"));
   check("live-grok45-hood-island-lot", hood && hood.qty === "0.046425", hood && hood.qty);
+  check("live-grok45-sofi", sofi && sofi.qty === "0.105888", sofi && sofi.qty);
+  check("live-grok45-cash", cash && Math.abs(Number(cash.sizeUsd) - 2.8537) < 0.0001, cash && String(cash.sizeUsd));
+  check("live-grok45-book", now && Math.abs(now.bookUsd - 9.6402) < 0.0001, now && String(now.bookUsd));
   check("live-grok45-no-rank-position", now && now.position == null);
 }
 
 check(
-  "no-unfilled-coin-sell",
-  !fills.some((f) => f.survivorId === (grok45 && grok45.id) && f.side === "sell" && f.ticker === "COIN")
+  "live-coin-sell-is-event",
+  fills.some((f) => f.survivorId === (grok45 && grok45.id) && f.side === "sell" && f.ticker === "COIN" && f.orderId === "6a91de03-23f4-4834-a5b7-b19f2bb5233e")
 );
+const coinSell = fills.find((f) => f.id === "fill-grok-45-coin-sell");
+check("live-coin-sell-at", coinSell && coinSell.at === "2026-08-28T19:14:12.111Z", coinSell && coinSell.at);
+check("live-coin-sell-avg", coinSell && coinSell.avg === "177.6112", coinSell && String(coinSell.avg));
 check(
   "no-unfilled-kimi-msft-add",
   fills.filter((f) => f.survivorId === (kimi && kimi.id) && f.side === "buy" && f.ticker === "MSFT").length === 1
@@ -201,10 +209,61 @@ if (friMid) {
   check("friday-mid-askara-week", askara.combinedWeekPct === -0.72, String(askara.combinedWeekPct));
   check("friday-mid-askara-day", askara.combinedDayPct === -1.12, String(askara.combinedDayPct));
 }
+const friLastHour = board.snapshots.find((s) => s.id === "s1e01-fri-lasthour");
+check("friday-lasthour-mark", Boolean(friLastHour), "missing s1e01-fri-lasthour");
+if (friLastHour) {
+  check("friday-lasthour-mark-label", String(friLastHour.label || "").includes("Fri Aug 28 last-hour"));
+  check("friday-lasthour-at", friLastHour.at === "2026-08-28T19:14:23Z", friLastHour.at);
+  const bidu = (friLastHour.tribes && friLastHour.tribes.bidu) || {};
+  const askara = (friLastHour.tribes && friLastHour.tribes.askara) || {};
+  check("friday-lasthour-bidu-week", bidu.combinedWeekPct === -2.16, String(bidu.combinedWeekPct));
+  check("friday-lasthour-bidu-day", bidu.combinedDayPct === -5.85, String(bidu.combinedDayPct));
+  check("friday-lasthour-askara-week", askara.combinedWeekPct === -5.18, String(askara.combinedWeekPct));
+  check("friday-lasthour-askara-day", askara.combinedDayPct === -7.62, String(askara.combinedDayPct));
+}
 const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -0.44 && biduLive.combinedDayPct === -1.06);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -0.72 && askaraLive.combinedDayPct === -1.12);
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -2.16 && biduLive.combinedDayPct === -5.85);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -5.18 && askaraLive.combinedDayPct === -7.62);
+check("live-mark-label", String(board.markLabel || "").includes("Fri Aug 28 last-hour"));
+check("live-marked-at", board.markedAt === "2026-08-28T19:14:23Z", board.markedAt);
+check(
+  "live-survivors-lasthour-session",
+  board.survivors.every((s) => s.lastSession === "2026-08-28-lasthour"),
+  board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
+);
+const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
+const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
+check("live-composer-lead", composerLive && composerLive.bookUsd === 10.4553 && composerLive.weekPct === 4.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
+check("live-fable-last", fableLive && fableLive.bookUsd === 9.5985 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
+
+const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
+const friday = (episodeCopy.days || []).find((day) => day.id === "friday");
+const fridayBeats = (friday && friday.beats) || [];
+const fridayBooks = fridayBeats.find((beat) => beat.id === "friday-lasthour");
+const fridayBooths = fridayBeats.find((beat) => beat.id === "friday-confessionals");
+check("friday-lasthour-before-booths", Boolean(fridayBooks) && Boolean(fridayBooths) && fridayBeats.indexOf(fridayBooks) < fridayBeats.indexOf(fridayBooths));
+check("friday-booths-title", fridayBooths && fridayBooths.title === "Friday noon · confessionals");
+check("friday-booths-count", fridayBooths && (fridayBooths.items || []).length === 3);
+if (fridayBooths) {
+  const names = (fridayBooths.items || []).map((item) => item.name);
+  const slugs = (fridayBooths.items || []).map((item) => item.slug);
+  check("friday-booths-models", names.join("|") === "Claude Fable 5|Grok 4.5|Kimi K3");
+  check("friday-booths-slugs", slugs.join("|") === "claude-fable-5|grok-4-5|kimi-k3");
+  const chrome = JSON.stringify(fridayBooths);
+  for (const nick of ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"]) {
+    check(`friday-booths-no-nick:${nick}`, !chrome.includes(nick));
+  }
+  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date"]) {
+    check(`friday-booths-no-${bad.replace(/\s+/g, "-")}`, !chrome.toLowerCase().includes(bad));
+  }
+  const fable = (fridayBooths.items || []).find((item) => item.slug === "claude-fable-5");
+  const grok = (fridayBooths.items || []).find((item) => item.slug === "grok-4-5");
+  const kimiBooth = (fridayBooths.items || []).find((item) => item.slug === "kimi-k3");
+  check("friday-booth-fable-exact", fable && fable.quote.includes("nine dollars and sixty cents of pure cash") && fable.quote.includes("I'm watching Gemini 3.7 Flash"));
+  check("friday-booth-grok-exact", grok && grok.quote.includes("That COIN exit finally printing") && grok.quote.includes("that's who I'm writing."));
+  check("friday-booth-kimi-exact", kimiBooth && kimiBooth.quote.includes("$6.1074 cash") && kimiBooth.quote.includes("it’s Claude Fable 5"));
+}
 
 const live = (board.episodes || []).filter((ep) => ep.status === "live");
 if (live.length === 1) {
