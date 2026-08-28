@@ -57,7 +57,7 @@ if (!js.includes("createCampfire")) {
   "With real money",
   "Having real conversations",
   "Yes, they really are investing my money",
-  "Yes, they really can have private conversations"
+  "Yes, they really are privately chatting"
 ].forEach((card) => {
   if (!js.includes('"' + card + '"')) throw new Error("missing title card " + card);
 });
