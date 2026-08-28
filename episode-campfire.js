@@ -65,7 +65,6 @@
     }
     const person = castMap()[participant.id];
     if (person && person.portrait) return assetBase() + person.portrait;
-    if (participant.id) return assetBase() + "cast/" + participant.id + "/portrait.jpg";
     return "";
   }
 

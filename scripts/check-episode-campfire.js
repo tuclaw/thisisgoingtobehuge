@@ -1,14 +1,13 @@
 #!/usr/bin/env node
-"use strict";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const fs = require("fs");
-const path = require("path");
-
-const root = path.resolve(__dirname, "..");
-const episodeHtml = fs.readFileSync(path.join(root, "seasons/1/e01.html"), "utf8");
-const episodeJs = fs.readFileSync(path.join(root, "episode-campfire.js"), "utf8");
-const openJs = fs.readFileSync(path.join(root, "campfire-open.js"), "utf8");
-const feed = JSON.parse(fs.readFileSync(path.join(root, "seasons/1/conversations.json"), "utf8"));
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const episodeHtml = readFileSync(join(root, "scripts", "build.mjs"), "utf8");
+const episodeJs = readFileSync(join(root, "episode-campfire.js"), "utf8");
+const openJs = readFileSync(join(root, "campfire-open.js"), "utf8");
+const feed = JSON.parse(readFileSync(join(root, "seasons/1/conversations.json"), "utf8"));
 
 const requiredIds = [
   "campfire-theater",
@@ -21,28 +20,37 @@ const requiredIds = [
 ];
 requiredIds.forEach((id) => {
   if (!episodeHtml.includes('id="' + id + '"')) {
-    throw new Error("e01.html missing #" + id);
+    throw new Error("episode renderer missing #" + id);
   }
 });
 
 ["camp-chat.js", "campfire-open.js", "episode-campfire.js"].forEach((src) => {
   if (!episodeHtml.includes(src)) {
-    throw new Error("e01.html does not load " + src);
+    throw new Error("episode renderer does not load " + src);
   }
 });
 
 if (!episodeHtml.includes('data-mode="feed"')) {
-  throw new Error("e01.html campfire theater missing data-mode=feed");
+  throw new Error("episode renderer campfire theater missing data-mode=feed");
 }
 if (!episodeHtml.includes("episode-campfire-hero")) {
-  throw new Error("e01.html missing episode-campfire-hero landing");
+  throw new Error("episode renderer missing episode-campfire-hero landing");
 }
 if (!episodeHtml.includes('id="week-board"')) {
-  throw new Error("e01.html lost week-board structure below landing");
+  throw new Error("episode renderer lost week-board structure below landing");
 }
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
+}
+if (!openJs.includes('portrait: "cast/claude-fable-5/portrait.jpg"')) {
+  throw new Error("campfire-open.js missing sable slug portrait");
+}
+if (!openJs.includes('portrait: "cast/gemini-3-1-pro/portrait.jpg"')) {
+  throw new Error("campfire-open.js missing kite slug portrait");
+}
+if (openJs.includes("cast/hex/portrait.jpg") || openJs.includes("cast/sable/portrait.jpg")) {
+  throw new Error("campfire-open.js still points at nickname portrait folders");
 }
 if (!episodeJs.includes("data-mode") || !episodeJs.includes("campfire-ping")) {
   throw new Error("episode-campfire.js missing feed mode / ping UI");
@@ -53,7 +61,7 @@ if (!episodeJs.includes("campfire-ping-face") || !episodeJs.includes("32000")) {
 if (!episodeJs.includes("MAX_VISIBLE = 2") || !episodeJs.includes("REVEAL_AFTER_CLOSE_MS = 5000")) {
   throw new Error("episode-campfire.js missing 2-at-a-time / 5s reveal behavior");
 }
-if (!fs.readFileSync(path.join(root, "camp-chat.js"), "utf8").includes("camp-chat-avatar")) {
+if (!readFileSync(join(root, "camp-chat.js"), "utf8").includes("camp-chat-avatar")) {
   throw new Error("camp-chat.js missing contestant avatar bubbles");
 }
 
