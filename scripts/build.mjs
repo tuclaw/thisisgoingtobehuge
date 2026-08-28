@@ -264,6 +264,7 @@ function renderEpisodePage(episode, season, base) {
     </div>
     <div class="campfire-theater" id="campfire-theater" data-mode="feed" data-count="0">
       <p class="visually-hidden" id="campfire-status">A campfire lights. Message bubbles fade in around it — click one to hear the latest bot thread.</p>
+      <div class="campfire-light-spill" aria-hidden="true"></div>
       <div class="campfire-pit" aria-hidden="true">
         <div class="campfire-heat"></div>
         <canvas class="campfire-canvas" id="campfire-canvas"></canvas>

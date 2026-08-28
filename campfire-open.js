@@ -158,7 +158,7 @@
 
     function spawnFlame(fromBase) {
       const cx = width * 0.5;
-      const baseY = height * 0.82;
+      const baseY = height * 0.58;
       const spread = width * (0.1 + Math.random() * 0.16);
       return {
         x: cx + (Math.random() - 0.5) * spread,
@@ -176,7 +176,7 @@
 
     function spawnEmber() {
       const cx = width * 0.5;
-      const baseY = height * 0.78;
+      const baseY = height * 0.55;
       return {
         x: cx + (Math.random() - 0.5) * width * 0.22,
         y: baseY,
@@ -191,7 +191,7 @@
 
     function spawnSpark() {
       const cx = width * 0.5;
-      const baseY = height * 0.8;
+      const baseY = height * 0.56;
       const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.1;
       const speed = 1.4 + Math.random() * 2.8;
       return {
@@ -229,7 +229,7 @@
 
     function drawLogs() {
       const cx = width * 0.5;
-      const y = height * 0.86;
+      const y = height * 0.6;
       ctx.save();
       ctx.globalCompositeOperation = "source-over";
       const logs = [
@@ -253,30 +253,54 @@
       ctx.restore();
     }
 
+    function softFadeBottom() {
+      /* Fade well above the canvas edge so the bitmap never prints a hard line. */
+      const fadeTop = height * 0.78;
+      const fade = ctx.createLinearGradient(0, fadeTop, 0, height);
+      fade.addColorStop(0, "rgba(0, 0, 0, 0)");
+      fade.addColorStop(0.35, "rgba(0, 0, 0, 0.2)");
+      fade.addColorStop(0.65, "rgba(0, 0, 0, 0.55)");
+      fade.addColorStop(0.88, "rgba(0, 0, 0, 0.88)");
+      fade.addColorStop(1, "rgba(0, 0, 0, 1)");
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillStyle = fade;
+      ctx.fillRect(0, fadeTop - 1, width, height - fadeTop + 2);
+      ctx.restore();
+    }
+
+    function softFadeSides() {
+      const fadeW = width * 0.12;
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      const left = ctx.createLinearGradient(0, 0, fadeW, 0);
+      left.addColorStop(0, "rgba(0, 0, 0, 1)");
+      left.addColorStop(1, "rgba(0, 0, 0, 0)");
+      ctx.fillStyle = left;
+      ctx.fillRect(0, 0, fadeW, height);
+      const right = ctx.createLinearGradient(width - fadeW, 0, width, 0);
+      right.addColorStop(0, "rgba(0, 0, 0, 0)");
+      right.addColorStop(1, "rgba(0, 0, 0, 1)");
+      ctx.fillStyle = right;
+      ctx.fillRect(width - fadeW, 0, fadeW, height);
+      ctx.restore();
+    }
+
     function drawGlow() {
       const cx = width * 0.5;
+      const cy = height * 0.52;
       const pulse = 0.82 + Math.sin(last * 0.0032) * 0.1 + Math.sin(last * 0.007) * 0.06;
+      const radius = Math.min(width * 0.55, height * 0.48);
+      const g = ctx.createRadialGradient(cx, cy, 2, cx, cy, radius);
+      g.addColorStop(0, "rgba(255, 236, 170, " + (0.72 * pulse) + ")");
+      g.addColorStop(0.18, "rgba(255, 154, 31, " + (0.4 * pulse) + ")");
+      g.addColorStop(0.45, "rgba(232, 93, 4, " + (0.16 * pulse) + ")");
+      g.addColorStop(0.72, "rgba(232, 93, 4, " + (0.05 * pulse) + ")");
+      g.addColorStop(1, "rgba(232, 93, 4, 0)");
       ctx.save();
       ctx.globalCompositeOperation = "lighter";
-
-      const cy = height * 0.68;
-      const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, width * 0.46);
-      g.addColorStop(0, "rgba(255, 236, 170, " + (0.85 * pulse) + ")");
-      g.addColorStop(0.18, "rgba(255, 154, 31, " + (0.45 * pulse) + ")");
-      g.addColorStop(0.48, "rgba(232, 93, 4, " + (0.18 * pulse) + ")");
-      g.addColorStop(1, "rgba(232, 93, 4, 0)");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, width, height);
-
-      const groundY = height * 0.78;
-      const ground = ctx.createRadialGradient(cx, groundY, 2, cx, groundY + height * 0.06, width * 0.78);
-      ground.addColorStop(0, "rgba(255, 154, 31, " + (0.24 * pulse) + ")");
-      ground.addColorStop(0.32, "rgba(232, 93, 4, " + (0.11 * pulse) + ")");
-      ground.addColorStop(0.58, "rgba(232, 93, 4, " + (0.035 * pulse) + ")");
-      ground.addColorStop(1, "rgba(232, 93, 4, 0)");
-      ctx.fillStyle = ground;
-      ctx.fillRect(0, height * 0.52, width, height * 0.48);
-
       ctx.restore();
     }
 
@@ -296,7 +320,7 @@
         p.vy *= 0.995;
         p.life -= p.decay * scale;
         p.size *= 0.992;
-        if (p.life <= 0.04 || p.y < height * 0.08) flames.splice(i, 1);
+        if (p.life <= 0.04 || p.y < height * 0.05) flames.splice(i, 1);
       }
       for (let i = embers.length - 1; i >= 0; i -= 1) {
         const e = embers[i];
@@ -350,6 +374,8 @@
       });
       ctx.restore();
       drawLogs();
+      softFadeBottom();
+      softFadeSides();
     }
 
     function frame(now) {
