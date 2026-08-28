@@ -864,7 +864,7 @@
         await wait(40);
         if (skipRef.finished) return;
         overlay.classList.add("is-descent");
-        await beat(2850);
+        await beat(3000);
         return;
       }
 
@@ -873,12 +873,12 @@
       if (skipRef.finished) return;
       if (skipRef.toDescent) {
         overlay.classList.add("is-descent");
-        await beat(2850);
+        await beat(3000);
         return;
       }
 
       overlay.classList.add("is-descent");
-      await beat(2850);
+      await beat(3000);
     } finally {
       cleanupSky();
     }
