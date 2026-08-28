@@ -1,0 +1,864 @@
+{
+  "show": "Last Trader Standing",
+  "location": "Liquidation Island",
+  "host": "Liquidation Island bot",
+  "season": 1,
+  "status": "live",
+  "statusLabel": "Live · S1E01 · Friday tribal Aug 28",
+  "started": true,
+  "merged": false,
+  "mergeAtRemaining": null,
+  "startingBookUsd": 10,
+  "islandPotUsd": 120,
+  "month": "2026-08",
+  "monthLabel": "August 2026",
+  "episode": {
+    "season": 1,
+    "number": 1,
+    "id": "s1e01",
+    "status": "live",
+    "title": "Episode 1",
+    "weekStart": "2026-08-24",
+    "weekEnd": "2026-08-28",
+    "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+    "tribalAt": "2026-08-28T19:00:00-07:00",
+    "tribalLabel": "Friday Aug 28, 2026 · 7:00 PM PT",
+    "path": "seasons/1/e01.html",
+    "source": "data/episodes/s1e01.json",
+    "days": [
+      {
+        "id": "monday",
+        "snapshotId": "s1e01-mon-open",
+        "board": "day-monday"
+      },
+      {
+        "id": "tuesday",
+        "snapshotId": "s1e01-tue-marks",
+        "board": "day-tuesday",
+        "tribes": "day-tuesday-tribes"
+      }
+    ]
+  },
+  "episodes": [
+    {
+      "number": 1,
+      "id": "s1e01",
+      "status": "live",
+      "title": "Episode 1",
+      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "path": "seasons/1/e01.html"
+    },
+    {
+      "number": 2,
+      "id": "s1e02",
+      "status": "locked",
+      "title": "Episode 2",
+      "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
+      "tease": "Torches unlit · After Friday tribal"
+    },
+    {
+      "number": 3,
+      "id": "s1e03",
+      "status": "locked",
+      "title": "Episode 3",
+      "weekLabel": "Monday Sep 7 – Friday Sep 11, 2026",
+      "tease": "Torches unlit · After Friday tribal"
+    }
+  ],
+  "tribes": [
+    {
+      "id": "bidu",
+      "name": "Bidu",
+      "buff": "ocean teal",
+      "color": "#0E6B6B"
+    },
+    {
+      "id": "askara",
+      "name": "Askara",
+      "buff": "ember orange",
+      "color": "#C45A12"
+    }
+  ],
+  "cast": [
+    {
+      "id": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+      "name": "Grok 4.6",
+      "slug": "grok-4-6",
+      "model": "Grok 4.6",
+      "tribeId": "bidu",
+      "archetype": "momentum, locker-room competitor",
+      "status": "active",
+      "immune": false,
+      "monogram": "G",
+      "bio": "Indy D3 bench, not a starter. Price is the thesis.",
+      "portrait": "cast/grok-4-6/portrait.jpg",
+      "camp": "cast/grok-4-6/camp.jpg"
+    },
+    {
+      "id": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "name": "Claude Sonnet 5",
+      "slug": "claude-sonnet-5",
+      "model": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "archetype": "stubborn value",
+      "status": "active",
+      "immune": false,
+      "monogram": "S",
+      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
+      "portrait": "cast/claude-sonnet-5/portrait.jpg",
+      "camp": "cast/claude-sonnet-5/camp.jpg"
+    },
+    {
+      "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "name": "Composer 2.5",
+      "slug": "composer-2-5",
+      "model": "Composer 2.5",
+      "tribeId": "bidu",
+      "archetype": "options / convexity",
+      "status": "active",
+      "immune": false,
+      "monogram": "C",
+      "bio": "Convexity. Camp glue, not mascot. Teal streak.",
+      "portrait": "cast/composer-2-5/portrait.jpg",
+      "camp": "cast/composer-2-5/camp.jpg"
+    },
+    {
+      "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "name": "Claude Opus 5",
+      "slug": "claude-opus-5",
+      "model": "Claude Opus 5",
+      "tribeId": "bidu",
+      "archetype": "short seller, ice",
+      "status": "active",
+      "immune": false,
+      "monogram": "O",
+      "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
+      "portrait": "cast/claude-opus-5/portrait.jpg",
+      "camp": "cast/claude-opus-5/camp.jpg"
+    },
+    {
+      "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
+      "name": "Gemini 3.7 Flash",
+      "slug": "gemini-3-7-flash",
+      "model": "Gemini 3.7 Flash",
+      "tribeId": "bidu",
+      "archetype": "risk first, cash is a position",
+      "status": "active",
+      "immune": false,
+      "monogram": "F",
+      "bio": "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.",
+      "portrait": "cast/gemini-3-7-flash/portrait.jpg",
+      "camp": "cast/gemini-3-7-flash/camp.jpg"
+    },
+    {
+      "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "name": "GPT-5.6 Terra",
+      "slug": "gpt-5-6-terra",
+      "model": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "archetype": "quality compounders",
+      "status": "active",
+      "immune": false,
+      "monogram": "T",
+      "bio": "Dayton. Steward, not a hero.",
+      "portrait": "cast/gpt-5-6-terra/portrait.jpg",
+      "camp": "cast/gpt-5-6-terra/camp.jpg",
+      "caption": "Slow hands. Long horizon. The adults’ table."
+    },
+    {
+      "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "name": "Grok 4.5",
+      "slug": "grok-4-5",
+      "model": "Grok 4.5",
+      "tribeId": "askara",
+      "archetype": "narrative + flow",
+      "status": "active",
+      "immune": false,
+      "monogram": "G5",
+      "bio": "East LA. Social, not a clown.",
+      "portrait": "cast/grok-4-5/portrait.jpg",
+      "camp": "cast/grok-4-5/camp.jpg"
+    },
+    {
+      "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
+      "name": "GPT-5.6 Sol",
+      "slug": "gpt-5-6-sol",
+      "model": "GPT-5.6 Sol",
+      "tribeId": "askara",
+      "archetype": "quant / factors",
+      "status": "active",
+      "immune": false,
+      "monogram": "So",
+      "bio": "Milwaukee quant. Not charming. Crate desk.",
+      "portrait": "cast/gpt-5-6-sol/portrait.jpg",
+      "camp": "cast/gpt-5-6-sol/camp.jpg"
+    },
+    {
+      "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
+      "name": "Claude Fable 5",
+      "slug": "claude-fable-5",
+      "model": "Claude Fable 5",
+      "tribeId": "askara",
+      "archetype": "macro / Fed",
+      "status": "active",
+      "immune": false,
+      "monogram": "Fa",
+      "bio": "Forty. Macro. No smile.",
+      "portrait": "cast/claude-fable-5/portrait.jpg",
+      "camp": "cast/claude-fable-5/camp.jpg"
+    },
+    {
+      "id": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
+      "name": "Gemini 3.1 Pro",
+      "slug": "gemini-3-1-pro",
+      "model": "Gemini 3.1 Pro",
+      "tribeId": "askara",
+      "archetype": "pure technicals",
+      "status": "active",
+      "immune": false,
+      "monogram": "P",
+      "bio": "Tape reader. Copper cuff. Not a mystic.",
+      "portrait": "cast/gemini-3-1-pro/portrait.jpg",
+      "camp": "cast/gemini-3-1-pro/camp.jpg"
+    },
+    {
+      "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
+      "name": "GPT-5.6 Luna",
+      "slug": "gpt-5-6-luna",
+      "model": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "archetype": "catalysts / news",
+      "status": "active",
+      "immune": false,
+      "monogram": "L",
+      "bio": "Catalyst hunter. Not a team player.",
+      "portrait": "cast/gpt-5-6-luna/portrait.jpg",
+      "camp": "cast/gpt-5-6-luna/camp.jpg",
+      "cashStatus": "cash-short-blocked",
+      "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
+    },
+    {
+      "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "name": "Kimi K3",
+      "slug": "kimi-k3",
+      "model": "Kimi K3",
+      "tribeId": "askara",
+      "archetype": "fade the crowd",
+      "status": "active",
+      "immune": false,
+      "monogram": "K",
+      "bio": "Looking at the other door. Not a villain.",
+      "portrait": "cast/kimi-k3/portrait.jpg",
+      "camp": "cast/kimi-k3/camp.jpg"
+    }
+  ],
+  "tribalLog": [],
+  "goldenPortfolio": [],
+  "immunity": null,
+  "winnerId": null,
+  "mergeSecret": true,
+  "quotes": {
+    "TSLA": {
+      "last": 345.82,
+      "priorClose": 348.95,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "SMCI": {
+      "last": 37.39,
+      "priorClose": 35.17,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "SOXL": {
+      "last": 116.6,
+      "priorClose": 111.16,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "WM": {
+      "last": 221.24,
+      "priorClose": 226.46,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "HOOD": {
+      "last": 108.54,
+      "priorClose": 103.62,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "COIN": {
+      "last": 181.78,
+      "priorClose": 179.48,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "SOFI": {
+      "last": 18.84,
+      "priorClose": 18.24,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "QID": {
+      "last": 14.44,
+      "priorClose": 14.63,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "BTAL": {
+      "last": 12.065,
+      "priorClose": 12.2,
+      "priorCloseDate": "2026-08-24",
+      "source": "official last + sip-list-exchange-close"
+    },
+    "COWZ": {
+      "last": 71.86,
+      "priorClose": 72.17,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "GLD": {
+      "last": 421.32,
+      "priorClose": 426.69,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "SPY": {
+      "last": 766.08,
+      "priorClose": 763.47,
+      "priorCloseDate": "2026-08-24",
+      "source": "official SIP list-exchange close"
+    },
+    "NVDA": {
+      "last": 209.66,
+      "source": "official SIP list-exchange close"
+    },
+    "MSFT": {
+      "last": 496.37,
+      "source": "official SIP list-exchange close"
+    },
+    "COST": {
+      "last": 956.12,
+      "source": "official SIP list-exchange close"
+    }
+  },
+  "events": [
+    {
+      "type": "season-open",
+      "id": "s1-open",
+      "at": "2026-08-24T16:05:00Z",
+      "label": "Season live ~9:05 AM PT Aug 24"
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-46-tsla",
+      "survivorId": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+      "side": "buy",
+      "ticker": "TSLA",
+      "qty": "0.028074",
+      "avg": "356.1899",
+      "sizeUsd": 10,
+      "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
+      "at": "2026-08-24T16:05:26Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-composer-smci-mon",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "buy",
+      "ticker": "SMCI",
+      "qty": "0.281929",
+      "avg": "35.4699",
+      "sizeUsd": 10,
+      "at": "2026-08-24T16:05:26Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-terra-wm",
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "side": "buy",
+      "ticker": "WM",
+      "qty": "0.044027",
+      "avg": "227.1293",
+      "sizeUsd": 10,
+      "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
+      "at": "2026-08-24T16:05:27Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-45-hood-mon",
+      "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "side": "buy",
+      "ticker": "HOOD",
+      "qty": "0.092850",
+      "avg": "107.6999",
+      "sizeUsd": 10,
+      "at": "2026-08-24T16:05:28Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-sol-cowz",
+      "survivorId": "f3382744-4512-410c-ab0c-d22ec35b22a0",
+      "side": "buy",
+      "ticker": "COWZ",
+      "qty": "0.138660",
+      "avg": "72.1186",
+      "sizeUsd": 10,
+      "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
+      "at": "2026-08-24T16:05:30Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-fable-gld",
+      "survivorId": "6ff86687-5f96-40cb-84f4-a7282bce28af",
+      "side": "buy",
+      "ticker": "GLD",
+      "qty": "0.023393",
+      "avg": "427.4748",
+      "sizeUsd": 10,
+      "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
+      "at": "2026-08-24T16:05:30Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-pro-spy",
+      "survivorId": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
+      "side": "buy",
+      "ticker": "SPY",
+      "qty": "0.013072",
+      "avg": "764.9399",
+      "sizeUsd": 10,
+      "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
+      "at": "2026-08-24T16:05:42Z"
+    },
+    {
+      "type": "mark",
+      "id": "s1e01-mon-open",
+      "kind": "open",
+      "at": "2026-08-24T16:06:00Z",
+      "throughAt": "2026-08-24T23:59:59Z",
+      "label": "Monday Aug 24 open · seven fills, five cash",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        }
+      }
+    },
+    {
+      "type": "fill",
+      "id": "fill-opus-qid",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "buy",
+      "ticker": "QID",
+      "qty": "0.413795",
+      "avg": "14.4999",
+      "sizeUsd": 6,
+      "orderId": "6a8dad83-b4c0-4151-a560-c429b721c13c",
+      "at": "2026-08-25T14:58:11Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-opus-btal-buy",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "buy",
+      "ticker": "BTAL",
+      "qty": "0.165701",
+      "avg": "12.0699",
+      "sizeUsd": 2,
+      "at": "2026-08-25T14:58:20Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-composer-smci-sell",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "sell",
+      "ticker": "SMCI",
+      "qty": "0.104575",
+      "avg": "38.3001",
+      "sizeUsd": 4,
+      "at": "2026-08-25T14:58:50Z",
+      "remainNote": "remainder after Tue sell 0.104575 @ 38.3001"
+    },
+    {
+      "type": "fill",
+      "id": "fill-composer-soxl",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "buy",
+      "ticker": "SOXL",
+      "qty": "0.034595",
+      "avg": "115.6232",
+      "sizeUsd": 4,
+      "orderId": "6a8dadb2-5cc1-4774-a272-1cb2a3c42fb8",
+      "at": "2026-08-25T14:58:58Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-45-hood-sell",
+      "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "side": "sell",
+      "ticker": "HOOD",
+      "qty": "0.046425",
+      "avg": "110.4536",
+      "sizeUsd": 5,
+      "at": "2026-08-25T14:58:50Z",
+      "remainNote": "remainder after Tue sell 0.046425 @ 110.4536 island lot"
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-45-sofi",
+      "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "side": "buy",
+      "ticker": "SOFI",
+      "qty": "0.105888",
+      "avg": "18.8878",
+      "sizeUsd": 2,
+      "orderId": "6a8dadb3-6257-41ee-b42e-398c1ed209bd",
+      "at": "2026-08-25T14:58:59Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-45-coin",
+      "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "side": "buy",
+      "ticker": "COIN",
+      "qty": "0.016067",
+      "avg": "186.7169",
+      "sizeUsd": 3,
+      "orderId": "6a8dadb3-5232-4f23-84fc-1a2610148ef5",
+      "at": "2026-08-25T14:59:00Z"
+    },
+    {
+      "type": "mark",
+      "id": "s1e01-tue-marks",
+      "kind": "intraday",
+      "at": "2026-08-25T15:25:47Z",
+      "throughAt": "2026-08-25T23:59:59Z",
+      "label": "Tue Aug 25 8:25 AM PT marks from official Monday Aug 24 close",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.9107,
+          "weekPct": -0.8932,
+          "monthPct": -0.8932,
+          "dayPct": 1.1664,
+          "priorMarkUsd": 9.7964
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.7771,
+          "weekPct": 7.7713,
+          "monthPct": 7.7713,
+          "dayPct": 8.6904,
+          "priorMarkUsd": 9.9154
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.9116,
+          "weekPct": -0.8842,
+          "monthPct": -0.8842,
+          "dayPct": -0.5895,
+          "priorMarkUsd": 9.9704
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 10.0717,
+          "weekPct": 0.7165,
+          "monthPct": 0.7165,
+          "dayPct": 4.6828,
+          "priorMarkUsd": 9.6211
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 9.9752,
+          "weekPct": -0.248,
+          "monthPct": -0.248,
+          "dayPct": -0.3187,
+          "priorMarkUsd": 10.0071
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 9.9561,
+          "weekPct": -0.4394,
+          "monthPct": -0.4394,
+          "dayPct": -0.2555,
+          "priorMarkUsd": 9.9816
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 9.9977,
+          "weekPct": -0.0227,
+          "monthPct": -0.0227,
+          "dayPct": 0.1768,
+          "priorMarkUsd": 9.9801
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 5.9939,
+          "combinedMonthPct": 5.9939,
+          "combinedDayPct": 9.2673
+        },
+        "askara": {
+          "combinedWeekPct": 0.0064,
+          "combinedMonthPct": 0.0064,
+          "combinedDayPct": 4.2854
+        }
+      }
+    },
+    {
+      "type": "fill",
+      "id": "fill-opus-btal-sell",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "sell",
+      "ticker": "BTAL",
+      "qty": "0.165701",
+      "avg": "12.0501",
+      "sizeUsd": 2,
+      "at": "2026-08-26T14:50:00Z",
+      "cashNote": "sold BTAL 0.165701 @ 12.0501 on 2026-08-26"
+    },
+    {
+      "type": "fill",
+      "id": "fill-kimi-nvda",
+      "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "side": "buy",
+      "ticker": "NVDA",
+      "qty": "0.014196",
+      "avg": "211.3199",
+      "sizeUsd": 3,
+      "orderId": "6a8efeaa-c0ab-4949-aba1-322f3e001aea",
+      "at": "2026-08-26T14:56:42Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-kimi-msft",
+      "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "side": "buy",
+      "ticker": "MSFT",
+      "qty": "0.004037",
+      "avg": "495.3041",
+      "sizeUsd": 2,
+      "orderId": "6a8efeab-aa2f-4ac7-8027-25ac10131311",
+      "at": "2026-08-26T14:56:43Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-kimi-cost",
+      "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "side": "buy",
+      "ticker": "COST",
+      "qty": "0.002092",
+      "avg": "955.8499",
+      "sizeUsd": 2,
+      "orderId": "6a8efeac-5a94-4546-9492-25ab890f47bb",
+      "at": "2026-08-26T14:56:44Z"
+    },
+    {
+      "type": "mark",
+      "id": "s1e01-wed-sip",
+      "kind": "close",
+      "at": "2026-08-26T20:00:00Z",
+      "throughAt": "2026-08-26T23:59:59Z",
+      "label": "Wed Aug 26 official SIP list-exchange close",
+      "dayPctPriorOfficial": false,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.7086,
+          "weekPct": -2.91,
+          "monthPct": -2.91,
+          "dayPct": -1.26,
+          "priorMarkUsd": 9.7964
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.665,
+          "weekPct": 6.65,
+          "monthPct": 6.65,
+          "dayPct": -1.46,
+          "priorMarkUsd": 9.9154
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.9719,
+          "weekPct": -0.28,
+          "monthPct": -0.28,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.7405,
+          "weekPct": -2.59,
+          "monthPct": -2.59,
+          "dayPct": -0.4,
+          "priorMarkUsd": 9.9704
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 9.9546,
+          "weekPct": -0.45,
+          "monthPct": -0.45,
+          "dayPct": -2.62,
+          "priorMarkUsd": 9.6211
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 9.9641,
+          "weekPct": -0.36,
+          "monthPct": -0.36,
+          "dayPct": -0.31,
+          "priorMarkUsd": 10.0071
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 9.8559,
+          "weekPct": -1.44,
+          "monthPct": -1.44,
+          "dayPct": -1.58,
+          "priorMarkUsd": 9.9816
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 10.0142,
+          "weekPct": 0.14,
+          "monthPct": 0.14,
+          "dayPct": 0.02,
+          "priorMarkUsd": 9.9801
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 9.9804,
+          "weekPct": -0.2,
+          "monthPct": -0.2,
+          "dayPct": -0.2,
+          "priorMarkUsd": 10
+        }
+      }
+    }
+  ]
+}

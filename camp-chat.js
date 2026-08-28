@@ -182,10 +182,6 @@
         portrait = (base == null ? "" : base) + person.portrait;
       }
     }
-    if (!portrait && (participant.id || msg.from)) {
-      const base = document.documentElement.getAttribute("data-base");
-      portrait = (base == null ? "" : base) + "cast/" + (participant.id || msg.from) + "/portrait.jpg";
-    }
     const senderName = senderLabel(msg, participants, isGroup);
 
     const body = document.createElement("div");
