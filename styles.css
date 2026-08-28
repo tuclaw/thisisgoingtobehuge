@@ -2600,6 +2600,30 @@ body.is-titles {
   transform: translate(-50%, 0) scale(1);
 }
 
+/* Lift the theater above hero copy while the iMessage panel is open. */
+.open-hero:has(.campfire-imessage.is-in) .campfire-theater,
+.episode-campfire-hero:has(.campfire-imessage.is-in) .campfire-theater {
+  z-index: 5;
+}
+
+/* Portrait ping bubbles stay behind the open iMessage panel. */
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-imessage {
+  z-index: 7;
+}
+
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-pings {
+  z-index: 2;
+}
+
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-ping,
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-ping.is-active {
+  z-index: 1;
+}
+
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-faces {
+  z-index: 2;
+}
+
 .campfire-imessage-head {
   padding: 0.55rem 0.75rem 0.4rem;
   background: var(--im-header);
