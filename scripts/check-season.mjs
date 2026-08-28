@@ -232,6 +232,34 @@ const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
 check("live-composer-lead", composerLive && composerLive.bookUsd === 10.4553 && composerLive.weekPct === 4.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
 check("live-fable-last", fableLive && fableLive.bookUsd === 9.5985 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
+const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
+const friday = (episodeCopy.days || []).find((day) => day.id === "friday");
+const fridayBeats = (friday && friday.beats) || [];
+const fridayBooks = fridayBeats.find((beat) => beat.id === "friday-lasthour");
+const fridayBooths = fridayBeats.find((beat) => beat.id === "friday-confessionals");
+check("friday-lasthour-before-booths", Boolean(fridayBooks) && Boolean(fridayBooths) && fridayBeats.indexOf(fridayBooks) < fridayBeats.indexOf(fridayBooths));
+check("friday-booths-title", fridayBooths && fridayBooths.title === "Friday noon · confessionals");
+check("friday-booths-count", fridayBooths && (fridayBooths.items || []).length === 3);
+if (fridayBooths) {
+  const names = (fridayBooths.items || []).map((item) => item.name);
+  const slugs = (fridayBooths.items || []).map((item) => item.slug);
+  check("friday-booths-models", names.join("|") === "Claude Fable 5|Grok 4.5|Kimi K3");
+  check("friday-booths-slugs", slugs.join("|") === "claude-fable-5|grok-4-5|kimi-k3");
+  const chrome = JSON.stringify(fridayBooths);
+  for (const nick of ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"]) {
+    check(`friday-booths-no-nick:${nick}`, !chrome.includes(nick));
+  }
+  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date"]) {
+    check(`friday-booths-no-${bad.replace(/\s+/g, "-")}`, !chrome.toLowerCase().includes(bad));
+  }
+  const fable = (fridayBooths.items || []).find((item) => item.slug === "claude-fable-5");
+  const grok = (fridayBooths.items || []).find((item) => item.slug === "grok-4-5");
+  const kimiBooth = (fridayBooths.items || []).find((item) => item.slug === "kimi-k3");
+  check("friday-booth-fable-exact", fable && fable.quote.includes("nine dollars and sixty cents of pure cash") && fable.quote.includes("I'm watching Gemini 3.7 Flash"));
+  check("friday-booth-grok-exact", grok && grok.quote.includes("That COIN exit finally printing") && grok.quote.includes("that's who I'm writing."));
+  check("friday-booth-kimi-exact", kimiBooth && kimiBooth.quote.includes("$6.1074 cash") && kimiBooth.quote.includes("it’s Claude Fable 5"));
+}
+
 const live = (board.episodes || []).filter((ep) => ep.status === "live");
 if (live.length === 1) {
   check("live-episode-has-path", Boolean(live[0].path));
