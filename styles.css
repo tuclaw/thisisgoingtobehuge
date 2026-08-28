@@ -1893,7 +1893,7 @@ a.brand:hover {
   top: 3.4rem;
   z-index: 5;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 0.45rem;
   margin: 0 0 1.6rem;
   padding: 0.55rem;
@@ -1933,6 +1933,30 @@ a.brand:hover {
 .day-rail a[aria-current="location"] {
   color: var(--gold-bright);
   border-color: rgba(212, 160, 23, 0.35);
+}
+
+#thursday-lunch .lunch-chats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1.15rem;
+}
+
+@media (max-width: 900px) {
+  #thursday-lunch .lunch-chats {
+    grid-template-columns: 1fr;
+  }
+}
+
+#thursday-lunch .camp-scene {
+  min-height: 540px;
+}
+
+#thursday-lunch .camp-chat-panel {
+  left: 0.65rem;
+  right: 0.65rem;
+  width: auto;
+  max-height: calc(100% - 1.3rem);
 }
 
 .beat-note {
@@ -2131,6 +2155,99 @@ a.brand:hover {
 
 
 /* —— Open credits landing —— */
+body.is-titles {
+  overflow: hidden;
+}
+
+.open-titles {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 1.25rem 4.5rem;
+  background: #000;
+  color: #fff;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.55s ease, visibility 1.55s ease;
+}
+
+.open-page:not(.is-titles) .open-titles {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.open-titles-word {
+  margin: 0;
+  max-width: 16ch;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 6vw, 3.25rem);
+  line-height: 1.18;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.72),
+    0 0 36px rgba(255, 255, 255, 0.38),
+    0 0 72px rgba(255, 255, 255, 0.18);
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.95s ease, transform 1.05s ease;
+}
+
+.open-titles-word.is-in {
+  opacity: 1;
+  transform: none;
+  animation: title-glow 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes title-glow {
+  from {
+    text-shadow:
+      0 0 14px rgba(255, 255, 255, 0.55),
+      0 0 32px rgba(255, 255, 255, 0.28),
+      0 0 64px rgba(255, 255, 255, 0.12);
+  }
+  to {
+    text-shadow:
+      0 0 22px rgba(255, 255, 255, 0.9),
+      0 0 48px rgba(255, 255, 255, 0.48),
+      0 0 88px rgba(255, 255, 255, 0.22);
+  }
+}
+
+.open-titles-skip {
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.42);
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.4rem 0.2rem;
+}
+
+.open-titles-skip:hover,
+.open-titles-skip:focus-visible {
+  color: rgba(255, 255, 255, 0.88);
+  outline: none;
+}
+
+.open-hero .btn-live {
+  max-width: 22rem;
+  line-height: 1.45;
+  letter-spacing: 0.1em;
+  text-wrap: balance;
+}
+
 .open-page .torch-nav {
   background: linear-gradient(180deg, rgba(8, 5, 4, 0.82), rgba(18, 12, 8, 0.2));
   border-bottom-color: rgba(212, 160, 23, 0.12);
@@ -2483,6 +2600,30 @@ a.brand:hover {
   transform: translate(-50%, 0) scale(1);
 }
 
+/* Lift the theater above hero copy while the iMessage panel is open. */
+.open-hero:has(.campfire-imessage.is-in) .campfire-theater,
+.episode-campfire-hero:has(.campfire-imessage.is-in) .campfire-theater {
+  z-index: 5;
+}
+
+/* Portrait ping bubbles stay behind the open iMessage panel. */
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-imessage {
+  z-index: 7;
+}
+
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-pings {
+  z-index: 2;
+}
+
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-ping,
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-ping.is-active {
+  z-index: 1;
+}
+
+.campfire-theater:has(.campfire-imessage.is-in) .campfire-faces {
+  z-index: 2;
+}
+
 .campfire-imessage-head {
   padding: 0.55rem 0.75rem 0.4rem;
   background: var(--im-header);
@@ -2552,6 +2693,26 @@ a.brand:hover {
 }
 
 @media (max-width: 560px) {
+  .open-hero {
+    min-height: calc(100dvh - 8rem);
+    padding-bottom: 1.1rem;
+  }
+  .open-hero .hero-inner {
+    padding-bottom: 1.15rem;
+  }
+  .open-hero .hero-line {
+    margin-top: 0.7rem;
+    font-size: 0.98rem;
+  }
+  .open-hero .hero-actions {
+    margin-top: 1.05rem;
+    gap: 0.5rem;
+  }
+  .open-hero .btn-live {
+    letter-spacing: 0.07em;
+    padding: 0.62rem 0.85rem;
+    max-width: 100%;
+  }
   .campfire-pit {
     width: min(58vw, 240px);
     height: min(70vw, 300px);
@@ -2569,6 +2730,23 @@ a.brand:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body.is-titles {
+    overflow: auto;
+  }
+  .open-titles,
+  .open-page:not(.is-titles) .open-titles {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: none;
+  }
+  .open-titles-word,
+  .open-titles-word.is-in {
+    opacity: 0;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
   .open-hero .hero-inner,
   .open-hero.is-copy-in .hero-inner {
     opacity: 1;
@@ -2602,6 +2780,419 @@ a.brand:hover {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);
+  }
+}
+
+/* —— Episode landing campfire (feed mode) —— */
+.episode-campfire-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 1.25rem 1.4rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.episode-campfire-hero .hero-stage {
+  z-index: 0;
+}
+
+.episode-campfire-hero .hero-embers {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 70%, rgba(240, 193, 75, 0.55), transparent),
+    radial-gradient(1px 1px at 70% 60%, rgba(232, 93, 4, 0.45), transparent),
+    radial-gradient(1.5px 1.5px at 40% 80%, rgba(255, 154, 31, 0.4), transparent),
+    radial-gradient(1px 1px at 85% 75%, rgba(240, 193, 75, 0.35), transparent);
+  animation: ember-rise 7s linear infinite;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.episode-campfire-hero .campfire-theater {
+  top: 3.6rem;
+  bottom: 11.5rem;
+  pointer-events: none;
+}
+
+.episode-campfire-hero .hero-inner {
+  position: relative;
+  z-index: 3;
+  max-width: 40rem;
+  padding: 0.2rem 0 2.2rem;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.episode-campfire-hero.is-copy-in .hero-inner {
+  opacity: 1;
+  transform: none;
+}
+
+.episode-campfire-hero .necklace {
+  display: none;
+}
+
+.episode-campfire-hero .scroll-cue {
+  z-index: 4;
+}
+
+.episode-campfire-hero .campfire-imessage {
+  pointer-events: auto;
+  max-height: min(42vh, 320px);
+  z-index: 8;
+}
+
+.episode-campfire-hero .campfire-imessage-head {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.45rem 0.55rem 0.35rem;
+}
+
+.campfire-imessage-head-meta {
+  text-align: center;
+  min-width: 0;
+}
+
+.campfire-imessage-close {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--im-blue, #007aff);
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.campfire-imessage-close:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.campfire-imessage-close:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 2px;
+}
+
+.campfire-pings {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.campfire-theater.is-reading .campfire-pings {
+  z-index: 3;
+}
+
+.campfire-ping {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0.86);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 1.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.55s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 1.55s;
+  z-index: 2;
+}
+
+.campfire-ping.is-in {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.campfire-ping.is-active {
+  z-index: 6;
+}
+
+/* While reading, park non-active pings (still present) behind the card — no full wipe. */
+.campfire-theater.is-reading .campfire-ping.is-in:not(.is-active) {
+  opacity: 0.35;
+  visibility: visible;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.92);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s;
+}
+
+.campfire-theater.is-reading .campfire-ping.is-active {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s;
+}
+
+/* Restore companion instantly when the panel closes. */
+.campfire-theater:not(.is-reading) .campfire-ping.is-in {
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.35s;
+}
+
+.campfire-theater.is-reading .campfire-imessage,
+.campfire-imessage.is-in {
+  z-index: 10;
+}
+
+.campfire-ping-stack {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.35rem;
+  padding: 0.15rem 0.35rem 0.35rem;
+  animation: campfire-ping-float 3.4s ease-in-out infinite;
+}
+
+.campfire-ping-face {
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 16%;
+  border: 2px solid rgba(240, 193, 75, 0.55);
+  box-shadow:
+    0 0 0 3px rgba(8, 5, 4, 0.55),
+    0 8px 18px rgba(0, 0, 0, 0.45);
+  background: #140f0b;
+  display: grid;
+  place-items: center;
+}
+
+.campfire-ping-face + .campfire-ping-face,
+.campfire-ping-face + .campfire-ping-more {
+  margin-left: -0.85rem;
+}
+
+.campfire-ping-stack.is-group .campfire-ping-face {
+  width: 2.45rem;
+  height: 2.45rem;
+}
+
+.campfire-ping-face.bidu {
+  border-color: rgba(26, 154, 138, 0.75);
+}
+
+.campfire-ping-face.askara {
+  border-color: rgba(196, 90, 18, 0.85);
+}
+
+.campfire-ping-face.fallback {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--gold-bright);
+  background: #1a120c;
+}
+
+.campfire-ping-more {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  color: var(--parchment);
+  background: rgba(20, 14, 10, 0.92);
+  border: 2px solid rgba(240, 193, 75, 0.4);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+.campfire-ping-badge {
+  position: absolute;
+  right: -0.05rem;
+  bottom: 0.05rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(145deg, #34c759, #248a3d);
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.4),
+    0 0 0 2px rgba(8, 5, 4, 0.85);
+}
+
+.campfire-ping.is-active .campfire-ping-badge,
+.campfire-ping.is-read .campfire-ping-badge {
+  background: linear-gradient(145deg, #5ac8fa, #0a84ff);
+}
+
+.campfire-ping:hover .campfire-ping-stack {
+  transform: scale(1.05);
+}
+
+.campfire-ping:focus-visible .campfire-ping-stack {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+.campfire-ping-pulse {
+  position: absolute;
+  right: -0.18rem;
+  top: -0.18rem;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+  background: #ff3b30;
+  border: 2px solid #1a120c;
+  box-shadow: 0 0 0 1px rgba(255, 59, 48, 0.35);
+  animation: camp-pulse 1.8s ease-in-out infinite;
+}
+
+.campfire-ping-pulse.is-hidden,
+.campfire-ping.is-read .campfire-ping-pulse {
+  opacity: 0;
+  transform: scale(0);
+  animation: none;
+}
+
+.campfire-imessage-faces {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.28rem;
+  min-height: 1.7rem;
+}
+
+.campfire-imessage-faces .campfire-ping-face {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-width: 1.5px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.campfire-imessage-faces .campfire-ping-face + .campfire-ping-face,
+.campfire-imessage-faces .campfire-ping-face + .campfire-ping-more {
+  margin-left: -0.45rem;
+}
+
+.campfire-imessage-faces .campfire-ping-more {
+  width: 1.45rem;
+  height: 1.45rem;
+  font-size: 0.52rem;
+}
+
+.campfire-ping-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.08rem;
+  max-width: 8.5rem;
+  opacity: 0.92;
+}
+
+.campfire-ping-time {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+}
+
+.campfire-ping-who {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  color: var(--parchment);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  line-height: 1.2;
+}
+
+@keyframes campfire-ping-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (max-width: 820px) {
+  .episode-campfire-hero .campfire-theater {
+    bottom: 13.5rem;
+  }
+  .campfire-ping-face {
+    width: 2.45rem;
+    height: 2.45rem;
+  }
+  .campfire-ping-stack.is-group .campfire-ping-face {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+  .campfire-ping-who {
+    font-size: 0.56rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .episode-campfire-hero .campfire-theater {
+    bottom: 14.5rem;
+  }
+  .episode-campfire-hero .campfire-imessage {
+    top: 22%;
+    max-height: 40vh;
+    width: min(20.5rem, calc(100vw - 1.25rem));
+    z-index: 12;
+  }
+  .campfire-theater.is-reading .campfire-pings {
+    z-index: 2;
+  }
+  /* Park idle bubbles toward the upper corners so they never sit on the card. */
+  .campfire-ping[style*="68%"],
+  .campfire-ping[style*="66%"] {
+    top: 18% !important;
+  }
+  .campfire-ping-meta {
+    max-width: 5.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .episode-campfire-hero .hero-inner,
+  .episode-campfire-hero.is-copy-in .hero-inner {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .campfire-ping,
+  .campfire-ping-stack,
+  .campfire-ping-pulse,
+  .episode-campfire-hero .hero-embers {
+    transition: none;
+    animation: none;
+  }
+  .campfire-ping.is-in {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
   }
 }
 

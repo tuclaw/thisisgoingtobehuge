@@ -9,8 +9,8 @@
   "terminals": [
     {
       "name": "web",
-      "command": "py scripts/dev-server.py",
-      "description": "Dev server with live reload at http://localhost:8000. Auto-refreshes the browser when HTML, CSS, JS, or JSON changes."
+      "command": "node scripts/build.mjs && py scripts/dev-server.py",
+      "description": "Build the public site into dist/, then serve it with live reload at http://localhost:8000."
     }
   ]
 }
