@@ -267,6 +267,7 @@ function renderEpisodePage(episode, season, base) {
       <div class="hero-glow"></div>
       <div class="hero-veil"></div>
       <div class="hero-embers"></div>
+      <div class="campfire-light-spill"></div>
     </div>
     <div class="hero-head">
       <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
