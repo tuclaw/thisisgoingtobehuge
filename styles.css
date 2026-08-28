@@ -2669,6 +2669,7 @@ a.brand:hover {
 .episode-campfire-hero .campfire-imessage {
   pointer-events: auto;
   max-height: min(42vh, 320px);
+  z-index: 8;
 }
 
 .episode-campfire-hero .campfire-imessage-head {
@@ -2715,6 +2716,10 @@ a.brand:hover {
   pointer-events: none;
 }
 
+.campfire-theater.is-reading .campfire-pings {
+  z-index: 3;
+}
+
 .campfire-ping {
   position: absolute;
   transform: translate(-50%, -50%) scale(0.86);
@@ -2730,9 +2735,9 @@ a.brand:hover {
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0.95s;
+    opacity 1.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.55s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 1.55s;
   z-index: 2;
 }
 
@@ -2747,9 +2752,15 @@ a.brand:hover {
 }
 
 .campfire-theater.is-reading .campfire-ping:not(.is-active) {
-  opacity: 0.22;
-  transform: translate(-50%, -50%) scale(0.92);
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.88);
+}
+
+.campfire-theater.is-reading .campfire-imessage,
+.campfire-imessage.is-in {
+  z-index: 10;
 }
 
 .campfire-ping-stack {
@@ -2946,8 +2957,18 @@ a.brand:hover {
     bottom: 14.5rem;
   }
   .episode-campfire-hero .campfire-imessage {
-    top: 26%;
-    max-height: 36vh;
+    top: 22%;
+    max-height: 40vh;
+    width: min(20.5rem, calc(100vw - 1.25rem));
+    z-index: 12;
+  }
+  .campfire-theater.is-reading .campfire-pings {
+    z-index: 2;
+  }
+  /* Park idle bubbles toward the upper corners so they never sit on the card. */
+  .campfire-ping[style*="68%"],
+  .campfire-ping[style*="66%"] {
+    top: 18% !important;
   }
   .campfire-ping-meta {
     max-width: 5.8rem;
