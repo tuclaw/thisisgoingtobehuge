@@ -2285,8 +2285,11 @@ body.is-titles {
   color: #fff;
   opacity: 1;
   visibility: visible;
-  transition: opacity 1.55s ease, visibility 1.55s ease;
+  transition:
+    opacity 1.45s ease,
+    visibility 1.45s ease;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .open-page:not(.is-titles) .open-titles {
@@ -2295,7 +2298,165 @@ body.is-titles {
   pointer-events: none;
 }
 
+/* Sky sits on black — never clear the overlay early or the fire flashes through. */
+.open-sky {
+  position: absolute;
+  inset: 0 0 -85% 0;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  /* Cool starfield only — warm fire light waits for the scroll. */
+  background:
+    radial-gradient(ellipse 50% 35% at 18% 62%, rgba(14, 107, 107, 0.1), transparent 60%),
+    linear-gradient(180deg, #01040c 0%, #06101f 42%, #0a1422 72%, #070b12 100%);
+  transition:
+    opacity 1.35s ease,
+    transform 2.9s cubic-bezier(0.4, 0.05, 0.2, 1),
+    background-color 1.2s ease;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+.open-titles.is-sky .open-sky {
+  opacity: 1;
+}
+
+.open-titles.is-instant .open-sky,
+.open-titles.is-instant .open-finale,
+.open-titles.is-instant .open-finale-slogan,
+.open-titles.is-instant .open-finale-title {
+  transition: none;
+  animation: none;
+}
+
+.open-titles.is-descent .open-sky {
+  transform: translate3d(0, -42%, 0);
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 92%, rgba(232, 93, 4, 0.34), transparent 58%),
+    radial-gradient(ellipse 50% 35% at 20% 70%, rgba(14, 107, 107, 0.12), transparent 60%),
+    linear-gradient(180deg, #01040c 0%, #06101f 32%, #0c1524 52%, #1a100a 78%, #0d0806 100%);
+}
+
+.open-sky-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.open-sky-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 90vmin;
+  height: 48vmin;
+  margin-left: -45vmin;
+  background: radial-gradient(ellipse at 50% 70%, rgba(255, 154, 31, 0.42), rgba(232, 93, 4, 0.16) 42%, transparent 72%);
+  filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 2.9s cubic-bezier(0.4, 0.05, 0.2, 1), opacity 1.1s ease 0.15s;
+}
+
+.open-titles.is-descent .open-sky-glow {
+  opacity: 1;
+  transform: translate3d(0, -28%, 0) scale(1.25);
+}
+
+/* Out of flow so title cards stay truly centered in the overlay grid. */
+.open-finale {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 1.25rem 4.5rem;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.05s ease;
+}
+
+.open-titles.is-finale .open-finale {
+  opacity: 1;
+}
+
+.open-finale-title {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* Same face as the cards — just larger. */
+  font-size: clamp(2.15rem, 7.2vw, 4.1rem);
+  line-height: 1.18;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.72),
+    0 0 36px rgba(255, 255, 255, 0.38),
+    0 0 72px rgba(255, 255, 255, 0.18);
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.95s ease, transform 1.05s ease;
+}
+
+.open-titles.is-finale .open-finale-title {
+  opacity: 1;
+  transform: none;
+  animation: title-glow 2.2s ease-in-out infinite alternate;
+}
+
+.open-titles.is-descent .open-finale {
+  transition:
+    opacity 0.9s ease 2s,
+    transform 2.9s cubic-bezier(0.4, 0.05, 0.2, 1);
+  opacity: 0;
+  transform: translate3d(0, -11vh, 0) scale(0.48);
+}
+
+.open-titles.is-descent .open-finale-title {
+  animation: none;
+}
+
+.open-finale-slogan {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + clamp(3.4rem, 10vw, 5.8rem));
+  margin: 0;
+  width: max-content;
+  max-width: calc(100vw - 2.5rem);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.95rem, 2.8vw, 1.45rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(243, 234, 214, 0.88);
+  text-shadow: 0 0 24px rgba(240, 193, 75, 0.28);
+  opacity: 0;
+  transform: translateX(-50%) translateY(0.55rem);
+  transition: opacity 1.1s ease, transform 1.15s ease;
+}
+
+.open-titles.is-slogan .open-finale-slogan {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+.open-titles.is-sky .open-titles-word,
+.open-titles.is-finale .open-titles-word {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.open-titles.is-descent {
+  pointer-events: none;
+}
+
 .open-titles-word {
+  position: relative;
+  z-index: 2;
   margin: 0;
   max-width: 16ch;
   text-align: center;
@@ -2339,6 +2500,7 @@ body.is-titles {
   position: absolute;
   right: 1.2rem;
   bottom: 1.2rem;
+  z-index: 3;
   appearance: none;
   border: 0;
   background: transparent;
@@ -3097,7 +3259,18 @@ body.is-titles {
     visibility: hidden;
     pointer-events: none;
     transition: none;
+    transform: none;
   }
+  .open-sky,
+  .open-titles.is-sky .open-sky,
+  .open-titles.is-descent .open-sky,
+  .open-finale,
+  .open-titles.is-finale .open-finale,
+  .open-titles.is-descent .open-finale,
+  .open-finale-title,
+  .open-titles.is-finale .open-finale-title,
+  .open-finale-slogan,
+  .open-titles.is-slogan .open-finale-slogan,
   .open-titles-word,
   .open-titles-word.is-in {
     opacity: 0;

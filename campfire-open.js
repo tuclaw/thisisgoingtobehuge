@@ -703,11 +703,186 @@
   function finishOpenTitles() {
     document.body.classList.remove("is-titles");
     const overlay = document.getElementById("open-titles");
-    if (overlay) overlay.setAttribute("aria-hidden", "true");
+    if (overlay) {
+      overlay.setAttribute("aria-hidden", "true");
+      window.setTimeout(function () {
+        overlay.classList.remove("is-sky", "is-finale", "is-slogan", "is-descent", "is-instant");
+      }, 1600);
+    }
+    const finale = document.getElementById("open-finale");
+    if (finale) finale.setAttribute("aria-hidden", "true");
     const hash = (window.location.hash || "").replace(/^#/, "");
     if (hash && hash !== "landing") {
       const target = document.getElementById(hash);
       if (target) requestAnimationFrame(() => target.scrollIntoView());
+    }
+  }
+
+  /* —— Starfield behind the show-title beat —— */
+  function createStarfield(canvas) {
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return { start: function () {}, stop: function () {}, resize: function () {} };
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let stars = [];
+    let running = false;
+    let rafId = 0;
+    let last = 0;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = Math.max(320, Math.floor(rect.width));
+      height = Math.max(480, Math.floor(rect.height));
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      seed();
+    }
+
+    function seed() {
+      const count = Math.floor(90 + (width * height) / 14000);
+      stars = [];
+      for (let i = 0; i < count; i += 1) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height * 0.92,
+          r: 0.4 + Math.random() * 1.6,
+          base: 0.25 + Math.random() * 0.7,
+          twinkle: Math.random() * Math.PI * 2,
+          speed: 0.008 + Math.random() * 0.02,
+          warm: Math.random() > 0.82
+        });
+      }
+    }
+
+    function draw(now) {
+      ctx.clearRect(0, 0, width, height);
+      stars.forEach((s) => {
+        const pulse = 0.55 + Math.sin(now * s.speed + s.twinkle) * 0.45;
+        const a = s.base * pulse;
+        ctx.beginPath();
+        ctx.fillStyle = s.warm
+          ? "rgba(255, 230, 180, " + a + ")"
+          : "rgba(235, 245, 255, " + a + ")";
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function frame(now) {
+      if (!running) return;
+      last = now;
+      draw(now);
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (running) return;
+      resize();
+      if (prefersReducedMotion()) {
+        draw(0);
+        return;
+      }
+      running = true;
+      last = 0;
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    return { start: start, stop: stop, resize: resize };
+  }
+
+  async function playTitleFinale(overlay, opts) {
+    const finale = document.getElementById("open-finale");
+    const canvas = document.getElementById("open-sky-canvas");
+    const wordEl = document.getElementById("open-titles-word");
+    const skipRef = opts.skipRef;
+    const beat = opts.beat;
+    const forceDescent = Boolean(opts.forceDescent);
+
+    if (wordEl) {
+      wordEl.classList.remove("is-in");
+      wordEl.textContent = "";
+    }
+
+    let sky = null;
+    if (canvas) {
+      sky = createStarfield(canvas);
+      sky.start();
+      window.addEventListener("resize", sky.resize);
+    }
+
+    function cleanupSky() {
+      if (!sky) return;
+      window.removeEventListener("resize", sky.resize);
+      sky.stop();
+      sky = null;
+    }
+
+    async function runDescent() {
+      /* Bigger title card on black first (same as slides), then sky, then scroll. */
+      overlay.classList.add("is-finale", "is-slogan", "is-instant");
+      await wait(450);
+      if (skipRef.finished) return;
+      overlay.classList.remove("is-instant");
+      void overlay.offsetWidth;
+      overlay.classList.add("is-sky");
+      await wait(520);
+      if (skipRef.finished) return;
+      overlay.classList.add("is-descent");
+      await beat(3000);
+    }
+
+    try {
+      if (finale) finale.setAttribute("aria-hidden", "false");
+
+      if (forceDescent) {
+        await runDescent();
+        return;
+      }
+
+      /* Bigger title card first (same style as the slides), then sky, slogan, scroll. */
+      overlay.classList.add("is-finale");
+      await beat(2000);
+      if (skipRef.finished) return;
+      if (skipRef.toDescent) {
+        await runDescent();
+        return;
+      }
+
+      overlay.classList.add("is-sky");
+      await beat(1100);
+      if (skipRef.finished) return;
+      if (skipRef.toDescent) {
+        overlay.classList.add("is-slogan");
+        await wait(40);
+        if (skipRef.finished) return;
+        overlay.classList.add("is-descent");
+        await beat(3000);
+        return;
+      }
+
+      overlay.classList.add("is-slogan");
+      await beat(1800);
+      if (skipRef.finished) return;
+      if (skipRef.toDescent) {
+        overlay.classList.add("is-descent");
+        await beat(3000);
+        return;
+      }
+
+      overlay.classList.add("is-descent");
+      await beat(3000);
+    } finally {
+      cleanupSky();
     }
   }
 
@@ -727,27 +902,61 @@
     wordEl.setAttribute("role", "status");
     wordEl.setAttribute("aria-live", "polite");
 
-    const skipRef = { skipped: false };
-    let skipResolve = function () {};
-    const skipped = new Promise((resolve) => {
-      skipResolve = resolve;
-    });
-    function skip() {
-      if (skipRef.skipped) return;
-      skipRef.skipped = true;
-      wordEl.classList.remove("is-in");
-      finishOpenTitles();
-      skipResolve();
-    }
+    const skipRef = { skipped: false, toDescent: false, finished: false };
+    let interrupt = null;
     function beat(ms) {
-      return Promise.race([wait(ms), skipped]);
+      return new Promise((resolve) => {
+        const timer = window.setTimeout(() => {
+          if (interrupt && interrupt.timer === timer) interrupt = null;
+          resolve("timeout");
+        }, ms);
+        interrupt = {
+          timer: timer,
+          resolve: function () {
+            window.clearTimeout(timer);
+            interrupt = null;
+            resolve("interrupt");
+          }
+        };
+      });
+    }
+    function skip() {
+      if (skipRef.finished) return;
+      /* During cards: jump straight into the sky→fire descent. */
+      if (!skipRef.skipped && !overlay.classList.contains("is-sky")) {
+        skipRef.skipped = true;
+        skipRef.toDescent = true;
+        wordEl.classList.remove("is-in");
+        if (interrupt) interrupt.resolve();
+        return;
+      }
+      /* During title hold: start descent now. */
+      if (!overlay.classList.contains("is-descent")) {
+        skipRef.toDescent = true;
+        if (interrupt) interrupt.resolve();
+        return;
+      }
+      /* During descent: snap to the fire. */
+      skipRef.finished = true;
+      finishOpenTitles();
+      if (interrupt) interrupt.resolve();
     }
 
     const skipBtn = document.getElementById("open-titles-skip");
     const skipLink = document.getElementById("skip-titles");
     if (overlay) overlay.addEventListener("click", skip);
-    if (skipBtn) skipBtn.addEventListener("click", skip);
-    if (skipLink) skipLink.addEventListener("click", skip);
+    if (skipBtn) {
+      skipBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        skip();
+      });
+    }
+    if (skipLink) {
+      skipLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        skip();
+      });
+    }
     function onKey(event) {
       if (event.key === "Escape") {
         event.preventDefault();
@@ -757,23 +966,32 @@
     window.addEventListener("keydown", onKey);
 
     try {
-      await beat(700);
-      for (let i = 0; i < TITLE_CARDS.length; i += 1) {
-        if (skipRef.skipped) return;
-        wordEl.textContent = TITLE_CARDS[i];
-        await beat(40);
-        if (skipRef.skipped) return;
-        wordEl.classList.add("is-in");
-        await beat(2200);
-        if (skipRef.skipped) return;
-        wordEl.classList.remove("is-in");
-        await beat(1000);
+      if (!skipRef.skipped) {
+        await beat(700);
+        for (let i = 0; i < TITLE_CARDS.length; i += 1) {
+          if (skipRef.skipped || skipRef.finished) break;
+          wordEl.textContent = TITLE_CARDS[i];
+          await beat(40);
+          if (skipRef.skipped || skipRef.finished) break;
+          wordEl.classList.add("is-in");
+          await beat(2200);
+          if (skipRef.skipped || skipRef.finished) break;
+          wordEl.classList.remove("is-in");
+          await beat(1000);
+        }
+        if (!skipRef.skipped && !skipRef.finished) await beat(280);
       }
-      if (skipRef.skipped) return;
-      await beat(280);
+
+      if (skipRef.finished) return;
+
+      await playTitleFinale(overlay, {
+        skipRef: skipRef,
+        beat: beat,
+        forceDescent: skipRef.toDescent || skipRef.skipped
+      });
     } finally {
       window.removeEventListener("keydown", onKey);
-      if (!skipRef.skipped) finishOpenTitles();
+      if (!skipRef.finished) finishOpenTitles();
     }
   }
 
@@ -838,11 +1056,12 @@
     else fire.start();
 
     const hero = theater.closest(".open-hero");
-    theater.classList.add("is-ready");
-    requestAnimationFrame(() => theater.classList.add("is-lit"));
 
     async function revealAfterTitles() {
       await playOpenTitles();
+      /* Light the fire only after the titles/descent finish — avoids a pre-scroll flash. */
+      theater.classList.add("is-ready");
+      requestAnimationFrame(() => theater.classList.add("is-lit"));
       window.setTimeout(() => {
         if (hero) hero.classList.add("is-copy-in");
       }, prefersReducedMotion() ? 80 : 900);
