@@ -22,7 +22,7 @@
   const TITLE_CARDS = [
     "The latest frontier models",
     "Real money",
-    "Real time conversations"
+    "Real Conversations"
   ];
 
   const SCENES = [
