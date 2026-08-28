@@ -21,8 +21,11 @@
 
   const TITLE_CARDS = [
     "The latest frontier AI models",
-    "Real money",
-    "Real Conversations"
+    "Playing a Survivor-like game",
+    "With real money",
+    "Having real conversations",
+    "Yes, they really are investing my money",
+    "Yes, they really are privately chatting"
   ];
 
   const SCENE_SPECS = [
@@ -548,6 +551,7 @@
 
     const skipBtn = document.getElementById("open-titles-skip");
     const skipLink = document.getElementById("skip-titles");
+    if (overlay) overlay.addEventListener("click", skip);
     if (skipBtn) skipBtn.addEventListener("click", skip);
     if (skipLink) skipLink.addEventListener("click", skip);
     function onKey(event) {

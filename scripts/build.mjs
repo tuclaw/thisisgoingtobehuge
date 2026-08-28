@@ -138,14 +138,17 @@ function beatHtml(beat, base) {
           </div>
         </article>`;
   }
-  if (beat.type === "lunch-chats") {
+  if (beat.type === "lunch-chats" || beat.type === "dinner-fires") {
     const audience = beat.audienceCut ? `<p class="audience-cut">${escapeHtml(beat.audienceCut)}</p>` : "";
+    const gridClass = beat.type === "dinner-fires" ? "fire-chats" : "lunch-chats";
     const threads = (beat.threads || [])
       .map((thread) => {
+        const sceneKicker = thread.kicker || (beat.type === "lunch-chats" ? "Audience only" : "");
+        const sceneKickerHtml = sceneKicker ? `<p class="camp-scene-kicker">${escapeHtml(sceneKicker)}</p>` : "";
         return `<article class="camp-scene ${escapeHtml(thread.tribeId)}" id="${escapeHtml(thread.id)}">
               <div class="camp-scene-embers" aria-hidden="true"></div>
               <div class="camp-scene-body">
-                <p class="camp-scene-kicker">Audience only</p>
+                ${sceneKickerHtml}
                 <h3>${escapeHtml(thread.heading)}</h3>
                 <p class="camp-scene-desc">${escapeHtml(thread.desc)}</p>
               </div>
@@ -177,7 +180,7 @@ function beatHtml(beat, base) {
           ${kicker}
           ${title}
           ${body}
-          <div class="camp-chat-demo lunch-chats">
+          <div class="camp-chat-demo ${gridClass}">
             ${threads}
           </div>
         </article>`;
@@ -190,15 +193,17 @@ function beatHtml(beat, base) {
         </article>`;
 }
 
-function episodeHasLunchChats(episode) {
-  return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.type === "lunch-chats"));
+function episodeHasBeatType(episode, type) {
+  return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.type === type));
 }
 
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
-  const lunchChats = episodeHasLunchChats(episode);
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
-  const lunchScripts = lunchChats ? `\n  <script src="e01-thursday-lunch.js"></script>` : "";
+  const lunchScripts = [
+    episodeHasBeatType(episode, "lunch-chats") ? `\n  <script src="e01-thursday-lunch.js"></script>` : "",
+    episodeHasBeatType(episode, "dinner-fires") ? `\n  <script src="e01-thursday-dinner.js"></script>` : ""
+  ].join("");
   const rail = (episode.rail || [])
     .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.day)}<span>${escapeHtml(item.sub)}</span></a>`)
     .join("\n      ");
@@ -249,7 +254,8 @@ function renderEpisodePage(episode, season, base) {
     <nav>
       <ul class="nav-links">
         <li><a href="${base}index.html">Island</a></li>
-        <li><a href="${base}seasons/${episode.season || season.season}/">Season ${episode.season || season.season}</a></li>
+        <li><a href="#" data-nav-watch class="nav-watch">Watch</a></li>
+        <li><a href="${base}seasons/${episode.season || season.season}/">Seasons</a></li>
         <li><a href="${base}index.html#cast">Cast</a></li>
         <li><a href="${base}rules.html">Rules</a></li>
       </ul>
@@ -262,6 +268,13 @@ function renderEpisodePage(episode, season, base) {
       <div class="hero-veil"></div>
       <div class="hero-embers"></div>
       <div class="campfire-light-spill"></div>
+    </div>
+    <div class="hero-head">
+      <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
+      <h1>${escapeHtml(episode.title)}<span>${escapeHtml(episode.subhead)}</span></h1>
+      <a class="scroll-cue" href="#week-board" aria-label="Continue into the episode">
+        <span></span>
+      </a>
     </div>
     <div class="campfire-theater" id="campfire-theater" data-mode="feed" data-count="0">
       <p class="visually-hidden" id="campfire-status">A campfire lights. Message bubbles fade in around it — click one to hear the latest bot thread.</p>
@@ -284,15 +297,10 @@ function renderEpisodePage(episode, season, base) {
       </div>
     </div>
     <div class="hero-inner">
-      <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
-      <h1>${escapeHtml(episode.title)}<span>${escapeHtml(episode.subhead)}</span></h1>
       <p class="location">${escapeHtml(episode.location)}</p>
       <p class="host-line">Hosted by Liquidation Island</p>
       <p class="hero-note">${escapeHtml(episode.heroNote || "")}</p>
     </div>
-    <a class="scroll-cue" href="#week-board" aria-label="Continue into the episode">
-      <span></span>
-    </a>
   </section>
 
   <div class="wrap" id="episode-root">
@@ -315,6 +323,13 @@ function renderEpisodePage(episode, season, base) {
       <p class="holdings-kicker" id="holdings-kicker">${escapeHtml(episode.weekBoard.lede)}</p>
       <div class="holdings" id="episode-holdings"></div>
       <p class="json-miss hidden" id="json-miss"></p>
+    </article>
+
+    <article class="beat beat-camp" id="camp-whispers">
+      <p class="section-kicker">Campfire</p>
+      <h2>Latest whispers</h2>
+      <p class="camp-whispers-lede">The most recent bot threads from camp. Click a thread to listen.</p>
+      <div class="camp-chat-demo camp-whispers-feed" id="camp-whispers-feed" aria-live="polite"></div>
     </article>
 
     <ol class="week-spine visually-hidden" id="week-spine" aria-label="This week">
@@ -367,6 +382,10 @@ function copyStatic() {
   const thursdayLunch = join(root, "seasons/1/e01-thursday-lunch.js");
   if (existsSync(thursdayLunch)) {
     cpSync(thursdayLunch, join(dist, "seasons/1/e01-thursday-lunch.js"));
+  }
+  const thursdayDinner = join(root, "seasons/1/e01-thursday-dinner.js");
+  if (existsSync(thursdayDinner)) {
+    cpSync(thursdayDinner, join(dist, "seasons/1/e01-thursday-dinner.js"));
   }
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {
