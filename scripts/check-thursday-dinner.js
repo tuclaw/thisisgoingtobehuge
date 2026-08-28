@@ -1,42 +1,54 @@
 #!/usr/bin/env node
-"use strict";
+import fs from "node:fs";
+import path from "node:path";
+import vm from "node:vm";
+import { fileURLToPath } from "node:url";
 
-const fs = require("fs");
-const path = require("path");
-const vm = require("vm");
-
-const root = path.resolve(__dirname, "..");
-const html = fs.readFileSync(path.join(root, "seasons/1/e01.html"), "utf8");
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
+const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");
 const js = fs.readFileSync(path.join(root, "seasons/1/e01-thursday-dinner.js"), "utf8");
 const lunch = fs.readFileSync(path.join(root, "seasons/1/e01-thursday-lunch.js"), "utf8");
 const campChat = fs.readFileSync(path.join(root, "camp-chat.js"), "utf8");
+const builtHtmlPath = path.join(root, "dist/seasons/1/e01.html");
+const html = fs.existsSync(builtHtmlPath) ? fs.readFileSync(builtHtmlPath, "utf8") : "";
 
-if (!html.includes('id="thursday-dinner"')) {
-  throw new Error("e01.html missing #thursday-dinner");
+const thursday = (episode.days || []).find((day) => day.id === "thursday");
+if (!thursday) throw new Error("s1e01.json missing thursday day");
+const beatIds = (thursday.beats || []).map((beat) => beat.id);
+const lunchBeat = (thursday.beats || []).find((beat) => beat.id === "thursday-lunch");
+const dinnerBeat = (thursday.beats || []).find((beat) => beat.id === "thursday-dinner");
+if (!lunchBeat || !dinnerBeat) throw new Error("s1e01.json missing lunch or dinner beat");
+if (beatIds.indexOf("thursday-lunch") > beatIds.indexOf("thursday-dinner")) {
+  throw new Error("thursday-dinner must follow thursday-lunch");
 }
-if (!html.includes("Thursday dinner · campfire")) {
-  throw new Error("e01.html missing dinner beat title");
+if (dinnerBeat.type !== "dinner-fires" || dinnerBeat.title !== "Thursday dinner · campfire") {
+  throw new Error("dinner beat title/type mismatch");
 }
-if (!html.includes("e01-thursday-dinner.js")) {
-  throw new Error("e01.html does not load e01-thursday-dinner.js");
-}
-
-const lunchIdx = html.indexOf('id="thursday-lunch"');
-const dinnerIdx = html.indexOf('id="thursday-dinner"');
-const foldClose = html.indexOf('id="tribal"');
-if (!(lunchIdx < dinnerIdx && dinnerIdx < foldClose)) {
-  throw new Error("thursday-dinner is not after lunch and before tribal");
-}
-
 ["bidu-thu-dinner-fire", "askara-thu-dinner-fire"].forEach((id) => {
-  if (!html.includes('id="' + id + '"')) {
-    throw new Error("e01.html missing #" + id);
+  if (!(dinnerBeat.threads || []).some((thread) => thread.id === id)) {
+    throw new Error("s1e01.json missing dinner thread " + id);
   }
 });
+if (!builder.includes("e01-thursday-dinner.js") || !builder.includes("dinner-fires")) {
+  throw new Error("build.mjs does not render or copy Thursday dinner");
+}
+
+if (html) {
+  if (!html.includes('id="thursday-dinner"') || !html.includes("e01-thursday-dinner.js")) {
+    throw new Error("built e01.html missing Thursday dinner mount");
+  }
+  const lunchIdx = html.indexOf('id="thursday-lunch"');
+  const dinnerIdx = html.indexOf('id="thursday-dinner"');
+  const foldClose = html.indexOf('id="tribal"');
+  if (!(lunchIdx < dinnerIdx && dinnerIdx < foldClose)) {
+    throw new Error("built thursday-dinner is not after lunch and before tribal");
+  }
+}
 
 ["Hex", "Pax", "Gage", "Riot", "Juno", "Reed"].forEach((nick) => {
-  const dinnerHtml = html.slice(dinnerIdx, foldClose);
-  if (dinnerHtml.includes(nick)) {
+  const chrome = JSON.stringify(dinnerBeat);
+  if (chrome.includes(nick)) {
     throw new Error("nickname in dinner chrome: " + nick);
   }
   if (new RegExp('name:\\s*"' + nick + '"').test(js)) {
@@ -45,7 +57,7 @@ if (!(lunchIdx < dinnerIdx && dinnerIdx < foldClose)) {
 });
 
 ["robinhood", "agentic", "uuid", "last-four"].forEach((bad) => {
-  if (js.toLowerCase().includes(bad) || html.slice(dinnerIdx, foldClose).toLowerCase().includes(bad)) {
+  if (js.toLowerCase().includes(bad) || JSON.stringify(dinnerBeat).toLowerCase().includes(bad)) {
     throw new Error("forbidden token in dinner: " + bad);
   }
 });

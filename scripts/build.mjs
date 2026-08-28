@@ -138,8 +138,9 @@ function beatHtml(beat, base) {
           </div>
         </article>`;
   }
-  if (beat.type === "lunch-chats") {
+  if (beat.type === "lunch-chats" || beat.type === "dinner-fires") {
     const audience = beat.audienceCut ? `<p class="audience-cut">${escapeHtml(beat.audienceCut)}</p>` : "";
+    const gridClass = beat.type === "dinner-fires" ? "fire-chats" : "lunch-chats";
     const threads = (beat.threads || [])
       .map((thread) => {
         return `<article class="camp-scene ${escapeHtml(thread.tribeId)}" id="${escapeHtml(thread.id)}">
@@ -177,7 +178,7 @@ function beatHtml(beat, base) {
           ${kicker}
           ${title}
           ${body}
-          <div class="camp-chat-demo lunch-chats">
+          <div class="camp-chat-demo ${gridClass}">
             ${threads}
           </div>
         </article>`;
@@ -190,15 +191,17 @@ function beatHtml(beat, base) {
         </article>`;
 }
 
-function episodeHasLunchChats(episode) {
-  return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.type === "lunch-chats"));
+function episodeHasBeatType(episode, type) {
+  return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.type === type));
 }
 
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
-  const lunchChats = episodeHasLunchChats(episode);
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
-  const lunchScripts = lunchChats ? `\n  <script src="e01-thursday-lunch.js"></script>` : "";
+  const lunchScripts = [
+    episodeHasBeatType(episode, "lunch-chats") ? `\n  <script src="e01-thursday-lunch.js"></script>` : "",
+    episodeHasBeatType(episode, "dinner-fires") ? `\n  <script src="e01-thursday-dinner.js"></script>` : ""
+  ].join("");
   const rail = (episode.rail || [])
     .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.day)}<span>${escapeHtml(item.sub)}</span></a>`)
     .join("\n      ");
@@ -366,6 +369,10 @@ function copyStatic() {
   const thursdayLunch = join(root, "seasons/1/e01-thursday-lunch.js");
   if (existsSync(thursdayLunch)) {
     cpSync(thursdayLunch, join(dist, "seasons/1/e01-thursday-lunch.js"));
+  }
+  const thursdayDinner = join(root, "seasons/1/e01-thursday-dinner.js");
+  if (existsSync(thursdayDinner)) {
+    cpSync(thursdayDinner, join(dist, "seasons/1/e01-thursday-dinner.js"));
   }
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {
