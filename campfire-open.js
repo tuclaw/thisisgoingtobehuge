@@ -254,13 +254,11 @@
     }
 
     function softFadeBottom() {
-      /* Fade well above the canvas edge so the bitmap never prints a hard line. */
-      const fadeTop = height * 0.78;
+      /* Safety net only — keep glow decay in the radial gradient itself. */
+      const fadeTop = height * 0.94;
       const fade = ctx.createLinearGradient(0, fadeTop, 0, height);
       fade.addColorStop(0, "rgba(0, 0, 0, 0)");
-      fade.addColorStop(0.35, "rgba(0, 0, 0, 0.2)");
-      fade.addColorStop(0.65, "rgba(0, 0, 0, 0.55)");
-      fade.addColorStop(0.88, "rgba(0, 0, 0, 0.88)");
+      fade.addColorStop(0.5, "rgba(0, 0, 0, 0.4)");
       fade.addColorStop(1, "rgba(0, 0, 0, 1)");
       ctx.save();
       ctx.globalCompositeOperation = "destination-out";
@@ -270,7 +268,7 @@
     }
 
     function softFadeSides() {
-      const fadeW = width * 0.12;
+      const fadeW = width * 0.1;
       ctx.save();
       ctx.globalCompositeOperation = "destination-out";
       const left = ctx.createLinearGradient(0, 0, fadeW, 0);
@@ -288,19 +286,22 @@
 
     function drawGlow() {
       const cx = width * 0.5;
-      const cy = height * 0.52;
+      const cy = height * 0.5;
       const pulse = 0.82 + Math.sin(last * 0.0032) * 0.1 + Math.sin(last * 0.007) * 0.06;
-      const radius = Math.min(width * 0.55, height * 0.48);
+      /* Keep the halo inside the canvas so it never clips at the bitmap edge. */
+      const radius = Math.min(width * 0.42, height * 0.28);
       const g = ctx.createRadialGradient(cx, cy, 2, cx, cy, radius);
-      g.addColorStop(0, "rgba(255, 236, 170, " + (0.72 * pulse) + ")");
-      g.addColorStop(0.18, "rgba(255, 154, 31, " + (0.4 * pulse) + ")");
-      g.addColorStop(0.45, "rgba(232, 93, 4, " + (0.16 * pulse) + ")");
-      g.addColorStop(0.72, "rgba(232, 93, 4, " + (0.05 * pulse) + ")");
+      g.addColorStop(0, "rgba(255, 236, 170, " + (0.75 * pulse) + ")");
+      g.addColorStop(0.2, "rgba(255, 154, 31, " + (0.4 * pulse) + ")");
+      g.addColorStop(0.5, "rgba(232, 93, 4, " + (0.14 * pulse) + ")");
+      g.addColorStop(0.78, "rgba(232, 93, 4, " + (0.04 * pulse) + ")");
       g.addColorStop(1, "rgba(232, 93, 4, 0)");
       ctx.save();
       ctx.globalCompositeOperation = "lighter";
       ctx.fillStyle = g;
-      ctx.fillRect(0, 0, width, height);
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fill();
       ctx.restore();
     }
 
