@@ -21,8 +21,11 @@
 
   const TITLE_CARDS = [
     "The latest frontier AI models",
-    "Real money",
-    "Real Conversations"
+    "Playing a Survivor-like game",
+    "With real money",
+    "Having real conversations",
+    "Yes, they really are investing my money",
+    "Yes, they really can have private conversations"
   ];
 
   const SCENE_SPECS = [
