@@ -36,6 +36,9 @@ if (!episodeHtml.includes('data-mode="feed"')) {
 if (!episodeHtml.includes("episode-campfire-hero")) {
   throw new Error("episode renderer missing episode-campfire-hero landing");
 }
+if (!episodeHtml.includes('class="hero-head"')) {
+  throw new Error("episode renderer missing hero-head above campfire theater");
+}
 if (!episodeHtml.includes('id="week-board"')) {
   throw new Error("episode renderer lost week-board structure below landing");
 }
@@ -65,7 +68,7 @@ if (!episodeJs.includes("campfire-ping-face") || !episodeJs.includes("32000")) {
   throw new Error("episode-campfire.js missing portrait faces or 30s hold");
 }
 if (
-  !episodeJs.includes("FIRST_BUBBLE_DELAY_MS = 20000") ||
+  !episodeJs.includes("FIRST_BUBBLE_DELAY_MS = 15000") ||
   !episodeJs.includes("NEXT_BUBBLE_DELAY_MS = 60000")
 ) {
   throw new Error("episode-campfire.js missing delayed bubble reveal timing");

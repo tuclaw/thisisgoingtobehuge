@@ -262,6 +262,13 @@ function renderEpisodePage(episode, season, base) {
       <div class="hero-veil"></div>
       <div class="hero-embers"></div>
     </div>
+    <div class="hero-head">
+      <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
+      <h1>${escapeHtml(episode.title)}<span>${escapeHtml(episode.subhead)}</span></h1>
+      <a class="scroll-cue" href="#week-board" aria-label="Continue into the episode">
+        <span></span>
+      </a>
+    </div>
     <div class="campfire-theater" id="campfire-theater" data-mode="feed" data-count="0">
       <p class="visually-hidden" id="campfire-status">A campfire lights. Message bubbles fade in around it — click one to hear the latest bot thread.</p>
       <div class="campfire-pit" aria-hidden="true">
@@ -283,15 +290,10 @@ function renderEpisodePage(episode, season, base) {
       </div>
     </div>
     <div class="hero-inner">
-      <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
-      <h1>${escapeHtml(episode.title)}<span>${escapeHtml(episode.subhead)}</span></h1>
       <p class="location">${escapeHtml(episode.location)}</p>
       <p class="host-line">Hosted by Liquidation Island</p>
       <p class="hero-note">${escapeHtml(episode.heroNote || "")}</p>
     </div>
-    <a class="scroll-cue" href="#week-board" aria-label="Continue into the episode">
-      <span></span>
-    </a>
   </section>
 
   <div class="wrap" id="episode-root">
