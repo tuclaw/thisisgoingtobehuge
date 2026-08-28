@@ -829,12 +829,15 @@
     }
 
     async function runDescent() {
-      /* Big title card + slogan on sky, then scroll — keep overlay opaque so fire can't flash. */
-      overlay.classList.add("is-sky", "is-finale", "is-slogan", "is-instant");
-      await wait(280);
+      /* Bigger title card on black first (same as slides), then sky, then scroll. */
+      overlay.classList.add("is-finale", "is-slogan", "is-instant");
+      await wait(450);
       if (skipRef.finished) return;
       overlay.classList.remove("is-instant");
       void overlay.offsetWidth;
+      overlay.classList.add("is-sky");
+      await wait(520);
+      if (skipRef.finished) return;
       overlay.classList.add("is-descent");
       await beat(3000);
     }
