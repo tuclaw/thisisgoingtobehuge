@@ -2469,20 +2469,21 @@ body.is-titles {
 .campfire-light-spill {
   position: absolute;
   left: 50%;
-  top: 30%;
-  width: min(100vw, 820px);
-  height: min(70vw, 560px);
-  margin-left: calc(min(100vw, 820px) / -2);
+  top: 18%;
+  width: min(110vw, 900px);
+  height: min(78vw, 620px);
+  margin-left: calc(min(110vw, 900px) / -2);
   background:
-    radial-gradient(ellipse 44% 52% at 50% 16%, rgba(255, 154, 31, 0.5), rgba(232, 93, 4, 0.2) 34%, rgba(232, 93, 4, 0.07) 54%, transparent 76%);
-  filter: blur(56px);
+    radial-gradient(ellipse 46% 54% at 50% 28%, rgba(255, 154, 31, 0.55), rgba(232, 93, 4, 0.22) 36%, rgba(232, 93, 4, 0.08) 58%, transparent 78%);
+  filter: blur(60px);
   pointer-events: none;
   z-index: 1;
   opacity: 0;
   transition: opacity 1.6s ease;
 }
 
-.campfire-theater.is-lit .campfire-light-spill {
+.open-hero:has(.campfire-theater.is-lit) .campfire-light-spill,
+.episode-campfire-hero:has(.campfire-theater.is-lit) .campfire-light-spill {
   opacity: 1;
 }
 
@@ -2854,7 +2855,8 @@ body.is-titles {
     visibility: visible;
     filter: none;
   }
-  .campfire-theater.is-lit .campfire-light-spill {
+  .open-hero:has(.campfire-theater.is-lit) .campfire-light-spill,
+  .episode-campfire-hero:has(.campfire-theater.is-lit) .campfire-light-spill {
     opacity: 1;
   }
   .campfire-faces.is-in .campfire-face {
