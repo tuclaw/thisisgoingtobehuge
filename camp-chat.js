@@ -8,6 +8,7 @@
   const DEFAULT_STEP_MS = 2200;
   const TYPING_MS = 1400;
   const MSG_ANIM_MS = 880;
+  const SCROLL_BOTTOM_PX = 28;
 
   function escapeHtml(str) {
     return String(str)
@@ -15,6 +16,92 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function wait(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  function isThreadNearBottom(thread, threshold) {
+    if (!thread) return true;
+    const pad = typeof threshold === "number" ? threshold : SCROLL_BOTTOM_PX;
+    return thread.scrollHeight - thread.scrollTop - thread.clientHeight <= pad;
+  }
+
+  /**
+   * Pause playback / fade-away while the reader scrolls up; resume at bottom.
+   * Auto-scroll stays pinned to live messages until the user leaves the bottom.
+   */
+  function attachThreadScrollGate(thread) {
+    if (!thread) {
+      return {
+        isPinned: function () { return true; },
+        scrollToBottomIfPinned: function () {},
+        waitUntilPinned: async function () { return true; },
+        gatedWait: async function (ms) {
+          await wait(ms);
+          return true;
+        },
+        destroy: function () {}
+      };
+    }
+
+    let pinned = true;
+    let destroyed = false;
+
+    function refreshPinned() {
+      if (destroyed) return true;
+      pinned = isThreadNearBottom(thread);
+      return pinned;
+    }
+
+    function onScroll() {
+      refreshPinned();
+    }
+
+    thread.addEventListener("scroll", onScroll, { passive: true });
+
+    const gate = {
+      isPinned: function () {
+        return refreshPinned();
+      },
+      scrollToBottomIfPinned: function () {
+        if (pinned) thread.scrollTop = thread.scrollHeight;
+      },
+      waitUntilPinned: async function (isAborted) {
+        while (!destroyed) {
+          if (isAborted && isAborted()) return false;
+          if (refreshPinned()) return true;
+          await wait(100);
+        }
+        return false;
+      },
+      gatedWait: async function (ms, isAborted) {
+        const duration = Math.max(0, ms || 0);
+        const start = performance.now();
+        while (!destroyed && performance.now() - start < duration) {
+          if (isAborted && isAborted()) return false;
+          if (!refreshPinned()) {
+            const ok = await gate.waitUntilPinned(isAborted);
+            if (!ok) return false;
+            continue;
+          }
+          const remaining = duration - (performance.now() - start);
+          await wait(Math.min(100, Math.max(0, remaining)));
+        }
+        if (destroyed || (isAborted && isAborted())) return false;
+        if (!refreshPinned()) return gate.waitUntilPinned(isAborted);
+        return true;
+      },
+      destroy: function () {
+        destroyed = true;
+        thread.removeEventListener("scroll", onScroll);
+      }
+    };
+
+    return gate;
   }
 
   function sideForMessage(msg, participants, anchorId) {
@@ -44,6 +131,7 @@
       this.abortToken = 0;
       this.isOpen = false;
       this.isPlaying = false;
+      this.scrollGate = null;
 
       this.trigger = root.querySelector(".camp-chat-trigger");
       this.panel = root.querySelector(".camp-chat-panel");
@@ -107,6 +195,10 @@
       this.abortToken += 1;
       this.isOpen = false;
       this.isPlaying = false;
+      if (this.scrollGate) {
+        this.scrollGate.destroy();
+        this.scrollGate = null;
+      }
       if (this.trigger) {
         this.trigger.classList.remove("is-open");
         this.trigger.setAttribute("aria-expanded", "false");
@@ -128,46 +220,63 @@
       this.isPlaying = true;
       if (this.replayBtn) this.replayBtn.disabled = true;
 
+      if (this.scrollGate) this.scrollGate.destroy();
+      this.scrollGate = attachThreadScrollGate(this.thread);
+
       const finished = await playConversation(this.thread, this.conversation, {
-        isAborted: () => token !== this.abortToken
+        isAborted: () => token !== this.abortToken,
+        scrollGate: this.scrollGate
       });
 
-      if (!finished) return;
+      if (!finished) return false;
       this.isPlaying = false;
       if (this.replayBtn) this.replayBtn.disabled = false;
+      return true;
+    }
+
+    async hold(ms) {
+      if (!this.scrollGate) {
+        await wait(ms);
+        return true;
+      }
+      const token = this.abortToken;
+      return this.scrollGate.gatedWait(ms, () => token !== this.abortToken);
     }
 
     renderAll() {
       if (!this.thread) return;
       this.abortToken += 1;
       this.isPlaying = false;
+      if (this.scrollGate) {
+        this.scrollGate.destroy();
+        this.scrollGate = null;
+      }
       renderConversation(this.thread, this.conversation);
     }
 
     abort() {
       this.abortToken += 1;
       this.isPlaying = false;
+      if (this.scrollGate) {
+        this.scrollGate.destroy();
+        this.scrollGate = null;
+      }
       this.clearThread();
     }
   }
 
-  function appendTyping(thread) {
+  function appendTyping(thread, scrollGate) {
     const el = document.createElement("div");
     el.className = "camp-chat-typing";
     el.innerHTML = "<span></span><span></span><span></span>";
     thread.appendChild(el);
     requestAnimationFrame(() => el.classList.add("is-active"));
-    thread.scrollTop = thread.scrollHeight;
+    if (scrollGate) scrollGate.scrollToBottomIfPinned();
+    else thread.scrollTop = thread.scrollHeight;
     return el;
   }
 
-  function wait(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
-
-  function appendMessage(thread, msg, participants, anchorId, isGroup, animate) {
+  function appendMessage(thread, msg, participants, anchorId, isGroup, animate, scrollGate) {
     const row = document.createElement("div");
     const side = sideForMessage(msg, participants, anchorId);
     row.className = "camp-chat-row from-" + side;
@@ -221,7 +330,8 @@
 
     thread.appendChild(row);
     if (animate) requestAnimationFrame(() => row.classList.add("is-visible"));
-    thread.scrollTop = thread.scrollHeight;
+    if (scrollGate) scrollGate.scrollToBottomIfPinned();
+    else thread.scrollTop = thread.scrollHeight;
     return row;
   }
 
@@ -252,6 +362,9 @@
       ? opts.typingMs
       : (typeof c.typingMs === "number" ? c.typingMs : TYPING_MS);
     const msgAnimMs = typeof opts.msgAnimMs === "number" ? opts.msgAnimMs : MSG_ANIM_MS;
+    const externalGate = opts.scrollGate || null;
+    const scrollGate = externalGate || attachThreadScrollGate(thread);
+    const ownsGate = !externalGate;
 
     thread.innerHTML = "";
     const participants = c.participants || [];
@@ -266,31 +379,32 @@
       thread.appendChild(day);
     }
 
-    for (let i = 0; i < (c.messages || []).length; i += 1) {
-      if (isAborted()) return false;
-
-      const msg = c.messages[i];
-      const showTyping = msg.typing !== false;
-      const typingEl = showTyping ? appendTyping(thread) : null;
-      if (showTyping) {
-        await wait(typingMs);
+    try {
+      for (let i = 0; i < (c.messages || []).length; i += 1) {
         if (isAborted()) return false;
-        typingEl.remove();
+
+        const msg = c.messages[i];
+        const showTyping = msg.typing !== false;
+        const typingEl = showTyping ? appendTyping(thread, scrollGate) : null;
+        if (showTyping) {
+          if (!(await scrollGate.gatedWait(typingMs, isAborted))) return false;
+          typingEl.remove();
+        }
+
+        appendMessage(thread, msg, participants, anchorId, isGroup, true, scrollGate);
+
+        if (!(await scrollGate.gatedWait(msgAnimMs, isAborted))) return false;
+
+        const delay = typeof msg.delay === "number" ? msg.delay : stepMs;
+        if (i < c.messages.length - 1) {
+          if (!(await scrollGate.gatedWait(delay, isAborted))) return false;
+        }
       }
 
-      appendMessage(thread, msg, participants, anchorId, isGroup, true);
-
-      await wait(msgAnimMs);
-      if (isAborted()) return false;
-
-      const delay = typeof msg.delay === "number" ? msg.delay : stepMs;
-      if (i < c.messages.length - 1) {
-        await wait(delay);
-        if (isAborted()) return false;
-      }
+      return !isAborted();
+    } finally {
+      if (ownsGate) scrollGate.destroy();
     }
-
-    return !isAborted();
   }
 
   const SAMPLE_CONVERSATIONS = {
@@ -512,7 +626,8 @@
       this.phones[0].classList.add("is-on");
       await this.players[0].play();
       if (token !== this.cycleToken) return false;
-      if (!(await this.wait(1400, token))) return false;
+      if (!(await this.players[0].hold(1400))) return false;
+      if (token !== this.cycleToken) return false;
 
       this.phones[0].classList.add("is-exit");
       this.phones[0].classList.remove("is-on");
@@ -522,7 +637,8 @@
         this.phones[1].classList.add("is-on");
         await this.players[1].play();
         if (token !== this.cycleToken) return false;
-        if (!(await this.wait(2000, token))) return false;
+        if (!(await this.players[1].hold(2000))) return false;
+        if (token !== this.cycleToken) return false;
         this.phones[1].classList.add("is-exit");
         this.phones[1].classList.remove("is-on");
         if (!(await this.wait(500, token))) return false;
@@ -548,6 +664,8 @@
   global.CampChat = {
     mount: mountCampChat,
     playConversation: playConversation,
+    attachThreadScrollGate: attachThreadScrollGate,
+    isThreadNearBottom: isThreadNearBottom,
     samples: SAMPLE_CONVERSATIONS,
     trailer: TRAILER_CONVERSATIONS,
     getTrailerConversations: getTrailerConversations,

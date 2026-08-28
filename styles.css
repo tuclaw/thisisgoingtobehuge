@@ -2904,6 +2904,7 @@ body.is-titles {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
 }
 
 /* Lift the theater above hero copy while the iMessage panel is open. */
@@ -2957,10 +2958,13 @@ body.is-titles {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 0.55rem 0.65rem 0.7rem;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  scroll-behavior: auto;
 }
 
 .campfire-theater[data-count="2"] .campfire-imessage {
