@@ -3546,8 +3546,10 @@ a.brand:hover {
 }
 
 .archify-embed {
+  position: relative;
   margin: 0 auto 1.25rem;
   padding: 0;
+  aspect-ratio: 1280 / 820;
   border: 1px solid rgba(212, 160, 23, 0.28);
   border-radius: 0.65rem;
   background:
@@ -3560,9 +3562,11 @@ a.brand:hover {
 }
 
 .archify-embed iframe {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: clamp(22rem, 58vw, 36rem);
+  height: 100%;
   border: 0;
   background: #020617;
 }
