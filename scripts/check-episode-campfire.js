@@ -58,6 +58,9 @@ if (!episodeJs.includes("data-mode") || !episodeJs.includes("campfire-ping")) {
 if (!episodeJs.includes("campfire-ping-face") || !episodeJs.includes("32000")) {
   throw new Error("episode-campfire.js missing portrait faces or 30s hold");
 }
+if (!episodeJs.includes("MAX_VISIBLE = 2") || !episodeJs.includes("REVEAL_AFTER_CLOSE_MS = 5000")) {
+  throw new Error("episode-campfire.js missing 2-at-a-time / 5s reveal behavior");
+}
 if (!readFileSync(join(root, "camp-chat.js"), "utf8").includes("camp-chat-avatar")) {
   throw new Error("camp-chat.js missing contestant avatar bubbles");
 }
