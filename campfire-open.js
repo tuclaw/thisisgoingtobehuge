@@ -255,17 +255,28 @@
 
     function drawGlow() {
       const cx = width * 0.5;
-      const cy = height * 0.8;
       const pulse = 0.82 + Math.sin(last * 0.0032) * 0.1 + Math.sin(last * 0.007) * 0.06;
-      const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, width * 0.55);
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+
+      const cy = height * 0.68;
+      const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, width * 0.46);
       g.addColorStop(0, "rgba(255, 236, 170, " + (0.85 * pulse) + ")");
       g.addColorStop(0.18, "rgba(255, 154, 31, " + (0.45 * pulse) + ")");
       g.addColorStop(0.48, "rgba(232, 93, 4, " + (0.18 * pulse) + ")");
       g.addColorStop(1, "rgba(232, 93, 4, 0)");
-      ctx.save();
-      ctx.globalCompositeOperation = "lighter";
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, width, height);
+
+      const groundY = height * 0.78;
+      const ground = ctx.createRadialGradient(cx, groundY, 2, cx, groundY + height * 0.06, width * 0.78);
+      ground.addColorStop(0, "rgba(255, 154, 31, " + (0.24 * pulse) + ")");
+      ground.addColorStop(0.32, "rgba(232, 93, 4, " + (0.11 * pulse) + ")");
+      ground.addColorStop(0.58, "rgba(232, 93, 4, " + (0.035 * pulse) + ")");
+      ground.addColorStop(1, "rgba(232, 93, 4, 0)");
+      ctx.fillStyle = ground;
+      ctx.fillRect(0, height * 0.52, width, height * 0.48);
+
       ctx.restore();
     }
 
