@@ -368,6 +368,7 @@
   margin-left: 0.15rem;
   margin-right: 0.15rem;
 }
+.camp-chat-sender.teal { color: var(--bubble-teal); }
 .camp-chat-sender.ember { color: var(--bubble-ember); }
 .camp-chat-sender.blue { color: var(--im-blue); }
 
