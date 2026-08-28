@@ -2348,10 +2348,18 @@ body.is-titles {
   position: relative;
   z-index: 3;
   max-width: 42rem;
-  padding: 0.15rem 0 2.4rem;
+  padding: 0.15rem 0 0.35rem;
   opacity: 0;
   transform: translateY(0.6rem);
   transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.open-hero .scroll-cue {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  margin: 0 auto 1.15rem;
+  z-index: 4;
 }
 
 .open-hero.is-copy-in .hero-inner {
@@ -2600,30 +2608,6 @@ body.is-titles {
   transform: translate(-50%, 0) scale(1);
 }
 
-/* Lift the theater above hero copy while the iMessage panel is open. */
-.open-hero:has(.campfire-imessage.is-in) .campfire-theater,
-.episode-campfire-hero:has(.campfire-imessage.is-in) .campfire-theater {
-  z-index: 5;
-}
-
-/* Portrait ping bubbles stay behind the open iMessage panel. */
-.campfire-theater:has(.campfire-imessage.is-in) .campfire-imessage {
-  z-index: 7;
-}
-
-.campfire-theater:has(.campfire-imessage.is-in) .campfire-pings {
-  z-index: 2;
-}
-
-.campfire-theater:has(.campfire-imessage.is-in) .campfire-ping,
-.campfire-theater:has(.campfire-imessage.is-in) .campfire-ping.is-active {
-  z-index: 1;
-}
-
-.campfire-theater:has(.campfire-imessage.is-in) .campfire-faces {
-  z-index: 2;
-}
-
 .campfire-imessage-head {
   padding: 0.55rem 0.75rem 0.4rem;
   background: var(--im-header);
@@ -2698,7 +2682,10 @@ body.is-titles {
     padding-bottom: 1.1rem;
   }
   .open-hero .hero-inner {
-    padding-bottom: 1.15rem;
+    padding-bottom: 0.2rem;
+  }
+  .open-hero .scroll-cue {
+    margin-bottom: 0.85rem;
   }
   .open-hero .hero-line {
     margin-top: 0.7rem;
@@ -4115,71 +4102,6 @@ body.is-titles {
   padding-bottom: 5.5rem;
   background:
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(212, 160, 23, 0.12), transparent 55%);
-}
-
-.diagram-band .wrap {
-  max-width: 72rem;
-}
-
-.diagram-band-title,
-.diagram-band-lede {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.diagram-band-title {
-  max-width: 24ch;
-}
-
-.diagram-band-lede {
-  max-width: 42rem;
-  margin-bottom: 1.75rem;
-}
-
-.archify-embed {
-  position: relative;
-  margin: 0 auto 1.25rem;
-  padding: 0;
-  aspect-ratio: 1140 / 680;
-  border: 1px solid rgba(212, 160, 23, 0.28);
-  border-radius: 0.65rem;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(14, 107, 107, 0.12), transparent 55%),
-    linear-gradient(180deg, rgba(8, 12, 18, 0.96), rgba(4, 8, 14, 0.98));
-  box-shadow:
-    0 1.2rem 3rem rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(212, 160, 23, 0.12);
-  overflow: hidden;
-}
-
-.archify-embed iframe {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: #020617;
-}
-
-.diagram-embed-caption {
-  padding: 0.65rem 1rem 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--worn);
-}
-
-.diagram-embed-caption a {
-  color: var(--gold-bright);
-  text-decoration: none;
-}
-
-.diagram-embed-caption a:hover {
-  color: var(--parchment);
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
 }
 
 .close-band h2,
