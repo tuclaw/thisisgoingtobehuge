@@ -3352,6 +3352,24 @@ body.is-titles {
   }
 }
 
+.episode-pot {
+  margin: 0 0 1.6rem;
+  max-width: none;
+  padding: 1.1rem 1rem 1.15rem;
+}
+
+.episode-pot .pot-amount {
+  font-size: clamp(2.2rem, 8vw, 3.6rem);
+}
+
+.episode-pot .pot-sentence {
+  font-size: 1.05rem;
+}
+
+.episode-pot .pot-sub {
+  font-size: 0.95rem;
+}
+
 .scroll-cue span {
   width: 0.28rem;
   height: 0.28rem;

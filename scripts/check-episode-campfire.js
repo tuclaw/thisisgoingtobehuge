@@ -39,6 +39,9 @@ if (!episodeHtml.includes("episode-campfire-hero")) {
 if (!episodeHtml.includes('id="week-board"')) {
   throw new Error("episode renderer lost week-board structure below landing");
 }
+if (!episodeHtml.includes('id="pot-amount"') || !episodeHtml.includes("episode-pot")) {
+  throw new Error("episode renderer missing glowing island pot on week-board");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
