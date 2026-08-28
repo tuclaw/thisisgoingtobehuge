@@ -2322,6 +2322,12 @@ body.is-titles {
   opacity: 1;
 }
 
+.open-titles.is-instant .open-sky,
+.open-titles.is-instant .open-finale,
+.open-titles.is-instant .open-finale-slogan {
+  transition: none;
+}
+
 .open-titles.is-descent .open-sky {
   transform: translate3d(0, -42%, 0);
 }

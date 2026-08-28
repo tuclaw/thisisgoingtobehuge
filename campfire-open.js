@@ -707,7 +707,7 @@
     if (overlay) {
       overlay.setAttribute("aria-hidden", "true");
       window.setTimeout(function () {
-        overlay.classList.remove("is-sky", "is-finale", "is-slogan", "is-descent");
+        overlay.classList.remove("is-sky", "is-finale", "is-slogan", "is-descent", "is-instant");
       }, 1600);
     }
     const finale = document.getElementById("open-finale");
@@ -829,10 +829,12 @@
     }
 
     async function runDescent() {
-      overlay.classList.add("is-sky", "is-finale", "is-slogan");
-      /* One frame so the browser paints the title before the shrink/scroll. */
-      await wait(48);
+      /* Paint title + slogan at full size first, then animate the shrink/scroll. */
+      overlay.classList.add("is-sky", "is-finale", "is-slogan", "is-instant");
+      await wait(64);
       if (skipRef.finished) return;
+      overlay.classList.remove("is-instant");
+      void overlay.offsetWidth;
       overlay.classList.add("is-descent");
       await beat(2850);
     }
@@ -857,13 +859,23 @@
       await beat(1800);
       if (skipRef.finished) return;
       if (skipRef.toDescent) {
-        await runDescent();
+        /* Title already visible — keep slogan in and descend without a snap flash. */
+        overlay.classList.add("is-slogan");
+        await wait(40);
+        if (skipRef.finished) return;
+        overlay.classList.add("is-descent");
+        await beat(2850);
         return;
       }
 
       overlay.classList.add("is-slogan");
       await beat(2000);
       if (skipRef.finished) return;
+      if (skipRef.toDescent) {
+        overlay.classList.add("is-descent");
+        await beat(2850);
+        return;
+      }
 
       overlay.classList.add("is-descent");
       await beat(2850);
