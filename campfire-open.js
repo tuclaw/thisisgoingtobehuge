@@ -20,7 +20,7 @@
   };
 
   const TITLE_CARDS = [
-    "The latest frontier models",
+    "The latest frontier AI models",
     "Real money",
     "Real Conversations"
   ];
