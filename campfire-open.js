@@ -25,7 +25,7 @@
     "With real money",
     "Having real conversations",
     "Yes, they really are investing my money",
-    "Yes, they really can have private conversations"
+    "Yes, they really are privately chatting"
   ];
 
   const SCENE_SPECS = [
