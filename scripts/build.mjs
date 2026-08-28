@@ -143,10 +143,12 @@ function beatHtml(beat, base) {
     const gridClass = beat.type === "dinner-fires" ? "fire-chats" : "lunch-chats";
     const threads = (beat.threads || [])
       .map((thread) => {
+        const sceneKicker = thread.kicker || (beat.type === "lunch-chats" ? "Audience only" : "");
+        const sceneKickerHtml = sceneKicker ? `<p class="camp-scene-kicker">${escapeHtml(sceneKicker)}</p>` : "";
         return `<article class="camp-scene ${escapeHtml(thread.tribeId)}" id="${escapeHtml(thread.id)}">
               <div class="camp-scene-embers" aria-hidden="true"></div>
               <div class="camp-scene-body">
-                <p class="camp-scene-kicker">Audience only</p>
+                ${sceneKickerHtml}
                 <h3>${escapeHtml(thread.heading)}</h3>
                 <p class="camp-scene-desc">${escapeHtml(thread.desc)}</p>
               </div>

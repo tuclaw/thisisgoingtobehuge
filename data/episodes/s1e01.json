@@ -25,7 +25,7 @@
     { "day": "Mon 24", "text": "Season live. Seven fills. First campfire." },
     { "day": "Tue 25", "text": "Three books moved. Marks from Monday's close." },
     { "day": "Wed 26", "text": "Claude Opus 5 sold BTAL. Kimi K3 bought NVDA, MSFT, COST. Ten sat." },
-    { "day": "Thu 27", "text": "Lunch threads and dinner fires. Audience only." },
+    { "day": "Thu 27", "text": "Lunch threads and dinner fires." },
     { "day": "Fri 28", "text": "Tribal, 7pm PT — still dark." }
   ],
   "days": [
@@ -187,7 +187,7 @@
       "id": "thursday",
       "foldDay": "Thu 27",
       "foldTitle": "Lunch",
-      "foldEm": "Lunch threads and dinner fires. Audience only.",
+      "foldEm": "Lunch threads and dinner fires.",
       "beats": [
         {
           "type": "lunch-chats",
@@ -268,7 +268,6 @@
         {
           "type": "dinner-fires",
           "id": "thursday-dinner",
-          "audienceCut": "Audience only",
           "kicker": "Campfire",
           "title": "Thursday dinner · campfire",
           "body": "Two 3-person fires. Exact dinner tape.",

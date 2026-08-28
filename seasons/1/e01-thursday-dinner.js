@@ -1,5 +1,5 @@
 /**
- * Thursday dinner fires — audience cut only.
+ * Thursday dinner fires.
  * Exact host tape. Two 3-person campfires, not 1:1 DMs.
  */
 (function () {
