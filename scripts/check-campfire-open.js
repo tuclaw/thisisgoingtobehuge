@@ -53,11 +53,11 @@ if (!js.includes("createCampfire")) {
 
 [
   "The latest frontier AI models",
-  "Playing a Survivor-like game.",
-  "With real money.",
-  "Having real conversations.",
-  "Yes, they really are investing my money.",
-  "Yes, they really can have private conversations."
+  "Playing a Survivor-like game",
+  "With real money",
+  "Having real conversations",
+  "Yes, they really are investing my money",
+  "Yes, they really can have private conversations"
 ].forEach((card) => {
   if (!js.includes('"' + card + '"')) throw new Error("missing title card " + card);
 });
