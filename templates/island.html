@@ -14,8 +14,13 @@
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 </head>
-<body class="open-page">
-  <a class="skip" href="#landing">Skip to fire</a>
+<body class="open-page is-titles">
+  <noscript><style>body.is-titles{overflow:auto}body.is-titles .open-titles{display:none}</style></noscript>
+  <div class="open-titles" id="open-titles">
+    <p class="open-titles-word" id="open-titles-word"></p>
+    <button type="button" class="open-titles-skip" id="open-titles-skip">Skip intro</button>
+  </div>
+  <a class="skip" href="#landing" id="skip-titles">Skip to fire</a>
   <header class="torch-nav">
     <a class="brand" href="index.html">
       <svg class="flame-mark" viewBox="0 0 32 40" aria-hidden="true">
