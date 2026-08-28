@@ -166,6 +166,9 @@ check(
   "live-coin-sell-is-event",
   fills.some((f) => f.survivorId === (grok45 && grok45.id) && f.side === "sell" && f.ticker === "COIN" && f.orderId === "6a91de03-23f4-4834-a5b7-b19f2bb5233e")
 );
+const coinSell = fills.find((f) => f.id === "fill-grok-45-coin-sell");
+check("live-coin-sell-at", coinSell && coinSell.at === "2026-08-28T19:14:12.111Z", coinSell && coinSell.at);
+check("live-coin-sell-avg", coinSell && coinSell.avg === "177.6112", coinSell && String(coinSell.avg));
 check(
   "no-unfilled-kimi-msft-add",
   fills.filter((f) => f.survivorId === (kimi && kimi.id) && f.side === "buy" && f.ticker === "MSFT").length === 1
