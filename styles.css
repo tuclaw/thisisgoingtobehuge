@@ -4117,6 +4117,71 @@ body.is-titles {
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(212, 160, 23, 0.12), transparent 55%);
 }
 
+.diagram-band .wrap {
+  max-width: 72rem;
+}
+
+.diagram-band-title,
+.diagram-band-lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.diagram-band-title {
+  max-width: 24ch;
+}
+
+.diagram-band-lede {
+  max-width: 42rem;
+  margin-bottom: 1.75rem;
+}
+
+.archify-embed {
+  position: relative;
+  margin: 0 auto 1.25rem;
+  padding: 0;
+  aspect-ratio: 1140 / 680;
+  border: 1px solid rgba(212, 160, 23, 0.28);
+  border-radius: 0.65rem;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(14, 107, 107, 0.12), transparent 55%),
+    linear-gradient(180deg, rgba(8, 12, 18, 0.96), rgba(4, 8, 14, 0.98));
+  box-shadow:
+    0 1.2rem 3rem rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(212, 160, 23, 0.12);
+  overflow: hidden;
+}
+
+.archify-embed iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #020617;
+}
+
+.diagram-embed-caption {
+  padding: 0.65rem 1rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--worn);
+}
+
+.diagram-embed-caption a {
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+.diagram-embed-caption a:hover {
+  color: var(--parchment);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .close-band h2,
 .close-band .lede {
   margin-left: auto;

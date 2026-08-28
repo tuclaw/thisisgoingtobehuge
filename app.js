@@ -1044,6 +1044,28 @@ function renderEpisodeLiveIndicator(season) {
   h1.insertBefore(titleRow, dateSpan || null);
 }
 
+function renderEpisodeLiveIndicator(season) {
+  if (document.documentElement.dataset.page !== "episode") return;
+  const epNum = Number(document.documentElement.dataset.episode);
+  if (!epNum) return;
+  const live = getLiveEpisode(season);
+  if (!live || live.number !== epNum) return;
+  const h1 = document.querySelector(".episode-hero h1");
+  if (!h1 || h1.querySelector(".live-badge")) return;
+  const dateSpan = h1.querySelector(":scope > span");
+  const titleRow = document.createElement("span");
+  titleRow.className = "ep-title-row ep-hero-title";
+  const textNode = h1.firstChild;
+  if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+    const titleSpan = document.createElement("span");
+    titleSpan.textContent = textNode.textContent.trim();
+    titleRow.appendChild(titleSpan);
+    h1.removeChild(textNode);
+  }
+  titleRow.insertAdjacentHTML("beforeend", liveIndicatorHtml());
+  h1.insertBefore(titleRow, dateSpan || null);
+}
+
 function renderEpisode(season) {
   renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
@@ -1210,6 +1232,35 @@ function renderNavLiveIndicators(season) {
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const href = link.getAttribute("href") || "";
     if (!isSeasonHubLink(href)) return;
+    if (link.querySelector(".live-badge")) return;
+    link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
+  });
+}
+
+function getLiveEpisode(season) {
+  const episodes = Array.isArray(season.episodes) ? season.episodes : [];
+  return episodes.find((ep) => ep.status === "live") || null;
+}
+
+function liveIndicatorHtml() {
+  return (
+    '<span class="live-badge" aria-label="Live now">' +
+    '<span class="live-badge-dot" aria-hidden="true"></span>LIVE</span>'
+  );
+}
+
+function isSeasonOneNavLink(href) {
+  if (!href) return false;
+  const path = href.split("#")[0].split("?")[0].replace(/\/+$/, "");
+  return path === "seasons/1" || path.endsWith("/seasons/1");
+}
+
+function renderNavLiveIndicators(season) {
+  const live = getLiveEpisode(season);
+  if (!live) return;
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    if (!isSeasonOneNavLink(href)) return;
     if (link.querySelector(".live-badge")) return;
     link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
   });
