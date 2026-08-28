@@ -68,7 +68,7 @@ if (!episodeJs.includes("campfire-ping-face") || !episodeJs.includes("32000")) {
   throw new Error("episode-campfire.js missing portrait faces or 30s hold");
 }
 if (
-  !episodeJs.includes("FIRST_BUBBLE_DELAY_MS = 15000") ||
+  !episodeJs.includes("FIRST_BUBBLE_DELAY_MS = 10000") ||
   !episodeJs.includes("NEXT_BUBBLE_DELAY_MS = 60000")
 ) {
   throw new Error("episode-campfire.js missing delayed bubble reveal timing");
