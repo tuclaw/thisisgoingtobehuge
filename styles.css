@@ -2348,10 +2348,18 @@ body.is-titles {
   position: relative;
   z-index: 3;
   max-width: 42rem;
-  padding: 0.15rem 0 2.4rem;
+  padding: 0.15rem 0 0.35rem;
   opacity: 0;
   transform: translateY(0.6rem);
   transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.open-hero .scroll-cue {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  margin: 0 auto 1.15rem;
+  z-index: 4;
 }
 
 .open-hero.is-copy-in .hero-inner {
@@ -2698,7 +2706,10 @@ body.is-titles {
     padding-bottom: 1.1rem;
   }
   .open-hero .hero-inner {
-    padding-bottom: 1.15rem;
+    padding-bottom: 0.2rem;
+  }
+  .open-hero .scroll-cue {
+    margin-bottom: 0.85rem;
   }
   .open-hero .hero-line {
     margin-top: 0.7rem;
