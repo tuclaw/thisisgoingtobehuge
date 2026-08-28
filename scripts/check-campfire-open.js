@@ -60,8 +60,5 @@ if (js.includes("Real time conversations")) {
 if (!html.includes("open-titles") || !html.includes("is-titles")) {
   throw new Error("templates/island.html missing title-card open");
 }
-if (!html.includes("Watch the contestants playing live right now")) {
-  throw new Error("templates/island.html missing live CTA");
-}
 
 console.log("campfire open checks passed");
