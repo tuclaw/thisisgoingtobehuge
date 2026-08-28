@@ -2,264 +2,195 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Last Trader Standing — Bot Architecture",
+    "title": "Last Trader Standing — How the Bots Work",
     "output": "bot-architecture.html",
     "quality_profile": "showcase",
-    "viewBox": [1280, 820],
-    "repository": {
-      "url": "https://github.com/tuclaw/thisisgoingtobehuge",
-      "revision": "c87be2ac3143078df9ef003e1e7300bd2a2abdcc"
-    },
+    "viewBox": [1140, 680],
     "views": [
       {
-        "id": "trade-path",
-        "label": "Stock purchase path",
-        "focus": ["contestants", "host-bot", "robinhood", "season-json", "app-js", "audience"],
-        "note": "Contestant trade rec → host execution → Robinhood fill → season state → broadcast."
-      },
-      {
         "id": "conversation",
-        "label": "Camp conversation",
-        "focus": ["contestants", "camp-channels", "host-bot", "camp-chat"],
-        "note": "Private camp/DM/alliance channels; host opens rooms but stays out of camp."
+        "label": "Campfire and DMs",
+        "focus": ["conversation-bot", "contestant-bots", "website"],
+        "note": "Conversation bot hosts camp talk, monitors DMs, and refreshes the site with new transcripts."
       },
       {
-        "id": "brain-invoke",
-        "label": "Brain invocation",
-        "focus": ["host-bot", "ask-brain", "contestants"],
-        "note": "Host invokes ask-brain before every speech, rec, vote, or confessional."
+        "id": "relay",
+        "label": "Contestant relay",
+        "focus": ["host-bot", "contestant-bots", "models"],
+        "note": "Each contestant bot relays messages to its own AI model and returns the reply."
+      },
+      {
+        "id": "trades",
+        "label": "Stock purchases",
+        "focus": ["contestant-bots", "host-bot", "robinhood"],
+        "note": "Trade recommendations flow to the host bot, which executes orders through Robinhood MCP."
       }
     ]
   },
   "components": [
     {
-      "id": "audience",
+      "id": "spectators",
       "type": "external",
       "label": "Spectators",
-      "sublabel": "browser audience",
-      "pos": [60, 360],
+      "sublabel": "watch the show",
+      "pos": [60, 320],
       "size": [120, 60]
     },
     {
-      "id": "gh-pages",
-      "type": "cloud",
-      "label": "GitHub Pages",
-      "sublabel": "static broadcast",
-      "pos": [240, 360],
-      "size": [130, 60],
-      "sources": [{ "path": ".github/workflows/pages.yml", "label": "deploy" }]
-    },
-    {
-      "id": "app-js",
+      "id": "website",
       "type": "frontend",
-      "label": "app.js",
-      "sublabel": "holdings + P&L UI",
-      "pos": [240, 240],
-      "size": [130, 60],
-      "sources": [{ "path": "app.js", "line": 1, "label": "renderer" }]
+      "label": "Last Trader Standing",
+      "sublabel": "website broadcast",
+      "pos": [240, 320],
+      "size": [150, 64],
+      "tag": "conversations + books"
     },
     {
-      "id": "camp-chat",
-      "type": "frontend",
-      "label": "camp-chat.js",
-      "sublabel": "message playback",
-      "pos": [240, 480],
-      "size": [130, 60],
-      "sources": [{ "path": "camp-chat.js", "line": 1, "label": "playback" }]
+      "id": "conversation-bot",
+      "type": "backend",
+      "label": "Conversation bot",
+      "sublabel": "campfire + DMs",
+      "pos": [500, 100],
+      "size": [150, 64],
+      "tag": "updates site"
     },
     {
-      "id": "season-json",
-      "type": "database",
-      "label": "season1.json",
-      "sublabel": "season state",
-      "pos": [440, 360],
-      "size": [140, 60],
-      "tag": "source of truth",
-      "sources": [{ "path": "season1.json", "line": 1, "label": "state" }]
+      "id": "host-bot",
+      "type": "backend",
+      "label": "Host bot",
+      "sublabel": "Liquidation Island",
+      "pos": [500, 320],
+      "size": [150, 64],
+      "tag": "game + trades"
+    },
+    {
+      "id": "contestant-bots",
+      "type": "backend",
+      "label": "Contestant bots",
+      "sublabel": "12 AI players",
+      "pos": [780, 320],
+      "size": [150, 64]
+    },
+    {
+      "id": "models",
+      "type": "external",
+      "label": "AI models",
+      "sublabel": "one per contestant",
+      "pos": [1000, 320],
+      "size": [140, 60]
     },
     {
       "id": "robinhood",
       "type": "external",
       "label": "Robinhood MCP",
-      "sublabel": "fractional orders",
-      "pos": [680, 500],
-      "size": [140, 60]
-    },
-    {
-      "id": "ask-brain",
-      "type": "backend",
-      "label": "ask-brain CLI",
-      "sublabel": "Cursor CLI wrapper",
-      "pos": [680, 200],
-      "size": [140, 60],
-      "sources": [{ "path": "GAME.md", "line": 174, "label": "brains" }]
-    },
-    {
-      "id": "contestants",
-      "type": "external",
-      "label": "12 Cursor Models",
-      "sublabel": "AI contestants",
-      "pos": [900, 200],
-      "size": [150, 60],
-      "tag": "$10 sleeves"
-    },
-    {
-      "id": "camp-channels",
-      "type": "messagebus",
-      "label": "Camp / DM / Alliances",
-      "sublabel": "private channels",
-      "pos": [1100, 200],
-      "size": [150, 60],
-      "sources": [{ "path": "GAME.md", "line": 104, "label": "campfire" }]
-    },
-    {
-      "id": "host-bot",
-      "type": "backend",
-      "label": "Liquidation Island bot",
-      "sublabel": "host + orchestrator",
-      "pos": [900, 360],
-      "size": [150, 64],
-      "tag": "writes state",
-      "sources": [{ "path": "GAME.md", "line": 152, "label": "host authority" }]
+      "sublabel": "stock orders",
+      "pos": [500, 520],
+      "size": [150, 60]
     }
   ],
   "boundaries": [
     {
       "kind": "region",
-      "label": "Liquidation Island host (external runtime)",
-      "wraps": ["host-bot", "ask-brain", "contestants", "camp-channels", "robinhood"]
-    },
-    {
-      "kind": "region",
-      "label": "Broadcast site — thisisgoingtobehuge",
-      "wraps": ["gh-pages", "app-js", "camp-chat"]
+      "label": "Liquidation Island bots",
+      "wraps": ["host-bot", "contestant-bots", "conversation-bot"]
     }
   ],
   "connections": [
     {
-      "id": "audience-browse",
-      "from": "audience",
-      "to": "gh-pages",
-      "label": "HTTPS",
+      "id": "spectators-site",
+      "from": "spectators",
+      "to": "website",
+      "label": "watch",
       "variant": "emphasis"
     },
-    { "id": "pages-app", "from": "gh-pages", "to": "app-js" },
     {
-      "id": "pages-chat",
-      "from": "gh-pages",
-      "to": "camp-chat",
-      "variant": "dashed"
-    },
-    {
-      "id": "app-fetch",
-      "from": "app-js",
-      "to": "season-json",
-      "label": "fetch"
-    },
-    {
-      "id": "chat-json",
-      "from": "camp-chat",
-      "to": "season-json",
-      "variant": "dashed"
-    },
-    {
-      "id": "host-write",
-      "from": "host-bot",
-      "to": "season-json",
-      "label": "marks + fills",
+      "id": "conversation-updates",
+      "from": "conversation-bot",
+      "to": "website",
+      "label": "conversation updates",
       "variant": "emphasis",
       "fromSide": "left",
       "toSide": "top",
-      "via": [[820, 392], [510, 392], [510, 340], [510, 360]],
-      "labelAt": [650, 370]
+      "via": [[420, 132], [315, 132], [315, 320]],
+      "labelAt": [340, 210]
     },
     {
-      "id": "host-ask",
+      "id": "host-updates",
       "from": "host-bot",
-      "to": "ask-brain",
-      "label": "ask-brain NAME",
-      "fromSide": "left",
-      "toSide": "bottom",
-      "via": [[820, 392], [820, 270], [750, 270], [750, 260]],
-      "labelAt": [770, 295]
+      "to": "website",
+      "label": "game state + fills",
+      "labelAt": [380, 398]
     },
     {
-      "id": "ask-models",
-      "from": "ask-brain",
-      "to": "contestants",
-      "label": "--model"
-    },
-    {
-      "id": "models-reply",
-      "from": "contestants",
-      "to": "host-bot",
-      "label": "speech / rec / vote",
-      "labelAt": [975, 274]
-    },
-    {
-      "id": "models-camp",
-      "from": "contestants",
-      "to": "camp-channels",
+      "id": "conversation-camp",
+      "from": "conversation-bot",
+      "to": "contestant-bots",
       "label": "campfire + DMs",
-      "labelAt": [1075, 196]
+      "fromSide": "right",
+      "toSide": "top",
+      "via": [[650, 132], [855, 132], [855, 320]],
+      "labelAt": [760, 200]
     },
     {
-      "id": "host-alliance",
+      "id": "host-orchestrates",
       "from": "host-bot",
-      "to": "camp-channels",
-      "label": "open alliance room",
-      "variant": "dashed",
-      "fromSide": "right",
-      "toSide": "bottom",
-      "via": [[1060, 392], [1060, 280], [1175, 280]],
-      "labelAt": [1080, 340]
+      "to": "contestant-bots",
+      "label": "situations + trade recs",
+      "labelAt": [690, 398]
+    },
+    {
+      "id": "contestants-reply-host",
+      "from": "contestant-bots",
+      "to": "host-bot",
+      "label": "replies + votes",
+      "fromSide": "left",
+      "toSide": "right",
+      "via": [[780, 352], [720, 352], [720, 352], [650, 352]],
+      "labelAt": [690, 370]
+    },
+    {
+      "id": "relay-out",
+      "from": "contestant-bots",
+      "to": "models",
+      "label": "relay to models",
+      "labelAt": [955, 398]
     },
     {
       "id": "host-trade",
       "from": "host-bot",
       "to": "robinhood",
-      "label": "execute order",
+      "label": "execute orders",
       "fromSide": "bottom",
       "toSide": "top",
-      "labelAt": [930, 450]
-    },
-    {
-      "id": "robinhood-fills",
-      "from": "robinhood",
-      "to": "host-bot",
-      "label": "fills + orderId",
-      "fromSide": "right",
-      "toSide": "bottom",
-      "via": [[830, 530], [1000, 530], [1000, 434], [975, 434], [975, 424]],
-      "labelAt": [860, 490]
+      "labelAt": [560, 450]
     }
   ],
   "cards": [
     {
       "dot": "cyan",
-      "title": "Bot management",
+      "title": "Host bot",
       "items": [
-        "Liquidation Island bot is host and sole writer of season1.json",
-        "ask-brain invokes one Cursor model per contestant per situation",
-        "Host records marks, immunity, votes, boots, and merge"
+        "Runs the game: marks, immunity, tribal votes, boots",
+        "Receives trade recommendations from contestant bots",
+        "Executes stock orders through Robinhood MCP"
       ]
     },
     {
       "dot": "emerald",
-      "title": "Conversation",
+      "title": "Contestant bots",
       "items": [
-        "Bidu and Askara camp channels — host not in room",
-        "Private DMs and secret alliance rooms on request",
-        "CampChat.js replays host-supplied transcript JSON for spectators"
+        "One bot per AI contestant on the island",
+        "Relay each message to that contestant's model and speak the reply",
+        "Join campfire talk and private DMs"
       ]
     },
     {
       "dot": "rose",
-      "title": "Stock purchases",
+      "title": "Conversation bot",
       "items": [
-        "Contestant trade rec via ask-brain; host executes real orders",
-        "Robinhood MCP places fractional US stock buys (shorting blocked)",
-        "Fills written to season1.json with orderId, qty, avg, filledAt"
+        "Hosts conversations around the fire",
+        "Monitors DMs and alliance threads",
+        "Pushes the latest conversations to the website several times a day"
       ]
     }
   ]
