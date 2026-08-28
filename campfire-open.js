@@ -420,7 +420,7 @@
     }
   }
 
-  async function playScene(theater, facesEl, threadEl, scene, abortRef) {
+  async function playScene(theater, facesEl, threadEl, scene, abortRef, scrollGate) {
     theater.dataset.count = String(scene.count);
     theater.dataset.scene = scene.id;
     facesEl.classList.remove("is-in");
@@ -445,6 +445,7 @@
       await play(threadEl, scene.conversation, {
         typingMs: 0,
         msgAnimMs: 0,
+        scrollGate: scrollGate || null,
         isAborted: function () {
           return abortRef.aborted;
         }
@@ -455,6 +456,7 @@
     const finished = await play(threadEl, Object.assign({}, scene.conversation, { stepMs: 3200 }), {
       typingMs: 2000,
       msgAnimMs: 1000,
+      scrollGate: scrollGate || null,
       isAborted: function () {
         return abortRef.aborted;
       }
@@ -545,7 +547,13 @@
     }
   }
 
-  async function fadeSceneOut(facesEl, threadEl, abortRef) {
+  async function fadeSceneOut(facesEl, threadEl, abortRef, scrollGate) {
+    if (scrollGate && typeof scrollGate.waitUntilPinned === "function") {
+      const ok = await scrollGate.waitUntilPinned(function () {
+        return abortRef.aborted;
+      });
+      if (!ok || abortRef.aborted) return;
+    }
     facesEl.classList.remove("is-in");
     const card = document.getElementById("campfire-imessage");
     if (card) card.classList.remove("is-in");
@@ -617,19 +625,32 @@
 
       await wait(900);
       const scenes = getScenes();
+      const attachGate = global.CampChat && global.CampChat.attachThreadScrollGate;
       while (looping && !abortRef.aborted) {
         const scene = scenes[sceneIndex % scenes.length];
         if (statusEl) {
           const names = scene.faces.map((id) => CAST[id] && CAST[id].model).filter(Boolean).join(", ");
           statusEl.textContent = "Around the fire: " + names + ".";
         }
-        const ok = await playScene(theater, facesEl, threadEl, scene, abortRef);
-        if (!ok || abortRef.aborted) break;
-        await wait(2200);
-        if (abortRef.aborted) break;
-        await fadeSceneOut(facesEl, threadEl, abortRef);
-        await wait(500);
-        sceneIndex += 1;
+        const scrollGate = typeof attachGate === "function" ? attachGate(threadEl) : null;
+        try {
+          const ok = await playScene(theater, facesEl, threadEl, scene, abortRef, scrollGate);
+          if (!ok || abortRef.aborted) break;
+          if (scrollGate) {
+            const held = await scrollGate.gatedWait(2200, function () {
+              return abortRef.aborted;
+            });
+            if (!held || abortRef.aborted) break;
+          } else {
+            await wait(2200);
+            if (abortRef.aborted) break;
+          }
+          await fadeSceneOut(facesEl, threadEl, abortRef, scrollGate);
+          await wait(500);
+          sceneIndex += 1;
+        } finally {
+          if (scrollGate) scrollGate.destroy();
+        }
       }
     }
 
