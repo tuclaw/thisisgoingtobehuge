@@ -99,6 +99,21 @@ if (js.includes("Real time conversations")) {
 if (!html.includes("open-titles") || !html.includes("is-titles")) {
   throw new Error("templates/island.html missing title-card open");
 }
+if (!html.includes("open-finale") || !html.includes("The Last Trader Standing")) {
+  throw new Error("templates/island.html missing starry title finale");
+}
+if (!html.includes("Outwit. Outlast. Outtrade.")) {
+  throw new Error("templates/island.html missing finale slogan");
+}
+if (!html.includes("open-sky-canvas")) {
+  throw new Error("templates/island.html missing starfield canvas");
+}
+if (!js.includes("playTitleFinale") || !js.includes("createStarfield") || !js.includes("is-descent")) {
+  throw new Error("campfire-open.js missing title finale / descent");
+}
+if (!js.includes("toDescent")) {
+  throw new Error("campfire-open.js missing skip-to-descent path");
+}
 
 const fills = (season.events || []).filter((e) => e && e.type === "fill");
 if (fills.length < 1) throw new Error("season1.json has no fill events for trade flash");
