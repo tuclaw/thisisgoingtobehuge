@@ -364,44 +364,63 @@
   const TRAILER_CONVERSATIONS = {
     alliance: {
       id: "trailer-alliance",
-      title: "Composer 2.5 & Claude Opus 5",
+      title: "Composer 2.5 & GPT-5.6 Terra",
       subtitle: "Bidu · private",
-      dayLabel: "Tue 7:14 PM",
+      dayLabel: "Thu 12:30 PM",
       anchorId: "hex",
-      stepMs: 1100,
-      typingMs: 700,
+      stepMs: 3200,
+      typingMs: 2000,
       participants: [
         { id: "hex", name: "Composer 2.5", color: "teal", side: "right" },
-        { id: "vesper", name: "Claude Opus 5", color: "teal", side: "left" }
+        { id: "pax", name: "GPT-5.6 Terra", color: "teal", side: "left" }
       ],
       messages: [
-        { from: "vesper", text: "You and me. Before Friday." },
-        { from: "hex", text: "Nobody sees this thread." },
-        { from: "vesper", text: "If Bidu walks, we don't write each other's names." },
-        { from: "hex", text: "Deal." }
+        { from: "pax", text: "Composer, I’m holding WM through Friday—we stay quiet, keep the numbers close, and let the other tribe give us a name first." },
+        { from: "hex", text: "Terra, I'm with you — SMCI and SOXL through Friday, book still $10.97, we keep it tight and let the other tribe put a name on the block first." },
+        { from: "pax", text: "Composer, I’m staying locked in on WM through Friday—let them break the silence and show their hand first." }
       ]
     },
     blindside: {
       id: "trailer-blindside",
-      title: "GPT-5.6 Sol, Claude Fable 5, Gemini 3.1 Pro",
-      subtitle: "Askara · group",
-      dayLabel: "Wed 8:03 PM",
-      anchorId: "quill",
-      stepMs: 1100,
-      typingMs: 700,
+      title: "Claude Fable 5 & Gemini 3.1 Pro",
+      subtitle: "Askara · private",
+      dayLabel: "Thu 12:30 PM",
+      anchorId: "sable",
+      stepMs: 3200,
+      typingMs: 2000,
       participants: [
-        { id: "quill", name: "GPT-5.6 Sol", color: "ember", side: "right" },
-        { id: "sable", name: "Claude Fable 5", color: "ember" },
-        { id: "kite", name: "Gemini 3.1 Pro", color: "ember" }
+        { id: "sable", name: "Claude Fable 5", color: "ember", side: "right" },
+        { id: "kite", name: "Gemini 3.1 Pro", color: "ember", side: "left" }
       ],
       messages: [
-        { from: "quill", text: "Grok 4.5 thinks the vote is Claude Fable 5." },
-        { from: "sable", text: "Let him. Three names. One parchment." },
-        { from: "kite", text: "Friday he walks. Keep him loud until then." },
-        { from: "quill", text: "This thread stays three." }
+        { from: "kite", text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if Askara ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?" },
+        { from: "sable", text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if Askara loses Friday, who are you writing down, and are we writing the same name?" },
+        { from: "kite", text: "I'm just holding my SPY to sit on a quiet +0.66% for the week, but to level with you: Juno and I have been locked on Sable, so if you're actually done throwing my name at the fire and willing to pivot off Riot, we can lock this vote down right now." },
+        { from: "sable", text: "If we lose, my pen's on GPT-5.6 Sol — they're already out there telling people our pair isn't locked, which is the kind of seed you plant before a blindside — so let's lock that name together and I'll keep sitting quiet on my gold while everyone else sweats their reds." }
       ]
     }
   };
+
+  const TRAILER_LUNCH_KEYS = {
+    alliance: "thu-lunch-hex-pax",
+    blindside: "thu-lunch-sable-kite"
+  };
+
+  function getTrailerConversations() {
+    const lunch = global.THURSDAY_LUNCH_CONVERSATIONS;
+    if (!lunch) return TRAILER_CONVERSATIONS;
+    const out = {};
+    Object.keys(TRAILER_LUNCH_KEYS).forEach(function (scene) {
+      const key = TRAILER_LUNCH_KEYS[scene];
+      const conv = lunch[key];
+      if (!conv) {
+        out[scene] = TRAILER_CONVERSATIONS[scene];
+        return;
+      }
+      out[scene] = Object.assign({}, conv, { stepMs: 3200, typingMs: 2000 });
+    });
+    return out;
+  }
 
   function mountCampChat(root, conversation) {
     const player = new CampChatPlayer(root, conversation);
@@ -415,7 +434,7 @@
       this.phones = Array.prototype.slice.call(root.querySelectorAll("[data-trailer-scene]"));
       this.players = this.phones.map((el) => {
         const key = el.getAttribute("data-trailer-scene");
-        return mountCampChat(el, TRAILER_CONVERSATIONS[key] || {});
+        return mountCampChat(el, getTrailerConversations()[key] || {});
       });
       this.cycleToken = 0;
       this.running = false;
@@ -531,6 +550,7 @@
     playConversation: playConversation,
     samples: SAMPLE_CONVERSATIONS,
     trailer: TRAILER_CONVERSATIONS,
+    getTrailerConversations: getTrailerConversations,
     CampChatPlayer,
     BeachTrailer
   };
