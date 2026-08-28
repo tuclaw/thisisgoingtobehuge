@@ -249,7 +249,8 @@ function renderEpisodePage(episode, season, base) {
     <nav>
       <ul class="nav-links">
         <li><a href="${base}index.html">Island</a></li>
-        <li><a href="${base}seasons/${episode.season || season.season}/">Season ${episode.season || season.season}</a></li>
+        <li><a href="#" data-nav-watch class="nav-watch">Watch</a></li>
+        <li><a href="${base}seasons/${episode.season || season.season}/">Seasons</a></li>
         <li><a href="${base}index.html#cast">Cast</a></li>
         <li><a href="${base}rules.html">Rules</a></li>
       </ul>

@@ -202,6 +202,23 @@ img {
   vertical-align: 0.05em;
 }
 
+.nav-watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+}
+
+.nav-watch-icon {
+  width: 0.82em;
+  height: 0.82em;
+  flex-shrink: 0;
+  opacity: 0.88;
+}
+
+.nav-links .nav-watch .live-badge {
+  margin-left: 0.1rem;
+}
+
 .episode-hero .live-badge {
   font-size: 0.62rem;
   padding: 0.18rem 0.55rem 0.15rem;

@@ -1082,28 +1082,6 @@ function renderEpisodeLiveIndicator(season) {
   h1.insertBefore(titleRow, dateSpan || null);
 }
 
-function renderEpisodeLiveIndicator(season) {
-  if (document.documentElement.dataset.page !== "episode") return;
-  const epNum = Number(document.documentElement.dataset.episode);
-  if (!epNum) return;
-  const live = getLiveEpisode(season);
-  if (!live || live.number !== epNum) return;
-  const h1 = document.querySelector(".episode-hero h1");
-  if (!h1 || h1.querySelector(".live-badge")) return;
-  const dateSpan = h1.querySelector(":scope > span");
-  const titleRow = document.createElement("span");
-  titleRow.className = "ep-title-row ep-hero-title";
-  const textNode = h1.firstChild;
-  if (textNode && textNode.nodeType === Node.TEXT_NODE) {
-    const titleSpan = document.createElement("span");
-    titleSpan.textContent = textNode.textContent.trim();
-    titleRow.appendChild(titleSpan);
-    h1.removeChild(textNode);
-  }
-  titleRow.insertAdjacentHTML("beforeend", liveIndicatorHtml());
-  h1.insertBefore(titleRow, dateSpan || null);
-}
-
 function renderEpisode(season) {
   renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
@@ -1258,49 +1236,35 @@ function liveIndicatorHtml() {
   );
 }
 
-function isSeasonHubLink(href) {
-  if (!href) return false;
-  const path = href.split("#")[0].split("?")[0].replace(/\/+$/, "");
-  return /(?:^|\/)seasons\/\d+$/.test(path);
-}
-
-function renderNavLiveIndicators(season) {
-  const live = getLiveEpisode(season);
-  if (!live) return;
-  document.querySelectorAll(".nav-links a").forEach((link) => {
-    const href = link.getAttribute("href") || "";
-    if (!isSeasonHubLink(href)) return;
-    if (link.querySelector(".live-badge")) return;
-    link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
-  });
-}
-
-function getLiveEpisode(season) {
-  const episodes = Array.isArray(season.episodes) ? season.episodes : [];
-  return episodes.find((ep) => ep.status === "live") || null;
-}
-
-function liveIndicatorHtml() {
+function watchIconHtml() {
   return (
-    '<span class="live-badge" aria-label="Live now">' +
-    '<span class="live-badge-dot" aria-hidden="true"></span>LIVE</span>'
+    '<svg class="nav-watch-icon" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>' +
+    "</svg>"
   );
 }
 
-function isSeasonOneNavLink(href) {
-  if (!href) return false;
-  const path = href.split("#")[0].split("?")[0].replace(/\/+$/, "");
-  return path === "seasons/1" || path.endsWith("/seasons/1");
-}
-
-function renderNavLiveIndicators(season) {
+function renderNavWatch(season) {
+  const path = liveEpisodePath(season);
+  if (!path) return;
   const live = getLiveEpisode(season);
-  if (!live) return;
-  document.querySelectorAll(".nav-links a").forEach((link) => {
-    const href = link.getAttribute("href") || "";
-    if (!isSeasonOneNavLink(href)) return;
-    if (link.querySelector(".live-badge")) return;
-    link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
+  const href = assetBase() + path;
+  const onLiveEpisode =
+    live &&
+    document.documentElement.dataset.page === "episode" &&
+    Number(document.documentElement.dataset.episode) === live.number;
+
+  document.querySelectorAll("[data-nav-watch]").forEach((link) => {
+    link.href = href;
+    if (!link.querySelector(".nav-watch-icon")) {
+      link.insertAdjacentHTML("afterbegin", watchIconHtml());
+    }
+    if (live && !link.querySelector(".live-badge")) {
+      link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
+    }
+    if (onLiveEpisode) {
+      link.setAttribute("aria-current", "page");
+    }
   });
 }
 
@@ -1354,7 +1318,7 @@ function render(season, sourceNote) {
   renderEpisode(season);
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
-  renderNavLiveIndicators(season);
+  renderNavWatch(season);
   initDayFolds();
   initReveals();
   const miss = document.getElementById("json-miss");
