@@ -425,8 +425,10 @@ function holdBookHtml(s, tribe, season, rank) {
     : "";
   const pad = rank < 10 ? "0" + rank : String(rank);
   const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
-  return `<article class="hold-book ${s.tribeId}">
-    <a class="hold-head" href="${escapeHtml(survivorHref(s))}">
+  const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
+  const hasLegs = legs.length > 0;
+  return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}">
+    <button type="button" class="hold-head" aria-expanded="false"${hasLegs ? ` aria-controls="${legsId}"` : ""} ${hasLegs ? "" : "disabled "}>
       <span class="hold-rank">${pad}</span>
       <span class="hold-face">${face}</span>
       <span class="hold-id">
@@ -439,10 +441,37 @@ function holdBookHtml(s, tribe, season, rank) {
         <b class="day ${chgClass(day)}">${pct(day)} today</b>
       </span>
       ${immune}
-    </a>
+    </button>
     ${holdChips(legs)}
-    <div class="hold-legs">${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
+    <div class="hold-legs" id="${legsId}" hidden>${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
   </article>`;
+}
+
+function setHoldBookSelected(book, open) {
+  if (!book) return;
+  const btn = book.querySelector(".hold-head");
+  const legs = book.querySelector(".hold-legs");
+  const canOpen = !book.classList.contains("is-empty") && legs && legs.children.length > 0;
+  const next = !!(open && canOpen);
+  book.classList.toggle("is-selected", next);
+  if (btn) btn.setAttribute("aria-expanded", next ? "true" : "false");
+  if (legs) legs.hidden = !next;
+}
+
+function bindHoldingsSelection(root) {
+  if (!root || root.dataset.holdSelectBound === "1") return;
+  root.dataset.holdSelectBound = "1";
+  root.addEventListener("click", (event) => {
+    const book = event.target.closest(".hold-book");
+    if (!book || !root.contains(book) || book.classList.contains("is-empty")) return;
+    if (!event.target.closest(".hold-head, .hold-chips")) return;
+    if (event.target.closest("a")) return;
+    const next = !book.classList.contains("is-selected");
+    root.querySelectorAll(".hold-book.is-selected").forEach((other) => {
+      if (other !== book) setHoldBookSelected(other, false);
+    });
+    setHoldBookSelected(book, next);
+  });
 }
 
 function renderEpisodeHoldings(season) {
@@ -456,6 +485,7 @@ function renderEpisodeHoldings(season) {
   root.innerHTML = ranked
     .map((s, i) => holdBookHtml(s, tribeById(season, s.tribeId), season, i + 1))
     .join("");
+  bindHoldingsSelection(root);
   const kicker = document.getElementById("holdings-kicker");
   if (kicker) {
     const label = season.markLabel ? String(season.markLabel).trim() : "";

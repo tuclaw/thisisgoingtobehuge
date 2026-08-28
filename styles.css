@@ -1392,18 +1392,43 @@ a.brand:hover {
   box-shadow: inset 3px 0 0 var(--ember);
 }
 
+.hold-book.is-selected {
+  background: rgba(232, 213, 176, 0.04);
+}
+
 .hold-head {
   display: grid;
   grid-template-columns: 1.6rem 2.55rem 1fr auto;
   gap: 0.7rem;
   align-items: center;
+  width: 100%;
+  margin: 0;
   padding: 0.95rem 1rem 0.55rem;
+  border: 0;
+  background: transparent;
   color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.hold-head:hover {
+.hold-head:hover:not(:disabled) {
   color: inherit;
   background: rgba(232, 213, 176, 0.04);
+}
+
+.hold-head:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.hold-chips {
+  cursor: pointer;
+}
+
+.hold-book.is-empty .hold-chips {
+  cursor: default;
 }
 
 .hold-rank {
@@ -1440,6 +1465,10 @@ a.brand:hover {
 }
 
 .hold-id {
+  min-width: 0;
+}
+
+.hold-leg-id {
   min-width: 0;
 }
 
@@ -1541,6 +1570,10 @@ a.brand:hover {
 
 .hold-legs {
   padding: 0 0 0.35rem;
+}
+
+.hold-legs[hidden] {
+  display: none;
 }
 
 .hold-leg {
@@ -1682,6 +1715,10 @@ a.brand:hover {
 }
 
 @media (max-width: 640px) {
+  .holdings {
+    overflow-x: clip;
+  }
+
   .hold-head {
     grid-template-columns: 1.3rem 2.2rem 1fr auto;
     gap: 0.5rem;
@@ -1694,12 +1731,20 @@ a.brand:hover {
   }
 
   .hold-leg {
-    grid-template-columns: 2rem 1fr auto;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
     padding-right: 0.75rem;
   }
 
   .hold-id strong {
     font-size: 0.82rem;
+  }
+
+  .hold-leg-id strong {
+    font-size: 0.8rem;
+  }
+
+  .hold-mark .val {
+    font-size: 0.92rem;
   }
 
   .day-fold > summary {
