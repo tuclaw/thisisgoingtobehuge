@@ -86,7 +86,7 @@ function positionsFromLots(book, lots, cash, startingBookUsd) {
     const cashPos = {
       action: "HOLD",
       ticker: "CASH",
-      sizeUsd: round(cash, 2),
+      sizeUsd: round(cash, 4),
       status: "cash"
     };
     if (book.cashNote) cashPos.note = book.cashNote;
@@ -126,7 +126,7 @@ export function applyFill(book, fill, startingBookUsd) {
       const lot = lots[idx];
       const lotQty = parseFloat(lot.qty);
       const remain = round(lotQty - qty, 6);
-      if (remain <= 1e-8) {
+      if (remain <= 1e-8 || fill.ignoreRemainder) {
         lots.splice(idx, 1);
       } else {
         lot.qty = String(remain);
@@ -137,6 +137,9 @@ export function applyFill(book, fill, startingBookUsd) {
       }
     }
     if (fill.cashNote) cashNote = fill.cashNote;
+    if (typeof fill.cashAfter === "number" && Number.isFinite(fill.cashAfter)) {
+      cash = fill.cashAfter;
+    }
   }
 
   if (cash < 0 && cash > -0.05) cash = 0;

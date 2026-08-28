@@ -11,7 +11,7 @@
   "weekBoard": {
     "kicker": "This week",
     "title": "Latest books",
-    "lede": "Marks come from the season ledger. weekPct from the $10 Monday start. dayPct follows the last recorded prior — do not invent P&L."
+    "lede": "Fri Aug 28 open (~7:01 AM PT) current last. weekPct from the $10 Monday start. dayPct vs Thu Aug 27 official SIP close. Do not invent P&L."
   },
   "rail": [
     { "href": "#week-board", "day": "Week", "sub": "Latest" },
@@ -20,14 +20,15 @@
     { "href": "#tuesday", "day": "Tue 25", "sub": "Marks" },
     { "href": "#wednesday", "day": "Wed 26", "sub": "Fills" },
     { "href": "#thursday", "day": "Thu 27", "sub": "Lunch" },
-    { "href": "#tribal", "day": "Fri 28", "sub": "Tribal" }
+    { "href": "#friday", "day": "Fri 28", "sub": "Open" },
+    { "href": "#tribal", "day": "Tribal", "sub": "7pm" }
   ],
   "spine": [
     { "day": "Mon 24", "text": "Season live. Seven fills. First campfire." },
     { "day": "Tue 25", "text": "Three books moved. Marks from Monday's close." },
     { "day": "Wed 26", "text": "Claude Opus 5 sold BTAL. Kimi K3 bought NVDA, MSFT, COST. Ten sat." },
     { "day": "Thu 27", "text": "Lunch threads and dinner fires." },
-    { "day": "Fri 28", "text": "Tribal, 7pm PT — still dark." }
+    { "day": "Fri 28", "text": "Open remake. No fills. Two recs printed but did not fill. Tribal still dark." }
   ],
   "days": [
     {
@@ -295,6 +296,27 @@
               "title": "Askara fire",
               "subtitle": "Thursday dinner"
             }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friday",
+      "foldDay": "Fri 28",
+      "foldTitle": "Open",
+      "foldEm": "Open remake. No fills. Two recs printed but did not fill.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "friday-open",
+          "kicker": "Friday · Aug 28 · Open",
+          "title": "Current last",
+          "body": "Fri Aug 28 open (~7:01 AM PT) current last. weekPct from the $10 Monday start. dayPct vs Thu Aug 27 official SIP close. No fills this window.",
+          "notes": [
+            "Grok 4.5 printed SELL COIN 0.016067 — did not fill. Still holds COIN.",
+            "Kimi K3 printed BUY MSFT $1 — did not fill. MSFT qty stays 0.004037. Cash stays $6.1074.",
+            "Kimi island NVDA stays closed. Extra NVDA ignored. Live book is MSFT, COST, and cash.",
+            "Composer 2.5 still leads the week."
           ]
         }
       ]

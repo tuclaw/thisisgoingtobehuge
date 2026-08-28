@@ -259,52 +259,52 @@
   "mergeSecret": true,
   "quotes": {
     "TSLA": {
-      "last": 345.82,
-      "priorClose": 348.95,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 353.655,
+      "priorClose": 354.81,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "SMCI": {
-      "last": 37.39,
-      "priorClose": 35.17,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 38.095,
+      "priorClose": 38.46,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "SOXL": {
-      "last": 116.6,
-      "priorClose": 111.16,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 119.51,
+      "priorClose": 123.05,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "WM": {
-      "last": 221.24,
-      "priorClose": 226.46,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 219,
+      "priorClose": 217.76,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "HOOD": {
-      "last": 108.54,
-      "priorClose": 103.62,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 107.8,
+      "priorClose": 109.76,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "COIN": {
-      "last": 181.78,
-      "priorClose": 179.48,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 186.52,
+      "priorClose": 190.72,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "SOFI": {
-      "last": 18.84,
-      "priorClose": 18.24,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 18.9823,
+      "priorClose": 19.18,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "QID": {
-      "last": 14.44,
-      "priorClose": 14.63,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 14.0898,
+      "priorClose": 14.04,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "BTAL": {
       "last": 12.065,
@@ -313,34 +313,40 @@
       "source": "official last + sip-list-exchange-close"
     },
     "COWZ": {
-      "last": 71.86,
-      "priorClose": 72.17,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 72.335,
+      "priorClose": 72.06,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "GLD": {
-      "last": 421.32,
-      "priorClose": 426.69,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 421.485,
+      "priorClose": 422.6,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "SPY": {
-      "last": 766.08,
-      "priorClose": 763.47,
-      "priorCloseDate": "2026-08-24",
-      "source": "official SIP list-exchange close"
+      "last": 772.08,
+      "priorClose": 771.1,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "NVDA": {
-      "last": 209.66,
+      "last": 227.98,
+      "priorClose": 227.98,
+      "priorCloseDate": "2026-08-27",
       "source": "official SIP list-exchange close"
     },
     "MSFT": {
-      "last": 496.37,
-      "source": "official SIP list-exchange close"
+      "last": 510.19,
+      "priorClose": 505.06,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     },
     "COST": {
-      "last": 956.12,
-      "source": "official SIP list-exchange close"
+      "last": 944.33,
+      "priorClose": 934.66,
+      "priorCloseDate": "2026-08-27",
+      "source": "current last"
     }
   },
   "events": [
@@ -857,6 +863,235 @@
           "monthPct": -0.2,
           "dayPct": -0.2,
           "priorMarkUsd": 10
+        }
+      }
+    },
+    {
+      "type": "fill",
+      "id": "fill-kimi-nvda-sell",
+      "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "side": "sell",
+      "ticker": "NVDA",
+      "qty": "0.007098",
+      "avg": "226.3307",
+      "sizeUsd": 1.6065,
+      "orderId": "6a908add-16b5-4d8d-bdad-a676a8cf4208",
+      "at": "2026-08-27T19:07:10Z",
+      "ignoreRemainder": true,
+      "cashAfter": 6.1074,
+      "cashNote": "Thu noon sold island NVDA 0.007098 @ 226.3307, proceeds $1.6065. Island NVDA closed. Extra NVDA ignored."
+    },
+    {
+      "type": "mark",
+      "id": "s1e01-thu-sip",
+      "kind": "close",
+      "at": "2026-08-28T00:13:00Z",
+      "throughAt": "2026-08-28T00:13:00Z",
+      "label": "Thu Aug 27 official SIP list-exchange close",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.9609,
+          "weekPct": -0.39,
+          "monthPct": -0.39,
+          "dayPct": 2.6,
+          "priorMarkUsd": 9.7086
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 11.0779,
+          "weekPct": 10.78,
+          "monthPct": 10.78,
+          "dayPct": 3.87,
+          "priorMarkUsd": 10.665
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.8097,
+          "weekPct": -1.9,
+          "monthPct": -1.9,
+          "dayPct": -1.63,
+          "priorMarkUsd": 9.9719
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.5873,
+          "weekPct": -4.13,
+          "monthPct": -4.13,
+          "dayPct": -1.57,
+          "priorMarkUsd": 9.7405
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 10.1908,
+          "weekPct": 1.91,
+          "monthPct": 1.91,
+          "dayPct": 2.37,
+          "priorMarkUsd": 9.9546
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 9.9918,
+          "weekPct": -0.08,
+          "monthPct": -0.08,
+          "dayPct": 0.28,
+          "priorMarkUsd": 9.9641
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 9.8859,
+          "weekPct": -1.14,
+          "monthPct": -1.14,
+          "dayPct": 0.3,
+          "priorMarkUsd": 9.8559
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 10.0798,
+          "weekPct": 0.8,
+          "monthPct": 0.8,
+          "dayPct": 0.66,
+          "priorMarkUsd": 10.0142
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 10.1016,
+          "weekPct": 1.02,
+          "monthPct": 1.02,
+          "dayPct": 1.21,
+          "priorMarkUsd": 9.9804
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 4.36,
+          "combinedMonthPct": 4.36,
+          "combinedDayPct": 3.27
+        },
+        "askara": {
+          "combinedWeekPct": 2.51,
+          "combinedMonthPct": 2.51,
+          "combinedDayPct": 4.82
+        }
+      }
+    },
+    {
+      "type": "mark",
+      "id": "s1e01-fri-open",
+      "kind": "intraday",
+      "at": "2026-08-28T14:01:56Z",
+      "throughAt": "2026-08-28T14:01:56Z",
+      "label": "Fri Aug 28 open (~7:01 AM PT) current last",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.9285,
+          "weekPct": -0.71,
+          "monthPct": -0.71,
+          "dayPct": -0.33,
+          "priorMarkUsd": 9.9609
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.8907,
+          "weekPct": 8.91,
+          "monthPct": 8.91,
+          "dayPct": -1.69,
+          "priorMarkUsd": 11.0779
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.8303,
+          "weekPct": -1.7,
+          "monthPct": -1.7,
+          "dayPct": 0.21,
+          "priorMarkUsd": 9.8097
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.6419,
+          "weekPct": -3.58,
+          "monthPct": -3.58,
+          "dayPct": 0.57,
+          "priorMarkUsd": 9.5873
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 10.0114,
+          "weekPct": 0.11,
+          "monthPct": 0.11,
+          "dayPct": -1.76,
+          "priorMarkUsd": 10.1908
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 10.03,
+          "weekPct": 0.3,
+          "monthPct": 0.3,
+          "dayPct": 0.38,
+          "priorMarkUsd": 9.9918
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 9.8598,
+          "weekPct": -1.4,
+          "monthPct": -1.4,
+          "dayPct": -0.26,
+          "priorMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 10.0926,
+          "weekPct": 0.93,
+          "monthPct": 0.93,
+          "dayPct": 0.13,
+          "priorMarkUsd": 10.0798
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 10.1426,
+          "weekPct": 1.43,
+          "monthPct": 1.43,
+          "dayPct": 0.41,
+          "priorMarkUsd": 10.1016
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 2.92,
+          "combinedMonthPct": 2.92,
+          "combinedDayPct": -1.24
+        },
+        "askara": {
+          "combinedWeekPct": 1.37,
+          "combinedMonthPct": 1.37,
+          "combinedDayPct": -1.1
         }
       }
     }
