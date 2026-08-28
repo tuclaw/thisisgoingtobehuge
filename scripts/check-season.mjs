@@ -58,6 +58,7 @@ for (const fill of fills) {
 check("sold-lots-are-events", fills.some((f) => f.side === "sell" && f.ticker === "SMCI"));
 check("sold-hood-is-event", fills.some((f) => f.side === "sell" && f.ticker === "HOOD"));
 check("sold-btal-is-event", fills.some((f) => f.side === "sell" && f.ticker === "BTAL"));
+check("sold-island-nvda-is-event", fills.some((f) => f.side === "sell" && f.ticker === "NVDA"));
 
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === source.cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
@@ -92,7 +93,7 @@ for (const s of board.survivors) {
   if (!unmarked) {
     check(`book-vs-marks:${s.slug}`, Math.abs(equity - s.bookUsd) < 0.05, `${equity.toFixed(4)} vs ${s.bookUsd}`);
   }
-  const sleeve = s.positions.reduce((sum, pos) => sum + (Number(pos.sizeUsd) || 0), 0);
+  const sleeve = s.positions.reduce((sum, pos) => (isCashLeg(pos) ? sum : sum + (Number(pos.sizeUsd) || 0)), 0);
   check(`sleeve:${s.slug}`, sleeve <= start + 0.05, String(sleeve));
 }
 
@@ -129,6 +130,44 @@ if (opus) {
   const now = board.survivors.find((s) => s.id === opus.id);
   const tickers = (now.positions || []).map(tickerOf);
   check("wednesday-opus-sold-btal", !tickers.includes("BTAL") && tickers.includes("QID") && tickers.includes("CASH"));
+}
+
+const grok45 = source.cast.find((m) => m.name === "Grok 4.5");
+if (kimi) {
+  const now = board.survivors.find((s) => s.id === kimi.id);
+  const tickers = (now.positions || []).map(tickerOf);
+  const msft = (now.positions || []).find((pos) => tickerOf(pos) === "MSFT");
+  const cost = (now.positions || []).find((pos) => tickerOf(pos) === "COST");
+  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
+  check("live-kimi-no-nvda", !tickers.includes("NVDA"));
+  check("live-kimi-msft-qty", msft && msft.qty === "0.004037", msft && msft.qty);
+  check("live-kimi-cost-qty", cost && cost.qty === "0.002092", cost && cost.qty);
+  check("live-kimi-cash", cash && Math.abs(Number(cash.sizeUsd) - 6.1074) < 0.0001, cash && String(cash.sizeUsd));
+  check("live-kimi-no-rank-position", now && now.position == null);
+}
+if (grok45) {
+  const now = board.survivors.find((s) => s.id === grok45.id);
+  const tickers = (now.positions || []).map(tickerOf);
+  const hood = (now.positions || []).find((pos) => tickerOf(pos) === "HOOD");
+  const coin = (now.positions || []).find((pos) => tickerOf(pos) === "COIN");
+  check("live-grok45-holds-coin", tickers.includes("COIN") && coin && coin.qty === "0.016067", coin && coin.qty);
+  check("live-grok45-hood-island-lot", hood && hood.qty === "0.046425", hood && hood.qty);
+  check("live-grok45-no-rank-position", now && now.position == null);
+}
+
+check(
+  "no-unfilled-coin-sell",
+  !fills.some((f) => f.survivorId === (grok45 && grok45.id) && f.side === "sell" && f.ticker === "COIN")
+);
+check(
+  "no-unfilled-kimi-msft-add",
+  fills.filter((f) => f.survivorId === (kimi && kimi.id) && f.side === "buy" && f.ticker === "MSFT").length === 1
+);
+
+const fri = board.snapshots.find((s) => s.id === "s1e01-fri-open");
+check("friday-open-mark", Boolean(fri), "missing s1e01-fri-open");
+if (fri) {
+  check("friday-mark-label", String(fri.label || "").includes("Fri Aug 28 open"));
 }
 
 const live = (board.episodes || []).filter((ep) => ep.status === "live");
