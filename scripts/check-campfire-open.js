@@ -67,6 +67,9 @@ if (!js.includes("POST_TITLES_WAIT_MS = 3000")) {
 if (!js.includes("playTrade") || !js.includes("loadTrades") || !js.includes("FALLBACK_TRADES")) {
   throw new Error("campfire-open.js missing trade flash helpers");
 }
+if (!js.includes('TRADE_SLOTS = ["left", "right", "top-left", "top-right"]')) {
+  throw new Error("campfire-open.js must rotate trade portraits around the fire");
+}
 if (!js.includes('theater.dataset.scene = "trade"')) {
   throw new Error("campfire-open.js must mark trade scenes");
 }
@@ -75,6 +78,9 @@ if (!css.includes("trade-dollar-up") || !css.includes("trade-minus-down")) {
 }
 if (!css.includes(".campfire-trade.is-in")) {
   throw new Error("styles.css missing campfire-trade fade-in");
+}
+if (!css.includes('.campfire-trade[data-slot="right"]') || !css.includes('.campfire-trade[data-slot="top-left"]')) {
+  throw new Error("styles.css missing trade slot positions around the fire");
 }
 
 [

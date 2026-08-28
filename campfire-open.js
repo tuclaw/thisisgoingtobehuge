@@ -37,6 +37,7 @@
   const POST_TITLES_WAIT_MS = 3000;
   const TRADE_HOLD_MS = 3400;
   const TRADE_FADE_MS = 720;
+  const TRADE_SLOTS = ["left", "right", "top-left", "top-right"];
 
   /* Newest fills first — used when season1.json is unavailable. */
   const FALLBACK_TRADES = [
@@ -618,10 +619,12 @@
     );
   }
 
-  async function playTrade(theater, tradeEl, trade, abortRef) {
+  async function playTrade(theater, tradeEl, trade, abortRef, slot) {
     if (!tradeEl || !trade) return false;
+    const place = TRADE_SLOTS.indexOf(slot) >= 0 ? slot : TRADE_SLOTS[0];
     theater.dataset.scene = "trade";
     theater.dataset.count = "1";
+    tradeEl.dataset.slot = place;
     tradeEl.innerHTML = tradeMarkup(trade);
     tradeEl.classList.remove("is-in");
     tradeEl.setAttribute("aria-hidden", "false");
@@ -637,6 +640,7 @@
     await wait(prefersReducedMotion() ? 80 : TRADE_FADE_MS);
     if (abortRef.aborted) return false;
     tradeEl.innerHTML = "";
+    tradeEl.removeAttribute("data-slot");
     tradeEl.setAttribute("aria-hidden", "true");
     return true;
   }
@@ -647,6 +651,7 @@
     await wait(prefersReducedMotion() ? 40 : 200);
     if (abortRef.aborted) return;
     tradeEl.innerHTML = "";
+    tradeEl.removeAttribute("data-slot");
     tradeEl.setAttribute("aria-hidden", "true");
   }
 
@@ -805,7 +810,7 @@
 
       if (prefersReducedMotion()) {
         if (trades[0] && tradeEl) {
-          await playTrade(theater, tradeEl, trades[0], abortRef);
+          await playTrade(theater, tradeEl, trades[0], abortRef, TRADE_SLOTS[0]);
         }
         await playScene(theater, facesEl, threadEl, scenes[0], abortRef);
         return;
@@ -825,7 +830,8 @@
               trade.ticker +
               ".";
           }
-          const tradeOk = await playTrade(theater, tradeEl, trade, abortRef);
+          const slot = TRADE_SLOTS[tradeIndex % TRADE_SLOTS.length];
+          const tradeOk = await playTrade(theater, tradeEl, trade, abortRef, slot);
           if (!tradeOk || abortRef.aborted) break;
           await wait(420);
           if (abortRef.aborted) break;
