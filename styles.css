@@ -2371,8 +2371,6 @@ body.is-titles {
   z-index: 2;
   display: grid;
   place-items: center;
-  justify-items: center;
-  gap: 0.9rem;
   padding: 1.5rem 1.25rem 4.5rem;
   text-align: center;
   opacity: 0;
@@ -2422,7 +2420,12 @@ body.is-titles {
 }
 
 .open-finale-slogan {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + clamp(3.4rem, 10vw, 5.8rem));
   margin: 0;
+  width: max-content;
+  max-width: calc(100vw - 2.5rem);
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(0.95rem, 2.8vw, 1.45rem);
@@ -2431,13 +2434,13 @@ body.is-titles {
   color: rgba(243, 234, 214, 0.88);
   text-shadow: 0 0 24px rgba(240, 193, 75, 0.28);
   opacity: 0;
-  transform: translateY(0.55rem);
+  transform: translateX(-50%) translateY(0.55rem);
   transition: opacity 1.1s ease, transform 1.15s ease;
 }
 
 .open-titles.is-slogan .open-finale-slogan {
   opacity: 1;
-  transform: none;
+  transform: translateX(-50%);
 }
 
 .open-titles.is-sky .open-titles-word,
