@@ -7,16 +7,17 @@
   "use strict";
 
   const SLOT_POSITIONS = [
-    { left: "18%", top: "42%" },
-    { left: "82%", top: "38%" },
-    { left: "22%", top: "72%" },
-    { left: "78%", top: "70%" },
-    { left: "50%", top: "18%" }
+    { left: "16%", top: "36%" },
+    { left: "84%", top: "34%" },
+    { left: "18%", top: "68%" },
+    { left: "82%", top: "66%" },
+    { left: "50%", top: "16%" }
   ];
 
-  const FADE_IN_STAGGER_MS = 780;
+  const MAX_VISIBLE = 2;
+  const FADE_IN_STAGGER_MS = 1700;
+  const REVEAL_AFTER_CLOSE_MS = 5000;
   const BUBBLE_HOLD_MS = 32000;
-  const BUBBLE_GAP_MS = 1100;
   const MAX_PING_FACES = 3;
   const FEED_PATHS = [
     "conversations.json",
@@ -253,10 +254,12 @@
     const reduce = prefersReducedMotion();
     let conversations = [];
     let abortToken = 0;
-    let cycleToken = 0;
     let openId = null;
-    let cycling = true;
-    let rotation = 0;
+    let lastViewedId = null;
+    let visibleIds = [];
+    let revealTimer = 0;
+    let holdTimer = 0;
+    let bootToken = 0;
 
     function onResize() {
       fire.resize();
@@ -296,8 +299,138 @@
       threadEl.innerHTML = "";
     }
 
+    function clearRevealTimer() {
+      if (revealTimer) {
+        window.clearTimeout(revealTimer);
+        revealTimer = 0;
+      }
+    }
+
+    function clearHoldTimer() {
+      if (holdTimer) {
+        window.clearTimeout(holdTimer);
+        holdTimer = 0;
+      }
+    }
+
+    function syncPingDom() {
+      const idSet = {};
+      visibleIds.forEach((id) => {
+        idSet[id] = true;
+      });
+      pingsEl.querySelectorAll(".campfire-ping").forEach((btn) => {
+        const on = !!idSet[btn.dataset.id];
+        const active = openId && btn.dataset.id === openId;
+        btn.classList.toggle("is-in", on);
+        btn.classList.toggle("is-active", !!active);
+        btn.tabIndex = on ? 0 : -1;
+        btn.setAttribute("aria-hidden", on ? "false" : "true");
+        btn.setAttribute("aria-expanded", active ? "true" : "false");
+      });
+    }
+
+    function conversationById(id) {
+      return conversations.find((c) => c.id === id);
+    }
+
+    function nextHiddenId(preferUnread) {
+      const hidden = conversations.filter((c) => visibleIds.indexOf(c.id) === -1);
+      if (!hidden.length) return null;
+      if (preferUnread) {
+        const unread = hidden.find((c) => c.unread !== false);
+        if (unread) return unread.id;
+      }
+      return hidden[0].id;
+    }
+
+    async function fadeInIds(ids, token) {
+      for (let i = 0; i < ids.length; i += 1) {
+        if (token !== bootToken || openId) return;
+        const id = ids[i];
+        if (visibleIds.indexOf(id) === -1) visibleIds.push(id);
+        /* Cap at two */
+        while (visibleIds.length > MAX_VISIBLE) visibleIds.shift();
+        syncPingDom();
+        if (!reduce) await wait(FADE_IN_STAGGER_MS);
+      }
+    }
+
+    function scheduleHoldRotate() {
+      clearHoldTimer();
+      if (reduce || openId || conversations.length <= MAX_VISIBLE) return;
+      holdTimer = window.setTimeout(() => {
+        holdTimer = 0;
+        if (openId) return;
+        softRotatePair();
+      }, BUBBLE_HOLD_MS);
+    }
+
+    async function softRotatePair() {
+      if (openId || conversations.length <= MAX_VISIBLE) return;
+      const token = ++bootToken;
+      const keep = visibleIds.slice(0, 1);
+      const incoming = nextHiddenId(true);
+      if (!incoming) return;
+      visibleIds = keep.slice();
+      syncPingDom();
+      await wait(reduce ? 40 : 900);
+      if (token !== bootToken || openId) return;
+      await fadeInIds([incoming], token);
+      if (token !== bootToken || openId) return;
+      scheduleHoldRotate();
+    }
+
+    async function bootTwoBubbles() {
+      const token = ++bootToken;
+      visibleIds = [];
+      syncPingDom();
+      const first = conversations.slice(0, MAX_VISIBLE).map((c) => c.id);
+      await fadeInIds(first, token);
+      if (token !== bootToken || openId) return;
+      scheduleHoldRotate();
+    }
+
+    function revealReplacementAfterView() {
+      clearRevealTimer();
+      const token = bootToken;
+      revealTimer = window.setTimeout(async () => {
+        revealTimer = 0;
+        if (openId || token !== bootToken) return;
+
+        /* Drop the just-viewed bubble from the pair if still present, then fade in another. */
+        if (lastViewedId) {
+          visibleIds = visibleIds.filter((id) => id !== lastViewedId);
+          syncPingDom();
+        }
+
+        const incoming = nextHiddenId(true);
+        if (!incoming) {
+          /* If nothing new, keep companion(s) and refill from remaining if under 2. */
+          if (visibleIds.length < MAX_VISIBLE) {
+            const fill = nextHiddenId(false);
+            if (fill) await fadeInIds([fill], token);
+          }
+          scheduleHoldRotate();
+          return;
+        }
+
+        await wait(reduce ? 40 : 600);
+        if (openId || token !== bootToken) return;
+        await fadeInIds([incoming], token);
+        if (openId || token !== bootToken) return;
+        /* Ensure we still have a companion when possible */
+        if (visibleIds.length < MAX_VISIBLE) {
+          const fill = nextHiddenId(false);
+          if (fill) await fadeInIds([fill], token);
+        }
+        scheduleHoldRotate();
+      }, reduce ? 80 : REVEAL_AFTER_CLOSE_MS);
+    }
+
     function closePanel() {
+      if (!openId && !card.classList.contains("is-in")) return;
       abortToken += 1;
+      const viewed = openId || lastViewedId;
       openId = null;
       card.classList.remove("is-in");
       theater.classList.remove("is-reading");
@@ -306,24 +439,31 @@
         btn.classList.remove("is-active");
         btn.setAttribute("aria-expanded", "false");
       });
-      cycling = true;
-      if (!reduce) startPingCycle();
-      else setPingVisibility(conversations.map((c) => c.id));
+
+      /* Keep the other bubble(s) — do not wipe the constellation. */
+      if (viewed && visibleIds.indexOf(viewed) === -1) {
+        /* viewed id already tracked */
+      }
+      syncPingDom();
+      lastViewedId = viewed;
+      revealReplacementAfterView();
     }
 
     async function openConversation(conversation, btn) {
       if (!conversation) return;
+      clearRevealTimer();
+      clearHoldTimer();
       abortToken += 1;
-      cycleToken += 1;
       const token = abortToken;
       openId = conversation.id;
-      cycling = false;
+      lastViewedId = conversation.id;
+      bootToken += 1;
 
-      /* Keep every present bubble; dim non-active via CSS while reading. */
-      pingsEl.querySelectorAll(".campfire-ping").forEach((el) => {
-        el.classList.toggle("is-active", el === btn);
-        el.setAttribute("aria-expanded", el === btn ? "true" : "false");
-      });
+      if (visibleIds.indexOf(conversation.id) === -1) {
+        visibleIds.push(conversation.id);
+        while (visibleIds.length > MAX_VISIBLE) visibleIds.shift();
+      }
+      syncPingDom();
 
       btn.classList.add("is-read", "is-in");
       const pulse = btn.querySelector(".campfire-ping-pulse");
@@ -362,7 +502,8 @@
       pingsEl.innerHTML = "";
       list.forEach((conversation, index) => {
         const btn = createBubbleButton(conversation, index);
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", (event) => {
+          event.stopPropagation();
           if (openId === conversation.id && card.classList.contains("is-in")) {
             closePanel();
             return;
@@ -373,54 +514,20 @@
       });
     }
 
-    function setPingVisibility(ids) {
-      const idSet = {};
-      ids.forEach((id) => {
-        idSet[id] = true;
-      });
-      pingsEl.querySelectorAll(".campfire-ping").forEach((btn) => {
-        const on = !!idSet[btn.dataset.id];
-        btn.classList.toggle("is-in", on);
-        btn.tabIndex = on ? 0 : -1;
-        btn.setAttribute("aria-hidden", on ? "false" : "true");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        closePanel();
       });
     }
 
-    function startPingCycle() {
-      cycleToken += 1;
-      cyclePings(cycleToken);
-    }
-
-    async function cyclePings(token) {
-      if (reduce || conversations.length === 0) return;
-      const maxVisible = Math.min(4, conversations.length);
-
-      while (cycling && !openId && token === cycleToken) {
-        const next = [];
-        for (let i = 0; i < maxVisible; i += 1) {
-          next.push(conversations[(rotation + i) % conversations.length].id);
-        }
-        rotation = (rotation + 1) % conversations.length;
-
-        /* Soft clear only when rotating to a new set */
-        setPingVisibility([]);
-        await wait(BUBBLE_GAP_MS);
-        if (!cycling || openId || token !== cycleToken) break;
-
-        for (let i = 0; i < next.length; i += 1) {
-          if (!cycling || openId || token !== cycleToken) break;
-          setPingVisibility(next.slice(0, i + 1));
-          await wait(FADE_IN_STAGGER_MS);
-        }
-        if (!cycling || openId || token !== cycleToken) break;
-
-        /* Stay present until clicked or ~30s+ passes */
-        await wait(BUBBLE_HOLD_MS);
-        if (!cycling || openId || token !== cycleToken) break;
-      }
-    }
-
-    if (closeBtn) closeBtn.addEventListener("click", closePanel);
+    /* Tap/click outside the message card dismisses it. */
+    document.addEventListener("click", (event) => {
+      if (!card.classList.contains("is-in")) return;
+      if (card.contains(event.target)) return;
+      if (event.target.closest && event.target.closest(".campfire-ping")) return;
+      closePanel();
+    });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && openId) closePanel();
@@ -442,12 +549,13 @@
       }
 
       if (reduce) {
-        setPingVisibility(conversations.slice(0, 4).map((c) => c.id));
+        visibleIds = conversations.slice(0, MAX_VISIBLE).map((c) => c.id);
+        syncPingDom();
         return;
       }
 
       window.setTimeout(() => {
-        startPingCycle();
+        bootTwoBubbles();
       }, 1200);
     });
   }
