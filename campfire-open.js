@@ -829,9 +829,9 @@
     }
 
     async function runDescent() {
-      /* Paint title + slogan at full size first, then animate the shrink/scroll. */
+      /* Big title card + slogan on sky, then scroll — keep overlay opaque so fire can't flash. */
       overlay.classList.add("is-sky", "is-finale", "is-slogan", "is-instant");
-      await wait(220);
+      await wait(280);
       if (skipRef.finished) return;
       overlay.classList.remove("is-instant");
       void overlay.offsetWidth;
@@ -847,19 +847,19 @@
         return;
       }
 
-      overlay.classList.add("is-sky");
-      await beat(1100);
+      /* Bigger title card first (same style as the slides), then sky, slogan, scroll. */
+      overlay.classList.add("is-finale");
+      await beat(2000);
       if (skipRef.finished) return;
       if (skipRef.toDescent) {
         await runDescent();
         return;
       }
 
-      overlay.classList.add("is-finale");
-      await beat(1800);
+      overlay.classList.add("is-sky");
+      await beat(1100);
       if (skipRef.finished) return;
       if (skipRef.toDescent) {
-        /* Title already visible — keep slogan in and descend without a snap flash. */
         overlay.classList.add("is-slogan");
         await wait(40);
         if (skipRef.finished) return;
@@ -869,7 +869,7 @@
       }
 
       overlay.classList.add("is-slogan");
-      await beat(2000);
+      await beat(1800);
       if (skipRef.finished) return;
       if (skipRef.toDescent) {
         overlay.classList.add("is-descent");
@@ -1054,11 +1054,12 @@
     else fire.start();
 
     const hero = theater.closest(".open-hero");
-    theater.classList.add("is-ready");
-    requestAnimationFrame(() => theater.classList.add("is-lit"));
 
     async function revealAfterTitles() {
       await playOpenTitles();
+      /* Light the fire only after the titles/descent finish — avoids a pre-scroll flash. */
+      theater.classList.add("is-ready");
+      requestAnimationFrame(() => theater.classList.add("is-lit"));
       window.setTimeout(() => {
         if (hero) hero.classList.add("is-copy-in");
       }, prefersReducedMotion() ? 80 : 900);
