@@ -300,6 +300,12 @@ function renderEpisodePage(episode, season, base) {
     </nav>
 
     <article class="beat beat-gold" id="week-board">
+      <div class="island-pot episode-pot reveal" id="episode-island-pot" aria-live="polite">
+        <p class="pot-kicker">Island pot · live capital</p>
+        <p class="pot-sentence"><span id="pot-contestants">12</span> contestants managing</p>
+        <p class="pot-amount" id="pot-amount">$120</p>
+        <p class="pot-sub">real dollars in live markets — not play money.</p>
+      </div>
       <p class="section-kicker">${escapeHtml(episode.weekBoard.kicker)}</p>
       <h2>${escapeHtml(episode.weekBoard.title)}</h2>
       <p>${episode.weekBoard.lede}</p>

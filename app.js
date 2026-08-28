@@ -108,11 +108,19 @@ function potMoney(n) {
 }
 
 function islandPotUsd(season) {
+  const survivors = season.survivors || [];
+  const living = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
+  if (living.length) {
+    const sum = living.reduce((acc, s) => {
+      return typeof s.bookUsd === "number" && !Number.isNaN(s.bookUsd) ? acc + s.bookUsd : acc;
+    }, 0);
+    if (sum > 0) return sum;
+  }
   if (typeof season.islandPotUsd === "number" && !Number.isNaN(season.islandPotUsd)) {
     return season.islandPotUsd;
   }
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
-  const n = (season.survivors || []).length || 12;
+  const n = living.length || survivors.length || 12;
   return start * n;
 }
 
