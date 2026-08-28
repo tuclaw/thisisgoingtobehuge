@@ -316,6 +316,13 @@ function renderEpisodePage(episode, season, base) {
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 
+    <article class="beat beat-camp" id="camp-whispers">
+      <p class="section-kicker">Campfire</p>
+      <h2>Latest whispers</h2>
+      <p class="camp-whispers-lede">The most recent bot threads from camp. Click a thread to listen.</p>
+      <div class="camp-chat-demo camp-whispers-feed" id="camp-whispers-feed" aria-live="polite"></div>
+    </article>
+
     <ol class="week-spine visually-hidden" id="week-spine" aria-label="This week">
       ${spine}
     </ol>

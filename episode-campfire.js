@@ -15,7 +15,9 @@
   ];
 
   const MAX_VISIBLE = 2;
-  const FADE_IN_STAGGER_MS = 1700;
+  const FIRST_BUBBLE_DELAY_MS = 20000;
+  const NEXT_BUBBLE_DELAY_MS = 60000;
+  const FADE_IN_STAGGER_MS = 900;
   const REVEAL_AFTER_CLOSE_MS = 5000;
   const BUBBLE_HOLD_MS = 32000;
   const MAX_PING_FACES = 3;
@@ -342,13 +344,13 @@
       return hidden[0].id;
     }
 
-    async function fadeInIds(ids, token) {
+    async function fadeInIds(ids, token, visibleCap) {
+      const cap = typeof visibleCap === "number" ? visibleCap : MAX_VISIBLE;
       for (let i = 0; i < ids.length; i += 1) {
         if (token !== bootToken || openId) return;
         const id = ids[i];
         if (visibleIds.indexOf(id) === -1) visibleIds.push(id);
-        /* Cap at two */
-        while (visibleIds.length > MAX_VISIBLE) visibleIds.shift();
+        while (visibleIds.length > cap) visibleIds.shift();
         syncPingDom();
         if (!reduce) await wait(FADE_IN_STAGGER_MS);
       }
@@ -379,12 +381,21 @@
       scheduleHoldRotate();
     }
 
-    async function bootTwoBubbles() {
+    async function bootSequentialBubbles() {
       const token = ++bootToken;
       visibleIds = [];
       syncPingDom();
-      const first = conversations.slice(0, MAX_VISIBLE).map((c) => c.id);
-      await fadeInIds(first, token);
+      const revealCap = conversations.length;
+
+      for (let i = 0; i < conversations.length; i += 1) {
+        if (token !== bootToken || openId) return;
+        const delay =
+          i === 0 ? (reduce ? 80 : FIRST_BUBBLE_DELAY_MS) : reduce ? 40 : NEXT_BUBBLE_DELAY_MS;
+        await wait(delay);
+        if (token !== bootToken || openId) return;
+        await fadeInIds([conversations[i].id], token, revealCap);
+      }
+
       if (token !== bootToken || openId) return;
       scheduleHoldRotate();
     }
@@ -497,6 +508,89 @@
       });
     }
 
+    function tribeClassFor(conversation) {
+      const tribes = (conversation.participants || [])
+        .map((p) => p.tribe)
+        .filter(Boolean);
+      if (!tribes.length) return "mixed";
+      const first = tribes[0];
+      return tribes.every((t) => t === first) ? first : "mixed";
+    }
+
+    function createCampSceneCard(conversation, index) {
+      const panelId = "panel-whisper-" + (conversation.id || "thread-" + index);
+      const names = (conversation.participants || []).map((p) => p.name || p.id).filter(Boolean);
+      const heading =
+        names.length > 2
+          ? names.slice(0, 2).join(" · ") + " +" + (names.length - 2)
+          : names.join(" ↔ ") || conversation.title || "Camp thread";
+      const desc = conversation.dayLabel
+        ? conversation.dayLabel + " · " + (conversation.subtitle || "private thread")
+        : conversation.subtitle || "private thread";
+      const root = document.createElement("article");
+      root.className = "camp-scene " + tribeClassFor(conversation);
+      root.id = "whisper-" + (conversation.id || "thread-" + index);
+      root.innerHTML =
+        '<div class="camp-scene-embers" aria-hidden="true"></div>' +
+        '<div class="camp-scene-body">' +
+        '<p class="camp-scene-kicker">Camp whisper</p>' +
+        "<h3>" +
+        escapeHtml(heading) +
+        "</h3>" +
+        '<p class="camp-scene-desc">' +
+        escapeHtml(desc) +
+        "</p>" +
+        "</div>" +
+        '<div class="camp-chat-trigger-wrap">' +
+        '<button type="button" class="camp-chat-trigger" aria-expanded="false" aria-controls="' +
+        escapeHtml(panelId) +
+        '">' +
+        '<span class="camp-chat-trigger-icon" aria-hidden="true">💬</span>' +
+        '<span class="camp-chat-trigger-label">' +
+        escapeHtml(conversation.triggerLabel || "New thread") +
+        "</span>" +
+        '<span class="camp-chat-trigger-pulse' +
+        (conversation.unread !== false ? "" : " is-hidden") +
+        '" aria-hidden="true"></span>' +
+        "</button>" +
+        "</div>" +
+        '<div class="camp-chat-panel" id="' +
+        escapeHtml(panelId) +
+        '" role="dialog" aria-label="' +
+        escapeHtml(heading + " private thread") +
+        '">' +
+        '<div class="camp-chat-header">' +
+        '<button type="button" class="camp-chat-back" aria-label="Close thread">‹</button>' +
+        '<div class="camp-chat-header-meta">' +
+        '<p class="camp-chat-title">' +
+        escapeHtml(conversation.title || "Messages") +
+        "</p>" +
+        '<p class="camp-chat-subtitle">' +
+        escapeHtml(conversation.subtitle || names.join(", ") || "private thread") +
+        "</p>" +
+        "</div>" +
+        "</div>" +
+        '<div class="camp-chat-thread"></div>' +
+        '<div class="camp-chat-footer">' +
+        '<button type="button" class="camp-chat-replay">Replay thread</button>' +
+        "</div>" +
+        "</div>";
+      return root;
+    }
+
+    function mountRecentConversations(list) {
+      const feed = document.getElementById("camp-whispers-feed");
+      if (!feed) return;
+      feed.innerHTML = "";
+      list.forEach((conversation, index) => {
+        const card = createCampSceneCard(conversation, index);
+        feed.appendChild(card);
+        if (global.CampChat && typeof global.CampChat.mount === "function") {
+          global.CampChat.mount(card, conversation);
+        }
+      });
+    }
+
     function renderPingButtons(list) {
       pingsEl.innerHTML = "";
       list.forEach((conversation, index) => {
@@ -540,22 +634,25 @@
       }
 
       renderPingButtons(conversations);
+      mountRecentConversations(conversations);
 
       if (statusEl) {
         const stamp = feed.updatedAt ? " Updated " + feed.updatedAt + "." : "";
         statusEl.textContent =
-          "Campfire feed: " + conversations.length + " threads." + stamp + " Click a bubble to listen.";
+          "Campfire feed: " +
+          conversations.length +
+          " threads." +
+          stamp +
+          " New bubbles appear slowly around the fire — click one to listen.";
       }
 
       if (reduce) {
-        visibleIds = conversations.slice(0, MAX_VISIBLE).map((c) => c.id);
+        visibleIds = conversations.map((c) => c.id);
         syncPingDom();
         return;
       }
 
-      window.setTimeout(() => {
-        bootTwoBubbles();
-      }, 1200);
+      bootSequentialBubbles();
     });
   }
 

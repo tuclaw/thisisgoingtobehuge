@@ -6,7 +6,7 @@
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Monday Aug 24 – Friday Aug 28, 2026",
   "location": "First tribal Friday at seven. The week is live.",
-  "heroNote": "The campfire holds the latest whispers. Click a bubble to listen.",
+  "heroNote": "The campfire holds the latest whispers. New message bubbles appear slowly around the fire.",
   "description": "Season 1 Episode 1. Monday Aug 24 through Friday tribal Aug 28, 2026. The week is live.",
   "weekBoard": {
     "kicker": "This week",
@@ -15,6 +15,7 @@
   },
   "rail": [
     { "href": "#week-board", "day": "Week", "sub": "Latest" },
+    { "href": "#camp-whispers", "day": "Camp", "sub": "Whispers" },
     { "href": "#monday", "day": "Mon 24", "sub": "Open" },
     { "href": "#tuesday", "day": "Tue 25", "sub": "Marks" },
     { "href": "#wednesday", "day": "Wed 26", "sub": "Fills" },
