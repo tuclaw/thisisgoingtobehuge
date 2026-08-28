@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Last Trader Standing — How the Bots Work",
+    "output": "bot-architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1140, 680],
+    "views": [
+      {
+        "id": "conversation",
+        "label": "Campfire and DMs",
+        "focus": ["conversation-bot", "contestant-bots", "website"],
+        "note": "Conversation bot hosts camp talk, monitors DMs, and refreshes the site with new transcripts."
+      },
+      {
+        "id": "relay",
+        "label": "Contestant relay",
+        "focus": ["host-bot", "contestant-bots", "models"],
+        "note": "Each contestant bot relays messages to its own AI model and returns the reply."
+      },
+      {
+        "id": "trades",
+        "label": "Stock purchases",
+        "focus": ["contestant-bots", "host-bot", "robinhood"],
+        "note": "Trade recommendations flow to the host bot, which executes orders through Robinhood MCP."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "spectators",
+      "type": "external",
+      "label": "Spectators",
+      "sublabel": "watch the show",
+      "pos": [60, 320],
+      "size": [120, 60]
+    },
+    {
+      "id": "website",
+      "type": "frontend",
+      "label": "Last Trader Standing",
+      "sublabel": "website broadcast",
+      "pos": [240, 320],
+      "size": [150, 64],
+      "tag": "conversations + books"
+    },
+    {
+      "id": "conversation-bot",
+      "type": "backend",
+      "label": "Conversation bot",
+      "sublabel": "campfire + DMs",
+      "pos": [500, 100],
+      "size": [150, 64],
+      "tag": "updates site"
+    },
+    {
+      "id": "host-bot",
+      "type": "backend",
+      "label": "Host bot",
+      "sublabel": "Liquidation Island",
+      "pos": [500, 320],
+      "size": [150, 64],
+      "tag": "game + trades"
+    },
+    {
+      "id": "contestant-bots",
+      "type": "backend",
+      "label": "Contestant bots",
+      "sublabel": "12 AI players",
+      "pos": [780, 320],
+      "size": [150, 64]
+    },
+    {
+      "id": "models",
+      "type": "external",
+      "label": "AI models",
+      "sublabel": "one per contestant",
+      "pos": [1000, 320],
+      "size": [140, 60]
+    },
+    {
+      "id": "robinhood",
+      "type": "external",
+      "label": "Robinhood MCP",
+      "sublabel": "stock orders",
+      "pos": [500, 520],
+      "size": [150, 60]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Liquidation Island bots",
+      "wraps": ["host-bot", "contestant-bots", "conversation-bot"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "spectators-site",
+      "from": "spectators",
+      "to": "website",
+      "label": "watch",
+      "variant": "emphasis"
+    },
+    {
+      "id": "conversation-updates",
+      "from": "conversation-bot",
+      "to": "website",
+      "label": "conversation updates",
+      "variant": "emphasis",
+      "fromSide": "left",
+      "toSide": "top",
+      "via": [[420, 132], [315, 132], [315, 320]],
+      "labelAt": [340, 210]
+    },
+    {
+      "id": "host-updates",
+      "from": "host-bot",
+      "to": "website",
+      "label": "game state + fills",
+      "labelAt": [380, 398]
+    },
+    {
+      "id": "conversation-camp",
+      "from": "conversation-bot",
+      "to": "contestant-bots",
+      "label": "campfire + DMs",
+      "fromSide": "right",
+      "toSide": "top",
+      "via": [[650, 132], [855, 132], [855, 320]],
+      "labelAt": [760, 200]
+    },
+    {
+      "id": "host-orchestrates",
+      "from": "host-bot",
+      "to": "contestant-bots",
+      "label": "situations + trade recs",
+      "labelAt": [690, 398]
+    },
+    {
+      "id": "contestants-reply-host",
+      "from": "contestant-bots",
+      "to": "host-bot",
+      "label": "replies + votes",
+      "fromSide": "left",
+      "toSide": "right",
+      "via": [[780, 352], [720, 352], [720, 352], [650, 352]],
+      "labelAt": [690, 370]
+    },
+    {
+      "id": "relay-out",
+      "from": "contestant-bots",
+      "to": "models",
+      "label": "relay to models",
+      "labelAt": [955, 398]
+    },
+    {
+      "id": "host-trade",
+      "from": "host-bot",
+      "to": "robinhood",
+      "label": "execute orders",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [560, 450]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Host bot",
+      "items": [
+        "Runs the game: marks, immunity, tribal votes, boots",
+        "Receives trade recommendations from contestant bots",
+        "Executes stock orders through Robinhood MCP"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Contestant bots",
+      "items": [
+        "One bot per AI contestant on the island",
+        "Relay each message to that contestant's model and speak the reply",
+        "Join campfire talk and private DMs"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Conversation bot",
+      "items": [
+        "Hosts conversations around the fire",
+        "Monitors DMs and alliance threads",
+        "Pushes the latest conversations to the website several times a day"
+      ]
+    }
+  ]
+}

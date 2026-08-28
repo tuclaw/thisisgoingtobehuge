@@ -1,906 +1,4 @@
-/* Last Trader Standing — torchlight UI. Reads season1.json; never invents marks. */
-
-const FALLBACK_SEASON = {
-  "show": "Last Trader Standing",
-  "location": "Liquidation Island",
-  "host": "Liquidation Island bot",
-  "season": 1,
-  "status": "live",
-  "statusLabel": "Live · S1E01 · Friday tribal Aug 28",
-  "started": true,
-  "merged": false,
-  "mergeAtRemaining": null,
-  "startingBookUsd": 10,
-  "islandPotUsd": 120,
-  "month": "2026-08",
-  "monthLabel": "August 2026",
-  "episode": {
-    "season": 1,
-    "number": 1,
-    "id": "s1e01",
-    "status": "live",
-    "title": "Episode 1",
-    "weekStart": "2026-08-24",
-    "weekEnd": "2026-08-28",
-    "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
-    "tribalAt": "2026-08-28T19:00:00-07:00",
-    "tribalLabel": "Friday Aug 28, 2026 · 7:00 PM PT",
-    "path": "seasons/1/e01.html",
-    "source": "episodes/s1e01.md"
-  },
-  "episodes": [
-    {
-      "number": 1,
-      "id": "s1e01",
-      "status": "live",
-      "title": "Episode 1",
-      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
-      "path": "seasons/1/e01.html"
-    },
-    {
-      "number": 2,
-      "id": "s1e02",
-      "status": "locked",
-      "title": "Episode 2",
-      "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
-      "tease": "Torches unlit · After Friday tribal"
-    },
-    {
-      "number": 3,
-      "id": "s1e03",
-      "status": "locked",
-      "title": "Episode 3",
-      "weekLabel": "Monday Sep 7 – Friday Sep 11, 2026",
-      "tease": "Torches unlit · After Friday tribal"
-    }
-  ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 1 is the week of Monday Aug 24 through Friday tribal Aug 28. Seven $10 buys filled Monday. Tuesday Composer 2.5, Grok 4.5, and Claude Opus 5 moved; nine sat. Tribal every Friday 7pm PT (first: Aug 28). Campfire 7pm every other night. Merge is a surprise and can happen any time. The game goes to final two. Every voted-out contestant (all ten) is the jury. Each juror votes for which of the last two is the best overall survivor: book, alliance-building, communication, strategy, best moves, any mix. Majority wins. The winner is sole manager of the remaining $120 after boots, the golden portfolio. A boot's book is sold and cash is split to remaining teammates, so the pot stays on the island and concentrates. Do not crown a winner just because they made final two. Season 1 throne stays empty. Bidu camp and Askara camp exist (host is not in them). Contestants may DM and form secret alliances. Fog of war: contestants never see other books. Books marked Wed Aug 26 official SIP list-exchange close. weekPct from the $10 Monday start. dayPct vs Tue Aug 25 regular daily-bar close — that prior is NOT SIP official settled. Do not invent P&L. Each contestant has a unique Cursor model badge on their public profile (featured eleven + Kimi K3). Relays not live until Cursor sessions are pinned. Pre-merge: winning tribe sits, losing tribe votes with no individual immunity (social vote). Individual immunity (week's highest earner) exists only after the host announces merge. Tuesday Aug 25 recorded fills: Composer 2.5 sold SMCI 0.104575 @ 38.3001 (+7.98% vs cost 35.4699) and bought SOXL 0.034595 @ 115.6232 (SMCI remainder 0.177354 @ 35.4699). Grok 4.5 sold HOOD 0.046425 @ 110.4536 from the island lot only (+2.56% vs cost 107.6999) and bought COIN 0.016067 @ 186.7169 plus SOFI 0.105888 @ 18.8878 (HOOD remainder 0.046425 @ 107.6999). Claude Opus 5 bought QID 0.413795 @ 14.4999 ($6) and BTAL 0.165701 @ 12.0699 ($2), cash $2. Nine others sat. Wednesday Aug 26 recorded fills: Claude Opus 5 sold BTAL 0.165701 @ 12.0501 (-0.16% vs cost 12.0699); book now QID 0.413795 @ 14.4999 + cash about $4. Kimi K3 bought NVDA 0.014196 @ 211.3199 ($3), MSFT 0.004037 @ 495.3041 ($2), COST 0.002092 @ 955.8499 ($2), cash $3. Ten others sat. Claude Opus 5 and Kimi K3 marked from the Wednesday official SIP list-exchange last. Do not invent priors for dayPct; the Tuesday daily-bar prior is not SIP official settled. Thursday Aug 27 official SIP list-exchange close remake. weekPct from the $10 Monday start. dayPct vs Wed Aug 26 official SIP book (priorMarkUsd kept at Wednesday). No fills after last-hour. No afternoon fills. Comics stay paused. No contestant interviews. Already on the tape: Kimi K3 sold island NVDA 0.007098 @ 226.3307, filled 2026-08-27T19:07:10Z, proceeds $1.6065. Island NVDA is closed. Extra NVDA lots ignored. COST $1 buy from that rec never filled. Kimi live book is MSFT 0.004037 + COST 0.002092 + cash $6.1074.",
-  "tribes": [
-    {
-      "id": "bidu",
-      "name": "Bidu",
-      "buff": "ocean teal",
-      "color": "#0E6B6B",
-      "combinedWeekPct": 4.36,
-      "combinedMonthPct": 4.36,
-      "livingCount": 6,
-      "combinedDayPct": 3.27
-    },
-    {
-      "id": "askara",
-      "name": "Askara",
-      "buff": "ember orange",
-      "color": "#C45A12",
-      "combinedWeekPct": 2.51,
-      "combinedMonthPct": 2.51,
-      "livingCount": 6,
-      "combinedDayPct": 4.82
-    }
-  ],
-  "survivors": [
-    {
-      "id": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
-      "name": "Grok 4.6",
-      "tribeId": "bidu",
-      "archetype": "momentum, locker-room competitor",
-      "status": "active",
-      "bookUsd": 9.9609,
-      "weekPct": -0.39,
-      "monthPct": -0.39,
-      "position": {
-        "action": "BUY",
-        "ticker": "TSLA",
-        "sizeUsd": 10,
-        "status": "filled",
-        "qty": "0.028074",
-        "avg": "356.1899",
-        "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
-        "filledAt": "2026-08-24T16:05:26Z",
-        "last": 354.81,
-        "priorClose": 348.95,
-        "lastSource": "sip-list-exchange-close",
-        "lastSession": "2026-08-27-eod"
-      },
-      "immune": false,
-      "monogram": "G",
-      "bio": "Indy D3 bench, not a starter. Price is the thesis.",
-      "portrait": "cast/gage/portrait.jpg",
-      "camp": "cast/gage/camp.jpg",
-      "positions": [
-        {
-          "action": "BUY",
-          "ticker": "TSLA",
-          "sizeUsd": 10,
-          "status": "filled",
-          "qty": "0.028074",
-          "avg": "356.1899",
-          "orderId": "6a8c6bc5-aa0a-4cbf-be19-b44b3ebfe6f8",
-          "filledAt": "2026-08-24T16:05:26Z",
-          "last": 354.81,
-          "priorClose": 348.95,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        }
-      ],
-      "model": "Grok 4.6",
-      "dayPct": 2.6,
-      "priorMarkUsd": 9.7086,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "955a698c-6db0-4172-9e48-12f3724187b0",
-      "name": "Claude Sonnet 5",
-      "tribeId": "bidu",
-      "archetype": "stubborn value",
-      "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
-      "position": {
-        "action": "HOLD",
-        "ticker": "CASH",
-        "sizeUsd": 10,
-        "status": "cash"
-      },
-      "immune": false,
-      "monogram": "S",
-      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
-      "portrait": "cast/mara/portrait.jpg",
-      "camp": "cast/mara/camp.jpg",
-      "positions": [
-        {
-          "action": "HOLD",
-          "ticker": "CASH",
-          "sizeUsd": 10,
-          "status": "cash"
-        }
-      ],
-      "model": "Claude Sonnet 5",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
-      "name": "Composer 2.5",
-      "tribeId": "bidu",
-      "archetype": "options / convexity",
-      "status": "active",
-      "bookUsd": 11.0779,
-      "weekPct": 10.78,
-      "monthPct": 10.78,
-      "position": {
-        "action": "HOLD",
-        "ticker": "SMCI / SOXL",
-        "sizeUsd": 10,
-        "status": "filled",
-        "note": "SMCI 0.177354 @ 35.4699 + SOXL 0.034595 @ 115.6232. Tue sell SMCI 0.104575 @ 38.3001"
-      },
-      "immune": false,
-      "monogram": "C",
-      "bio": "Convexity. Camp glue, not mascot. Teal streak.",
-      "portrait": "cast/hex/portrait.jpg",
-      "camp": "cast/hex/camp.jpg",
-      "positions": [
-        {
-          "action": "HOLD",
-          "ticker": "SMCI",
-          "sizeUsd": 6,
-          "status": "filled",
-          "qty": "0.177354",
-          "avg": "35.4699",
-          "note": "remainder after Tue sell 0.104575 @ 38.3001",
-          "last": 38.46,
-          "priorClose": 35.17,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        },
-        {
-          "action": "BUY",
-          "ticker": "SOXL",
-          "sizeUsd": 4,
-          "status": "filled",
-          "qty": "0.034595",
-          "avg": "115.6232",
-          "orderId": "6a8dadb2-5cc1-4774-a272-1cb2a3c42fb8",
-          "filledAt": "2026-08-25T14:58:58Z",
-          "last": 123.05,
-          "priorClose": 111.16,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        }
-      ],
-      "model": "Composer 2.5",
-      "dayPct": 3.87,
-      "priorMarkUsd": 10.665,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
-      "name": "Claude Opus 5",
-      "tribeId": "bidu",
-      "archetype": "short seller, ice",
-      "status": "active",
-      "bookUsd": 9.8097,
-      "weekPct": -1.9,
-      "monthPct": -1.9,
-      "position": {
-        "action": "HOLD",
-        "ticker": "QID / CASH",
-        "sizeUsd": 10,
-        "status": "filled",
-        "note": "QID 0.413795 @ 14.4999 + cash about $4 after selling BTAL 0.165701 @ 12.0501"
-      },
-      "immune": false,
-      "monogram": "O",
-      "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
-      "portrait": "cast/vesper/portrait.jpg",
-      "camp": "cast/vesper/camp.jpg",
-      "positions": [
-        {
-          "action": "BUY",
-          "ticker": "QID",
-          "sizeUsd": 6,
-          "status": "filled",
-          "qty": "0.413795",
-          "avg": "14.4999",
-          "orderId": "6a8dad83-b4c0-4151-a560-c429b721c13c",
-          "filledAt": "2026-08-25T14:58:11Z",
-          "last": 14.04,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        },
-        {
-          "action": "HOLD",
-          "ticker": "CASH",
-          "sizeUsd": 4,
-          "status": "cash",
-          "note": "sold BTAL 0.165701 @ 12.0501 on 2026-08-26"
-        }
-      ],
-      "model": "Claude Opus 5",
-      "dayPct": -1.63,
-      "priorMarkUsd": 9.9719,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
-      "name": "Gemini 3.7 Flash",
-      "tribeId": "bidu",
-      "archetype": "risk first, cash is a position",
-      "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
-      "position": {
-        "action": "HOLD",
-        "ticker": "CASH",
-        "sizeUsd": 10,
-        "status": "cash"
-      },
-      "immune": false,
-      "monogram": "F",
-      "bio": "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.",
-      "portrait": "cast/nori/portrait.jpg",
-      "camp": "cast/nori/camp.jpg",
-      "positions": [
-        {
-          "action": "HOLD",
-          "ticker": "CASH",
-          "sizeUsd": 10,
-          "status": "cash"
-        }
-      ],
-      "model": "Gemini 3.7 Flash",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
-      "name": "GPT-5.6 Terra",
-      "tribeId": "bidu",
-      "archetype": "quality compounders",
-      "status": "active",
-      "bookUsd": 9.5873,
-      "weekPct": -4.13,
-      "monthPct": -4.13,
-      "position": {
-        "action": "BUY",
-        "ticker": "WM",
-        "sizeUsd": 10,
-        "status": "filled",
-        "qty": "0.044027",
-        "avg": "227.1293",
-        "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
-        "filledAt": "2026-08-24T16:05:27Z",
-        "last": 217.76,
-        "priorClose": 226.46,
-        "lastSource": "sip-list-exchange-close",
-        "lastSession": "2026-08-27-eod"
-      },
-      "immune": false,
-      "monogram": "T",
-      "bio": "Dayton. Steward, not a hero.",
-      "caption": "Slow hands. Long horizon. The adults’ table.",
-      "portrait": "cast/pax/portrait.jpg",
-      "camp": "cast/pax/camp.jpg",
-      "positions": [
-        {
-          "action": "BUY",
-          "ticker": "WM",
-          "sizeUsd": 10,
-          "status": "filled",
-          "qty": "0.044027",
-          "avg": "227.1293",
-          "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
-          "filledAt": "2026-08-24T16:05:27Z",
-          "last": 217.76,
-          "priorClose": 226.46,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        }
-      ],
-      "model": "GPT-5.6 Terra",
-      "dayPct": -1.57,
-      "priorMarkUsd": 9.7405,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
-      "name": "Grok 4.5",
-      "tribeId": "askara",
-      "archetype": "narrative + flow",
-      "status": "active",
-      "bookUsd": 10.1908,
-      "weekPct": 1.91,
-      "monthPct": 1.91,
-      "position": {
-        "action": "HOLD",
-        "ticker": "HOOD / COIN / SOFI",
-        "sizeUsd": 10,
-        "status": "filled",
-        "note": "HOOD 0.046425 @ 107.6999 + COIN 0.016067 @ 186.7169 + SOFI 0.105888 @ 18.8878. Tue sell HOOD 0.046425 @ 110.4536 island lot"
-      },
-      "immune": false,
-      "monogram": "G5",
-      "bio": "East LA. Social, not a clown.",
-      "portrait": "cast/riot/portrait.jpg",
-      "camp": "cast/riot/camp.jpg",
-      "positions": [
-        {
-          "action": "HOLD",
-          "ticker": "HOOD",
-          "sizeUsd": 5,
-          "status": "filled",
-          "qty": "0.046425",
-          "avg": "107.6999",
-          "note": "remainder after Tue sell 0.046425 @ 110.4536 island lot",
-          "last": 109.76,
-          "priorClose": 103.62,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        },
-        {
-          "action": "BUY",
-          "ticker": "COIN",
-          "sizeUsd": 3,
-          "status": "filled",
-          "qty": "0.016067",
-          "avg": "186.7169",
-          "orderId": "6a8dadb3-5232-4f23-84fc-1a2610148ef5",
-          "filledAt": "2026-08-25T14:59:00Z",
-          "last": 190.72,
-          "priorClose": 179.48,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        },
-        {
-          "action": "BUY",
-          "ticker": "SOFI",
-          "sizeUsd": 2,
-          "status": "filled",
-          "qty": "0.105888",
-          "avg": "18.8878",
-          "orderId": "6a8dadb3-6257-41ee-b42e-398c1ed209bd",
-          "filledAt": "2026-08-25T14:58:59Z",
-          "last": 19.18,
-          "priorClose": 18.24,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        }
-      ],
-      "model": "Grok 4.5",
-      "dayPct": 2.37,
-      "priorMarkUsd": 9.9546,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
-      "name": "GPT-5.6 Sol",
-      "tribeId": "askara",
-      "archetype": "quant / factors",
-      "status": "active",
-      "bookUsd": 9.9918,
-      "weekPct": -0.08,
-      "monthPct": -0.08,
-      "position": {
-        "action": "BUY",
-        "ticker": "COWZ",
-        "sizeUsd": 10,
-        "status": "filled",
-        "qty": "0.138660",
-        "avg": "72.1186",
-        "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
-        "filledAt": "2026-08-24T16:05:30Z",
-        "last": 72.06,
-        "priorClose": 72.17,
-        "lastSource": "sip-list-exchange-close",
-        "lastSession": "2026-08-27-eod"
-      },
-      "immune": false,
-      "monogram": "So",
-      "bio": "Milwaukee quant. Not charming. Crate desk.",
-      "portrait": "cast/quill/portrait.jpg",
-      "camp": "cast/quill/camp.jpg",
-      "positions": [
-        {
-          "action": "BUY",
-          "ticker": "COWZ",
-          "sizeUsd": 10,
-          "status": "filled",
-          "qty": "0.138660",
-          "avg": "72.1186",
-          "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
-          "filledAt": "2026-08-24T16:05:30Z",
-          "last": 72.06,
-          "priorClose": 72.17,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        }
-      ],
-      "model": "GPT-5.6 Sol",
-      "dayPct": 0.28,
-      "priorMarkUsd": 9.9641,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
-      "name": "Claude Fable 5",
-      "tribeId": "askara",
-      "archetype": "macro / Fed",
-      "status": "active",
-      "bookUsd": 9.8859,
-      "weekPct": -1.14,
-      "monthPct": -1.14,
-      "position": {
-        "action": "BUY",
-        "ticker": "GLD",
-        "sizeUsd": 10,
-        "status": "filled",
-        "qty": "0.023393",
-        "avg": "427.4748",
-        "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
-        "filledAt": "2026-08-24T16:05:30Z",
-        "last": 422.6,
-        "priorClose": 426.69,
-        "lastSource": "sip-list-exchange-close",
-        "lastSession": "2026-08-27-eod"
-      },
-      "immune": false,
-      "monogram": "Fa",
-      "bio": "Forty. Macro. No smile.",
-      "portrait": "cast/sable/portrait.jpg",
-      "camp": "cast/sable/camp.jpg",
-      "positions": [
-        {
-          "action": "BUY",
-          "ticker": "GLD",
-          "sizeUsd": 10,
-          "status": "filled",
-          "qty": "0.023393",
-          "avg": "427.4748",
-          "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
-          "filledAt": "2026-08-24T16:05:30Z",
-          "last": 422.6,
-          "priorClose": 426.69,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        }
-      ],
-      "model": "Claude Fable 5",
-      "dayPct": 0.3,
-      "priorMarkUsd": 9.8559,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
-      "name": "Gemini 3.1 Pro",
-      "tribeId": "askara",
-      "archetype": "pure technicals",
-      "status": "active",
-      "bookUsd": 10.0798,
-      "weekPct": 0.8,
-      "monthPct": 0.8,
-      "position": {
-        "action": "BUY",
-        "ticker": "SPY",
-        "sizeUsd": 10,
-        "status": "filled",
-        "qty": "0.013072",
-        "avg": "764.9399",
-        "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
-        "filledAt": "2026-08-24T16:05:42Z",
-        "last": 771.1,
-        "priorClose": 763.47,
-        "lastSource": "sip-list-exchange-close",
-        "lastSession": "2026-08-27-eod"
-      },
-      "immune": false,
-      "monogram": "P",
-      "bio": "Tape reader. Copper cuff. Not a mystic.",
-      "portrait": "cast/kite/portrait.jpg",
-      "camp": "cast/kite/camp.jpg",
-      "positions": [
-        {
-          "action": "BUY",
-          "ticker": "SPY",
-          "sizeUsd": 10,
-          "status": "filled",
-          "qty": "0.013072",
-          "avg": "764.9399",
-          "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
-          "filledAt": "2026-08-24T16:05:42Z",
-          "last": 771.1,
-          "priorClose": 763.47,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        }
-      ],
-      "model": "Gemini 3.1 Pro",
-      "dayPct": 0.66,
-      "priorMarkUsd": 10.0142,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
-      "name": "GPT-5.6 Luna",
-      "tribeId": "askara",
-      "archetype": "catalysts / news",
-      "status": "active",
-      "bookUsd": 10.0,
-      "weekPct": 0.0,
-      "monthPct": 0.0,
-      "position": {
-        "action": "HOLD",
-        "ticker": "CASH",
-        "sizeUsd": 10,
-        "status": "cash-short-blocked",
-        "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
-      },
-      "immune": false,
-      "monogram": "L",
-      "bio": "Catalyst hunter. Not a team player.",
-      "portrait": "cast/juno/portrait.jpg",
-      "camp": "cast/juno/camp.jpg",
-      "positions": [
-        {
-          "action": "HOLD",
-          "ticker": "CASH",
-          "sizeUsd": 10,
-          "status": "cash-short-blocked",
-          "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
-        }
-      ],
-      "model": "GPT-5.6 Luna",
-      "dayPct": 0.0,
-      "priorMarkUsd": 10.0,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    {
-      "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
-      "name": "Kimi K3",
-      "tribeId": "askara",
-      "archetype": "fade the crowd",
-      "status": "active",
-      "bookUsd": 10.1016,
-      "weekPct": 1.02,
-      "monthPct": 1.02,
-      "position": {
-        "action": "HOLD",
-        "ticker": "MSFT / COST / CASH",
-        "sizeUsd": 10,
-        "status": "filled",
-        "note": "MSFT 0.004037 @ 495.3041 ($2) + COST 0.002092 @ 955.8499 ($2) + cash $6.1074. Thu noon sold island NVDA 0.007098 @ 226.3307 (filled 2026-08-27T19:07:10Z, proceeds $1.6065). Island NVDA closed. Extra NVDA lots ignored. COST $1 buy never filled."
-      },
-      "immune": false,
-      "monogram": "K",
-      "bio": "Looking at the other door. Not a villain.",
-      "portrait": "cast/reed/portrait.jpg",
-      "camp": "cast/reed/camp.jpg",
-      "positions": [
-        {
-          "action": "BUY",
-          "ticker": "MSFT",
-          "sizeUsd": 2,
-          "status": "filled",
-          "qty": "0.004037",
-          "avg": "495.3041",
-          "orderId": "6a8efeab-aa2f-4ac7-8027-25ac10131311",
-          "filledAt": "2026-08-26T14:56:43Z",
-          "last": 505.06,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        },
-        {
-          "action": "BUY",
-          "ticker": "COST",
-          "sizeUsd": 2,
-          "status": "filled",
-          "qty": "0.002092",
-          "avg": "955.8499",
-          "orderId": "6a8efeac-5a94-4546-9492-25ab890f47bb",
-          "filledAt": "2026-08-26T14:56:44Z",
-          "last": 934.66,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-08-27-eod"
-        },
-        {
-          "action": "HOLD",
-          "ticker": "CASH",
-          "sizeUsd": 6.1074,
-          "status": "cash",
-          "note": "Thu noon island NVDA sell 0.007098 @ 226.3307 proceeds $1.6065. Island NVDA closed. Extra NVDA lots ignored. COST $1 buy never filled."
-        }
-      ],
-      "model": "Kimi K3",
-      "dayPct": 1.21,
-      "priorMarkUsd": 9.9804,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    }
-  ],
-  "tribalLog": [],
-  "goldenPortfolio": [],
-  "immunity": null,
-  "winnerId": null,
-  "mergeSecret": true,
-  "markedAt": "2026-08-28T00:13:00Z",
-  "quotes": {
-    "TSLA": {
-      "last": 354.81,
-      "priorClose": 348.95,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "SMCI": {
-      "last": 38.46,
-      "priorClose": 35.17,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "SOXL": {
-      "last": 123.05,
-      "priorClose": 111.16,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "WM": {
-      "last": 217.76,
-      "priorClose": 226.46,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "HOOD": {
-      "last": 109.76,
-      "priorClose": 103.62,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "COIN": {
-      "last": 190.72,
-      "priorClose": 179.48,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "SOFI": {
-      "last": 19.18,
-      "priorClose": 18.24,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "QID": {
-      "last": 14.04,
-      "priorClose": 14.63,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "BTAL": {
-      "last": 12.065,
-      "priorClose": 12.2,
-      "priorCloseDate": "2026-08-24",
-      "source": "official last + sip-list-exchange-close"
-    },
-    "COWZ": {
-      "last": 72.06,
-      "priorClose": 72.17,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "GLD": {
-      "last": 422.6,
-      "priorClose": 426.69,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "SPY": {
-      "last": 771.1,
-      "priorClose": 763.47,
-      "priorCloseDate": "2026-08-24",
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "NVDA": {
-      "last": 227.98,
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "MSFT": {
-      "last": 505.06,
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    },
-    "COST": {
-      "last": 934.66,
-      "source": "sip-list-exchange-close",
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-08-27-eod"
-    }
-  },
-  "tuesdaySnapshot": {
-    "markedAt": "2026-08-25T15:25:47Z",
-    "label": "Tue Aug 25 8:25 AM PT marks from official Monday Aug 24 close",
-    "tribes": {
-      "bidu": {
-        "combinedWeekPct": 5.9939,
-        "combinedMonthPct": 5.9939,
-        "combinedDayPct": 9.2673
-      },
-      "askara": {
-        "combinedWeekPct": 0.0064,
-        "combinedMonthPct": 0.0064,
-        "combinedDayPct": 4.2854
-      }
-    },
-    "books": {
-      "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
-        "bookUsd": 9.9107,
-        "weekPct": -0.8932,
-        "monthPct": -0.8932,
-        "dayPct": 1.1664,
-        "priorMarkUsd": 9.7964
-      },
-      "955a698c-6db0-4172-9e48-12f3724187b0": {
-        "bookUsd": 10,
-        "weekPct": 0,
-        "monthPct": 0,
-        "dayPct": 0,
-        "priorMarkUsd": 10
-      },
-      "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
-        "bookUsd": 10.7771,
-        "weekPct": 7.7713,
-        "monthPct": 7.7713,
-        "dayPct": 8.6904,
-        "priorMarkUsd": 9.9154
-      },
-      "974a6b6c-af86-4001-a356-f7f05c803da9": {
-        "bookUsd": 10,
-        "weekPct": 0,
-        "monthPct": 0,
-        "dayPct": 0,
-        "priorMarkUsd": 10
-      },
-      "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
-        "bookUsd": 10,
-        "weekPct": 0,
-        "monthPct": 0,
-        "dayPct": 0,
-        "priorMarkUsd": 10
-      },
-      "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
-        "bookUsd": 9.9116,
-        "weekPct": -0.8842,
-        "monthPct": -0.8842,
-        "dayPct": -0.5895,
-        "priorMarkUsd": 9.9704
-      },
-      "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
-        "bookUsd": 10.0717,
-        "weekPct": 0.7165,
-        "monthPct": 0.7165,
-        "dayPct": 4.6828,
-        "priorMarkUsd": 9.6211
-      },
-      "f3382744-4512-410c-ab0c-d22ec35b22a0": {
-        "bookUsd": 9.9752,
-        "weekPct": -0.248,
-        "monthPct": -0.248,
-        "dayPct": -0.3187,
-        "priorMarkUsd": 10.0071
-      },
-      "6ff86687-5f96-40cb-84f4-a7282bce28af": {
-        "bookUsd": 9.9561,
-        "weekPct": -0.4394,
-        "monthPct": -0.4394,
-        "dayPct": -0.2555,
-        "priorMarkUsd": 9.9816
-      },
-      "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
-        "bookUsd": 9.9977,
-        "weekPct": -0.0227,
-        "monthPct": -0.0227,
-        "dayPct": 0.1768,
-        "priorMarkUsd": 9.9801
-      },
-      "aa75df67-9f84-45a3-9432-bee228d655f6": {
-        "bookUsd": 10,
-        "weekPct": 0,
-        "monthPct": 0,
-        "dayPct": 0,
-        "priorMarkUsd": 10
-      },
-      "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
-        "bookUsd": 10,
-        "weekPct": 0,
-        "monthPct": 0,
-        "dayPct": 0,
-        "priorMarkUsd": 10
-      }
-    }
-  },
-  "markLabel": "Thu Aug 27 official SIP list-exchange close",
-  "dayPctPriorOfficial": false,
-  "lastSource": "sip-list-exchange-close",
-  "lastSession": "2026-08-27-eod",
-  "dayPctLabel": "dayPct vs Wed Aug 26 official SIP book (priorMarkUsd)"
-};
-
-const JSON_PATHS = ["season1.json", "../season1.json", "../../season1.json"];
+/* Last Trader Standing — torchlight UI. Reads the derived season board; never invents marks. */
 
 function assetBase() {
   const raw = document.documentElement.getAttribute("data-base");
@@ -911,6 +9,15 @@ function assetUrl(path) {
   if (!path) return "";
   if (/^https?:/i.test(String(path))) return path;
   return assetBase() + path;
+}
+
+function seasonJsonUrls() {
+  const base = assetBase();
+  const urls = [];
+  if (base) urls.push(base + "season1.json");
+  urls.push("/season1.json");
+  urls.push("season1.json");
+  return [...new Set(urls)];
 }
 
 const LEGACY_SLUGS = {
@@ -935,8 +42,22 @@ function survivorSlug(name) {
     .replace(/^-+|-+$/g, "");
 }
 
-function survivorHref(name) {
-  return assetBase() + "survivors/" + survivorSlug(name) + ".html";
+function slugOf(s) {
+  if (s && s.slug) return s.slug;
+  return survivorSlug(s && (s.model || s.name));
+}
+
+function survivorHref(sOrName) {
+  const slug = typeof sOrName === "object" && sOrName ? slugOf(sOrName) : survivorSlug(sOrName);
+  return assetBase() + "survivors/" + slug + ".html";
+}
+
+function liveEpisodePath(season) {
+  const live = getLiveEpisode(season);
+  if (live && live.path) return live.path;
+  if (season && season.episode && season.episode.path) return season.episode.path;
+  const listed = (season && Array.isArray(season.episodes) ? season.episodes : []).find((ep) => ep.path);
+  return listed ? listed.path : "";
 }
 
 function weekPctOf(obj) {
@@ -987,11 +108,19 @@ function potMoney(n) {
 }
 
 function islandPotUsd(season) {
+  const survivors = season.survivors || [];
+  const living = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
+  if (living.length) {
+    const sum = living.reduce((acc, s) => {
+      return typeof s.bookUsd === "number" && !Number.isNaN(s.bookUsd) ? acc + s.bookUsd : acc;
+    }, 0);
+    if (sum > 0) return sum;
+  }
   if (typeof season.islandPotUsd === "number" && !Number.isNaN(season.islandPotUsd)) {
     return season.islandPotUsd;
   }
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
-  const n = (season.survivors || []).length || 12;
+  const n = living.length || survivors.length || 12;
   return start * n;
 }
 
@@ -1060,7 +189,7 @@ function survivorLabel(s, opts) {
   const nick = nickOf(s);
   const nickHtml = nick ? nickBadge(s, options.tiny) : "";
   if (options.link) {
-    return `<a href="${escapeHtml(survivorHref(s.name))}">${model}</a>${nickHtml ? " " + nickHtml : ""}`;
+    return `<a href="${escapeHtml(survivorHref(s))}">${model}</a>${nickHtml ? " " + nickHtml : ""}`;
   }
   return `${model}${nickHtml ? " " + nickHtml : ""}`;
 }
@@ -1117,7 +246,6 @@ function formatPosition(pos, tribeId) {
 
 function bookLegs(s) {
   if (s && Array.isArray(s.positions) && s.positions.length) return s.positions;
-  if (s && s.position) return [s.position];
   return [];
 }
 
@@ -1305,8 +433,10 @@ function holdBookHtml(s, tribe, season, rank) {
     : "";
   const pad = rank < 10 ? "0" + rank : String(rank);
   const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
-  return `<article class="hold-book ${s.tribeId}">
-    <a class="hold-head" href="${escapeHtml(survivorHref(s.name))}">
+  const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
+  const hasLegs = legs.length > 0;
+  return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}">
+    <button type="button" class="hold-head" aria-expanded="false"${hasLegs ? ` aria-controls="${legsId}"` : ""} ${hasLegs ? "" : "disabled "}>
       <span class="hold-rank">${pad}</span>
       <span class="hold-face">${face}</span>
       <span class="hold-id">
@@ -1319,10 +449,37 @@ function holdBookHtml(s, tribe, season, rank) {
         <b class="day ${chgClass(day)}">${pct(day)} today</b>
       </span>
       ${immune}
-    </a>
+    </button>
     ${holdChips(legs)}
-    <div class="hold-legs">${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
+    <div class="hold-legs" id="${legsId}" hidden>${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
   </article>`;
+}
+
+function setHoldBookSelected(book, open) {
+  if (!book) return;
+  const btn = book.querySelector(".hold-head");
+  const legs = book.querySelector(".hold-legs");
+  const canOpen = !book.classList.contains("is-empty") && legs && legs.children.length > 0;
+  const next = !!(open && canOpen);
+  book.classList.toggle("is-selected", next);
+  if (btn) btn.setAttribute("aria-expanded", next ? "true" : "false");
+  if (legs) legs.hidden = !next;
+}
+
+function bindHoldingsSelection(root) {
+  if (!root || root.dataset.holdSelectBound === "1") return;
+  root.dataset.holdSelectBound = "1";
+  root.addEventListener("click", (event) => {
+    const book = event.target.closest(".hold-book");
+    if (!book || !root.contains(book) || book.classList.contains("is-empty")) return;
+    if (!event.target.closest(".hold-head, .hold-chips")) return;
+    if (event.target.closest("a")) return;
+    const next = !book.classList.contains("is-selected");
+    root.querySelectorAll(".hold-book.is-selected").forEach((other) => {
+      if (other !== book) setHoldBookSelected(other, false);
+    });
+    setHoldBookSelected(book, next);
+  });
 }
 
 function renderEpisodeHoldings(season) {
@@ -1336,15 +493,17 @@ function renderEpisodeHoldings(season) {
   root.innerHTML = ranked
     .map((s, i) => holdBookHtml(s, tribeById(season, s.tribeId), season, i + 1))
     .join("");
+  bindHoldingsSelection(root);
   const kicker = document.getElementById("holdings-kicker");
   if (kicker) {
     const label = season.markLabel ? String(season.markLabel).trim() : "";
     const when = formatMarkedAt(season.markedAt);
     if (label) {
-      const dayLine = season.dayPctLabel
-        ? String(season.dayPctLabel).trim()
-        : "dayPct vs Wed Aug 26 official SIP book (priorMarkUsd)";
-      kicker.textContent = `Ranked by week %. ${label}. weekPct from the $10 Monday start. ${dayLine}.`;
+      const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+      const priorNote = season.dayPctPriorOfficial
+        ? "dayPct versus the prior official mark."
+        : "dayPct versus the prior session; that prior may not be SIP official settled.";
+      kicker.textContent = `Ranked by week %. ${label}. weekPct from the $${start} week open. ${priorNote}`;
     } else if (when) {
       kicker.textContent = `Ranked by week %. Tickers as of ${when}.`;
     } else {
@@ -1522,7 +681,7 @@ function renderFaces(season) {
           const face = s.portrait
             ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
             : totemSvg(s, tribe);
-          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}">
+          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}">
         ${face}
         <h3>${escapeHtml(model)}</h3>
         <p class="face-tribe">${escapeHtml(tribe.name)}</p>
@@ -1575,7 +734,7 @@ function renderMoneyJourney(season) {
         ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
         : `<span class="money-mono">${escapeHtml(s.monogram || nickOf(s).slice(0, 1) || "?")}</span>`;
       const startPct = Math.max(2, Math.min(98, (start / maxBook) * 100));
-      return `<a class="money-row ${s.tribeId}" href="${escapeHtml(survivorHref(s.name))}" style="--i:${i}">
+      return `<a class="money-row ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" style="--i:${i}">
         <span class="money-rank">${i + 1}</span>
         <span class="money-face">${face}</span>
         <span class="money-id">
@@ -1607,9 +766,6 @@ function renderHomeEpisodes(season) {
   (Array.isArray(season.episodes) ? season.episodes : []).forEach((ep) => {
     byNum.set(ep.number, ep);
   });
-  lockedTeasers().forEach((ep) => {
-    if (!byNum.has(ep.number)) byNum.set(ep.number, ep);
-  });
   const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
   root.innerHTML = episodes
     .map((ep) => {
@@ -1625,7 +781,7 @@ function renderHomeEpisodes(season) {
           <p class="ep-locked-note">${tease}</p>
         </div>`;
       }
-      const href = assetBase() + (ep.path || "seasons/1/e01.html");
+      const href = assetBase() + ep.path;
       const live = ep.status === "live";
       return `<a class="journey-ep${live ? " live" : ""} reveal" href="${escapeHtml(href)}">
         <p class="ep-kicker">${live ? "Now burning" : escapeHtml(ep.status || "Cut")}</p>
@@ -1668,7 +824,7 @@ function renderSurvivor(season) {
   const slug = document.documentElement.getAttribute("data-survivor");
   const resolved = LEGACY_SLUGS[slug] || slug;
   const s = (season.survivors || []).find((x) => {
-    const now = survivorSlug(x.name);
+    const now = slugOf(x);
     const model = survivorSlug(modelOf(x));
     return now === resolved || model === resolved || now === slug || model === slug;
   });
@@ -1696,7 +852,7 @@ function renderSurvivor(season) {
       const img = m.portrait
         ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(modelOf(m))}">`
         : "";
-      return `<a class="mate-card" href="${escapeHtml(survivorHref(m.name))}">${img}<span class="mate-model">${escapeHtml(modelOf(m))}</span></a>`;
+      return `<a class="mate-card" href="${escapeHtml(survivorHref(m))}">${img}<span class="mate-model">${escapeHtml(modelOf(m))}</span></a>`;
     })
     .join("");
   document.title = `${model} — Last Trader Standing`;
@@ -1720,7 +876,7 @@ function renderSurvivor(season) {
       ${caption}
       <div class="survivor-book">
         <h3>The money</h3>
-        <p class="survivor-money-arc">Episode snapshot — started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week. <a href="${escapeHtml(assetBase() + "seasons/1/e01.html#week-board")}">See the week board →</a></p>
+        <p class="survivor-money-arc">Episode snapshot — started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week. <a href="${escapeHtml(assetBase() + liveEpisodePath(season) + "#week-board")}">See the week board →</a></p>
         <p>${book}</p>
         <div class="survivor-stats">
           <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
@@ -1773,56 +929,33 @@ function renderStandings(season) {
     .join("");
 }
 
-function dayKey(iso) {
-  if (!iso) return "";
-  return String(iso).slice(0, 10);
+function snapshotById(season, id) {
+  return (season.snapshots || []).find((snap) => snap.id === id) || null;
 }
 
-function legsOnDay(s, ymd) {
-  return bookLegs(s).filter((p) => dayKey(p.filledAt) === ymd);
+function snapshotBook(snap, survivorId) {
+  if (!snap || !snap.books) return null;
+  return snap.books[survivorId] || null;
 }
 
-function cashLegs(s) {
-  return bookLegs(s).filter((p) => {
-    const ticker = String(p.ticker || "").toUpperCase();
-    return p.status === "cash" || p.status === "cash-short-blocked" || ticker === "CASH";
-  });
+function positionSignature(legs) {
+  return (legs || [])
+    .map((pos) => `${String(pos.ticker || "").toUpperCase()}:${pos.qty || ""}:${pos.sizeUsd || ""}:${pos.status || ""}`)
+    .join("|");
 }
 
-function mondayOpening(s, start) {
-  const mon = legsOnDay(s, "2026-08-24");
-  const tue = legsOnDay(s, "2026-08-25");
-  const cash = cashLegs(s);
-  if (mon.length) {
-    return { bookUsd: start, legs: mon, tag: "Opened Monday", moved: false };
+function snapshotTag(row, prevRow, kind) {
+  const legs = (row && row.positions) || [];
+  const allCash = legs.length > 0 && legs.every((pos) => isCashLeg(pos));
+  const blocked = legs.some((pos) => pos.status === "cash-short-blocked");
+  if (kind === "open" || !prevRow) {
+    if (blocked) return { tag: "Shorts blocked", moved: false };
+    if (allCash) return { tag: "Held cash", moved: false };
+    return { tag: "Opened", moved: false };
   }
-  if (tue.length) {
-    return {
-      bookUsd: start,
-      legs: [{ action: "HOLD", ticker: "CASH", sizeUsd: start, status: "cash" }],
-      tag: "Cash Monday",
-      moved: false
-    };
-  }
-  if (cash.length) {
-    const blocked = cash.some((p) => p.status === "cash-short-blocked");
-    return {
-      bookUsd: start,
-      legs: cash,
-      tag: blocked ? "Shorts blocked" : "Held cash",
-      moved: false
-    };
-  }
-  const undated = bookLegs(s).filter((p) => !p.filledAt && String(p.ticker || "").toUpperCase() !== "CASH");
-  if (undated.length) {
-    return { bookUsd: start, legs: undated, tag: "Opened Monday", moved: false };
-  }
-  return {
-    bookUsd: start,
-    legs: [{ action: "HOLD", ticker: "CASH", sizeUsd: start, status: "cash" }],
-    tag: "Cash",
-    moved: false
-  };
+  const moved = positionSignature(legs) !== positionSignature(prevRow.positions);
+  if (moved) return { tag: "", moved: true };
+  return { tag: "Sat", moved: false };
 }
 
 function dayCardHtml(s, tribe, opts) {
@@ -1849,8 +982,8 @@ function dayCardHtml(s, tribe, opts) {
   }
   return `<article class="day-card ${s.tribeId}">
     <div class="day-card-top">
-      ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s.name))}">${face}</a>` : ""}
-      <a class="day-id" href="${escapeHtml(survivorHref(s.name))}">
+      ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s))}">${face}</a>` : ""}
+      <a class="day-id" href="${escapeHtml(survivorHref(s))}">
         <strong>${model}</strong>
         <em>${escapeHtml(tribeLine(s, tribe))}</em>
       </a>
@@ -1867,78 +1000,86 @@ function dayCardHtml(s, tribe, opts) {
 }
 
 function renderEpisodeDays(season) {
-  const monday = document.getElementById("day-monday");
-  const tuesday = document.getElementById("day-tuesday");
-  const tueTribes = document.getElementById("day-tuesday-tribes");
-  if (!monday && !tuesday && !tueTribes) return;
-  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const specs = season.episode && Array.isArray(season.episode.days) ? season.episode.days : [];
+  if (!specs.length) return;
+  const snapshots = season.snapshots || [];
   const survivors = season.survivors || [];
 
-  if (monday) {
-    const ordered = [...survivors].sort((a, b) => {
-      if (a.tribeId !== b.tribeId) return a.tribeId < b.tribeId ? -1 : 1;
-      return modelOf(a).localeCompare(modelOf(b));
-    });
-    monday.innerHTML = ordered
-      .map((s) => {
-        const tribe = tribeById(season, s.tribeId);
-        const snap = mondayOpening(s, start);
-        return dayCardHtml(s, tribe, {
-          bookUsd: snap.bookUsd,
-          legs: snap.legs,
-          tag: snap.tag,
-          moved: false
-        });
-      })
-      .join("");
-  }
+  specs.forEach((spec, index) => {
+    const board = spec.board ? document.getElementById(spec.board) : null;
+    const tribesMount = spec.tribes ? document.getElementById(spec.tribes) : null;
+    const snap = snapshotById(season, spec.snapshotId);
+    if (!snap) return;
+    const prevSnap = index > 0 ? snapshotById(season, specs[index - 1].snapshotId) || snapshots[index - 1] : null;
 
-  const tueSnap = season.tuesdaySnapshot && typeof season.tuesdaySnapshot === "object"
-    ? season.tuesdaySnapshot
-    : null;
-  const tueBooks = tueSnap && tueSnap.books ? tueSnap.books : {};
-  const tueTribesSnap = tueSnap && tueSnap.tribes ? tueSnap.tribes : {};
-
-  if (tueTribes) {
-    tueTribes.innerHTML = (season.tribes || [])
-      .map((t) => {
-        const snap = tueTribesSnap[t.id] || t;
-        return `<div class="total-card ${t.id}">
+    if (tribesMount) {
+      tribesMount.innerHTML = (season.tribes || [])
+        .map((t) => {
+          const tot = (snap.tribes && snap.tribes[t.id]) || t;
+          return `<div class="total-card ${t.id}">
         <h3>${escapeHtml(t.name)}</h3>
-        <p class="pct">${pct(combinedWeekPctOf(snap))}</p>
-        <p>${t.livingCount} standing · combined week % · Tue snapshot</p>
+        <p class="pct">${pct(combinedWeekPctOf(tot))}</p>
+        <p>${t.livingCount} standing · combined week % · snapshot</p>
       </div>`;
-      })
-      .join("");
-  }
+        })
+        .join("");
+    }
 
-  if (tuesday) {
-    const ranked = [...survivors].sort((a, b) => {
-      const bookA = tueBooks[a.id] || a;
-      const bookB = tueBooks[b.id] || b;
+    if (!board) return;
+    const open = snap.kind === "open" || spec.id === "monday";
+    const ordered = [...survivors].sort((a, b) => {
+      if (open) {
+        if (a.tribeId !== b.tribeId) return a.tribeId < b.tribeId ? -1 : 1;
+        return modelOf(a).localeCompare(modelOf(b));
+      }
+      const bookA = snapshotBook(snap, a.id) || a;
+      const bookB = snapshotBook(snap, b.id) || b;
       return dayPctOf(bookB) - dayPctOf(bookA);
     });
-    tuesday.innerHTML = ranked
+    board.innerHTML = ordered
       .map((s) => {
         const tribe = tribeById(season, s.tribeId);
-        const snap = tueBooks[s.id] || s;
-        const moved = legsOnDay(s, "2026-08-25").length > 0;
+        const row = snapshotBook(snap, s.id) || {};
+        const prev = snapshotBook(prevSnap, s.id);
+        const meta = snapshotTag(row, prev, snap.kind || (open ? "open" : "mark"));
         const prior =
-          typeof snap.priorMarkUsd === "number" && !Number.isNaN(snap.priorMarkUsd)
-            ? snap.priorMarkUsd
-            : start;
+          !open && typeof row.priorMarkUsd === "number" && !Number.isNaN(row.priorMarkUsd)
+            ? row.priorMarkUsd
+            : null;
         return dayCardHtml(s, tribe, {
-          bookUsd: snap.bookUsd,
+          bookUsd: row.bookUsd,
           priorMarkUsd: prior,
-          legs: bookLegs(s),
-          dayPct: dayPctOf(snap),
-          weekPct: weekPctOf(snap),
-          tag: moved ? "" : "Sat",
-          moved
+          legs: row.positions || [],
+          dayPct: open ? null : dayPctOf(row),
+          weekPct: open ? null : weekPctOf(row),
+          tag: meta.tag,
+          moved: meta.moved
         });
       })
       .join("");
+  });
+}
+
+function renderEpisodeLiveIndicator(season) {
+  if (document.documentElement.dataset.page !== "episode") return;
+  const epNum = Number(document.documentElement.dataset.episode);
+  if (!epNum) return;
+  const live = getLiveEpisode(season);
+  if (!live || live.number !== epNum) return;
+  const h1 = document.querySelector(".episode-hero h1");
+  if (!h1 || h1.querySelector(".live-badge")) return;
+  const dateSpan = h1.querySelector(":scope > span");
+  const titleRow = document.createElement("span");
+  titleRow.className = "ep-title-row ep-hero-title";
+  const textNode = h1.firstChild;
+  if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+    const titleSpan = document.createElement("span");
+    titleSpan.textContent = textNode.textContent.trim();
+    titleRow.appendChild(titleSpan);
+    h1.removeChild(textNode);
   }
+  titleRow.insertAdjacentHTML("beforeend", liveIndicatorHtml());
+  h1.insertBefore(titleRow, dateSpan || null);
 }
 
 function renderEpisodeLiveIndicator(season) {
@@ -2105,25 +1246,33 @@ function bindTribalSpoilers(root) {
   }
 }
 
-function lockedTeasers() {
-  return [
-    {
-      number: 2,
-      id: "s1e02",
-      status: "locked",
-      title: "Episode 2",
-      weekLabel: "Monday Aug 31 – Friday Sep 4, 2026",
-      tease: "Torches unlit · After Friday tribal"
-    },
-    {
-      number: 3,
-      id: "s1e03",
-      status: "locked",
-      title: "Episode 3",
-      weekLabel: "Monday Sep 7 – Friday Sep 11, 2026",
-      tease: "Torches unlit · After Friday tribal"
-    }
-  ];
+function getLiveEpisode(season) {
+  const episodes = Array.isArray(season.episodes) ? season.episodes : [];
+  return episodes.find((ep) => ep.status === "live") || null;
+}
+
+function liveIndicatorHtml() {
+  return (
+    '<span class="live-badge" aria-label="Live now">' +
+    '<span class="live-badge-dot" aria-hidden="true"></span>LIVE</span>'
+  );
+}
+
+function isSeasonHubLink(href) {
+  if (!href) return false;
+  const path = href.split("#")[0].split("?")[0].replace(/\/+$/, "");
+  return /(?:^|\/)seasons\/\d+$/.test(path);
+}
+
+function renderNavLiveIndicators(season) {
+  const live = getLiveEpisode(season);
+  if (!live) return;
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    if (!isSeasonHubLink(href)) return;
+    if (link.querySelector(".live-badge")) return;
+    link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
+  });
 }
 
 function getLiveEpisode(season) {
@@ -2168,9 +1317,6 @@ function renderSeasonHub(season) {
   const byNum = new Map();
   (Array.isArray(season.episodes) ? season.episodes : []).forEach((ep) => {
     byNum.set(ep.number, ep);
-  });
-  lockedTeasers().forEach((ep) => {
-    if (!byNum.has(ep.number)) byNum.set(ep.number, ep);
   });
   const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
   list.innerHTML = episodes
@@ -2221,21 +1367,31 @@ function render(season, sourceNote) {
   }
 }
 
+function emptySeason() {
+  return { survivors: [], tribes: [], episodes: [], snapshots: [] };
+}
+
 async function loadSeason() {
-  for (const path of JSON_PATHS) {
+  for (const path of seasonJsonUrls()) {
     try {
       const res = await fetch(path, { cache: "no-store" });
       if (!res.ok) continue;
       const data = await res.json();
-      if (!data || !Array.isArray(data.survivors) || data.survivors.length !== 12) continue;
+      if (!data || !Array.isArray(data.survivors) || data.survivors.length < 1) continue;
       return { season: data, note: null };
     } catch {
       /* file:// or missing path */
     }
   }
+  if (window.__SEASON_FALLBACK__ && Array.isArray(window.__SEASON_FALLBACK__.survivors)) {
+    return {
+      season: window.__SEASON_FALLBACK__,
+      note: "Could not fetch the live board. Showing the baked-in week."
+    };
+  }
   return {
-    season: FALLBACK_SEASON,
-    note: "Could not fetch the live board. Showing the baked-in week."
+    season: emptySeason(),
+    note: "Could not fetch the live board."
   };
 }
 
@@ -2333,5 +1489,12 @@ loadSeason()
   .then(({ season, note }) => render(applyDemoTribal(season), note))
   .catch((err) => {
     console.error("Failed to load season data:", err);
-    render(applyDemoTribal(FALLBACK_SEASON), "Could not fetch the live board. Showing the baked-in week.");
+    const fallback =
+      window.__SEASON_FALLBACK__ && Array.isArray(window.__SEASON_FALLBACK__.survivors)
+        ? window.__SEASON_FALLBACK__
+        : emptySeason();
+    render(
+      applyDemoTribal(fallback),
+      "Could not fetch the live board. Showing the baked-in week."
+    );
   });
