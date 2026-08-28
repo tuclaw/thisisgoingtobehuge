@@ -2669,6 +2669,26 @@ body.is-titles {
 }
 
 @media (max-width: 560px) {
+  .open-hero {
+    min-height: calc(100dvh - 8rem);
+    padding-bottom: 1.1rem;
+  }
+  .open-hero .hero-inner {
+    padding-bottom: 1.15rem;
+  }
+  .open-hero .hero-line {
+    margin-top: 0.7rem;
+    font-size: 0.98rem;
+  }
+  .open-hero .hero-actions {
+    margin-top: 1.05rem;
+    gap: 0.5rem;
+  }
+  .open-hero .btn-live {
+    letter-spacing: 0.07em;
+    padding: 0.62rem 0.85rem;
+    max-width: 100%;
+  }
   .campfire-pit {
     width: min(58vw, 240px);
     height: min(70vw, 300px);
