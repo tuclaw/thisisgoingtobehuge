@@ -34,6 +34,111 @@
     { id: "blindside", count: 2, faces: ["riot", "reed"], lunchKey: "thu-lunch-riot-reed" }
   ];
 
+  const POST_TITLES_WAIT_MS = 3000;
+  const TRADE_HOLD_MS = 3400;
+  const TRADE_FADE_MS = 720;
+
+  /* Newest fills first — used when season1.json is unavailable. */
+  const FALLBACK_TRADES = [
+    { id: "fill-reed-cost", side: "buy", ticker: "COST", at: "2026-08-26T14:56:44Z", castId: "reed" },
+    { id: "fill-reed-msft", side: "buy", ticker: "MSFT", at: "2026-08-26T14:56:43Z", castId: "reed" },
+    { id: "fill-reed-nvda", side: "buy", ticker: "NVDA", at: "2026-08-26T14:56:42Z", castId: "reed" },
+    { id: "fill-vesper-btal-sell", side: "sell", ticker: "BTAL", at: "2026-08-26T14:50:00Z", castId: "vesper" },
+    { id: "fill-riot-coin", side: "buy", ticker: "COIN", at: "2026-08-25T14:59:00Z", castId: "riot" },
+    { id: "fill-riot-sofi", side: "buy", ticker: "SOFI", at: "2026-08-25T14:58:59Z", castId: "riot" },
+    { id: "fill-hex-soxl", side: "buy", ticker: "SOXL", at: "2026-08-25T14:58:58Z", castId: "hex" },
+    { id: "fill-riot-hood-sell", side: "sell", ticker: "HOOD", at: "2026-08-25T14:58:50Z", castId: "riot" },
+    { id: "fill-hex-smci-sell", side: "sell", ticker: "SMCI", at: "2026-08-25T14:58:50Z", castId: "hex" },
+    { id: "fill-vesper-btal-buy", side: "buy", ticker: "BTAL", at: "2026-08-25T14:58:20Z", castId: "vesper" },
+    { id: "fill-vesper-qid", side: "buy", ticker: "QID", at: "2026-08-25T14:58:11Z", castId: "vesper" },
+    { id: "fill-kite-spy", side: "buy", ticker: "SPY", at: "2026-08-24T16:05:42Z", castId: "kite" },
+    { id: "fill-sable-gld", side: "buy", ticker: "GLD", at: "2026-08-24T16:05:30Z", castId: "sable" },
+    { id: "fill-quill-cowz", side: "buy", ticker: "COWZ", at: "2026-08-24T16:05:30Z", castId: "quill" },
+    { id: "fill-riot-hood-mon", side: "buy", ticker: "HOOD", at: "2026-08-24T16:05:28Z", castId: "riot" },
+    { id: "fill-pax-wm", side: "buy", ticker: "WM", at: "2026-08-24T16:05:27Z", castId: "pax" },
+    { id: "fill-hex-smci-mon", side: "buy", ticker: "SMCI", at: "2026-08-24T16:05:26Z", castId: "hex" },
+    { id: "fill-gage-tsla", side: "buy", ticker: "TSLA", at: "2026-08-24T16:05:26Z", castId: "gage" }
+  ];
+
+  const CAST_BY_SLUG = {};
+  Object.keys(CAST).forEach(function (id) {
+    const person = CAST[id];
+    const match = String(person.portrait || "").match(/cast\/([^/]+)\//);
+    if (match) CAST_BY_SLUG[match[1]] = person;
+  });
+
+  function castIdFromSurvivor(survivor) {
+    if (!survivor) return null;
+    const slug = survivor.slug || String(survivor.model || survivor.name || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    const person = CAST_BY_SLUG[slug];
+    return person ? person.id : null;
+  }
+
+  function normalizeTrade(raw, castId) {
+    if (!raw || !castId || !CAST[castId]) return null;
+    const side = raw.side === "sell" ? "sell" : "buy";
+    const ticker = String(raw.ticker || "").toUpperCase();
+    if (!ticker) return null;
+    return {
+      id: raw.id || castId + "-" + ticker + "-" + side,
+      side: side,
+      ticker: ticker,
+      at: raw.at || "",
+      castId: castId
+    };
+  }
+
+  function tradesFromSeason(data) {
+    if (!data || !Array.isArray(data.events)) return [];
+    const byId = {};
+    (data.survivors || data.cast || []).forEach(function (s) {
+      if (s && s.id) byId[s.id] = s;
+    });
+    const trades = [];
+    data.events.forEach(function (ev) {
+      if (!ev || ev.type !== "fill") return;
+      const castId = castIdFromSurvivor(byId[ev.survivorId]);
+      const trade = normalizeTrade(ev, castId);
+      if (trade) trades.push(trade);
+    });
+    trades.sort(function (a, b) {
+      if (a.at === b.at) return 0;
+      return a.at < b.at ? 1 : -1;
+    });
+    return trades;
+  }
+
+  function seasonJsonUrls() {
+    const base = document.documentElement.getAttribute("data-base") || "";
+    const urls = [];
+    if (base) urls.push(base + "season1.json");
+    urls.push("season1.json");
+    urls.push("/season1.json");
+    urls.push("data/season1.json");
+    return urls.filter(function (url, i, arr) {
+      return arr.indexOf(url) === i;
+    });
+  }
+
+  async function loadTrades() {
+    const urls = seasonJsonUrls();
+    for (let i = 0; i < urls.length; i += 1) {
+      try {
+        const res = await fetch(urls[i], { cache: "no-store" });
+        if (!res.ok) continue;
+        const data = await res.json();
+        const trades = tradesFromSeason(data);
+        if (trades.length) return trades;
+      } catch (err) {
+        /* try next */
+      }
+    }
+    return FALLBACK_TRADES.slice();
+  }
+
   const FALLBACK_SCENES = [
     {
       id: "target",
@@ -462,6 +567,89 @@
     return finished;
   }
 
+  function tradeMarkup(trade) {
+    const person = CAST[trade.castId];
+    if (!person) return "";
+    const isBuy = trade.side === "buy";
+    const sign = isBuy ? "$" : "−";
+    const verb = isBuy ? "Bought" : "Sold";
+    return (
+      '<div class="campfire-trade-card ' +
+      person.tribe +
+      " " +
+      (isBuy ? "is-buy" : "is-sell") +
+      '" data-ticker="' +
+      escapeHtml(trade.ticker) +
+      '" data-side="' +
+      escapeHtml(trade.side) +
+      '">' +
+      '<div class="campfire-trade-fx" aria-hidden="true">' +
+      '<span class="campfire-trade-sign">' +
+      sign +
+      "</span>" +
+      '<span class="campfire-trade-sign">' +
+      sign +
+      "</span>" +
+      '<span class="campfire-trade-sign">' +
+      sign +
+      "</span>" +
+      "</div>" +
+      '<div class="campfire-trade-portrait">' +
+      '<img src="' +
+      escapeHtml(person.portrait) +
+      '" alt="' +
+      escapeHtml(person.model) +
+      '" />' +
+      "</div>" +
+      '<div class="campfire-trade-meta">' +
+      '<span class="campfire-trade-name">' +
+      escapeHtml(person.model) +
+      "</span>" +
+      '<span class="campfire-trade-ticker">' +
+      escapeHtml(trade.ticker) +
+      "</span>" +
+      "</div>" +
+      '<p class="campfire-trade-label">' +
+      verb +
+      " " +
+      escapeHtml(trade.ticker) +
+      "</p>" +
+      "</div>"
+    );
+  }
+
+  async function playTrade(theater, tradeEl, trade, abortRef) {
+    if (!tradeEl || !trade) return false;
+    theater.dataset.scene = "trade";
+    theater.dataset.count = "1";
+    tradeEl.innerHTML = tradeMarkup(trade);
+    tradeEl.classList.remove("is-in");
+    tradeEl.setAttribute("aria-hidden", "false");
+
+    await wait(40);
+    if (abortRef.aborted) return false;
+    tradeEl.classList.add("is-in");
+
+    await wait(prefersReducedMotion() ? 900 : TRADE_HOLD_MS);
+    if (abortRef.aborted) return false;
+
+    tradeEl.classList.remove("is-in");
+    await wait(prefersReducedMotion() ? 80 : TRADE_FADE_MS);
+    if (abortRef.aborted) return false;
+    tradeEl.innerHTML = "";
+    tradeEl.setAttribute("aria-hidden", "true");
+    return true;
+  }
+
+  async function fadeTradeOut(tradeEl, abortRef) {
+    if (!tradeEl) return;
+    tradeEl.classList.remove("is-in");
+    await wait(prefersReducedMotion() ? 40 : 200);
+    if (abortRef.aborted) return;
+    tradeEl.innerHTML = "";
+    tradeEl.setAttribute("aria-hidden", "true");
+  }
+
   function shouldSkipOpenTitles() {
     if (prefersReducedMotion()) return true;
     const hash = (window.location.hash || "").replace(/^#/, "");
@@ -559,6 +747,7 @@
     const theater = document.getElementById("campfire-theater");
     const canvas = document.getElementById("campfire-canvas");
     const facesEl = document.getElementById("campfire-faces");
+    const tradeEl = document.getElementById("campfire-trade");
     const threadEl = document.getElementById("campfire-thread");
     const statusEl = document.getElementById("campfire-status");
     /* Episode feed landing uses the same theater markup with data-mode="feed". */
@@ -574,7 +763,9 @@
     const fire = createCampfire(canvas);
     const abortRef = { aborted: false };
     let sceneIndex = 0;
+    let tradeIndex = 0;
     let looping = true;
+    const tradesPromise = loadTrades();
 
     function onResize() {
       fire.resize();
@@ -609,20 +800,44 @@
 
     async function loop() {
       await revealAfterTitles();
+      const trades = await tradesPromise;
+      const scenes = getScenes();
 
       if (prefersReducedMotion()) {
-        await playScene(theater, facesEl, threadEl, getScenes()[0], abortRef);
+        if (trades[0] && tradeEl) {
+          await playTrade(theater, tradeEl, trades[0], abortRef);
+        }
+        await playScene(theater, facesEl, threadEl, scenes[0], abortRef);
         return;
       }
 
-      await wait(900);
-      const scenes = getScenes();
+      await wait(POST_TITLES_WAIT_MS);
       while (looping && !abortRef.aborted) {
+        const trade = trades.length ? trades[tradeIndex % trades.length] : null;
+        if (trade && tradeEl) {
+          const person = CAST[trade.castId];
+          if (statusEl && person) {
+            statusEl.textContent =
+              person.model +
+              " " +
+              (trade.side === "buy" ? "bought" : "sold") +
+              " " +
+              trade.ticker +
+              ".";
+          }
+          const tradeOk = await playTrade(theater, tradeEl, trade, abortRef);
+          if (!tradeOk || abortRef.aborted) break;
+          await wait(420);
+          if (abortRef.aborted) break;
+          tradeIndex += 1;
+        }
+
         const scene = scenes[sceneIndex % scenes.length];
         if (statusEl) {
           const names = scene.faces.map((id) => CAST[id] && CAST[id].model).filter(Boolean).join(", ");
           statusEl.textContent = "Around the fire: " + names + ".";
         }
+        await fadeTradeOut(tradeEl, abortRef);
         const ok = await playScene(theater, facesEl, threadEl, scene, abortRef);
         if (!ok || abortRef.aborted) break;
         await wait(2200);
@@ -646,6 +861,9 @@
     cast: CAST,
     scenes: FALLBACK_SCENES,
     getScenes: getScenes,
+    loadTrades: loadTrades,
+    tradesFromSeason: tradesFromSeason,
+    fallbackTrades: FALLBACK_TRADES,
     prefersReducedMotion: prefersReducedMotion,
     wait: wait,
     escapeHtml: escapeHtml
