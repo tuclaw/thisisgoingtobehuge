@@ -2591,9 +2591,9 @@ body.is-titles {
 .campfire-trade {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: 36%;
   z-index: 5;
-  width: min(17rem, calc(100vw - 2.4rem));
+  width: min(18rem, calc(100vw - 2.4rem));
   transform: translate(-50%, -50%) scale(0.92);
   opacity: 0;
   visibility: hidden;
@@ -2621,13 +2621,13 @@ body.is-titles {
 
 .campfire-trade-portrait {
   position: relative;
-  width: 6.4rem;
-  height: 6.4rem;
+  width: 7.2rem;
+  height: 7.2rem;
   border-radius: 50%;
   overflow: hidden;
   box-shadow:
-    0 0 0 3px rgba(255, 236, 170, 0.35),
-    0 18px 40px rgba(0, 0, 0, 0.45);
+    0 0 0 3px rgba(255, 236, 170, 0.45),
+    0 18px 40px rgba(0, 0, 0, 0.5);
 }
 
 .campfire-trade-card.bidu .campfire-trade-portrait {
@@ -2705,53 +2705,53 @@ body.is-titles {
 
 .campfire-trade.is-in .campfire-trade-card.is-buy .campfire-trade-sign {
   color: #3dd68c;
-  animation: trade-dollar-up 1.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: trade-dollar-up 1.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .campfire-trade.is-in .campfire-trade-card.is-sell .campfire-trade-sign {
   color: #ff5c5c;
-  animation: trade-minus-down 1.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: trade-minus-down 1.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.campfire-trade.is-in .campfire-trade-sign:nth-child(1) { animation-delay: 0.35s; left: 22%; }
-.campfire-trade.is-in .campfire-trade-sign:nth-child(2) { animation-delay: 0.55s; left: 50%; font-size: 2.35rem; }
-.campfire-trade.is-in .campfire-trade-sign:nth-child(3) { animation-delay: 0.75s; left: 78%; }
+.campfire-trade.is-in .campfire-trade-sign:nth-child(1) { animation-delay: 0.28s; left: 18%; }
+.campfire-trade.is-in .campfire-trade-sign:nth-child(2) { animation-delay: 0.48s; left: 50%; font-size: 2.6rem; }
+.campfire-trade.is-in .campfire-trade-sign:nth-child(3) { animation-delay: 0.68s; left: 82%; }
 
 @keyframes trade-dollar-up {
   0% {
     opacity: 0;
-    transform: translate(-50%, 1.2rem) scale(0.55);
+    transform: translate(-50%, 1.4rem) scale(0.5);
   }
-  28% {
+  22% {
     opacity: 1;
-    transform: translate(-50%, -0.2rem) scale(1.12);
+    transform: translate(-50%, -0.35rem) scale(1.18);
   }
-  70% {
-    opacity: 0.95;
-    transform: translate(-50%, -2.4rem) scale(1);
+  62% {
+    opacity: 1;
+    transform: translate(-50%, -2.6rem) scale(1.05);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -3.6rem) scale(0.9);
+    transform: translate(-50%, -4rem) scale(0.92);
   }
 }
 
 @keyframes trade-minus-down {
   0% {
     opacity: 0;
-    transform: translate(-50%, -1.4rem) scale(0.55);
+    transform: translate(-50%, -1.6rem) scale(0.5);
   }
-  28% {
+  22% {
     opacity: 1;
-    transform: translate(-50%, 0.1rem) scale(1.12);
+    transform: translate(-50%, 0.15rem) scale(1.18);
   }
-  70% {
-    opacity: 0.95;
-    transform: translate(-50%, 1.8rem) scale(1);
+  62% {
+    opacity: 1;
+    transform: translate(-50%, 2rem) scale(1.05);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, 3rem) scale(0.9);
+    transform: translate(-50%, 3.4rem) scale(0.92);
   }
 }
 
@@ -3034,6 +3034,13 @@ body.is-titles {
     top: 30%;
     max-height: 28vh;
   }
+  .campfire-trade {
+    top: 38%;
+  }
+  .campfire-trade-portrait { width: 4.8rem; height: 4.8rem; }
+  .campfire-trade-ticker { font-size: 1.1rem; }
+  .campfire-trade-sign { font-size: 1.55rem; }
+  .campfire-trade.is-in .campfire-trade-sign:nth-child(2) { font-size: 1.9rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
