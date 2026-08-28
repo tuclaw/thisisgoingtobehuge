@@ -2,13 +2,24 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const require = createRequire(import.meta.url);
 const js = readFileSync(join(root, "campfire-open.js"), "utf8");
 const html = readFileSync(join(root, "templates", "island.html"), "utf8");
+const css = readFileSync(join(root, "styles.css"), "utf8");
 const chat = readFileSync(join(root, "camp-chat.js"), "utf8");
+const season = require(join(root, "data", "season1.json"));
 
-const requiredIds = ["campfire-theater", "campfire-canvas", "campfire-faces", "campfire-thread", "campfire-imessage"];
+const requiredIds = [
+  "campfire-theater",
+  "campfire-canvas",
+  "campfire-faces",
+  "campfire-trade",
+  "campfire-thread",
+  "campfire-imessage"
+];
 requiredIds.forEach((id) => {
   if (!html.includes('id="' + id + '"')) {
     throw new Error("templates/island.html missing #" + id);
@@ -50,6 +61,27 @@ portraits.forEach((name) => {
 if (!js.includes("createCampfire")) {
   throw new Error("campfire-open.js missing fire engine");
 }
+if (!js.includes("POST_TITLES_WAIT_MS = 3000")) {
+  throw new Error("campfire-open.js must wait 3s after titles before the trade loop");
+}
+if (!js.includes("playTrade") || !js.includes("loadTrades") || !js.includes("FALLBACK_TRADES")) {
+  throw new Error("campfire-open.js missing trade flash helpers");
+}
+if (!js.includes('TRADE_SLOTS = ["left", "right", "top-left", "top-right"]')) {
+  throw new Error("campfire-open.js must rotate trade portraits around the fire");
+}
+if (!js.includes('theater.dataset.scene = "trade"')) {
+  throw new Error("campfire-open.js must mark trade scenes");
+}
+if (!css.includes("trade-dollar-up") || !css.includes("trade-minus-down")) {
+  throw new Error("styles.css missing buy/sell trade animations");
+}
+if (!css.includes(".campfire-trade.is-in")) {
+  throw new Error("styles.css missing campfire-trade fade-in");
+}
+if (!css.includes('.campfire-trade[data-slot="right"]') || !css.includes('.campfire-trade[data-slot="top-left"]')) {
+  throw new Error("styles.css missing trade slot positions around the fire");
+}
 
 [
   "The latest frontier AI models",
@@ -67,5 +99,10 @@ if (js.includes("Real time conversations")) {
 if (!html.includes("open-titles") || !html.includes("is-titles")) {
   throw new Error("templates/island.html missing title-card open");
 }
+
+const fills = (season.events || []).filter((e) => e && e.type === "fill");
+if (fills.length < 1) throw new Error("season1.json has no fill events for trade flash");
+const newest = fills.slice().sort((a, b) => (a.at < b.at ? 1 : -1))[0];
+if (!newest || !newest.ticker) throw new Error("newest fill missing ticker");
 
 console.log("campfire open checks passed");
