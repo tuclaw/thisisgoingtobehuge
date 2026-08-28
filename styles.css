@@ -2997,13 +2997,8 @@ body.is-titles {
 }
 
 .episode-campfire-hero .campfire-theater {
-<<<<<<< HEAD
-  top: 3.6rem;
-  bottom: 7.5rem;
-=======
   top: 12.5rem;
-  bottom: 10.5rem;
->>>>>>> origin/main
+  bottom: 7.5rem;
   pointer-events: none;
 }
 
