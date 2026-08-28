@@ -2507,6 +2507,12 @@ a.brand:hover {
   transform: translate(-50%, 0) scale(1);
 }
 
+/* Lift the theater above hero copy while the iMessage panel is open. */
+.open-hero:has(.campfire-imessage.is-in) .campfire-theater,
+.episode-campfire-hero:has(.campfire-imessage.is-in) .campfire-theater {
+  z-index: 5;
+}
+
 .campfire-imessage-head {
   padding: 0.55rem 0.75rem 0.4rem;
   background: var(--im-header);
