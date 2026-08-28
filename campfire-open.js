@@ -449,9 +449,9 @@
       return !abortRef.aborted;
     }
 
-    const finished = await play(threadEl, scene.conversation, {
-      typingMs: 1100,
-      msgAnimMs: 720,
+    const finished = await play(threadEl, Object.assign({}, scene.conversation, { stepMs: 3200 }), {
+      typingMs: 2000,
+      msgAnimMs: 1000,
       isAborted: function () {
         return abortRef.aborted;
       }

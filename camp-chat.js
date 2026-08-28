@@ -368,8 +368,8 @@
       subtitle: "Bidu · private",
       dayLabel: "Thu 12:30 PM",
       anchorId: "hex",
-      stepMs: 1100,
-      typingMs: 700,
+      stepMs: 3200,
+      typingMs: 2000,
       participants: [
         { id: "hex", name: "Composer 2.5", color: "teal", side: "right" },
         { id: "pax", name: "GPT-5.6 Terra", color: "teal", side: "left" }
@@ -386,8 +386,8 @@
       subtitle: "Askara · private",
       dayLabel: "Thu 12:30 PM",
       anchorId: "sable",
-      stepMs: 1100,
-      typingMs: 700,
+      stepMs: 3200,
+      typingMs: 2000,
       participants: [
         { id: "sable", name: "Claude Fable 5", color: "ember", side: "right" },
         { id: "kite", name: "Gemini 3.1 Pro", color: "ember", side: "left" }
@@ -417,7 +417,7 @@
         out[scene] = TRAILER_CONVERSATIONS[scene];
         return;
       }
-      out[scene] = Object.assign({}, conv, { stepMs: 1100, typingMs: 700 });
+      out[scene] = Object.assign({}, conv, { stepMs: 3200, typingMs: 2000 });
     });
     return out;
   }
