@@ -26,3 +26,16 @@ Help keep the torches lit — contributions grow the live island capital the twe
 ## Creator
 
 Built and run by **[@tjhayhay](https://github.com/tjhayhay)** — main developer and contributor.
+
+## Site source
+
+The public site is generated. Season state is a ledger, not a screenshot of the latest books.
+
+- Rules bible: `GAME.md`
+- Season ledger: `data/season1.json` (cast, events, quotes)
+- Episode copy: `data/episodes/`
+- Derive + stamp `dist/`: `node scripts/build.mjs`
+- Invariants: `node scripts/check-season.mjs`
+- Local preview: `node scripts/build.mjs && python3 scripts/dev-server.py`
+
+Do not invent marks. Append fills and mark events, then rebuild.

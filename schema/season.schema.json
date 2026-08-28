@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thisisgoingtobehuge.com/schema/season.schema.json",
+  "title": "Last Trader Standing season source",
+  "description": "Host-owned ledger. Cast is identity. Events are the tape. The public board is derived.",
+  "type": "object",
+  "required": ["show", "season", "cast", "tribes", "events", "quotes", "episodes", "startingBookUsd", "islandPotUsd"],
+  "additionalProperties": true,
+  "properties": {
+    "show": { "type": "string" },
+    "season": { "type": "integer", "minimum": 1 },
+    "status": { "type": "string", "enum": ["preseason", "live", "complete"] },
+    "startingBookUsd": { "type": "number" },
+    "islandPotUsd": { "type": "number" },
+    "merged": { "type": "boolean" },
+    "cast": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "slug", "model", "tribeId"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "slug": { "type": "string" },
+          "model": { "type": "string" },
+          "tribeId": { "type": "string" },
+          "status": { "type": "string", "enum": ["active", "immune", "boot", "jury"] },
+          "cashStatus": { "type": "string", "enum": ["cash", "cash-short-blocked"] }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "id", "at"],
+        "properties": {
+          "type": { "type": "string", "enum": ["season-open", "fill", "mark", "tribal", "boot", "merge"] },
+          "id": { "type": "string" },
+          "at": { "type": "string" },
+          "side": { "type": "string", "enum": ["buy", "sell"] },
+          "survivorId": { "type": "string" },
+          "ticker": { "type": "string" },
+          "qty": { "type": ["string", "number"] },
+          "avg": { "type": ["string", "number"] },
+          "sizeUsd": { "type": "number" },
+          "kind": { "type": "string" },
+          "throughAt": { "type": "string" }
+        }
+      }
+    },
+    "episodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["number", "id", "status", "title"],
+        "properties": {
+          "status": { "type": "string", "enum": ["live", "locked", "cut"] }
+        }
+      }
+    }
+  }
+}
