@@ -490,12 +490,8 @@
     const skipLink = document.getElementById("skip-titles");
     if (skipBtn) skipBtn.addEventListener("click", skip);
     if (skipLink) skipLink.addEventListener("click", skip);
-    overlay.addEventListener("click", (event) => {
-      if (event.target === skipBtn) return;
-      skip();
-    });
     function onKey(event) {
-      if (event.key === "Escape" || event.key === "Enter" || event.key === " ") {
+      if (event.key === "Escape") {
         event.preventDefault();
         skip();
       }
