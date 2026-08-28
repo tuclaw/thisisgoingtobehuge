@@ -263,120 +263,120 @@
       "priorClose": 354.81,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "SMCI": {
-      "last": 37.12,
+      "last": 37.2235,
       "priorClose": 38.46,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "SOXL": {
-      "last": 112.23,
+      "last": 111.3904,
       "priorClose": 123.05,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "WM": {
-      "last": 218.705,
+      "last": 219.69,
       "priorClose": 217.76,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "HOOD": {
-      "last": 106.14,
+      "last": 104.83,
       "priorClose": 109.76,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "COIN": {
-      "last": 177.6,
+      "last": 177.66,
       "priorClose": 190.72,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "SOFI": {
-      "last": 18.3195,
+      "last": 18.13,
       "priorClose": 19.18,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "QID": {
-      "last": 14.2301,
+      "last": 14.265,
       "priorClose": 14.04,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "BTAL": {
       "last": 12.065,
       "priorClose": 12.2,
       "priorCloseDate": "2026-08-24",
       "source": "official last + sip-list-exchange-close",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "COWZ": {
-      "last": 72.215,
+      "last": 72.3351,
       "priorClose": 72.06,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "GLD": {
       "last": 410.65,
       "priorClose": 422.6,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "SPY": {
-      "last": 769.91,
+      "last": 769.03,
       "priorClose": 771.1,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "NVDA": {
       "last": 227.98,
       "priorClose": 227.98,
       "priorCloseDate": "2026-08-27",
       "source": "official SIP list-exchange close",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "MSFT": {
-      "last": 516.94,
+      "last": 514.06,
       "priorClose": 505.06,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     },
     "COST": {
-      "last": 945.89,
+      "last": 945.26,
       "priorClose": 934.66,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-mid",
-      "asOf": "2026-08-28T16:57:36Z"
+      "lastSession": "2026-08-28-lasthour",
+      "asOf": "2026-08-28T19:14:23Z"
     }
   },
   "events": [
@@ -1271,6 +1271,143 @@
           "combinedWeekPct": -0.72,
           "combinedMonthPct": -0.72,
           "combinedDayPct": -1.12,
+          "livingCount": 6
+        }
+      }
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-45-coin-sell",
+      "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "side": "sell",
+      "ticker": "COIN",
+      "qty": "0.016067",
+      "avg": "177.6112",
+      "sizeUsd": 2.8537,
+      "orderId": "6a91de03-23f4-4834-a5b7-b19f2bb5233e",
+      "taxLotId": "6cfea596-7ffe-583b-a06e-34cadd8ba86b",
+      "at": "2026-08-28T19:14:00Z",
+      "cashAfter": 2.8537,
+      "cashNote": "Fri last-hour sold island COIN 0.016067 @ 177.6112 order 6a91de03"
+    },
+    {
+      "type": "mark",
+      "id": "s1e01-fri-lasthour",
+      "kind": "intraday",
+      "at": "2026-08-28T19:14:23Z",
+      "throughAt": "2026-08-28T19:14:23Z",
+      "lastSession": "2026-08-28-lasthour",
+      "label": "Fri Aug 28 last-hour (~12:14 PM PT) last-trade",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.7543,
+          "weekPct": -2.46,
+          "monthPct": -2.46,
+          "dayPct": -2.07,
+          "priorMarkUsd": 9.9609,
+          "eodMarkUsd": 9.9609
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.4553,
+          "weekPct": 4.55,
+          "monthPct": 4.55,
+          "dayPct": -5.62,
+          "priorMarkUsd": 11.0779,
+          "eodMarkUsd": 11.0779
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.9028,
+          "weekPct": -0.97,
+          "monthPct": -0.97,
+          "dayPct": 0.95,
+          "priorMarkUsd": 9.8097,
+          "eodMarkUsd": 9.8097
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.6723,
+          "weekPct": -3.28,
+          "monthPct": -3.28,
+          "dayPct": 0.89,
+          "priorMarkUsd": 9.5873,
+          "eodMarkUsd": 9.5873
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 9.6402,
+          "weekPct": -3.6,
+          "monthPct": -3.6,
+          "dayPct": -5.4,
+          "priorMarkUsd": 10.1908,
+          "eodMarkUsd": 10.1908
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 10.03,
+          "weekPct": 0.3,
+          "monthPct": 0.3,
+          "dayPct": 0.38,
+          "priorMarkUsd": 9.9918,
+          "eodMarkUsd": 9.9918
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 9.5985,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": -2.91,
+          "priorMarkUsd": 9.8859,
+          "eodMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 10.0528,
+          "weekPct": 0.53,
+          "monthPct": 0.53,
+          "dayPct": -0.27,
+          "priorMarkUsd": 10.0798,
+          "eodMarkUsd": 10.0798
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 10.1601,
+          "weekPct": 1.6,
+          "monthPct": 1.6,
+          "dayPct": 0.58,
+          "priorMarkUsd": 10.1016,
+          "eodMarkUsd": 10.1016
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -2.16,
+          "combinedMonthPct": -2.16,
+          "combinedDayPct": -5.85,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": -5.18,
+          "combinedMonthPct": -5.18,
+          "combinedDayPct": -7.62,
           "livingCount": 6
         }
       }
