@@ -34,9 +34,7 @@ const friday = (episode.days || []).find((day) => day.id === "friday");
 if (!friday) fail("friday fold was removed");
 const fridayBooths = (friday.beats || []).find((beat) => beat.id === "friday-confessionals");
 if (!fridayBooths || (fridayBooths.items || []).length !== 3) fail("friday noon booths were overwritten");
-if ((friday.beats || []).some((beat) => beat.id === "friday-lunch")) {
-  fail("do not fight Friday lunch PR 50 — leave that beat off this cut");
-}
+// Friday lunch phones live on PR 50 / this branch. Tribal cut must not overwrite them.
 
 const tribal = (episode.days || []).find((day) => day.id === "tribal");
 if (!tribal) fail("tribal fold missing");
