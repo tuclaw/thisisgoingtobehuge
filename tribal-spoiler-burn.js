@@ -166,19 +166,24 @@ void main() {
     ctx.fillStyle = "#c4a574";
     ctx.font = '400 15px "Cinzel", "Times New Roman", Times, serif';
     try {
-      ctx.letterSpacing = "0.32em";
+      ctx.letterSpacing = "0.28em";
     } catch (_) {
       /* letterSpacing unsupported */
     }
-    ctx.fillText("SPOILER", TEX_W / 2, TEX_H * 0.34);
+    ctx.fillText("SPOILER", TEX_W / 2, TEX_H * 0.3);
+    try {
+      ctx.letterSpacing = "0px";
+    } catch (_) {
+      /* letterSpacing unsupported */
+    }
 
     ctx.fillStyle = "#e8d5b0";
-    ctx.font = '700 42px "Cinzel", "Times New Roman", Times, serif';
-    ctx.fillText("THE VOTE", TEX_W / 2, TEX_H * 0.5);
+    ctx.font = '700 40px "Cinzel", "Times New Roman", Times, serif';
+    ctx.fillText("THE VOTE", TEX_W / 2, TEX_H * 0.48);
 
     ctx.fillStyle = "#8a7355";
-    ctx.font = 'italic 18px "IM Fell English", "Palatino Linotype", Palatino, serif';
-    wrapText(ctx, "Burn to reveal who goes home.", TEX_W / 2, TEX_H * 0.66, TEX_W * 0.7, 26);
+    ctx.font = 'italic 17px "IM Fell English", "Palatino Linotype", Palatino, serif';
+    wrapText(ctx, "Burn to reveal who goes home.", TEX_W / 2, TEX_H * 0.7, TEX_W * 0.68, 24);
 
     return c;
   }
