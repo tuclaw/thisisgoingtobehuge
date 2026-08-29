@@ -108,7 +108,7 @@ if (html) {
   if (!(friLunch > -1 && satIdx > friLunch)) {
     throw new Error("built saturday-lunch is not after friday lunch");
   }
-  if (!(tribalFocus > -1 && tribalFocus < weekIdx && weekIdx < satIdx)) {
+  if (!(tribalFocus > -1 && weekIdx > -1 && weekIdx < tribalFocus && tribalFocus < satIdx)) {
     throw new Error("saturday lunch must stay in the weekend fold below books, after tribal focus");
   }
   if (html.includes('href="e02.html"') || html.includes("seasons/1/e02")) {

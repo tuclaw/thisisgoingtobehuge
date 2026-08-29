@@ -549,7 +549,6 @@ function openFoldForTarget(target) {
 }
 
 function episodeFocusId() {
-  if (document.getElementById("tribal-focus")) return "tribal-focus";
   return "week-board";
 }
 

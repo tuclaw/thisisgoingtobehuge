@@ -153,7 +153,7 @@ function beatHtml(beat, base, opts = {}) {
   const kicker = beat.kicker ? `<p class="section-kicker">${escapeHtml(beat.kicker)}</p>` : "";
   const title = beat.title ? `<h2>${escapeHtml(beat.title)}</h2>` : "";
   const body = beat.body ? `<p>${beat.body}</p>` : "";
-  // After the vote, spoiler + prevote live in #tribal-focus above the books.
+  // After the vote, spoiler + prevote live in #tribal-focus (below the money diagram).
   if (opts.votePosted && (beat.type === "tribal" || beat.id === "tribal-prevote")) {
     return "";
   }
@@ -274,7 +274,7 @@ function episodeHasBeatId(episode, id) {
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
   const votePosted = episodeVotePosted(season);
-  const focusHref = votePosted ? "#tribal-focus" : "#week-board";
+  const focusHref = "#week-board";
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
   const lunchScripts = [
     episodeHasBeatType(episode, "lunch-chats") || episodeHasBeatId(episode, "thursday-lunch")
@@ -391,7 +391,7 @@ function renderEpisodePage(episode, season, base) {
   </section>
 
   <div class="wrap" id="episode-root">
-    ${focusBlock}<article class="beat beat-gold" id="week-board">
+    <article class="beat beat-gold" id="week-board">
       <div class="island-pot episode-pot reveal" id="episode-island-pot" aria-live="polite">
         <p class="pot-kicker">Island pot · live capital</p>
         <p class="pot-sentence"><span id="pot-contestants">12</span> contestants managing</p>
@@ -400,6 +400,9 @@ function renderEpisodePage(episode, season, base) {
         <p class="pot-sub">real dollars in live markets — not play money.</p>
       </div>
       <section class="money-ticker reveal" id="money-ticker" aria-label="Island money playback"></section>
+    </article>
+
+    ${focusBlock}<article class="beat beat-gold" id="latest-books">
       <p class="section-kicker">${escapeHtml(episode.weekBoard.kicker)}</p>
       <h2>${escapeHtml(episode.weekBoard.title)}</h2>
       <p>${episode.weekBoard.lede}</p>
