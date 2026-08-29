@@ -147,6 +147,9 @@ if (!js.includes("force: true") && !js.includes("force ? { force: true }")) {
 if (!css.includes(".replay-trailer") || !css.includes("open-hero.is-copy-in .replay-trailer")) {
   throw new Error("styles.css missing subtle replay trailer styling");
 }
+if (!css.includes("touch-action: manipulation") || !html.includes("replay-trailer")) {
+  throw new Error("replay trailer must be touch-friendly on mobile");
+}
 
 const fills = (season.events || []).filter((e) => e && e.type === "fill");
 if (fills.length < 1) throw new Error("season1.json has no fill events for trade flash");
