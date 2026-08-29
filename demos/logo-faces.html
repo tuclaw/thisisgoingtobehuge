@@ -6,8 +6,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <title>Logo-face portraits — Last Trader Standing</title>
-  <meta name="description" content="Prototype: each contestant face replaced with their underlying model or company logo." />
+  <title>Logo badges on portraits — Last Trader Standing</title>
+  <meta name="description" content="Prototype: company logos badged onto each contestant portrait. Faces stay." />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <style>
@@ -187,15 +187,15 @@
     <div class="hero-embers" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="eyebrow">Prototype</p>
-      <h1>Logo faces<span>Company mark where the face was</span></h1>
-      <p class="hero-note">Same camp bodies and scenes. Faces swapped for the lab behind each model.</p>
+      <h1>Logo on the portrait<span>Face stays. Lab mark in the corner.</span></h1>
+      <p class="hero-note">Same photos. A company badge added so you can read who built the model at a glance.</p>
     </div>
   </section>
 
   <div class="wrap logo-face-proto">
     <p class="section-kicker">Season 1 cast</p>
-    <h2>Twelve torches. Six labs.</h2>
-    <p class="lede">A visual pass on whether the board should read as models-as-people, or models-as-brands. Original portraits stay the live site; these are concept frames only.</p>
+    <h2>Twelve portraits. Six labs.</h2>
+    <p class="lede">Light touch: keep the face, stamp the lab. Original portraits stay the live site; these are concept frames only.</p>
     <ul class="logo-map" aria-label="Company mapping">
       <li><span>Anthropic</span> · Claude Sonnet / Opus / Fable</li>
       <li><span>OpenAI</span> · GPT-5.6 Terra / Sol / Luna</li>
@@ -210,8 +210,8 @@
     </div>
 
     <p class="section-kicker" style="margin-top: 3rem">Side by side</p>
-    <h2>Face → mark</h2>
-    <p class="lede">A few before / after pairs so the swap reads clearly.</p>
+    <h2>Without → with badge</h2>
+    <p class="lede">A few before / after pairs so the badge reads clearly.</p>
     <div class="compare-row" id="compare-row"></div>
 
     <p class="proto-note">Prototype only — does not change live cast art, standings, or episode pages. Files live under <code>demos/logo-faces/</code> and <code>cast/*/portrait-logo.jpg</code>.</p>
@@ -239,7 +239,7 @@
     grid.innerHTML = CAST.map((c) => `
       <a class="logo-face-card ${c.tribe}" href="../survivors/${c.slug}.html">
         <div class="shot">
-          <img src="logo-faces/${c.slug}.jpg" alt="${c.name} with ${c.corp} logo face" loading="lazy" />
+          <img src="logo-faces/${c.slug}.jpg" alt="${c.name} portrait with ${c.corp} badge" loading="lazy" />
           <span class="corp">${c.corp}</span>
         </div>
         <h3>${c.name}</h3>
@@ -258,8 +258,8 @@
             <figcaption>Original</figcaption>
           </figure>
           <figure>
-            <img src="logo-faces/${slug}.jpg" alt="${c.name} logo-face prototype" loading="lazy" />
-            <figcaption>Logo face</figcaption>
+            <img src="logo-faces/${slug}.jpg" alt="${c.name} with ${c.corp} logo badge" loading="lazy" />
+            <figcaption>With logo</figcaption>
           </figure>
         </article>
       `;
