@@ -79,14 +79,14 @@ if (html) {
     throw new Error("built e01.html missing Friday lunch mount");
   }
   const lunchIdx = html.indexOf('id="friday-lunch"');
-  const tribalIdx = html.indexOf('id="tribal"');
   const thuLunch = html.indexOf('id="thursday-lunch"');
   const thuDinner = html.indexOf('id="thursday-dinner"');
   const boothsIdx = html.indexOf('id="friday-confessionals"');
-  if (!(thuLunch < thuDinner && thuDinner < lunchIdx && lunchIdx < tribalIdx)) {
-    throw new Error("built friday-lunch is not after Thursday tapes and before tribal");
+  if (!(thuLunch < thuDinner && thuDinner < lunchIdx)) {
+    throw new Error("built friday-lunch is not after Thursday tapes");
   }
   if (boothsIdx < 0) throw new Error("built e01.html lost Friday noon booths");
+  // Post-vote: tribal fold is promoted above books; friday lunch still lands in the friday fold.
   expectedThreadIds.forEach((id) => {
     if (!html.includes('id="' + id + '"')) throw new Error("built html missing phone " + id);
   });

@@ -94,11 +94,69 @@ function boothsHtml(items, base) {
     .join("\n")}</div>`;
 }
 
-function beatHtml(beat, base) {
+function episodeVotePosted(season) {
+  return Array.isArray(season.tribalLog) && season.tribalLog.length > 0;
+}
+
+function tribalCutBeat(episode) {
+  for (const day of episode.days || []) {
+    for (const beat of day.beats || []) {
+      if (beat.type === "tribal") return beat;
+    }
+  }
+  return null;
+}
+
+function tribalPrevoteBeat(episode) {
+  for (const day of episode.days || []) {
+    for (const beat of day.beats || []) {
+      if (beat.id === "tribal-prevote" && beat.type === "booths") return beat;
+    }
+  }
+  return null;
+}
+
+function tribalFocusHtml(episode, base) {
+  const cut = tribalCutBeat(episode);
+  const prevote = tribalPrevoteBeat(episode);
+  const kicker = escapeHtml((cut && cut.kicker) || "Tribal");
+  const title = escapeHtml((cut && cut.title) || "The vote");
+  const body = (cut && cut.body) || "Askara walks in. Bidu sits. Nobody wears a necklace. Who goes home stays behind the burn.";
+  const conversations =
+    prevote && (prevote.items || []).length
+      ? `<details class="tribal-conversations" id="tribal-prevote">
+      <summary>
+        <span class="fold-day">${escapeHtml(prevote.kicker || "Confessionals")}</span>
+        <span class="fold-copy">
+          <strong>${escapeHtml(prevote.title || "Pre-vote")}</strong>
+          <em>${escapeHtml(prevote.body || "Audience only.")}</em>
+        </span>
+      </summary>
+      <div class="tribal-conversations-body">
+        ${boothsHtml(prevote.items || [], base)}
+      </div>
+    </details>`
+      : "";
+  return `<article class="beat beat-dark tribal-focus" id="tribal-focus">
+      <p class="section-kicker">${kicker}</p>
+      <h2>${title}</h2>
+      <p>${body}</p>
+      <div class="council-stage" id="episode-tribal">
+        <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
+      </div>
+      ${conversations}
+    </article>`;
+}
+
+function beatHtml(beat, base, opts = {}) {
   const id = beat.id ? ` id="${escapeHtml(beat.id)}"` : "";
   const kicker = beat.kicker ? `<p class="section-kicker">${escapeHtml(beat.kicker)}</p>` : "";
   const title = beat.title ? `<h2>${escapeHtml(beat.title)}</h2>` : "";
   const body = beat.body ? `<p>${beat.body}</p>` : "";
+  // After the vote, spoiler + prevote live in #tribal-focus above the books.
+  if (opts.votePosted && (beat.type === "tribal" || beat.id === "tribal-prevote")) {
+    return "";
+  }
   if (beat.type === "camp") {
     return `<article class="beat"${id}>
           ${kicker}
@@ -215,6 +273,8 @@ function episodeHasBeatId(episode, id) {
 
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
+  const votePosted = episodeVotePosted(season);
+  const focusHref = votePosted ? "#tribal-focus" : "#week-board";
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
   const lunchScripts = [
     episodeHasBeatType(episode, "lunch-chats") || episodeHasBeatId(episode, "thursday-lunch")
@@ -223,7 +283,12 @@ function renderEpisodePage(episode, season, base) {
     episodeHasBeatId(episode, "friday-lunch") ? `\n  <script src="e01-friday-lunch.js"></script>` : "",
     episodeHasBeatType(episode, "dinner-fires") ? `\n  <script src="e01-thursday-dinner.js"></script>` : ""
   ].join("");
-  const rail = (episode.rail || [])
+  let railItems = episode.rail || [];
+  if (votePosted) {
+    const rest = railItems.filter((item) => item.href !== "#tribal" && item.href !== "#tribal-focus");
+    railItems = [{ href: "#tribal-focus", day: "Tribal", sub: "The vote" }, ...rest];
+  }
+  const rail = railItems
     .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.day)}<span>${escapeHtml(item.sub)}</span></a>`)
     .join("\n      ");
   const spine = (episode.spine || [])
@@ -232,7 +297,12 @@ function renderEpisodePage(episode, season, base) {
   const days = (episode.days || [])
     .map((day) => {
       const dark = day.dark ? " day-fold-dark" : "";
-      const beats = (day.beats || []).map((beat) => beatHtml(beat, base)).join("\n\n        ");
+      const beatChunks = (day.beats || [])
+        .map((beat) => beatHtml(beat, base, { votePosted }))
+        .filter(Boolean);
+      // Vote posted: tribal fold only held spoiler + prevote — both moved above books.
+      if (!beatChunks.length) return "";
+      const beats = beatChunks.join("\n\n        ");
       return `<details class="day-fold${dark}" id="${escapeHtml(day.id)}">
       <summary>
         <span class="fold-day">${escapeHtml(day.foldDay)}</span>
@@ -246,10 +316,12 @@ function renderEpisodePage(episode, season, base) {
       </div>
     </details>`;
     })
+    .filter(Boolean)
     .join("\n\n    ");
+  const focusBlock = votePosted ? `${tribalFocusHtml(episode, base)}\n\n    ` : "";
 
   return `<!DOCTYPE html>
-<html lang="en" data-page="episode" data-season="${episode.season || season.season}" data-episode="${episode.number}" data-base="${base}">
+<html lang="en" data-page="episode" data-season="${episode.season || season.season}" data-episode="${episode.number}" data-base="${base}"${votePosted ? ' data-vote-posted="1"' : ""}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -263,8 +335,8 @@ function renderEpisodePage(episode, season, base) {
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 </head>
-<body class="episode-page">
-  <a class="skip" href="#week-board">Skip to episode</a>
+<body class="episode-page${votePosted ? " episode-vote-posted" : ""}">
+  <a class="skip" href="${focusHref}">Skip to episode</a>
   <header class="torch-nav">
     <a class="brand" href="${base}index.html">
       ${flame}
@@ -291,7 +363,7 @@ function renderEpisodePage(episode, season, base) {
     <div class="hero-head">
       <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
       <h1>${escapeHtml(episode.title)}<span>${escapeHtml(episode.subhead)}</span></h1>
-      <a class="scroll-cue" href="#week-board" aria-label="Continue into the episode">
+      <a class="scroll-cue" href="${focusHref}" aria-label="Continue into the episode">
         <span></span>
       </a>
     </div>
@@ -327,7 +399,7 @@ function renderEpisodePage(episode, season, base) {
       ${rail}
     </nav>
 
-    <article class="beat beat-gold" id="week-board">
+    ${focusBlock}<article class="beat beat-gold" id="week-board">
       <div class="island-pot episode-pot reveal" id="episode-island-pot" aria-live="polite">
         <p class="pot-kicker">Island pot · live capital</p>
         <p class="pot-sentence"><span id="pot-contestants">12</span> contestants managing</p>

@@ -522,8 +522,14 @@ function openFoldForTarget(target) {
   if (fold) fold.open = true;
 }
 
+function episodeFocusId() {
+  if (document.getElementById("tribal-focus")) return "tribal-focus";
+  return "week-board";
+}
+
 function syncDayRail() {
-  const hash = (window.location.hash || "#week-board").replace(/^#/, "") || "week-board";
+  const fallback = `#${episodeFocusId()}`;
+  const hash = (window.location.hash || fallback).replace(/^#/, "") || episodeFocusId();
   const target = document.getElementById(hash);
   document.querySelectorAll(".day-rail a").forEach((a) => {
     const id = (a.getAttribute("href") || "").replace(/^#/, "");
@@ -1119,7 +1125,9 @@ function renderEpisode(season) {
       .join("");
   }
   const tribal = document.getElementById("episode-tribal");
-  const tribalHeading = document.querySelector("#tribal-cut > h2, #tribal > h2");
+  const tribalHeading = document.querySelector(
+    "#tribal-focus > h2, #tribal-cut > h2, #tribal > h2"
+  );
   if (tribal) {
     const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
     if (log.length === 0) {
@@ -1132,6 +1140,7 @@ function renderEpisode(season) {
       </div>`;
     } else {
       if (tribalHeading) tribalHeading.textContent = "The vote";
+      document.body.classList.add("episode-vote-posted");
       const items = log.map((entry) => formatTribalEntry(entry)).join("");
       tribal.innerHTML = `
     <div class="torches">${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}</div>
