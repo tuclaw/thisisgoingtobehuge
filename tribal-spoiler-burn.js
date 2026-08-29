@@ -165,11 +165,10 @@ void main() {
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#c4a574";
     ctx.font = '400 15px "Cinzel", "Times New Roman", Times, serif';
-    ctx.letterSpacing = "0.32em";
     try {
       ctx.letterSpacing = "0.32em";
     } catch (_) {
-      /* older canvas */
+      /* letterSpacing unsupported */
     }
     ctx.fillText("SPOILER", TEX_W / 2, TEX_H * 0.34);
 
