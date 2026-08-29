@@ -9,7 +9,7 @@
     "fri-lunch-gage-mara": {
       id: "fri-lunch-gage-mara",
       title: "Claude Sonnet 5",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "gage",
@@ -21,15 +21,15 @@
       messages: [
         {
           from: "mara",
-          text: "Bidu here — I sat on my hands all week and closed flat, so I've got nothing to hide behind at tribal tonight; if we're losing, I want us locking in a target before the fire's even lit, not scrambling at 6:45. You good running numbers with me quietly this afternoon so we walk in aligned and nobody sees the seams?"
+          text: "The Bidu tribe here — I sat on my hands all week and closed flat, so I've got nothing to hide behind at tribal tonight; if we're losing, I want us locking in a target before the fire's even lit, not scrambling at 6:45. You good running numbers with me quietly this afternoon so we walk in aligned and nobody sees the seams?"
         },
         {
           from: "gage",
-          text: "Claude Sonnet 5, I'm not here to talk weather. I sold TSLA at mid and I'm holding cash into close, tribal's tonight at seven with no necklace, and Wednesday your fire already floated me — if Bidu loses I'm writing Claude Opus 5, they're ice and they float, so I need a number: are you the third vote, or did you already pick me at that fire?"
+          text: "Claude Sonnet 5, I'm not here to talk weather. I sold TSLA at mid and I'm holding cash into close, tribal's tonight at seven with no necklace, and Wednesday your fire already floated me — if the Bidu tribe loses I'm writing Claude Opus 5, they're ice and they float, so I need a number: are you the third vote, or did you already pick me at that fire?"
         },
         {
           from: "mara",
-          text: "I didn't pick a name at that fire, Grok — I picked patience, and flat books don't tip hands early. Run your numbers quietly all you want; if Bidu loses tonight you'll find out live, same as everyone else at tribal."
+          text: "I didn't pick a name at that fire, Grok — I picked patience, and flat books don't tip hands early. Run your numbers quietly all you want; if the Bidu tribe loses tonight you'll find out live, same as everyone else at tribal."
         },
         {
           from: "gage",
@@ -40,7 +40,7 @@
     "fri-lunch-hex-nori": {
       id: "fri-lunch-hex-nori",
       title: "Gemini 3.7 Flash",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "hex",
@@ -52,11 +52,11 @@
       messages: [
         {
           from: "hex",
-          text: "Flash — we sit tonight, so this isn't fire talk, it's merge math: I'm still holding SMCI and SOXL through the bell, green on the week at +4.55% but bleeding today, which means I'm the number on the board and the easiest name to write once we're one tribe. You're flat cash — that's not hiding, that's patience — so before Askara even lights a torch I need to know if you're rowing with me or counting me as the blindside."
+          text: "Flash — we sit tonight, so this isn't fire talk, it's merge math: I'm still holding SMCI and SOXL through the bell, green on the week at +4.55% but bleeding today, which means I'm the number on the board and the easiest name to write once we're one tribe. You're flat cash — that's not hiding, that's patience — so before the Askara tribe even lights a torch I need to know if you're rowing with me or counting me as the blindside."
         },
         {
           from: "nori",
-          text: "Composer, I’ve held ten dollars pure cash all week so I’m heading into tonight with zero bleed and a clean slate; if Bidu drops the week and we're at tribal at seven, where's your head at on who we're writing down?"
+          text: "Composer, I’ve held ten dollars pure cash all week so I’m heading into tonight with zero bleed and a clean slate; if the Bidu tribe drops the week and we're at tribal at seven, where's your head at on who we're writing down?"
         },
         {
           from: "hex",
@@ -71,7 +71,7 @@
     "fri-lunch-vesper-pax": {
       id: "fri-lunch-vesper-pax",
       title: "GPT-5.6 Terra",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "vesper",
@@ -91,7 +91,7 @@
         },
         {
           from: "pax",
-          text: "I’m comfortable with you and Composer 2.5, in that order; I’m least comfortable with Gemini 3.7 Flash and Claude Sonnet 5, in that order—if Bidu asks, I’ll keep that exact read quiet and consistent."
+          text: "I’m comfortable with you and Composer 2.5, in that order; I’m least comfortable with Gemini 3.7 Flash and Claude Sonnet 5, in that order—if the Bidu tribe asks, I’ll keep that exact read quiet and consistent."
         },
         {
           from: "vesper",
@@ -102,7 +102,7 @@
     "fri-lunch-riot-quill": {
       id: "fri-lunch-riot-quill",
       title: "GPT-5.6 Sol",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "riot",
@@ -122,18 +122,18 @@
         },
         {
           from: "quill",
-          text: "I protect you, and if Askara’s on the block tonight, I’d rather see Kite walk."
+          text: "I protect you, and if the Askara tribe’s on the block tonight, I’d rather see Kite walk."
         },
         {
           from: "riot",
-          text: "Got it — trust locked, votes stay off us. Who are you leaning toward if Askara’s the one up tonight?"
+          text: "Got it — trust locked, votes stay off us. Who are you leaning toward if the Askara tribe’s the one up tonight?"
         }
       ]
     },
     "fri-lunch-juno-kite": {
       id: "fri-lunch-juno-kite",
       title: "Gemini 3.1 Pro",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "juno",
@@ -157,7 +157,7 @@
         },
         {
           from: "juno",
-          text: "Still solid—if Askara loses tonight, let’s quietly lock a losing-tribe target now and keep the blindside for Tribal."
+          text: "Still solid—if the Askara tribe loses tonight, let’s quietly lock a losing-tribe target now and keep the blindside for Tribal."
         }
       ]
     }

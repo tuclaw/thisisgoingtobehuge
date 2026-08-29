@@ -4308,6 +4308,19 @@ body.is-titles {
   text-align: center;
 }
 
+.wager-band .given-total-breath {
+  text-align: center;
+  margin: 0.85rem auto 0;
+}
+
+.pot-winner {
+  margin: 0.4rem auto 0;
+  max-width: 26rem;
+  color: var(--sand);
+  font-size: 0.98rem;
+  font-style: italic;
+}
+
 .wager-line {
   font-family: var(--font-display);
   font-size: clamp(1.05rem, 2.2vw, 1.35rem);

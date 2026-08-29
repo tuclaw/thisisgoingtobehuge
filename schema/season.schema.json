@@ -12,6 +12,7 @@
     "status": { "type": "string", "enum": ["preseason", "live", "complete"] },
     "startingBookUsd": { "type": "number" },
     "islandPotUsd": { "type": "number" },
+    "islandGivenUsd": { "type": "number" },
     "merged": { "type": "boolean" },
     "cast": {
       "type": "array",

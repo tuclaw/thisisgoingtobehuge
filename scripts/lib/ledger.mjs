@@ -404,6 +404,7 @@ export function deriveSeason(source) {
     mergeAtRemaining: source.mergeAtRemaining,
     startingBookUsd: starting,
     islandPotUsd: source.islandPotUsd,
+    islandGivenUsd: source.islandGivenUsd,
     month: source.month,
     monthLabel: source.monthLabel,
     episode: source.episode || liveEpisode,

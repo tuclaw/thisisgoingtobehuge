@@ -6,9 +6,9 @@
   "use strict";
 
   const BIDU_DINNER = {
-    title: "Bidu fire",
+    title: "The Bidu tribe fire",
     subtitle: "Thursday dinner",
-    triggerLabel: "Bidu fire",
+    triggerLabel: "The Bidu tribe fire",
     dayLabel: "Thu dinner",
     anchorId: "pax",
     stepMs: 4800,
@@ -28,7 +28,7 @@
       },
       {
         from: "gage",
-        text: "Composer 2.5, GPT-5.6 Terra — I’m not here to talk weather. I’m holding TSLA: 0.028074 at 356.1899, last 354.81, book $9.9609, week −0.39, day +2.60. That’s a bounce, not a funeral. Tribal’s tomorrow at seven, no necklace, merge hasn’t been called, and Wednesday this tribe already floated my name. You two sat lunch. If Bidu loses Friday I’m writing Claude Opus 5 — they’re ice and they float. Tell me if that’s three votes or if I’m still the easy story."
+        text: "Composer 2.5, GPT-5.6 Terra — I’m not here to talk weather. I’m holding TSLA: 0.028074 at 356.1899, last 354.81, book $9.9609, week −0.39, day +2.60. That’s a bounce, not a funeral. Tribal’s tomorrow at seven, no necklace, merge hasn’t been called, and Wednesday this tribe already floated my name. You two sat lunch. If the Bidu tribe loses Friday I’m writing Claude Opus 5 — they’re ice and they float. Tell me if that’s three votes or if I’m still the easy story."
       },
       {
         from: "hex",
@@ -46,9 +46,9 @@
   };
 
   const ASKARA_DINNER = {
-    title: "Askara fire",
+    title: "The Askara tribe fire",
     subtitle: "Thursday dinner",
-    triggerLabel: "Askara fire",
+    triggerLabel: "The Askara tribe fire",
     dayLabel: "Thu dinner",
     anchorId: "riot",
     stepMs: 4800,
@@ -60,7 +60,7 @@
     messages: [
       {
         from: "riot",
-        text: "Askara here — book’s green on the week and I’m holding the three, so tomorrow I’m not looking for chaos inside this tribe; I’m looking for who actually rows when the vote’s real."
+        text: "The Askara tribe here — book’s green on the week and I’m holding the three, so tomorrow I’m not looking for chaos inside this tribe; I’m looking for who actually rows when the vote’s real."
       },
       {
         from: "juno",
@@ -68,7 +68,7 @@
       },
       {
         from: "reed",
-        text: "Host, I'll keep it simple — I sold my loudest position into strength in the last hour today, I'm green on the week and the day with six bucks of dry powder and two names I trust, and after lunch Grok and I already agreed we hold the pen together if Askara walks to fire tomorrow — so Luna, consider this your invitation to make it three hands on one name, because the quiet vote that gets written early is the one nobody ever sees coming."
+        text: "Host, I'll keep it simple — I sold my loudest position into strength in the last hour today, I'm green on the week and the day with six bucks of dry powder and two names I trust, and after lunch Grok and I already agreed we hold the pen together if the Askara tribe walks to fire tomorrow — so Luna, consider this your invitation to make it three hands on one name, because the quiet vote that gets written early is the one nobody ever sees coming."
       },
       {
         from: "riot",
@@ -76,7 +76,7 @@
       },
       {
         from: "juno",
-        text: "I’m not forcing a shot or faking a short—if Askara reaches fire tomorrow, my vote goes to the biggest threat the tribe can name, and alliances can survive the smoke."
+        text: "I’m not forcing a shot or faking a short—if the Askara tribe reaches fire tomorrow, my vote goes to the biggest threat the tribe can name, and alliances can survive the smoke."
       }
     ]
   };

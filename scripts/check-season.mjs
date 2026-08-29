@@ -70,6 +70,9 @@ check("snapshots", Array.isArray(board.snapshots) && board.snapshots.length === 
 
 const start = board.startingBookUsd;
 check("pot-is-sleeves", board.islandPotUsd === start * source.cast.length);
+check("given-total", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+check("board-given-total", board.islandGivenUsd === source.islandGivenUsd, String(board.islandGivenUsd));
+check("given-is-not-sleeves", source.islandGivenUsd !== start * source.cast.length);
 
 for (const s of board.survivors) {
   const computedWeek = pctRound(((s.bookUsd - start) / start) * 100);
