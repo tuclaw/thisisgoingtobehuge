@@ -47,6 +47,16 @@ if (!cut) fail("missing tribal-cut beat with #episode-tribal");
 if (beats.indexOf(prevote) > beats.indexOf(cut)) fail("pre-vote booths must sit above the spoiler");
 if ((prevote.items || []).length !== 6) fail("need all six pre-vote booths");
 
+if (!builder.includes("function tribalFocusHtml") || !builder.includes("episodeVotePosted")) {
+  fail("build must elevate tribal focus after the vote");
+}
+if (!builder.includes('id="tribal-focus"') || !builder.includes("tribal-conversations")) {
+  fail("post-vote layout must mount #tribal-focus with collapsed conversations");
+}
+if (!app.includes("function episodeFocusId") || !app.includes("tribal-focus")) {
+  fail("app must treat #tribal-focus as the post-vote episode focus");
+}
+
 const expectedBooths = [
   ["grok-4-5", "Grok 4.5", "The number says Fable."],
   ["gpt-5-6-sol", "GPT-5.6 Sol", "COWZ kept me positive at +0.30%"],
@@ -134,23 +144,33 @@ const fableCast = (season.cast || []).find((member) => member.id === fableId);
 if (!fableCast || fableCast.status !== "active") fail("do not change Fable cast status on this page cut");
 
 if (html) {
+  if (!html.includes('id="tribal-focus"')) fail("built e01.html missing post-vote #tribal-focus");
   if (!html.includes('id="tribal-prevote"')) fail("built e01.html missing pre-vote booths");
   if (!html.includes('id="episode-tribal"')) fail("built e01.html missing #episode-tribal");
   if (!html.includes("tribal-spoiler-burn.js")) fail("built e01.html must keep tribal-spoiler-burn.js");
-  const prevoteIdx = html.indexOf('id="tribal-prevote"');
+  if (!html.includes("tribal-conversations")) fail("built e01.html missing collapsed tribal conversations");
+  if (!html.includes('data-vote-posted="1"') || !html.includes("episode-vote-posted")) {
+    fail("built e01.html must mark vote-posted chrome");
+  }
+  const focusIdx = html.indexOf('id="tribal-focus"');
   const tribalIdx = html.indexOf('id="episode-tribal"');
+  const prevoteIdx = html.indexOf('id="tribal-prevote"');
+  const weekIdx = html.indexOf('id="week-board"');
   const noonIdx = html.indexOf('id="friday-confessionals"');
-  if (!(noonIdx < prevoteIdx && prevoteIdx < tribalIdx)) {
-    fail("pre-vote booths must render after Friday noon booths and above #episode-tribal");
+  if (!(focusIdx < tribalIdx && tribalIdx < prevoteIdx && prevoteIdx < weekIdx)) {
+    fail("post-vote order must be #tribal-focus → spoiler → collapsed prevote → #week-board");
   }
-  if (html.includes("day-fold-dark") && html.indexOf("day-fold-dark") > html.indexOf('id="tribal"')) {
-    const tribalTag = html.slice(html.indexOf('id="tribal"') - 80, html.indexOf('id="tribal"') + 40);
-    if (tribalTag.includes("day-fold-dark")) fail("built tribal fold is still dark");
+  if (!(noonIdx > weekIdx)) {
+    fail("Friday noon booths stay in the week folds below books");
   }
-  const open = html.slice(0, html.indexOf('id="tribal-prevote"'));
+  if (/\sid="tribal"/.test(html)) {
+    fail("empty tribal day fold should not render after vote promotion");
+  }
+  const open = html.slice(0, html.indexOf('id="episode-tribal"'));
   if (/Voted off:|joins the jury|Tally 5–1/.test(open)) {
     fail("built open copy leaked the boot before the spoiler");
   }
+  if (!html.includes('href="#tribal-focus"')) fail("skip/rail must point at #tribal-focus after the vote");
 }
 
-console.log("s1e01 tribal checks passed (log + six booths, books untouched, existing spoiler)");
+console.log("s1e01 tribal checks passed (post-vote focus above books, collapsed prevote, spoiler intact)");

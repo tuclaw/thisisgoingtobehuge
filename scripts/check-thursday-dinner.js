@@ -40,9 +40,9 @@ if (html) {
   }
   const lunchIdx = html.indexOf('id="thursday-lunch"');
   const dinnerIdx = html.indexOf('id="thursday-dinner"');
-  const foldClose = html.indexOf('id="tribal"');
-  if (!(lunchIdx < dinnerIdx && dinnerIdx < foldClose)) {
-    throw new Error("built thursday-dinner is not after lunch and before tribal");
+  const fridayFold = html.indexOf('id="friday"');
+  if (!(lunchIdx < dinnerIdx && dinnerIdx < fridayFold)) {
+    throw new Error("built thursday-dinner is not after lunch and before friday");
   }
 }
 

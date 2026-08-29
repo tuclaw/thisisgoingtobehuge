@@ -945,14 +945,131 @@ img.portrait.photo {
   isolation: isolate;
   margin: 0.6rem auto 0;
   width: min(26rem, 100%);
-  min-height: 15.5rem;
+  min-height: 0;
   aspect-ratio: 13 / 9;
   overflow: hidden;
 }
 
 .council-stage:has(.tribal-spoiler) {
   position: relative;
+  min-height: 0;
   text-align: center;
+}
+
+/* Post-vote: spoiler is the episode focus, above Latest books */
+.tribal-focus {
+  margin-bottom: 1.6rem;
+  padding-top: 1.8rem;
+  padding-bottom: 1.6rem;
+}
+
+.tribal-focus > .section-kicker {
+  color: var(--gold-bright);
+}
+
+.tribal-focus > h2 {
+  font-size: clamp(1.85rem, 4.2vw, 2.55rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tribal-focus > .council-stage {
+  margin-top: 1.25rem;
+  min-height: 0;
+  padding: 1.6rem 1.2rem 1.5rem;
+  text-align: center;
+}
+
+.tribal-focus .tribal-spoiler {
+  width: min(28rem, 100%);
+  min-height: 0;
+  margin-top: 0.35rem;
+}
+
+.tribal-conversations {
+  margin: 1.35rem 0 0;
+  border: 1px solid rgba(140, 70, 30, 0.35);
+  background: rgba(8, 5, 6, 0.55);
+}
+
+.tribal-conversations > summary {
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem 1rem;
+  align-items: center;
+  padding: 0.95rem 1.1rem;
+  cursor: pointer;
+  color: var(--sand);
+}
+
+.tribal-conversations > summary::-webkit-details-marker {
+  display: none;
+}
+
+.tribal-conversations > summary::after {
+  content: "+";
+  justify-self: end;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.tribal-conversations[open] > summary::after {
+  content: "–";
+}
+
+.tribal-conversations > summary:hover {
+  background: rgba(232, 93, 4, 0.06);
+}
+
+.tribal-conversations .fold-day {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.tribal-conversations .fold-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.tribal-conversations .fold-copy strong {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--parchment);
+}
+
+.tribal-conversations .fold-copy em {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--worn);
+}
+
+.tribal-conversations-body {
+  padding: 0 1.1rem 1.2rem;
+  border-top: 1px solid rgba(140, 70, 30, 0.28);
+}
+
+.tribal-conversations-body .booths {
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .tribal-conversations > summary {
+    grid-template-columns: 1fr auto;
+  }
+
+  .tribal-conversations .fold-day {
+    grid-column: 1 / -1;
+  }
 }
 
 .tribal-spoiler-result {
@@ -1045,12 +1162,14 @@ img.portrait.photo {
 
 .tribal-spoiler-cover-fallback .spoiler-title {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 3.6vw, 1.85rem);
+  font-size: clamp(1.05rem, 3.2vw, 1.45rem);
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
   text-transform: uppercase;
   color: var(--parchment);
   margin: 0;
+  max-width: 15.5rem;
   text-shadow: 0 0 28px rgba(232, 93, 4, 0.2);
 }
 
@@ -1190,6 +1309,59 @@ img.portrait.photo {
   }
   .tribal-spoiler.is-revealed .tribal-spoiler-result {
     animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .tribal-focus {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .tribal-focus > h2 {
+    font-size: clamp(1.35rem, 6vw, 1.7rem);
+  }
+
+  .tribal-focus > p {
+    font-size: 0.95rem;
+  }
+
+  .tribal-focus > .council-stage {
+    margin-top: 0.85rem;
+    padding: 0.85rem 0.7rem 0.95rem;
+  }
+
+  .tribal-focus .torches {
+    gap: 0.85rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .tribal-focus .torch {
+    width: 15px;
+    height: 48px;
+  }
+
+  .tribal-spoiler,
+  .tribal-focus .tribal-spoiler {
+    width: 100%;
+    aspect-ratio: 5 / 3;
+    margin-top: 0.2rem;
+  }
+
+  .tribal-spoiler-cover-fallback {
+    gap: 0.35rem;
+    padding: 1rem 0.9rem;
+  }
+
+  .tribal-spoiler-cover-fallback .spoiler-title {
+    font-size: clamp(0.98rem, 4.4vw, 1.2rem);
+    letter-spacing: 0.05em;
+    max-width: 12.5rem;
+  }
+
+  .tribal-spoiler-cover-fallback .spoiler-copy {
+    font-size: 0.9rem;
+    max-width: 14rem;
   }
 }
 

@@ -178,12 +178,12 @@ void main() {
     }
 
     ctx.fillStyle = "#e8d5b0";
-    ctx.font = '700 40px "Cinzel", "Times New Roman", Times, serif';
-    ctx.fillText("THE VOTE", TEX_W / 2, TEX_H * 0.48);
+    ctx.font = '700 28px "Cinzel", "Times New Roman", Times, serif';
+    wrapText(ctx, "CLICK TO REVEAL THE VOTE", TEX_W / 2, TEX_H * 0.46, TEX_W * 0.78, 34);
 
     ctx.fillStyle = "#8a7355";
     ctx.font = 'italic 17px "IM Fell English", "Palatino Linotype", Palatino, serif';
-    wrapText(ctx, "Burn to reveal who goes home.", TEX_W / 2, TEX_H * 0.7, TEX_W * 0.68, 24);
+    wrapText(ctx, "Burn to reveal who goes home.", TEX_W / 2, TEX_H * 0.74, TEX_W * 0.68, 24);
 
     return c;
   }
