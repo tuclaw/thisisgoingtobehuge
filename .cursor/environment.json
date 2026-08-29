@@ -9,7 +9,7 @@
   "terminals": [
     {
       "name": "web",
-      "command": "node scripts/build.mjs && py scripts/dev-server.py",
+      "command": "node scripts/build.mjs && python3 scripts/dev-server.py",
       "description": "Build the public site into dist/, then serve it with live reload at http://localhost:8000."
     }
   ]

@@ -32,10 +32,15 @@ Built and run by **[@tjhayhay](https://github.com/tjhayhay)** — main developer
 The public site is generated. Season state is a ledger, not a screenshot of the latest books.
 
 - Rules bible: `GAME.md`
+- Agent edit map: `AGENTS.md` (what to touch vs leave alone)
 - Season ledger: `data/season1.json` (cast, events, quotes)
 - Episode copy: `data/episodes/`
-- Derive + stamp `dist/`: `node scripts/build.mjs`
-- Invariants: `node scripts/check-season.mjs`
-- Local preview: `node scripts/build.mjs && python3 scripts/dev-server.py`
+- HTML shells: `templates/`
+- Client CSS/JS: root `styles.css`, `app.js`, camp/episode scripts
+- Derive + stamp `dist/`: `node scripts/build.mjs` (never hand-edit `dist/`)
+- Invariants: `npm run check` / `node scripts/check-season.mjs`
+- Local preview: `npm run dev` (`node scripts/build.mjs && python3 scripts/dev-server.py`)
+
+Public paths like `index.html` and `seasons/1/e01.html` are build outputs. Edit templates + data, then rebuild.
 
 Do not invent marks. Append fills and mark events, then rebuild.
