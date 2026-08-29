@@ -51,6 +51,9 @@ if ((lunchBeat.threads || []).some((thread) => /reed|sable|kimi|fable/i.test(thr
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
 if (!thursday) throw new Error("thursday fold was removed");
+if (!(thursday.beats || []).some((beat) => beat.id === "thursday-books")) {
+  throw new Error("thursday official SIP board missing");
+}
 if (!(thursday.beats || []).some((beat) => beat.id === "thursday-lunch")) {
   throw new Error("thursday lunch was overwritten");
 }

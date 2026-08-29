@@ -281,7 +281,10 @@ function renderEpisodePage(episode, season, base) {
       ? `\n  <script src="e01-thursday-lunch.js"></script>`
       : "",
     episodeHasBeatId(episode, "friday-lunch") ? `\n  <script src="e01-friday-lunch.js"></script>` : "",
-    episodeHasBeatType(episode, "dinner-fires") ? `\n  <script src="e01-thursday-dinner.js"></script>` : ""
+    episodeHasBeatId(episode, "wednesday-dinner") ? `\n  <script src="e01-wednesday-dinner.js"></script>` : "",
+    episodeHasBeatType(episode, "dinner-fires") || episodeHasBeatId(episode, "thursday-dinner")
+      ? `\n  <script src="e01-thursday-dinner.js"></script>`
+      : ""
   ].join("");
   let railItems = episode.rail || [];
   if (votePosted) {
@@ -473,6 +476,10 @@ function copyStatic() {
   const thursdayLunch = join(root, "seasons/1/e01-thursday-lunch.js");
   if (existsSync(thursdayLunch)) {
     cpSync(thursdayLunch, join(dist, "seasons/1/e01-thursday-lunch.js"));
+  }
+  const wednesdayDinner = join(root, "seasons/1/e01-wednesday-dinner.js");
+  if (existsSync(wednesdayDinner)) {
+    cpSync(wednesdayDinner, join(dist, "seasons/1/e01-wednesday-dinner.js"));
   }
   const thursdayDinner = join(root, "seasons/1/e01-thursday-dinner.js");
   if (existsSync(thursdayDinner)) {

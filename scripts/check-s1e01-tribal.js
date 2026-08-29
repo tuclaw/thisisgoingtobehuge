@@ -27,6 +27,7 @@ if (!builder.includes("tribal-spoiler-burn.js")) {
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
 if (!thursday) fail("thursday fold was removed");
+if (!(thursday.beats || []).some((beat) => beat.id === "thursday-books")) fail("thursday official SIP board missing");
 if (!(thursday.beats || []).some((beat) => beat.id === "thursday-lunch")) fail("thursday lunch was overwritten");
 if (!(thursday.beats || []).some((beat) => beat.id === "thursday-dinner")) fail("thursday dinner was overwritten");
 
