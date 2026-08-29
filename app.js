@@ -1137,7 +1137,11 @@ const moneyTicker = {
   reducedMotion: false,
   autoplayArmed: false,
   autoplayDone: false,
-  scrollObserver: null
+  scrollObserver: null,
+  progress: 0,
+  raf: null,
+  playStartedAt: 0,
+  playFromProgress: 0
 };
 
 function moneyPutInTotal(season) {
@@ -1253,6 +1257,10 @@ function stopMoneyTickerPlayback() {
     clearTimeout(moneyTicker.timer);
     moneyTicker.timer = null;
   }
+  if (moneyTicker.raf) {
+    cancelAnimationFrame(moneyTicker.raf);
+    moneyTicker.raf = null;
+  }
   moneyTicker.playing = false;
   const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
   if (btn) {
@@ -1261,57 +1269,67 @@ function stopMoneyTickerPlayback() {
   }
 }
 
-function moneyTickerStepMs() {
-  const base = 900;
-  return Math.max(60, base / moneyTicker.speed);
+function moneyTickerFullDurationMs() {
+  const segments = Math.max(1, moneyTicker.frames.length - 1);
+  return (segments * 900) / Math.max(0.05, moneyTicker.speed || 1);
 }
 
 function setMoneyTickerSpeed(speed) {
   if (!MONEY_TICKER_SPEEDS.includes(speed)) return;
+  const wasPlaying = moneyTicker.playing;
+  const at = moneyTicker.progress || 0;
   moneyTicker.speed = speed;
   const root = moneyTicker.root;
-  if (!root) return;
-  root.querySelectorAll("[data-ticker-speed]").forEach((btn) => {
-    const s = Number(btn.getAttribute("data-ticker-speed"));
-    btn.setAttribute("aria-pressed", s === speed ? "true" : "false");
-  });
+  if (root) {
+    root.querySelectorAll("[data-ticker-speed]").forEach((btn) => {
+      const s = Number(btn.getAttribute("data-ticker-speed"));
+      btn.setAttribute("aria-pressed", s === speed ? "true" : "false");
+    });
+  }
+  if (wasPlaying) {
+    moneyTicker.playFromProgress = at;
+    moneyTicker.playStartedAt = performance.now();
+  }
 }
 
 function startMoneyTickerPlayback(opts) {
   if (!moneyTicker.frames.length) return;
+  const max = moneyTicker.frames.length - 1;
   if (moneyTicker.reducedMotion) {
-    setMoneyTickerIndex(moneyTicker.frames.length - 1);
+    setMoneyTickerProgress(max);
     return;
   }
   const fromStart = !opts || opts.fromStart !== false;
-  if (fromStart || moneyTicker.index >= moneyTicker.frames.length - 1) {
-    setMoneyTickerIndex(0);
+  if (fromStart || (moneyTicker.progress || 0) >= max - 0.001) {
+    setMoneyTickerProgress(0);
   }
   if (moneyTicker.playing) return;
   moneyTicker.playing = true;
+  moneyTicker.playFromProgress = moneyTicker.progress || 0;
+  moneyTicker.playStartedAt = performance.now();
   const playBtn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
   if (playBtn) {
     playBtn.setAttribute("aria-pressed", "true");
     playBtn.innerHTML = `<span aria-hidden="true">❚❚</span> Pause`;
   }
-  scheduleMoneyTickerTick();
+  moneyTicker.raf = requestAnimationFrame(tickMoneyTickerPlayback);
 }
 
-function scheduleMoneyTickerTick() {
+function tickMoneyTickerPlayback(now) {
   if (!moneyTicker.playing) return;
-  moneyTicker.timer = setTimeout(() => {
-    if (!moneyTicker.playing) return;
-    if (moneyTicker.index >= moneyTicker.frames.length - 1) {
-      stopMoneyTickerPlayback();
-      const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
-      if (btn) {
-        btn.innerHTML = `<span aria-hidden="true">↻</span> Replay`;
-      }
-      return;
-    }
-    setMoneyTickerIndex(moneyTicker.index + 1, { animate: true });
-    scheduleMoneyTickerTick();
-  }, moneyTickerStepMs());
+  const max = Math.max(0, moneyTicker.frames.length - 1);
+  const full = moneyTickerFullDurationMs();
+  const rate = max / full;
+  const progress = Math.min(max, moneyTicker.playFromProgress + (now - moneyTicker.playStartedAt) * rate);
+  setMoneyTickerProgress(progress);
+  if (progress >= max - 0.0001) {
+    setMoneyTickerProgress(max);
+    stopMoneyTickerPlayback();
+    const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+    if (btn) btn.innerHTML = `<span aria-hidden="true">↻</span> Replay`;
+    return;
+  }
+  moneyTicker.raf = requestAnimationFrame(tickMoneyTickerPlayback);
 }
 
 function armMoneyTickerAutoplay() {
@@ -1351,14 +1369,49 @@ function armMoneyTickerAutoplay() {
   moneyTicker.scrollObserver.observe(root);
 }
 
+function lerp(a, b, u) {
+  return a + (b - a) * u;
+}
+
+function sampleJaggedValue(values, seriesKey, progress, valueSpan) {
+  if (!values.length) return 0;
+  const max = values.length - 1;
+  const t = Math.max(0, Math.min(max, progress));
+  if (t <= 0) return values[0];
+  if (t >= max) return values[max];
+  if (Math.abs(t - Math.round(t)) < 1e-6) return values[Math.round(t)];
+  const samples = jaggedSeriesSamples(values, seriesKey, valueSpan);
+  for (let i = 1; i < samples.length; i++) {
+    if (samples[i].t >= t) {
+      const a = samples[i - 1];
+      const b = samples[i];
+      const u = (t - a.t) / (b.t - a.t || 1);
+      return lerp(a.v, b.v, u);
+    }
+  }
+  return values[max];
+}
+
 function setMoneyTickerIndex(next, opts) {
+  setMoneyTickerProgress(next, opts);
+}
+
+function setMoneyTickerProgress(next, opts) {
   const frames = moneyTicker.frames;
   if (!frames.length) return;
-  const i = Math.max(0, Math.min(frames.length - 1, next));
-  moneyTicker.index = i;
-  const frame = frames[i];
+  const max = frames.length - 1;
+  const progress = Math.max(0, Math.min(max, Number(next) || 0));
+  moneyTicker.progress = progress;
+  const i0 = Math.floor(progress);
+  const i1 = Math.min(max, i0 + 1);
+  const u = progress - i0;
+  const a = frames[i0];
+  const b = frames[i1];
+  moneyTicker.index = u < 0.5 ? i0 : i1;
+
+  const total = roundMoney(lerp(a.total, b.total, u));
   const putIn = moneyTicker.putIn;
-  const delta = roundMoney(frame.total - putIn);
+  const delta = roundMoney(total - putIn);
   const pctChange = putIn ? (delta / putIn) * 100 : 0;
   const down = delta < -0.00005;
   const up = delta > 0.00005;
@@ -1367,37 +1420,48 @@ function setMoneyTickerIndex(next, opts) {
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
-    amount.textContent = potMoney(frame.total);
+    amount.textContent = potMoney(total);
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
-    live.textContent = potMoney(frame.total);
+    live.textContent = potMoney(total);
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
+  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
-    chg.textContent = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
+    chg.textContent = chgText;
   }
   const liveChg = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live-chg]");
   if (liveChg) {
     liveChg.className = "money-ticker-chg " + chgClass;
-    liveChg.textContent = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
+    liveChg.textContent = chgText;
   }
 
   const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
-  if (scrub && Number(scrub.value) !== i) scrub.value = String(i);
+  if (scrub) {
+    const scrubVal = String(progress);
+    if (scrub.value !== scrubVal) scrub.value = scrubVal;
+  }
 
   const stamp = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-stamp]");
   if (stamp) {
-    const when = pacificDayLabel(frame.at) || frame.label || "";
-    stamp.textContent = when ? `Playhead · ${when}` : frame.label || "";
+    let when = "";
+    const t0 = Date.parse(a.at);
+    const t1 = Date.parse(b.at);
+    if (!Number.isNaN(t0) && !Number.isNaN(t1)) {
+      when = pacificDayLabel(new Date(lerp(t0, t1, u)).toISOString());
+    } else {
+      when = pacificDayLabel(u < 0.5 ? a.at : b.at) || (u < 0.5 ? a.label : b.label) || "";
+    }
+    stamp.textContent = when ? `Playhead · ${when}` : "";
   }
 
-  const playX = moneyTickerXAt(i, frames.length);
+  const playX = moneyTickerXAt(progress, frames.length);
   const playhead = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-playhead]");
   if (playhead) {
     playhead.setAttribute("x1", String(playX));
@@ -1408,12 +1472,10 @@ function setMoneyTickerIndex(next, opts) {
     clip.setAttribute("width", String(Math.max(playX + 4, 40)));
   }
   const potDot = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-pot-dot]");
-  if (potDot) {
-    let value = frame.total;
-    if (moneyTicker.liveSeries && moneyTicker.liveSeries !== "total") {
-      if (moneyTicker.diagram === "tribes" && frame.tribes) value = frame.tribes[moneyTicker.liveSeries] ?? value;
-      else if (moneyTicker.diagram === "contestants" && frame.books) value = frame.books[moneyTicker.liveSeries] ?? value;
-    }
+  if (potDot && moneyTicker.diagram === "island") {
+    const values = frames.map((f) => f.total);
+    const span = moneyTicker.chartMax - moneyTicker.chartMin || 1;
+    const value = sampleJaggedValue(values, 7, progress, span);
     potDot.setAttribute("cx", String(playX));
     potDot.setAttribute(
       "cy",
@@ -1658,14 +1720,19 @@ function renderMoneyTickerSvg(season, frames) {
     })
     .join("");
 
-  const playX = moneyTickerXAt(moneyTicker.index, frames.length);
-  const frame = frames[moneyTicker.index] || frames[frames.length - 1];
+  const playProgress =
+    typeof moneyTicker.progress === "number" ? moneyTicker.progress : moneyTicker.index || 0;
+  const playX = moneyTickerXAt(playProgress, frames.length);
+  const frame = frames[Math.min(frames.length - 1, Math.round(playProgress))] || frames[frames.length - 1];
   let dotValue = frame ? frame.total : spec.putIn;
-  if (spec.liveSeries !== "total" && frame) {
+  if (moneyTicker.diagram === "island") {
+    const values = frames.map((f) => f.total);
+    const span = spec.max - spec.min || 1;
+    dotValue = sampleJaggedValue(values, 7, playProgress, span);
+  } else if (spec.liveSeries !== "total" && frame) {
     if (moneyTicker.diagram === "tribes" && frame.tribes) dotValue = frame.tribes[spec.liveSeries] ?? dotValue;
     else if (moneyTicker.diagram === "contestants" && frame.books) dotValue = frame.books[spec.liveSeries] ?? dotValue;
   }
-  if (moneyTicker.diagram === "island" && frame) dotValue = frame.total;
   const dotY = moneyTickerY(dotValue, spec.min, spec.max, chartTop, chartHeight);
   const showDot = moneyTicker.diagram === "island";
 
@@ -1709,7 +1776,7 @@ function refreshMoneyTickerChart() {
   const legend = root.querySelector(".money-ticker-legend");
   if (chart) chart.innerHTML = renderMoneyTickerSvg(season, moneyTicker.frames);
   if (legend) legend.innerHTML = moneyTickerLegendHtml(season, moneyTicker.frames);
-  setMoneyTickerIndex(moneyTicker.index);
+  setMoneyTickerProgress(moneyTicker.progress || moneyTicker.index || 0);
 }
 
 function bindMoneyTickerControls() {
@@ -1754,7 +1821,9 @@ function bindMoneyTickerControls() {
         return;
       }
       moneyTicker.autoplayDone = true;
-      startMoneyTickerPlayback({ fromStart: moneyTicker.index >= moneyTicker.frames.length - 1 });
+      startMoneyTickerPlayback({
+        fromStart: (moneyTicker.progress || 0) >= moneyTicker.frames.length - 1 - 0.001
+      });
     }
   });
 
@@ -1789,7 +1858,9 @@ function mountMoneyTicker(season, opts) {
   }
   root.hidden = false;
   const keepEnd = opts && opts.keepEnd;
-  moneyTicker.index = keepEnd ? moneyTicker.frames.length - 1 : moneyTicker.frames.length - 1;
+  const end = moneyTicker.frames.length - 1;
+  moneyTicker.index = end;
+  moneyTicker.progress = end;
   if (!MONEY_TICKER_DIAGRAMS.includes(moneyTicker.diagram)) moneyTicker.diagram = "island";
 
   const speeds = MONEY_TICKER_SPEEDS.map((s) => {
@@ -1813,7 +1884,7 @@ function mountMoneyTicker(season, opts) {
       <p class="money-ticker-kicker">Replay the books</p>
       <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].total))}</p>
       <p class="money-ticker-chg" data-ticker-live-chg></p>
-      <p class="money-ticker-lede">Watch the island, the tribes, or every contestant sleeve. Jagged lines are for the ride — every stop lands on a real mark. Dotted line is money put in.</p>
+      <p class="money-ticker-lede">Watch the island, the tribes, or every contestant sleeve. Dotted line is money put in.</p>
     </div>
     <div class="money-ticker-toolbar">
       <div class="money-ticker-range" role="tablist" aria-label="Time range">
@@ -1826,7 +1897,7 @@ function mountMoneyTicker(season, opts) {
     </div>
     <div class="money-ticker-chart">${renderMoneyTickerSvg(season, moneyTicker.frames)}</div>
     <div class="money-ticker-transport">
-      <input class="money-ticker-scrub" data-ticker-scrub type="range" min="0" max="${moneyTicker.frames.length - 1}" value="${moneyTicker.index}" step="1" aria-label="Scrub marks" />
+      <input class="money-ticker-scrub" data-ticker-scrub type="range" min="0" max="${moneyTicker.frames.length - 1}" value="${moneyTicker.progress || moneyTicker.index}" step="0.01" aria-label="Scrub marks" />
       <div class="money-ticker-controls">
         <button type="button" class="money-ticker-play" data-ticker-play aria-pressed="false"><span aria-hidden="true">▶</span> Play</button>
         <div class="money-ticker-speeds" role="group" aria-label="Playback speed">${speeds}</div>
@@ -1836,7 +1907,7 @@ function mountMoneyTicker(season, opts) {
     <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>`;
 
   bindMoneyTickerControls();
-  setMoneyTickerIndex(moneyTicker.index);
+  setMoneyTickerProgress(moneyTicker.progress);
   if (!(opts && opts.keepEnd)) {
     armMoneyTickerAutoplay();
   }

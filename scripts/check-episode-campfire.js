@@ -84,6 +84,12 @@ if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
 if (!appJs.includes("armMoneyTickerAutoplay") || !appJs.includes("startMoneyTickerPlayback")) {
   throw new Error("app.js money ticker must autoplay at 1x from the start on first scroll into view");
 }
+if (!appJs.includes("tickMoneyTickerPlayback") || !appJs.includes("setMoneyTickerProgress")) {
+  throw new Error("app.js money ticker must reveal continuously left-to-right while playing");
+}
+if (appJs.includes("Jagged lines are for the ride")) {
+  throw new Error("app.js must not keep the jagged-lines-for-the-ride copy");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
