@@ -84,19 +84,18 @@ if (!css.includes('.campfire-trade[data-slot="right"]') || !css.includes('.campf
 }
 
 [
-  "The latest frontier AI models",
-  "Playing a Survivor-like game",
-  "With real money",
-  "Having real conversations",
-  "Yes, they really are investing my money"
+  "12 Of The Best AI Robots, Competing In A Survivor-like Game, Where The Challenge Is Day Trading, \\u2026 With My Wife\\u2019s Savings"
 ].forEach((card) => {
   if (!js.includes('"' + card + '"')) throw new Error("missing title card " + card);
 });
-if (js.includes("Yes, they really are privately chatting")) {
-  throw new Error("title card still says Yes, they really are privately chatting");
+if (js.includes("The latest frontier AI models")) {
+  throw new Error("old title card still present: The latest frontier AI models");
 }
-if (js.includes("Real time conversations")) {
-  throw new Error("title card still says Real time conversations");
+if (js.includes("Yes, they really are investing my money")) {
+  throw new Error("old title card still present: Yes, they really are investing my money");
+}
+if (!js.includes("TITLE_CARD_HOLD_MS = 5200")) {
+  throw new Error("campfire-open.js must hold the long title card long enough to read");
 }
 if (!html.includes("open-titles") || !html.includes("is-titles")) {
   throw new Error("templates/island.html missing title-card open");
