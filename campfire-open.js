@@ -942,6 +942,9 @@
     wordEl.setAttribute("aria-live", "polite");
 
     const skipRef = { skipped: false, toDescent: false, finished: false };
+    /* Forced replays ignore skip for a beat so the Replay click / focus
+       cannot immediately collapse the trailer. */
+    const skipArmedAt = (force ? Date.now() + 550 : 0);
     let interrupt = null;
     function beat(ms) {
       return new Promise((resolve) => {
@@ -961,6 +964,7 @@
     }
     function skip() {
       if (skipRef.finished) return;
+      if (Date.now() < skipArmedAt) return;
       /* During cards: jump straight into the sky→fire descent. */
       if (!skipRef.skipped && !overlay.classList.contains("is-sky")) {
         skipRef.skipped = true;
@@ -1001,6 +1005,15 @@
       }
     }
 
+    /* Attach skip controls after the arm window so a replay click cannot
+       land on the newly-visible overlay and abort the first cards. */
+    const armWait = force ? Math.max(0, skipArmedAt - Date.now()) : 0;
+    if (armWait) await beat(armWait);
+    if (skipRef.finished) {
+      finishOpenTitles();
+      return;
+    }
+
     overlay.addEventListener("click", onOverlayClick);
     if (skipBtn) skipBtn.addEventListener("click", onSkipBtn);
     if (skipLink) skipLink.addEventListener("click", onSkipLink);
@@ -1008,7 +1021,7 @@
 
     try {
       if (!skipRef.skipped) {
-        await beat(700);
+        await beat(force ? 280 : 700);
         for (let i = 0; i < TITLE_CARDS.length; i += 1) {
           if (skipRef.skipped || skipRef.finished) break;
           wordEl.textContent = TITLE_CARDS[i];
@@ -1234,7 +1247,8 @@
       document.body.classList.add("is-titles");
       window.scrollTo(0, 0);
 
-      await wait(80);
+      /* Let the Replay click fully settle before titles accept skip input. */
+      await wait(120);
       await revealAfterTitles(true);
       await runTheaterLoop(false);
     }

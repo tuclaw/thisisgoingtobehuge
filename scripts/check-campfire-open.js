@@ -136,6 +136,9 @@ if (!html.includes('id="replay-trailer"') || !html.includes("Replay trailer")) {
 if (!js.includes("replayTrailer") || !js.includes("resetOpenTitlesOverlay")) {
   throw new Error("campfire-open.js missing replay trailer helpers");
 }
+if (!js.includes("skipArmedAt")) {
+  throw new Error("campfire-open.js must arm skip after replay starts");
+}
 if (!js.includes("force: true") && !js.includes("force ? { force: true }")) {
   throw new Error("campfire-open.js must force-play titles on replay");
 }
