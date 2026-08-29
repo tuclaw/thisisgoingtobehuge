@@ -15,6 +15,15 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 </head>
 <body class="open-page is-titles">
+  <script>
+    /* Drop the titles gate before paint when this tab already saw the cold open
+       (Island/brand return to index.html). Matches campfire-open.js storage key. */
+    try {
+      if (sessionStorage.getItem("lts-open-titles-seen") === "1") {
+        document.body.classList.remove("is-titles");
+      }
+    } catch (e) {}
+  </script>
   <noscript><style>body.is-titles{overflow:auto}body.is-titles .open-titles{display:none}</style></noscript>
   <div class="open-titles" id="open-titles">
     <div class="open-sky" id="open-sky" aria-hidden="true">
