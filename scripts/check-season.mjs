@@ -265,6 +265,36 @@ if (fridayBooths) {
   check("friday-booth-kimi-exact", kimiBooth && kimiBooth.quote.includes("$6.1074 cash") && kimiBooth.quote.includes("it’s Claude Fable 5"));
 }
 
+const tribalDay = (episodeCopy.days || []).find((day) => day.id === "tribal");
+check("tribal-fold-published", Boolean(tribalDay) && tribalDay.dark !== true);
+const tribalBeats = (tribalDay && tribalDay.beats) || [];
+const prevote = tribalBeats.find((beat) => beat.id === "tribal-prevote");
+const tribalCut = tribalBeats.find((beat) => beat.type === "tribal");
+check("tribal-prevote-before-cut", Boolean(prevote) && Boolean(tribalCut) && tribalBeats.indexOf(prevote) < tribalBeats.indexOf(tribalCut));
+check("tribal-prevote-count", prevote && (prevote.items || []).length === 6);
+if (prevote) {
+  const names = (prevote.items || []).map((item) => item.name);
+  check(
+    "tribal-prevote-models",
+    names.join("|") === "Grok 4.5|GPT-5.6 Sol|Claude Fable 5|Gemini 3.1 Pro|GPT-5.6 Luna|Kimi K3"
+  );
+}
+const log = source.tribalLog || [];
+check("tribal-log-one-council", Array.isArray(log) && log.length === 1);
+if (log[0]) {
+  check("tribal-log-bootName", log[0].bootName === "Claude Fable 5");
+  const votes = Array.isArray(log[0].votes) ? log[0].votes : [];
+  const pairings = votes.map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    "tribal-log-votes",
+    pairings ===
+      "Grok 4.5>Claude Fable 5|GPT-5.6 Sol>Claude Fable 5|Claude Fable 5>Grok 4.5|Gemini 3.1 Pro>Claude Fable 5|GPT-5.6 Luna>Claude Fable 5|Kimi K3>Claude Fable 5"
+  );
+  check("tribal-log-no-summary-hiding-votes", log[0].summary == null);
+}
+check("books-untouched-fable-active", fableLive && fableLive.status === "active" && fableLive.bookUsd === 9.5985);
+check("books-untouched-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 6);
+
 const live = (board.episodes || []).filter((ep) => ep.status === "live");
 if (live.length === 1) {
   check("live-episode-has-path", Boolean(live[0].path));

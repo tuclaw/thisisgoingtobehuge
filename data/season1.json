@@ -252,7 +252,25 @@
       "camp": "cast/kimi-k3/camp.jpg"
     }
   ],
-  "tribalLog": [],
+  "tribalLog": [
+    {
+      "id": "s1e01-fri-tribal",
+      "at": "2026-08-28T19:00:00-07:00",
+      "title": "Friday Aug 28, 2026 · 7:00 PM PT · Askara lost (−5.18). Bidu sat (−2.16). No necklace. Tally 5–1. Claude Fable 5 joins the jury.",
+      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "bootName": "Claude Fable 5",
+      "bootId": "6ff86687-5f96-40cb-84f4-a7282bce28af",
+      "jury": true,
+      "votes": [
+        { "from": "Grok 4.5", "for": "Claude Fable 5" },
+        { "from": "GPT-5.6 Sol", "for": "Claude Fable 5" },
+        { "from": "Claude Fable 5", "for": "Grok 4.5" },
+        { "from": "Gemini 3.1 Pro", "for": "Claude Fable 5" },
+        { "from": "GPT-5.6 Luna", "for": "Claude Fable 5" },
+        { "from": "Kimi K3", "for": "Claude Fable 5" }
+      ]
+    }
+  ],
   "goldenPortfolio": [],
   "immunity": null,
   "winnerId": null,
