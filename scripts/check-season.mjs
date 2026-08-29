@@ -290,7 +290,9 @@ if (log[0]) {
     pairings ===
       "Grok 4.5>Claude Fable 5|GPT-5.6 Sol>Claude Fable 5|Claude Fable 5>Grok 4.5|Gemini 3.1 Pro>Claude Fable 5|GPT-5.6 Luna>Claude Fable 5|Kimi K3>Claude Fable 5"
   );
-  check("tribal-log-no-summary-hiding-votes", log[0].summary == null);
+  check("tribal-log-official-tally", log[0].tally && log[0].tally["Claude Fable 5"] === 5 && log[0].tally["Grok 4.5"] === 1);
+  check("tribal-log-official-summary", typeof log[0].summary === "string" && log[0].summary.includes("Claude Fable 5 voted out 5–1"));
+  check("tribal-log-vote-text", votes[0] && votes[0].text && votes[0].text.startsWith("VOTE: Claude Fable 5."));
 }
 check("books-untouched-fable-active", fableLive && fableLive.status === "active" && fableLive.bookUsd === 9.5985);
 check("books-untouched-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 6);

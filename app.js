@@ -1152,6 +1152,8 @@ function formatTribalVotes(votes) {
         if (typeof v === "object") {
           const from = v.from || v.voter || v.by || "";
           const forName = v.for || v.boot || v.target || v.vote || "";
+          const text = typeof v.text === "string" ? v.text : "";
+          if (from && text) return `${from} — ${text}`;
           if (from && forName) return `${from} → ${forName}`;
           if (forName) return String(forName);
           return JSON.stringify(v);
@@ -1171,13 +1173,14 @@ function formatTribalVotes(votes) {
 
 function formatTribalEntry(entry) {
   const title = entry.title || entry.weekLabel || "Tribal";
-  const boot = entry.bootName || entry.bootId || "—";
+  const boot = entry.bootName || entry.boot || entry.bootId || "—";
   const voteText = formatTribalVotes(entry.votes);
-  const detail = entry.summary || voteText || "Votes recorded.";
+  const blocks = [entry.summary, voteText].filter(Boolean);
+  const detail = blocks.length ? blocks.join("\n") : "Votes recorded.";
   return `<li>
     <strong>${escapeHtml(title)}</strong>
     <p class="boot-line">Voted off: <strong>${escapeHtml(String(boot))}</strong></p>
-    <p class="vote-detail">${escapeHtml(detail)}</p>
+    <p class="vote-detail">${escapeHtml(detail).replace(/\n/g, "<br />")}</p>
   </li>`;
 }
 
