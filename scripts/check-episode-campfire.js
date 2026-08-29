@@ -81,6 +81,15 @@ if (!appJs.includes("jaggedSeriesSamples")) {
 if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
   throw new Error("app.js money ticker still builds boxy step paths");
 }
+if (!appJs.includes("armMoneyTickerAutoplay") || !appJs.includes("startMoneyTickerPlayback")) {
+  throw new Error("app.js money ticker must autoplay at 1x from the start on first scroll into view");
+}
+if (!appJs.includes("tickMoneyTickerPlayback") || !appJs.includes("setMoneyTickerProgress")) {
+  throw new Error("app.js money ticker must reveal continuously left-to-right while playing");
+}
+if (appJs.includes("Jagged lines are for the ride")) {
+  throw new Error("app.js must not keep the jagged-lines-for-the-ride copy");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
@@ -152,12 +161,6 @@ feed.conversations.forEach((c) => {
     throw new Error("host feed dayLabel must be latest Friday cut, got " + c.dayLabel);
   }
 });
-if (episodeJs.includes("SATURDAY_LUNCH_CONVERSATIONS")) {
-  throw new Error("comics paused: do not wire Saturday lunch into campfire pings");
-}
-if (feedIds.some((id) => String(id).startsWith("sat-lunch-"))) {
-  throw new Error("comics paused: conversations.json must not host Saturday lunch");
-}
 
 /* Pure sort/filter check mirroring episode-campfire scoring. */
 const DOW = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
