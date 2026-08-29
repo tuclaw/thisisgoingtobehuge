@@ -56,6 +56,16 @@ if (!episodeHtml.includes('id="camp-whispers"') || !episodeHtml.includes("camp-w
 if (!episodeHtml.includes('id="pot-amount"') || !episodeHtml.includes("episode-pot")) {
   throw new Error("episode renderer missing glowing island pot on week-board");
 }
+if (!episodeHtml.includes('id="money-ticker"') || !episodeHtml.includes("money-ticker-chg")) {
+  throw new Error("episode renderer missing money ticker playback mount on week-board");
+}
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")) {
+  throw new Error("app.js missing money ticker playback (mount + put-in dotted line)");
+}
+if (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"')) {
+  throw new Error("app.js money ticker must offer week and season ranges");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");

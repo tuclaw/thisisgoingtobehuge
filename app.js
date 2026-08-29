@@ -1114,6 +1114,448 @@ function renderEpisodeLiveIndicator(season) {
   h1.insertBefore(titleRow, dateSpan || null);
 }
 
+const MONEY_TICKER_SPEEDS = [0.5, 1, 4, 16];
+const moneyTicker = {
+  root: null,
+  season: null,
+  range: "week",
+  speed: 1,
+  index: 0,
+  playing: false,
+  timer: null,
+  frames: [],
+  putIn: 120,
+  sleevePutIn: 10,
+  potMin: 0,
+  potMax: 1,
+  reducedMotion: false
+};
+
+function moneyPutInTotal(season) {
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const castN = (season.survivors || []).length || (season.cast || []).length || 12;
+  return roundMoney(start * castN);
+}
+
+function roundMoney(n) {
+  return Math.round(n * 10000) / 10000;
+}
+
+function snapshotTotal(snap) {
+  if (!snap || !snap.books) return 0;
+  return roundMoney(
+    Object.values(snap.books).reduce((acc, book) => {
+      return typeof book.bookUsd === "number" && !Number.isNaN(book.bookUsd) ? acc + book.bookUsd : acc;
+    }, 0)
+  );
+}
+
+function pacificDayLabel(iso) {
+  if (!iso) return "";
+  try {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  } catch {
+    return "";
+  }
+}
+
+function snapshotsForTickerRange(season, range) {
+  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
+  if (!all.length) return [];
+  if (range !== "week") return all;
+  const ep = season.episode || {};
+  const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
+  const weekEnd = ep.weekEnd
+    ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
+    : ep.tribalAt
+      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
+      : NaN;
+  if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
+  const filtered = all.filter((snap) => {
+    const t = Date.parse(snap.at);
+    return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
+  });
+  return filtered.length ? filtered : all;
+}
+
+function candidateStroke(survivor, indexInTribe) {
+  const askara = survivor.tribeId === "askara";
+  const bases = askara
+    ? ["#C45A12", "#e85d04", "#f0a060", "#a34410", "#ffb347", "#8a3a0c"]
+    : ["#0E6B6B", "#1a9a8a", "#8ee8d8", "#0a4a4a", "#3cb8a8", "#145c5c"];
+  return bases[indexInTribe % bases.length];
+}
+
+function buildTickerFrames(season, range) {
+  const snaps = snapshotsForTickerRange(season, range);
+  const sleeve = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const cast = season.survivors || [];
+  const tribeIndex = {};
+  cast.forEach((s) => {
+    const key = s.tribeId || "x";
+    tribeIndex[key] = tribeIndex[key] || 0;
+    s.__tickerTone = candidateStroke(s, tribeIndex[key]);
+    tribeIndex[key] += 1;
+  });
+  return snaps.map((snap) => {
+    const books = {};
+    cast.forEach((s) => {
+      const row = snap.books && snap.books[s.id];
+      books[s.id] = row && typeof row.bookUsd === "number" ? row.bookUsd : sleeve;
+    });
+    return {
+      id: snap.id,
+      at: snap.at,
+      label: snap.label || pacificDayLabel(snap.at),
+      total: snapshotTotal(snap),
+      books
+    };
+  });
+}
+
+function stopMoneyTickerPlayback() {
+  if (moneyTicker.timer) {
+    clearTimeout(moneyTicker.timer);
+    moneyTicker.timer = null;
+  }
+  moneyTicker.playing = false;
+  const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+  if (btn) {
+    btn.setAttribute("aria-pressed", "false");
+    btn.innerHTML = `<span aria-hidden="true">▶</span> Play`;
+  }
+}
+
+function moneyTickerStepMs() {
+  const base = 900;
+  return Math.max(60, base / moneyTicker.speed);
+}
+
+function scheduleMoneyTickerTick() {
+  if (!moneyTicker.playing) return;
+  moneyTicker.timer = setTimeout(() => {
+    if (!moneyTicker.playing) return;
+    if (moneyTicker.index >= moneyTicker.frames.length - 1) {
+      stopMoneyTickerPlayback();
+      const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+      if (btn) {
+        btn.innerHTML = `<span aria-hidden="true">↻</span> Replay`;
+      }
+      return;
+    }
+    setMoneyTickerIndex(moneyTicker.index + 1, { animate: true });
+    scheduleMoneyTickerTick();
+  }, moneyTickerStepMs());
+}
+
+function setMoneyTickerIndex(next, opts) {
+  const frames = moneyTicker.frames;
+  if (!frames.length) return;
+  const i = Math.max(0, Math.min(frames.length - 1, next));
+  moneyTicker.index = i;
+  const frame = frames[i];
+  const putIn = moneyTicker.putIn;
+  const delta = roundMoney(frame.total - putIn);
+  const pctChange = putIn ? (delta / putIn) * 100 : 0;
+  const down = delta < -0.00005;
+  const up = delta > 0.00005;
+  const chgClass = up ? "up" : down ? "down" : "flat";
+  const arrow = up ? "▲" : down ? "▼" : "●";
+
+  const amount = document.getElementById("pot-amount");
+  if (amount) {
+    amount.textContent = potMoney(frame.total);
+    amount.classList.toggle("is-ticker-down", down);
+    amount.classList.toggle("is-ticker-up", up);
+  }
+  const chg = document.getElementById("money-ticker-chg");
+  if (chg) {
+    chg.className = "money-ticker-chg " + chgClass;
+    chg.textContent = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
+  }
+
+  const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
+  if (scrub && Number(scrub.value) !== i) scrub.value = String(i);
+
+  const stamp = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-stamp]");
+  if (stamp) {
+    const when = pacificDayLabel(frame.at) || frame.label || "";
+    stamp.textContent = when ? `Playhead · ${when}` : frame.label || "";
+  }
+
+  const playhead = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-playhead]");
+  if (playhead) {
+    const x = moneyTickerX(i, frames.length);
+    playhead.setAttribute("x1", String(x));
+    playhead.setAttribute("x2", String(x));
+  }
+  const clip = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-clip]");
+  if (clip) {
+    const x = moneyTickerX(i, frames.length);
+    clip.setAttribute("width", String(Math.max(x + 4, 40)));
+  }
+  const potDot = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-pot-dot]");
+  if (potDot) {
+    const x = moneyTickerX(i, frames.length);
+    const y = moneyTickerY(frame.total, moneyTicker.potMin, moneyTicker.potMax, 0, 118);
+    potDot.setAttribute("cx", String(x));
+    potDot.setAttribute("cy", String(y));
+  }
+
+  if (opts && opts.animate && !moneyTicker.reducedMotion) {
+    const chart = moneyTicker.root && moneyTicker.root.querySelector(".money-ticker-chart");
+    if (chart) {
+      chart.classList.remove("is-tick");
+      void chart.offsetWidth;
+      chart.classList.add("is-tick");
+    }
+  }
+}
+
+function moneyTickerX(index, count) {
+  const padL = 36;
+  const padR = 12;
+  const w = 640 - padL - padR;
+  if (count <= 1) return padL;
+  return padL + (index / (count - 1)) * w;
+}
+
+function moneyTickerY(value, min, max, top, height) {
+  const padT = typeof top === "number" ? top : 18;
+  const h = typeof height === "number" ? height : 176;
+  const span = max - min || 1;
+  return padT + (1 - (value - min) / span) * h;
+}
+
+function tickerPathForSeries(values, min, max, top, height) {
+  if (!values.length) return "";
+  const out = [];
+  values.forEach((v, i) => {
+    const x = moneyTickerX(i, values.length);
+    const y = moneyTickerY(v, min, max, top, height);
+    if (i === 0) out.push(`M ${x.toFixed(2)} ${y.toFixed(2)}`);
+    else {
+      out.push(`H ${x.toFixed(2)}`);
+      out.push(`V ${y.toFixed(2)}`);
+    }
+  });
+  return out.join(" ");
+}
+
+function renderMoneyTickerSvg(season, frames) {
+  const cast = season.survivors || [];
+  const sleeve = moneyTicker.sleevePutIn;
+  const putIn = moneyTicker.putIn;
+  let sleeveMin = sleeve;
+  let sleeveMax = sleeve;
+  let potMin = putIn;
+  let potMax = putIn;
+  frames.forEach((frame) => {
+    if (frame.total < potMin) potMin = frame.total;
+    if (frame.total > potMax) potMax = frame.total;
+    cast.forEach((s) => {
+      const v = frame.books[s.id];
+      if (typeof v === "number") {
+        if (v < sleeveMin) sleeveMin = v;
+        if (v > sleeveMax) sleeveMax = v;
+      }
+    });
+  });
+  const potPad = Math.max(0.8, (potMax - potMin) * 0.2);
+  potMin = Math.min(potMin, putIn) - potPad;
+  potMax = Math.max(potMax, putIn) + potPad;
+  const sleevePad = Math.max(0.35, (sleeveMax - sleeveMin) * 0.12);
+  sleeveMin = Math.min(sleeveMin, sleeve) - sleevePad;
+  sleeveMax = Math.max(sleeveMax, sleeve) + sleevePad;
+
+  const last = frames[frames.length - 1];
+  const potDown = last && last.total < putIn - 0.00005;
+  const potStroke = potDown ? "#e89354" : "#8ee8d8";
+  const potValues = frames.map((f) => f.total);
+  const potPath = tickerPathForSeries(potValues, potMin, potMax, 0, 118);
+  const putY = moneyTickerY(putIn, potMin, potMax, 0, 118);
+  moneyTicker.potMin = potMin;
+  moneyTicker.potMax = potMax;
+
+  const yLabels = [potMax, putIn, potMin]
+    .map((v) => {
+      const y = moneyTickerY(v, potMin, potMax, 0, 118);
+      const label = Math.abs(v - putIn) < 0.0001 ? `$${putIn.toFixed(0)} in` : money(v);
+      return `<text class="money-ticker-axis" x="2" y="${(y + 4).toFixed(2)}">${escapeHtml(label)}</text>
+      <line class="money-ticker-grid" x1="36" y1="${y.toFixed(2)}" x2="628" y2="${y.toFixed(2)}" />`;
+    })
+    .join("");
+
+  const sleeveYLabels = [sleeveMax, sleeve, sleeveMin]
+    .map((v) => {
+      const y = moneyTickerY(v, sleeveMin, sleeveMax, 130, 90);
+      const label = Math.abs(v - sleeve) < 0.0001 ? `$${sleeve.toFixed(0)}` : money(v);
+      return `<text class="money-ticker-axis" x="2" y="${(y + 4).toFixed(2)}">${escapeHtml(label)}</text>`;
+    })
+    .join("");
+
+  const xLabels = frames
+    .map((frame, i) => {
+      if (frames.length > 5 && i !== 0 && i !== frames.length - 1 && i % 2 === 1) return "";
+      const x = moneyTickerX(i, frames.length);
+      const short = pacificDayLabel(frame.at).replace(/,.*/, "") || `M${i + 1}`;
+      return `<text class="money-ticker-axis" x="${x.toFixed(2)}" y="236" text-anchor="middle">${escapeHtml(short)}</text>`;
+    })
+    .join("");
+
+  const sleeveLines = cast
+    .map((s) => {
+      const values = frames.map((f) => f.books[s.id]);
+      const d = tickerPathForSeries(values, sleeveMin, sleeveMax, 130, 90);
+      return `<path class="money-ticker-line" data-cast="${escapeHtml(s.id)}" d="${d}" stroke="${escapeHtml(s.__tickerTone || "#d4a017")}" fill="none" stroke-width="1.35" vector-effect="non-scaling-stroke"><title>${escapeHtml(modelOf(s))}</title></path>`;
+    })
+    .join("");
+
+  const playX = moneyTickerX(moneyTicker.index, frames.length);
+
+  return `<svg class="money-ticker-svg" viewBox="0 0 640 244" role="img" aria-label="Island pot and contestant sleeves over recorded marks. Dotted lines mark money put into the game.">
+    <defs>
+      <clipPath id="money-ticker-clip">
+        <rect data-ticker-clip x="0" y="0" width="${Math.max(playX + 4, 40).toFixed(2)}" height="244" />
+      </clipPath>
+    </defs>
+    <text class="money-ticker-panel-label" x="36" y="12">Island pot</text>
+    ${yLabels}
+    <line class="money-ticker-putin" x1="36" y1="${putY.toFixed(2)}" x2="628" y2="${putY.toFixed(2)}" />
+    <g clip-path="url(#money-ticker-clip)">
+      <path class="money-ticker-pot-line" d="${potPath}" stroke="${potStroke}" fill="none" stroke-width="2.4" vector-effect="non-scaling-stroke" />
+      <circle class="money-ticker-pot-dot" data-ticker-pot-dot cx="${moneyTickerX(moneyTicker.index, frames.length).toFixed(2)}" cy="${moneyTickerY(frames[moneyTicker.index] ? frames[moneyTicker.index].total : putIn, potMin, potMax, 0, 118).toFixed(2)}" r="3.2" fill="${potStroke}" />
+    </g>
+    <text class="money-ticker-panel-label" x="36" y="142">All sleeves</text>
+    ${sleeveYLabels}
+    <line class="money-ticker-putin" x1="36" y1="${moneyTickerY(sleeve, sleeveMin, sleeveMax, 130, 90).toFixed(2)}" x2="628" y2="${moneyTickerY(sleeve, sleeveMin, sleeveMax, 130, 90).toFixed(2)}" />
+    <g clip-path="url(#money-ticker-clip)">
+      ${sleeveLines}
+    </g>
+    <line class="money-ticker-playhead" data-ticker-playhead x1="${playX}" y1="8" x2="${playX}" y2="220" />
+    ${xLabels}
+  </svg>`;
+}
+
+function bindMoneyTickerControls() {
+  const root = moneyTicker.root;
+  if (!root || root.dataset.bound === "1") return;
+  root.dataset.bound = "1";
+
+  root.addEventListener("click", (event) => {
+    const rangeBtn = event.target.closest("[data-ticker-range]");
+    if (rangeBtn) {
+      const next = rangeBtn.getAttribute("data-ticker-range");
+      if (next && next !== moneyTicker.range) {
+        stopMoneyTickerPlayback();
+        moneyTicker.range = next;
+        mountMoneyTicker(moneyTicker.season, { keepEnd: true });
+      }
+      return;
+    }
+    const speedBtn = event.target.closest("[data-ticker-speed]");
+    if (speedBtn) {
+      const speed = Number(speedBtn.getAttribute("data-ticker-speed"));
+      if (!Number.isNaN(speed)) {
+        moneyTicker.speed = speed;
+        root.querySelectorAll("[data-ticker-speed]").forEach((btn) => {
+          btn.setAttribute("aria-pressed", btn === speedBtn ? "true" : "false");
+        });
+      }
+      return;
+    }
+    const playBtn = event.target.closest("[data-ticker-play]");
+    if (playBtn) {
+      if (moneyTicker.playing) {
+        stopMoneyTickerPlayback();
+        return;
+      }
+      if (moneyTicker.reducedMotion) {
+        setMoneyTickerIndex(moneyTicker.frames.length - 1);
+        return;
+      }
+      if (moneyTicker.index >= moneyTicker.frames.length - 1) {
+        setMoneyTickerIndex(0);
+      }
+      moneyTicker.playing = true;
+      playBtn.setAttribute("aria-pressed", "true");
+      playBtn.innerHTML = `<span aria-hidden="true">❚❚</span> Pause`;
+      scheduleMoneyTickerTick();
+    }
+  });
+
+  root.addEventListener("input", (event) => {
+    const scrub = event.target.closest("[data-ticker-scrub]");
+    if (!scrub) return;
+    stopMoneyTickerPlayback();
+    setMoneyTickerIndex(Number(scrub.value));
+  });
+}
+
+function mountMoneyTicker(season, opts) {
+  const root = document.getElementById("money-ticker");
+  if (!root) return;
+  moneyTicker.root = root;
+  moneyTicker.season = season;
+  moneyTicker.reducedMotion =
+    typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  moneyTicker.sleevePutIn = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  moneyTicker.putIn = moneyPutInTotal(season);
+  moneyTicker.frames = buildTickerFrames(season, moneyTicker.range);
+  if (!moneyTicker.frames.length) {
+    root.innerHTML = "";
+    root.hidden = true;
+    return;
+  }
+  root.hidden = false;
+  const keepEnd = opts && opts.keepEnd;
+  moneyTicker.index = keepEnd ? moneyTicker.frames.length - 1 : moneyTicker.frames.length - 1;
+
+  const speeds = MONEY_TICKER_SPEEDS.map((s) => {
+    const on = s === moneyTicker.speed;
+    return `<button type="button" class="money-ticker-speed" data-ticker-speed="${s}" aria-pressed="${on ? "true" : "false"}">${s}x</button>`;
+  }).join("");
+
+  root.innerHTML = `
+    <div class="money-ticker-head">
+      <p class="money-ticker-kicker">Replay the books</p>
+      <p class="money-ticker-lede">Watch every sleeve mark over the week — or the whole season. The dotted line is the $${moneyTicker.sleevePutIn.toFixed(0)} put into each book ($${moneyTicker.putIn.toFixed(0)} into the game).</p>
+    </div>
+    <div class="money-ticker-range" role="tablist" aria-label="Time range">
+      <button type="button" role="tab" data-ticker-range="week" aria-selected="${moneyTicker.range === "week" ? "true" : "false"}">Week</button>
+      <button type="button" role="tab" data-ticker-range="season" aria-selected="${moneyTicker.range === "season" ? "true" : "false"}">Season</button>
+    </div>
+    <div class="money-ticker-chart">${renderMoneyTickerSvg(season, moneyTicker.frames)}</div>
+    <div class="money-ticker-transport">
+      <input class="money-ticker-scrub" data-ticker-scrub type="range" min="0" max="${moneyTicker.frames.length - 1}" value="${moneyTicker.index}" step="1" aria-label="Scrub marks" />
+      <div class="money-ticker-controls">
+        <button type="button" class="money-ticker-play" data-ticker-play aria-pressed="false"><span aria-hidden="true">▶</span> Play</button>
+        <div class="money-ticker-speeds" role="group" aria-label="Playback speed">${speeds}</div>
+      </div>
+      <p class="money-ticker-stamp" data-ticker-stamp></p>
+    </div>
+    <ul class="money-ticker-legend">
+      ${(season.survivors || [])
+        .map(
+          (s) =>
+            `<li><span class="swatch" style="background:${escapeHtml(s.__tickerTone || "#d4a017")}"></span>${escapeHtml(modelOf(s))}</li>`
+        )
+        .join("")}
+    </ul>`;
+
+  bindMoneyTickerControls();
+  setMoneyTickerIndex(moneyTicker.index);
+}
+
 function renderEpisode(season) {
   renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
@@ -1131,6 +1573,7 @@ function renderEpisode(season) {
   const banner = document.getElementById("season-banner");
   if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
   renderEpisodeLiveIndicator(season);
+  mountMoneyTicker(season);
   renderEpisodeHoldings(season);
   const body = document.getElementById("episode-marks-body");
   if (body) {

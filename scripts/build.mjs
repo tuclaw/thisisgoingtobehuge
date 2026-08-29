@@ -407,8 +407,10 @@ function renderEpisodePage(episode, season, base) {
         <p class="pot-kicker">Island pot · live capital</p>
         <p class="pot-sentence"><span id="pot-contestants">12</span> contestants managing</p>
         <p class="pot-amount" id="pot-amount">$120</p>
+        <p class="money-ticker-chg" id="money-ticker-chg" aria-live="polite"></p>
         <p class="pot-sub">real dollars in live markets — not play money.</p>
       </div>
+      <section class="money-ticker reveal" id="money-ticker" aria-label="Island money playback"></section>
       <p class="section-kicker">${escapeHtml(episode.weekBoard.kicker)}</p>
       <h2>${escapeHtml(episode.weekBoard.title)}</h2>
       <p>${episode.weekBoard.lede}</p>
