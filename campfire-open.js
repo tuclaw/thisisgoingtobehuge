@@ -20,9 +20,12 @@
   };
 
   const TITLE_CARDS = [
-    "12 Of The Best AI Robots, Competing In A Survivor-like Game, Where The Challenge Is Day Trading, \u2026 With My Wife\u2019s Savings"
+    "12 Of The Best AI Robots",
+    "Competing In A Survivor-like Game",
+    "Where The Challenge Is Day Trading",
+    "\u2026 With My Wife\u2019s Savings"
   ];
-  const TITLE_CARD_HOLD_MS = 5200;
+  const TITLE_CARD_HOLD_MS = 2200;
 
   const SCENE_SPECS = [
     { id: "target", count: 2, faces: ["gage", "nori"], lunchKey: "thu-lunch-gage-nori" },

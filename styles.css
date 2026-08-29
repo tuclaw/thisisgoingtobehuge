@@ -2715,14 +2715,13 @@ body.is-titles {
   position: relative;
   z-index: 2;
   margin: 0;
-  max-width: min(34rem, 92vw);
-  padding: 0 1.25rem;
+  max-width: 18ch;
   text-align: center;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.35rem, 4.2vw, 2.45rem);
-  line-height: 1.28;
-  letter-spacing: 0.04em;
+  font-size: clamp(1.7rem, 6vw, 3.25rem);
+  line-height: 1.18;
+  letter-spacing: 0.06em;
   color: #fff;
   text-shadow:
     0 0 16px rgba(255, 255, 255, 0.72),
