@@ -1141,46 +1141,50 @@ function renderEpisode(season) {
   }
 }
 
-function formatTribalVotes(votes) {
-  if (votes == null) return "";
-  if (typeof votes === "string") return votes;
-  if (Array.isArray(votes)) {
-    return votes
-      .map((v) => {
-        if (v == null) return "";
-        if (typeof v === "string") return v;
-        if (typeof v === "object") {
-          const from = v.from || v.voter || v.by || "";
-          const forName = v.for || v.boot || v.target || v.vote || "";
-          const text = typeof v.text === "string" ? v.text : "";
-          if (from && text) return `${from} — ${text}`;
-          if (from && forName) return `${from} → ${forName}`;
-          if (forName) return String(forName);
-          return JSON.stringify(v);
-        }
-        return String(v);
-      })
-      .filter(Boolean)
-      .join("; ");
+function tallyFromVotes(votes) {
+  if (!votes) return null;
+  if (typeof votes === "object" && !Array.isArray(votes)) {
+    const entries = Object.entries(votes).filter(([, n]) => Number(n) > 0);
+    return entries.length ? entries : null;
   }
-  if (typeof votes === "object") {
-    return Object.entries(votes)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("; ");
+  if (!Array.isArray(votes)) return null;
+  const counts = new Map();
+  for (const v of votes) {
+    if (v == null) continue;
+    let name = "";
+    if (typeof v === "string") name = v;
+    else if (typeof v === "object") name = v.for || v.boot || v.target || v.vote || "";
+    if (!name) continue;
+    counts.set(name, (counts.get(name) || 0) + 1);
   }
-  return String(votes);
+  return counts.size ? [...counts.entries()] : null;
+}
+
+function formatTribalTally(entry) {
+  const pairs =
+    (entry.tally && typeof entry.tally === "object" && !Array.isArray(entry.tally)
+      ? Object.entries(entry.tally)
+      : null) || tallyFromVotes(entry.votes);
+  if (!pairs || !pairs.length) return "";
+  const sorted = [...pairs].sort((a, b) => Number(b[1]) - Number(a[1]) || String(a[0]).localeCompare(String(b[0])));
+  return sorted
+    .map(
+      ([name, n]) =>
+        `<li class="vote-tally-row"><span class="vote-tally-name">${escapeHtml(String(name))}</span><span class="vote-tally-count">${escapeHtml(String(n))}</span></li>`
+    )
+    .join("");
 }
 
 function formatTribalEntry(entry) {
-  const title = entry.title || entry.weekLabel || "Tribal";
   const boot = entry.bootName || entry.boot || entry.bootId || "—";
-  const voteText = formatTribalVotes(entry.votes);
-  const blocks = [entry.summary, voteText].filter(Boolean);
-  const detail = blocks.length ? blocks.join("\n") : "Votes recorded.";
-  return `<li>
-    <strong>${escapeHtml(title)}</strong>
-    <p class="boot-line">Voted off: <strong>${escapeHtml(String(boot))}</strong></p>
-    <p class="vote-detail">${escapeHtml(detail).replace(/\n/g, "<br />")}</p>
+  const tallyRows = formatTribalTally(entry);
+  const tallyHtml = tallyRows
+    ? `<ul class="vote-tally" aria-label="Votes">${tallyRows}</ul>`
+    : "";
+  return `<li class="tribal-vote-entry">
+    <p class="boot-kicker">The tribe has spoken</p>
+    <p class="boot-name">${escapeHtml(String(boot))}</p>
+    ${tallyHtml}
   </li>`;
 }
 
@@ -1190,11 +1194,11 @@ function wrapTribalSpoiler(innerHtml) {
     <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="tribal-spoiler-result">
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
       <span class="tribal-spoiler-cover-fallback">
-        <span class="spoiler-kicker">Spoiler alert</span>
-        <span class="spoiler-title">Tribal results</span>
-        <span class="spoiler-copy">Click to burn and reveal the vote — and who gets snuffed.</span>
+        <span class="spoiler-kicker">Spoiler</span>
+        <span class="spoiler-title">The vote</span>
+        <span class="spoiler-copy">Burn to reveal who goes home.</span>
       </span>
-      <span class="visually-hidden">Spoiler alert: tribal results. Click to burn and reveal the vote.</span>
+      <span class="visually-hidden">Spoiler: tribal results. Click to burn and reveal the vote.</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;

@@ -115,8 +115,11 @@ const expectedTexts = [
   if (vote.text !== expectedTexts[i]) fail("official vote text drifted at " + (i + 1));
 });
 if (entry.title !== "Season 1 Episode 1 · Friday Aug 28, 2026") fail("official title drifted");
-if (!app.includes("v.text") || !app.includes("entry.summary")) {
-  fail("formatTribalEntry must still read official summary and vote text");
+if (!app.includes("entry.tally") || !app.includes("boot-name") || !app.includes("vote-tally")) {
+  fail("formatTribalEntry must emphasize the boot and show the official tally only");
+}
+if (app.includes("entry.summary") && /blocks = \[entry\.summary/.test(app)) {
+  fail("do not dump the tribal summary into the spoiler reveal");
 }
 
 const lastHour = (season.events || []).find((event) => event.id === "s1e01-fri-lasthour");
