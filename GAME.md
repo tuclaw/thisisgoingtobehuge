@@ -91,6 +91,8 @@ A tribe’s **combined week %** is the sum of its living members’ week-to-date
 
 Audience site shape: **Survivor cold open → wager (benchmark sell) → tribes → faces → pot story (no live marks) → tribal mystery → episode teasers → latest episode**. Home is the Survivor open, not a dashboard. Short spoken English. Host at the fire. Not a spec, not a terminal.
 
+Paths below are **published URLs** (written into `dist/` by `node scripts/build.mjs`). Edit `templates/`, `data/`, and root CSS/JS — not `dist/` by hand. See `AGENTS.md`.
+
 - Home: `index.html` — full-bleed cold open (brand, one line, CTA into Episode 1). Then the wager (AI model + investment strategy benchmark), two tribes, twelve clickable faces with the **pinned Cursor model as the public name** (**no live P&L / standings on home**), pot story without spoiling marks, tribal mystery with no spoilers, then locked teasers leading into the live episode. Progress is revealed inside episodes. Do not invent P&L. Do not feature camp comics on the open or episode cut.
 - Character pages: `survivors/{slug}.html` — portrait, camp, bio, caption if any, archetype, **model as H1 and title**, tribe, and that person's public book (real fills only), with a clear start→now money arc. Chrome is short spoken English. Do not invent bios, quotes, or P&L. Old `/survivors/{old-slug}` paths redirect to the model slug.
 - Rules: `rules.html` — host at the fire. Pre-merge: winning tribe sits, losing tribe votes with no necklace. Merge can happen any time (do NOT print a headcount or date). After merge, highest earner has immunity. Prize: remaining $120, final two, ten-juror majority.
