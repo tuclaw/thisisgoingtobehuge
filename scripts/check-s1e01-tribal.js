@@ -75,11 +75,10 @@ expectedBooths.forEach(([slug, name, needle], i) => {
 });
 
 const chrome = [episode.location, episode.description, episode.heroNote, tribal.foldEm, tribal.foldTitle, cut.title, cut.body]
-  .concat((episode.rail || []).map((item) => `${item.day} ${item.sub}`))
   .concat((episode.spine || []).map((item) => item.text))
   .join("\n");
 if (/voted off|joins the jury|tally 5|5–1|5-1/i.test(chrome)) {
-  fail("do not print the boot or tally in hero/rail/open copy");
+  fail("do not print the boot or tally in hero/open copy");
 }
 ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"].forEach((nick) => {
   const boothChrome = (prevote.items || []).map((item) => item.name).join(" ");
@@ -171,7 +170,8 @@ if (html) {
   if (/Voted off:|joins the jury|Tally 5–1/.test(open)) {
     fail("built open copy leaked the boot before the spoiler");
   }
-  if (!html.includes('href="#tribal-focus"')) fail("skip/rail must point at #tribal-focus after the vote");
+  if (!html.includes('href="#tribal-focus"')) fail("skip/scroll cue must point at #tribal-focus after the vote");
+  if (html.includes("day-rail")) fail("episode page must not render the day-rail TOC");
 }
 
 console.log("s1e01 tribal checks passed (post-vote focus above books, collapsed prevote, spoiler intact)");

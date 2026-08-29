@@ -553,28 +553,12 @@ function episodeFocusId() {
   return "week-board";
 }
 
-function syncDayRail() {
-  const fallback = `#${episodeFocusId()}`;
-  const hash = (window.location.hash || fallback).replace(/^#/, "") || episodeFocusId();
-  const target = document.getElementById(hash);
-  document.querySelectorAll(".day-rail a").forEach((a) => {
-    const id = (a.getAttribute("href") || "").replace(/^#/, "");
-    const section = id ? document.getElementById(id) : null;
-    const on =
-      id === hash ||
-      (section && target && (section === target || section.contains(target) || target.contains(section)));
-    if (on) a.setAttribute("aria-current", "location");
-    else a.removeAttribute("aria-current");
-  });
-}
-
 function openFoldForHash() {
   const hash = (window.location.hash || "").replace(/^#/, "");
   if (hash) {
     const el = document.getElementById(hash);
     if (el) openFoldForTarget(el);
   }
-  syncDayRail();
 }
 
 function initDayFolds() {
@@ -583,14 +567,6 @@ function initDayFolds() {
   if (initDayFolds.bound) return;
   initDayFolds.bound = true;
   window.addEventListener("hashchange", openFoldForHash);
-  document.querySelectorAll(".day-rail a").forEach((a) => {
-    a.addEventListener("click", () => {
-      const href = a.getAttribute("href") || "";
-      const id = href.charAt(0) === "#" ? href.slice(1) : "";
-      const el = id ? document.getElementById(id) : null;
-      if (el) openFoldForTarget(el);
-    });
-  });
 }
 
 function totemSvg(survivor, tribe) {

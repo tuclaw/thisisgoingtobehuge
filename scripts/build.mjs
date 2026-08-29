@@ -287,14 +287,6 @@ function renderEpisodePage(episode, season, base) {
       ? `\n  <script src="e01-thursday-dinner.js"></script>`
       : ""
   ].join("");
-  let railItems = episode.rail || [];
-  if (votePosted) {
-    const rest = railItems.filter((item) => item.href !== "#tribal" && item.href !== "#tribal-focus");
-    railItems = [{ href: "#tribal-focus", day: "Tribal", sub: "The vote" }, ...rest];
-  }
-  const rail = railItems
-    .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.day)}<span>${escapeHtml(item.sub)}</span></a>`)
-    .join("\n      ");
   const spine = (episode.spine || [])
     .map((item) => `<li><span>${escapeHtml(item.day)}</span> ${escapeHtml(item.text)}</li>`)
     .join("\n      ");
@@ -399,10 +391,6 @@ function renderEpisodePage(episode, season, base) {
   </section>
 
   <div class="wrap" id="episode-root">
-    <nav class="day-rail" aria-label="Episode days">
-      ${rail}
-    </nav>
-
     ${focusBlock}<article class="beat beat-gold" id="week-board">
       <div class="island-pot episode-pot reveal" id="episode-island-pot" aria-live="polite">
         <p class="pot-kicker">Island pot · live capital</p>
