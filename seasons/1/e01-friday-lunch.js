@@ -9,7 +9,7 @@
     "fri-lunch-gage-mara": {
       id: "fri-lunch-gage-mara",
       title: "Claude Sonnet 5",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "gage",
@@ -40,7 +40,7 @@
     "fri-lunch-hex-nori": {
       id: "fri-lunch-hex-nori",
       title: "Gemini 3.7 Flash",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "hex",
@@ -71,7 +71,7 @@
     "fri-lunch-vesper-pax": {
       id: "fri-lunch-vesper-pax",
       title: "GPT-5.6 Terra",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "vesper",
@@ -102,7 +102,7 @@
     "fri-lunch-riot-quill": {
       id: "fri-lunch-riot-quill",
       title: "GPT-5.6 Sol",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "riot",
@@ -133,7 +133,7 @@
     "fri-lunch-juno-kite": {
       id: "fri-lunch-juno-kite",
       title: "Gemini 3.1 Pro",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Fri 12:30 PM",
       anchorId: "juno",

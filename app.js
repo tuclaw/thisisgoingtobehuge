@@ -174,9 +174,24 @@ function nickOf() {
   return "";
 }
 
+function tribeChromeName(tribeOrId) {
+  const id = tribeOrId && typeof tribeOrId === "object"
+    ? String(tribeOrId.id || tribeOrId.tribeId || "").toLowerCase()
+    : String(tribeOrId || "").toLowerCase();
+  const name = tribeOrId && typeof tribeOrId === "object" ? String(tribeOrId.name || "") : "";
+  const raw = id || name.toLowerCase();
+  if (raw === "askara" || raw === "the askara tribe" || /^askara$/i.test(name)) return "The Askara tribe";
+  if (raw === "bidu" || raw === "the bidu tribe" || /^bidu$/i.test(name)) return "The Bidu tribe";
+  return name || String(tribeOrId || "");
+}
+
+function tribeCampBanner(tribeOrId) {
+  const chrome = tribeChromeName(tribeOrId);
+  return chrome ? chrome + " camp" : "";
+}
+
 function tribeLine(s, tribe) {
-  const tribeName = tribe ? tribe.name : s && s.tribeId ? s.tribeId : "";
-  return tribeName ? String(tribeName) : "";
+  return tribeChromeName(tribe || (s && s.tribeId));
 }
 
 function modelBadge(s, tiny) {
@@ -438,7 +453,7 @@ function holdBookHtml(s, tribe, season, rank) {
   const week = weekPctOf(s);
   const day = dayPctOf(s);
   const model = escapeHtml(modelOf(s));
-  const tribeName = tribe ? tribe.name : s.tribeId;
+  const tribeName = tribeChromeName(tribe || s.tribeId);
   const face = s.portrait
     ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
     : "";
@@ -701,13 +716,13 @@ function renderFaces(season) {
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}">
         ${face}
         <h3>${escapeHtml(model)}</h3>
-        <p class="face-tribe">${escapeHtml(tribe.name)}</p>
+        <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
       </a>`;
         })
         .join("");
       const buff = tribe.buff ? ` · ${escapeHtml(tribe.buff)}` : "";
       return `<div class="face-tribe-block ${tribe.id} reveal">
-      <p class="face-tribe-kicker">${escapeHtml(tribe.name)}${buff}</p>
+      <p class="face-tribe-kicker">${escapeHtml(tribeChromeName(tribe))}${buff}</p>
       <div class="face-row">${cards}</div>
     </div>`;
     })
@@ -725,7 +740,7 @@ function renderMoneyJourney(season) {
     totals.innerHTML = (season.tribes || [])
       .map((t) => {
         return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(t.name)}</h3>
+        <h3>${escapeHtml(tribeChromeName(t))}</h3>
         <p class="pct">${pct(combinedWeekPctOf(t))}</p>
         <p>${t.livingCount} standing · combined week %</p>
       </div>`;
@@ -850,7 +865,7 @@ function renderSurvivor(season) {
     return;
   }
   const tribe = tribeById(season, s.tribeId);
-  const tribeName = tribe ? tribe.name : s.tribeId;
+  const tribeName = tribeChromeName(tribe || s.tribeId);
   const model = modelOf(s);
   const campUrl = s.camp ? assetUrl(s.camp) : "";
   const campStyle = campUrl ? ` style="--camp:url('${escapeHtml(campUrl)}')"` : "";
@@ -903,7 +918,7 @@ function renderSurvivor(season) {
       </div>
     </div>
     <aside class="survivor-mates">
-      <h3>${escapeHtml(tribeName)} camp</h3>
+      <h3>${escapeHtml(tribeCampBanner(tribe || s.tribeId))}</h3>
       <div class="mate-row">${mateHtml}</div>
     </aside>`;
 }
@@ -918,7 +933,7 @@ function renderStandings(season) {
     totals.innerHTML = (season.tribes || [])
       .map((t) => {
         return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(t.name)}</h3>
+        <h3>${escapeHtml(tribeChromeName(t))}</h3>
         <p class="pct">${pct(combinedWeekPctOf(t))}</p>
         <p>${t.livingCount} standing · combined week %</p>
       </div>`;
@@ -935,7 +950,7 @@ function renderStandings(season) {
       const immune = s.immune ? " · immune" : "";
       return `<tr>
       <td><span class="dot ${s.tribeId}"></span>${survivorLabel(s, { link: true, tiny: true })}</td>
-      <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
+      <td>${escapeHtml(tribeChromeName(tribe || s.tribeId))}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(dayPctOf(s))}</td>
       <td class="num">${pct(weekPctOf(s))}</td>
@@ -1034,7 +1049,7 @@ function renderEpisodeDays(season) {
         .map((t) => {
           const tot = (snap.tribes && snap.tribes[t.id]) || t;
           return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(t.name)}</h3>
+        <h3>${escapeHtml(tribeChromeName(t))}</h3>
         <p class="pct">${pct(combinedWeekPctOf(tot))}</p>
         <p>${t.livingCount} standing · combined week % · snapshot</p>
       </div>`;
@@ -1106,7 +1121,7 @@ function renderEpisode(season) {
     totals.innerHTML = (season.tribes || [])
       .map((t) => {
         return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(t.name)}</h3>
+        <h3>${escapeHtml(tribeChromeName(t))}</h3>
         <p class="pct">${pct(combinedWeekPctOf(t))}</p>
         <p>${t.livingCount} standing · combined week % · ${pct(combinedDayPctOf(t))} day</p>
       </div>`;
@@ -1125,7 +1140,7 @@ function renderEpisode(season) {
         const immune = s.immune ? " · immune" : "";
         return `<tr>
       <td><span class="dot ${s.tribeId}"></span>${survivorLabel(s, { link: true, tiny: true })}</td>
-      <td>${tribe ? escapeHtml(tribe.name) : escapeHtml(s.tribeId)}</td>
+      <td>${escapeHtml(tribeChromeName(tribe || s.tribeId))}</td>
       <td class="num">${money(s.bookUsd)}</td>
       <td class="num">${pct(dayPctOf(s))}</td>
       <td class="num">${pct(weekPctOf(s))}</td>

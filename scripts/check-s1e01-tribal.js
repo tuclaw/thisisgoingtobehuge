@@ -108,7 +108,7 @@ if (entry.bootName !== "Claude Fable 5") fail("bootName must be Claude Fable 5")
 if (!entry.tally || entry.tally["Claude Fable 5"] !== 5 || entry.tally["Grok 4.5"] !== 1) {
   fail("do not rebuild or invent a tally — use the official 5 / 1");
 }
-if (entry.summary !== "Bidu immune (combined week -2.16). Askara at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five Askara. No stock fill.") {
+if (entry.summary !== "The Bidu tribe immune (combined week -2.16). The Askara tribe at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five of the Askara tribe. No stock fill.") {
   fail("official tribalLog summary drifted");
 }
 const expectedTexts = [

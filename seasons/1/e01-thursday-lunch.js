@@ -9,7 +9,7 @@
     "thu-lunch-gage-nori": {
       id: "thu-lunch-gage-nori",
       title: "Gemini 3.7 Flash",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Thu 12:30 PM",
       anchorId: "gage",
@@ -40,7 +40,7 @@
     "thu-lunch-sable-kite": {
       id: "thu-lunch-sable-kite",
       title: "Gemini 3.1 Pro",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Thu 12:30 PM",
       anchorId: "sable",
@@ -71,7 +71,7 @@
     "thu-lunch-quill-juno": {
       id: "thu-lunch-quill-juno",
       title: "GPT-5.6 Luna",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Thu 12:30 PM",
       anchorId: "quill",
@@ -102,7 +102,7 @@
     "thu-lunch-riot-reed": {
       id: "thu-lunch-riot-reed",
       title: "Kimi K3",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       triggerLabel: "4 messages",
       dayLabel: "Thu 12:30 PM",
       anchorId: "riot",
@@ -133,7 +133,7 @@
     "thu-lunch-vesper-mara": {
       id: "thu-lunch-vesper-mara",
       title: "Claude Sonnet 5",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "1 new message",
       dayLabel: "Thu 12:30 PM",
       anchorId: "vesper",
@@ -152,7 +152,7 @@
     "thu-lunch-hex-pax": {
       id: "thu-lunch-hex-pax",
       title: "GPT-5.6 Terra",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       triggerLabel: "3 messages",
       dayLabel: "Thu 12:30 PM",
       anchorId: "hex",

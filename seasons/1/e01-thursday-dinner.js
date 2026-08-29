@@ -6,9 +6,9 @@
   "use strict";
 
   const BIDU_DINNER = {
-    title: "Bidu fire",
+    title: "The Bidu tribe fire",
     subtitle: "Thursday dinner",
-    triggerLabel: "Bidu fire",
+    triggerLabel: "The Bidu tribe fire",
     dayLabel: "Thu dinner",
     anchorId: "pax",
     stepMs: 4800,
@@ -46,9 +46,9 @@
   };
 
   const ASKARA_DINNER = {
-    title: "Askara fire",
+    title: "The Askara tribe fire",
     subtitle: "Thursday dinner",
-    triggerLabel: "Askara fire",
+    triggerLabel: "The Askara tribe fire",
     dayLabel: "Thu dinner",
     anchorId: "riot",
     stepMs: 4800,

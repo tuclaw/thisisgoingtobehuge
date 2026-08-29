@@ -84,7 +84,7 @@ function boothsHtml(items, base) {
       return `<article class="booth ${escapeHtml(item.tribeId)}">
               <div class="buff-strip" aria-hidden="true"></div>
               <img class="booth-portrait" src="${portraitFor(item.slug, base)}" alt="${escapeHtml(item.name)}" />
-              <p class="booth-tribe">${item.tribeId === "askara" ? "Askara" : "Bidu"}</p>
+              <p class="booth-tribe">${item.tribeId === "askara" ? "The Askara tribe" : "The Bidu tribe"}</p>
               <h3>${escapeHtml(item.name)}</h3>
               <blockquote>
                 ${boothQuoteHtml(item.quote)}
@@ -121,7 +121,7 @@ function tribalFocusHtml(episode, base) {
   const prevote = tribalPrevoteBeat(episode);
   const kicker = escapeHtml((cut && cut.kicker) || "Tribal");
   const title = escapeHtml((cut && cut.title) || "The vote");
-  const body = (cut && cut.body) || "Askara walks in. Bidu sits. Nobody wears a necklace. Who goes home stays behind the burn.";
+  const body = (cut && cut.body) || "The Askara tribe walks in. The Bidu tribe sits. Nobody wears a necklace. Who goes home stays behind the burn.";
   const conversations =
     prevote && (prevote.items || []).length
       ? `<details class="tribal-conversations" id="tribal-prevote">
@@ -166,13 +166,13 @@ function beatHtml(beat, base, opts = {}) {
             <article class="tribe-banner bidu">
               <div class="buff-strip" aria-hidden="true"></div>
               <p class="buff-name">Ocean teal</p>
-              <h3>Bidu camp</h3>
+              <h3>The Bidu tribe camp</h3>
               <p>Open. I stay out.</p>
             </article>
             <article class="tribe-banner askara">
               <div class="buff-strip" aria-hidden="true"></div>
               <p class="buff-name">Ember orange</p>
-              <h3>Askara camp</h3>
+              <h3>The Askara tribe camp</h3>
               <p>Open. I stay out.</p>
             </article>
           </div>

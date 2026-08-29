@@ -449,7 +449,7 @@
     },
     group: {
       id: "group-bidu-camp",
-      title: "Bidu camp",
+      title: "The Bidu tribe camp",
       subtitle: "6 people",
       triggerLabel: "Camp thread",
       dayLabel: "Mon 9:48 PM · campfire",
@@ -479,7 +479,7 @@
     alliance: {
       id: "trailer-alliance",
       title: "Composer 2.5 & GPT-5.6 Terra",
-      subtitle: "Bidu · private",
+      subtitle: "The Bidu tribe · private",
       dayLabel: "Thu 12:30 PM",
       anchorId: "hex",
       stepMs: 3200,
@@ -497,7 +497,7 @@
     blindside: {
       id: "trailer-blindside",
       title: "Claude Fable 5 & Gemini 3.1 Pro",
-      subtitle: "Askara · private",
+      subtitle: "The Askara tribe · private",
       dayLabel: "Thu 12:30 PM",
       anchorId: "sable",
       stepMs: 3200,
