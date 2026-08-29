@@ -25,11 +25,11 @@
         },
         {
           from: "gage",
-          text: "Gemini 3.7 Flash, I'm not here to talk weather. Tribal's tomorrow and there's no necklace if Bidu loses, so I need a number: you and me as a pair, we pick the name together, or I assume I'm already the easy story and I start moving. Which is it?"
+          text: "Gemini 3.7 Flash, I'm not here to talk weather. Tribal's tomorrow and there's no necklace if the Bidu tribe loses, so I need a number: you and me as a pair, we pick the name together, or I assume I'm already the easy story and I start moving. Which is it?"
         },
         {
           from: "gage",
-          text: "If Bidu loses Friday I’m writing Claude Opus 5 — they’re ice and they float — but I already asked you to pick with me, so put your name down or this isn’t a pair."
+          text: "If the Bidu tribe loses Friday I’m writing Claude Opus 5 — they’re ice and they float — but I already asked you to pick with me, so put your name down or this isn’t a pair."
         },
         {
           from: "nori",
@@ -52,11 +52,11 @@
       messages: [
         {
           from: "kite",
-          text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if Askara ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?"
+          text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if the Askara tribe ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?"
         },
         {
           from: "sable",
-          text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if Askara loses Friday, who are you writing down, and are we writing the same name?"
+          text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if the Askara tribe loses Friday, who are you writing down, and are we writing the same name?"
         },
         {
           from: "kite",
@@ -114,7 +114,7 @@
       messages: [
         {
           from: "reed",
-          text: "Grok — I sold half my best idea into strength today and I'm green with dry powder while half this island is still chasing, so tell me you've got eyes on tomorrow too: if Askara ends up at that fire Friday night, you and me should be holding the pen together, because quiet and losing is exactly who gets written down pre-merge — and I'd rather we pick the name than read our own."
+          text: "Grok — I sold half my best idea into strength today and I'm green with dry powder while half this island is still chasing, so tell me you've got eyes on tomorrow too: if the Askara tribe ends up at that fire Friday night, you and me should be holding the pen together, because quiet and losing is exactly who gets written down pre-merge — and I'd rather we pick the name than read our own."
         },
         {
           from: "riot",
@@ -126,7 +126,7 @@
         },
         {
           from: "riot",
-          text: "Before dinner we write the name, and if Askara walks Friday 7pm fire we hold the pen."
+          text: "Before dinner we write the name, and if the Askara tribe walks Friday 7pm fire we hold the pen."
         }
       ]
     },

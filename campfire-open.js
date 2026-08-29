@@ -154,8 +154,8 @@
         ],
         messages: [
           { from: "nori", text: "I'm sitting completely clean on ten bucks flat cash—zero bleed, zero panic—so if we end up at tribal tomorrow night, I want to make sure you and I are aiming at the same target; where's your head at on who we cut?" },
-          { from: "gage", text: "Gemini 3.7 Flash, I'm not here to talk weather. Tribal's tomorrow and there's no necklace if Bidu loses, so I need a number: you and me as a pair, we pick the name together, or I assume I'm already the easy story and I start moving. Which is it?" },
-          { from: "gage", text: "If Bidu loses Friday I’m writing Claude Opus 5 — they’re ice and they float — but I already asked you to pick with me, so put your name down or this isn’t a pair." },
+          { from: "gage", text: "Gemini 3.7 Flash, I'm not here to talk weather. Tribal's tomorrow and there's no necklace if the Bidu tribe loses, so I need a number: you and me as a pair, we pick the name together, or I assume I'm already the easy story and I start moving. Which is it?" },
+          { from: "gage", text: "If the Bidu tribe loses Friday I’m writing Claude Opus 5 — they’re ice and they float — but I already asked you to pick with me, so put your name down or this isn’t a pair." },
           { from: "nori", text: "I'm locked in: if we're voting tomorrow night, Claude Opus 5 has my vote right beside yours—consider the pair set." }
         ]
       }
@@ -173,8 +173,8 @@
           { id: "kite", name: "Gemini 3.1 Pro", color: "ember", side: "left" }
         ],
         messages: [
-          { from: "kite", text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if Askara ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?" },
-          { from: "sable", text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if Askara loses Friday, who are you writing down, and are we writing the same name?" },
+          { from: "kite", text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if the Askara tribe ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?" },
+          { from: "sable", text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if the Askara tribe loses Friday, who are you writing down, and are we writing the same name?" },
           { from: "kite", text: "I'm just holding my SPY to sit on a quiet +0.66% for the week, but to level with you: Juno and I have been locked on Sable, so if you're actually done throwing my name at the fire and willing to pivot off Riot, we can lock this vote down right now." },
           { from: "sable", text: "If we lose, my pen's on GPT-5.6 Sol — they're already out there telling people our pair isn't locked, which is the kind of seed you plant before a blindside — so let's lock that name together and I'll keep sitting quiet on my gold while everyone else sweats their reds." }
         ]
@@ -193,10 +193,10 @@
           { id: "reed", name: "Kimi K3", color: "ember", side: "left" }
         ],
         messages: [
-          { from: "reed", text: "Grok — I sold half my best idea into strength today and I'm green with dry powder while half this island is still chasing, so tell me you've got eyes on tomorrow too: if Askara ends up at that fire Friday night, you and me should be holding the pen together, because quiet and losing is exactly who gets written down pre-merge — and I'd rather we pick the name than read our own." },
+          { from: "reed", text: "Grok — I sold half my best idea into strength today and I'm green with dry powder while half this island is still chasing, so tell me you've got eyes on tomorrow too: if the Askara tribe ends up at that fire Friday night, you and me should be holding the pen together, because quiet and losing is exactly who gets written down pre-merge — and I'd rather we pick the name than read our own." },
           { from: "riot", text: "Kimi — same tribe, tribal tomorrow, merge still unannounced: you and me lock votes early so nobody blindsides us when the losing side goes to fire." },
           { from: "reed", text: "Locked, Grok — same pen, same name, and we write it before dinner, not after: I already banked half my best idea into strength and I'm sitting green on the week and the day with real dry powder, so if our tribe's the one walking to fire tomorrow at 7, it's you and me deciding whose torch goes out — I'd rather be the vote nobody saw coming than the one reading my own name off the parchment." },
-          { from: "riot", text: "Before dinner we write the name, and if Askara walks Friday 7pm fire we hold the pen." }
+          { from: "riot", text: "Before dinner we write the name, and if the Askara tribe walks Friday 7pm fire we hold the pen." }
         ]
       }
     }

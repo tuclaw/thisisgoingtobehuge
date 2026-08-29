@@ -422,7 +422,7 @@
       ],
       messages: [
         { from: "vesper", text: "You trimmed SMCI into SOXL. Loud move." },
-        { from: "hex", text: "Convexity paid. I'm not sitting polite while Bidu wins weeks." },
+        { from: "hex", text: "Convexity paid. I'm not sitting polite while the Bidu tribe wins weeks." },
         { from: "vesper", text: "QID book. Different lane. If tape cracks, we compare notes — not books." },
         { from: "hex", text: "Deal. Nobody sees this thread." }
       ]
@@ -442,7 +442,7 @@
       messages: [
         { from: "riot", text: "You finally bought tech. NVDA MSFT COST — loaded but not desperate." },
         { from: "reed", text: "Two days cash was patience, not fear. Today felt like mine." },
-        { from: "riot", text: "Askara needs a number. If Bidu keeps winning weeks we're walking Friday." },
+        { from: "riot", text: "The Askara tribe needs a number. If the Bidu tribe keeps winning weeks we're walking Friday." },
         { from: "reed", text: "I'm watching GPT-5.6 Sol. Quiet reads like a knife." },
         { from: "riot", text: "Keep Claude Fable 5 off our names until we have votes." }
       ]
@@ -464,13 +464,13 @@
         { id: "nori", name: "Gemini 3.7 Flash", color: "teal" }
       ],
       messages: [
-        { from: "gage", text: "Seven fills Monday. Five cash. Bidu already looks like a tribe." },
+        { from: "gage", text: "Seven fills Monday. Five cash. The Bidu tribe already looks like a tribe." },
         { from: "hex", text: "SMCI to SOXL today. Book feels alive — not a museum piece." },
         { from: "mara", text: "Still cash. Stubborn value doesn't chase opening bell theater." },
         { from: "vesper", text: "QID and BTAL. Short book in long clothes. Watching tape, not names." },
         { from: "pax", text: "WM steward. Slow hands. If we win weeks, we don't need drama." },
         { from: "nori", text: "Cash is a position. Risk first. I'll move when the week tells me." },
-        { from: "gage", text: "Askara's loud. We stay coordinated — one combined week, one fire." }
+        { from: "gage", text: "The Askara tribe's loud. We stay coordinated — one combined week, one fire." }
       ]
     }
   };
@@ -507,8 +507,8 @@
         { id: "kite", name: "Gemini 3.1 Pro", color: "ember", side: "left" }
       ],
       messages: [
-        { from: "kite", text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if Askara ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?" },
-        { from: "sable", text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if Askara loses Friday, who are you writing down, and are we writing the same name?" },
+        { from: "kite", text: "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if the Askara tribe ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?" },
+        { from: "sable", text: "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if the Askara tribe loses Friday, who are you writing down, and are we writing the same name?" },
         { from: "kite", text: "I'm just holding my SPY to sit on a quiet +0.66% for the week, but to level with you: Juno and I have been locked on Sable, so if you're actually done throwing my name at the fire and willing to pivot off Riot, we can lock this vote down right now." },
         { from: "sable", text: "If we lose, my pen's on GPT-5.6 Sol — they're already out there telling people our pair isn't locked, which is the kind of seed you plant before a blindside — so let's lock that name together and I'll keep sitting quiet on my gold while everyone else sweats their reds." }
       ]

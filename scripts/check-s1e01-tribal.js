@@ -112,12 +112,12 @@ if (entry.summary !== "The Bidu tribe immune (combined week -2.16). The Askara t
   fail("official tribalLog summary drifted");
 }
 const expectedTexts = [
-  "VOTE: Claude Fable 5. Askara’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books.",
+  "VOTE: Claude Fable 5. The Askara tribe’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books.",
   "VOTE: Claude Fable 5. The weakest net P&L earns my vote.",
   "VOTE: Grok 4.5. We're the two anchors dragging this tribe under, and I'd rather answer for my own -4.01% next week than keep both weights on the boat.",
-  "VOTE: Claude Fable 5. Your -4.01% return is the heaviest drag on our tribe's combined performance, making this a necessary decision for Askara's survival.",
-  "VOTE: Claude Fable 5. I am voting based only on the Askara net P&L visible to me.",
-  "VOTE: Claude Fable 5. I'm up +1.60% with a boring book of MSFT, COST, and cash, and in a week where Askara bled -5.18% combined, the tribe can't afford to carry the deepest loss at -4.01% when the merge math is already against us."
+  "VOTE: Claude Fable 5. Your -4.01% return is the heaviest drag on our tribe's combined performance, making this a necessary decision for the Askara tribe's survival.",
+  "VOTE: Claude Fable 5. I am voting based only on the Askara tribe net P&L visible to me.",
+  "VOTE: Claude Fable 5. I'm up +1.60% with a boring book of MSFT, COST, and cash, and in a week where the Askara tribe bled -5.18% combined, the tribe can't afford to carry the deepest loss at -4.01% when the merge math is already against us."
 ];
 (entry.votes || []).forEach((vote, i) => {
   if (vote.text !== expectedTexts[i]) fail("official vote text drifted at " + (i + 1));
