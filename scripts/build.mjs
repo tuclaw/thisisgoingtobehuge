@@ -464,6 +464,8 @@ function copyStatic() {
     if (existsSync(src)) cpSync(src, join(dist, file));
   }
   cpSync(join(root, "cast"), join(dist, "cast"), { recursive: true });
+  const demos = join(root, "demos");
+  if (existsSync(demos)) cpSync(demos, join(dist, "demos"), { recursive: true });
   const diagrams = join(root, "diagrams");
   if (existsSync(diagrams)) cpSync(diagrams, join(dist, "diagrams"), { recursive: true });
   mkdirSync(join(dist, "seasons/1"), { recursive: true });
