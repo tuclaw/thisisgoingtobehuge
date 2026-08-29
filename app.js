@@ -1204,10 +1204,10 @@ function wrapTribalSpoiler(innerHtml) {
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
       <span class="tribal-spoiler-cover-fallback">
         <span class="spoiler-kicker">Spoiler</span>
-        <span class="spoiler-title">The vote</span>
+        <span class="spoiler-title">Click to Reveal the Vote</span>
         <span class="spoiler-copy">Burn to reveal who goes home.</span>
       </span>
-      <span class="visually-hidden">Spoiler: tribal results. Click to burn and reveal the vote.</span>
+      <span class="visually-hidden">Spoiler: tribal results. Click to reveal the vote.</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;
