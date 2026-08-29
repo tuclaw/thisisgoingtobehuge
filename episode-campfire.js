@@ -272,6 +272,7 @@
     btn.style.top = pos.top;
     btn.style.setProperty("--i", String(index));
     btn.dataset.id = conversation.id || ("thread-" + index);
+    btn.dataset.slot = String(slot % SLOT_POSITIONS.length);
     const names = (conversation.participants || []).map((p) => p.name || p.id).filter(Boolean);
     btn.setAttribute(
       "aria-label",
