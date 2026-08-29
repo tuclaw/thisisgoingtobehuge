@@ -213,7 +213,17 @@ if (!page || !page.webSocketDebuggerUrl) {
   throw new Error("No Chrome page target");
 }
 
-const ws = new WebSocket(page.webSocketDebuggerUrl);
+/* Node 22+ exposes WebSocket globally. CI used to pin Node 20, which does not. */
+const WS = globalThis.WebSocket;
+if (typeof WS !== "function") {
+  chrome.kill("SIGKILL");
+  server.close();
+  throw new Error(
+    "WebSocket is not defined (need Node 22+). Current: " + process.version
+  );
+}
+
+const ws = new WS(page.webSocketDebuggerUrl);
 await new Promise((resolve, reject) => {
   ws.addEventListener("open", () => resolve(), { once: true });
   ws.addEventListener("error", (event) => reject(event.error || new Error("WebSocket error")), { once: true });
