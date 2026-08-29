@@ -26,6 +26,13 @@
     "./conversations.json",
     "seasons/1/conversations.json"
   ];
+  /* Day-tape maps published by episode beat scripts (newest first preference). */
+  const LIVE_FEED_GLOBALS = [
+    "FRIDAY_LUNCH_CONVERSATIONS",
+    "THURSDAY_DINNER_CONVERSATIONS",
+    "THURSDAY_LUNCH_CONVERSATIONS"
+  ];
+  const DOW = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
 
   function prefersReducedMotion() {
     if (global.CampfireEngine && typeof global.CampfireEngine.prefersReducedMotion === "function") {
@@ -99,6 +106,92 @@
       else paths.push(p);
     });
     return paths;
+  }
+
+  function conversationTimeScore(conversation) {
+    if (conversation && typeof conversation.at === "string") {
+      const parsed = Date.parse(conversation.at);
+      if (!isNaN(parsed)) return parsed;
+    }
+    const raw = String((conversation && conversation.dayLabel) || "")
+      .split("·")[0]
+      .trim();
+    const match = raw.match(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b(?:\s+(.+))?$/i);
+    if (!match) return 0;
+    const day = DOW[match[1].toLowerCase()] || 0;
+    const rest = String(match[2] || "")
+      .trim()
+      .toLowerCase();
+    let mins = 0;
+    if (rest === "dinner") mins = 19 * 60;
+    else if (rest === "lunch") mins = 12 * 60 + 30;
+    else {
+      const time = rest.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/i);
+      if (time) {
+        let hour = parseInt(time[1], 10);
+        const minute = parseInt(time[2], 10);
+        const ap = String(time[3] || "").toLowerCase();
+        if (ap === "pm" && hour < 12) hour += 12;
+        if (ap === "am" && hour === 12) hour = 0;
+        mins = hour * 60 + minute;
+      }
+    }
+    /* Episode-week relative score: later weekday + clock wins. */
+    return day * 1440 + mins;
+  }
+
+  function sortNewestFirst(list) {
+    return (list || []).slice().sort(function (a, b) {
+      const diff = conversationTimeScore(b) - conversationTimeScore(a);
+      if (diff !== 0) return diff;
+      return String((b && b.id) || "").localeCompare(String((a && a.id) || ""));
+    });
+  }
+
+  function latestDayConversations(list) {
+    const sorted = sortNewestFirst(list);
+    if (!sorted.length) return sorted;
+    const topDay = Math.floor(conversationTimeScore(sorted[0]) / 1440);
+    return sorted.filter(function (c) {
+      return Math.floor(conversationTimeScore(c) / 1440) === topDay;
+    });
+  }
+
+  function collectLiveConversations() {
+    const out = [];
+    LIVE_FEED_GLOBALS.forEach(function (key) {
+      const map = global[key];
+      if (!map || typeof map !== "object") return;
+      Object.keys(map).forEach(function (id) {
+        const raw = map[id];
+        if (!raw || typeof raw !== "object") return;
+        const next = Object.assign({}, raw);
+        if (!next.id) next.id = id;
+        if (!Array.isArray(next.messages) || !next.messages.length) return;
+        out.push(next);
+      });
+    });
+    return out;
+  }
+
+  function mergeConversations(feedList, liveList) {
+    const byId = {};
+    const order = [];
+    function add(conversation) {
+      if (!conversation || !conversation.id) return;
+      if (!byId[conversation.id]) order.push(conversation.id);
+      byId[conversation.id] = conversation;
+    }
+    (feedList || []).forEach(add);
+    /* Live day tapes win on id collision — they are the exact host cut. */
+    (liveList || []).forEach(add);
+    return order.map(function (id) {
+      return byId[id];
+    });
+  }
+
+  function resolveLatestConversations(feedList) {
+    return latestDayConversations(mergeConversations(feedList, collectLiveConversations()));
   }
 
   async function loadFeed() {
@@ -627,7 +720,7 @@
     });
 
     loadFeed().then((feed) => {
-      conversations = (feed.conversations || []).map(enrichConversation);
+      conversations = resolveLatestConversations(feed.conversations || []).map(enrichConversation);
       if (!conversations.length) {
         if (statusEl) statusEl.textContent = "Campfire is lit. No threads yet.";
         return;

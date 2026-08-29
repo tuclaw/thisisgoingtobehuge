@@ -438,9 +438,9 @@ function renderEpisodePage(episode, season, base) {
   <script src="${base}season.fallback.js"></script>
   <script src="${base}tribal-spoiler-burn.js"></script>
   <script src="${base}camp-chat.js"></script>
-  <script src="${base}campfire-open.js"></script>
+  <script src="${base}campfire-open.js"></script>${lunchScripts}
   <script src="${base}episode-campfire.js"></script>
-  <script src="${base}app.js"></script>${lunchScripts}
+  <script src="${base}app.js"></script>
 </body>
 </html>
 `;
