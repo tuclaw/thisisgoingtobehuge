@@ -2776,6 +2776,51 @@ body.is-titles {
   outline: none;
 }
 
+/* Quiet corner control — rewatch the cold-open trailer without competing with brand. */
+.replay-trailer {
+  position: absolute;
+  left: max(0.85rem, env(safe-area-inset-left, 0px));
+  bottom: max(0.85rem, env(safe-area-inset-bottom, 0px));
+  z-index: 5;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(232, 214, 184, 0.42);
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.45rem 0.35rem;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.9s ease 0.35s,
+    transform 0.9s ease 0.35s,
+    color 0.2s ease;
+}
+
+.open-hero.is-copy-in .replay-trailer:not([hidden]) {
+  opacity: 1;
+  transform: none;
+}
+
+.replay-trailer:hover,
+.replay-trailer:focus-visible {
+  color: rgba(244, 228, 200, 0.78);
+  outline: none;
+}
+
+.replay-trailer:disabled {
+  cursor: default;
+  color: rgba(232, 214, 184, 0.16);
+}
+
+body.is-titles .replay-trailer {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .open-hero .btn-live {
   max-width: 22rem;
   line-height: 1.45;
@@ -3509,6 +3554,9 @@ body.is-titles {
 @media (prefers-reduced-motion: reduce) {
   body.is-titles {
     overflow: auto;
+  }
+  .replay-trailer {
+    display: none;
   }
   .open-titles,
   .open-page:not(.is-titles) .open-titles {
