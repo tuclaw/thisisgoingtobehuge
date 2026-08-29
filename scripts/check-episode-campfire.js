@@ -124,6 +124,19 @@ if (
 if (!episodeJs.includes("MAX_VISIBLE = 2") || !episodeJs.includes("REVEAL_AFTER_CLOSE_MS = 5000")) {
   throw new Error("episode-campfire.js missing 2-at-a-time / 5s reveal behavior");
 }
+if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot')) {
+  throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
+}
+const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
+if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
+  throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
+}
+if (!stylesCss.includes("--ping-anchor-y") || !stylesCss.includes('.campfire-ping[data-slot="2"]')) {
+  throw new Error("styles.css missing face-anchored ping layout / data-slot mobile spacing");
+}
+if (!stylesCss.includes(".campfire-theater.is-reading .campfire-ping[data-slot=\"2\"]")) {
+  throw new Error("styles.css must only park lower pings while reading, not always on mobile");
+}
 if (!episodeJs.includes("camp-whispers-feed") || !episodeJs.includes("mountRecentConversations")) {
   throw new Error("episode-campfire.js missing recent whispers section mount");
 }

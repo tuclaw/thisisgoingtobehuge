@@ -3747,8 +3747,11 @@ body.is-titles .replay-trailer {
 }
 
 .campfire-ping {
+  /* Anchor on the face stack so day/name meta hangs below into free space
+     instead of shifting portraits up into a neighbor's labels. */
+  --ping-anchor-y: 1.85rem;
   position: absolute;
-  transform: translate(-50%, -50%) scale(0.86);
+  transform: translate(-50%, calc(-1 * var(--ping-anchor-y))) scale(0.86);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3763,14 +3766,16 @@ body.is-titles .replay-trailer {
   transition:
     opacity 1.55s cubic-bezier(0.22, 1, 0.36, 1),
     transform 1.55s cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 1.55s;
+    visibility 1.55s,
+    top 0.35s ease,
+    left 0.35s ease;
   z-index: 2;
 }
 
 .campfire-ping.is-in {
   opacity: 1;
   visibility: visible;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, calc(-1 * var(--ping-anchor-y))) scale(1);
 }
 
 .campfire-ping.is-active {
@@ -3782,11 +3787,13 @@ body.is-titles .replay-trailer {
   opacity: 0.35;
   visibility: visible;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.92);
+  transform: translate(-50%, calc(-1 * var(--ping-anchor-y))) scale(0.92);
   transition:
     opacity 0.25s ease,
     transform 0.25s ease,
-    visibility 0.25s;
+    visibility 0.25s,
+    top 0.35s ease,
+    left 0.35s ease;
 }
 
 .campfire-theater.is-reading .campfire-ping.is-active {
@@ -3988,6 +3995,9 @@ body.is-titles .replay-trailer {
     top: 13.5rem;
     bottom: 11.5rem;
   }
+  .campfire-ping {
+    --ping-anchor-y: 1.65rem;
+  }
   .campfire-ping-face {
     width: 2.45rem;
     height: 2.45rem;
@@ -4019,13 +4029,38 @@ body.is-titles .replay-trailer {
   .campfire-theater.is-reading .campfire-pings {
     z-index: 2;
   }
-  /* Park idle bubbles toward the upper corners so they never sit on the card. */
-  .campfire-ping[style*="68%"],
-  .campfire-ping[style*="66%"] {
-    top: 18% !important;
+  /*
+    Spread upper/lower slots farther apart so face stacks + hanging meta
+    never collide on short mobile theaters. (Previously a blanket top:18%
+    park on lower slots collapsed them into the upper row.)
+  */
+  .campfire-ping[data-slot="0"] { top: 30% !important; }
+  .campfire-ping[data-slot="1"] { top: 28% !important; }
+  .campfire-ping[data-slot="2"] { top: 78% !important; }
+  .campfire-ping[data-slot="3"] { top: 76% !important; }
+  .campfire-ping[data-slot="4"] { top: 12% !important; }
+  /* Only while reading: tuck lower companions into opposite top corners. */
+  .campfire-theater.is-reading .campfire-ping[data-slot="2"] {
+    top: 14% !important;
+    left: 16% !important;
+  }
+  .campfire-theater.is-reading .campfire-ping[data-slot="3"] {
+    top: 14% !important;
+    left: 84% !important;
+  }
+  .campfire-ping {
+    --ping-anchor-y: 1.55rem;
+    gap: 0.28rem;
   }
   .campfire-ping-meta {
-    max-width: 5.8rem;
+    max-width: 7.2rem;
+  }
+  .campfire-ping-who {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
   }
 }
 
@@ -4048,7 +4083,7 @@ body.is-titles .replay-trailer {
   .campfire-ping.is-in {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, calc(-1 * var(--ping-anchor-y)));
   }
 }
 
