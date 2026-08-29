@@ -1134,7 +1134,10 @@ const moneyTicker = {
   chartTop: 18,
   chartHeight: 176,
   liveSeries: "total",
-  reducedMotion: false
+  reducedMotion: false,
+  autoplayArmed: false,
+  autoplayDone: false,
+  scrollObserver: null
 };
 
 function moneyPutInTotal(season) {
@@ -1263,6 +1266,37 @@ function moneyTickerStepMs() {
   return Math.max(60, base / moneyTicker.speed);
 }
 
+function setMoneyTickerSpeed(speed) {
+  if (!MONEY_TICKER_SPEEDS.includes(speed)) return;
+  moneyTicker.speed = speed;
+  const root = moneyTicker.root;
+  if (!root) return;
+  root.querySelectorAll("[data-ticker-speed]").forEach((btn) => {
+    const s = Number(btn.getAttribute("data-ticker-speed"));
+    btn.setAttribute("aria-pressed", s === speed ? "true" : "false");
+  });
+}
+
+function startMoneyTickerPlayback(opts) {
+  if (!moneyTicker.frames.length) return;
+  if (moneyTicker.reducedMotion) {
+    setMoneyTickerIndex(moneyTicker.frames.length - 1);
+    return;
+  }
+  const fromStart = !opts || opts.fromStart !== false;
+  if (fromStart || moneyTicker.index >= moneyTicker.frames.length - 1) {
+    setMoneyTickerIndex(0);
+  }
+  if (moneyTicker.playing) return;
+  moneyTicker.playing = true;
+  const playBtn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+  if (playBtn) {
+    playBtn.setAttribute("aria-pressed", "true");
+    playBtn.innerHTML = `<span aria-hidden="true">❚❚</span> Pause`;
+  }
+  scheduleMoneyTickerTick();
+}
+
 function scheduleMoneyTickerTick() {
   if (!moneyTicker.playing) return;
   moneyTicker.timer = setTimeout(() => {
@@ -1278,6 +1312,43 @@ function scheduleMoneyTickerTick() {
     setMoneyTickerIndex(moneyTicker.index + 1, { animate: true });
     scheduleMoneyTickerTick();
   }, moneyTickerStepMs());
+}
+
+function armMoneyTickerAutoplay() {
+  const root = moneyTicker.root;
+  if (!root || moneyTicker.autoplayDone || moneyTicker.reducedMotion) return;
+  if (moneyTicker.scrollObserver) {
+    moneyTicker.scrollObserver.disconnect();
+    moneyTicker.scrollObserver = null;
+  }
+  moneyTicker.autoplayArmed = true;
+
+  const kickoff = () => {
+    if (moneyTicker.autoplayDone || moneyTicker.reducedMotion) return;
+    moneyTicker.autoplayDone = true;
+    moneyTicker.autoplayArmed = false;
+    if (moneyTicker.scrollObserver) {
+      moneyTicker.scrollObserver.disconnect();
+      moneyTicker.scrollObserver = null;
+    }
+    setMoneyTickerSpeed(1);
+    startMoneyTickerPlayback({ fromStart: true });
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    kickoff();
+    return;
+  }
+
+  moneyTicker.scrollObserver = new IntersectionObserver(
+    (entries) => {
+      const hit = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.35);
+      if (!hit) return;
+      kickoff();
+    },
+    { threshold: [0.35, 0.5], rootMargin: "0px 0px -8% 0px" }
+  );
+  moneyTicker.scrollObserver.observe(root);
 }
 
 function setMoneyTickerIndex(next, opts) {
@@ -1673,12 +1744,7 @@ function bindMoneyTickerControls() {
     const speedBtn = event.target.closest("[data-ticker-speed]");
     if (speedBtn) {
       const speed = Number(speedBtn.getAttribute("data-ticker-speed"));
-      if (!Number.isNaN(speed)) {
-        moneyTicker.speed = speed;
-        root.querySelectorAll("[data-ticker-speed]").forEach((btn) => {
-          btn.setAttribute("aria-pressed", btn === speedBtn ? "true" : "false");
-        });
-      }
+      if (!Number.isNaN(speed)) setMoneyTickerSpeed(speed);
       return;
     }
     const playBtn = event.target.closest("[data-ticker-play]");
@@ -1687,23 +1753,15 @@ function bindMoneyTickerControls() {
         stopMoneyTickerPlayback();
         return;
       }
-      if (moneyTicker.reducedMotion) {
-        setMoneyTickerIndex(moneyTicker.frames.length - 1);
-        return;
-      }
-      if (moneyTicker.index >= moneyTicker.frames.length - 1) {
-        setMoneyTickerIndex(0);
-      }
-      moneyTicker.playing = true;
-      playBtn.setAttribute("aria-pressed", "true");
-      playBtn.innerHTML = `<span aria-hidden="true">❚❚</span> Pause`;
-      scheduleMoneyTickerTick();
+      moneyTicker.autoplayDone = true;
+      startMoneyTickerPlayback({ fromStart: moneyTicker.index >= moneyTicker.frames.length - 1 });
     }
   });
 
   root.addEventListener("input", (event) => {
     const scrub = event.target.closest("[data-ticker-scrub]");
     if (!scrub) return;
+    moneyTicker.autoplayDone = true;
     stopMoneyTickerPlayback();
     setMoneyTickerIndex(Number(scrub.value));
   });
@@ -1779,6 +1837,9 @@ function mountMoneyTicker(season, opts) {
 
   bindMoneyTickerControls();
   setMoneyTickerIndex(moneyTicker.index);
+  if (!(opts && opts.keepEnd)) {
+    armMoneyTickerAutoplay();
+  }
 }
 
 function renderEpisode(season) {

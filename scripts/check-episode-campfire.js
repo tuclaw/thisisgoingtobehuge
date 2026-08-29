@@ -81,6 +81,9 @@ if (!appJs.includes("jaggedSeriesSamples")) {
 if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
   throw new Error("app.js money ticker still builds boxy step paths");
 }
+if (!appJs.includes("armMoneyTickerAutoplay") || !appJs.includes("startMoneyTickerPlayback")) {
+  throw new Error("app.js money ticker must autoplay at 1x from the start on first scroll into view");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
