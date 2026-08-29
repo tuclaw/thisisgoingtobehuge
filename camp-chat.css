@@ -383,6 +383,7 @@
   line-height: 1.35;
   letter-spacing: -0.01em;
   word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .camp-chat-row.from-left .camp-chat-bubble {

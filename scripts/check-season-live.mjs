@@ -309,6 +309,33 @@ check("books-untouched-fable-active", fableLive && fableLive.status === "active"
 check("books-untouched-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 6);
 check("given-total-fixture", source.islandGivenUsd === 230, String(source.islandGivenUsd));
 
+const saturday = (episodeCopy.days || []).find((day) => day.id === "saturday");
+const saturdayBeats = (saturday && saturday.beats) || [];
+const saturdayLunch = saturdayBeats.find((beat) => beat.id === "saturday-lunch");
+const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
+check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
+check("saturday-lunch-beat", Boolean(saturdayLunch) && saturdayLunch.type === "lunch-chats");
+check("saturday-lunch-three-phones", saturdayLunch && (saturdayLunch.threads || []).length === 3);
+if (saturdayLunch) {
+  const satIds = (saturdayLunch.threads || []).map((thread) => thread.id).join("|");
+  check("saturday-lunch-ids", satIds === "sat-lunch-hex-gage|sat-lunch-kite-riot|sat-lunch-juno-reed");
+  check(
+    "saturday-lunch-no-sol",
+    !(saturdayLunch.threads || []).some((thread) => /quill|sol/i.test([thread.id, thread.heading, thread.title].join(" ")))
+  );
+  const satChrome = [saturday.foldEm, saturdayLunch.title, saturdayLunch.body, saturdayLunch.kicker]
+    .concat((saturdayLunch.threads || []).flatMap((thread) => [thread.heading, thread.title, thread.subtitle, thread.desc, thread.ariaLabel]))
+    .join(" ");
+  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date", "merge headcount"]) {
+    check(`saturday-lunch-no-${bad.replace(/\s+/g, "-")}`, !satChrome.toLowerCase().includes(bad));
+  }
+  const satChromeBare = satChrome.replace(/the Bidu tribe/gi, "").replace(/the Askara tribe/gi, "");
+  check("saturday-lunch-no-bare-bidu", !/\bBidu\b/.test(satChromeBare));
+  check("saturday-lunch-no-bare-askara", !/\bAskara\b/.test(satChromeBare));
+}
+const e2 = (source.episodes || []).find((ep) => ep.id === "s1e02");
+check("episode-2-locked", e2 && e2.status === "locked" && !e2.path);
+
 if (failures.length) {
   console.error("Season live fixtures failed:\n- " + failures.join("\n- "));
   process.exit(1);
