@@ -90,6 +90,9 @@ if (!appJs.includes("tickMoneyTickerPlayback") || !appJs.includes("setMoneyTicke
 if (appJs.includes("Jagged lines are for the ride")) {
   throw new Error("app.js must not keep the jagged-lines-for-the-ride copy");
 }
+if (!appJs.includes("data-ticker-sky") || !appJs.includes("syncMoneyTickerSky") || !appJs.includes("renderMoneyTickerSkySvg")) {
+  throw new Error("app.js money ticker must offer a sun & moon sky toggle synced to playhead time");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
