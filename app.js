@@ -124,6 +124,13 @@ function islandPotUsd(season) {
   return start * n;
 }
 
+function islandGivenUsd(season) {
+  if (typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)) {
+    return season.islandGivenUsd;
+  }
+  return null;
+}
+
 function livingContestantCount(season) {
   const list = season.survivors || [];
   const living = list.filter((s) => s && (s.status === "active" || s.status === "immune"));
@@ -136,7 +143,11 @@ function renderIslandPot(season) {
   const count = document.getElementById("pot-contestants");
   if (!amount && !count) return;
   if (count) count.textContent = String(livingContestantCount(season));
-  if (amount) amount.textContent = potMoney(islandPotUsd(season));
+  if (amount) {
+    const homepage = document.documentElement.getAttribute("data-page") === "island";
+    const given = homepage ? islandGivenUsd(season) : null;
+    amount.textContent = potMoney(given != null ? given : islandPotUsd(season));
+  }
 }
 
 function pct(n) {
