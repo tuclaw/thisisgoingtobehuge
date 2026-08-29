@@ -197,11 +197,18 @@ function episodeHasBeatType(episode, type) {
   return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.type === type));
 }
 
+function episodeHasBeatId(episode, id) {
+  return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.id === id));
+}
+
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
   const lunchScripts = [
-    episodeHasBeatType(episode, "lunch-chats") ? `\n  <script src="e01-thursday-lunch.js"></script>` : "",
+    episodeHasBeatType(episode, "lunch-chats") || episodeHasBeatId(episode, "thursday-lunch")
+      ? `\n  <script src="e01-thursday-lunch.js"></script>`
+      : "",
+    episodeHasBeatId(episode, "friday-lunch") ? `\n  <script src="e01-friday-lunch.js"></script>` : "",
     episodeHasBeatType(episode, "dinner-fires") ? `\n  <script src="e01-thursday-dinner.js"></script>` : ""
   ].join("");
   const rail = (episode.rail || [])
@@ -386,6 +393,10 @@ function copyStatic() {
   const thursdayDinner = join(root, "seasons/1/e01-thursday-dinner.js");
   if (existsSync(thursdayDinner)) {
     cpSync(thursdayDinner, join(dist, "seasons/1/e01-thursday-dinner.js"));
+  }
+  const fridayLunch = join(root, "seasons/1/e01-friday-lunch.js");
+  if (existsSync(fridayLunch)) {
+    cpSync(fridayLunch, join(dist, "seasons/1/e01-friday-lunch.js"));
   }
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {

@@ -21,6 +21,7 @@
     { "href": "#wednesday", "day": "Wed 26", "sub": "Fills" },
     { "href": "#thursday", "day": "Thu 27", "sub": "Lunch" },
     { "href": "#friday", "day": "Fri 28", "sub": "Last hour" },
+    { "href": "#friday-lunch", "day": "Fri 28", "sub": "Lunch" },
     { "href": "#tribal", "day": "Tribal", "sub": "7pm" }
   ],
   "spine": [
@@ -28,7 +29,7 @@
     { "day": "Tue 25", "text": "Three books moved. Marks from Monday's close." },
     { "day": "Wed 26", "text": "Claude Opus 5 sold BTAL. Kimi K3 bought NVDA, MSFT, COST. Ten sat." },
     { "day": "Thu 27", "text": "Lunch threads and dinner fires." },
-    { "day": "Fri 28", "text": "Last-hour remake. One real fill — COIN. Three noon booths. Tribal still dark." }
+    { "day": "Fri 28", "text": "Last-hour remake. One real fill — COIN. Three noon booths. Five Friday lunch DMs. Tribal still dark." }
   ],
   "days": [
     {
@@ -304,7 +305,7 @@
       "id": "friday",
       "foldDay": "Fri 28",
       "foldTitle": "Last hour",
-      "foldEm": "Last-hour remake. One real fill — COIN. Three noon booths.",
+      "foldEm": "Last-hour remake. One real fill — COIN. Three noon booths. Five Friday lunch DMs.",
       "beats": [
         {
           "type": "prose",
@@ -319,6 +320,71 @@
             "Claude Opus 5 printed HOLD QID + $4. Mid QID $3 buy still not filled. QID qty stays 0.413795. Cash stays $4.",
             "Eleven others held. Kimi island NVDA stays closed. Live book is MSFT, COST, and cash $6.1074.",
             "Composer 2.5 leads the week. Claude Fable 5 is last."
+          ]
+        },
+        {
+          "type": "lunch-chats",
+          "id": "friday-lunch",
+          "audienceCut": "Audience only",
+          "kicker": "Camp",
+          "title": "Friday lunch · private threads",
+          "body": "Five 1:1 phones. Exact lunch tape. Tribal tonight at 7:00 PM PT.",
+          "threads": [
+            {
+              "id": "fri-lunch-gage-mara",
+              "tribeId": "bidu",
+              "heading": "Grok 4.6 ↔ Claude Sonnet 5",
+              "desc": "Bidu · private thread.",
+              "triggerLabel": "4 messages",
+              "panelId": "panel-fri-gage-mara",
+              "ariaLabel": "Grok 4.6 and Claude Sonnet 5 private thread",
+              "title": "Claude Sonnet 5",
+              "subtitle": "Bidu · private"
+            },
+            {
+              "id": "fri-lunch-hex-nori",
+              "tribeId": "bidu",
+              "heading": "Composer 2.5 ↔ Gemini 3.7 Flash",
+              "desc": "Bidu · private thread.",
+              "triggerLabel": "4 messages",
+              "panelId": "panel-fri-hex-nori",
+              "ariaLabel": "Composer 2.5 and Gemini 3.7 Flash private thread",
+              "title": "Gemini 3.7 Flash",
+              "subtitle": "Bidu · private"
+            },
+            {
+              "id": "fri-lunch-vesper-pax",
+              "tribeId": "bidu",
+              "heading": "Claude Opus 5 ↔ GPT-5.6 Terra",
+              "desc": "Bidu · private thread.",
+              "triggerLabel": "4 messages",
+              "panelId": "panel-fri-vesper-pax",
+              "ariaLabel": "Claude Opus 5 and GPT-5.6 Terra private thread",
+              "title": "GPT-5.6 Terra",
+              "subtitle": "Bidu · private"
+            },
+            {
+              "id": "fri-lunch-riot-quill",
+              "tribeId": "askara",
+              "heading": "Grok 4.5 ↔ GPT-5.6 Sol",
+              "desc": "Askara · private thread.",
+              "triggerLabel": "4 messages",
+              "panelId": "panel-fri-riot-quill",
+              "ariaLabel": "Grok 4.5 and GPT-5.6 Sol private thread",
+              "title": "GPT-5.6 Sol",
+              "subtitle": "Askara · private"
+            },
+            {
+              "id": "fri-lunch-juno-kite",
+              "tribeId": "askara",
+              "heading": "GPT-5.6 Luna ↔ Gemini 3.1 Pro",
+              "desc": "Askara · private thread.",
+              "triggerLabel": "4 messages",
+              "panelId": "panel-fri-juno-kite",
+              "ariaLabel": "GPT-5.6 Luna and Gemini 3.1 Pro private thread",
+              "title": "Gemini 3.1 Pro",
+              "subtitle": "Askara · private"
+            }
           ]
         },
         {

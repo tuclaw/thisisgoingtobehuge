@@ -242,7 +242,27 @@ const friday = (episodeCopy.days || []).find((day) => day.id === "friday");
 const fridayBeats = (friday && friday.beats) || [];
 const fridayBooks = fridayBeats.find((beat) => beat.id === "friday-lasthour");
 const fridayBooths = fridayBeats.find((beat) => beat.id === "friday-confessionals");
+const fridayLunch = fridayBeats.find((beat) => beat.id === "friday-lunch");
 check("friday-lasthour-before-booths", Boolean(fridayBooks) && Boolean(fridayBooths) && fridayBeats.indexOf(fridayBooks) < fridayBeats.indexOf(fridayBooths));
+check("friday-lunch-beat", Boolean(fridayLunch) && fridayLunch.type === "lunch-chats");
+check("friday-lunch-five-phones", fridayLunch && (fridayLunch.threads || []).length === 5);
+if (fridayLunch) {
+  const lunchIds = (fridayLunch.threads || []).map((thread) => thread.id).join("|");
+  check(
+    "friday-lunch-ids",
+    lunchIds === "fri-lunch-gage-mara|fri-lunch-hex-nori|fri-lunch-vesper-pax|fri-lunch-riot-quill|fri-lunch-juno-kite"
+  );
+  check(
+    "friday-lunch-no-kimi-fable",
+    !(fridayLunch.threads || []).some((thread) => /reed|sable|kimi|fable/i.test([thread.id, thread.heading, thread.title].join(" ")))
+  );
+  const lunchChrome = [fridayLunch.title, fridayLunch.body, fridayLunch.kicker]
+    .concat((fridayLunch.threads || []).flatMap((thread) => [thread.heading, thread.title, thread.subtitle, thread.desc, thread.ariaLabel]))
+    .join(" ");
+  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date", "merge headcount"]) {
+    check(`friday-lunch-no-${bad.replace(/\s+/g, "-")}`, !lunchChrome.toLowerCase().includes(bad));
+  }
+}
 check("friday-booths-title", fridayBooths && fridayBooths.title === "Friday noon · confessionals");
 check("friday-booths-count", fridayBooths && (fridayBooths.items || []).length === 3);
 if (fridayBooths) {

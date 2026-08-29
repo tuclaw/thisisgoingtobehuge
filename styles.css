@@ -1997,7 +1997,8 @@ a.brand:hover {
   border-color: rgba(212, 160, 23, 0.35);
 }
 
-#thursday-lunch .lunch-chats {
+#thursday-lunch .lunch-chats,
+#friday-lunch .lunch-chats {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
@@ -2030,7 +2031,8 @@ a.brand:hover {
 }
 
 @media (max-width: 900px) {
-  #thursday-lunch .lunch-chats {
+  #thursday-lunch .lunch-chats,
+  #friday-lunch .lunch-chats {
     grid-template-columns: 1fr;
   }
 
@@ -2039,11 +2041,13 @@ a.brand:hover {
   }
 }
 
-#thursday-lunch .camp-scene {
+#thursday-lunch .camp-scene,
+#friday-lunch .camp-scene {
   min-height: 540px;
 }
 
-#thursday-lunch .camp-chat-panel {
+#thursday-lunch .camp-chat-panel,
+#friday-lunch .camp-chat-panel {
   left: 0.65rem;
   right: 0.65rem;
   width: auto;
