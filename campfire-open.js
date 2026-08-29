@@ -694,13 +694,35 @@
     tradeEl.setAttribute("aria-hidden", "true");
   }
 
+  /* Remember a completed (or skipped) intro for this tab so Island/brand
+     links back to index.html do not replay the cold open. */
+  const OPEN_TITLES_SEEN_KEY = "lts-open-titles-seen";
+
+  function hasSeenOpenTitles() {
+    try {
+      return sessionStorage.getItem(OPEN_TITLES_SEEN_KEY) === "1";
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function markOpenTitlesSeen() {
+    try {
+      sessionStorage.setItem(OPEN_TITLES_SEEN_KEY, "1");
+    } catch (_) {
+      /* private mode / blocked storage — intro may replay; fine */
+    }
+  }
+
   function shouldSkipOpenTitles() {
     if (prefersReducedMotion()) return true;
+    if (hasSeenOpenTitles()) return true;
     const hash = (window.location.hash || "").replace(/^#/, "");
     return Boolean(hash && hash !== "landing");
   }
 
   function finishOpenTitles() {
+    markOpenTitlesSeen();
     document.body.classList.remove("is-titles");
     const overlay = document.getElementById("open-titles");
     if (overlay) {

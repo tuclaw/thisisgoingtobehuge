@@ -116,6 +116,15 @@ if (!js.includes("playTitleFinale") || !js.includes("createStarfield") || !js.in
 if (!js.includes("toDescent")) {
   throw new Error("campfire-open.js missing skip-to-descent path");
 }
+if (!js.includes('OPEN_TITLES_SEEN_KEY = "lts-open-titles-seen"')) {
+  throw new Error("campfire-open.js must remember open titles in sessionStorage");
+}
+if (!js.includes("hasSeenOpenTitles") || !js.includes("markOpenTitlesSeen")) {
+  throw new Error("campfire-open.js missing open-titles session helpers");
+}
+if (!html.includes('sessionStorage.getItem("lts-open-titles-seen")')) {
+  throw new Error("templates/island.html must skip titles gate when already seen");
+}
 
 const fills = (season.events || []).filter((e) => e && e.type === "fill");
 if (fills.length < 1) throw new Error("season1.json has no fill events for trade flash");
