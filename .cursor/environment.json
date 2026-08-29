@@ -1,5 +1,6 @@
 {
   "name": "Last Trader Standing",
+  "install": "node scripts/build.mjs",
   "ports": [
     {
       "name": "web",
@@ -10,7 +11,7 @@
     {
       "name": "web",
       "command": "node scripts/build.mjs && python3 scripts/dev-server.py",
-      "description": "Build the public site into dist/, then serve it with live reload at http://localhost:8000."
+      "description": "Rebuild dist/ from the checked-out revision, then serve with live reload at http://localhost:8000."
     }
   ]
 }
