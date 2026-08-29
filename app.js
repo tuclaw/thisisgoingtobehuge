@@ -1114,6 +1114,673 @@ function renderEpisodeLiveIndicator(season) {
   h1.insertBefore(titleRow, dateSpan || null);
 }
 
+const MONEY_TICKER_SPEEDS = [0.5, 1, 4, 16];
+const MONEY_TICKER_DIAGRAMS = ["island", "tribes", "contestants"];
+const moneyTicker = {
+  root: null,
+  season: null,
+  range: "week",
+  diagram: "island",
+  speed: 1,
+  index: 0,
+  playing: false,
+  timer: null,
+  frames: [],
+  putIn: 120,
+  sleevePutIn: 10,
+  tribePutIn: 60,
+  chartMin: 0,
+  chartMax: 1,
+  chartTop: 18,
+  chartHeight: 176,
+  liveSeries: "total",
+  reducedMotion: false
+};
+
+function moneyPutInTotal(season) {
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const castN = (season.survivors || []).length || (season.cast || []).length || 12;
+  return roundMoney(start * castN);
+}
+
+function roundMoney(n) {
+  return Math.round(n * 10000) / 10000;
+}
+
+function snapshotTotal(snap) {
+  if (!snap || !snap.books) return 0;
+  return roundMoney(
+    Object.values(snap.books).reduce((acc, book) => {
+      return typeof book.bookUsd === "number" && !Number.isNaN(book.bookUsd) ? acc + book.bookUsd : acc;
+    }, 0)
+  );
+}
+
+function pacificDayLabel(iso) {
+  if (!iso) return "";
+  try {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  } catch {
+    return "";
+  }
+}
+
+function snapshotsForTickerRange(season, range) {
+  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
+  if (!all.length) return [];
+  if (range !== "week") return all;
+  const ep = season.episode || {};
+  const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
+  const weekEnd = ep.weekEnd
+    ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
+    : ep.tribalAt
+      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
+      : NaN;
+  if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
+  const filtered = all.filter((snap) => {
+    const t = Date.parse(snap.at);
+    return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
+  });
+  return filtered.length ? filtered : all;
+}
+
+function candidateStroke(survivor, indexInTribe) {
+  const askara = survivor.tribeId === "askara";
+  const bases = askara
+    ? ["#C45A12", "#e85d04", "#f0a060", "#a34410", "#ffb347", "#8a3a0c"]
+    : ["#0E6B6B", "#1a9a8a", "#8ee8d8", "#0a4a4a", "#3cb8a8", "#145c5c"];
+  return bases[indexInTribe % bases.length];
+}
+
+function tribeBooksFromFrame(frame, season) {
+  const out = {};
+  (season.tribes || []).forEach((tribe) => {
+    out[tribe.id] = 0;
+  });
+  (season.survivors || []).forEach((s) => {
+    const id = s.tribeId;
+    if (!id) return;
+    if (out[id] == null) out[id] = 0;
+    const v = frame.books && frame.books[s.id];
+    if (typeof v === "number") out[id] = roundMoney(out[id] + v);
+  });
+  return out;
+}
+
+function buildTickerFrames(season, range) {
+  const snaps = snapshotsForTickerRange(season, range);
+  const sleeve = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  const cast = season.survivors || [];
+  const tribeIndex = {};
+  cast.forEach((s) => {
+    const key = s.tribeId || "x";
+    tribeIndex[key] = tribeIndex[key] || 0;
+    s.__tickerTone = candidateStroke(s, tribeIndex[key]);
+    tribeIndex[key] += 1;
+  });
+  return snaps.map((snap) => {
+    const books = {};
+    cast.forEach((s) => {
+      const row = snap.books && snap.books[s.id];
+      books[s.id] = row && typeof row.bookUsd === "number" ? row.bookUsd : sleeve;
+    });
+    const frame = {
+      id: snap.id,
+      at: snap.at,
+      label: snap.label || pacificDayLabel(snap.at),
+      total: snapshotTotal(snap),
+      books
+    };
+    frame.tribes = tribeBooksFromFrame(frame, season);
+    return frame;
+  });
+}
+
+function stopMoneyTickerPlayback() {
+  if (moneyTicker.timer) {
+    clearTimeout(moneyTicker.timer);
+    moneyTicker.timer = null;
+  }
+  moneyTicker.playing = false;
+  const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+  if (btn) {
+    btn.setAttribute("aria-pressed", "false");
+    btn.innerHTML = `<span aria-hidden="true">▶</span> Play`;
+  }
+}
+
+function moneyTickerStepMs() {
+  const base = 900;
+  return Math.max(60, base / moneyTicker.speed);
+}
+
+function scheduleMoneyTickerTick() {
+  if (!moneyTicker.playing) return;
+  moneyTicker.timer = setTimeout(() => {
+    if (!moneyTicker.playing) return;
+    if (moneyTicker.index >= moneyTicker.frames.length - 1) {
+      stopMoneyTickerPlayback();
+      const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+      if (btn) {
+        btn.innerHTML = `<span aria-hidden="true">↻</span> Replay`;
+      }
+      return;
+    }
+    setMoneyTickerIndex(moneyTicker.index + 1, { animate: true });
+    scheduleMoneyTickerTick();
+  }, moneyTickerStepMs());
+}
+
+function setMoneyTickerIndex(next, opts) {
+  const frames = moneyTicker.frames;
+  if (!frames.length) return;
+  const i = Math.max(0, Math.min(frames.length - 1, next));
+  moneyTicker.index = i;
+  const frame = frames[i];
+  const putIn = moneyTicker.putIn;
+  const delta = roundMoney(frame.total - putIn);
+  const pctChange = putIn ? (delta / putIn) * 100 : 0;
+  const down = delta < -0.00005;
+  const up = delta > 0.00005;
+  const chgClass = up ? "up" : down ? "down" : "flat";
+  const arrow = up ? "▲" : down ? "▼" : "●";
+
+  const amount = document.getElementById("pot-amount");
+  if (amount) {
+    amount.textContent = potMoney(frame.total);
+    amount.classList.toggle("is-ticker-down", down);
+    amount.classList.toggle("is-ticker-up", up);
+  }
+  const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
+  if (live) {
+    live.textContent = potMoney(frame.total);
+    live.classList.toggle("is-ticker-down", down);
+    live.classList.toggle("is-ticker-up", up);
+  }
+  const chg = document.getElementById("money-ticker-chg");
+  if (chg) {
+    chg.className = "money-ticker-chg " + chgClass;
+    chg.textContent = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
+  }
+  const liveChg = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live-chg]");
+  if (liveChg) {
+    liveChg.className = "money-ticker-chg " + chgClass;
+    liveChg.textContent = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
+  }
+
+  const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
+  if (scrub && Number(scrub.value) !== i) scrub.value = String(i);
+
+  const stamp = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-stamp]");
+  if (stamp) {
+    const when = pacificDayLabel(frame.at) || frame.label || "";
+    stamp.textContent = when ? `Playhead · ${when}` : frame.label || "";
+  }
+
+  const playX = moneyTickerXAt(i, frames.length);
+  const playhead = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-playhead]");
+  if (playhead) {
+    playhead.setAttribute("x1", String(playX));
+    playhead.setAttribute("x2", String(playX));
+  }
+  const clip = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-clip]");
+  if (clip) {
+    clip.setAttribute("width", String(Math.max(playX + 4, 40)));
+  }
+  const potDot = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-pot-dot]");
+  if (potDot) {
+    let value = frame.total;
+    if (moneyTicker.liveSeries && moneyTicker.liveSeries !== "total") {
+      if (moneyTicker.diagram === "tribes" && frame.tribes) value = frame.tribes[moneyTicker.liveSeries] ?? value;
+      else if (moneyTicker.diagram === "contestants" && frame.books) value = frame.books[moneyTicker.liveSeries] ?? value;
+    }
+    potDot.setAttribute("cx", String(playX));
+    potDot.setAttribute(
+      "cy",
+      String(moneyTickerY(value, moneyTicker.chartMin, moneyTicker.chartMax, moneyTicker.chartTop, moneyTicker.chartHeight))
+    );
+  }
+
+  if (opts && opts.animate && !moneyTicker.reducedMotion) {
+    const chart = moneyTicker.root && moneyTicker.root.querySelector(".money-ticker-chart");
+    if (chart) {
+      chart.classList.remove("is-tick");
+      void chart.offsetWidth;
+      chart.classList.add("is-tick");
+    }
+  }
+}
+
+function moneyTickerXAt(t, count) {
+  const padL = 36;
+  const padR = 12;
+  const w = 640 - padL - padR;
+  if (count <= 1) return padL;
+  return padL + (t / (count - 1)) * w;
+}
+
+function moneyTickerX(index, count) {
+  return moneyTickerXAt(index, count);
+}
+
+function moneyTickerY(value, min, max, top, height) {
+  const padT = typeof top === "number" ? top : 18;
+  const h = typeof height === "number" ? height : 176;
+  const span = max - min || 1;
+  return padT + (1 - (value - min) / span) * h;
+}
+
+/** Deterministic 0..1 noise for stable jagged fills between marks. */
+function tickerNoise(seed) {
+  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+  return x - Math.floor(x);
+}
+
+/**
+ * Robinhood-style jagged polyline through real mark values.
+ * Intermediate wiggles are decorative; every mark lands exactly on tape.
+ */
+function jaggedSeriesSamples(values, seriesKey, valueSpan) {
+  const samples = [];
+  if (!values.length) return samples;
+  const steps = values.length <= 3 ? 18 : 14;
+  const baseAmp = Math.max((valueSpan || 1) * 0.045, 0.08);
+  samples.push({ t: 0, v: values[0] });
+  for (let i = 1; i < values.length; i++) {
+    const v0 = values[i - 1];
+    const v1 = values[i];
+    const segAmp = Math.max(Math.abs(v1 - v0) * 0.55, baseAmp);
+    const seedBase = (Number(seriesKey) || 1) * 19.17 + i * 97.3;
+    for (let s = 1; s < steps; s++) {
+      const u = s / steps;
+      const linear = v0 + (v1 - v0) * u;
+      const env = Math.sin(Math.PI * u);
+      const n1 = tickerNoise(seedBase + s * 3.17) * 2 - 1;
+      const n2 = tickerNoise(seedBase + s * 11.9 + 4.2) * 2 - 1;
+      const jag = (n1 * 0.65 + n2 * 0.35) * segAmp * env;
+      samples.push({ t: i - 1 + u, v: linear + jag });
+    }
+    samples.push({ t: i, v: v1 });
+  }
+  return samples;
+}
+
+function tickerPathForSeries(values, min, max, top, height, seriesKey) {
+  if (!values.length) return "";
+  const span = max - min || 1;
+  const samples = jaggedSeriesSamples(values, seriesKey, span);
+  const count = values.length;
+  return samples
+    .map((pt, i) => {
+      const x = moneyTickerXAt(pt.t, count);
+      const y = moneyTickerY(pt.v, min, max, top, height);
+      return `${i === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)}`;
+    })
+    .join(" ");
+}
+
+function moneyTickerDiagramSeries(season, frames) {
+  const sleeve = moneyTicker.sleevePutIn;
+  const putIn = moneyTicker.putIn;
+  const tribePutIn = moneyTicker.tribePutIn;
+  const diagram = moneyTicker.diagram || "island";
+  const last = frames[frames.length - 1];
+
+  if (diagram === "tribes") {
+    const tribes = season.tribes || [];
+    let min = tribePutIn;
+    let max = tribePutIn;
+    frames.forEach((frame) => {
+      tribes.forEach((tribe) => {
+        const v = frame.tribes && frame.tribes[tribe.id];
+        if (typeof v === "number") {
+          if (v < min) min = v;
+          if (v > max) max = v;
+        }
+      });
+    });
+    const pad = Math.max(0.6, (max - min) * 0.18);
+    min = Math.min(min, tribePutIn) - pad;
+    max = Math.max(max, tribePutIn) + pad;
+    return {
+      title: "Tribes",
+      aria: "Tribe book totals over recorded marks. Dotted line is money put into each tribe.",
+      putIn: tribePutIn,
+      putInLabel: `$${tribePutIn.toFixed(0)} in`,
+      min,
+      max,
+      series: tribes.map((tribe) => ({
+        id: tribe.id,
+        label: tribeChromeName(tribe),
+        color: tribe.color || (tribe.id === "askara" ? "#C45A12" : "#0E6B6B"),
+        values: frames.map((f) => (f.tribes && f.tribes[tribe.id]) || tribePutIn),
+        seed: tribe.id === "askara" ? 42 : 17,
+        width: 2.2
+      })),
+      legend: tribes.map((tribe) => ({
+        label: tribeChromeName(tribe),
+        color: tribe.color || (tribe.id === "askara" ? "#C45A12" : "#0E6B6B")
+      })),
+      liveSeries: tribes[0] ? tribes[0].id : "total",
+      strokeForDot: (tribes[0] && (tribes[0].color || "#0E6B6B")) || "#e89354"
+    };
+  }
+
+  if (diagram === "contestants") {
+    const cast = season.survivors || [];
+    let min = sleeve;
+    let max = sleeve;
+    frames.forEach((frame) => {
+      cast.forEach((s) => {
+        const v = frame.books[s.id];
+        if (typeof v === "number") {
+          if (v < min) min = v;
+          if (v > max) max = v;
+        }
+      });
+    });
+    const pad = Math.max(0.35, (max - min) * 0.14);
+    min = Math.min(min, sleeve) - pad;
+    max = Math.max(max, sleeve) + pad;
+    return {
+      title: "Contestants",
+      aria: "Contestant sleeves over recorded marks. Dotted line is the $10 put into each book.",
+      putIn: sleeve,
+      putInLabel: `$${sleeve.toFixed(0)} in`,
+      min,
+      max,
+      series: cast.map((s, idx) => ({
+        id: s.id,
+        label: modelOf(s),
+        color: s.__tickerTone || "#d4a017",
+        values: frames.map((f) => f.books[s.id]),
+        seed: idx + 11,
+        width: 1.45
+      })),
+      legend: cast.map((s) => ({
+        label: modelOf(s),
+        color: s.__tickerTone || "#d4a017"
+      })),
+      liveSeries: cast[0] ? cast[0].id : "total",
+      strokeForDot: cast[0] && cast[0].__tickerTone ? cast[0].__tickerTone : "#e89354"
+    };
+  }
+
+  /* island */
+  let min = putIn;
+  let max = putIn;
+  frames.forEach((frame) => {
+    if (frame.total < min) min = frame.total;
+    if (frame.total > max) max = frame.total;
+  });
+  const pad = Math.max(0.8, (max - min) * 0.22);
+  min = Math.min(min, putIn) - pad;
+  max = Math.max(max, putIn) + pad;
+  const potDown = last && last.total < putIn - 0.00005;
+  const potStroke = potDown ? "#e89354" : "#8ee8d8";
+  return {
+    title: "Island",
+    aria: "Island pot over recorded marks. Dotted line is money put into the game.",
+    putIn,
+    putInLabel: `$${putIn.toFixed(0)} in`,
+    min,
+    max,
+    series: [
+      {
+        id: "island",
+        label: "Island pot",
+        color: potStroke,
+        values: frames.map((f) => f.total),
+        seed: 7,
+        width: 2.6
+      }
+    ],
+    legend: [{ label: "Island pot", color: potStroke }],
+    liveSeries: "total",
+    strokeForDot: potStroke
+  };
+}
+
+function renderMoneyTickerSvg(season, frames) {
+  const chartTop = 22;
+  const chartHeight = 168;
+  const spec = moneyTickerDiagramSeries(season, frames);
+  moneyTicker.chartMin = spec.min;
+  moneyTicker.chartMax = spec.max;
+  moneyTicker.chartTop = chartTop;
+  moneyTicker.chartHeight = chartHeight;
+  moneyTicker.liveSeries = spec.liveSeries;
+
+  const yTicks = [spec.max, spec.putIn, spec.min];
+  const yLabels = yTicks
+    .map((v) => {
+      const y = moneyTickerY(v, spec.min, spec.max, chartTop, chartHeight);
+      const label = Math.abs(v - spec.putIn) < 0.0001 ? spec.putInLabel : money(v);
+      return `<text class="money-ticker-axis" x="2" y="${(y + 4).toFixed(2)}">${escapeHtml(label)}</text>
+      <line class="money-ticker-grid" x1="36" y1="${y.toFixed(2)}" x2="628" y2="${y.toFixed(2)}" />`;
+    })
+    .join("");
+
+  const putY = moneyTickerY(spec.putIn, spec.min, spec.max, chartTop, chartHeight);
+  const xLabels = frames
+    .map((frame, i) => {
+      if (frames.length > 5 && i !== 0 && i !== frames.length - 1 && i % 2 === 1) return "";
+      const x = moneyTickerXAt(i, frames.length);
+      const short = pacificDayLabel(frame.at).replace(/,.*/, "") || `M${i + 1}`;
+      return `<text class="money-ticker-axis" x="${x.toFixed(2)}" y="214" text-anchor="middle">${escapeHtml(short)}</text>`;
+    })
+    .join("");
+
+  const lines = spec.series
+    .map((series) => {
+      const d = tickerPathForSeries(series.values, spec.min, spec.max, chartTop, chartHeight, series.seed);
+      return `<path class="money-ticker-line" data-series="${escapeHtml(series.id)}" d="${d}" stroke="${escapeHtml(series.color)}" fill="none" stroke-width="${series.width || 1.6}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"><title>${escapeHtml(series.label)}</title></path>`;
+    })
+    .join("");
+
+  const playX = moneyTickerXAt(moneyTicker.index, frames.length);
+  const frame = frames[moneyTicker.index] || frames[frames.length - 1];
+  let dotValue = frame ? frame.total : spec.putIn;
+  if (spec.liveSeries !== "total" && frame) {
+    if (moneyTicker.diagram === "tribes" && frame.tribes) dotValue = frame.tribes[spec.liveSeries] ?? dotValue;
+    else if (moneyTicker.diagram === "contestants" && frame.books) dotValue = frame.books[spec.liveSeries] ?? dotValue;
+  }
+  if (moneyTicker.diagram === "island" && frame) dotValue = frame.total;
+  const dotY = moneyTickerY(dotValue, spec.min, spec.max, chartTop, chartHeight);
+  const showDot = moneyTicker.diagram === "island";
+
+  return `<svg class="money-ticker-svg" viewBox="0 0 640 222" role="img" aria-label="${escapeHtml(spec.aria)}">
+    <defs>
+      <clipPath id="money-ticker-clip">
+        <rect data-ticker-clip x="0" y="0" width="${Math.max(playX + 4, 40).toFixed(2)}" height="222" />
+      </clipPath>
+    </defs>
+    <text class="money-ticker-panel-label" x="36" y="14">${escapeHtml(spec.title)}</text>
+    ${yLabels}
+    <line class="money-ticker-putin" x1="36" y1="${putY.toFixed(2)}" x2="628" y2="${putY.toFixed(2)}" />
+    <g clip-path="url(#money-ticker-clip)">
+      ${lines}
+      ${
+        showDot
+          ? `<circle class="money-ticker-pot-dot" data-ticker-pot-dot cx="${playX.toFixed(2)}" cy="${dotY.toFixed(2)}" r="3.4" fill="${escapeHtml(spec.strokeForDot)}" />`
+          : `<circle class="money-ticker-pot-dot" data-ticker-pot-dot cx="-20" cy="-20" r="0" fill="transparent" />`
+      }
+    </g>
+    <line class="money-ticker-playhead" data-ticker-playhead x1="${playX}" y1="16" x2="${playX}" y2="198" />
+    ${xLabels}
+  </svg>`;
+}
+
+function moneyTickerLegendHtml(season, frames) {
+  const spec = moneyTickerDiagramSeries(season, frames);
+  return (spec.legend || [])
+    .map(
+      (item) =>
+        `<li><span class="swatch" style="background:${escapeHtml(item.color)}"></span>${escapeHtml(item.label)}</li>`
+    )
+    .join("");
+}
+
+function refreshMoneyTickerChart() {
+  const root = moneyTicker.root;
+  const season = moneyTicker.season;
+  if (!root || !season || !moneyTicker.frames.length) return;
+  const chart = root.querySelector(".money-ticker-chart");
+  const legend = root.querySelector(".money-ticker-legend");
+  if (chart) chart.innerHTML = renderMoneyTickerSvg(season, moneyTicker.frames);
+  if (legend) legend.innerHTML = moneyTickerLegendHtml(season, moneyTicker.frames);
+  setMoneyTickerIndex(moneyTicker.index);
+}
+
+function bindMoneyTickerControls() {
+  const root = moneyTicker.root;
+  if (!root || root.dataset.bound === "1") return;
+  root.dataset.bound = "1";
+
+  root.addEventListener("click", (event) => {
+    const diagramBtn = event.target.closest("[data-ticker-diagram]");
+    if (diagramBtn) {
+      const next = diagramBtn.getAttribute("data-ticker-diagram");
+      if (next && MONEY_TICKER_DIAGRAMS.includes(next) && next !== moneyTicker.diagram) {
+        stopMoneyTickerPlayback();
+        moneyTicker.diagram = next;
+        root.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
+          btn.setAttribute("aria-selected", btn === diagramBtn ? "true" : "false");
+        });
+        refreshMoneyTickerChart();
+      }
+      return;
+    }
+    const rangeBtn = event.target.closest("[data-ticker-range]");
+    if (rangeBtn) {
+      const next = rangeBtn.getAttribute("data-ticker-range");
+      if (next && next !== moneyTicker.range) {
+        stopMoneyTickerPlayback();
+        moneyTicker.range = next;
+        mountMoneyTicker(moneyTicker.season, { keepEnd: true });
+      }
+      return;
+    }
+    const speedBtn = event.target.closest("[data-ticker-speed]");
+    if (speedBtn) {
+      const speed = Number(speedBtn.getAttribute("data-ticker-speed"));
+      if (!Number.isNaN(speed)) {
+        moneyTicker.speed = speed;
+        root.querySelectorAll("[data-ticker-speed]").forEach((btn) => {
+          btn.setAttribute("aria-pressed", btn === speedBtn ? "true" : "false");
+        });
+      }
+      return;
+    }
+    const playBtn = event.target.closest("[data-ticker-play]");
+    if (playBtn) {
+      if (moneyTicker.playing) {
+        stopMoneyTickerPlayback();
+        return;
+      }
+      if (moneyTicker.reducedMotion) {
+        setMoneyTickerIndex(moneyTicker.frames.length - 1);
+        return;
+      }
+      if (moneyTicker.index >= moneyTicker.frames.length - 1) {
+        setMoneyTickerIndex(0);
+      }
+      moneyTicker.playing = true;
+      playBtn.setAttribute("aria-pressed", "true");
+      playBtn.innerHTML = `<span aria-hidden="true">❚❚</span> Pause`;
+      scheduleMoneyTickerTick();
+    }
+  });
+
+  root.addEventListener("input", (event) => {
+    const scrub = event.target.closest("[data-ticker-scrub]");
+    if (!scrub) return;
+    stopMoneyTickerPlayback();
+    setMoneyTickerIndex(Number(scrub.value));
+  });
+}
+
+function mountMoneyTicker(season, opts) {
+  const root = document.getElementById("money-ticker");
+  if (!root) return;
+  moneyTicker.root = root;
+  moneyTicker.season = season;
+  moneyTicker.reducedMotion =
+    typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  moneyTicker.sleevePutIn = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  moneyTicker.putIn = moneyPutInTotal(season);
+  const livingPerTribe = Math.max(
+    1,
+    Math.round(((season.survivors || []).length || 12) / Math.max(1, (season.tribes || []).length || 2))
+  );
+  moneyTicker.tribePutIn = roundMoney(moneyTicker.sleevePutIn * livingPerTribe);
+  moneyTicker.frames = buildTickerFrames(season, moneyTicker.range);
+  if (!moneyTicker.frames.length) {
+    root.innerHTML = "";
+    root.hidden = true;
+    return;
+  }
+  root.hidden = false;
+  const keepEnd = opts && opts.keepEnd;
+  moneyTicker.index = keepEnd ? moneyTicker.frames.length - 1 : moneyTicker.frames.length - 1;
+  if (!MONEY_TICKER_DIAGRAMS.includes(moneyTicker.diagram)) moneyTicker.diagram = "island";
+
+  const speeds = MONEY_TICKER_SPEEDS.map((s) => {
+    const on = s === moneyTicker.speed;
+    return `<button type="button" class="money-ticker-speed" data-ticker-speed="${s}" aria-pressed="${on ? "true" : "false"}">${s}x</button>`;
+  }).join("");
+
+  const diagramTabs = [
+    ["island", "Island"],
+    ["tribes", "Tribes"],
+    ["contestants", "Contestants"]
+  ]
+    .map(([id, label]) => {
+      const on = moneyTicker.diagram === id;
+      return `<button type="button" role="tab" data-ticker-diagram="${id}" aria-selected="${on ? "true" : "false"}">${label}</button>`;
+    })
+    .join("");
+
+  root.innerHTML = `
+    <div class="money-ticker-head">
+      <p class="money-ticker-kicker">Replay the books</p>
+      <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].total))}</p>
+      <p class="money-ticker-chg" data-ticker-live-chg></p>
+      <p class="money-ticker-lede">Watch the island, the tribes, or every contestant sleeve. Jagged lines are for the ride — every stop lands on a real mark. Dotted line is money put in.</p>
+    </div>
+    <div class="money-ticker-toolbar">
+      <div class="money-ticker-range" role="tablist" aria-label="Time range">
+        <button type="button" role="tab" data-ticker-range="week" aria-selected="${moneyTicker.range === "week" ? "true" : "false"}">Week</button>
+        <button type="button" role="tab" data-ticker-range="season" aria-selected="${moneyTicker.range === "season" ? "true" : "false"}">Season</button>
+      </div>
+      <div class="money-ticker-diagrams" role="tablist" aria-label="Diagram">
+        ${diagramTabs}
+      </div>
+    </div>
+    <div class="money-ticker-chart">${renderMoneyTickerSvg(season, moneyTicker.frames)}</div>
+    <div class="money-ticker-transport">
+      <input class="money-ticker-scrub" data-ticker-scrub type="range" min="0" max="${moneyTicker.frames.length - 1}" value="${moneyTicker.index}" step="1" aria-label="Scrub marks" />
+      <div class="money-ticker-controls">
+        <button type="button" class="money-ticker-play" data-ticker-play aria-pressed="false"><span aria-hidden="true">▶</span> Play</button>
+        <div class="money-ticker-speeds" role="group" aria-label="Playback speed">${speeds}</div>
+      </div>
+      <p class="money-ticker-stamp" data-ticker-stamp></p>
+    </div>
+    <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>`;
+
+  bindMoneyTickerControls();
+  setMoneyTickerIndex(moneyTicker.index);
+}
+
 function renderEpisode(season) {
   renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
@@ -1131,6 +1798,7 @@ function renderEpisode(season) {
   const banner = document.getElementById("season-banner");
   if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
   renderEpisodeLiveIndicator(season);
+  mountMoneyTicker(season);
   renderEpisodeHoldings(season);
   const body = document.getElementById("episode-marks-body");
   if (body) {

@@ -56,6 +56,31 @@ if (!episodeHtml.includes('id="camp-whispers"') || !episodeHtml.includes("camp-w
 if (!episodeHtml.includes('id="pot-amount"') || !episodeHtml.includes("episode-pot")) {
   throw new Error("episode renderer missing glowing island pot on week-board");
 }
+if (!episodeHtml.includes('id="money-ticker"') || !episodeHtml.includes("money-ticker-chg")) {
+  throw new Error("episode renderer missing money ticker playback mount on week-board");
+}
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")) {
+  throw new Error("app.js missing money ticker playback (mount + put-in dotted line)");
+}
+if (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"')) {
+  throw new Error("app.js money ticker must offer week and season ranges");
+}
+if (
+  !appJs.includes('["island", "tribes", "contestants"]') &&
+  !appJs.includes('["island", "Island"]')
+) {
+  throw new Error("app.js money ticker must offer Island / Tribes / Contestants diagrams");
+}
+if (!appJs.includes("data-ticker-diagram") || !appJs.includes("MONEY_TICKER_DIAGRAMS")) {
+  throw new Error("app.js money ticker missing diagram tab wiring");
+}
+if (!appJs.includes("jaggedSeriesSamples")) {
+  throw new Error("app.js money ticker must use jagged Robinhood-style paths, not boxy step H/V");
+}
+if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
+  throw new Error("app.js money ticker still builds boxy step paths");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
