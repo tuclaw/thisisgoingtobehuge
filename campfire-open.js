@@ -24,7 +24,8 @@
     "12 Of The Best AI Robots",
     "Competing In A Survivor-like Game",
     "Where The Challenge Is Day Trading",
-    "With My Wife\u2019s Savings"
+    "With My Wife\u2019s Savings",
+    "Who Will Be"
   ];
   const TITLE_CARD_HOLD_MS = 2200;
 
