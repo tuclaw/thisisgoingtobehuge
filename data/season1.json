@@ -37,6 +37,18 @@
         "snapshotId": "s1e01-tue-marks",
         "board": "day-tuesday",
         "tribes": "day-tuesday-tribes"
+      },
+      {
+        "id": "wednesday",
+        "snapshotId": "s1e01-wed-sip",
+        "board": "day-wednesday",
+        "tribes": "day-wednesday-tribes"
+      },
+      {
+        "id": "thursday",
+        "snapshotId": "s1e01-thu-sip",
+        "board": "day-thursday",
+        "tribes": "day-thursday-tribes"
       }
     ]
   },

@@ -115,6 +115,43 @@ if (fable) {
   check("live-fable-cash", cash && Math.abs(Number(cash.sizeUsd) - 9.5985) < 0.0001, cash && String(cash.sizeUsd));
 }
 
+const wedSip = board.snapshots.find((s) => s.id === "s1e01-wed-sip");
+check("wednesday-sip-mark", Boolean(wedSip), "missing s1e01-wed-sip");
+if (wedSip) {
+  check("wednesday-sip-mark-label", String(wedSip.label || "").includes("Wed Aug 26 official SIP"));
+}
+const thuSip = board.snapshots.find((s) => s.id === "s1e01-thu-sip");
+check("thursday-sip-mark", Boolean(thuSip), "missing s1e01-thu-sip");
+if (thuSip) {
+  check("thursday-sip-mark-label", String(thuSip.label || "").includes("Thu Aug 27 official SIP"));
+  const bidu = (thuSip.tribes && thuSip.tribes.bidu) || {};
+  const askara = (thuSip.tribes && thuSip.tribes.askara) || {};
+  check("thursday-sip-bidu-week", bidu.combinedWeekPct === 4.36, String(bidu.combinedWeekPct));
+  check("thursday-sip-bidu-day", bidu.combinedDayPct === 3.27, String(bidu.combinedDayPct));
+  check("thursday-sip-askara-week", askara.combinedWeekPct === 2.51, String(askara.combinedWeekPct));
+  check("thursday-sip-askara-day", askara.combinedDayPct === 4.82, String(askara.combinedDayPct));
+  const composerThu = thuSip.books && composer && thuSip.books[composer.id];
+  const kimiThu = thuSip.books && kimi && thuSip.books[kimi.id];
+  check("thursday-sip-composer-book", composerThu && composerThu.bookUsd === 11.0779 && composerThu.weekPct === 10.78, composerThu && `${composerThu.bookUsd} / ${composerThu.weekPct}`);
+  check("thursday-sip-kimi-book", kimiThu && kimiThu.bookUsd === 10.1016 && kimiThu.weekPct === 1.02, kimiThu && `${kimiThu.bookUsd} / ${kimiThu.weekPct}`);
+}
+
+const wiredDays = (source.episode && source.episode.days) || [];
+const wiredIds = wiredDays.map((day) => day.id).join("|");
+check("episode-days-wire-history", wiredIds === "monday|tuesday|wednesday|thursday", wiredIds);
+const wedWire = wiredDays.find((day) => day.id === "wednesday");
+const thuWire = wiredDays.find((day) => day.id === "thursday");
+check("wednesday-board-wire", wedWire && wedWire.snapshotId === "s1e01-wed-sip" && wedWire.board === "day-wednesday");
+check("thursday-board-wire", thuWire && thuWire.snapshotId === "s1e01-thu-sip" && thuWire.board === "day-thursday");
+check(
+  "friday-not-wired-as-day-board",
+  !wiredDays.some((day) => day.id === "friday" || /fri-lasthour|fri-mid|fri-open/.test(String(day.snapshotId || "")))
+);
+check(
+  "one-thursday-history-board",
+  wiredDays.filter((day) => day.id === "thursday" || /thu-/i.test(String(day.snapshotId || ""))).length === 1
+);
+
 const friOpen = board.snapshots.find((s) => s.id === "s1e01-fri-open");
 check("friday-open-mark", Boolean(friOpen), "missing s1e01-fri-open");
 if (friOpen) {
@@ -160,6 +197,38 @@ check("live-composer-lead", composerLive && composerLive.bookUsd === 10.4553 && 
 check("live-fable-last", fableLive && fableLive.bookUsd === 9.5985 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
+const wednesday = (episodeCopy.days || []).find((day) => day.id === "wednesday");
+const wednesdayBeats = (wednesday && wednesday.beats) || [];
+const wednesdayBooks = wednesdayBeats.find((beat) => beat.id === "wednesday-books");
+const wednesdayDinner = wednesdayBeats.find((beat) => beat.id === "wednesday-dinner");
+check("wednesday-books-is-snapshot", Boolean(wednesdayBooks) && wednesdayBooks.type === "books" && wednesdayBooks.boardId === "day-wednesday");
+check("wednesday-dinner-beat", Boolean(wednesdayDinner) && wednesdayDinner.type === "dinner-fires");
+check(
+  "wednesday-books-not-week-board-dump",
+  wednesdayBooks && !String(wednesdayBooks.body || "").includes("Latest week % and books are on the week board")
+);
+const thursdayCopy = (episodeCopy.days || []).find((day) => day.id === "thursday");
+const thursdayBeats = (thursdayCopy && thursdayCopy.beats) || [];
+const thursdayBooks = thursdayBeats.find((beat) => beat.id === "thursday-books");
+check("thursday-books-is-snapshot", Boolean(thursdayBooks) && thursdayBooks.type === "books" && thursdayBooks.boardId === "day-thursday");
+check("thursday-one-books-beat", thursdayBeats.filter((beat) => beat.type === "books").length === 1);
+check(
+  "thursday-books-official-sip",
+  thursdayBooks && String(thursdayBooks.body || "").includes("Thu Aug 27 official SIP") && String(thursdayBooks.body || "").includes("dayPct vs Wed Aug 26")
+);
+check(
+  "thursday-books-not-friday-lasthour",
+  thursdayBooks &&
+    !String(thursdayBooks.body || "").includes("Fri Aug 28 last-hour") &&
+    !String(JSON.stringify(thursdayBooks)).includes("12:14")
+);
+check(
+  "week-board-still-friday-lasthour",
+  episodeCopy.weekBoard &&
+    String(episodeCopy.weekBoard.lede || "").includes("Fri Aug 28 last-hour") &&
+    String(episodeCopy.weekBoard.lede || "").includes("dayPct vs Thu Aug 27 official SIP close")
+);
+
 const friday = (episodeCopy.days || []).find((day) => day.id === "friday");
 const fridayBeats = (friday && friday.beats) || [];
 const fridayBooks = fridayBeats.find((beat) => beat.id === "friday-lasthour");
