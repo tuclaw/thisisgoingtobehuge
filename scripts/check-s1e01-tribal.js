@@ -54,8 +54,8 @@ if (!builder.includes("function tribalFocusHtml") || !builder.includes("episodeV
 if (!builder.includes('id="tribal-focus"') || !builder.includes("tribal-conversations")) {
   fail("post-vote layout must mount #tribal-focus with collapsed conversations");
 }
-if (!app.includes("function episodeFocusId") || !app.includes("tribal-focus")) {
-  fail("app must treat #tribal-focus as the post-vote episode focus");
+if (!app.includes("function episodeFocusId") || !app.includes("week-board")) {
+  fail("app must treat #week-board as the episode focus (vote sits below the diagram)");
 }
 
 const expectedBooths = [
@@ -75,11 +75,10 @@ expectedBooths.forEach(([slug, name, needle], i) => {
 });
 
 const chrome = [episode.location, episode.description, episode.heroNote, tribal.foldEm, tribal.foldTitle, cut.title, cut.body]
-  .concat((episode.rail || []).map((item) => `${item.day} ${item.sub}`))
   .concat((episode.spine || []).map((item) => item.text))
   .join("\n");
 if (/voted off|joins the jury|tally 5|5–1|5-1/i.test(chrome)) {
-  fail("do not print the boot or tally in hero/rail/open copy");
+  fail("do not print the boot or tally in hero/open copy");
 }
 ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"].forEach((nick) => {
   const boothChrome = (prevote.items || []).map((item) => item.name).join(" ");
@@ -157,11 +156,13 @@ if (html) {
   const tribalIdx = html.indexOf('id="episode-tribal"');
   const prevoteIdx = html.indexOf('id="tribal-prevote"');
   const weekIdx = html.indexOf('id="week-board"');
+  const tickerIdx = html.indexOf('id="money-ticker"');
+  const booksIdx = html.indexOf('id="latest-books"');
   const noonIdx = html.indexOf('id="friday-confessionals"');
-  if (!(focusIdx < tribalIdx && tribalIdx < prevoteIdx && prevoteIdx < weekIdx)) {
-    fail("post-vote order must be #tribal-focus → spoiler → collapsed prevote → #week-board");
+  if (!(weekIdx < tickerIdx && tickerIdx < focusIdx && focusIdx < tribalIdx && tribalIdx < prevoteIdx && prevoteIdx < booksIdx)) {
+    fail("post-vote order must be #week-board → #money-ticker → #tribal-focus → spoiler → collapsed prevote → #latest-books");
   }
-  if (!(noonIdx > weekIdx)) {
+  if (!(noonIdx > booksIdx)) {
     fail("Friday noon booths stay in the week folds below books");
   }
   if (/\sid="tribal"/.test(html)) {
@@ -171,7 +172,8 @@ if (html) {
   if (/Voted off:|joins the jury|Tally 5–1/.test(open)) {
     fail("built open copy leaked the boot before the spoiler");
   }
-  if (!html.includes('href="#tribal-focus"')) fail("skip/rail must point at #tribal-focus after the vote");
+  if (!html.includes('href="#week-board"')) fail("skip/scroll cue must point at #week-board");
+  if (html.includes("day-rail")) fail("episode page must not render the day-rail TOC");
 }
 
-console.log("s1e01 tribal checks passed (post-vote focus above books, collapsed prevote, spoiler intact)");
+console.log("s1e01 tribal checks passed (vote below diagram, collapsed prevote, spoiler intact)");

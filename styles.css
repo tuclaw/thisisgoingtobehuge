@@ -2203,53 +2203,6 @@ a.brand:hover {
   margin-top: 1.25rem;
 }
 
-.day-rail {
-  position: sticky;
-  top: 3.4rem;
-  z-index: 5;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.45rem;
-  margin: 0 0 1.6rem;
-  padding: 0.55rem;
-  background: rgba(8, 5, 4, 0.92);
-  border: 1px solid rgba(212, 160, 23, 0.22);
-  backdrop-filter: blur(8px);
-}
-
-@media (max-width: 640px) {
-  .day-rail {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.day-rail a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
-  padding: 0.55rem 0.4rem;
-  font-family: var(--font-display);
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--parchment);
-  border: 1px solid transparent;
-  text-align: center;
-}
-
-.day-rail a span {
-  font-size: 0.55rem;
-  letter-spacing: 0.16em;
-  color: var(--worn);
-}
-
-.day-rail a:hover,
-.day-rail a[aria-current="location"] {
-  color: var(--gold-bright);
-  border-color: rgba(212, 160, 23, 0.35);
-}
-
 #thursday-lunch .lunch-chats,
 #friday-lunch .lunch-chats,
 #saturday-lunch .lunch-chats {

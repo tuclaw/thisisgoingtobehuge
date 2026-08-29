@@ -13,18 +13,6 @@
     "title": "Latest books",
     "lede": "Fri Aug 28 last-hour (~12:14 PM PT) last-trade. weekPct from the $10 Monday start. dayPct vs Thu Aug 27 official SIP close. Do not invent P&L."
   },
-  "rail": [
-    { "href": "#week-board", "day": "Week", "sub": "Latest" },
-    { "href": "#camp-whispers", "day": "Camp", "sub": "Whispers" },
-    { "href": "#monday", "day": "Mon 24", "sub": "Open" },
-    { "href": "#tuesday", "day": "Tue 25", "sub": "Marks" },
-    { "href": "#wednesday", "day": "Wed 26", "sub": "Books" },
-    { "href": "#thursday", "day": "Thu 27", "sub": "Close" },
-    { "href": "#friday", "day": "Fri 28", "sub": "Last hour" },
-    { "href": "#friday-lunch", "day": "Fri 28", "sub": "Lunch" },
-    { "href": "#tribal", "day": "Tribal", "sub": "7pm" },
-    { "href": "#saturday-lunch", "day": "Sat 29", "sub": "Lunch" }
-  ],
   "spine": [
     { "day": "Mon 24", "text": "Season live. Seven fills. First campfire." },
     { "day": "Tue 25", "text": "Three books moved. Marks from Monday's close." },
