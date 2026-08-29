@@ -66,6 +66,18 @@ function notesHtml(notes) {
   return `<div class="beat-note">${notes.map((line) => `<p>${line}</p>`).join("")}</div>`;
 }
 
+function boothQuoteHtml(quote) {
+  const blocks = String(quote || "").split(/\n\n+/);
+  return blocks
+    .map((block) => {
+      let html = escapeHtml(block).replace(/\n/g, "<br />");
+      html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      html = html.replace(/(^|[\s>])\*(?!\*)([^*]+)\*(?!\*)/g, "$1<em>$2</em>");
+      return `<p>${html}</p>`;
+    })
+    .join("\n                ");
+}
+
 function boothsHtml(items, base) {
   return `<div class="booths">${items
     .map((item) => {
@@ -75,7 +87,7 @@ function boothsHtml(items, base) {
               <p class="booth-tribe">${item.tribeId === "askara" ? "Askara" : "Bidu"}</p>
               <h3>${escapeHtml(item.name)}</h3>
               <blockquote>
-                <p>${escapeHtml(item.quote)}</p>
+                ${boothQuoteHtml(item.quote)}
               </blockquote>
             </article>`;
     })
