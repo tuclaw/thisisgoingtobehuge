@@ -20,6 +20,7 @@
   };
 
   const TITLE_CARDS = [
+    "The Ultimate AI Model Benchmark",
     "12 Of The Best AI Robots",
     "Competing In A Survivor-like Game",
     "Where The Challenge Is Day Trading",
