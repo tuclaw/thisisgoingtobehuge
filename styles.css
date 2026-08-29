@@ -4348,6 +4348,23 @@ body.is-titles .replay-trailer {
   color: var(--gold);
 }
 
+.money-ticker-live {
+  margin: 0.15rem 0 0.2rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 7vw, 3.4rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  color: var(--bone);
+}
+
+.money-ticker-live.is-ticker-up { color: #8ee8d8; }
+.money-ticker-live.is-ticker-down { color: #ff9a6a; }
+
+.money-ticker-head .money-ticker-chg {
+  margin: 0 0 0.65rem;
+}
+
 .money-ticker-lede {
   margin: 0;
   max-width: 40rem;

@@ -1277,10 +1277,21 @@ function setMoneyTickerIndex(next, opts) {
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
+  const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
+  if (live) {
+    live.textContent = potMoney(frame.total);
+    live.classList.toggle("is-ticker-down", down);
+    live.classList.toggle("is-ticker-up", up);
+  }
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
     chg.textContent = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
+  }
+  const liveChg = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live-chg]");
+  if (liveChg) {
+    liveChg.className = "money-ticker-chg " + chgClass;
+    liveChg.textContent = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
   }
 
   const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
@@ -1528,6 +1539,8 @@ function mountMoneyTicker(season, opts) {
   root.innerHTML = `
     <div class="money-ticker-head">
       <p class="money-ticker-kicker">Replay the books</p>
+      <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].total))}</p>
+      <p class="money-ticker-chg" data-ticker-live-chg></p>
       <p class="money-ticker-lede">Watch every sleeve mark over the week — or the whole season. The dotted line is the $${moneyTicker.sleevePutIn.toFixed(0)} put into each book ($${moneyTicker.putIn.toFixed(0)} into the game).</p>
     </div>
     <div class="money-ticker-range" role="tablist" aria-label="Time range">
