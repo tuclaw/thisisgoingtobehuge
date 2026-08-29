@@ -104,8 +104,8 @@ void main() {
 
   const QUAD_POS = new Float32Array([-1, -1, 1, -1, -1, 1, 1, -1, 1, 1, -1, 1]);
   const QUAD_UV = new Float32Array([0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1]);
-  const TEX_W = 600;
-  const TEX_H = 420;
+  const TEX_W = 520;
+  const TEX_H = 360;
   const BURN_SECONDS = 3.5;
 
   function easeBurn(raw) {
@@ -122,39 +122,68 @@ void main() {
     const ctx = c.getContext("2d");
     if (!ctx) return c;
 
-    const grad = ctx.createLinearGradient(0, 0, TEX_W, TEX_H);
-    grad.addColorStop(0, "#b8894f");
-    grad.addColorStop(0.45, "#9a6b38");
-    grad.addColorStop(1, "#6f4a24");
+    const grad = ctx.createRadialGradient(
+      TEX_W * 0.5,
+      TEX_H * 1.05,
+      20,
+      TEX_W * 0.5,
+      TEX_H * 0.45,
+      TEX_W * 0.75
+    );
+    grad.addColorStop(0, "rgba(232,93,4,0.16)");
+    grad.addColorStop(0.35, "#140e0b");
+    grad.addColorStop(1, "#0b0809");
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, TEX_W, TEX_H);
 
-    ctx.globalAlpha = 0.14;
-    for (let i = 0; i < 9000; i++) {
+    ctx.globalAlpha = 0.18;
+    for (let i = 0; i < 7000; i++) {
       const x = Math.random() * TEX_W;
       const y = Math.random() * TEX_H;
-      const a = Math.random() * 0.35;
-      ctx.fillStyle = Math.random() > 0.5 ? `rgba(40,20,8,${a})` : `rgba(255,230,180,${a})`;
-      ctx.fillRect(x, y, 1.2, 1.2);
+      const a = Math.random() * 0.4;
+      ctx.fillStyle = Math.random() > 0.55 ? `rgba(0,0,0,${a})` : `rgba(232,200,140,${a * 0.45})`;
+      ctx.fillRect(x, y, 1.1, 1.1);
     }
     ctx.globalAlpha = 1;
 
     const inset = ctx.createLinearGradient(0, 0, 0, TEX_H);
-    inset.addColorStop(0, "rgba(255,240,200,0.12)");
-    inset.addColorStop(1, "rgba(0,0,0,0.35)");
+    inset.addColorStop(0, "rgba(240,193,75,0.06)");
+    inset.addColorStop(0.55, "rgba(0,0,0,0)");
+    inset.addColorStop(1, "rgba(0,0,0,0.45)");
     ctx.fillStyle = inset;
     ctx.fillRect(0, 0, TEX_W, TEX_H);
 
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#2a1408";
-    ctx.font = '600 22px "Cinzel", Georgia, serif';
-    ctx.fillText("SPOILER ALERT", TEX_W / 2, TEX_H * 0.34);
+    const pad = 18;
+    ctx.strokeStyle = "rgba(140,70,30,0.55)";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(pad + 0.5, pad + 0.5, TEX_W - pad * 2, TEX_H - pad * 2);
+    ctx.strokeStyle = "rgba(212,160,23,0.22)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(pad + 6.5, pad + 6.5, TEX_W - pad * 2 - 12, TEX_H - pad * 2 - 12);
 
-    ctx.font = '700 44px "Cinzel", Georgia, serif';
-    ctx.fillText("TRIBAL RESULTS", TEX_W / 2, TEX_H * 0.48);
-    ctx.fillStyle = "#3a1f0f";
-    const copy = "Click to burn and reveal the vote — and who gets snuffed.";
-    wrapText(ctx, copy, TEX_W / 2, TEX_H * 0.62, TEX_W * 0.72, 30);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#c4a574";
+    ctx.font = '400 15px "Cinzel", "Times New Roman", Times, serif';
+    try {
+      ctx.letterSpacing = "0.28em";
+    } catch (_) {
+      /* letterSpacing unsupported */
+    }
+    ctx.fillText("SPOILER", TEX_W / 2, TEX_H * 0.3);
+    try {
+      ctx.letterSpacing = "0px";
+    } catch (_) {
+      /* letterSpacing unsupported */
+    }
+
+    ctx.fillStyle = "#e8d5b0";
+    ctx.font = '700 40px "Cinzel", "Times New Roman", Times, serif';
+    ctx.fillText("THE VOTE", TEX_W / 2, TEX_H * 0.48);
+
+    ctx.fillStyle = "#8a7355";
+    ctx.font = 'italic 17px "IM Fell English", "Palatino Linotype", Palatino, serif';
+    wrapText(ctx, "Burn to reveal who goes home.", TEX_W / 2, TEX_H * 0.7, TEX_W * 0.68, 24);
 
     return c;
   }
@@ -173,7 +202,8 @@ void main() {
       }
     }
     if (line) lines.push(line);
-    lines.forEach((ln, i) => ctx.fillText(ln, x, y + i * lineHeight));
+    const startY = y - ((lines.length - 1) * lineHeight) / 2;
+    lines.forEach((ln, i) => ctx.fillText(ln, x, startY + i * lineHeight));
   }
 
   class TribalSpoilerBurn {
