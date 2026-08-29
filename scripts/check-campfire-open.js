@@ -130,6 +130,18 @@ if (!js.includes("hasSeenOpenTitles") || !js.includes("markOpenTitlesSeen")) {
 if (!html.includes('sessionStorage.getItem("lts-open-titles-seen")')) {
   throw new Error("templates/island.html must skip titles gate when already seen");
 }
+if (!html.includes('id="replay-trailer"') || !html.includes("Replay trailer")) {
+  throw new Error("templates/island.html missing subtle Replay trailer control");
+}
+if (!js.includes("replayTrailer") || !js.includes("resetOpenTitlesOverlay")) {
+  throw new Error("campfire-open.js missing replay trailer helpers");
+}
+if (!js.includes("force: true") && !js.includes("force ? { force: true }")) {
+  throw new Error("campfire-open.js must force-play titles on replay");
+}
+if (!css.includes(".replay-trailer") || !css.includes("open-hero.is-copy-in .replay-trailer")) {
+  throw new Error("styles.css missing subtle replay trailer styling");
+}
 
 const fills = (season.events || []).filter((e) => e && e.type === "fill");
 if (fills.length < 1) throw new Error("season1.json has no fill events for trade flash");

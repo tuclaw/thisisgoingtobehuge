@@ -908,7 +908,24 @@
     }
   }
 
-  async function playOpenTitles() {
+  function resetOpenTitlesOverlay() {
+    const overlay = document.getElementById("open-titles");
+    const wordEl = document.getElementById("open-titles-word");
+    const finale = document.getElementById("open-finale");
+    if (overlay) {
+      overlay.classList.remove("is-sky", "is-finale", "is-slogan", "is-descent", "is-instant");
+      overlay.removeAttribute("aria-hidden");
+    }
+    if (wordEl) {
+      wordEl.textContent = "";
+      wordEl.classList.remove("is-in");
+    }
+    if (finale) finale.setAttribute("aria-hidden", "true");
+  }
+
+  async function playOpenTitles(options) {
+    const opts = options || {};
+    const force = opts.force === true;
     const overlay = document.getElementById("open-titles");
     const wordEl = document.getElementById("open-titles-word");
     if (!overlay || !wordEl || !document.body.classList.contains("is-titles")) {
@@ -916,7 +933,7 @@
       return;
     }
 
-    if (shouldSkipOpenTitles()) {
+    if (!force && shouldSkipOpenTitles()) {
       finishOpenTitles();
       return;
     }
@@ -966,18 +983,16 @@
 
     const skipBtn = document.getElementById("open-titles-skip");
     const skipLink = document.getElementById("skip-titles");
-    if (overlay) overlay.addEventListener("click", skip);
-    if (skipBtn) {
-      skipBtn.addEventListener("click", function (event) {
-        event.stopPropagation();
-        skip();
-      });
+    function onOverlayClick() {
+      skip();
     }
-    if (skipLink) {
-      skipLink.addEventListener("click", function (event) {
-        event.preventDefault();
-        skip();
-      });
+    function onSkipBtn(event) {
+      event.stopPropagation();
+      skip();
+    }
+    function onSkipLink(event) {
+      event.preventDefault();
+      skip();
     }
     function onKey(event) {
       if (event.key === "Escape") {
@@ -985,6 +1000,10 @@
         skip();
       }
     }
+
+    overlay.addEventListener("click", onOverlayClick);
+    if (skipBtn) skipBtn.addEventListener("click", onSkipBtn);
+    if (skipLink) skipLink.addEventListener("click", onSkipLink);
     window.addEventListener("keydown", onKey);
 
     try {
@@ -1012,6 +1031,9 @@
         forceDescent: skipRef.toDescent || skipRef.skipped
       });
     } finally {
+      overlay.removeEventListener("click", onOverlayClick);
+      if (skipBtn) skipBtn.removeEventListener("click", onSkipBtn);
+      if (skipLink) skipLink.removeEventListener("click", onSkipLink);
       window.removeEventListener("keydown", onKey);
       if (!skipRef.finished) finishOpenTitles();
     }
@@ -1033,6 +1055,22 @@
     threadEl.innerHTML = "";
   }
 
+  function clearCampfireStage(facesEl, threadEl, tradeEl) {
+    if (facesEl) {
+      facesEl.classList.remove("is-in");
+      facesEl.innerHTML = "";
+    }
+    if (threadEl) threadEl.innerHTML = "";
+    const card = document.getElementById("campfire-imessage");
+    if (card) card.classList.remove("is-in");
+    if (tradeEl) {
+      tradeEl.classList.remove("is-in");
+      tradeEl.innerHTML = "";
+      tradeEl.removeAttribute("data-slot");
+      tradeEl.setAttribute("aria-hidden", "true");
+    }
+  }
+
   function initCampfireOpen() {
     const theater = document.getElementById("campfire-theater");
     const canvas = document.getElementById("campfire-canvas");
@@ -1040,6 +1078,7 @@
     const tradeEl = document.getElementById("campfire-trade");
     const threadEl = document.getElementById("campfire-thread");
     const statusEl = document.getElementById("campfire-status");
+    const replayBtn = document.getElementById("replay-trailer");
     /* Episode feed landing uses the same theater markup with data-mode="feed". */
     if (!theater || theater.getAttribute("data-mode") === "feed") {
       finishOpenTitles();
@@ -1055,6 +1094,8 @@
     let sceneIndex = 0;
     let tradeIndex = 0;
     let looping = true;
+    let loopGeneration = 0;
+    let titlesBusy = false;
     const tradesPromise = loadTrades();
 
     function onResize() {
@@ -1079,18 +1120,35 @@
 
     const hero = theater.closest(".open-hero");
 
-    async function revealAfterTitles() {
-      await playOpenTitles();
+    function showReplayControl() {
+      if (!replayBtn || prefersReducedMotion()) return;
+      replayBtn.hidden = false;
+      replayBtn.disabled = false;
+    }
+
+    function hideReplayControl() {
+      if (!replayBtn) return;
+      replayBtn.hidden = true;
+      replayBtn.disabled = true;
+    }
+
+    async function revealAfterTitles(force) {
+      titlesBusy = true;
+      hideReplayControl();
+      await playOpenTitles(force ? { force: true } : undefined);
       /* Light the fire only after the titles/descent finish — avoids a pre-scroll flash. */
       theater.classList.add("is-ready");
       requestAnimationFrame(() => theater.classList.add("is-lit"));
       window.setTimeout(() => {
         if (hero) hero.classList.add("is-copy-in");
+        showReplayControl();
       }, prefersReducedMotion() ? 80 : 900);
+      titlesBusy = false;
     }
 
-    async function loop() {
-      await revealAfterTitles();
+    async function runTheaterLoop(skipPostTitlesWait) {
+      const generation = ++loopGeneration;
+      abortRef.aborted = false;
       const trades = await tradesPromise;
       const scenes = getScenes();
 
@@ -1102,9 +1160,13 @@
         return;
       }
 
-      await wait(POST_TITLES_WAIT_MS);
+      if (!skipPostTitlesWait) {
+        await wait(POST_TITLES_WAIT_MS);
+        if (generation !== loopGeneration || abortRef.aborted) return;
+      }
+
       const attachGate = global.CampChat && global.CampChat.attachThreadScrollGate;
-      while (looping && !abortRef.aborted) {
+      while (looping && !abortRef.aborted && generation === loopGeneration) {
         const trade = trades.length ? trades[tradeIndex % trades.length] : null;
         if (trade && tradeEl) {
           const person = CAST[trade.castId];
@@ -1119,9 +1181,9 @@
           }
           const slot = TRADE_SLOTS[tradeIndex % TRADE_SLOTS.length];
           const tradeOk = await playTrade(theater, tradeEl, trade, abortRef, slot);
-          if (!tradeOk || abortRef.aborted) break;
+          if (!tradeOk || abortRef.aborted || generation !== loopGeneration) break;
           await wait(420);
-          if (abortRef.aborted) break;
+          if (abortRef.aborted || generation !== loopGeneration) break;
           tradeIndex += 1;
         }
 
@@ -1131,21 +1193,24 @@
           statusEl.textContent = "Around the fire: " + names + ".";
         }
         await fadeTradeOut(tradeEl, abortRef);
+        if (abortRef.aborted || generation !== loopGeneration) break;
         const scrollGate = typeof attachGate === "function" ? attachGate(threadEl) : null;
         try {
           const ok = await playScene(theater, facesEl, threadEl, scene, abortRef, scrollGate);
-          if (!ok || abortRef.aborted) break;
+          if (!ok || abortRef.aborted || generation !== loopGeneration) break;
           if (scrollGate) {
             const held = await scrollGate.gatedWait(2200, function () {
-              return abortRef.aborted;
+              return abortRef.aborted || generation !== loopGeneration;
             });
-            if (!held || abortRef.aborted) break;
+            if (!held || abortRef.aborted || generation !== loopGeneration) break;
           } else {
             await wait(2200);
-            if (abortRef.aborted) break;
+            if (abortRef.aborted || generation !== loopGeneration) break;
           }
           await fadeSceneOut(facesEl, threadEl, abortRef, scrollGate);
+          if (abortRef.aborted || generation !== loopGeneration) break;
           await wait(500);
+          if (abortRef.aborted || generation !== loopGeneration) break;
           sceneIndex += 1;
         } finally {
           if (scrollGate) scrollGate.destroy();
@@ -1153,7 +1218,39 @@
       }
     }
 
-    loop();
+    async function replayTrailer() {
+      if (titlesBusy || prefersReducedMotion()) return;
+      if (!document.getElementById("open-titles")) return;
+
+      titlesBusy = true;
+      hideReplayControl();
+      abortRef.aborted = true;
+      loopGeneration += 1;
+      clearCampfireStage(facesEl, threadEl, tradeEl);
+
+      if (hero) hero.classList.remove("is-copy-in");
+      theater.classList.remove("is-lit", "is-ready");
+      resetOpenTitlesOverlay();
+      document.body.classList.add("is-titles");
+      window.scrollTo(0, 0);
+
+      await wait(80);
+      await revealAfterTitles(true);
+      await runTheaterLoop(false);
+    }
+
+    if (replayBtn) {
+      replayBtn.addEventListener("click", function () {
+        replayTrailer();
+      });
+    }
+
+    async function boot() {
+      await revealAfterTitles(false);
+      await runTheaterLoop(false);
+    }
+
+    boot();
 
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) fire.stop();
@@ -1171,7 +1268,9 @@
     fallbackTrades: FALLBACK_TRADES,
     prefersReducedMotion: prefersReducedMotion,
     wait: wait,
-    escapeHtml: escapeHtml
+    escapeHtml: escapeHtml,
+    playOpenTitles: playOpenTitles,
+    resetOpenTitlesOverlay: resetOpenTitlesOverlay
   };
 
   if (document.readyState === "loading") {
