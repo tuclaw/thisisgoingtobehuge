@@ -6,7 +6,7 @@ Static site for Liquidation Island. Season state is a ledger; the public board i
 
 ```bash
 npm run build    # node scripts/build.mjs → stamps dist/
-npm run check    # season invariants + episode/UI checks
+npm run check    # durable season invariants + live fixtures + episode/UI checks
 npm run dev      # build, then python3 scripts/dev-server.py @ :8000
 ```
 
@@ -37,10 +37,12 @@ Public URLs like `index.html` / `seasons/1/e01.html` are **build outputs**. Chan
 ## Season / trade changes
 
 1. Append events to `data/season1.json` (do not rewrite history unless correcting a bad append).
-2. Run `npm run build` and `npm run check` (or at least `node scripts/check-season.mjs`).
+2. Run `npm run build` and `npm run check`.
 3. Update episode copy in `data/episodes/` only when the audience beat actually changed.
 
-`scripts/check-season.mjs` asserts the current live board. Expect to update its fixtures when the ledger moves.
+Season checks are split:
+- `scripts/check-season.mjs` — durable shape/math/GAME.md invariants (keep green without rewriting for every mark)
+- `scripts/check-season-live.mjs` — golden fixtures for the current live board / Episode 1 cut (update this when the ledger or episode copy moves)
 
 ## UI / landing changes
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Schema-ish shape + GAME.md invariants. Never snapshot a week's leader. */
+/** Durable season invariants (shape, math, GAME.md). Episode board fixtures live in check-season-live.mjs. */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,12 +33,15 @@ check("exactly-one-live-episode-or-none", (source.episodes || []).filter((ep) =>
 
 const ids = new Set();
 const slugs = new Set();
+const names = new Set();
 for (const member of source.cast) {
   requireKeys(member, ["id", "name", "slug", "tribeId", "model", "portrait"], `cast.${member && member.name}`);
   check(`unique-id:${member.id}`, !ids.has(member.id));
   check(`unique-slug:${member.slug}`, !slugs.has(member.slug));
+  check(`unique-name:${member.name}`, !names.has(member.name));
   ids.add(member.id);
   slugs.add(member.slug);
+  names.add(member.name);
   check(`slug-matches:${member.slug}`, member.slug === slugify(member.model || member.name));
 }
 
@@ -47,21 +50,23 @@ const marks = (source.events || []).filter((event) => event.type === "mark");
 check("has-fills", fills.length > 0);
 check("has-marks", marks.length > 0);
 
+const fillIds = new Set();
 for (const fill of fills) {
   requireKeys(fill, ["id", "survivorId", "side", "ticker", "qty", "avg", "at"], `fill.${fill.id}`);
+  check(`fill-unique-id:${fill.id}`, !fillIds.has(fill.id));
+  fillIds.add(fill.id);
   check(`fill-known-survivor:${fill.id}`, ids.has(fill.survivorId));
   check(`fill-side:${fill.id}`, fill.side === "buy" || fill.side === "sell");
   check(`fill-qty:${fill.id}`, Number.isFinite(parseFloat(fill.qty)) && parseFloat(fill.qty) > 0);
   check(`fill-avg:${fill.id}`, Number.isFinite(parseFloat(fill.avg)) && parseFloat(fill.avg) > 0);
 }
 
-check("sold-lots-are-events", fills.some((f) => f.side === "sell" && f.ticker === "SMCI"));
-check("sold-hood-is-event", fills.some((f) => f.side === "sell" && f.ticker === "HOOD"));
-check("sold-btal-is-event", fills.some((f) => f.side === "sell" && f.ticker === "BTAL"));
-check("sold-island-nvda-is-event", fills.some((f) => f.side === "sell" && f.ticker === "NVDA"));
-check("sold-island-tsla-is-event", fills.some((f) => f.side === "sell" && f.ticker === "TSLA"));
-check("sold-island-gld-is-event", fills.some((f) => f.side === "sell" && f.ticker === "GLD"));
-check("sold-island-coin-is-event", fills.some((f) => f.side === "sell" && f.ticker === "COIN"));
+const markIds = new Set();
+for (const mark of marks) {
+  requireKeys(mark, ["id", "at"], `mark.${mark && mark.id}`);
+  check(`mark-unique-id:${mark.id}`, !markIds.has(mark.id));
+  markIds.add(mark.id);
+}
 
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === source.cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
@@ -70,7 +75,7 @@ check("snapshots", Array.isArray(board.snapshots) && board.snapshots.length === 
 
 const start = board.startingBookUsd;
 check("pot-is-sleeves", board.islandPotUsd === start * source.cast.length);
-check("given-total", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
 check("board-given-total", board.islandGivenUsd === source.islandGivenUsd, String(board.islandGivenUsd));
 check("given-is-not-sleeves", source.islandGivenUsd !== start * source.cast.length);
 
@@ -108,218 +113,6 @@ for (const tribe of board.tribes) {
   check(`living-count:${tribe.id}`, tribe.livingCount === living.length);
 }
 
-const tue = board.snapshots.find((s) => s.id === "s1e01-tue-marks");
-const mon = board.snapshots.find((s) => s.id === "s1e01-mon-open");
-const kimi = source.cast.find((m) => m.name === "Kimi K3");
-const composer = source.cast.find((m) => m.name === "Composer 2.5");
-const opus = source.cast.find((m) => m.name === "Claude Opus 5");
-
-if (tue && kimi) {
-  const tickers = (tue.books[kimi.id].positions || []).map(tickerOf);
-  check("tuesday-kimi-no-nvda", !tickers.includes("NVDA"));
-}
-if (mon && composer) {
-  const tickers = (mon.books[composer.id].positions || []).map(tickerOf);
-  check("monday-composer-smci-only", tickers.includes("SMCI") && !tickers.includes("SOXL"));
-}
-if (tue && opus) {
-  const tickers = (tue.books[opus.id].positions || []).map(tickerOf);
-  check("tuesday-opus-still-has-btal", tickers.includes("BTAL") && tickers.includes("QID"));
-}
-if (opus) {
-  const now = board.survivors.find((s) => s.id === opus.id);
-  const tickers = (now.positions || []).map(tickerOf);
-  const qid = (now.positions || []).find((pos) => tickerOf(pos) === "QID");
-  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
-  check("wednesday-opus-sold-btal", !tickers.includes("BTAL") && tickers.includes("QID") && tickers.includes("CASH"));
-  check("live-opus-qid-qty", qid && qid.qty === "0.413795", qid && qid.qty);
-  check("live-opus-cash-4", cash && Math.abs(Number(cash.sizeUsd) - 4) < 0.05, cash && String(cash.sizeUsd));
-}
-
-const grok45 = source.cast.find((m) => m.name === "Grok 4.5");
-const grok46 = source.cast.find((m) => m.name === "Grok 4.6");
-const fable = source.cast.find((m) => m.name === "Claude Fable 5");
-if (kimi) {
-  const now = board.survivors.find((s) => s.id === kimi.id);
-  const tickers = (now.positions || []).map(tickerOf);
-  const msft = (now.positions || []).find((pos) => tickerOf(pos) === "MSFT");
-  const cost = (now.positions || []).find((pos) => tickerOf(pos) === "COST");
-  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
-  check("live-kimi-no-nvda", !tickers.includes("NVDA"));
-  check("live-kimi-msft-qty", msft && msft.qty === "0.004037", msft && msft.qty);
-  check("live-kimi-cost-qty", cost && cost.qty === "0.002092", cost && cost.qty);
-  check("live-kimi-cash", cash && Math.abs(Number(cash.sizeUsd) - 6.1074) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-kimi-no-rank-position", now && now.position == null);
-}
-if (grok45) {
-  const now = board.survivors.find((s) => s.id === grok45.id);
-  const tickers = (now.positions || []).map(tickerOf);
-  const hood = (now.positions || []).find((pos) => tickerOf(pos) === "HOOD");
-  const sofi = (now.positions || []).find((pos) => tickerOf(pos) === "SOFI");
-  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
-  check("live-grok45-no-coin", !tickers.includes("COIN"));
-  check("live-grok45-hood-island-lot", hood && hood.qty === "0.046425", hood && hood.qty);
-  check("live-grok45-sofi", sofi && sofi.qty === "0.105888", sofi && sofi.qty);
-  check("live-grok45-cash", cash && Math.abs(Number(cash.sizeUsd) - 2.8537) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 9.6402) < 0.0001, now && String(now.bookUsd));
-  check("live-grok45-no-rank-position", now && now.position == null);
-}
-
-check(
-  "live-coin-sell-is-event",
-  fills.some((f) => f.survivorId === (grok45 && grok45.id) && f.side === "sell" && f.ticker === "COIN" && f.orderId === "6a91de03-23f4-4834-a5b7-b19f2bb5233e")
-);
-const coinSell = fills.find((f) => f.id === "fill-grok-45-coin-sell");
-check("live-coin-sell-at", coinSell && coinSell.at === "2026-08-28T19:14:12.111Z", coinSell && coinSell.at);
-check("live-coin-sell-avg", coinSell && coinSell.avg === "177.6112", coinSell && String(coinSell.avg));
-check(
-  "no-unfilled-kimi-msft-add",
-  fills.filter((f) => f.survivorId === (kimi && kimi.id) && f.side === "buy" && f.ticker === "MSFT").length === 1
-);
-check(
-  "no-unfilled-qid-add",
-  fills.filter((f) => f.survivorId === (opus && opus.id) && f.side === "buy" && f.ticker === "QID").length === 1
-);
-
-if (grok46) {
-  const now = board.survivors.find((s) => s.id === grok46.id);
-  const tickers = (now.positions || []).map(tickerOf);
-  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
-  check("live-grok46-no-tsla", !tickers.includes("TSLA"));
-  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 9.7543) < 0.0001, cash && String(cash.sizeUsd));
-}
-if (fable) {
-  const now = board.survivors.find((s) => s.id === fable.id);
-  const tickers = (now.positions || []).map(tickerOf);
-  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
-  check("live-fable-no-gld", !tickers.includes("GLD"));
-  check("live-fable-cash", cash && Math.abs(Number(cash.sizeUsd) - 9.5985) < 0.0001, cash && String(cash.sizeUsd));
-}
-
-const friOpen = board.snapshots.find((s) => s.id === "s1e01-fri-open");
-check("friday-open-mark", Boolean(friOpen), "missing s1e01-fri-open");
-if (friOpen) {
-  check("friday-open-mark-label", String(friOpen.label || "").includes("Fri Aug 28 open"));
-}
-const friMid = board.snapshots.find((s) => s.id === "s1e01-fri-mid");
-check("friday-mid-mark", Boolean(friMid), "missing s1e01-fri-mid");
-if (friMid) {
-  check("friday-mid-mark-label", String(friMid.label || "").includes("Fri Aug 28 mid"));
-  const bidu = (friMid.tribes && friMid.tribes.bidu) || {};
-  const askara = (friMid.tribes && friMid.tribes.askara) || {};
-  check("friday-mid-bidu-week", bidu.combinedWeekPct === -0.44, String(bidu.combinedWeekPct));
-  check("friday-mid-bidu-day", bidu.combinedDayPct === -1.06, String(bidu.combinedDayPct));
-  check("friday-mid-askara-week", askara.combinedWeekPct === -0.72, String(askara.combinedWeekPct));
-  check("friday-mid-askara-day", askara.combinedDayPct === -1.12, String(askara.combinedDayPct));
-}
-const friLastHour = board.snapshots.find((s) => s.id === "s1e01-fri-lasthour");
-check("friday-lasthour-mark", Boolean(friLastHour), "missing s1e01-fri-lasthour");
-if (friLastHour) {
-  check("friday-lasthour-mark-label", String(friLastHour.label || "").includes("Fri Aug 28 last-hour"));
-  check("friday-lasthour-at", friLastHour.at === "2026-08-28T19:14:23Z", friLastHour.at);
-  const bidu = (friLastHour.tribes && friLastHour.tribes.bidu) || {};
-  const askara = (friLastHour.tribes && friLastHour.tribes.askara) || {};
-  check("friday-lasthour-bidu-week", bidu.combinedWeekPct === -2.16, String(bidu.combinedWeekPct));
-  check("friday-lasthour-bidu-day", bidu.combinedDayPct === -5.85, String(bidu.combinedDayPct));
-  check("friday-lasthour-askara-week", askara.combinedWeekPct === -5.18, String(askara.combinedWeekPct));
-  check("friday-lasthour-askara-day", askara.combinedDayPct === -7.62, String(askara.combinedDayPct));
-}
-const biduLive = board.tribes.find((t) => t.id === "bidu");
-const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -2.16 && biduLive.combinedDayPct === -5.85);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -5.18 && askaraLive.combinedDayPct === -7.62);
-check("live-mark-label", String(board.markLabel || "").includes("Fri Aug 28 last-hour"));
-check("live-marked-at", board.markedAt === "2026-08-28T19:14:23Z", board.markedAt);
-check(
-  "live-survivors-lasthour-session",
-  board.survivors.every((s) => s.lastSession === "2026-08-28-lasthour"),
-  board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
-);
-const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
-const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
-check("live-composer-lead", composerLive && composerLive.bookUsd === 10.4553 && composerLive.weekPct === 4.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
-check("live-fable-last", fableLive && fableLive.bookUsd === 9.5985 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
-
-const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
-const friday = (episodeCopy.days || []).find((day) => day.id === "friday");
-const fridayBeats = (friday && friday.beats) || [];
-const fridayBooks = fridayBeats.find((beat) => beat.id === "friday-lasthour");
-const fridayBooths = fridayBeats.find((beat) => beat.id === "friday-confessionals");
-const fridayLunch = fridayBeats.find((beat) => beat.id === "friday-lunch");
-check("friday-lasthour-before-booths", Boolean(fridayBooks) && Boolean(fridayBooths) && fridayBeats.indexOf(fridayBooks) < fridayBeats.indexOf(fridayBooths));
-check("friday-lunch-beat", Boolean(fridayLunch) && fridayLunch.type === "lunch-chats");
-check("friday-lunch-five-phones", fridayLunch && (fridayLunch.threads || []).length === 5);
-if (fridayLunch) {
-  const lunchIds = (fridayLunch.threads || []).map((thread) => thread.id).join("|");
-  check(
-    "friday-lunch-ids",
-    lunchIds === "fri-lunch-gage-mara|fri-lunch-hex-nori|fri-lunch-vesper-pax|fri-lunch-riot-quill|fri-lunch-juno-kite"
-  );
-  check(
-    "friday-lunch-no-kimi-fable",
-    !(fridayLunch.threads || []).some((thread) => /reed|sable|kimi|fable/i.test([thread.id, thread.heading, thread.title].join(" ")))
-  );
-  const lunchChrome = [fridayLunch.title, fridayLunch.body, fridayLunch.kicker]
-    .concat((fridayLunch.threads || []).flatMap((thread) => [thread.heading, thread.title, thread.subtitle, thread.desc, thread.ariaLabel]))
-    .join(" ");
-  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date", "merge headcount"]) {
-    check(`friday-lunch-no-${bad.replace(/\s+/g, "-")}`, !lunchChrome.toLowerCase().includes(bad));
-  }
-}
-check("friday-booths-title", fridayBooths && fridayBooths.title === "Friday noon · confessionals");
-check("friday-booths-count", fridayBooths && (fridayBooths.items || []).length === 3);
-if (fridayBooths) {
-  const names = (fridayBooths.items || []).map((item) => item.name);
-  const slugs = (fridayBooths.items || []).map((item) => item.slug);
-  check("friday-booths-models", names.join("|") === "Claude Fable 5|Grok 4.5|Kimi K3");
-  check("friday-booths-slugs", slugs.join("|") === "claude-fable-5|grok-4-5|kimi-k3");
-  const chrome = JSON.stringify(fridayBooths);
-  for (const nick of ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"]) {
-    check(`friday-booths-no-nick:${nick}`, !chrome.includes(nick));
-  }
-  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date"]) {
-    check(`friday-booths-no-${bad.replace(/\s+/g, "-")}`, !chrome.toLowerCase().includes(bad));
-  }
-  const fable = (fridayBooths.items || []).find((item) => item.slug === "claude-fable-5");
-  const grok = (fridayBooths.items || []).find((item) => item.slug === "grok-4-5");
-  const kimiBooth = (fridayBooths.items || []).find((item) => item.slug === "kimi-k3");
-  check("friday-booth-fable-exact", fable && fable.quote.includes("nine dollars and sixty cents of pure cash") && fable.quote.includes("I'm watching Gemini 3.7 Flash"));
-  check("friday-booth-grok-exact", grok && grok.quote.includes("That COIN exit finally printing") && grok.quote.includes("that's who I'm writing."));
-  check("friday-booth-kimi-exact", kimiBooth && kimiBooth.quote.includes("$6.1074 cash") && kimiBooth.quote.includes("it’s Claude Fable 5"));
-}
-
-const tribalDay = (episodeCopy.days || []).find((day) => day.id === "tribal");
-check("tribal-fold-published", Boolean(tribalDay) && tribalDay.dark !== true);
-const tribalBeats = (tribalDay && tribalDay.beats) || [];
-const prevote = tribalBeats.find((beat) => beat.id === "tribal-prevote");
-const tribalCut = tribalBeats.find((beat) => beat.type === "tribal");
-check("tribal-prevote-before-cut", Boolean(prevote) && Boolean(tribalCut) && tribalBeats.indexOf(prevote) < tribalBeats.indexOf(tribalCut));
-check("tribal-prevote-count", prevote && (prevote.items || []).length === 6);
-if (prevote) {
-  const names = (prevote.items || []).map((item) => item.name);
-  check(
-    "tribal-prevote-models",
-    names.join("|") === "Grok 4.5|GPT-5.6 Sol|Claude Fable 5|Gemini 3.1 Pro|GPT-5.6 Luna|Kimi K3"
-  );
-}
-const log = source.tribalLog || [];
-check("tribal-log-one-council", Array.isArray(log) && log.length === 1);
-if (log[0]) {
-  check("tribal-log-bootName", log[0].bootName === "Claude Fable 5");
-  const votes = Array.isArray(log[0].votes) ? log[0].votes : [];
-  const pairings = votes.map((v) => `${v.from}>${v.for}`).join("|");
-  check(
-    "tribal-log-votes",
-    pairings ===
-      "Grok 4.5>Claude Fable 5|GPT-5.6 Sol>Claude Fable 5|Claude Fable 5>Grok 4.5|Gemini 3.1 Pro>Claude Fable 5|GPT-5.6 Luna>Claude Fable 5|Kimi K3>Claude Fable 5"
-  );
-  check("tribal-log-official-tally", log[0].tally && log[0].tally["Claude Fable 5"] === 5 && log[0].tally["Grok 4.5"] === 1);
-  check("tribal-log-official-summary", typeof log[0].summary === "string" && log[0].summary.includes("Claude Fable 5 voted out 5–1"));
-  check("tribal-log-vote-text", votes[0] && votes[0].text && votes[0].text.startsWith("VOTE: Claude Fable 5."));
-}
-check("books-untouched-fable-active", fableLive && fableLive.status === "active" && fableLive.bookUsd === 9.5985);
-check("books-untouched-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 6);
-
 const live = (board.episodes || []).filter((ep) => ep.status === "live");
 if (live.length === 1) {
   check("live-episode-has-path", Boolean(live[0].path));
@@ -333,6 +126,24 @@ for (const day of episodeDays) {
   }
 }
 
+const log = source.tribalLog || [];
+check("tribal-log-is-array", Array.isArray(log));
+for (const [i, council] of log.entries()) {
+  requireKeys(council, ["bootName", "votes", "tally"], `tribalLog[${i}]`);
+  check(`tribal-boot-known:${i}`, names.has(council.bootName), council.bootName);
+  const votes = Array.isArray(council.votes) ? council.votes : [];
+  check(`tribal-votes-nonempty:${i}`, votes.length > 0);
+  for (const [j, vote] of votes.entries()) {
+    check(`tribal-vote-from:${i}.${j}`, names.has(vote.from), vote.from);
+    check(`tribal-vote-for:${i}.${j}`, names.has(vote.for), vote.for);
+  }
+  const tally = council.tally || {};
+  const tallySum = Object.values(tally).reduce((sum, n) => sum + Number(n || 0), 0);
+  check(`tribal-tally-sums:${i}`, tallySum === votes.length, `${tallySum} vs ${votes.length}`);
+  check(`tribal-tally-boot:${i}`, Number(tally[council.bootName] || 0) >= 1);
+  check(`tribal-summary:${i}`, typeof council.summary === "string" && council.summary.includes(council.bootName));
+}
+
 if (failures.length) {
   console.error("Season checks failed:\n- " + failures.join("\n- "));
   process.exit(1);
@@ -341,6 +152,7 @@ console.log(
   JSON.stringify(
     {
       ok: true,
+      kind: "invariants",
       survivors: board.survivors.length,
       fills: fills.length,
       snapshots: board.snapshots.map((s) => s.id),
