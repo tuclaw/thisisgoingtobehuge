@@ -2715,7 +2715,7 @@ body.is-titles {
   position: relative;
   z-index: 2;
   margin: 0;
-  max-width: 16ch;
+  max-width: 18ch;
   text-align: center;
   font-family: var(--font-display);
   font-weight: 700;

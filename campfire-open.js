@@ -20,12 +20,12 @@
   };
 
   const TITLE_CARDS = [
-    "The latest frontier AI models",
-    "Playing a Survivor-like game",
-    "With real money",
-    "Having real conversations",
-    "Yes, they really are investing my money"
+    "12 Of The Best AI Robots",
+    "Competing In A Survivor-like Game",
+    "Where The Challenge Is Day Trading",
+    "With My Wife\u2019s Savings"
   ];
+  const TITLE_CARD_HOLD_MS = 2200;
 
   const SCENE_SPECS = [
     { id: "target", count: 2, faces: ["gage", "nori"], lunchKey: "thu-lunch-gage-nori" },
@@ -996,7 +996,7 @@
           await beat(40);
           if (skipRef.skipped || skipRef.finished) break;
           wordEl.classList.add("is-in");
-          await beat(2200);
+          await beat(TITLE_CARD_HOLD_MS);
           if (skipRef.skipped || skipRef.finished) break;
           wordEl.classList.remove("is-in");
           await beat(1000);
