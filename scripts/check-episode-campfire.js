@@ -66,6 +66,21 @@ if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")
 if (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"')) {
   throw new Error("app.js money ticker must offer week and season ranges");
 }
+if (
+  !appJs.includes('["island", "tribes", "contestants"]') &&
+  !appJs.includes('["island", "Island"]')
+) {
+  throw new Error("app.js money ticker must offer Island / Tribes / Contestants diagrams");
+}
+if (!appJs.includes("data-ticker-diagram") || !appJs.includes("MONEY_TICKER_DIAGRAMS")) {
+  throw new Error("app.js money ticker missing diagram tab wiring");
+}
+if (!appJs.includes("jaggedSeriesSamples")) {
+  throw new Error("app.js money ticker must use jagged Robinhood-style paths, not boxy step H/V");
+}
+if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
+  throw new Error("app.js money ticker still builds boxy step paths");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");

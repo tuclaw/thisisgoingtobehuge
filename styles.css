@@ -4373,14 +4373,25 @@ body.is-titles .replay-trailer {
   line-height: 1.45;
 }
 
-.money-ticker-range {
+.money-ticker-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
   margin: 0.9rem 0 0.75rem;
 }
 
-.money-ticker-range button {
+.money-ticker-range,
+.money-ticker-diagrams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.money-ticker-range button,
+.money-ticker-diagrams button {
   appearance: none;
   border: 0;
   cursor: pointer;
@@ -4394,9 +4405,14 @@ body.is-titles .replay-trailer {
   border-radius: 999px;
 }
 
-.money-ticker-range button[aria-selected="true"] {
+.money-ticker-range button[aria-selected="true"],
+.money-ticker-diagrams button[aria-selected="true"] {
   color: #120c08;
   background: #e89354;
+}
+
+.money-ticker-diagrams button[aria-selected="true"] {
+  background: #f0c14b;
 }
 
 .money-ticker-chart {
@@ -4420,7 +4436,7 @@ body.is-titles .replay-trailer {
   display: block;
   width: 100%;
   height: auto;
-  min-height: 14rem;
+  min-height: 13rem;
 }
 
 .money-ticker-panel-label {
