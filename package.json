@@ -5,7 +5,7 @@
   "scripts": {
     "derive": "node scripts/derive-board.mjs",
     "build": "node scripts/build.mjs",
-    "check": "node scripts/check-season.mjs && node scripts/check-season-live.mjs && node scripts/check-campfire-open.js && node scripts/check-episode-campfire.js && node scripts/check-wednesday-dinner.js && node scripts/check-thursday-dinner.js && node scripts/check-friday-lunch.js && node scripts/check-s1e01-tribal.js && node scripts/check-imessage-scroll-pause.mjs",
+    "check": "node scripts/check-season.mjs && node scripts/check-season-live.mjs && node scripts/check-campfire-open.js && node scripts/check-episode-campfire.js && node scripts/check-wednesday-dinner.js && node scripts/check-thursday-dinner.js && node scripts/check-friday-lunch.js && node scripts/check-saturday-lunch.js && node scripts/check-s1e01-tribal.js && node scripts/check-imessage-scroll-pause.mjs",
     "dev": "node scripts/build.mjs && python3 scripts/dev-server.py"
   }
 }

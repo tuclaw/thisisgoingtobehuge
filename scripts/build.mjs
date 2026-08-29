@@ -281,6 +281,7 @@ function renderEpisodePage(episode, season, base) {
       ? `\n  <script src="e01-thursday-lunch.js"></script>`
       : "",
     episodeHasBeatId(episode, "friday-lunch") ? `\n  <script src="e01-friday-lunch.js"></script>` : "",
+    episodeHasBeatId(episode, "saturday-lunch") ? `\n  <script src="e01-saturday-lunch.js"></script>` : "",
     episodeHasBeatId(episode, "wednesday-dinner") ? `\n  <script src="e01-wednesday-dinner.js"></script>` : "",
     episodeHasBeatType(episode, "dinner-fires") || episodeHasBeatId(episode, "thursday-dinner")
       ? `\n  <script src="e01-thursday-dinner.js"></script>`
@@ -488,6 +489,10 @@ function copyStatic() {
   const fridayLunch = join(root, "seasons/1/e01-friday-lunch.js");
   if (existsSync(fridayLunch)) {
     cpSync(fridayLunch, join(dist, "seasons/1/e01-friday-lunch.js"));
+  }
+  const saturdayLunch = join(root, "seasons/1/e01-saturday-lunch.js");
+  if (existsSync(saturdayLunch)) {
+    cpSync(saturdayLunch, join(dist, "seasons/1/e01-saturday-lunch.js"));
   }
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {

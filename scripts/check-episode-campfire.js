@@ -127,6 +127,12 @@ feed.conversations.forEach((c) => {
     throw new Error("host feed dayLabel must be latest Friday cut, got " + c.dayLabel);
   }
 });
+if (episodeJs.includes("SATURDAY_LUNCH_CONVERSATIONS")) {
+  throw new Error("comics paused: do not wire Saturday lunch into campfire pings");
+}
+if (feedIds.some((id) => String(id).startsWith("sat-lunch-"))) {
+  throw new Error("comics paused: conversations.json must not host Saturday lunch");
+}
 
 /* Pure sort/filter check mirroring episode-campfire scoring. */
 const DOW = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
