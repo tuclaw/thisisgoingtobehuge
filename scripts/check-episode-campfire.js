@@ -93,6 +93,9 @@ if (appJs.includes("Jagged lines are for the ride")) {
 if (!appJs.includes("data-ticker-sky") || !appJs.includes("syncMoneyTickerSky") || !appJs.includes("renderMoneyTickerSkySvg")) {
   throw new Error("app.js money ticker must offer a sun & moon sky toggle synced to playhead time");
 }
+if (!appJs.includes("money-ticker-palm")) {
+  throw new Error("app.js money ticker sky must include a palm tree on the island");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");

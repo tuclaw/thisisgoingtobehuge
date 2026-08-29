@@ -1306,10 +1306,19 @@ function renderMoneyTickerSkySvg() {
     <g class="money-ticker-island" fill="#0a0708">
       <path d="M0 176 C40 168 70 150 110 152 C150 154 170 168 210 164 C250 160 280 140 330 142 C380 144 410 158 460 154 C510 150 550 138 600 148 C620 152 640 160 640 160 L640 222 L0 222 Z"/>
       <path d="M80 158 C88 140 96 128 104 158 Z" opacity="0.95"/>
-      <path d="M92 150 C98 136 104 130 108 150" fill="none" stroke="#1a1410" stroke-width="1.2"/>
       <path d="M400 156 C408 132 418 120 426 156 Z" opacity="0.9"/>
-      <path d="M520 150 C528 134 536 126 542 150 Z" opacity="0.92"/>
       <ellipse cx="320" cy="198" rx="220" ry="18" fill="#050408" opacity="0.55"/>
+      <!-- palm tree -->
+      <g class="money-ticker-palm" transform="translate(528 86)">
+        <path d="M14 66 C12 48 11 32 13 18 C14 10 15 4 16 0 C18 8 20 18 19 34 C18 48 18 58 20 70 Z"/>
+        <path d="M16 8 C2 2 -10 8 -18 18 C-8 12 4 10 16 12 Z"/>
+        <path d="M16 6 C6 -6 -4 -14 -14 -12 C-4 -10 6 -2 16 8 Z"/>
+        <path d="M16 4 C22 -8 34 -14 46 -10 C34 -12 24 -4 16 6 Z"/>
+        <path d="M16 8 C28 0 42 2 52 12 C40 6 28 8 16 12 Z"/>
+        <path d="M16 10 C8 16 -2 28 -4 40 C2 28 10 18 16 14 Z"/>
+        <path d="M16 10 C24 18 34 28 40 40 C32 28 24 18 16 14 Z"/>
+        <circle cx="15" cy="7" r="2.2"/>
+      </g>
     </g>
   </svg>`;
 }
