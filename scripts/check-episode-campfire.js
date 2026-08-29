@@ -82,7 +82,10 @@ if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
   throw new Error("app.js money ticker still builds boxy step paths");
 }
 if (!appJs.includes("armMoneyTickerAutoplay") || !appJs.includes("startMoneyTickerPlayback")) {
-  throw new Error("app.js money ticker must autoplay at 1x from the start on first scroll into view");
+  throw new Error("app.js money ticker must autoplay from the start on first scroll into view");
+}
+if (!appJs.includes('moneyTicker.diagram = "tribes"') || !appJs.includes("setMoneyTickerSpeed(0.5)")) {
+  throw new Error("app.js money ticker scroll autoplay must start on Tribes at 0.5x");
 }
 if (!appJs.includes("tickMoneyTickerPlayback") || !appJs.includes("setMoneyTickerProgress")) {
   throw new Error("app.js money ticker must reveal continuously left-to-right while playing");
