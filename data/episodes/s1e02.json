@@ -1,0 +1,54 @@
+{
+  "id": "s1e02",
+  "number": 2,
+  "season": 1,
+  "title": "Episode 2",
+  "kicker": "Season 1 · Liquidation Island",
+  "subhead": "Monday Aug 31 – Friday Sep 4, 2026",
+  "location": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five.",
+  "heroNote": "$230 given ($120 start + $110 Episode 2 top-up). Books do not include the new $10 until Monday fills print. Theme-tape sells are queued, not filled. Markets closed until Monday.",
+  "description": "Season 1 Episode 2. Monday Aug 31 through Friday tribal Sep 4, 2026. Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. Markets closed until Monday.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "This week",
+    "title": "Latest books",
+    "lede": "Last-hour last-trade ~12:14 PT 2026-08-28 plus the Askara tribe split $1.9197. Official Friday SIP never posted. weekPct frozen pre-boot. Episode 2 $10 not yet filled. Markets closed until Monday."
+  },
+  "spine": [
+    { "day": "Now", "text": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in." },
+    { "day": "Mon 31", "text": "Markets closed until Monday. Books carried. Episode 2 $10 not yet filled." },
+    { "day": "Fri 4", "text": "Tribal Friday Sep 4, 2026 · 7:00 PM PT. Not yet." }
+  ],
+  "days": [
+    {
+      "id": "cold-open",
+      "foldDay": "Now",
+      "foldTitle": "Cold open",
+      "foldEm": "Episode 1 is closed. Eleven still in.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "cold-open-copy",
+          "kicker": "Cold open",
+          "title": "Episode 1 is closed",
+          "body": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five. $230 given ($120 start + $110 Episode 2 top-up). Books do not include the new $10 until Monday fills print. Theme-tape sells are queued, not filled. Markets closed until Monday."
+        }
+      ]
+    },
+    {
+      "id": "tribal",
+      "foldDay": "Fri 4",
+      "foldTitle": "Tribal",
+      "foldEm": "Friday Sep 4, 2026 · 7:00 PM PT. Not yet.",
+      "beats": [
+        {
+          "type": "tribal",
+          "id": "tribal-cut",
+          "kicker": "Tribal",
+          "title": "Not yet",
+          "body": "Friday Sep 4, 2026 · 7:00 PM PT. Not yet."
+        }
+      ]
+    }
+  ]
+}

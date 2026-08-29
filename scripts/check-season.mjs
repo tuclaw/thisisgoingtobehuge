@@ -96,13 +96,26 @@ check("pot-is-sleeves", board.islandPotUsd === start * source.cast.length);
 check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
 check("board-given-total", board.islandGivenUsd === source.islandGivenUsd, String(board.islandGivenUsd));
 check("given-is-not-sleeves", source.islandGivenUsd !== start * source.cast.length);
+check("merged-stays-false-or-true", source.merged === true || source.merged === false);
+
+const firstBoot = (source.events || []).find((event) => event && event.type === "boot");
+const lastPreBootMark = firstBoot
+  ? [...(source.events || [])]
+      .filter((event) => event && event.type === "mark" && Date.parse(event.at || "") < Date.parse(firstBoot.at || ""))
+      .pop()
+  : null;
 
 for (const s of board.survivors) {
-  const computedWeek = pctRound(((s.bookUsd - start) / start) * 100);
+  const preBoot =
+    lastPreBootMark && lastPreBootMark.recorded && typeof lastPreBootMark.recorded[s.id]?.bookUsd === "number"
+      ? lastPreBootMark.recorded[s.id].bookUsd
+      : null;
+  const weekBasis = preBoot != null ? preBoot : s.bookUsd;
+  const computedWeek = pctRound(((weekBasis - start) / start) * 100);
   check(
     `weekPct:${s.slug}`,
     Math.abs(computedWeek - s.weekPct) <= 0.02,
-    `${s.weekPct} vs computed ${computedWeek} on ${s.bookUsd}`
+    `${s.weekPct} vs computed ${computedWeek} on basis ${weekBasis} (book ${s.bookUsd})`
   );
   let equity = 0;
   let unmarked = false;
@@ -136,11 +149,17 @@ if (live.length === 1) {
   check("live-episode-has-path", Boolean(live[0].path));
 }
 
-const episodeDays = (source.episode && source.episode.days) || [];
 const snapIds = new Set(board.snapshots.map((snap) => snap.id));
-for (const day of episodeDays) {
+for (const ep of source.episodes || []) {
+  for (const day of ep.days || []) {
+    if (day.snapshotId) {
+      check(`episode-day-snapshot:${ep.id}:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+    }
+  }
+}
+for (const day of (source.episode && source.episode.days) || []) {
   if (day.snapshotId) {
-    check(`episode-day-snapshot:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+    check(`live-episode-day-snapshot:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
   }
 }
 

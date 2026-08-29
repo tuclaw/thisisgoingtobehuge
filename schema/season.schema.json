@@ -57,7 +57,7 @@
         "type": "object",
         "required": ["number", "id", "status", "title"],
         "properties": {
-          "status": { "type": "string", "enum": ["live", "locked", "cut"] }
+          "status": { "type": "string", "enum": ["live", "locked", "cut", "closed"] }
         }
       }
     }

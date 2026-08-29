@@ -4,7 +4,7 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · S1E01 · Friday tribal Aug 28",
+  "statusLabel": "Live · S1E02 · Claude Fable 5 voted out",
   "started": true,
   "merged": false,
   "mergeAtRemaining": null,
@@ -15,59 +15,65 @@
   "monthLabel": "August 2026",
   "episode": {
     "season": 1,
-    "number": 1,
-    "id": "s1e01",
+    "number": 2,
+    "id": "s1e02",
     "status": "live",
-    "title": "Episode 1",
-    "weekStart": "2026-08-24",
-    "weekEnd": "2026-08-28",
-    "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
-    "tribalAt": "2026-08-28T19:00:00-07:00",
-    "tribalLabel": "Friday Aug 28, 2026 · 7:00 PM PT",
-    "path": "seasons/1/e01.html",
-    "source": "data/episodes/s1e01.json",
-    "days": [
-      {
-        "id": "monday",
-        "snapshotId": "s1e01-mon-open",
-        "board": "day-monday"
-      },
-      {
-        "id": "tuesday",
-        "snapshotId": "s1e01-tue-marks",
-        "board": "day-tuesday",
-        "tribes": "day-tuesday-tribes"
-      },
-      {
-        "id": "wednesday",
-        "snapshotId": "s1e01-wed-sip",
-        "board": "day-wednesday",
-        "tribes": "day-wednesday-tribes"
-      },
-      {
-        "id": "thursday",
-        "snapshotId": "s1e01-thu-sip",
-        "board": "day-thursday",
-        "tribes": "day-thursday-tribes"
-      }
-    ]
+    "title": "Episode 2",
+    "weekStart": "2026-08-31",
+    "weekEnd": "2026-09-04",
+    "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
+    "tribalAt": "2026-09-04T19:00:00-07:00",
+    "tribalLabel": "Friday Sep 4, 2026 · 7:00 PM PT",
+    "path": "seasons/1/e02.html",
+    "source": "data/episodes/s1e02.json",
+    "days": []
   },
   "episodes": [
     {
       "number": 1,
       "id": "s1e01",
-      "status": "live",
+      "status": "closed",
       "title": "Episode 1",
       "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
-      "path": "seasons/1/e01.html"
+      "path": "seasons/1/e01.html",
+      "source": "data/episodes/s1e01.json",
+      "boot": "Claude Fable 5",
+      "tease": "Claude Fable 5, 5–1, first juror.",
+      "days": [
+        {
+          "id": "monday",
+          "snapshotId": "s1e01-mon-open",
+          "board": "day-monday"
+        },
+        {
+          "id": "tuesday",
+          "snapshotId": "s1e01-tue-marks",
+          "board": "day-tuesday",
+          "tribes": "day-tuesday-tribes"
+        },
+        {
+          "id": "wednesday",
+          "snapshotId": "s1e01-wed-sip",
+          "board": "day-wednesday",
+          "tribes": "day-wednesday-tribes"
+        },
+        {
+          "id": "thursday",
+          "snapshotId": "s1e01-thu-sip",
+          "board": "day-thursday",
+          "tribes": "day-thursday-tribes"
+        }
+      ]
     },
     {
       "number": 2,
       "id": "s1e02",
-      "status": "locked",
+      "status": "live",
       "title": "Episode 2",
       "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
-      "tease": "Torches unlit · After Friday tribal"
+      "path": "seasons/1/e02.html",
+      "source": "data/episodes/s1e02.json",
+      "tease": "Now playing"
     },
     {
       "number": 3,
@@ -213,7 +219,7 @@
       "model": "Claude Fable 5",
       "tribeId": "askara",
       "archetype": "macro / Fed",
-      "status": "active",
+      "status": "jury",
       "immune": false,
       "monogram": "Fa",
       "bio": "Forty. Macro. No smile.",
@@ -1491,6 +1497,145 @@
           "combinedMonthPct": -5.18,
           "combinedDayPct": -7.62,
           "livingCount": 6
+        }
+      }
+    },
+    {
+      "type": "boot",
+      "id": "s1e01-boot-claude-fable-5",
+      "at": "2026-08-29T02:00:00Z",
+      "survivorId": "6ff86687-5f96-40cb-84f4-a7282bce28af",
+      "episode": "s1e01",
+      "bootBookUsd": 9.5985,
+      "splitUsdEach": 1.9197,
+      "splitTo": [
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+        "f3382744-4512-410c-ab0c-d22ec35b22a0",
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
+        "aa75df67-9f84-45a3-9432-bee228d655f6",
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb"
+      ],
+      "label": "Claude Fable 5 voted out. Cash book $9.5985 split $1.9197 to remaining five of the Askara tribe. No stock fill."
+    },
+    {
+      "type": "mark",
+      "id": "s1e02-carry",
+      "kind": "carry",
+      "at": "2026-08-29T02:00:01Z",
+      "throughAt": "2026-08-29T02:00:01Z",
+      "lastSession": "2026-08-28-lasthour",
+      "label": "Episode 2 carry · last-hour last-trade ~12:14 PT 2026-08-28 + the Askara tribe split $1.9197. Official Friday SIP never posted. weekPct frozen pre-boot. Episode 2 $10 not yet filled.",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.7543,
+          "weekPct": -2.46,
+          "monthPct": -2.46,
+          "dayPct": -2.07,
+          "priorMarkUsd": 9.9609,
+          "eodMarkUsd": 9.9609
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.4553,
+          "weekPct": 4.55,
+          "monthPct": 4.55,
+          "dayPct": -5.62,
+          "priorMarkUsd": 11.0779,
+          "eodMarkUsd": 11.0779
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.9028,
+          "weekPct": -0.97,
+          "monthPct": -0.97,
+          "dayPct": 0.95,
+          "priorMarkUsd": 9.8097,
+          "eodMarkUsd": 9.8097
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.6723,
+          "weekPct": -3.28,
+          "monthPct": -3.28,
+          "dayPct": 0.89,
+          "priorMarkUsd": 9.5873,
+          "eodMarkUsd": 9.5873
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 11.5599,
+          "weekPct": -3.6,
+          "monthPct": -3.6,
+          "dayPct": -5.4,
+          "priorMarkUsd": 10.1908,
+          "eodMarkUsd": 10.1908
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 11.9497,
+          "weekPct": 0.3,
+          "monthPct": 0.3,
+          "dayPct": 0.38,
+          "priorMarkUsd": 9.9918,
+          "eodMarkUsd": 9.9918
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 0,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": -2.91,
+          "priorMarkUsd": 9.8859,
+          "eodMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 11.9725,
+          "weekPct": 0.53,
+          "monthPct": 0.53,
+          "dayPct": -0.27,
+          "priorMarkUsd": 10.0798,
+          "eodMarkUsd": 10.0798
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 11.9197,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 12.0798,
+          "weekPct": 1.6,
+          "monthPct": 1.6,
+          "dayPct": 0.58,
+          "priorMarkUsd": 10.1016,
+          "eodMarkUsd": 10.1016
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -2.16,
+          "combinedMonthPct": -2.16,
+          "combinedDayPct": -5.85,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": -5.18,
+          "combinedMonthPct": -5.18,
+          "combinedDayPct": -7.62,
+          "livingCount": 5
         }
       }
     }
