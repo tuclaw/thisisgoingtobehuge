@@ -1524,7 +1524,16 @@ function armMoneyTickerAutoplay() {
       moneyTicker.scrollObserver.disconnect();
       moneyTicker.scrollObserver = null;
     }
-    setMoneyTickerSpeed(1);
+    moneyTicker.diagram = "tribes";
+    const rootEl = moneyTicker.root;
+    if (rootEl) {
+      rootEl.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
+        const id = btn.getAttribute("data-ticker-diagram");
+        btn.setAttribute("aria-selected", id === "tribes" ? "true" : "false");
+      });
+      refreshMoneyTickerChart();
+    }
+    setMoneyTickerSpeed(0.5);
     startMoneyTickerPlayback({ fromStart: true });
   };
 
