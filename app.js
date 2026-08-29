@@ -1141,7 +1141,8 @@ const moneyTicker = {
   progress: 0,
   raf: null,
   playStartedAt: 0,
-  playFromProgress: 0
+  playFromProgress: 0,
+  skyOn: false
 };
 
 function moneyPutInTotal(season) {
@@ -1179,6 +1180,205 @@ function pacificDayLabel(iso) {
   } catch {
     return "";
   }
+}
+
+function pacificHourDecimal(dateOrIso) {
+  const d = dateOrIso instanceof Date ? dateOrIso : new Date(dateOrIso);
+  if (Number.isNaN(d.getTime())) return 12;
+  try {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour: "numeric",
+      minute: "numeric",
+      hourCycle: "h23"
+    }).formatToParts(d);
+    const hour = Number((parts.find((p) => p.type === "hour") || {}).value);
+    const minute = Number((parts.find((p) => p.type === "minute") || {}).value);
+    if (Number.isNaN(hour) || Number.isNaN(minute)) return 12;
+    return hour + minute / 60;
+  } catch {
+    return 12;
+  }
+}
+
+function moneyTickerPlayheadDate(progress) {
+  const frames = moneyTicker.frames;
+  if (!frames.length) return null;
+  const max = frames.length - 1;
+  const t = Math.max(0, Math.min(max, progress));
+  const i0 = Math.floor(t);
+  const i1 = Math.min(max, i0 + 1);
+  const u = t - i0;
+  const t0 = Date.parse(frames[i0].at);
+  const t1 = Date.parse(frames[i1].at);
+  if (Number.isNaN(t0)) return null;
+  if (Number.isNaN(t1) || i0 === i1) return new Date(t0);
+  return new Date(lerp(t0, t1, u));
+}
+
+/** Late-August Liquidation Island sky: sun/moon arcs over the day in PT. */
+function moneyTickerSkyPose(hour) {
+  const h = ((hour % 24) + 24) % 24;
+  const sunRise = 6.2;
+  const sunSet = 19.55;
+  const dayLen = sunSet - sunRise;
+  const sunT = (h - sunRise) / dayLen;
+  const sunUp = sunT > -0.02 && sunT < 1.02;
+  const sunX = Math.max(0, Math.min(1, sunT));
+  const sunY = sunUp ? Math.max(0, Math.sin(Math.PI * Math.max(0, Math.min(1, sunT)))) : 0;
+
+  const hNight = h < sunRise ? h + 24 : h;
+  const nightLen = 24 - dayLen;
+  const moonT = (hNight - sunSet) / nightLen;
+  const moonUp = moonT >= -0.02 && moonT <= 1.02;
+  const moonX = Math.max(0, Math.min(1, moonT));
+  const moonY = moonUp ? Math.max(0, Math.sin(Math.PI * Math.max(0, Math.min(1, moonT)))) : 0;
+
+  let phase = "night";
+  if (h >= sunRise - 0.6 && h < sunRise + 1.1) phase = "dawn";
+  else if (h >= sunRise + 1.1 && h < sunSet - 1.2) phase = "day";
+  else if (h >= sunSet - 1.2 && h < sunSet + 0.8) phase = "dusk";
+
+  return { hour: h, phase, sunX, sunY, sunUp, moonX, moonY, moonUp };
+}
+
+function moneyTickerSkyColors(phase, hour) {
+  if (phase === "dawn") {
+    return { top: "#3a2240", mid: "#c45a3a", bot: "#f0c14b", glow: "rgba(240, 193, 75, 0.45)" };
+  }
+  if (phase === "day") {
+    return { top: "#1a4a62", mid: "#2a7a8a", bot: "#8ec8c0", glow: "rgba(255, 220, 120, 0.35)" };
+  }
+  if (phase === "dusk") {
+    return { top: "#1a1028", mid: "#c45a12", bot: "#e89354", glow: "rgba(232, 147, 84, 0.5)" };
+  }
+  /* night — cooler near midnight */
+  const deep = hour > 22 || hour < 4;
+  return {
+    top: deep ? "#05060c" : "#0a1020",
+    mid: deep ? "#0c1428" : "#152038",
+    bot: deep ? "#1a2030" : "#2a3048",
+    glow: "rgba(200, 210, 255, 0.2)"
+  };
+}
+
+function renderMoneyTickerSkySvg() {
+  return `<svg class="money-ticker-sky-svg" viewBox="0 0 640 222" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="mts-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop data-sky-stop="top" offset="0" stop-color="#0a1020"/>
+        <stop data-sky-stop="mid" offset="0.55" stop-color="#152038"/>
+        <stop data-sky-stop="bot" offset="1" stop-color="#2a3048"/>
+      </linearGradient>
+      <radialGradient id="mts-sun-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#fff6d6" stop-opacity="0.95"/>
+        <stop offset="0.35" stop-color="#f0c14b" stop-opacity="0.7"/>
+        <stop offset="1" stop-color="#e85d04" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="mts-moon-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#f3ead6" stop-opacity="0.85"/>
+        <stop offset="0.45" stop-color="#c8d0e8" stop-opacity="0.35"/>
+        <stop offset="1" stop-color="#c8d0e8" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect class="money-ticker-sky-fill" width="640" height="222" fill="url(#mts-sky)"/>
+    <g class="money-ticker-stars" data-sky-stars opacity="0">
+      <circle cx="72" cy="28" r="1.1" fill="#f3ead6"/>
+      <circle cx="140" cy="48" r="0.8" fill="#f3ead6"/>
+      <circle cx="210" cy="22" r="1" fill="#f3ead6"/>
+      <circle cx="290" cy="40" r="0.7" fill="#f3ead6"/>
+      <circle cx="360" cy="18" r="1.2" fill="#f3ead6"/>
+      <circle cx="430" cy="36" r="0.8" fill="#f3ead6"/>
+      <circle cx="510" cy="24" r="1" fill="#f3ead6"/>
+      <circle cx="580" cy="44" r="0.9" fill="#f3ead6"/>
+      <circle cx="100" cy="70" r="0.6" fill="#f3ead6"/>
+      <circle cx="470" cy="60" r="0.7" fill="#f3ead6"/>
+    </g>
+    <g data-sky-sun opacity="0">
+      <circle data-sky-sun-glow cx="0" cy="0" r="28" fill="url(#mts-sun-glow)"/>
+      <circle data-sky-sun-body cx="0" cy="0" r="11" fill="#fff1b8"/>
+    </g>
+    <g data-sky-moon opacity="0">
+      <circle data-sky-moon-glow cx="0" cy="0" r="22" fill="url(#mts-moon-glow)"/>
+      <circle data-sky-moon-body cx="0" cy="0" r="9" fill="#e8eef8"/>
+      <circle data-sky-moon-shade cx="3" cy="-1" r="8" fill="#0a1020" opacity="0.22"/>
+    </g>
+    <g class="money-ticker-island" fill="#0a0708">
+      <path d="M0 176 C40 168 70 150 110 152 C150 154 170 168 210 164 C250 160 280 140 330 142 C380 144 410 158 460 154 C510 150 550 138 600 148 C620 152 640 160 640 160 L640 222 L0 222 Z"/>
+      <path d="M80 158 C88 140 96 128 104 158 Z" opacity="0.95"/>
+      <path d="M400 156 C408 132 418 120 426 156 Z" opacity="0.9"/>
+      <ellipse cx="320" cy="198" rx="220" ry="18" fill="#050408" opacity="0.55"/>
+      <!-- palm tree -->
+      <g class="money-ticker-palm" transform="translate(528 86)">
+        <path d="M14 66 C12 48 11 32 13 18 C14 10 15 4 16 0 C18 8 20 18 19 34 C18 48 18 58 20 70 Z"/>
+        <path d="M16 8 C2 2 -10 8 -18 18 C-8 12 4 10 16 12 Z"/>
+        <path d="M16 6 C6 -6 -4 -14 -14 -12 C-4 -10 6 -2 16 8 Z"/>
+        <path d="M16 4 C22 -8 34 -14 46 -10 C34 -12 24 -4 16 6 Z"/>
+        <path d="M16 8 C28 0 42 2 52 12 C40 6 28 8 16 12 Z"/>
+        <path d="M16 10 C8 16 -2 28 -4 40 C2 28 10 18 16 14 Z"/>
+        <path d="M16 10 C24 18 34 28 40 40 C32 28 24 18 16 14 Z"/>
+        <circle cx="15" cy="7" r="2.2"/>
+      </g>
+    </g>
+  </svg>`;
+}
+
+function syncMoneyTickerSky(progress) {
+  const root = moneyTicker.root;
+  if (!root || !moneyTicker.skyOn) return;
+  const sky = root.querySelector(".money-ticker-sky");
+  if (!sky) return;
+  const when = moneyTickerPlayheadDate(progress);
+  const hour = when ? pacificHourDecimal(when) : 12;
+  const pose = moneyTickerSkyPose(hour);
+  const colors = moneyTickerSkyColors(pose.phase, pose.hour);
+
+  sky.querySelectorAll("[data-sky-stop]").forEach((stop) => {
+    const key = stop.getAttribute("data-sky-stop");
+    if (key && colors[key]) stop.setAttribute("stop-color", colors[key]);
+  });
+
+  const stars = sky.querySelector("[data-sky-stars]");
+  if (stars) {
+    const starOp = pose.phase === "night" ? 0.85 : pose.phase === "dusk" || pose.phase === "dawn" ? 0.25 : 0;
+    stars.setAttribute("opacity", String(starOp));
+  }
+
+  const skyPadL = 48;
+  const skyPadR = 48;
+  const skyW = 640 - skyPadL - skyPadR;
+  const horizon = 168;
+  const zenith = 28;
+
+  const place = (groupSel, glowSel, bodySel, xNorm, yNorm, up) => {
+    const g = sky.querySelector(groupSel);
+    if (!g) return;
+    g.setAttribute("opacity", up && yNorm > 0.02 ? "1" : "0");
+    const x = skyPadL + xNorm * skyW;
+    const y = horizon - yNorm * (horizon - zenith);
+    const glow = sky.querySelector(glowSel);
+    const body = sky.querySelector(bodySel);
+    if (glow) {
+      glow.setAttribute("cx", String(x));
+      glow.setAttribute("cy", String(y));
+    }
+    if (body) {
+      body.setAttribute("cx", String(x));
+      body.setAttribute("cy", String(y));
+    }
+    return { x, y };
+  };
+
+  place("[data-sky-sun]", "[data-sky-sun-glow]", "[data-sky-sun-body]", pose.sunX, pose.sunY, pose.sunUp);
+  const moon = place("[data-sky-moon]", "[data-sky-moon-glow]", "[data-sky-moon-body]", pose.moonX, pose.moonY, pose.moonUp);
+  const shade = sky.querySelector("[data-sky-moon-shade]");
+  if (shade && moon) {
+    shade.setAttribute("cx", String(moon.x + 3));
+    shade.setAttribute("cy", String(moon.y - 1));
+  }
+
+  const chart = root.querySelector(".money-ticker-chart");
+  if (chart) chart.setAttribute("data-sky-phase", pose.phase);
 }
 
 function snapshotsForTickerRange(season, range) {
@@ -1491,6 +1691,7 @@ function setMoneyTickerProgress(next, opts) {
       chart.classList.add("is-tick");
     }
   }
+  syncMoneyTickerSky(progress);
 }
 
 function moneyTickerXAt(t, count) {
@@ -1772,9 +1973,9 @@ function refreshMoneyTickerChart() {
   const root = moneyTicker.root;
   const season = moneyTicker.season;
   if (!root || !season || !moneyTicker.frames.length) return;
-  const chart = root.querySelector(".money-ticker-chart");
+  const plot = root.querySelector(".money-ticker-plot");
   const legend = root.querySelector(".money-ticker-legend");
-  if (chart) chart.innerHTML = renderMoneyTickerSvg(season, moneyTicker.frames);
+  if (plot) plot.innerHTML = renderMoneyTickerSvg(season, moneyTicker.frames);
   if (legend) legend.innerHTML = moneyTickerLegendHtml(season, moneyTicker.frames);
   setMoneyTickerProgress(moneyTicker.progress || moneyTicker.index || 0);
 }
@@ -1785,6 +1986,15 @@ function bindMoneyTickerControls() {
   root.dataset.bound = "1";
 
   root.addEventListener("click", (event) => {
+    const skyBtn = event.target.closest("[data-ticker-sky]");
+    if (skyBtn) {
+      moneyTicker.skyOn = !moneyTicker.skyOn;
+      skyBtn.setAttribute("aria-pressed", moneyTicker.skyOn ? "true" : "false");
+      const chart = root.querySelector(".money-ticker-chart");
+      if (chart) chart.classList.toggle("is-sky-on", moneyTicker.skyOn);
+      syncMoneyTickerSky(moneyTicker.progress || 0);
+      return;
+    }
     const diagramBtn = event.target.closest("[data-ticker-diagram]");
     if (diagramBtn) {
       const next = diagramBtn.getAttribute("data-ticker-diagram");
@@ -1894,8 +2104,12 @@ function mountMoneyTicker(season, opts) {
       <div class="money-ticker-diagrams" role="tablist" aria-label="Diagram">
         ${diagramTabs}
       </div>
+      <button type="button" class="money-ticker-sky-toggle" data-ticker-sky aria-pressed="${moneyTicker.skyOn ? "true" : "false"}">Sun &amp; moon</button>
     </div>
-    <div class="money-ticker-chart">${renderMoneyTickerSvg(season, moneyTicker.frames)}</div>
+    <div class="money-ticker-chart${moneyTicker.skyOn ? " is-sky-on" : ""}">
+      <div class="money-ticker-sky" aria-hidden="true">${renderMoneyTickerSkySvg()}</div>
+      <div class="money-ticker-plot">${renderMoneyTickerSvg(season, moneyTicker.frames)}</div>
+    </div>
     <div class="money-ticker-transport">
       <input class="money-ticker-scrub" data-ticker-scrub type="range" min="0" max="${moneyTicker.frames.length - 1}" value="${moneyTicker.progress || moneyTicker.index}" step="0.01" aria-label="Scrub marks" />
       <div class="money-ticker-controls">

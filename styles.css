@@ -4419,12 +4419,79 @@ body.is-titles .replay-trailer {
   background: #f0c14b;
 }
 
+.money-ticker-sky-toggle {
+  appearance: none;
+  border: 1px solid rgba(232, 147, 84, 0.35);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  color: rgba(232, 147, 84, 0.85);
+  background: transparent;
+  border-radius: 999px;
+  margin-left: auto;
+}
+
+.money-ticker-sky-toggle[aria-pressed="true"] {
+  color: #120c08;
+  background: linear-gradient(90deg, #f0c14b, #e89354);
+  border-color: transparent;
+}
+
 .money-ticker-chart {
   position: relative;
   margin: 0.4rem 0 0.7rem;
+  overflow: hidden;
   background:
     linear-gradient(180deg, rgba(8, 6, 5, 0.55), rgba(8, 6, 5, 0.2));
   border: 1px solid rgba(196, 165, 116, 0.12);
+}
+
+.money-ticker-sky {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-sky {
+  display: block;
+}
+
+.money-ticker-chart.is-sky-on {
+  background: #0a0708;
+}
+
+.money-ticker-sky-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.money-ticker-plot {
+  position: relative;
+  z-index: 1;
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-axis {
+  fill: rgba(243, 234, 214, 0.78);
+  paint-order: stroke fill;
+  stroke: rgba(8, 6, 5, 0.45);
+  stroke-width: 2.5;
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-grid {
+  stroke: rgba(243, 234, 214, 0.12);
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-panel-label {
+  fill: rgba(255, 241, 184, 0.92);
+  paint-order: stroke fill;
+  stroke: rgba(8, 6, 5, 0.4);
+  stroke-width: 2.5;
 }
 
 .money-ticker-chart.is-tick {
