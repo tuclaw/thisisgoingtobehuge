@@ -4389,8 +4389,17 @@ body.is-titles .replay-trailer {
 .money-ticker-live.is-ticker-up { color: #8ee8d8; }
 .money-ticker-live.is-ticker-down { color: #ff9a6a; }
 
-.money-ticker-head .money-ticker-chg {
-  margin: 0 0 0.65rem;
+.money-ticker-foot {
+  margin: 1.15rem 0 0;
+  text-align: center;
+}
+
+.money-ticker-foot .money-ticker-live {
+  margin: 0 0 0.25rem;
+}
+
+.money-ticker-foot .money-ticker-chg {
+  margin: 0;
 }
 
 .money-ticker-lede {

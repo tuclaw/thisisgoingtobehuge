@@ -2147,8 +2147,6 @@ function mountMoneyTicker(season, opts) {
   root.innerHTML = `
     <div class="money-ticker-head">
       <p class="money-ticker-kicker">Replay the books</p>
-      <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].total))}</p>
-      <p class="money-ticker-chg" data-ticker-live-chg></p>
       <p class="money-ticker-lede">${lede}</p>
     </div>
     <div class="money-ticker-toolbar">
@@ -2172,7 +2170,11 @@ function mountMoneyTicker(season, opts) {
       </div>
       <p class="money-ticker-stamp" data-ticker-stamp></p>
     </div>
-    <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>`;
+    <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>
+    <div class="money-ticker-foot">
+      <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].total))}</p>
+      <p class="money-ticker-chg" data-ticker-live-chg></p>
+    </div>`;
 
   bindMoneyTickerControls();
   setMoneyTickerProgress(moneyTicker.progress);
