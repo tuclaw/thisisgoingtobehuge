@@ -18,6 +18,18 @@ function fail(message) {
 if (!app.includes("function wrapTribalSpoiler") || !app.includes("function bindTribalSpoilers")) {
   fail("do not remove wrapTribalSpoiler / bindTribalSpoilers");
 }
+if (!app.includes("function councilTorchCount") || !app.includes("function councilTorchRowHtml")) {
+  fail("episode tribal torches must be sized from the losing tribe / vote count");
+}
+if (!app.includes("councilTorchRowHtml(season, latest)") || !app.includes("councilTorchRowHtml(season, null)")) {
+  fail("renderEpisode must paint council torches from councilTorchRowHtml");
+}
+if (
+  app.includes("${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}") ||
+  app.includes("${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}")
+) {
+  fail("do not hardcode a three-torch tribal row");
+}
 if (!app.includes("initTribalSpoilerBurns")) {
   fail("episode page must still call initTribalSpoilerBurns");
 }

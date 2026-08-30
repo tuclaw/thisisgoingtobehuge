@@ -697,6 +697,35 @@ function torchSvg(lit) {
   return lit ? TORCH_LIT : TORCH_SNUFFED;
 }
 
+function councilTorchCount(season, entry) {
+  if (entry) {
+    const votes = Array.isArray(entry.votes) ? entry.votes : [];
+    if (votes.length > 0) return votes.length;
+    const tribeId = entry.losingTribe;
+    if (tribeId) {
+      const onTribe = (season.survivors || []).filter((s) => s && s.tribeId === tribeId);
+      if (onTribe.length) return onTribe.length;
+    }
+  }
+  const tribes = (season.tribes || []).length || 2;
+  const living = livingContestantCount(season);
+  return Math.max(2, Math.round(living / tribes));
+}
+
+function councilTorchRowHtml(season, entry) {
+  const count = councilTorchCount(season, entry);
+  if (!entry) {
+    return Array.from({ length: count }, () => torchSvg(false)).join("");
+  }
+  const snuffed =
+    entry.torchSnuffed === true || entry.bootName || entry.boot || entry.bootId ? 1 : 0;
+  const lit = Math.max(0, count - snuffed);
+  return (
+    Array.from({ length: lit }, () => torchSvg(true)).join("") +
+    Array.from({ length: snuffed }, () => torchSvg(false)).join("")
+  );
+}
+
 
 function renderFaces(season) {
   const grid = document.getElementById("face-grid");
@@ -2252,7 +2281,7 @@ function renderEpisode(season) {
     if (log.length === 0) {
       if (tribalHeading) tribalHeading.textContent = "Not yet";
       tribal.innerHTML = `
-      <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
+      <div class="torches">${councilTorchRowHtml(season, null)}</div>
       <div class="council-empty">
         <h3>Not yet</h3>
         <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
@@ -2260,9 +2289,10 @@ function renderEpisode(season) {
     } else {
       if (tribalHeading) tribalHeading.textContent = "The vote";
       document.body.classList.add("episode-vote-posted");
+      const latest = log[log.length - 1];
       const items = log.map((entry) => formatTribalEntry(entry)).join("");
       tribal.innerHTML = `
-    <div class="torches">${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}</div>
+    <div class="torches">${councilTorchRowHtml(season, latest)}</div>
     ${wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`)}`;
       bindTribalSpoilers(tribal);
     }
