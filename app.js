@@ -1091,11 +1091,17 @@ function renderEpisodeLiveIndicator(season) {
 
 const MONEY_TICKER_SPEEDS = [0.5, 1, 4, 16];
 const MONEY_TICKER_DIAGRAMS = ["island", "tribes", "contestants"];
+const MONEY_TICKER_RANGES = ["week", "season"];
+const MONEY_TICKER_HOME_DIAGRAMS = ["island"];
+const MONEY_TICKER_HOME_RANGES = ["season"];
 const moneyTicker = {
   root: null,
   season: null,
   range: "week",
   diagram: "island",
+  mode: "episode",
+  ranges: MONEY_TICKER_RANGES.slice(),
+  diagrams: MONEY_TICKER_DIAGRAMS.slice(),
   speed: 1,
   index: 0,
   playing: false,
@@ -1119,6 +1125,22 @@ const moneyTicker = {
   playFromProgress: 0,
   skyOn: false
 };
+
+function moneyTickerIsHome() {
+  return moneyTicker.mode === "home";
+}
+
+function moneyTickerAllowedDiagrams() {
+  return moneyTicker.diagrams && moneyTicker.diagrams.length
+    ? moneyTicker.diagrams
+    : MONEY_TICKER_DIAGRAMS;
+}
+
+function moneyTickerAllowedRanges() {
+  return moneyTicker.ranges && moneyTicker.ranges.length
+    ? moneyTicker.ranges
+    : MONEY_TICKER_RANGES;
+}
 
 function moneyPutInTotal(season) {
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
@@ -1524,14 +1546,29 @@ function armMoneyTickerAutoplay() {
       moneyTicker.scrollObserver.disconnect();
       moneyTicker.scrollObserver = null;
     }
-    moneyTicker.diagram = "tribes";
-    const rootEl = moneyTicker.root;
-    if (rootEl) {
-      rootEl.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
-        const id = btn.getAttribute("data-ticker-diagram");
-        btn.setAttribute("aria-selected", id === "tribes" ? "true" : "false");
-      });
-      refreshMoneyTickerChart();
+    const allowed = moneyTickerAllowedDiagrams();
+    /* Episode autoplay opens on Tribes; home stays on Island (only diagram offered). */
+    const autoDiagram = moneyTickerIsHome()
+      ? allowed.includes("island")
+        ? "island"
+        : allowed[0]
+      : allowed.includes("tribes")
+        ? "tribes"
+        : allowed[0];
+    if (autoDiagram === "tribes") {
+      moneyTicker.diagram = "tribes";
+    } else if (autoDiagram && autoDiagram !== moneyTicker.diagram) {
+      moneyTicker.diagram = autoDiagram;
+    }
+    if (autoDiagram) {
+      const rootEl = moneyTicker.root;
+      if (rootEl) {
+        rootEl.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
+          const id = btn.getAttribute("data-ticker-diagram");
+          btn.setAttribute("aria-selected", id === autoDiagram ? "true" : "false");
+        });
+        refreshMoneyTickerChart();
+      }
     }
     setMoneyTickerSpeed(0.5);
     startMoneyTickerPlayback({ fromStart: true });
@@ -1982,7 +2019,7 @@ function bindMoneyTickerControls() {
     const diagramBtn = event.target.closest("[data-ticker-diagram]");
     if (diagramBtn) {
       const next = diagramBtn.getAttribute("data-ticker-diagram");
-      if (next && MONEY_TICKER_DIAGRAMS.includes(next) && next !== moneyTicker.diagram) {
+      if (next && moneyTickerAllowedDiagrams().includes(next) && next !== moneyTicker.diagram) {
         stopMoneyTickerPlayback();
         moneyTicker.diagram = next;
         root.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
@@ -1995,7 +2032,7 @@ function bindMoneyTickerControls() {
     const rangeBtn = event.target.closest("[data-ticker-range]");
     if (rangeBtn) {
       const next = rangeBtn.getAttribute("data-ticker-range");
-      if (next && next !== moneyTicker.range) {
+      if (next && moneyTickerAllowedRanges().includes(next) && next !== moneyTicker.range) {
         stopMoneyTickerPlayback();
         moneyTicker.range = next;
         mountMoneyTicker(moneyTicker.season, { keepEnd: true });
@@ -2035,6 +2072,22 @@ function mountMoneyTicker(season, opts) {
   if (!root) return;
   moneyTicker.root = root;
   moneyTicker.season = season;
+  const homeMode =
+    root.getAttribute("data-ticker-mode") === "home" ||
+    document.documentElement.getAttribute("data-page") === "island";
+  moneyTicker.mode = homeMode ? "home" : "episode";
+  moneyTicker.ranges = homeMode ? MONEY_TICKER_HOME_RANGES.slice() : MONEY_TICKER_RANGES.slice();
+  moneyTicker.diagrams = homeMode ? MONEY_TICKER_HOME_DIAGRAMS.slice() : MONEY_TICKER_DIAGRAMS.slice();
+  if (homeMode && !(opts && opts.keepEnd)) {
+    moneyTicker.range = "season";
+    moneyTicker.diagram = "island";
+  }
+  if (!moneyTickerAllowedRanges().includes(moneyTicker.range)) {
+    moneyTicker.range = moneyTickerAllowedRanges()[0] || "season";
+  }
+  if (!moneyTickerAllowedDiagrams().includes(moneyTicker.diagram)) {
+    moneyTicker.diagram = moneyTickerAllowedDiagrams()[0] || "island";
+  }
   moneyTicker.reducedMotion =
     typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   moneyTicker.sleevePutIn = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
@@ -2055,35 +2108,52 @@ function mountMoneyTicker(season, opts) {
   const end = moneyTicker.frames.length - 1;
   moneyTicker.index = end;
   moneyTicker.progress = end;
-  if (!MONEY_TICKER_DIAGRAMS.includes(moneyTicker.diagram)) moneyTicker.diagram = "island";
 
   const speeds = MONEY_TICKER_SPEEDS.map((s) => {
     const on = s === moneyTicker.speed;
     return `<button type="button" class="money-ticker-speed" data-ticker-speed="${s}" aria-pressed="${on ? "true" : "false"}">${s}x</button>`;
   }).join("");
 
-  const diagramTabs = [
+  const rangeLabels = {
+    week: "Week",
+    season: "Season"
+  };
+  /* Episode keeps both range tabs (data-ticker-range="week" / "season"). */
+  const rangeTabs = moneyTickerAllowedRanges()
+    .map((id) => {
+      const on = moneyTicker.range === id;
+      const label = rangeLabels[id] || id;
+      return `<button type="button" role="tab" data-ticker-range="${id}" aria-selected="${on ? "true" : "false"}">${label}</button>`;
+    })
+    .join("");
+
+  const diagramLabelList = [
     ["island", "Island"],
     ["tribes", "Tribes"],
     ["contestants", "Contestants"]
-  ]
+  ];
+  const diagramTabs = diagramLabelList
+    .filter(([id]) => moneyTickerAllowedDiagrams().includes(id))
     .map(([id, label]) => {
       const on = moneyTicker.diagram === id;
       return `<button type="button" role="tab" data-ticker-diagram="${id}" aria-selected="${on ? "true" : "false"}">${label}</button>`;
     })
     .join("");
 
+  const lede = homeMode
+    ? "See how each tribe and contestant did in the Episode."
+    : "Watch the island, the tribes, or every contestant sleeve. Dotted line is money put in.";
+
   root.innerHTML = `
     <div class="money-ticker-head">
       <p class="money-ticker-kicker">Replay the books</p>
       <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].total))}</p>
       <p class="money-ticker-chg" data-ticker-live-chg></p>
-      <p class="money-ticker-lede">Watch the island, the tribes, or every contestant sleeve. Dotted line is money put in.</p>
+      <p class="money-ticker-lede">${lede}</p>
     </div>
     <div class="money-ticker-toolbar">
       <div class="money-ticker-range" role="tablist" aria-label="Time range">
-        <button type="button" role="tab" data-ticker-range="week" aria-selected="${moneyTicker.range === "week" ? "true" : "false"}">Week</button>
-        <button type="button" role="tab" data-ticker-range="season" aria-selected="${moneyTicker.range === "season" ? "true" : "false"}">Season</button>
+        ${rangeTabs}
       </div>
       <div class="money-ticker-diagrams" role="tablist" aria-label="Diagram">
         ${diagramTabs}

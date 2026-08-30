@@ -63,7 +63,8 @@ const appJs = readFileSync(join(root, "app.js"), "utf8");
 if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")) {
   throw new Error("app.js missing money ticker playback (mount + put-in dotted line)");
 }
-if (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"')) {
+if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
+  (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
   throw new Error("app.js money ticker must offer week and season ranges");
 }
 if (
