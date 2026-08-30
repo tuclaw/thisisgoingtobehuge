@@ -155,6 +155,18 @@ if (!stylesCss.includes(".campfire-theater.is-reading .campfire-ping[data-slot=\
 if (!episodeJs.includes("camp-whispers-feed") || !episodeJs.includes("mountRecentConversations")) {
   throw new Error("episode-campfire.js missing recent whispers section mount");
 }
+if (/#camp-whispers \.camp-scene\s*\{[^}]*min-height:\s*([1-9]\d{2,}|[3-9]\d)px/.test(stylesCss)) {
+  throw new Error("#camp-whispers cards must stay compact; do not reserve a standing min-height");
+}
+if (!stylesCss.includes("#camp-whispers .camp-whispers-feed") || !stylesCss.includes("align-items: start")) {
+  throw new Error("#camp-whispers feed must align-items:start so a closed neighbor does not stretch");
+}
+if (!stylesCss.includes("#camp-whispers .camp-chat-panel.is-open")) {
+  throw new Error("#camp-whispers chat panel must grow in-flow when the thread is opened");
+}
+if (!stylesCss.includes("grid-template-columns: minmax(0, 1fr) auto")) {
+  throw new Error("#camp-whispers cards must keep the 4 messages trigger on the heading row");
+}
 if (
   !episodeJs.includes("resolveLatestConversations") ||
   !episodeJs.includes("latestDayConversations") ||

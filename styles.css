@@ -2268,6 +2268,7 @@ a.brand:hover {
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
   margin-top: 1.15rem;
+  align-items: start;
 }
 
 .camp-whispers-lede {
@@ -2278,14 +2279,67 @@ a.brand:hover {
 }
 
 #camp-whispers .camp-scene {
-  min-height: 480px;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: 0.75rem;
+  align-items: center;
+  padding: 0.85rem 0.95rem 0.9rem;
+}
+
+#camp-whispers .camp-scene-embers {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+#camp-whispers .camp-scene-body {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#camp-whispers .camp-scene h3 {
+  margin-bottom: 0.2rem;
+}
+
+#camp-whispers .camp-scene-desc {
+  max-width: none;
+}
+
+#camp-whispers .camp-chat-trigger-wrap {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  margin: 0;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+}
+
+#camp-whispers .camp-scene:has(.camp-chat-panel.is-open) .camp-chat-trigger-wrap {
+  width: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 #camp-whispers .camp-chat-panel {
-  left: 0.65rem;
-  right: 0.65rem;
-  width: auto;
-  max-height: calc(100% - 1.3rem);
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  max-height: 0;
+  margin-top: 0;
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+#camp-whispers .camp-chat-panel.is-open {
+  height: min(420px, 70vh);
+  max-height: min(420px, 70vh);
+  margin-top: 0.75rem;
 }
 
 @media (max-width: 900px) {
