@@ -434,6 +434,7 @@ function renderEpisodePage(episode, season, base) {
 
   <script src="${base}season.fallback.js"></script>
   <script src="${base}tribal-spoiler-burn.js"></script>
+  <script src="${base}lab-logos.js"></script>
   <script src="${base}camp-chat.js"></script>
   <script src="${base}campfire-open.js"></script>${lunchScripts}
   <script src="${base}episode-campfire.js"></script>
@@ -449,6 +450,7 @@ function copyStatic() {
     "styles.css",
     "camp-chat.js",
     "camp-chat.css",
+    "lab-logos.js",
     "campfire-open.js",
     "episode-campfire.js",
     "tribal-spoiler-burn.js",
@@ -464,6 +466,8 @@ function copyStatic() {
     if (existsSync(src)) cpSync(src, join(dist, file));
   }
   cpSync(join(root, "cast"), join(dist, "cast"), { recursive: true });
+  const assets = join(root, "assets");
+  if (existsSync(assets)) cpSync(assets, join(dist, "assets"), { recursive: true });
   const demos = join(root, "demos");
   if (existsSync(demos)) cpSync(demos, join(dist, "demos"), { recursive: true });
   const diagrams = join(root, "diagrams");

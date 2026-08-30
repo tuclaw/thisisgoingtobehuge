@@ -6008,3 +6008,74 @@ body.is-titles .replay-trailer {
     animation: none;
   }
 }
+
+/* —— Lab logos: overlay on portraits; logo-only for small avatars —— */
+.portrait-with-lab {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.portrait-with-lab .portrait-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.lab-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: clamp(1.65rem, 18%, 2.75rem);
+  height: clamp(1.65rem, 18%, 2.75rem);
+  padding: 0.32em;
+  border-radius: 50%;
+  background: rgba(244, 239, 228, 0.94);
+  border: 1px solid rgba(232, 213, 176, 0.55);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  object-fit: contain;
+  color: #14120b;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.lab-avatar,
+img.lab-avatar,
+.camp-chat-avatar.lab-avatar {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.28em;
+  flex-shrink: 0;
+  background: #f4efe4;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
+  color: #14120b;
+}
+
+.trailer-avatars img.lab-avatar {
+  width: 2.15rem;
+  height: 2.15rem;
+  padding: 0.35em;
+  object-fit: contain;
+  object-position: center;
+  background: #f4efe4;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

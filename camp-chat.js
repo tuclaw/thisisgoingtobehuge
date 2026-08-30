@@ -310,12 +310,25 @@
     bubble.innerHTML = escapeHtml(msg.text || "");
     body.appendChild(bubble);
 
-    if (portrait) {
-      const avatar = document.createElement("img");
+    // Small chat bubbles: prefer lab logo over face portrait.
+    let avatar = null;
+    if (global.LabLogos) {
+      const id = participant.id || participant.slug || msg.from;
+      avatar = global.LabLogos.labAvatarEl({
+        id: id,
+        slug: participant.slug,
+        alt: participant.name || msg.from || "",
+        className: "camp-chat-avatar"
+      });
+    }
+    if (!avatar && portrait) {
+      avatar = document.createElement("img");
       avatar.className = "camp-chat-avatar";
       avatar.src = portrait;
       avatar.alt = participant.name || msg.from || "";
       avatar.decoding = "async";
+    }
+    if (avatar) {
       if (side === "left") {
         row.appendChild(avatar);
         row.appendChild(body);

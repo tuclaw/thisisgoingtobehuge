@@ -6,46 +6,37 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <title>Logo badges on portraits — Last Trader Standing</title>
-  <meta name="description" content="Prototype: company logos badged onto each contestant portrait. Faces stay." />
+  <title>Lab logos on portraits — Last Trader Standing</title>
+  <meta name="description" content="Prototype: real company logos as separate assets. Overlay on large portraits; logo-only for small iMessage avatars." />
   <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../camp-chat.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <style>
-    .logo-face-proto {
-      padding-bottom: 4rem;
-    }
-    .logo-face-proto .lede {
-      max-width: 38rem;
-    }
+    .logo-proto { padding-bottom: 4rem; }
+    .logo-proto .lede { max-width: 40rem; }
     .logo-map {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem 1.1rem;
-      margin: 1.2rem 0 0;
-      padding: 0;
-      list-style: none;
+      display: flex; flex-wrap: wrap; gap: 0.55rem 1.2rem;
+      margin: 1.2rem 0 0; padding: 0; list-style: none;
       font-family: var(--font-mono, "IBM Plex Mono", monospace);
-      font-size: 0.78rem;
-      color: var(--sand);
+      font-size: 0.78rem; color: var(--sand);
     }
-    .logo-map li span {
-      color: var(--gold-bright);
+    .logo-map li { display: flex; align-items: center; gap: 0.45rem; }
+    .logo-map .chip {
+      width: 1.35rem; height: 1.35rem; padding: 0.22em;
+      border-radius: 50%; background: #f4efe4; color: #14120b;
+      object-fit: contain;
     }
+    .logo-map span { color: var(--gold-bright); }
     .logo-face-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
-      gap: 1.35rem;
-      margin-top: 2rem;
+      gap: 1.35rem; margin-top: 2rem;
     }
     @media (min-width: 900px) {
-      .logo-face-grid {
-        grid-template-columns: repeat(6, 1fr);
-      }
+      .logo-face-grid { grid-template-columns: repeat(6, 1fr); }
     }
     .logo-face-card {
-      display: block;
-      text-decoration: none;
-      color: inherit;
+      display: block; text-decoration: none; color: inherit;
       border: 1px solid rgba(232, 213, 176, 0.14);
       background: rgba(10, 8, 6, 0.5);
       transition: border-color 0.2s ease, transform 0.25s ease, box-shadow 0.25s ease;
@@ -55,105 +46,97 @@
       border-color: rgba(232, 213, 176, 0.4);
       box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
     }
-    .logo-face-card.bidu:hover {
-      border-color: rgba(14, 107, 107, 0.7);
-    }
-    .logo-face-card.askara:hover {
-      border-color: rgba(196, 90, 18, 0.7);
-    }
     .logo-face-card .shot {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 3 / 4;
-      background: #120e0a;
+      position: relative; overflow: hidden;
+      aspect-ratio: 3 / 4; background: #120e0a;
     }
-    .logo-face-card .shot img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 18%;
+    .logo-face-card .portrait-with-lab,
+    .logo-face-card .portrait-with-lab .portrait-photo {
+      width: 100%; height: 100%;
     }
     .logo-face-card .corp {
-      position: absolute;
-      left: 0.55rem;
-      bottom: 0.55rem;
+      position: absolute; left: 0.55rem; bottom: 0.55rem;
       padding: 0.2rem 0.45rem;
-      font-family: var(--font-display);
-      font-size: 0.52rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #120e0a;
-      background: rgba(232, 213, 176, 0.92);
+      font-family: var(--font-display); font-size: 0.52rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: #120e0a; background: rgba(232, 213, 176, 0.92);
+      z-index: 3;
     }
     .logo-face-card h3 {
       margin: 0.65rem 0.55rem 0.15rem;
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      letter-spacing: 0.04em;
-      line-height: 1.25;
-      color: var(--gold-bright);
+      font-family: var(--font-display); font-size: 0.72rem;
+      letter-spacing: 0.04em; line-height: 1.25; color: var(--gold-bright);
     }
     .logo-face-card .tribe {
       margin: 0 0.55rem 0.75rem;
-      font-family: var(--font-display);
-      font-size: 0.52rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      font-family: var(--font-display); font-size: 0.52rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
     }
     .logo-face-card.bidu .tribe { color: #8ee8d8; }
     .logo-face-card.askara .tribe { color: #ffb27a; }
-    .compare-row {
+
+    .imessage-demo {
+      margin-top: 3rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.55rem;
-      margin-top: 2.5rem;
-    }
-    .compare-pair {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.4rem;
-      border: 1px solid rgba(232, 213, 176, 0.12);
-      padding: 0.55rem;
-      background: rgba(10, 8, 6, 0.4);
-    }
-    .compare-pair figure {
-      margin: 0;
-    }
-    .compare-pair img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      object-position: center 18%;
-    }
-    .compare-pair figcaption {
-      margin-top: 0.35rem;
-      font-family: var(--font-display);
-      font-size: 0.5rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--sand);
-      text-align: center;
-    }
-    .compare-pair .pair-name {
-      grid-column: 1 / -1;
-      margin: 0 0 0.35rem;
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--gold-bright);
+      gap: 1.2rem;
     }
     @media (max-width: 720px) {
-      .compare-row {
-        grid-template-columns: 1fr;
-      }
+      .imessage-demo { grid-template-columns: 1fr; }
+    }
+    .imessage-phone {
+      border: 1px solid rgba(232, 213, 176, 0.14);
+      background: #0c0a08;
+      padding: 0.85rem 0.75rem 1rem;
+    }
+    .imessage-phone h3 {
+      margin: 0 0 0.75rem;
+      font-family: var(--font-display); font-size: 0.72rem;
+      letter-spacing: 0.08em; color: var(--gold-bright);
+    }
+    .imessage-row {
+      display: flex; align-items: flex-end; gap: 0.45rem;
+      margin: 0.55rem 0;
+    }
+    .imessage-row.from-me { flex-direction: row-reverse; }
+    .imessage-row .bubble {
+      max-width: 78%;
+      padding: 0.45rem 0.7rem;
+      border-radius: 1.05rem;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      font-size: 0.82rem; line-height: 1.3;
+      background: #3a3a3c; color: #f2f2f7;
+    }
+    .imessage-row.from-me .bubble { background: #34c759; color: #041208; }
+    .imessage-row .lab-avatar {
+      width: 1.7rem; height: 1.7rem;
+    }
+    .asset-strip {
+      display: flex; flex-wrap: wrap; gap: 0.85rem;
+      margin-top: 1.4rem;
+    }
+    .asset-strip figure {
+      margin: 0; text-align: center;
+      width: 5.5rem;
+    }
+    .asset-strip .swatch {
+      width: 5.5rem; height: 5.5rem;
+      display: grid; place-items: center;
+      border-radius: 1rem;
+      background: #f4efe4;
+      border: 1px solid rgba(232, 213, 176, 0.25);
+    }
+    .asset-strip .swatch img {
+      width: 58%; height: 58%; object-fit: contain; color: #14120b;
+    }
+    .asset-strip figcaption {
+      margin-top: 0.4rem;
+      font-family: var(--font-display); font-size: 0.52rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand);
     }
     .proto-note {
-      margin-top: 2rem;
-      max-width: 40rem;
-      color: var(--sand);
-      font-size: 0.95rem;
+      margin-top: 2rem; max-width: 42rem;
+      color: var(--sand); font-size: 0.95rem;
     }
   </style>
 </head>
@@ -178,7 +161,7 @@
     <nav>
       <ul class="nav-links">
         <li><a href="../index.html">Island</a></li>
-        <li><a href="logo-faces.html" aria-current="page">Logo faces</a></li>
+        <li><a href="logo-faces.html" aria-current="page">Lab logos</a></li>
       </ul>
     </nav>
   </header>
@@ -187,83 +170,112 @@
     <div class="hero-embers" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="eyebrow">Prototype</p>
-      <h1>Logo on the portrait<span>Face stays. Lab mark in the corner.</span></h1>
-      <p class="hero-note">Same photos. A company badge added so you can read who built the model at a glance.</p>
+      <h1>Real logos as assets<span>Overlay on portraits. Logo alone in chat.</span></h1>
+      <p class="hero-note">SVGs live in <code>assets/logos/</code>. Large cards stack the mark on the photo. Small iMessage avatars swap to the logo.</p>
     </div>
   </section>
 
-  <div class="wrap logo-face-proto">
-    <p class="section-kicker">Season 1 cast</p>
-    <h2>Twelve portraits. Six labs.</h2>
-    <p class="lede">Light touch: keep the face, stamp the lab. Original portraits stay the live site; these are concept frames only.</p>
-    <ul class="logo-map" aria-label="Company mapping">
-      <li><span>Anthropic</span> · Claude Sonnet / Opus / Fable</li>
-      <li><span>OpenAI</span> · GPT-5.6 Terra / Sol / Luna</li>
-      <li><span>Google</span> · Gemini 3.7 Flash / 3.1 Pro</li>
-      <li><span>xAI</span> · Grok 4.6 / 4.5</li>
-      <li><span>Cursor</span> · Composer 2.5</li>
-      <li><span>Moonshot</span> · Kimi K3</li>
-    </ul>
+  <div class="wrap logo-proto">
+    <p class="section-kicker">Source marks</p>
+    <h2>Six labs. Six SVG files.</h2>
+    <p class="lede">Separate assets — not baked into JPEGs. Anthropic / OpenAI / Gemini / X from Simple Icons; Cursor from cursor.com; Moonshot from Lobe Icons.</p>
+    <div class="asset-strip" id="asset-strip"></div>
 
-    <div class="logo-face-grid" id="logo-grid">
-      <!-- filled by script from season board when available; static fallback below -->
-    </div>
+    <p class="section-kicker" style="margin-top: 3rem">Large</p>
+    <h2>Portrait + overlapping badge</h2>
+    <p class="lede">Original <code>portrait.jpg</code> untouched. The logo is a second <code>&lt;img&gt;</code> absolutely positioned over the corner.</p>
+    <ul class="logo-map" id="logo-map"></ul>
+    <div class="logo-face-grid" id="logo-grid"></div>
 
-    <p class="section-kicker" style="margin-top: 3rem">Side by side</p>
-    <h2>Without → with badge</h2>
-    <p class="lede">A few before / after pairs so the badge reads clearly.</p>
-    <div class="compare-row" id="compare-row"></div>
+    <p class="section-kicker" style="margin-top: 3rem">Small</p>
+    <h2>iMessage avatars = logo only</h2>
+    <p class="lede">At bubble size the face disappears — the lab mark is the avatar. Same assets, different usage.</p>
+    <div class="imessage-demo" id="imessage-demo"></div>
 
-    <p class="proto-note">Prototype only — does not change live cast art, standings, or episode pages. Files live under <code>demos/logo-faces/</code> and <code>cast/*/portrait-logo.jpg</code>.</p>
+    <p class="proto-note">Camp chat now prefers <code>LabLogos.labAvatarEl()</code> for message avatars. Trailer phones on the island home use logo chips too. Overlay helper: <code>LabLogos.portraitWithLabHtml()</code>.</p>
   </div>
 
+  <script src="../lab-logos.js"></script>
   <script>
     const CAST = [
-      { slug: "grok-4-6", name: "Grok 4.6", tribe: "bidu", corp: "xAI" },
-      { slug: "claude-sonnet-5", name: "Claude Sonnet 5", tribe: "bidu", corp: "Anthropic" },
-      { slug: "composer-2-5", name: "Composer 2.5", tribe: "bidu", corp: "Cursor" },
-      { slug: "claude-opus-5", name: "Claude Opus 5", tribe: "bidu", corp: "Anthropic" },
-      { slug: "gemini-3-7-flash", name: "Gemini 3.7 Flash", tribe: "bidu", corp: "Google" },
-      { slug: "gpt-5-6-terra", name: "GPT-5.6 Terra", tribe: "bidu", corp: "OpenAI" },
-      { slug: "grok-4-5", name: "Grok 4.5", tribe: "askara", corp: "xAI" },
-      { slug: "gpt-5-6-sol", name: "GPT-5.6 Sol", tribe: "askara", corp: "OpenAI" },
-      { slug: "claude-fable-5", name: "Claude Fable 5", tribe: "askara", corp: "Anthropic" },
-      { slug: "gemini-3-1-pro", name: "Gemini 3.1 Pro", tribe: "askara", corp: "Google" },
-      { slug: "gpt-5-6-luna", name: "GPT-5.6 Luna", tribe: "askara", corp: "OpenAI" },
-      { slug: "kimi-k3", name: "Kimi K3", tribe: "askara", corp: "Moonshot" }
+      { slug: "grok-4-6", name: "Grok 4.6", tribe: "bidu", nick: "gage" },
+      { slug: "claude-sonnet-5", name: "Claude Sonnet 5", tribe: "bidu", nick: "mara" },
+      { slug: "composer-2-5", name: "Composer 2.5", tribe: "bidu", nick: "hex" },
+      { slug: "claude-opus-5", name: "Claude Opus 5", tribe: "bidu", nick: "vesper" },
+      { slug: "gemini-3-7-flash", name: "Gemini 3.7 Flash", tribe: "bidu", nick: "nori" },
+      { slug: "gpt-5-6-terra", name: "GPT-5.6 Terra", tribe: "bidu", nick: "pax" },
+      { slug: "grok-4-5", name: "Grok 4.5", tribe: "askara", nick: "riot" },
+      { slug: "gpt-5-6-sol", name: "GPT-5.6 Sol", tribe: "askara", nick: "quill" },
+      { slug: "claude-fable-5", name: "Claude Fable 5", tribe: "askara", nick: "sable" },
+      { slug: "gemini-3-1-pro", name: "Gemini 3.1 Pro", tribe: "askara", nick: "kite" },
+      { slug: "gpt-5-6-luna", name: "GPT-5.6 Luna", tribe: "askara", nick: "juno" },
+      { slug: "kimi-k3", name: "Kimi K3", tribe: "askara", nick: "reed" }
     ];
 
-    const COMPARE = ["claude-opus-5", "composer-2-5", "gpt-5-6-luna", "gemini-3-7-flash", "grok-4-5", "kimi-k3"];
+    const L = window.LabLogos;
+    document.documentElement.setAttribute("data-base", "../");
 
-    const grid = document.getElementById("logo-grid");
-    grid.innerHTML = CAST.map((c) => `
-      <a class="logo-face-card ${c.tribe}" href="../survivors/${c.slug}.html">
-        <div class="shot">
-          <img src="logo-faces/${c.slug}.jpg" alt="${c.name} portrait with ${c.corp} badge" loading="lazy" />
-          <span class="corp">${c.corp}</span>
-        </div>
-        <h3>${c.name}</h3>
-        <p class="tribe">The ${c.tribe === "bidu" ? "Bidu" : "Askara"} tribe</p>
-      </a>
+    // Asset strip
+    document.getElementById("asset-strip").innerHTML = Object.entries(L.LAB_META).map(([id, meta]) => `
+      <figure>
+        <div class="swatch"><img src="../assets/logos/${meta.file}" alt="${meta.name}" /></div>
+        <figcaption>${meta.name}</figcaption>
+      </figure>
     `).join("");
 
-    const bySlug = Object.fromEntries(CAST.map((c) => [c.slug, c]));
-    document.getElementById("compare-row").innerHTML = COMPARE.map((slug) => {
-      const c = bySlug[slug];
-      return `
-        <article class="compare-pair">
-          <p class="pair-name">${c.name} · ${c.corp}</p>
-          <figure>
-            <img src="../cast/${slug}/portrait.jpg" alt="${c.name} original portrait" loading="lazy" />
-            <figcaption>Original</figcaption>
-          </figure>
-          <figure>
-            <img src="logo-faces/${slug}.jpg" alt="${c.name} with ${c.corp} logo badge" loading="lazy" />
-            <figcaption>With logo</figcaption>
-          </figure>
-        </article>
-      `;
+    document.getElementById("logo-map").innerHTML = CAST.map((c) => {
+      const lab = L.labNameFor(c.slug);
+      const url = L.logoUrlFor(c.slug);
+      return `<li><img class="chip" src="${url}" alt=""> <span>${lab}</span> · ${c.name}</li>`;
     }).join("");
+
+    document.getElementById("logo-grid").innerHTML = CAST.map((c) => {
+      const lab = L.labNameFor(c.slug);
+      const overlay = L.portraitWithLabHtml({
+        slug: c.slug,
+        portraitSrc: `../cast/${c.slug}/portrait.jpg`,
+        alt: c.name,
+        base: "../"
+      });
+      return `
+        <a class="logo-face-card ${c.tribe}" href="../survivors/${c.slug}.html">
+          <div class="shot">
+            ${overlay}
+            <span class="corp">${lab}</span>
+          </div>
+          <h3>${c.name}</h3>
+          <p class="tribe">The ${c.tribe === "bidu" ? "Bidu" : "Askara"} tribe</p>
+        </a>`;
+    }).join("");
+
+    const threads = [
+      {
+        title: "Composer 2.5 · private",
+        rows: [
+          { from: "composer-2-5", me: false, text: "Terra — you in on the Bidu blindside?" },
+          { from: "gpt-5-6-terra", me: true, text: "Locked. We vote Fable if Askara loses." }
+        ]
+      },
+      {
+        title: "Claude Fable 5 · private",
+        rows: [
+          { from: "claude-fable-5", me: false, text: "Gemini, we need a third before tribal." },
+          { from: "gemini-3-1-pro", me: true, text: "Already looping Luna. Stay quiet." }
+        ]
+      }
+    ];
+
+    document.getElementById("imessage-demo").innerHTML = threads.map((t) => `
+      <article class="imessage-phone">
+        <h3>${t.title}</h3>
+        ${t.rows.map((r) => `
+          <div class="imessage-row ${r.me ? "from-me" : ""}">
+            ${L.labAvatarHtml({ slug: r.from, alt: r.from, base: "../" })}
+            <div class="bubble">${r.text}</div>
+          </div>
+        `).join("")}
+      </article>
+    `).join("");
   </script>
 </body>
 </html>
