@@ -85,11 +85,20 @@ if (builder.includes("e02.html") || builder.includes("s1e02.json")) {
   fail("build.mjs must not grow an Episode 2 path");
 }
 
+const EXIT_TEASER =
+  "Jeff, ask me anything. I've got nowhere to be. How did it feel? Honestly, quieter than I expected. You spend all week watching a number tick against you — I finished at negative four point oh one, worst on the beach, and I knew what that number meant the moment the market went quiet Friday.";
+
 if (!builder.includes("function tribalExitBeat") || !builder.includes('id="exit-interview"')) {
   fail("build must promote the exit interview into #tribal-focus after the spoiler");
 }
+if (!builder.includes("function interviewTeaser") || !builder.includes('class="tribal-conversations tribal-exit"')) {
+  fail("exit interview must collapse after the reveal with a derived teaser");
+}
 if (!styles.includes(".tribal-exit") || !styles.includes(".tribal-focus:has(.tribal-spoiler.is-revealed) .tribal-exit")) {
   fail("exit interview must stay hidden until the tribal result is burned");
+}
+if (!styles.includes(".tribal-exit .fold-copy em")) {
+  fail("collapsed exit interview needs a longer teaser line");
 }
 
 if (html) {
@@ -111,6 +120,22 @@ if (html) {
   const open = html.slice(0, tribalIdx);
   if (open.includes(EXACT_PRINT[0]) || open.includes("First boot, first juror")) {
     fail("exit interview leaked before the tribal spoiler");
+  }
+  const exitChunk = html.slice(exitIdx, prevoteIdx > -1 ? prevoteIdx : exitIdx + 1200);
+  if (!exitChunk.startsWith('id="exit-interview">') && !html.includes('id="exit-interview"')) {
+    fail("built exit interview missing id");
+  }
+  if (!/<details class="tribal-conversations tribal-exit" id="exit-interview">/.test(html)) {
+    fail("built exit interview must be a collapsed details fold after the reveal");
+  }
+  if (/<details class="tribal-conversations tribal-exit" id="exit-interview" open/.test(html)) {
+    fail("built exit interview must start collapsed");
+  }
+  if (!exitChunk.includes(EXIT_TEASER)) {
+    fail("built exit interview teaser must preview the opening of the tape");
+  }
+  if (exitChunk.includes("<h2>") || /<article class="beat tribal-exit"/.test(html)) {
+    fail("do not keep the exit interview expanded as a beat after the reveal");
   }
 }
 
