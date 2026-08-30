@@ -2421,6 +2421,239 @@ function renderSeasonHub(season) {
     .join("");
 }
 
+const ISLAND_ARCH_WIRES = [
+  { from: "spectators", to: "website", fromSide: "right", toSide: "left", label: "watch", emphasis: true, beat: 1 },
+  { from: "conversation", to: "website", fromSide: "left", toSide: "top", label: "conversation updates", emphasis: true, beat: 2 },
+  { from: "host", to: "website", fromSide: "top", toSide: "bottom", label: "game state + fills", beat: 3 },
+  { from: "host", to: "robinhood", fromSide: "bottom", toSide: "top", label: "execute orders", beat: 4 },
+  { from: "conversation", to: "relays", fromSide: "bottom", toSide: "top", label: "campfire + DMs", beat: 5, toAlong: 0.28 },
+  { from: "host", to: "relays", fromSide: "right", toSide: "top", label: "situations + recs", beat: 5, toAlong: 0.58 }
+];
+
+const ISLAND_ARCH_BEATS = [
+  { at: 80, text: "Spectators watch the broadcast." },
+  { at: 480, text: "The conversation bot refreshes the site with camp talk and DMs." },
+  { at: 880, text: "The host bot publishes game state and fills." },
+  { at: 1240, text: "Trade recommendations become Robinhood orders." },
+  { at: 1680, text: "Twelve contestant bots. Twelve model connections." }
+];
+
+const ISLAND_ARCH_WIRE_GAP = 14;
+
+function archNodeBox(el, stage) {
+  const a = el.getBoundingClientRect();
+  const b = stage.getBoundingClientRect();
+  return {
+    left: a.left - b.left,
+    top: a.top - b.top,
+    right: a.right - b.left,
+    bottom: a.bottom - b.top,
+    width: a.width,
+    height: a.height,
+    cx: a.left - b.left + a.width / 2,
+    cy: a.top - b.top + a.height / 2
+  };
+}
+
+function archPort(box, side, gap, along) {
+  const t = along == null ? 0.5 : Math.max(0.08, Math.min(0.92, along));
+  if (side === "left") return { x: box.left - gap, y: box.top + box.height * t };
+  if (side === "right") return { x: box.right + gap, y: box.top + box.height * t };
+  if (side === "top") return { x: box.left + box.width * t, y: box.top - gap };
+  return { x: box.left + box.width * t, y: box.bottom + gap };
+}
+
+function archOrthoPath(from, to, fromSide, toSide) {
+  const fx = from.x.toFixed(1);
+  const fy = from.y.toFixed(1);
+  const tx = to.x.toFixed(1);
+  const ty = to.y.toFixed(1);
+  if (fromSide === "right" && toSide === "left") {
+    const mid = ((from.x + to.x) / 2).toFixed(1);
+    return `M ${fx} ${fy} L ${mid} ${fy} L ${mid} ${ty} L ${tx} ${ty}`;
+  }
+  if (fromSide === "left" && toSide === "right") {
+    const mid = ((from.x + to.x) / 2).toFixed(1);
+    return `M ${fx} ${fy} L ${mid} ${fy} L ${mid} ${ty} L ${tx} ${ty}`;
+  }
+  if ((fromSide === "bottom" && toSide === "top") || (fromSide === "top" && toSide === "bottom")) {
+    const mid = ((from.y + to.y) / 2).toFixed(1);
+    return `M ${fx} ${fy} L ${fx} ${mid} L ${tx} ${mid} L ${tx} ${ty}`;
+  }
+  if (fromSide === "left" && toSide === "top") {
+    return `M ${fx} ${fy} L ${tx} ${fy} L ${tx} ${ty}`;
+  }
+  if (fromSide === "right" && toSide === "top") {
+    return `M ${fx} ${fy} L ${tx} ${fy} L ${tx} ${ty}`;
+  }
+  if (fromSide === "bottom" && toSide === "left") {
+    return `M ${fx} ${fy} L ${fx} ${ty} L ${tx} ${ty}`;
+  }
+  return `M ${fx} ${fy} L ${tx} ${ty}`;
+}
+
+function drawIslandArchWires(root) {
+  const stage = root.querySelector("#island-arch-stage") || root.querySelector(".island-arch-stage");
+  const svg = root.querySelector("#island-arch-wires") || root.querySelector(".island-arch-wires");
+  if (!stage || !svg) return;
+  const width = stage.clientWidth;
+  const height = stage.clientHeight;
+  if (width < 8 || height < 8) return;
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute("width", String(width));
+  svg.setAttribute("height", String(height));
+  const nodes = {};
+  root.querySelectorAll("[data-arch-node]").forEach((el) => {
+    nodes[el.getAttribute("data-arch-node")] = el;
+  });
+  const parts = [
+    '<defs>',
+    '<marker id="island-arch-arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">',
+    '<polygon points="0 0, 10 3.5, 0 7" fill="#8a9bb0"/>',
+    "</marker>",
+    '<marker id="island-arch-arrow-emphasis" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">',
+    '<polygon points="0 0, 10 3.5, 0 7" fill="#34d399"/>',
+    "</marker>",
+    "</defs>"
+  ];
+  ISLAND_ARCH_WIRES.forEach((wire, idx) => {
+    const fromEl = nodes[wire.from];
+    const toEl = nodes[wire.to];
+    if (!fromEl || !toEl) return;
+    const fromBox = archNodeBox(fromEl, stage);
+    const toBox = archNodeBox(toEl, stage);
+    const start = archPort(fromBox, wire.fromSide, 2);
+    const end = archPort(toBox, wire.toSide, ISLAND_ARCH_WIRE_GAP, wire.toAlong);
+    const d = archOrthoPath(start, end, wire.fromSide, wire.toSide);
+    const delay = wire.beat === 1 ? "0.12s" : wire.beat === 2 ? "0.52s" : wire.beat === 3 ? "0.92s" : wire.beat === 4 ? "1.28s" : "1.68s";
+    const marker = wire.emphasis ? "url(#island-arch-arrow-emphasis)" : "url(#island-arch-arrow)";
+    const cls = wire.emphasis ? "arch-wire is-emphasis" : "arch-wire";
+    parts.push(
+      `<path class="${cls}" pathLength="1" style="--wire-delay:${delay}" d="${d}" marker-end="${marker}"/>`
+    );
+    parts.push(`<path class="arch-wire-flow" pathLength="100" d="${d}"/>`);
+    if (wire.label) {
+      const lx = ((start.x + end.x) / 2).toFixed(1);
+      const ly = ((start.y + end.y) / 2 - 10).toFixed(1);
+      parts.push(
+        `<text text-anchor="middle" x="${lx}" y="${ly}">${escapeHtml(wire.label)}</text>`
+      );
+    }
+    void idx;
+  });
+  svg.innerHTML = parts.join("");
+}
+
+function islandArchRelayRow(s, _tribe, index) {
+  const model = modelOf(s);
+  const out = s.status === "boot" || s.status === "jury";
+  const face = s.portrait
+    ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
+    : "";
+  return `<li class="arch-relay ${escapeHtml(s.tribeId || "")}${out ? " is-out" : ""}" style="--i:${index}">
+    <p class="arch-relay-name">${face}<a href="${escapeHtml(survivorHref(s))}">${escapeHtml(model)}</a></p>
+    <div class="arch-relay-line">
+      <span class="arch-chip bot">Contestant bot</span>
+      <span class="arch-flow" aria-hidden="true"></span>
+      <span class="arch-chip model">Model</span>
+    </div>
+  </li>`;
+}
+
+function renderIslandBotDiagram(season) {
+  const root = document.getElementById("island-bot-diagram");
+  const board = document.getElementById("island-arch-relays");
+  if (!root || !board) return;
+  const tribes = season.tribes || [];
+  const survivors = season.survivors || [];
+  if (tribes.length && survivors.length) {
+    board.innerHTML = tribes
+      .map((tribe) => {
+        const members = survivors.filter((s) => s.tribeId === tribe.id);
+        const rows = members.map((s, i) => islandArchRelayRow(s, tribe, i)).join("");
+        return `<section class="island-arch-tribe ${escapeHtml(tribe.id)}" data-arch-tribe="${escapeHtml(tribe.id)}">
+          <p class="island-arch-tribe-kicker">${escapeHtml(tribeChromeName(tribe))}</p>
+          <ul class="island-arch-relay-list">${rows}</ul>
+        </section>`;
+      })
+      .join("");
+  } else {
+    board.querySelectorAll(".arch-relay").forEach((row, i) => {
+      row.style.setProperty("--i", String(i % 6));
+    });
+  }
+  const draw = () => drawIslandArchWires(root);
+  requestAnimationFrame(() => requestAnimationFrame(draw));
+  if (typeof ResizeObserver === "function" && !root._archResize) {
+    root._archResize = new ResizeObserver(draw);
+    root._archResize.observe(root);
+  }
+  window.addEventListener("resize", draw);
+  initIslandBotDiagramPresent(root);
+}
+
+function islandArchPrefersReducedMotion() {
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function setIslandArchStatus(root, text) {
+  const status = root.querySelector("#island-arch-status");
+  if (status) status.textContent = text || "";
+}
+
+function playIslandArchPresentation(root) {
+  root.classList.remove("is-presented");
+  root.classList.remove("is-presenting");
+  void root.offsetWidth;
+  const replay = root.querySelector("#island-arch-replay");
+  if (replay) replay.hidden = true;
+  if (islandArchPrefersReducedMotion()) {
+    root.classList.add("is-presenting");
+    root.classList.add("is-presented");
+    setIslandArchStatus(root, "Twelve contestant bots. Twelve model connections.");
+    if (replay) replay.hidden = false;
+    return;
+  }
+  setIslandArchStatus(root, "");
+  root.classList.add("is-presenting");
+  ISLAND_ARCH_BEATS.forEach((beat) => {
+    window.setTimeout(() => {
+      if (!root.classList.contains("is-presenting")) return;
+      setIslandArchStatus(root, beat.text);
+    }, beat.at);
+  });
+  window.setTimeout(() => {
+    if (!root.classList.contains("is-presenting")) return;
+    root.classList.add("is-presented");
+    if (replay) replay.hidden = false;
+  }, 2500);
+}
+
+function initIslandBotDiagramPresent(root) {
+  if (root.dataset.archInit === "1") return;
+  root.dataset.archInit = "1";
+  const replay = root.querySelector("#island-arch-replay");
+  if (replay && !replay.dataset.archBound) {
+    replay.dataset.archBound = "1";
+    replay.addEventListener("click", () => playIslandArchPresentation(root));
+  }
+  if (!("IntersectionObserver" in window)) {
+    playIslandArchPresentation(root);
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        playIslandArchPresentation(root);
+        io.disconnect();
+      });
+    },
+    { threshold: 0.28, rootMargin: "0px 0px -10% 0px" }
+  );
+  io.observe(root);
+}
+
 function render(season, sourceNote) {
   renderIslandPot(season);
   renderFaces(season);
@@ -2431,6 +2664,7 @@ function render(season, sourceNote) {
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
   renderNavWatch(season);
+  renderIslandBotDiagram(season);
   initDayFolds();
   initReveals();
   const miss = document.getElementById("json-miss");
