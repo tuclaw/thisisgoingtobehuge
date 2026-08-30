@@ -138,6 +138,17 @@ if (!html.includes('id="replay-trailer"') || !html.includes("Replay trailer")) {
 if (!html.includes('id="money-ticker"') || !html.includes('data-ticker-mode="home"')) {
   throw new Error("templates/island.html missing home money ticker in Real Trades section");
 }
+if (!html.includes("money-ticker-ctas") || !html.includes("Add Fuel") || !html.includes("Watch Live")) {
+  throw new Error("templates/island.html must put Add Fuel + Watch Live below the money ticker");
+}
+if (html.includes('id="island-pot"') || html.includes('id="pot-amount"')) {
+  throw new Error("templates/island.html must not keep the duplicate top pot amount above the ticker");
+}
+const homeTickerIdx = html.indexOf('id="money-ticker"');
+const homeCtaIdx = html.indexOf("money-ticker-ctas");
+if (!(homeTickerIdx > -1 && homeCtaIdx > homeTickerIdx)) {
+  throw new Error("home Add Fuel / Watch Live CTAs must sit after #money-ticker");
+}
 if (!html.includes('id="wager"') || !html.includes("Real Trades On The Stock Market")) {
   throw new Error("templates/island.html missing Real Trades wager section");
 }
