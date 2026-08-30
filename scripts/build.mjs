@@ -78,6 +78,24 @@ function boothQuoteHtml(quote) {
     .join("\n                ");
 }
 
+/** Longer collapsed-fold hook from the tape. Prefer a finished sentence, then an em-dash. */
+function interviewTeaser(quote, limit = 360) {
+  const text = String(quote || "").replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  if (text.length <= limit) return text;
+  const slice = text.slice(0, limit);
+  const sentence = Math.max(slice.lastIndexOf(". "), slice.lastIndexOf("? "), slice.lastIndexOf("! "));
+  if (sentence >= Math.floor(limit * 0.45)) {
+    return slice.slice(0, sentence + 1).trim();
+  }
+  const dash = slice.lastIndexOf(" — ");
+  if (dash >= Math.floor(limit * 0.4)) {
+    return `${slice.slice(0, dash).trim()}…`;
+  }
+  const space = slice.lastIndexOf(" ");
+  return `${(space > 40 ? slice.slice(0, space) : slice).replace(/[—,.;:]+$/, "")}…`;
+}
+
 function boothsHtml(items, base) {
   return `<div class="booths">${items
     .map((item) => {
@@ -147,14 +165,22 @@ function tribalFocusHtml(episode, base) {
       </div>
     </details>`
       : "";
+  const exitQuote = exitInterview && (exitInterview.items || [])[0] ? exitInterview.items[0].quote : "";
+  const exitTeaser = interviewTeaser(exitQuote) || exitInterview.body || "Audience only.";
   const exitHtml =
     exitInterview && (exitInterview.items || []).length
-      ? `<article class="beat tribal-exit" id="exit-interview">
-      <p class="section-kicker">${escapeHtml(exitInterview.kicker || "Exit interview")}</p>
-      <h2>${escapeHtml(exitInterview.title || "Claude Fable 5")}</h2>
-      <p>${escapeHtml(exitInterview.body || "Audience only.")}</p>
-      ${boothsHtml(exitInterview.items || [], base)}
-    </article>`
+      ? `<details class="tribal-conversations tribal-exit" id="exit-interview">
+      <summary>
+        <span class="fold-day">${escapeHtml(exitInterview.kicker || "Exit interview")}</span>
+        <span class="fold-copy">
+          <strong>${escapeHtml(exitInterview.title || "Claude Fable 5")}</strong>
+          <em>${escapeHtml(exitTeaser)}</em>
+        </span>
+      </summary>
+      <div class="tribal-conversations-body">
+        ${boothsHtml(exitInterview.items || [], base)}
+      </div>
+    </details>`
       : "";
   return `<article class="beat beat-dark tribal-focus" id="tribal-focus">
       <p class="section-kicker">${kicker}</p>

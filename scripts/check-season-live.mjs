@@ -295,6 +295,12 @@ if (exitInterview) {
       fableExit.quote.includes("Torch is out, Jeff. The book's closed at nine-sixty.")
   );
   check("tribal-exit-audience-only", exitInterview.body === "Audience only.");
+  check(
+    "tribal-exit-teaser-source",
+    fableExit &&
+      fableExit.quote.includes("How did it feel? Honestly, quieter than I expected.") &&
+      fableExit.quote.includes("the market went quiet Friday.")
+  );
 }
 check("tribal-prevote-count", prevote && (prevote.items || []).length === 6);
 if (prevote) {

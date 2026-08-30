@@ -999,6 +999,17 @@ img.portrait.photo {
   grid-template-columns: 1fr;
 }
 
+.tribal-exit > summary {
+  align-items: start;
+}
+
+.tribal-exit .fold-copy em {
+  display: block;
+  margin-top: 0.28rem;
+  line-height: 1.45;
+  max-width: 42rem;
+}
+
 .tribal-conversations {
   margin: 1.35rem 0 0;
   border: 1px solid rgba(140, 70, 30, 0.35);
