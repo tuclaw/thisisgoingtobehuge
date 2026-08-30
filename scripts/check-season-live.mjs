@@ -332,10 +332,17 @@ check("given-total-fixture", source.islandGivenUsd === 230, String(source.island
 const saturday = (episodeCopy.days || []).find((day) => day.id === "saturday");
 const saturdayBeats = (saturday && saturday.beats) || [];
 const saturdayLunch = saturdayBeats.find((beat) => beat.id === "saturday-lunch");
+const saturdayDinner = saturdayBeats.find((beat) => beat.id === "saturday-dinner");
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
 check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
 check("saturday-lunch-beat", Boolean(saturdayLunch) && saturdayLunch.type === "lunch-chats");
 check("saturday-lunch-three-phones", saturdayLunch && (saturdayLunch.threads || []).length === 3);
+check("saturday-dinner-beat", Boolean(saturdayDinner) && saturdayDinner.type === "dinner-fires");
+check(
+  "saturday-dinner-after-lunch",
+  Boolean(saturdayLunch && saturdayDinner) &&
+    saturdayBeats.indexOf(saturdayLunch) < saturdayBeats.indexOf(saturdayDinner)
+);
 if (saturdayLunch) {
   const satIds = (saturdayLunch.threads || []).map((thread) => thread.id).join("|");
   check("saturday-lunch-ids", satIds === "sat-lunch-hex-gage|sat-lunch-kite-riot|sat-lunch-juno-reed");
@@ -352,6 +359,21 @@ if (saturdayLunch) {
   const satChromeBare = satChrome.replace(/the Bidu tribe/gi, "").replace(/the Askara tribe/gi, "");
   check("saturday-lunch-no-bare-bidu", !/\bBidu\b/.test(satChromeBare));
   check("saturday-lunch-no-bare-askara", !/\bAskara\b/.test(satChromeBare));
+}
+if (saturdayDinner) {
+  const dinnerIds = (saturdayDinner.threads || []).map((thread) => thread.id).join("|");
+  check("saturday-dinner-ids", dinnerIds === "bidu-sat-dinner-fire|askara-sat-dinner-fire");
+  check("saturday-dinner-two-fires", (saturdayDinner.threads || []).length === 2);
+  check("saturday-dinner-audience-only", saturdayDinner.audienceCut === "Audience only");
+  const dinnerChrome = [saturdayDinner.title, saturdayDinner.body, saturdayDinner.kicker]
+    .concat((saturdayDinner.threads || []).flatMap((thread) => [thread.heading, thread.title, thread.subtitle, thread.desc, thread.ariaLabel]))
+    .join(" ");
+  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date", "merge headcount"]) {
+    check(`saturday-dinner-no-${bad.replace(/\s+/g, "-")}`, !dinnerChrome.toLowerCase().includes(bad));
+  }
+  const dinnerChromeBare = dinnerChrome.replace(/the Bidu tribe/gi, "").replace(/the Askara tribe/gi, "");
+  check("saturday-dinner-no-bare-bidu", !/\bBidu\b/.test(dinnerChromeBare));
+  check("saturday-dinner-no-bare-askara", !/\bAskara\b/.test(dinnerChromeBare));
 }
 const e2 = (source.episodes || []).find((ep) => ep.id === "s1e02");
 check("episode-2-locked", e2 && e2.status === "locked" && !e2.path);
