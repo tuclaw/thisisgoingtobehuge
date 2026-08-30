@@ -436,14 +436,11 @@ function renderEpisodePage(episode, season, base) {
 
   <div class="wrap" id="episode-root">
     <article class="beat beat-gold" id="week-board">
-      <div class="island-pot episode-pot reveal" id="episode-island-pot" aria-live="polite">
-        <p class="pot-kicker">Island pot · live capital</p>
-        <p class="pot-sentence"><span id="pot-contestants">12</span> contestants managing</p>
-        <p class="pot-amount" id="pot-amount">$120</p>
-        <p class="money-ticker-chg" id="money-ticker-chg" aria-live="polite"></p>
-        <p class="pot-sub">real dollars in live markets — not play money.</p>
-      </div>
       <section class="money-ticker reveal" id="money-ticker" aria-label="Island money playback"></section>
+      <div class="money-ticker-ctas reveal">
+        <a class="btn ember pot-fuel" href="https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00" target="_blank" rel="noopener noreferrer">Add Fuel</a>
+        <a class="btn" href="#" data-nav-watch>Watch Live</a>
+      </div>
     </article>
 
     ${focusBlock}<article class="beat beat-gold" id="latest-books">
