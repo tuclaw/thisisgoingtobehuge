@@ -26,6 +26,13 @@ requiredIds.forEach((id) => {
   }
 });
 
+if (!html.includes('http-equiv="Content-Security-Policy"')) {
+  throw new Error("templates/island.html missing meta Content-Security-Policy");
+}
+if (/http-equiv="Content-Security-Policy"[^>]*frame-ancestors/i.test(html)) {
+  throw new Error("meta CSP cannot include frame-ancestors (HTTP header only via Cloudflare)");
+}
+
 if (!html.includes("campfire-open.js")) {
   throw new Error("templates/island.html does not load campfire-open.js");
 }
