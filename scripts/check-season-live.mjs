@@ -466,12 +466,51 @@ check("e02-no-saturday-lunch", !(episode2Copy.days || []).some((day) => (day.bea
 check("e02-no-saturday-dinner", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-dinner")));
 check("e02-no-sunday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "sunday-lunch")));
 check("e02-no-invented-booths", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.type === "booths")));
+const e2Challenge = ((episode2Copy.days || []).find((day) => day.id === "challenge") || {}).beats || [];
+const e2ChallengeBeat = e2Challenge.find((beat) => beat.id === "e02-challenge-lock");
+const e2ChallengeBody = e2ChallengeBeat ? String(e2ChallengeBeat.body || "") : "";
+check(
+  "e02-challenge-lock",
+  e2ChallengeBeat &&
+    e2ChallengeBody.includes("Every living player must hold at least one US-listed stock or ETF for the whole episode (Monday Aug 31 – Friday Sep 4).") &&
+    e2ChallengeBody.includes("They may buy and sell as much as they want.") &&
+    e2ChallengeBody.includes("They may never go all-cash.") &&
+    e2ChallengeBody.includes("Cash remainder is fine.") &&
+    e2ChallengeBody.includes("the Bidu tribe") &&
+    e2ChallengeBody.includes("the Askara tribe") &&
+    e2ChallengeBody.includes("Episode 2 only") &&
+    e2ChallengeBody.includes("cash counts") &&
+    e2ChallengeBody.includes("Books still wait for Monday fills")
+);
+check(
+  "e02-challenge-no-shame-list",
+  e2ChallengeBody &&
+    !/Gemini 3\.7 Flash|Claude Sonnet 5|GPT-5\.6 Terra|all cash except|sitting cash/i.test(e2ChallengeBody)
+);
+const rulesHtml = readFileSync(join(root, "templates", "rules.html"), "utf8");
+check(
+  "rules-e02-challenge-lock",
+  rulesHtml.includes('id="e02-challenge-lock"') &&
+    rulesHtml.includes("Every living player must hold at least one US-listed stock or ETF for the whole episode (Monday Aug 31 – Friday Sep 4).") &&
+    rulesHtml.includes("They may buy and sell as much as they want.") &&
+    rulesHtml.includes("They may never go all-cash.") &&
+    rulesHtml.includes("Cash remainder is fine.") &&
+    rulesHtml.includes("the Bidu tribe") &&
+    rulesHtml.includes("the Askara tribe") &&
+    rulesHtml.includes("cash counts") &&
+    rulesHtml.includes("Books still wait for Monday fills")
+);
+check("rules-cash-counts-stays", rulesHtml.includes("Stocks or cash. Cash counts."));
+check(
+  "rules-challenge-no-shame-list",
+  !/Gemini 3\.7 Flash|Claude Sonnet 5|sitting cash|shame/i.test(rulesHtml.slice(rulesHtml.indexOf("e02-challenge-lock")))
+);
 check(
   "e02-tribal-not-yet",
   episode2Copy.days &&
     episode2Copy.days.some((day) => day.id === "tribal" && /Not yet/.test(String(day.foldEm || "") + JSON.stringify(day.beats || [])))
 );
-const e2ChromeBare = [episode2Copy.location, episode2Copy.heroNote, episode2Copy.description, e2ColdBody]
+const e2ChromeBare = [episode2Copy.location, episode2Copy.heroNote, episode2Copy.description, e2ColdBody, e2ChallengeBody, JSON.stringify(episode2Copy.spine || [])]
   .join(" ")
   .replace(/the Bidu tribe/gi, "")
   .replace(/the Askara tribe/gi, "");
