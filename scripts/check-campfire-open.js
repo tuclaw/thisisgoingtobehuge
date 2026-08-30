@@ -168,8 +168,8 @@ if (!appJs.includes("function renderHomeTorches") || !appJs.includes("function h
 if (!appJs.includes("renderHomeTorches(season)")) {
   throw new Error("render() must call renderHomeTorches on the homepage");
 }
-if (!css.includes(".tribal-torches") || !css.includes("flex-wrap: wrap") || !css.includes("--torch-delay")) {
-  throw new Error("styles.css must wrap the full torch row and desync lit flames");
+if (!css.includes(".tribal-torches") || !css.includes("flex-wrap: nowrap") || !css.includes("--torch-delay")) {
+  throw new Error("styles.css must keep the full torch row on one line and desync lit flames");
 }
 if (!js.includes("replayTrailer") || !js.includes("resetOpenTitlesOverlay")) {
   throw new Error("campfire-open.js missing replay trailer helpers");
