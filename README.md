@@ -39,6 +39,7 @@ The public site is generated. Season state is a ledger, not a screenshot of the 
 - Client CSS/JS: root `styles.css`, `app.js`, camp/episode scripts
 - Derive + stamp `dist/`: `node scripts/build.mjs` (never hand-edit `dist/`)
 - Invariants: `npm run check` / `node scripts/check-season.mjs`
+- Quote refresh (no LLM): `npm run quotes` / `scripts/refresh-quotes.mjs` — universe from live holdings, public lasts, mark only if a price moved. Cadence: `.github/workflows/refresh-quotes.yml` (weekday US cash hours). If you change stocks/marks, update that path in the same PR (`AGENTS.md`).
 - Local preview: `npm run dev` (`node scripts/build.mjs && python3 scripts/dev-server.py`)
 
 Public paths like `index.html` and `seasons/1/e01.html` are build outputs. Edit templates + data, then rebuild.

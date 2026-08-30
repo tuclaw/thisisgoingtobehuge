@@ -5,6 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   deriveSeason,
+  heldTickers,
   isCashLeg,
   markedEquity,
   pctRound,
@@ -67,6 +68,14 @@ for (const mark of marks) {
   check(`mark-unique-id:${mark.id}`, !markIds.has(mark.id));
   markIds.add(mark.id);
 }
+
+const liveHeld = heldTickers(source);
+const boardHeld = [
+  ...new Set(
+    board.survivors.flatMap((s) => (s.positions || []).filter((pos) => !isCashLeg(pos)).map(tickerOf)).filter(Boolean)
+  )
+].sort();
+check("held-tickers-match-board", JSON.stringify(liveHeld) === JSON.stringify(boardHeld), `${liveHeld} vs ${boardHeld}`);
 
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === source.cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));

@@ -155,6 +155,8 @@ Do not re-id. Public names are the pinned Cursor models only.
 
 The Liquidation Island bot is host. The bot appends fills, marks, immunity, votes, boots, and merge to `data/season1.json` as events. Confessionals and episode copy live in `data/episodes/`. Run `node scripts/build.mjs` to derive books and stamp the public tree. If a fact is not in season state, it did not happen.
 
+Intraday last-price marks may also be appended by `scripts/refresh-quotes.mjs` (GitHub Action during US cash hours) from public quotes of names the ledger actually holds. That path is not an agent and does not talk to contestants. It still may not invent a price: skip a name that does not fetch, and make no commit if nothing moved. Change how stocks or marks work → update that refresh path in the same PR (`AGENTS.md`).
+
 ---
 
 ## What this bible does not allow

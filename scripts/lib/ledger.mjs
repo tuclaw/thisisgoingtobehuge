@@ -312,6 +312,167 @@ export function latestMark(events) {
   return marks.length ? marks[marks.length - 1] : null;
 }
 
+/** NY calendar date (YYYY-MM-DD) for US cash-session logic. */
+export function nyDate(value) {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(date);
+  const year = parts.find((part) => part.type === "year")?.value;
+  const month = parts.find((part) => part.type === "month")?.value;
+  const day = parts.find((part) => part.type === "day")?.value;
+  return year && month && day ? `${year}-${month}-${day}` : "";
+}
+
+/** True during the US cash session (Mon–Fri 9:30–16:10 America/New_York). */
+export function isUsCashSession(value = new Date(), opts = {}) {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return false;
+  const closePad = Number.isFinite(opts.closePadMinutes) ? opts.closePadMinutes : 10;
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+  const weekday = parts.find((part) => part.type === "weekday")?.value;
+  const hour = Number(parts.find((part) => part.type === "hour")?.value);
+  const minute = Number(parts.find((part) => part.type === "minute")?.value);
+  if (!["Mon", "Tue", "Wed", "Thu", "Fri"].includes(weekday)) return false;
+  const mins = hour * 60 + minute;
+  return mins >= 9 * 60 + 30 && mins <= 16 * 60 + closePad;
+}
+
+export function isNewTradingDay(prevAt, nextAt) {
+  const prev = nyDate(prevAt);
+  const next = nyDate(nextAt);
+  if (!next) return false;
+  if (!prev) return true;
+  return prev !== next;
+}
+
+/**
+ * Tickers the live board actually holds right now.
+ * Derived from fills (same books as deriveSeason) — not a watchlist.
+ */
+export function heldTickers(source, throughAt) {
+  const starting = typeof source.startingBookUsd === "number" ? source.startingBookUsd : 10;
+  const books = booksFromFills(source.cast || [], source.events || [], starting, throughAt);
+  const tickers = new Set();
+  for (const book of books.values()) {
+    for (const pos of book.positions || []) {
+      if (isCashLeg(pos)) continue;
+      const ticker = tickerOf(pos);
+      if (ticker) tickers.add(ticker);
+    }
+  }
+  return [...tickers].sort();
+}
+
+export function quotesMoved(prevQuotes, nextQuotes, tickers, epsilon = 1e-4) {
+  for (const ticker of tickers || []) {
+    const next = nextQuotes && nextQuotes[ticker];
+    if (!next || typeof next.last !== "number" || !Number.isFinite(next.last)) continue;
+    const prev = prevQuotes && prevQuotes[ticker];
+    if (!prev || typeof prev.last !== "number" || !Number.isFinite(prev.last)) return true;
+    if (Math.abs(prev.last - next.last) > epsilon) return true;
+  }
+  return false;
+}
+
+export function mergeQuotes(existing, fetched, meta = {}) {
+  const out = { ...(existing || {}) };
+  for (const [ticker, quote] of Object.entries(fetched || {})) {
+    if (!quote || typeof quote.last !== "number" || !Number.isFinite(quote.last)) continue;
+    const prev = out[ticker] || {};
+    const next = {
+      ...prev,
+      last: quote.last
+    };
+    if (typeof quote.priorClose === "number" && Number.isFinite(quote.priorClose)) {
+      next.priorClose = quote.priorClose;
+    }
+    if (quote.priorCloseDate) next.priorCloseDate = quote.priorCloseDate;
+    if (quote.source) next.source = quote.source;
+    if (meta.lastSession) next.lastSession = meta.lastSession;
+    if (meta.at) next.asOf = meta.at;
+    out[ticker] = next;
+  }
+  return out;
+}
+
+function recordedFromBook(book, priorMarkUsd, eodMarkUsd) {
+  const row = {
+    bookUsd: book.bookUsd,
+    weekPct: book.weekPct,
+    monthPct: book.monthPct,
+    dayPct: book.dayPct,
+    priorMarkUsd
+  };
+  if (typeof eodMarkUsd === "number" && Number.isFinite(eodMarkUsd)) {
+    row.eodMarkUsd = eodMarkUsd;
+  }
+  return row;
+}
+
+/**
+ * Build a mark event in the same shape as the host tape
+ * (`type: mark`, recorded books, tribe totals). Computes P&L from quotes
+ * via markBook — do not pass invented last prices.
+ */
+export function buildMarkEvent(source, quotes, meta = {}) {
+  const starting = typeof source.startingBookUsd === "number" ? source.startingBookUsd : 10;
+  const cast = source.cast || [];
+  const events = source.events || [];
+  const at = meta.at || new Date().toISOString();
+  const last = latestMark(events);
+  const newDay = isNewTradingDay(last && last.at, at);
+  const books = booksFromFills(cast, events, starting, meta.throughAt || at);
+  const marked = new Map();
+  const recorded = {};
+
+  for (const member of cast) {
+    const prevRec = (last && last.recorded && last.recorded[member.id]) || {};
+    const prior = newDay
+      ? typeof prevRec.bookUsd === "number"
+        ? prevRec.bookUsd
+        : starting
+      : typeof prevRec.priorMarkUsd === "number"
+        ? prevRec.priorMarkUsd
+        : starting;
+    const eod = newDay
+      ? prior
+      : typeof prevRec.eodMarkUsd === "number"
+        ? prevRec.eodMarkUsd
+        : prior;
+    const book = markBook(books.get(member.id), quotes, {
+      startingBookUsd: starting,
+      priorMarkUsd: prior
+    });
+    marked.set(member.id, book);
+    recorded[member.id] = recordedFromBook(book, prior, eod);
+  }
+
+  const mark = {
+    type: "mark",
+    id: meta.id,
+    kind: meta.kind || "intraday",
+    at,
+    throughAt: meta.throughAt || at,
+    label: meta.label,
+    dayPctPriorOfficial: meta.dayPctPriorOfficial !== false,
+    recorded,
+    tribes: tribeTotals(cast, marked)
+  };
+  if (meta.lastSession) mark.lastSession = meta.lastSession;
+  return mark;
+}
+
 export function deriveSeason(source) {
   const starting = typeof source.startingBookUsd === "number" ? source.startingBookUsd : 10;
   const cast = source.cast || [];

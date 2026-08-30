@@ -6,7 +6,9 @@ Static site for Liquidation Island. Season state is a ledger; the public board i
 
 ```bash
 npm run build    # node scripts/build.mjs → stamps dist/
-npm run check    # durable season invariants + live fixtures + episode/UI checks
+npm run check    # durable season invariants + live fixtures + quote-refresh coupling + episode/UI checks
+npm run quotes   # dry-run: held tickers from the ledger, fetch public lasts (no write)
+npm run quotes:universe  # print current holdings only (no network)
 npm run dev      # build, then python3 scripts/dev-server.py @ :8000
 ```
 
@@ -23,6 +25,8 @@ No npm dependencies. Node 20+ and Python 3 are enough.
 | `seasons/1/e01-*.js`, `conversations.json`, images | Episode tapes / media (copied into `dist/`) |
 | `GAME.md` | Rules bible — not the live board |
 | `cast/{slug}/` | Portraits; public names are pinned Cursor model slugs |
+| `scripts/lib/ledger.mjs` `heldTickers` / `buildMarkEvent` | Live holdings + mark shape for the no-LLM quote refresh |
+| `scripts/refresh-quotes.mjs` + `scripts/lib/quotes.mjs` + `.github/workflows/refresh-quotes.yml` | Public last-price marks (same PR as any stock/mark change) |
 
 | Never hand-edit | Why |
 |-----------------|-----|
@@ -42,7 +46,24 @@ Public URLs like `index.html` / `seasons/1/e01.html` are **build outputs**. Chan
 
 Season checks are split:
 - `scripts/check-season.mjs` — durable shape/math/GAME.md invariants (keep green without rewriting for every mark)
-- `scripts/check-season-live.mjs` — golden fixtures for the current live board / Episode 1 cut (update this when the ledger or episode copy moves)
+- `scripts/check-season-live.mjs` — Episode 1 historical snapshots + live-board-follows-latest-mark (update when fills or episode copy move; do not pin the latest auto-mark numbers)
+- `scripts/check-quotes-refresh.mjs` — quote refresh stays coupled to `heldTickers` / mark shape
+
+## Quote / mark refresh (no LLM, no contestant ping)
+
+Public marks refresh without waking Grok Bots or contestants. Do not fan out an agent chat to the twelve to update last prices.
+
+| Piece | Role |
+|-------|------|
+| `heldTickers()` in `scripts/lib/ledger.mjs` | Universe = current books after fills. Adding/removing a position changes what gets quoted. **No parallel watchlist.** |
+| `buildMarkEvent()` / `mergeQuotes()` in `scripts/lib/ledger.mjs` | Same mark shape the site already uses (`type: mark`, `recorded`, `tribes`, `lastSession`) |
+| `scripts/lib/quotes.mjs` | Public last-trade fetch (Yahoo chart). Skip a name if no real price. Never invent a last. |
+| `scripts/refresh-quotes.mjs` | Dry-run by default. `--apply` writes only when a fetched last moved, then rebuilds. `--force` bypasses the US cash-session gate. |
+| `.github/workflows/refresh-quotes.yml` | Weekday hourly ceiling during US RTH. No commit if prices did not move. |
+
+**Same-PR rule:** if you change stocks, holdings, tickers, position shape, `quotes` fields, how marks are written, `markBook` / `deriveSeason`, or live-board mark checks, update this refresh path (`heldTickers`, `buildMarkEvent`, `scripts/refresh-quotes.mjs`, `scripts/lib/quotes.mjs`, the workflow, and `scripts/check-quotes-refresh.mjs`) in the **same change**. A hardcoded ticker list that can go stale is a bug.
+
+Apply path: fetch lasts for `heldTickers` only → skip failures → if nothing moved, make no commit → else append a mark, merge those lasts into `data/season1.json` `quotes`, `npm run build`, then commit the ledger. Do not hand-edit `dist/`. Do not invent marks or P&L.
 
 ## UI / landing changes
 
