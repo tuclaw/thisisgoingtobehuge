@@ -26,6 +26,14 @@ if (beatIds.indexOf("friday-lasthour") > beatIds.indexOf("friday-confessionals")
   throw new Error("friday-lasthour must stay before friday-confessionals");
 }
 if (beatIds.indexOf("friday-lunch") < 0) throw new Error("friday-lunch missing from friday fold");
+if (
+  !(
+    beatIds.indexOf("friday-lasthour") < beatIds.indexOf("friday-confessionals") &&
+    beatIds.indexOf("friday-confessionals") < beatIds.indexOf("friday-lunch")
+  )
+) {
+  throw new Error("friday fold order must be last-hour → noon booths → lunch");
+}
 if (lunchBeat.type !== "lunch-chats" || lunchBeat.title !== "Friday lunch · private threads") {
   throw new Error("friday lunch beat title/type mismatch");
 }
@@ -89,6 +97,10 @@ if (html) {
     throw new Error("built friday-lunch is not after Thursday tapes");
   }
   if (boothsIdx < 0) throw new Error("built e01.html lost Friday noon booths");
+  const lastHourIdx = html.indexOf('id="friday-lasthour"');
+  if (!(lastHourIdx > -1 && lastHourIdx < boothsIdx && boothsIdx < lunchIdx)) {
+    throw new Error("built friday fold order must be last-hour → noon booths → lunch");
+  }
   // Post-vote: tribal fold is promoted above books; friday lunch still lands in the friday fold.
   expectedThreadIds.forEach((id) => {
     if (!html.includes('id="' + id + '"')) throw new Error("built html missing phone " + id);
