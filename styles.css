@@ -5757,15 +5757,15 @@ body.is-titles .replay-trailer {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(11rem, 1fr) 6.4rem minmax(15rem, 1.3fr) 6.4rem minmax(12rem, 1.15fr);
+  grid-template-columns: minmax(11rem, 1fr) 7.4rem minmax(15rem, 1.3fr) 7.4rem minmax(12rem, 1.15fr);
   grid-template-areas:
     "spectators awatch website aupdates conversation"
     ".          .      afills  .        ."
     ".          .      host    .        ."
     ".          .      aorders .        ."
     ".          .      robinhood .      .";
-  column-gap: 0.35rem;
-  row-gap: 0.2rem;
+  column-gap: 0.7rem;
+  row-gap: 0.55rem;
   align-items: stretch;
   padding: 0.6rem 0.2rem 1.5rem;
 }
@@ -5777,7 +5777,7 @@ body.is-titles .replay-trailer {
   position: relative;
   z-index: 1;
   min-height: 2.6rem;
-  padding: 0 0.15rem;
+  padding: 0 0.55rem;
   opacity: 0;
   pointer-events: none;
 }
@@ -5818,8 +5818,8 @@ body.is-titles .replay-trailer {
 .arch-arrow.is-up,
 .arch-arrow.is-down {
   flex-direction: column;
-  min-height: 3.4rem;
-  padding: 0.15rem 0;
+  min-height: 3.8rem;
+  padding: 0.55rem 0;
 }
 
 .arch-arrow.is-up .arch-arrow-line,
@@ -6011,6 +6011,13 @@ body.is-titles .replay-trailer {
   gap: 0.7rem;
 }
 
+.island-arch-relay-list .arch-relay:nth-child(1) { --i: 0; }
+.island-arch-relay-list .arch-relay:nth-child(2) { --i: 1; }
+.island-arch-relay-list .arch-relay:nth-child(3) { --i: 2; }
+.island-arch-relay-list .arch-relay:nth-child(4) { --i: 3; }
+.island-arch-relay-list .arch-relay:nth-child(5) { --i: 4; }
+.island-arch-relay-list .arch-relay:nth-child(6) { --i: 5; }
+
 .arch-relay {
   display: grid;
   gap: 0.55rem;
@@ -6056,9 +6063,9 @@ body.is-titles .replay-trailer {
 
 .arch-relay-line {
   display: grid;
-  grid-template-columns: minmax(7.2rem, 1fr) minmax(2.8rem, 0.85fr) minmax(5.4rem, 0.8fr);
+  grid-template-columns: minmax(7.2rem, 1fr) 3.6rem minmax(5.4rem, 0.8fr);
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.7rem;
 }
 
 .arch-chip {
@@ -6090,7 +6097,7 @@ body.is-titles .replay-trailer {
 .arch-flow {
   position: relative;
   height: 0.22rem;
-  margin: 0 0.15rem;
+  margin: 0 0.2rem;
   border-radius: 99px;
   background: rgba(148, 163, 184, 0.28);
   overflow: visible;
@@ -6100,7 +6107,7 @@ body.is-titles .replay-trailer {
   content: "";
   position: absolute;
   top: 50%;
-  right: -1px;
+  right: 1px;
   width: 0;
   height: 0;
   border-style: solid;
@@ -6220,14 +6227,15 @@ body.is-titles .replay-trailer {
       "host"
       "aorders"
       "robinhood";
-    gap: 0.15rem;
+    gap: 0.45rem;
     padding-bottom: 1.2rem;
   }
 
   .arch-arrow,
   .arch-arrow.is-rev {
     flex-direction: column;
-    min-height: 3.1rem;
+    min-height: 3.6rem;
+    padding: 0.55rem 0;
   }
 
   .arch-arrow-line,
