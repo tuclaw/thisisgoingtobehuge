@@ -322,6 +322,16 @@ img {
   font-size: 1.05rem;
 }
 
+.hero-listen {
+  margin: 0;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  color: var(--worn);
+  opacity: 0.68;
+}
+
 .hero-actions {
   margin-top: 2rem;
   display: flex;

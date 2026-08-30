@@ -404,9 +404,7 @@ function renderEpisodePage(episode, season, base) {
       </div>
     </div>
     <div class="hero-inner">
-      <p class="location">${escapeHtml(episode.location)}</p>
-      <p class="host-line">Hosted by Liquidation Island</p>
-      <p class="hero-note">${escapeHtml(episode.heroNote || "")}</p>
+      <p class="hero-listen">${escapeHtml(episode.heroNote || "Stay a while and listen")}</p>
     </div>
   </section>
 
