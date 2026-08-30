@@ -118,6 +118,51 @@ if (!appJs.includes("data-ticker-sky") || !appJs.includes("syncMoneyTickerSky") 
 if (!appJs.includes("money-ticker-palm")) {
   throw new Error("app.js money ticker sky must include a palm tree on the island");
 }
+if (
+  !appJs.includes("function formatPacificDateRange") ||
+  !appJs.includes("function moneyTickerAxisRangeLabels") ||
+  !appJs.includes("data-ticker-x-range")
+) {
+  throw new Error("app.js money ticker x-axis must label Pacific date ranges, not weekday ticks");
+}
+if (appJs.includes('pacificDayLabel(frame.at).replace(/,.*/, "")')) {
+  throw new Error("app.js money ticker x-axis must not strip timestamps down to weekday-only labels");
+}
+
+const axisStart = appJs.indexOf("function pacificDateParts");
+const axisEnd = appJs.indexOf("function pacificHourDecimal");
+if (!(axisStart > -1 && axisEnd > axisStart)) {
+  throw new Error("app.js missing Pacific date-range helpers before pacificHourDecimal");
+}
+const axisHelpers = new Function(`
+  function moneyTickerXAt(t, count) {
+    return count <= 1 ? 0 : t / (count - 1);
+  }
+  ${appJs.slice(axisStart, axisEnd)}
+  return { formatPacificDateRange, moneyTickerAxisRangeLabels };
+`)();
+if (axisHelpers.formatPacificDateRange("2026-08-24T16:06:00Z", "2026-08-28T19:14:23Z") !== "Aug 24–28") {
+  throw new Error("formatPacificDateRange should compact a same-month span to Aug 24–28");
+}
+if (axisHelpers.formatPacificDateRange("2026-08-31T16:00:00Z", "2026-09-04T19:00:00Z") !== "Aug 31–Sep 4") {
+  throw new Error("formatPacificDateRange should keep both months when a span crosses months");
+}
+const liveAxis = axisHelpers.moneyTickerAxisRangeLabels([
+  { at: "2026-08-24T16:06:00Z" },
+  { at: "2026-08-25T15:25:47Z" },
+  { at: "2026-08-26T20:00:00Z" },
+  { at: "2026-08-28T00:13:00Z" },
+  { at: "2026-08-28T14:01:56Z" },
+  { at: "2026-08-28T16:57:36Z" },
+  { at: "2026-08-28T19:14:23Z" }
+]);
+const liveAxisLabels = liveAxis.map((tick) => tick.label);
+if (liveAxisLabels.join(" | ") !== "Aug 24–26 | Aug 26–28") {
+  throw new Error("Episode 1 marks must axis-label as Aug 24–26 and Aug 26–28, got " + liveAxisLabels.join(" | "));
+}
+if (new Set(liveAxisLabels).size !== liveAxisLabels.length) {
+  throw new Error("money ticker date-range labels must not repeat");
+}
 
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");

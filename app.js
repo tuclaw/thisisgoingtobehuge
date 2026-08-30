@@ -1247,6 +1247,91 @@ function pacificDayLabel(iso) {
   }
 }
 
+function pacificDateParts(iso) {
+  if (!iso) return null;
+  const d = iso instanceof Date ? iso : new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  try {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    }).formatToParts(d);
+    const get = (type) => {
+      const part = parts.find((p) => p.type === type);
+      return part ? part.value : "";
+    };
+    const month = get("month");
+    const day = get("day");
+    const year = get("year");
+    if (!month || !day || !year) return null;
+    return {
+      weekday: get("weekday"),
+      month,
+      day,
+      year,
+      key: `${year}-${month}-${day}`
+    };
+  } catch {
+    return null;
+  }
+}
+
+function formatPacificDateRange(startIso, endIso) {
+  const start = pacificDateParts(startIso);
+  const end = pacificDateParts(endIso) || start;
+  if (!start) return "";
+  if (!end || start.key === end.key) return `${start.month} ${start.day}`;
+  if (start.month === end.month && start.year === end.year) {
+    return `${start.month} ${start.day}–${end.day}`;
+  }
+  if (start.year === end.year) return `${start.month} ${start.day}–${end.month} ${end.day}`;
+  return `${start.month} ${start.day}, ${start.year}–${end.month} ${end.day}, ${end.year}`;
+}
+
+function moneyTickerAxisRangeLabels(frames) {
+  const days = [];
+  const byKey = new Map();
+  (frames || []).forEach((frame, i) => {
+    const parts = pacificDateParts(frame && frame.at);
+    if (!parts) return;
+    const day = byKey.get(parts.key);
+    if (!day) {
+      const next = {
+        startIndex: i,
+        endIndex: i,
+        startAt: frame.at,
+        endAt: frame.at
+      };
+      byKey.set(parts.key, next);
+      days.push(next);
+      return;
+    }
+    day.endIndex = i;
+    day.endAt = frame.at;
+  });
+  if (!days.length) return [];
+  const rangeCount = days.length <= 2 ? 1 : days.length <= 6 ? 2 : 3;
+  const labels = [];
+  for (let r = 0; r < rangeCount; r += 1) {
+    const from = Math.round((r * (days.length - 1)) / rangeCount);
+    const to = Math.round(((r + 1) * (days.length - 1)) / rangeCount);
+    if (to < from) continue;
+    const startDay = days[from];
+    const endDay = days[to];
+    const label = formatPacificDateRange(startDay.startAt, endDay.endAt);
+    if (!label) continue;
+    if (labels.length && labels[labels.length - 1].label === label) continue;
+    labels.push({
+      x: moneyTickerXAt((startDay.startIndex + endDay.endIndex) / 2, frames.length),
+      label
+    });
+  }
+  return labels;
+}
+
 function pacificHourDecimal(dateOrIso) {
   const d = dateOrIso instanceof Date ? dateOrIso : new Date(dateOrIso);
   if (Number.isNaN(d.getTime())) return 12;
@@ -1994,12 +2079,12 @@ function renderMoneyTickerSvg(season, frames) {
     .join("");
 
   const putY = moneyTickerY(spec.putIn, spec.min, spec.max, chartTop, chartHeight);
-  const xLabels = frames
-    .map((frame, i) => {
-      if (frames.length > 5 && i !== 0 && i !== frames.length - 1 && i % 2 === 1) return "";
-      const x = moneyTickerXAt(i, frames.length);
-      const short = pacificDayLabel(frame.at).replace(/,.*/, "") || `M${i + 1}`;
-      return `<text class="money-ticker-axis" x="${x.toFixed(2)}" y="214" text-anchor="middle">${escapeHtml(short)}</text>`;
+  const xLabels = moneyTickerAxisRangeLabels(frames)
+    .map((tick) => {
+      let anchor = "middle";
+      if (tick.x < 70) anchor = "start";
+      else if (tick.x > 600) anchor = "end";
+      return `<text class="money-ticker-axis" data-ticker-x-range="${escapeHtml(tick.label)}" x="${tick.x.toFixed(2)}" y="214" text-anchor="${anchor}">${escapeHtml(tick.label)}</text>`;
     })
     .join("");
 
