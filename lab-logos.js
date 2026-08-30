@@ -103,8 +103,9 @@
     const labId = labIdForSlug(id);
     const meta = labMeta(labId);
     const logo = logoUrl(labId, o.base);
+    // Wrapper stays square; img fills it with contain (avoids SVG stretch).
     const badge = logo
-      ? `<img class="lab-badge" src="${escapeAttr(logo)}" alt="" width="48" height="48" decoding="async" data-lab="${escapeAttr(labId)}" />`
+      ? `<span class="lab-badge" data-lab="${escapeAttr(labId)}" aria-hidden="true"><img src="${escapeAttr(logo)}" alt="" width="48" height="48" decoding="async" /></span>`
       : "";
     const label = meta ? `<span class="visually-hidden">${escapeAttr(meta.name)}</span>` : "";
     return `<span class="portrait-with-lab">${
