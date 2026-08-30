@@ -135,6 +135,19 @@ if (!html.includes('sessionStorage.getItem("lts-open-titles-seen")')) {
 if (!html.includes('id="replay-trailer"') || !html.includes("Replay trailer")) {
   throw new Error("templates/island.html missing subtle Replay trailer control");
 }
+if (!html.includes('id="money-ticker"') || !html.includes('data-ticker-mode="home"')) {
+  throw new Error("templates/island.html missing home money ticker in Real Trades section");
+}
+if (!html.includes('id="wager"') || !html.includes("Real Trades On The Stock Market")) {
+  throw new Error("templates/island.html missing Real Trades wager section");
+}
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {
+  throw new Error("app.js missing home money ticker Season/Island-only tab config");
+}
+if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
+  throw new Error("app.js missing home money ticker lede copy");
+}
 if (!js.includes("replayTrailer") || !js.includes("resetOpenTitlesOverlay")) {
   throw new Error("campfire-open.js missing replay trailer helpers");
 }

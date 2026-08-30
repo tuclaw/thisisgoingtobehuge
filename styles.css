@@ -4186,6 +4186,16 @@ body.is-titles .replay-trailer {
   margin-top: 1.1rem;
 }
 
+.wager-band .money-ticker {
+  margin: 1.75rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(196, 165, 116, 0.18);
+}
+
+.wager-band .money-ticker-lede {
+  max-width: 36rem;
+}
+
 .pot-kicker {
   margin: 0 0 0.55rem;
   font-family: var(--font-display);
