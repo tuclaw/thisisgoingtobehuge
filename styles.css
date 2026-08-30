@@ -1009,6 +1009,21 @@ img.portrait.photo {
   grid-template-columns: 1fr;
 }
 
+.tribal-exit > summary {
+  align-items: start;
+}
+
+.tribal-exit > summary::after {
+  margin-top: 0.15rem;
+}
+
+.tribal-exit .fold-copy em {
+  display: block;
+  margin-top: 0.28rem;
+  line-height: 1.45;
+  max-width: 42rem;
+}
+
 .tribal-conversations {
   margin: 1.35rem 0 0;
   border: 1px solid rgba(140, 70, 30, 0.35);
@@ -1018,7 +1033,7 @@ img.portrait.photo {
 .tribal-conversations > summary {
   list-style: none;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   gap: 0.85rem 1rem;
   align-items: center;
   padding: 0.95rem 1.1rem;
@@ -1026,13 +1041,20 @@ img.portrait.photo {
   color: var(--sand);
 }
 
+.tribal-conversations > summary::marker,
 .tribal-conversations > summary::-webkit-details-marker {
   display: none;
+  content: none;
 }
 
 .tribal-conversations > summary::after {
   content: "+";
+  grid-column: -1;
+  grid-row: 1;
   justify-self: end;
+  align-self: start;
+  width: 1.1rem;
+  text-align: right;
   font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--gold);
@@ -1074,6 +1096,7 @@ img.portrait.photo {
   font-style: italic;
   font-size: 0.92rem;
   color: var(--worn);
+  overflow-wrap: anywhere;
 }
 
 .tribal-conversations-body {
@@ -1091,6 +1114,11 @@ img.portrait.photo {
   }
 
   .tribal-conversations .fold-day {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .tribal-conversations .fold-copy {
     grid-column: 1 / -1;
   }
 }

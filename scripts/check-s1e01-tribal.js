@@ -149,6 +149,9 @@ if (html) {
   if (!html.includes('id="episode-tribal"')) fail("built e01.html missing #episode-tribal");
   if (!html.includes("tribal-spoiler-burn.js")) fail("built e01.html must keep tribal-spoiler-burn.js");
   if (!html.includes("tribal-conversations")) fail("built e01.html missing collapsed tribal conversations");
+  if (!/<details class="tribal-conversations tribal-exit" id="exit-interview">/.test(html)) {
+    fail("built exit interview must collapse after the reveal");
+  }
   if (!html.includes('data-vote-posted="1"') || !html.includes("episode-vote-posted")) {
     fail("built e01.html must mark vote-posted chrome");
   }
