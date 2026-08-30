@@ -34,10 +34,16 @@ if (dayIds.filter((id) => id === "saturday").length !== 1) {
   throw new Error("saturday must be a single post-tribal fold");
 }
 
+const beatIds = (saturday.beats || []).map((beat) => beat.id);
 const lunchBeat = (saturday.beats || []).find((beat) => beat.id === "saturday-lunch");
+const dinnerBeat = (saturday.beats || []).find((beat) => beat.id === "saturday-dinner");
 if (!lunchBeat) throw new Error("s1e01.json missing saturday-lunch beat");
-if ((saturday.beats || []).length !== 1) {
-  throw new Error("saturday fold should only hold the lunch beat");
+if (!dinnerBeat) throw new Error("s1e01.json missing saturday-dinner beat after lunch");
+if (beatIds.indexOf("saturday-lunch") > beatIds.indexOf("saturday-dinner")) {
+  throw new Error("saturday-dinner must follow saturday-lunch");
+}
+if ((saturday.beats || []).some((beat) => beat.id !== "saturday-lunch" && beat.id !== "saturday-dinner")) {
+  throw new Error("saturday fold should only hold lunch then dinner");
 }
 if (lunchBeat.type !== "lunch-chats" || lunchBeat.title !== "Saturday lunch · private threads") {
   throw new Error("saturday lunch beat title/type mismatch");
