@@ -2329,11 +2329,19 @@ a.brand:hover {
 }
 
 .booth h3 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
   font-family: var(--font-display);
   font-size: 1.15rem;
   letter-spacing: 0.04em;
   margin: 0 0 0.2rem;
   color: var(--gold-bright);
+}
+
+.booth h3 .booth-name {
+  min-width: 0;
 }
 
 .booth-nick {
@@ -5226,6 +5234,10 @@ body.is-titles .replay-trailer {
 }
 
 .face-card h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   font-family: var(--font-display);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
@@ -5233,6 +5245,10 @@ body.is-titles .replay-trailer {
   line-height: 1.25;
   padding: 0 0.35rem;
   color: var(--gold-bright);
+}
+
+.face-card h3 .face-name {
+  min-width: 0;
 }
 
 .face-nick {
@@ -6317,4 +6333,43 @@ body.is-titles .replay-trailer {
   .torch-snuffed .st-coil {
     animation: none;
   }
+}
+
+/* —— Lab mark: small icon left of a player name (portraits stay untouched) —— */
+.lab-mark {
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  min-width: 0.95em;
+  flex: 0 0 auto;
+  object-fit: contain;
+  object-position: center;
+  vertical-align: -0.12em;
+  /* Invert dark SVG marks onto parchment UI */
+  filter: invert(1) brightness(1.15);
+  opacity: 0.92;
+}
+
+.booth h3 .lab-mark {
+  width: 0.85em;
+  height: 0.85em;
+  min-width: 0.85em;
+}
+
+.face-card h3 .lab-mark {
+  width: 0.9em;
+  height: 0.9em;
+  min-width: 0.9em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

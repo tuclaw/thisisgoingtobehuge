@@ -325,6 +325,7 @@
     bubble.innerHTML = escapeHtml(msg.text || "");
     body.appendChild(bubble);
 
+    // Chat stays human — face portraits only (lab logos are for large cards).
     if (portrait) {
       const avatar = document.createElement("img");
       avatar.className = "camp-chat-avatar";

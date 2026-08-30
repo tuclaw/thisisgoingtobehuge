@@ -62,6 +62,28 @@ function portraitFor(slug, base) {
   return `${base}cast/${slug}/portrait.jpg`;
 }
 
+/** Lab mark files — keep in sync with lab-logos.js */
+const LAB_FILE_BY_SLUG = {
+  "claude-fable-5": "anthropic.svg",
+  "claude-opus-5": "anthropic.svg",
+  "claude-sonnet-5": "anthropic.svg",
+  "composer-2-5": "cursor.svg",
+  "gemini-3-1-pro": "google-gemini.svg",
+  "gemini-3-7-flash": "google-gemini.svg",
+  "gpt-5-6-luna": "openai.svg",
+  "gpt-5-6-sol": "openai.svg",
+  "gpt-5-6-terra": "openai.svg",
+  "grok-4-5": "xai.svg",
+  "grok-4-6": "xai.svg",
+  "kimi-k3": "moonshot.svg"
+};
+
+function labMarkHtml(slug, base) {
+  const file = LAB_FILE_BY_SLUG[slug];
+  if (!file) return "";
+  return `<img class="lab-mark" src="${base}assets/logos/${file}" alt="" width="16" height="16" decoding="async" />`;
+}
+
 function notesHtml(notes) {
   if (!Array.isArray(notes) || !notes.length) return "";
   return `<div class="beat-note">${notes.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}</div>`;
@@ -100,11 +122,12 @@ function interviewTeaser(quote, limit = 360) {
 function boothsHtml(items, base) {
   return `<div class="booths">${items
     .map((item) => {
+      const mark = labMarkHtml(item.slug, base);
       return `<article class="booth ${escapeHtml(item.tribeId)}">
               <div class="buff-strip" aria-hidden="true"></div>
               <img class="booth-portrait" src="${portraitFor(item.slug, base)}" alt="${escapeHtml(item.name)}" />
               <p class="booth-tribe">${item.tribeId === "askara" ? "The Askara tribe" : "The Bidu tribe"}</p>
-              <h3>${escapeHtml(item.name)}</h3>
+              <h3>${mark}<span class="booth-name">${escapeHtml(item.name)}</span></h3>
               <blockquote>
                 ${boothQuoteHtml(item.quote)}
               </blockquote>
@@ -479,6 +502,7 @@ function renderEpisodePage(episode, season, base) {
 
   <script src="${base}season.fallback.js"></script>
   <script src="${base}tribal-spoiler-burn.js"></script>
+  <script src="${base}lab-logos.js"></script>
   <script src="${base}camp-chat.js"></script>
   <script src="${base}campfire-open.js"></script>${lunchScripts}
   <script src="${base}episode-campfire.js"></script>
@@ -494,6 +518,7 @@ function copyStatic() {
     "styles.css",
     "camp-chat.js",
     "camp-chat.css",
+    "lab-logos.js",
     "campfire-open.js",
     "episode-campfire.js",
     "tribal-spoiler-burn.js",
@@ -509,6 +534,10 @@ function copyStatic() {
     if (existsSync(src)) cpSync(src, join(dist, file));
   }
   cpSync(join(root, "cast"), join(dist, "cast"), { recursive: true });
+  const assets = join(root, "assets");
+  if (existsSync(assets)) cpSync(assets, join(dist, "assets"), { recursive: true });
+  const demos = join(root, "demos");
+  if (existsSync(demos)) cpSync(demos, join(dist, "demos"), { recursive: true });
   const diagrams = join(root, "diagrams");
   if (existsSync(diagrams)) cpSync(diagrams, join(dist, "diagrams"), { recursive: true });
   mkdirSync(join(dist, "seasons/1"), { recursive: true });
