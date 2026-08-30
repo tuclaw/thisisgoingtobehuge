@@ -911,9 +911,13 @@ img.portrait.photo {
 
 .torches {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 1.4rem;
+  align-items: flex-end;
+  gap: 0.85rem;
   margin-bottom: 1.2rem;
+  max-width: 100%;
+  overflow: visible;
 }
 
 .torch {
@@ -1383,13 +1387,13 @@ img.portrait.photo {
   }
 
   .tribal-focus .torches {
-    gap: 0.85rem;
+    gap: 0.45rem;
     margin-bottom: 0.55rem;
   }
 
   .tribal-focus .torch {
-    width: 15px;
-    height: 48px;
+    width: 12px;
+    height: 40px;
   }
 
   .tribal-spoiler,
@@ -5570,27 +5574,34 @@ body.is-titles .replay-trailer {
 
 .tribal-torches {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 1.4rem;
+  align-items: flex-end;
+  gap: 0.65rem;
   margin-top: 2.2rem;
+  max-width: min(100%, 36rem);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0.5rem;
 }
 
 .tribal-torch {
-  width: 0.7rem;
-  height: 3.4rem;
+  width: 0.5rem;
+  height: 2.85rem;
   border-radius: 0.2rem 0.2rem 0.05rem 0.05rem;
   background: #2a1c14;
   position: relative;
+  flex: 0 0 auto;
 }
 
 .tribal-torch::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: -0.85rem;
-  width: 0.9rem;
-  height: 1.2rem;
-  margin-left: -0.45rem;
+  top: -0.75rem;
+  width: 0.72rem;
+  height: 1.05rem;
+  margin-left: -0.36rem;
   border-radius: 50% 50% 40% 40%;
   background: transparent;
 }
@@ -5598,11 +5609,31 @@ body.is-titles .replay-trailer {
 .tribal-torch.lit::before {
   background: radial-gradient(circle at 50% 70%, #fff1b8, #e85d04 55%, transparent 70%);
   animation: torch-flicker 1.4s ease-in-out infinite alternate;
+  animation-delay: var(--torch-delay, 0s);
 }
 
 .tribal-torch.dark::before {
   background: #1a120c;
   box-shadow: 0 -0.3rem 0.6rem rgba(107, 92, 74, 0.25);
+}
+
+@media (max-width: 640px) {
+  .tribal-torches {
+    gap: 0.42rem;
+    max-width: 100%;
+  }
+
+  .tribal-torch {
+    width: 0.4rem;
+    height: 2.35rem;
+  }
+
+  .tribal-torch::before {
+    width: 0.62rem;
+    height: 0.9rem;
+    margin-left: -0.31rem;
+    top: -0.65rem;
+  }
 }
 
 @keyframes torch-flicker {
@@ -6194,10 +6225,16 @@ body.is-titles .replay-trailer {
 /* Desync a row of tribal torches */
 .torches .torch-lit:nth-child(2) .fm-sway { animation-delay: -0.38s; }
 .torches .torch-lit:nth-child(3) .fm-sway { animation-delay: -0.72s; }
+.torches .torch-lit:nth-child(4) .fm-sway { animation-delay: -0.21s; }
+.torches .torch-lit:nth-child(5) .fm-sway { animation-delay: -0.95s; }
+.torches .torch-lit:nth-child(6) .fm-sway { animation-delay: -0.54s; }
 .torches .torch-lit:nth-child(2) .fm-outer { animation-delay: -0.15s; }
 .torches .torch-lit:nth-child(3) .fm-outer { animation-delay: -0.4s; }
+.torches .torch-lit:nth-child(4) .fm-outer { animation-delay: -0.28s; }
+.torches .torch-lit:nth-child(5) .fm-outer { animation-delay: -0.61s; }
 .torches .torch-snuffed:nth-child(2) .st-wisp-a { animation-delay: -0.8s; }
 .torches .torch-snuffed:nth-child(3) .st-wisp-a { animation-delay: -1.6s; }
+.torches .torch-snuffed:nth-child(6) .st-wisp-a { animation-delay: -1.2s; }
 
 @keyframes fm-sway {
   0%, 100% { transform: rotate(-3.5deg) scale(1, 1); }

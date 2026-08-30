@@ -138,6 +138,29 @@ function livingContestantCount(season) {
   return list.length || 12;
 }
 
+function seasonOngoing(season) {
+  if (!season) return false;
+  if (season.winnerId) return false;
+  if (season.status === "complete" || season.status === "ended") return false;
+  return season.status === "live" || season.started === true;
+}
+
+function homeTorchCount(season) {
+  const n = (season && Array.isArray(season.survivors) && season.survivors.length) || 0;
+  return n > 0 ? n : 12;
+}
+
+function renderHomeTorches(season) {
+  const root = document.querySelector(".tribal-torches");
+  if (!root) return;
+  const count = homeTorchCount(season);
+  const lit = seasonOngoing(season);
+  root.innerHTML = Array.from({ length: count }, (_, i) => {
+    const delay = lit ? ` style="--torch-delay: ${((-0.17 * i) % 1.4).toFixed(2)}s"` : "";
+    return `<span class="tribal-torch ${lit ? "lit" : "dark"}"${delay}></span>`;
+  }).join("");
+}
+
 function renderIslandPot(season) {
   const amount = document.getElementById("pot-amount");
   const count = document.getElementById("pot-contestants");
@@ -672,6 +695,35 @@ const TORCH_SNUFFED = `<svg class="torch torch-snuffed" viewBox="0 0 32 100" ari
 
 function torchSvg(lit) {
   return lit ? TORCH_LIT : TORCH_SNUFFED;
+}
+
+function councilTorchCount(season, entry) {
+  if (entry) {
+    const votes = Array.isArray(entry.votes) ? entry.votes : [];
+    if (votes.length > 0) return votes.length;
+    const tribeId = entry.losingTribe;
+    if (tribeId) {
+      const onTribe = (season.survivors || []).filter((s) => s && s.tribeId === tribeId);
+      if (onTribe.length) return onTribe.length;
+    }
+  }
+  const tribes = (season.tribes || []).length || 2;
+  const living = livingContestantCount(season);
+  return Math.max(2, Math.round(living / tribes));
+}
+
+function councilTorchRowHtml(season, entry) {
+  const count = councilTorchCount(season, entry);
+  if (!entry) {
+    return Array.from({ length: count }, () => torchSvg(false)).join("");
+  }
+  const snuffed =
+    entry.torchSnuffed === true || entry.bootName || entry.boot || entry.bootId ? 1 : 0;
+  const lit = Math.max(0, count - snuffed);
+  return (
+    Array.from({ length: lit }, () => torchSvg(true)).join("") +
+    Array.from({ length: snuffed }, () => torchSvg(false)).join("")
+  );
 }
 
 
@@ -2229,7 +2281,7 @@ function renderEpisode(season) {
     if (log.length === 0) {
       if (tribalHeading) tribalHeading.textContent = "Not yet";
       tribal.innerHTML = `
-      <div class="torches">${torchSvg(false)}${torchSvg(false)}${torchSvg(false)}</div>
+      <div class="torches">${councilTorchRowHtml(season, null)}</div>
       <div class="council-empty">
         <h3>Not yet</h3>
         <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
@@ -2237,9 +2289,10 @@ function renderEpisode(season) {
     } else {
       if (tribalHeading) tribalHeading.textContent = "The vote";
       document.body.classList.add("episode-vote-posted");
+      const latest = log[log.length - 1];
       const items = log.map((entry) => formatTribalEntry(entry)).join("");
       tribal.innerHTML = `
-    <div class="torches">${torchSvg(true)}${torchSvg(true)}${torchSvg(false)}</div>
+    <div class="torches">${councilTorchRowHtml(season, latest)}</div>
     ${wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`)}`;
       bindTribalSpoilers(tribal);
     }
@@ -2430,6 +2483,7 @@ function render(season, sourceNote) {
   renderEpisode(season);
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
+  renderHomeTorches(season);
   renderNavWatch(season);
   initDayFolds();
   initReveals();
