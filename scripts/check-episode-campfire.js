@@ -47,6 +47,12 @@ if (!episodeHtml.includes("episode-campfire-hero")) {
 if (!episodeHtml.includes('class="hero-head"')) {
   throw new Error("episode renderer missing hero-head above campfire theater");
 }
+if (episodeHtml.includes('class="location"') || episodeHtml.includes("host-line") || episodeHtml.includes("hero-note")) {
+  throw new Error("episode renderer still prints location/host/hero-note chrome under the campfire");
+}
+if (!episodeHtml.includes("hero-listen") || !episodeHtml.includes("Stay a while and listen")) {
+  throw new Error("episode renderer missing subtle stay-a-while listen line");
+}
 if (!episodeHtml.includes('id="week-board"')) {
   throw new Error("episode renderer lost week-board structure below landing");
 }
