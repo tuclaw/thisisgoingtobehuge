@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * Golden fixtures for the current live board / Episode 1 cut.
+ * Golden fixtures for Episode 1 history / live board shape.
+ * Pin historical snapshots and fills here. Current live P&L follows the latest
+ * mark event — quote refresh may append a newer mark; do not pin its numbers.
  * Update this file when the ledger or episode copy moves; keep check-season.mjs durable.
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { deriveSeason, tickerOf } from "./lib/ledger.mjs";
+import { deriveSeason, latestMark, tickerOf } from "./lib/ledger.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const source = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
@@ -80,7 +82,13 @@ if (grok45) {
   check("live-grok45-hood-island-lot", hood && hood.qty === "0.046425", hood && hood.qty);
   check("live-grok45-sofi", sofi && sofi.qty === "0.105888", sofi && sofi.qty);
   check("live-grok45-cash", cash && Math.abs(Number(cash.sizeUsd) - 2.8537) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 9.6402) < 0.0001, now && String(now.bookUsd));
+  const lastRec = latestMark(source.events);
+  const grokRec = lastRec && lastRec.recorded && lastRec.recorded[grok45.id];
+  check(
+    "live-grok45-book",
+    now && grokRec && Math.abs(now.bookUsd - grokRec.bookUsd) < 0.0001,
+    now && String(now.bookUsd)
+  );
   check("live-grok45-no-rank-position", now && now.position == null);
 }
 
@@ -182,19 +190,41 @@ if (friLastHour) {
 }
 const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -2.16 && biduLive.combinedDayPct === -5.85);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -5.18 && askaraLive.combinedDayPct === -7.62);
-check("live-mark-label", String(board.markLabel || "").includes("Fri Aug 28 last-hour"));
-check("live-marked-at", board.markedAt === "2026-08-28T19:14:23Z", board.markedAt);
+const lastMark = latestMark(source.events);
+const lastTribes = (lastMark && lastMark.tribes) || {};
+check("live-mark-exists", Boolean(lastMark));
+check("live-marked-at", lastMark && board.markedAt === lastMark.at, board.markedAt);
+check("live-mark-label", lastMark && board.markLabel === lastMark.label, board.markLabel);
 check(
-  "live-survivors-lasthour-session",
-  board.survivors.every((s) => s.lastSession === "2026-08-28-lasthour"),
+  "live-bidu-host-digest",
+  biduLive &&
+    lastTribes.bidu &&
+    biduLive.combinedWeekPct === lastTribes.bidu.combinedWeekPct &&
+    biduLive.combinedDayPct === lastTribes.bidu.combinedDayPct
+);
+check(
+  "live-askara-host-digest",
+  askaraLive &&
+    lastTribes.askara &&
+    askaraLive.combinedWeekPct === lastTribes.askara.combinedWeekPct &&
+    askaraLive.combinedDayPct === lastTribes.askara.combinedDayPct
+);
+check(
+  "live-survivors-session",
+  lastMark &&
+    lastMark.lastSession &&
+    board.survivors.every((s) => s.lastSession === lastMark.lastSession),
   board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
 );
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
-check("live-composer-lead", composerLive && composerLive.bookUsd === 10.4553 && composerLive.weekPct === 4.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
-check("live-fable-last", fableLive && fableLive.bookUsd === 9.5985 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
+const composerRec = lastMark && lastMark.recorded && composerLive && lastMark.recorded[composerLive.id];
+check(
+  "live-composer-book",
+  composerLive && composerRec && composerLive.bookUsd === composerRec.bookUsd && composerLive.weekPct === composerRec.weekPct,
+  composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`
+);
+check("live-fable-cash-book", fableLive && fableLive.bookUsd === 9.5985 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
 const wednesday = (episodeCopy.days || []).find((day) => day.id === "wednesday");

@@ -1,0 +1,51 @@
+name: Refresh quotes
+
+# Hourly ceiling during a UTC window that covers US cash hours in EST and EDT.
+# The script no-ops outside America/New_York RTH and does not commit if last prices did not move.
+on:
+  schedule:
+    - cron: "35 13-21 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Apply even outside US cash hours (still skip if prices did not move)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-quotes
+  cancel-in-progress: false
+
+jobs:
+  mark:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch holdings and mark if last moved
+        run: |
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            node scripts/refresh-quotes.mjs --apply --force
+          else
+            node scripts/refresh-quotes.mjs --apply
+          fi
+      - name: Commit tape only when marks changed
+        run: |
+          if git diff --quiet -- data/season1.json; then
+            echo "No quote move; no commit."
+            exit 0
+          fi
+          npm run check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/season1.json
+          git commit -m "Mark books from public RTH quotes"
+          git push
