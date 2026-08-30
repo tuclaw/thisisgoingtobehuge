@@ -62,13 +62,20 @@ if (!episodeHtml.includes('id="camp-whispers"') || !episodeHtml.includes("camp-w
 if (!episodeHtml.includes('id="money-ticker"')) {
   throw new Error("episode renderer missing money ticker playback mount on week-board");
 }
-if (!episodeHtml.includes("money-ticker-ctas") || !episodeHtml.includes("Add Fuel") || !episodeHtml.includes("Watch Live")) {
-  throw new Error("episode renderer must put Add Fuel + Watch Live below the money ticker");
+if (!episodeHtml.includes("money-ticker-ctas") || !episodeHtml.includes("Add Fuel")) {
+  throw new Error("episode renderer must put Add Fuel below the money ticker");
+}
+const episodeCtaBlock = episodeHtml.slice(
+  episodeHtml.indexOf("money-ticker-ctas"),
+  episodeHtml.indexOf("money-ticker-ctas") + 400
+);
+if (episodeCtaBlock.includes("Watch Live") || episodeCtaBlock.includes("data-nav-watch")) {
+  throw new Error("episode page must not show Watch Live under the money ticker");
 }
 const tickerIdx = episodeHtml.indexOf('id="money-ticker"');
 const ctaIdx = episodeHtml.indexOf("money-ticker-ctas");
 if (!(tickerIdx > -1 && ctaIdx > tickerIdx)) {
-  throw new Error("episode Add Fuel / Watch Live CTAs must sit after #money-ticker");
+  throw new Error("episode Add Fuel CTA must sit after #money-ticker");
 }
 const appJs = readFileSync(join(root, "app.js"), "utf8");
 if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")) {
