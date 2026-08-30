@@ -986,6 +986,19 @@ img.portrait.photo {
   margin-top: 0.35rem;
 }
 
+.tribal-exit {
+  display: none;
+  margin: 1.35rem 0 0;
+}
+
+.tribal-focus:has(.tribal-spoiler.is-revealed) .tribal-exit {
+  display: block;
+}
+
+.tribal-exit .booths {
+  grid-template-columns: 1fr;
+}
+
 .tribal-conversations {
   margin: 1.35rem 0 0;
   border: 1px solid rgba(140, 70, 30, 0.35);

@@ -116,9 +116,19 @@ function tribalPrevoteBeat(episode) {
   return null;
 }
 
+function tribalExitBeat(episode) {
+  for (const day of episode.days || []) {
+    for (const beat of day.beats || []) {
+      if (beat.id === "exit-interview" && beat.type === "booths") return beat;
+    }
+  }
+  return null;
+}
+
 function tribalFocusHtml(episode, base) {
   const cut = tribalCutBeat(episode);
   const prevote = tribalPrevoteBeat(episode);
+  const exitInterview = tribalExitBeat(episode);
   const kicker = escapeHtml((cut && cut.kicker) || "Tribal");
   const title = escapeHtml((cut && cut.title) || "The vote");
   const body = (cut && cut.body) || "The Askara tribe walks in. The Bidu tribe sits. Nobody wears a necklace. Who goes home stays behind the burn.";
@@ -137,6 +147,15 @@ function tribalFocusHtml(episode, base) {
       </div>
     </details>`
       : "";
+  const exitHtml =
+    exitInterview && (exitInterview.items || []).length
+      ? `<article class="beat tribal-exit" id="exit-interview">
+      <p class="section-kicker">${escapeHtml(exitInterview.kicker || "Exit interview")}</p>
+      <h2>${escapeHtml(exitInterview.title || "Claude Fable 5")}</h2>
+      <p>${escapeHtml(exitInterview.body || "Audience only.")}</p>
+      ${boothsHtml(exitInterview.items || [], base)}
+    </article>`
+      : "";
   return `<article class="beat beat-dark tribal-focus" id="tribal-focus">
       <p class="section-kicker">${kicker}</p>
       <h2>${title}</h2>
@@ -144,6 +163,7 @@ function tribalFocusHtml(episode, base) {
       <div class="council-stage" id="episode-tribal">
         <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
       </div>
+      ${exitHtml}
       ${conversations}
     </article>`;
 }
@@ -154,7 +174,7 @@ function beatHtml(beat, base, opts = {}) {
   const title = beat.title ? `<h2>${escapeHtml(beat.title)}</h2>` : "";
   const body = beat.body ? `<p>${beat.body}</p>` : "";
   // After the vote, spoiler + prevote live in #tribal-focus (below the money diagram).
-  if (opts.votePosted && (beat.type === "tribal" || beat.id === "tribal-prevote")) {
+  if (opts.votePosted && (beat.type === "tribal" || beat.id === "tribal-prevote" || beat.id === "exit-interview")) {
     return "";
   }
   if (beat.type === "camp") {
