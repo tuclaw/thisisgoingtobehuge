@@ -382,6 +382,37 @@ check(
   !JSON.stringify(saturdayLunch || {}).includes("Jeff, ask me anything. I've got nowhere to be.")
 );
 
+const sunday = (episodeCopy.days || []).find((day) => day.id === "sunday");
+const sundayBeats = (sunday && sunday.beats) || [];
+const sundayLunch = sundayBeats.find((beat) => beat.id === "sunday-lunch");
+check("sunday-after-saturday", episodeDayIds.indexOf("sunday") > episodeDayIds.indexOf("saturday"));
+check("sunday-after-tribal", episodeDayIds.indexOf("sunday") > episodeDayIds.indexOf("tribal"));
+check("sunday-lunch-beat", Boolean(sundayLunch) && sundayLunch.type === "lunch-chats");
+check("sunday-lunch-three-phones", sundayLunch && (sundayLunch.threads || []).length === 3);
+if (sundayLunch) {
+  const sunIds = (sundayLunch.threads || []).map((thread) => thread.id).join("|");
+  check("sunday-lunch-ids", sunIds === "sun-lunch-mara-hex|sun-lunch-gage-vesper|sun-lunch-kite-riot");
+  check(
+    "sunday-lunch-no-held-off",
+    !(sundayLunch.threads || []).some((thread) =>
+      /quill|sol|juno|reed|kimi|luna|fable|flash|terra/i.test([thread.id, thread.heading, thread.title].join(" "))
+    )
+  );
+  const sunChrome = [sunday.foldEm, sundayLunch.title, sundayLunch.body, sundayLunch.kicker]
+    .concat((sundayLunch.threads || []).flatMap((thread) => [thread.heading, thread.title, thread.subtitle, thread.desc, thread.ariaLabel]))
+    .join(" ");
+  for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date", "merge headcount"]) {
+    check(`sunday-lunch-no-${bad.replace(/\s+/g, "-")}`, !sunChrome.toLowerCase().includes(bad));
+  }
+  const sunChromeBare = sunChrome.replace(/the Bidu tribe/gi, "").replace(/the Askara tribe/gi, "");
+  check("sunday-lunch-no-bare-bidu", !/\bBidu\b/.test(sunChromeBare));
+  check("sunday-lunch-no-bare-askara", !/\bAskara\b/.test(sunChromeBare));
+  check(
+    "sunday-lunch-no-exit-interview",
+    !JSON.stringify(sundayLunch || {}).includes("Jeff, ask me anything. I've got nowhere to be.")
+  );
+}
+
 if (failures.length) {
   console.error("Season live fixtures failed:\n- " + failures.join("\n- "));
   process.exit(1);
