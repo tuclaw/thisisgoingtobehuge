@@ -685,9 +685,19 @@ function renderFaces(season) {
       const cards = members
         .map((s) => {
           const model = modelOf(s);
-          const face = s.portrait
-            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
-            : totemSvg(s, tribe);
+          const slug = slugOf(s);
+          let face;
+          if (s.portrait && globalThis.LabLogos && typeof LabLogos.portraitWithLabHtml === "function") {
+            face = LabLogos.portraitWithLabHtml({
+              slug: slug,
+              portraitSrc: assetUrl(s.portrait),
+              alt: model
+            });
+          } else if (s.portrait) {
+            face = `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`;
+          } else {
+            face = totemSvg(s, tribe);
+          }
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}">
         ${face}
         <h3>${escapeHtml(model)}</h3>

@@ -2120,19 +2120,49 @@ a.brand:hover {
   margin: -1.4rem -1.2rem 1.05rem;
 }
 
-.booth-portrait {
+.booth-portrait,
+.booth-portrait-wrap {
   display: block;
   width: 64px;
   height: 64px;
-  object-fit: cover;
-  object-position: center 18%;
   margin: 0 0 0.75rem;
   border: 2px solid #0E6B6B;
   border-radius: 2px;
   box-shadow: 0 0 0 1px rgba(232, 213, 176, 0.18);
 }
 
-.booth.askara .booth-portrait {
+.booth-portrait {
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.booth-portrait-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.booth-portrait-wrap .booth-portrait,
+.booth-portrait-wrap .portrait-photo {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.booth-portrait-wrap .lab-badge {
+  top: 0.2rem;
+  right: 0.2rem;
+  width: 1.15rem;
+  padding: 0.18em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.booth.askara .booth-portrait,
+.booth.askara .booth-portrait-wrap {
   border-color: #C45A12;
 }
 
@@ -4944,15 +4974,36 @@ body.is-titles .replay-trailer {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(196, 90, 18, 0.45);
 }
 
-.face-card img,
+.face-card > img,
+.face-card .portrait-with-lab,
 .face-card .portrait {
   display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
   height: auto;
+  margin: 0 0 0.65rem;
+}
+
+.face-card > img,
+.face-card .portrait,
+.face-card .portrait-with-lab .portrait-photo {
   object-fit: cover;
   object-position: center 16%;
-  margin: 0 0 0.65rem;
+}
+
+.face-card .portrait-with-lab .portrait-photo {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  aspect-ratio: auto;
+}
+
+.face-card .lab-badge img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
 }
 
 .face-card h3 {
