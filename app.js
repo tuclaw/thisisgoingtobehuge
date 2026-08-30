@@ -2481,6 +2481,124 @@ const ROBINHOOD = {
   url: "https://join.robinhood.com/tuckerh138"
 };
 
+let fuelPromptReturnFocus = null;
+
+function getFuelPrompt() {
+  return document.getElementById("fuel-prompt");
+}
+
+function closeFuelPrompt() {
+  const root = getFuelPrompt();
+  if (!root || root.hidden) return;
+  root.hidden = true;
+  root.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("fuel-prompt-open");
+  document.removeEventListener("keydown", onFuelPromptKeydown);
+  const restore = fuelPromptReturnFocus;
+  fuelPromptReturnFocus = null;
+  if (restore && typeof restore.focus === "function") {
+    try {
+      restore.focus();
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
+function onFuelPromptKeydown(event) {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeFuelPrompt();
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const root = getFuelPrompt();
+  if (!root || root.hidden) return;
+  const focusable = root.querySelectorAll(
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function ensureFuelPrompt() {
+  let root = getFuelPrompt();
+  if (root) return root;
+
+  root = document.createElement("div");
+  root.id = "fuel-prompt";
+  root.className = "fuel-prompt";
+  root.hidden = true;
+  root.setAttribute("aria-hidden", "true");
+  root.innerHTML =
+    '<div class="fuel-prompt-backdrop" data-fuel-dismiss></div>' +
+    '<div class="fuel-prompt-panel" role="dialog" aria-modal="true" aria-labelledby="fuel-prompt-title" aria-describedby="fuel-prompt-copy">' +
+    '<button type="button" class="fuel-prompt-close" data-fuel-dismiss aria-label="Close">×</button>' +
+    '<p class="fuel-prompt-kicker">Fuel the fire</p>' +
+    '<h2 id="fuel-prompt-title">Do you want to add funds to fuel the fire?</h2>' +
+    '<p id="fuel-prompt-copy" class="fuel-prompt-copy">' +
+    "This will help fund the torches staying lit, the bots investing, and the conversations flowing. " +
+    "It also helps me know you want more of this. " +
+    "Clicking the add fuel button will take you to a Stripe page so you can contribute." +
+    "</p>" +
+    '<div class="fuel-prompt-actions">' +
+    '<a class="btn ember" href="' +
+    CONTRIBUTE.url +
+    '" target="_blank" rel="noopener noreferrer" data-fuel-go>Add Fuel</a>' +
+    '<button type="button" class="btn ghost" data-fuel-dismiss>Not now</button>' +
+    "</div>" +
+    "</div>";
+
+  root.addEventListener("click", (event) => {
+    const go = event.target.closest("[data-fuel-go]");
+    if (go) {
+      closeFuelPrompt();
+      return;
+    }
+    if (event.target.closest("[data-fuel-dismiss]")) {
+      event.preventDefault();
+      closeFuelPrompt();
+    }
+  });
+
+  document.body.appendChild(root);
+  return root;
+}
+
+function openFuelPrompt(trigger) {
+  const root = ensureFuelPrompt();
+  fuelPromptReturnFocus =
+    trigger && typeof trigger.focus === "function"
+      ? trigger
+      : document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+  root.hidden = false;
+  root.setAttribute("aria-hidden", "false");
+  document.body.classList.add("fuel-prompt-open");
+  document.addEventListener("keydown", onFuelPromptKeydown);
+  const panel = root.querySelector(".fuel-prompt-panel");
+  const primary = root.querySelector("[data-fuel-go]");
+  (primary || panel)?.focus?.();
+  if (primary && typeof primary.focus === "function") primary.focus();
+}
+
+function isFuelPromptTrigger(el) {
+  if (!el || el.closest("#fuel-prompt")) return false;
+  if (el.closest("[data-contribute]")) return true;
+  if (el.closest("a.pot-fuel")) return true;
+  if (el.closest(".contribute-note a[href]")) return true;
+  return false;
+}
+
 function initContribute() {
   const nav = document.querySelector(".nav-links");
   if (nav && !nav.querySelector("[data-contribute]")) {
@@ -2530,6 +2648,22 @@ function initContribute() {
     script.async = true;
     script.src = "https://js.stripe.com/v3/buy-button.js";
     document.head.appendChild(script);
+  }
+
+  if (!document.documentElement.dataset.fuelPromptBound) {
+    document.documentElement.dataset.fuelPromptBound = "true";
+    document.addEventListener(
+      "click",
+      (event) => {
+        const trigger = event.target.closest(
+          "a[data-contribute], a.pot-fuel, .contribute-note a"
+        );
+        if (!isFuelPromptTrigger(trigger)) return;
+        event.preventDefault();
+        openFuelPrompt(trigger);
+      },
+      true
+    );
   }
 }
 

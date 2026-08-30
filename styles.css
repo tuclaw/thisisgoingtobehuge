@@ -1506,6 +1506,135 @@ footer strong {
   color: var(--smoke);
 }
 
+/* —— Fuel contribute prompt —— */
+body.fuel-prompt-open {
+  overflow: hidden;
+}
+
+.fuel-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
+.fuel-prompt[hidden] {
+  display: none !important;
+}
+
+.fuel-prompt-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 40%, rgba(232, 93, 4, 0.16), transparent 55%),
+    rgba(8, 5, 4, 0.78);
+  animation: fuel-prompt-fade 0.28s ease-out both;
+}
+
+.fuel-prompt-panel {
+  position: relative;
+  z-index: 1;
+  width: min(28rem, 100%);
+  padding: 2rem 1.6rem 1.6rem;
+  text-align: center;
+  color: var(--bone);
+  background:
+    linear-gradient(165deg, rgba(42, 28, 18, 0.97), rgba(14, 10, 8, 0.98)),
+    #120c08;
+  border: 1px solid rgba(212, 160, 23, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(196, 90, 18, 0.18),
+    0 18px 48px rgba(0, 0, 0, 0.55);
+  animation: fuel-prompt-rise 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fuel-prompt-close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.65rem;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  background: transparent;
+  color: var(--worn);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fuel-prompt-close:hover,
+.fuel-prompt-close:focus-visible {
+  color: var(--parchment);
+}
+
+.fuel-prompt-kicker {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  color: var(--gold);
+}
+
+.fuel-prompt-panel h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 3.2vw, 1.45rem);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  color: var(--parchment);
+}
+
+.fuel-prompt-copy {
+  margin: 1rem 0 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--sand);
+}
+
+.fuel-prompt-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+.fuel-prompt-actions .btn {
+  min-width: 8.5rem;
+}
+
+@keyframes fuel-prompt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fuel-prompt-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.7rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fuel-prompt-backdrop,
+  .fuel-prompt-panel {
+    animation: none;
+  }
+}
+
 .robinhood-block {
   margin: 1.4rem auto 0;
   max-width: 28rem;
