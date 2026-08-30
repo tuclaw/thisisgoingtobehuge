@@ -152,43 +152,25 @@ if (!(homeTickerIdx > -1 && homeCtaIdx > homeTickerIdx)) {
 if (!html.includes('id="wager"') || !html.includes("Real Trades On The Stock Market")) {
   throw new Error("templates/island.html missing Real Trades wager section");
 }
-if (!html.includes('id="island-bot-diagram"') || !html.includes("island-arch-relays")) {
-  throw new Error("templates/island.html missing native island bot diagram");
+if (!html.includes('id="island-bot-diagram"') || !html.includes("archify-embed")) {
+  throw new Error("templates/island.html missing Archify bot diagram embed");
 }
-if (html.includes("archify-embed") || /<iframe[^>]+bot-architecture/.test(html)) {
-  throw new Error("home diagram must be native, not an Archify iframe embed");
+if (!/<iframe[^>]+bot-architecture/.test(html)) {
+  throw new Error("home diagram must embed diagrams/bot-architecture.html");
 }
-if (!html.includes("Contestant bot") || !html.includes("The twelve relays")) {
-  throw new Error("templates/island.html must emphasize the twelve contestant bot relays");
+const archify = readFileSync(join(root, "diagrams", "bot-architecture.html"), "utf8");
+if (!archify.includes("lts-diagram-flow") || !archify.includes("lts-island-edge-flow")) {
+  throw new Error("bot-architecture.html missing island scroll-flow wiring");
 }
-[
-  "Grok 4.6",
-  "Claude Sonnet 5",
-  "Composer 2.5",
-  "Claude Opus 5",
-  "Gemini 3.7 Flash",
-  "GPT-5.6 Terra",
-  "Grok 4.5",
-  "GPT-5.6 Sol",
-  "Claude Fable 5",
-  "Gemini 3.1 Pro",
-  "GPT-5.6 Luna",
-  "Kimi K3"
-].forEach((name) => {
-  if (!html.includes(name)) throw new Error("island bot diagram missing contestant " + name);
-});
-if (!css.includes(".island-arch") || !css.includes(".arch-arrow")) {
-  throw new Error("styles.css missing island-arch presentation styles");
+if (!archify.includes("font-size: 13px") || !archify.includes("[data-edge-label] text")) {
+  throw new Error("bot-architecture.html missing larger embed label type");
 }
-if (!css.includes("island-arch-in") || !css.includes("island-arch-relay-flow")) {
-  throw new Error("styles.css missing island diagram flow animations");
+if (!css.includes(".archify-embed") || !css.includes("min-height: 28rem")) {
+  throw new Error("styles.css missing larger Archify embed");
 }
 const appJs = readFileSync(join(root, "app.js"), "utf8");
-if (!appJs.includes("renderIslandBotDiagram") || !html.includes('data-arch-arrow="watch"')) {
-  throw new Error("app.js / island.html missing island bot diagram renderer / gutter arrows");
-}
-if (!appJs.includes("playIslandArchPresentation") || !appJs.includes("ISLAND_ARCH_BEATS")) {
-  throw new Error("app.js missing scroll-triggered diagram presentation");
+if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow")) {
+  throw new Error("app.js missing scroll-triggered Archify flow");
 }
 if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {
   throw new Error("app.js missing home money ticker Season/Island-only tab config");

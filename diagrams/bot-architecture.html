@@ -20,6 +20,11 @@
           if (new URLSearchParams(window.location.search).get('present') === '1') {
             document.documentElement.setAttribute('data-present', 'true');
           }
+          window.addEventListener('message', function (event) {
+            if (!event || !event.data || event.data.type !== 'lts-diagram-flow') return;
+            if (event.data.on) document.documentElement.setAttribute('data-island-flow', '1');
+            else document.documentElement.removeAttribute('data-island-flow');
+          });
         } catch (_) {}
         if (!theme) {
           try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
@@ -413,6 +418,59 @@
       box-shadow: none;
     }
     html[data-embed="true"] .diagram-container svg { min-width: 0; }
+
+    /* Island homepage: larger words, and flowing edges once the parent
+       section scrolls the embed into view. */
+    html[data-embed="true"] svg text.t-primary {
+      font-size: 13px;
+    }
+    html[data-embed="true"] svg text.t-muted,
+    html[data-embed="true"] svg text.t-backend,
+    html[data-embed="true"] svg text.t-frontend,
+    html[data-embed="true"] svg text.t-cloud {
+      font-size: 10.5px;
+    }
+    html[data-embed="true"] svg text[data-detail="fine"] {
+      font-size: 9px;
+    }
+    html[data-embed="true"] svg text[data-boundary-label] {
+      font-size: 11px;
+      font-weight: 650;
+    }
+    html[data-embed="true"] svg [data-edge-label] text {
+      font-size: 10.5px;
+    }
+    html[data-embed="true"] svg [data-edge-label] rect {
+      height: 18px;
+      transform: translateY(-2px);
+    }
+    html[data-embed="true"][data-island-flow="1"] path.a-default,
+    html[data-embed="true"][data-island-flow="1"] path.a-emphasis {
+      stroke-dasharray: 12 9;
+      animation: lts-island-edge-flow 1.7s linear infinite;
+    }
+    html[data-embed="true"][data-island-flow="1"] path.a-emphasis {
+      animation-duration: 1.25s;
+    }
+    html[data-embed="true"][data-island-flow="1"] [data-node-id] > rect:not(.c-mask) {
+      animation: lts-island-node-glow 3.2s ease-in-out infinite;
+    }
+    @keyframes lts-island-edge-flow {
+      to { stroke-dashoffset: -42; }
+    }
+    @keyframes lts-island-node-glow {
+      0%, 100% { filter: none; }
+      45% { filter: drop-shadow(0 0 6px var(--arrow-emphasis)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html[data-embed="true"][data-island-flow="1"] path.a-default,
+      html[data-embed="true"][data-island-flow="1"] path.a-emphasis,
+      html[data-embed="true"][data-island-flow="1"] [data-node-id] > rect:not(.c-mask) {
+        animation: none;
+        stroke-dasharray: none;
+        filter: none;
+      }
+    }
 
     /* Share Chapter Cue lives in the HTML viewer layer, not inside the SVG.
        It gives one-shot embeds a title, authored note, truthful stop order,

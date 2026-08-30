@@ -2421,113 +2421,35 @@ function renderSeasonHub(season) {
     .join("");
 }
 
-const ISLAND_ARCH_BEATS = [
-  { at: 80, text: "Spectators watch the broadcast." },
-  { at: 480, text: "The conversation bot refreshes the site with camp talk and DMs." },
-  { at: 880, text: "The host bot publishes game state and fills." },
-  { at: 1240, text: "Trade recommendations become Robinhood orders." },
-  { at: 1680, text: "Twelve contestant bots. Twelve model connections." }
-];
-
-function islandArchRelayRow(s, _tribe, index) {
-  const model = modelOf(s);
-  const out = s.status === "boot" || s.status === "jury";
-  const face = s.portrait
-    ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
-    : "";
-  return `<li class="arch-relay ${escapeHtml(s.tribeId || "")}${out ? " is-out" : ""}" style="--i:${index}">
-    <p class="arch-relay-name">${face}<a href="${escapeHtml(survivorHref(s))}">${escapeHtml(model)}</a></p>
-    <div class="arch-relay-line">
-      <span class="arch-chip bot">Contestant bot</span>
-      <span class="arch-flow" aria-hidden="true"></span>
-      <span class="arch-chip model">Model</span>
-    </div>
-  </li>`;
+function startArchifyEmbedFlow(iframe) {
+  if (!iframe || !iframe.contentWindow) return;
+  try {
+    iframe.contentWindow.postMessage({ type: "lts-diagram-flow", on: true }, "*");
+  } catch {
+    /* cross-origin or not ready */
+  }
 }
 
-function renderIslandBotDiagram(season) {
+function initArchifyEmbedFlow() {
   const root = document.getElementById("island-bot-diagram");
-  const board = document.getElementById("island-arch-relays");
-  if (!root || !board) return;
-  const tribes = season.tribes || [];
-  const survivors = season.survivors || [];
-  if (tribes.length && survivors.length) {
-    board.innerHTML = tribes
-      .map((tribe) => {
-        const members = survivors.filter((s) => s.tribeId === tribe.id);
-        const rows = members.map((s, i) => islandArchRelayRow(s, tribe, i)).join("");
-        return `<section class="island-arch-tribe ${escapeHtml(tribe.id)}" data-arch-tribe="${escapeHtml(tribe.id)}">
-          <p class="island-arch-tribe-kicker">${escapeHtml(tribeChromeName(tribe))}</p>
-          <ul class="island-arch-relay-list">${rows}</ul>
-        </section>`;
-      })
-      .join("");
-  } else {
-    board.querySelectorAll(".arch-relay").forEach((row, i) => {
-      row.style.setProperty("--i", String(i % 6));
-    });
-  }
-  initIslandBotDiagramPresent(root);
-}
-
-function islandArchPrefersReducedMotion() {
-  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function setIslandArchStatus(root, text) {
-  const status = root.querySelector("#island-arch-status");
-  if (status) status.textContent = text || "";
-}
-
-function playIslandArchPresentation(root) {
-  root.classList.remove("is-presented");
-  root.classList.remove("is-presenting");
-  void root.offsetWidth;
-  const replay = root.querySelector("#island-arch-replay");
-  if (replay) replay.hidden = true;
-  if (islandArchPrefersReducedMotion()) {
-    root.classList.add("is-presenting");
-    root.classList.add("is-presented");
-    setIslandArchStatus(root, "Twelve contestant bots. Twelve model connections.");
-    if (replay) replay.hidden = false;
-    return;
-  }
-  setIslandArchStatus(root, "");
-  root.classList.add("is-presenting");
-  ISLAND_ARCH_BEATS.forEach((beat) => {
-    window.setTimeout(() => {
-      if (!root.classList.contains("is-presenting")) return;
-      setIslandArchStatus(root, beat.text);
-    }, beat.at);
-  });
-  window.setTimeout(() => {
-    if (!root.classList.contains("is-presenting")) return;
-    root.classList.add("is-presented");
-    if (replay) replay.hidden = false;
-  }, 2500);
-}
-
-function initIslandBotDiagramPresent(root) {
-  if (root.dataset.archInit === "1") return;
-  root.dataset.archInit = "1";
-  const replay = root.querySelector("#island-arch-replay");
-  if (replay && !replay.dataset.archBound) {
-    replay.dataset.archBound = "1";
-    replay.addEventListener("click", () => playIslandArchPresentation(root));
-  }
+  const iframe = root && root.querySelector("iframe");
+  if (!root || !iframe || root.dataset.archFlowInit === "1") return;
+  root.dataset.archFlowInit = "1";
+  const start = () => startArchifyEmbedFlow(iframe);
+  iframe.addEventListener("load", start);
   if (!("IntersectionObserver" in window)) {
-    playIslandArchPresentation(root);
+    start();
     return;
   }
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        playIslandArchPresentation(root);
+        start();
         io.disconnect();
       });
     },
-    { threshold: 0.28, rootMargin: "0px 0px -10% 0px" }
+    { threshold: 0.32, rootMargin: "0px 0px -8% 0px" }
   );
   io.observe(root);
 }
@@ -2542,7 +2464,7 @@ function render(season, sourceNote) {
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
   renderNavWatch(season);
-  renderIslandBotDiagram(season);
+  initArchifyEmbedFlow();
   initDayFolds();
   initReveals();
   const miss = document.getElementById("json-miss");
@@ -2807,6 +2729,7 @@ function applyDemoTribal(season) {
 }
 
 initContribute();
+initArchifyEmbedFlow();
 loadSeason()
   .then(({ season, note }) => render(applyDemoTribal(season), note))
   .catch((err) => {
