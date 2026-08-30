@@ -6160,7 +6160,13 @@ body.is-titles .replay-trailer {
 }
 
 .island-arch.is-presented .arch-arrow-line {
+  transform: scaleX(1);
   box-shadow: 0 0 10px rgba(52, 211, 153, 0.28);
+}
+
+.island-arch.is-presented .arch-arrow.is-up .arch-arrow-line,
+.island-arch.is-presented .arch-arrow.is-down .arch-arrow-line {
+  transform: scaleY(1);
 }
 
 .island-arch.is-presenting .arch-flow::after {
@@ -6195,10 +6201,12 @@ body.is-titles .replay-trailer {
 
 .island-arch-replay {
   appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  margin-right: 0.75rem;
+  display: inline-block;
+  margin: 0 0.85rem 0 0;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid rgba(212, 160, 23, 0.45);
+  border-radius: 999px;
+  background: rgba(212, 160, 23, 0.08);
   font: inherit;
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -6210,8 +6218,8 @@ body.is-titles .replay-trailer {
 
 .island-arch-replay:hover {
   color: var(--parchment);
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
+  border-color: var(--gold-bright);
+  background: rgba(212, 160, 23, 0.16);
 }
 
 @media (max-width: 860px) {
@@ -6287,7 +6295,12 @@ body.is-titles .replay-trailer {
 }
 
 .diagram-embed-caption {
-  padding: 0.65rem 1rem 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+  padding: 0.75rem 1rem 1rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.06em;
