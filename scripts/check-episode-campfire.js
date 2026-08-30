@@ -153,6 +153,9 @@ if (!stylesCss.includes("#camp-whispers .camp-whispers-feed") || !stylesCss.incl
 if (!stylesCss.includes("#camp-whispers .camp-chat-panel.is-open")) {
   throw new Error("#camp-whispers chat panel must grow in-flow when the thread is opened");
 }
+if (!stylesCss.includes("grid-template-columns: minmax(0, 1fr) auto")) {
+  throw new Error("#camp-whispers cards must keep the 4 messages trigger on the heading row");
+}
 if (
   !episodeJs.includes("resolveLatestConversations") ||
   !episodeJs.includes("latestDayConversations") ||
