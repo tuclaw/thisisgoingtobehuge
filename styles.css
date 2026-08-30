@@ -2230,6 +2230,7 @@ a.brand:hover {
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
   margin-top: 1.15rem;
+  align-items: start;
 }
 
 .camp-whispers-lede {
@@ -2240,14 +2241,38 @@ a.brand:hover {
 }
 
 #camp-whispers .camp-scene {
-  min-height: 480px;
+  min-height: 0;
+}
+
+#camp-whispers .camp-chat-trigger-wrap {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  margin-top: 1.1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#camp-whispers .camp-scene:has(.camp-chat-panel.is-open) .camp-chat-trigger-wrap {
+  height: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
 #camp-whispers .camp-chat-panel {
-  left: 0.65rem;
-  right: 0.65rem;
-  width: auto;
-  max-height: calc(100% - 1.3rem);
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  max-height: 0;
+  margin-top: 0;
+}
+
+#camp-whispers .camp-chat-panel.is-open {
+  height: min(420px, 70vh);
+  max-height: min(420px, 70vh);
+  margin-top: 1rem;
 }
 
 @media (max-width: 900px) {
