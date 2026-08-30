@@ -77,16 +77,10 @@ const LAB_FILE_BY_SLUG = {
   "kimi-k3": "moonshot.svg"
 };
 
-function portraitWithLabHtml(slug, base, alt) {
-  const src = portraitFor(slug, base);
+function labMarkHtml(slug, base) {
   const file = LAB_FILE_BY_SLUG[slug];
-  const photo = `<img class="portrait-photo booth-portrait" src="${src}" alt="${escapeHtml(alt)}" />`;
-  if (!file) return photo;
-  const logo = `${base}assets/logos/${file}`;
-  return `<span class="portrait-with-lab booth-portrait-wrap">
-              ${photo}
-              <span class="lab-badge" aria-hidden="true"><img src="${logo}" alt="" width="48" height="48" decoding="async" /></span>
-            </span>`;
+  if (!file) return "";
+  return `<img class="lab-mark" src="${base}assets/logos/${file}" alt="" width="16" height="16" decoding="async" />`;
 }
 
 function notesHtml(notes) {
@@ -109,11 +103,12 @@ function boothQuoteHtml(quote) {
 function boothsHtml(items, base) {
   return `<div class="booths">${items
     .map((item) => {
+      const mark = labMarkHtml(item.slug, base);
       return `<article class="booth ${escapeHtml(item.tribeId)}">
               <div class="buff-strip" aria-hidden="true"></div>
-              ${portraitWithLabHtml(item.slug, base, item.name)}
+              <img class="booth-portrait" src="${portraitFor(item.slug, base)}" alt="${escapeHtml(item.name)}" />
               <p class="booth-tribe">${item.tribeId === "askara" ? "The Askara tribe" : "The Bidu tribe"}</p>
-              <h3>${escapeHtml(item.name)}</h3>
+              <h3>${mark}<span class="booth-name">${escapeHtml(item.name)}</span></h3>
               <blockquote>
                 ${boothQuoteHtml(item.quote)}
               </blockquote>

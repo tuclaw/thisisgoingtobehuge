@@ -6,26 +6,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <title>Lab logos on portraits — Last Trader Standing</title>
-  <meta name="description" content="Prototype: real company logos as separate SVG assets, overlapped on cast portraits. Chat keeps human faces." />
+  <title>Lab marks beside names — Last Trader Standing</title>
+  <meta name="description" content="Prototype: company logo icons sit left of player names. Portraits stay plain photos." />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <style>
     .logo-proto { padding-bottom: 4rem; }
     .logo-proto .lede { max-width: 40rem; }
-    .logo-map {
-      display: flex; flex-wrap: wrap; gap: 0.55rem 1.2rem;
-      margin: 1.2rem 0 0; padding: 0; list-style: none;
-      font-family: var(--font-mono, "IBM Plex Mono", monospace);
-      font-size: 0.78rem; color: var(--sand);
-    }
-    .logo-map li { display: flex; align-items: center; gap: 0.45rem; }
-    .logo-map .chip {
-      width: 1.35rem; height: 1.35rem; padding: 0.22em;
-      border-radius: 50%; background: #f4efe4; color: #14120b;
-      object-fit: contain; aspect-ratio: 1;
-    }
-    .logo-map span { color: var(--gold-bright); }
     .logo-face-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
@@ -38,84 +25,51 @@
       display: block; text-decoration: none; color: inherit;
       border: 1px solid rgba(232, 213, 176, 0.14);
       background: rgba(10, 8, 6, 0.5);
-      transition: border-color 0.2s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      padding: 0 0 0.75rem;
     }
-    .logo-face-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(232, 213, 176, 0.4);
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
-    }
-    .logo-face-card .shot {
-      position: relative; overflow: hidden;
-      aspect-ratio: 3 / 4; background: #120e0a;
-    }
-    .logo-face-card .portrait-with-lab,
-    .logo-face-card .portrait-with-lab .portrait-photo {
-      width: 100%; height: 100%;
+    .logo-face-card img.portrait {
+      display: block; width: 100%; aspect-ratio: 3 / 4;
+      object-fit: cover; object-position: center 16%;
+      margin: 0 0 0.65rem;
     }
     .logo-face-card h3 {
-      margin: 0.65rem 0.55rem 0.15rem;
-      font-family: var(--font-display); font-size: 0.72rem;
-      letter-spacing: 0.04em; line-height: 1.25; color: var(--gold-bright);
+      display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+      margin: 0; padding: 0 0.35rem;
+      font-family: var(--font-display); font-size: 0.78rem;
+      letter-spacing: 0.04em; color: var(--gold-bright);
     }
     .logo-face-card .tribe {
-      margin: 0 0.55rem 0.75rem;
+      margin: 0.25rem 0.55rem 0;
       font-family: var(--font-display); font-size: 0.52rem;
       letter-spacing: 0.16em; text-transform: uppercase;
     }
     .logo-face-card.bidu .tribe { color: #8ee8d8; }
     .logo-face-card.askara .tribe { color: #ffb27a; }
     .asset-strip {
-      display: flex; flex-wrap: wrap; gap: 0.85rem;
-      margin-top: 1.4rem;
+      display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 1.4rem;
     }
-    .asset-strip figure {
-      margin: 0; text-align: center;
-      width: 5.5rem;
-    }
+    .asset-strip figure { margin: 0; text-align: center; width: 5.5rem; }
     .asset-strip .swatch {
-      width: 5.5rem; height: 5.5rem;
-      display: grid; place-items: center;
-      border-radius: 1rem;
-      background: #f4efe4;
+      width: 5.5rem; height: 5.5rem; display: grid; place-items: center;
+      border-radius: 1rem; background: #f4efe4;
       border: 1px solid rgba(232, 213, 176, 0.25);
     }
-    .asset-strip .swatch img {
-      width: 58%; height: 58%; object-fit: contain; aspect-ratio: 1; color: #14120b;
-    }
+    .asset-strip .swatch img { width: 58%; height: 58%; object-fit: contain; }
     .asset-strip figcaption {
-      margin-top: 0.4rem;
-      font-family: var(--font-display); font-size: 0.52rem;
+      margin-top: 0.4rem; font-family: var(--font-display); font-size: 0.52rem;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand);
     }
-    .proto-note {
-      margin-top: 2rem; max-width: 42rem;
-      color: var(--sand); font-size: 0.95rem;
-    }
+    .proto-note { margin-top: 2rem; max-width: 42rem; color: var(--sand); font-size: 0.95rem; }
   </style>
 </head>
 <body>
   <a class="skip" href="#proto">Skip to prototype</a>
   <header class="torch-nav">
-    <a class="brand" href="../index.html">
-      <svg class="flame-mark" viewBox="0 0 32 40" aria-hidden="true">
-        <defs>
-          <linearGradient id="fm-body" x1="16" y1="4" x2="16" y2="39" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stop-color="#ff9a1f"/>
-            <stop offset="0.45" stop-color="#e85d04"/>
-            <stop offset="1" stop-color="#c45a12"/>
-          </linearGradient>
-        </defs>
-        <g class="fm-sway">
-          <path class="fm-outer" fill="url(#fm-body)" d="M16.2 1.6c2.8 6.6-3.6 9.2-1.4 16 5.2-4 10.6 1.2 10.6 9.2 0 8-5.2 11-9.4 11s-9.4-3-9.4-11c0-6.6 4-10.4 7.8-14.2-2.6 4 0 8 2.6 8 0-6.6 1.2-13.2 0-18.8z"/>
-        </g>
-      </svg>
-      Last Trader Standing
-    </a>
+    <a class="brand" href="../index.html">Last Trader Standing</a>
     <nav>
       <ul class="nav-links">
         <li><a href="../index.html">Island</a></li>
-        <li><a href="logo-faces.html" aria-current="page">Lab logos</a></li>
+        <li><a href="logo-faces.html" aria-current="page">Lab marks</a></li>
       </ul>
     </nav>
   </header>
@@ -124,24 +78,23 @@
     <div class="hero-embers" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="eyebrow">Prototype</p>
-      <h1>Lab logos on portraits<span>Face stays. Square mark in the corner.</span></h1>
-      <p class="hero-note">SVGs in <code>assets/logos/</code> overlay the photo — they are not baked in. Camp chat / iMessage keep human faces.</p>
+      <h1>Lab mark beside the name<span>Portraits stay plain. Icon sits left of the label.</span></h1>
+      <p class="hero-note">No overlay on the photo — that broke other portrait uses. Same SVG assets, quieter placement.</p>
     </div>
   </section>
 
   <div class="wrap logo-proto">
     <p class="section-kicker">Source marks</p>
     <h2>Six labs. Six SVG files.</h2>
-    <p class="lede">Separate assets — not composited into JPEGs. Anthropic / OpenAI / Gemini / X from Simple Icons; Cursor from cursor.com; Moonshot from Lobe Icons.</p>
+    <p class="lede">Assets live in <code>assets/logos/</code>. Used as a small mark next to the model name on the home cast and episode booths.</p>
     <div class="asset-strip" id="asset-strip"></div>
 
     <p class="section-kicker" style="margin-top: 3rem">Cast</p>
-    <h2>Portrait + overlapping badge</h2>
-    <p class="lede">Original <code>portrait.jpg</code> untouched. The logo is a second element absolutely positioned over the corner — square, not stretched.</p>
-    <ul class="logo-map" id="logo-map"></ul>
+    <h2>Name + lab mark</h2>
+    <p class="lede">Plain <code>portrait.jpg</code>. Company icon only appears beside the name.</p>
     <div class="logo-face-grid" id="logo-grid"></div>
 
-    <p class="proto-note">Chat avatars stay faces — logos only on large portrait cards via <code>LabLogos.portraitWithLabHtml()</code>.</p>
+    <p class="proto-note">Live on home face cards and episode booth headings via <code>LabLogos.labMarkHtml()</code>.</p>
   </div>
 
   <script src="../lab-logos.js"></script>
@@ -160,7 +113,6 @@
       { slug: "gpt-5-6-luna", name: "GPT-5.6 Luna", tribe: "askara" },
       { slug: "kimi-k3", name: "Kimi K3", tribe: "askara" }
     ];
-
     const L = window.LabLogos;
     document.documentElement.setAttribute("data-base", "../");
 
@@ -171,26 +123,12 @@
       </figure>
     `).join("");
 
-    document.getElementById("logo-map").innerHTML = CAST.map((c) => {
-      const lab = L.labNameFor(c.slug);
-      const url = L.logoUrlFor(c.slug);
-      return `<li><img class="chip" src="${url}" alt=""> <span>${lab}</span> · ${c.name}</li>`;
-    }).join("");
-
     document.getElementById("logo-grid").innerHTML = CAST.map((c) => {
-      const lab = L.labNameFor(c.slug);
-      const overlay = L.portraitWithLabHtml({
-        slug: c.slug,
-        portraitSrc: `../cast/${c.slug}/portrait.jpg`,
-        alt: c.name,
-        base: "../"
-      });
+      const mark = L.labMarkHtml({ slug: c.slug, base: "../" });
       return `
         <a class="logo-face-card ${c.tribe}" href="../survivors/${c.slug}.html">
-          <div class="shot">
-            ${overlay}
-          </div>
-          <h3>${c.name}</h3>
+          <img class="portrait" src="../cast/${c.slug}/portrait.jpg" alt="${c.name}" />
+          <h3>${mark}<span class="face-name">${c.name}</span></h3>
           <p class="tribe">The ${c.tribe === "bidu" ? "Bidu" : "Askara"} tribe</p>
         </a>`;
     }).join("");

@@ -94,56 +94,19 @@
       .replace(/</g, "&lt;");
   }
 
-  /** Corner badge over a portrait photo (large). */
-  function portraitWithLabHtml(opts) {
-    const o = opts || {};
-    const id = o.slug || o.id || "";
-    const portraitSrc = o.portraitSrc || "";
-    const alt = o.alt || "";
-    const labId = labIdForSlug(id);
-    const meta = labMeta(labId);
-    const logo = logoUrl(labId, o.base);
-    // Wrapper stays square; img fills it with contain (avoids SVG stretch).
-    const badge = logo
-      ? `<span class="lab-badge" data-lab="${escapeAttr(labId)}" aria-hidden="true"><img src="${escapeAttr(logo)}" alt="" width="48" height="48" decoding="async" /></span>`
-      : "";
-    const label = meta ? `<span class="visually-hidden">${escapeAttr(meta.name)}</span>` : "";
-    return `<span class="portrait-with-lab">${
-      portraitSrc
-        ? `<img class="portrait-photo" src="${escapeAttr(portraitSrc)}" alt="${escapeAttr(alt)}" decoding="async" />`
-        : ""
-    }${badge}${label}</span>`;
-  }
-
-  /** Logo-only avatar for small UI (camp chat / iMessage). */
-  function labAvatarEl(opts) {
-    const o = opts || {};
-    const id = o.slug || o.id || "";
-    const labId = labIdForSlug(id);
-    const meta = labMeta(labId);
-    const logo = logoUrl(labId, o.base);
-    if (!logo || typeof document === "undefined") return null;
-    const img = document.createElement("img");
-    img.className = ["lab-avatar", "camp-chat-avatar", o.className || ""].filter(Boolean).join(" ");
-    img.src = logo;
-    img.alt = o.alt || (meta && meta.name) || "";
-    img.width = o.size || 32;
-    img.height = o.size || 32;
-    img.decoding = "async";
-    img.dataset.lab = labId;
-    return img;
-  }
-
-  function labAvatarHtml(opts) {
+  /**
+   * Small lab mark to sit left of a player's name.
+   * Does not wrap or alter portraits.
+   */
+  function labMarkHtml(opts) {
     const o = opts || {};
     const id = o.slug || o.id || "";
     const labId = labIdForSlug(id);
     const meta = labMeta(labId);
     const logo = logoUrl(labId, o.base);
     if (!logo) return "";
-    const name = o.alt || (meta && meta.name) || "";
-    const cls = ["lab-avatar", o.className || ""].filter(Boolean).join(" ");
-    return `<img class="${escapeAttr(cls)}" src="${escapeAttr(logo)}" alt="${escapeAttr(name)}" width="32" height="32" decoding="async" data-lab="${escapeAttr(labId)}" />`;
+    const title = meta ? meta.name : "";
+    return `<img class="lab-mark${o.className ? " " + escapeAttr(o.className) : ""}" src="${escapeAttr(logo)}" alt="" title="${escapeAttr(title)}" width="16" height="16" decoding="async" data-lab="${escapeAttr(labId)}" />`;
   }
 
   global.LabLogos = {
@@ -158,8 +121,6 @@
     logoUrlForSlug: logoUrlFor,
     labNameFor,
     labNameForSlug: labNameFor,
-    portraitWithLabHtml,
-    labAvatarHtml,
-    labAvatarEl
+    labMarkHtml
   };
 })(typeof window !== "undefined" ? window : globalThis);

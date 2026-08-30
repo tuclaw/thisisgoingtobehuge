@@ -2120,49 +2120,19 @@ a.brand:hover {
   margin: -1.4rem -1.2rem 1.05rem;
 }
 
-.booth-portrait,
-.booth-portrait-wrap {
+.booth-portrait {
   display: block;
   width: 64px;
   height: 64px;
+  object-fit: cover;
+  object-position: center 18%;
   margin: 0 0 0.75rem;
   border: 2px solid #0E6B6B;
   border-radius: 2px;
   box-shadow: 0 0 0 1px rgba(232, 213, 176, 0.18);
 }
 
-.booth-portrait {
-  object-fit: cover;
-  object-position: center 18%;
-}
-
-.booth-portrait-wrap {
-  position: relative;
-  overflow: hidden;
-}
-
-.booth-portrait-wrap .booth-portrait,
-.booth-portrait-wrap .portrait-photo {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  border: 0;
-  box-shadow: none;
-  border-radius: 0;
-  object-fit: cover;
-  object-position: center 18%;
-}
-
-.booth-portrait-wrap .lab-badge {
-  top: 0.2rem;
-  right: 0.2rem;
-  width: 1.15rem;
-  padding: 0.18em;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-}
-
-.booth.askara .booth-portrait,
-.booth.askara .booth-portrait-wrap {
+.booth.askara .booth-portrait {
   border-color: #C45A12;
 }
 
@@ -2175,11 +2145,19 @@ a.brand:hover {
 }
 
 .booth h3 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
   font-family: var(--font-display);
   font-size: 1.15rem;
   letter-spacing: 0.04em;
   margin: 0 0 0.2rem;
   color: var(--gold-bright);
+}
+
+.booth h3 .booth-name {
+  min-width: 0;
 }
 
 .booth-nick {
@@ -4974,39 +4952,22 @@ body.is-titles .replay-trailer {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(196, 90, 18, 0.45);
 }
 
-.face-card > img,
-.face-card .portrait-with-lab,
+.face-card img,
 .face-card .portrait {
   display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
   height: auto;
+  object-fit: cover;
+  object-position: center 16%;
   margin: 0 0 0.65rem;
 }
 
-.face-card > img,
-.face-card .portrait,
-.face-card .portrait-with-lab .portrait-photo {
-  object-fit: cover;
-  object-position: center 16%;
-}
-
-.face-card .portrait-with-lab .portrait-photo {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  aspect-ratio: auto;
-}
-
-.face-card .lab-badge img {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-}
-
 .face-card h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   font-family: var(--font-display);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
@@ -5014,6 +4975,10 @@ body.is-titles .replay-trailer {
   line-height: 1.25;
   padding: 0 0.35rem;
   color: var(--gold-bright);
+}
+
+.face-card h3 .face-name {
+  min-width: 0;
 }
 
 .face-nick {
@@ -6060,53 +6025,31 @@ body.is-titles .replay-trailer {
   }
 }
 
-/* —— Lab logos: corner badge overlaid on portraits (not used in chat) —— */
-.portrait-with-lab {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-.portrait-with-lab .portrait-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-}
-
-.lab-badge {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  /* Square from width only — never set height as % of the tall portrait. */
-  width: clamp(1.75rem, 16%, 2.6rem);
-  aspect-ratio: 1 / 1;
-  height: auto;
-  padding: 0.34em;
-  box-sizing: border-box;
-  border-radius: 50%;
-  background: rgba(244, 239, 228, 0.96);
-  border: 1px solid rgba(232, 213, 176, 0.55);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  z-index: 2;
-  color: #14120b;
-}
-
-.lab-badge img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
+/* —— Lab mark: small icon left of a player name (portraits stay untouched) —— */
+.lab-mark {
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  min-width: 0.95em;
+  flex: 0 0 auto;
   object-fit: contain;
   object-position: center;
-  aspect-ratio: 1 / 1;
+  vertical-align: -0.12em;
+  /* Invert dark SVG marks onto parchment UI */
+  filter: invert(1) brightness(1.15);
+  opacity: 0.92;
+}
+
+.booth h3 .lab-mark {
+  width: 0.85em;
+  height: 0.85em;
+  min-width: 0.85em;
+}
+
+.face-card h3 .lab-mark {
+  width: 0.9em;
+  height: 0.9em;
+  min-width: 0.9em;
 }
 
 .visually-hidden {

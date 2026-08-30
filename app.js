@@ -686,21 +686,16 @@ function renderFaces(season) {
         .map((s) => {
           const model = modelOf(s);
           const slug = slugOf(s);
-          let face;
-          if (s.portrait && globalThis.LabLogos && typeof LabLogos.portraitWithLabHtml === "function") {
-            face = LabLogos.portraitWithLabHtml({
-              slug: slug,
-              portraitSrc: assetUrl(s.portrait),
-              alt: model
-            });
-          } else if (s.portrait) {
-            face = `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`;
-          } else {
-            face = totemSvg(s, tribe);
-          }
+          const face = s.portrait
+            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
+            : totemSvg(s, tribe);
+          const mark =
+            globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
+              ? LabLogos.labMarkHtml({ slug: slug })
+              : "";
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}">
         ${face}
-        <h3>${escapeHtml(model)}</h3>
+        <h3>${mark}<span class="face-name">${escapeHtml(model)}</span></h3>
         <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
       </a>`;
         })
