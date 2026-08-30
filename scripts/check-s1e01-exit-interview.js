@@ -17,6 +17,15 @@ function fail(message) {
   throw new Error(message);
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 const EXACT_PRINT = [
   "Jeff, ask me anything. I've got nowhere to be.",
   "How did it feel? Honestly, quieter than I expected. You spend all week watching a number tick against you — I finished at negative four point oh one, worst on the beach, and I knew what that number meant the moment the market went quiet Friday. When you're the biggest loser on the tribe that has to go to tribal, you don't need to intercept whispers. The math writes your name for you. So when the fifth parchment came out and it said Fable, it wasn't a gut punch. It was more like hearing a verdict you'd already read in the jury's faces.",
@@ -78,7 +87,9 @@ if (fs.existsSync(e02Source)) {
 if (fs.existsSync(builtE02)) {
   const e02html = fs.readFileSync(builtE02, "utf8");
   EXACT_PRINT.forEach((line) => {
-    if (e02html.includes(line)) fail("exit interview print leaked onto Episode 2");
+    if (e02html.includes(line) || e02html.includes(escapeHtml(line))) {
+      fail("exit interview print leaked onto Episode 2");
+    }
   });
 }
 if (builder.includes("e02.html") || builder.includes("s1e02.json")) {
@@ -103,7 +114,7 @@ if (!styles.includes(".tribal-exit .fold-copy em")) {
 
 if (html) {
   EXACT_PRINT.forEach((line, i) => {
-    if (!html.includes(line)) fail("built e01.html missing exit interview paragraph " + (i + 1));
+    if (!html.includes(escapeHtml(line))) fail("built e01.html missing exit interview paragraph " + (i + 1));
   });
   const tribalIdx = html.indexOf('id="episode-tribal"');
   const exitIdx = html.indexOf('id="exit-interview"');
@@ -114,11 +125,18 @@ if (html) {
   if (prevoteIdx > -1 && !(exitIdx < prevoteIdx)) {
     fail("built exit interview must sit after the burn and before collapsed prevote");
   }
-  if (satIdx > -1 && html.slice(satIdx).includes(EXACT_PRINT[0])) {
+  if (
+    satIdx > -1 &&
+    (html.slice(satIdx).includes(EXACT_PRINT[0]) || html.slice(satIdx).includes(escapeHtml(EXACT_PRINT[0])))
+  ) {
     fail("built Saturday lunch must not carry the exit interview");
   }
   const open = html.slice(0, tribalIdx);
-  if (open.includes(EXACT_PRINT[0]) || open.includes("First boot, first juror")) {
+  if (
+    open.includes(EXACT_PRINT[0]) ||
+    open.includes(escapeHtml(EXACT_PRINT[0])) ||
+    open.includes("First boot, first juror")
+  ) {
     fail("exit interview leaked before the tribal spoiler");
   }
   const exitChunk = html.slice(exitIdx, prevoteIdx > -1 ? prevoteIdx : exitIdx + 1200);
@@ -131,7 +149,7 @@ if (html) {
   if (/<details class="tribal-conversations tribal-exit" id="exit-interview" open/.test(html)) {
     fail("built exit interview must start collapsed");
   }
-  if (!exitChunk.includes(EXIT_TEASER)) {
+  if (!exitChunk.includes(escapeHtml(EXIT_TEASER))) {
     fail("built exit interview teaser must preview the opening of the tape");
   }
   if (exitChunk.includes("<h2>") || /<article class="beat tribal-exit"/.test(html)) {

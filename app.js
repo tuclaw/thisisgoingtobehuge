@@ -5,10 +5,20 @@ function assetBase() {
   return raw == null ? "" : raw;
 }
 
+function isSafePublicPath(path) {
+  const raw = String(path || "").trim();
+  if (!raw) return false;
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return false;
+  if (raw.startsWith("//") || raw.startsWith("\\")) return false;
+  if (raw.includes("..") || raw.includes("\\")) return false;
+  return true;
+}
+
 function assetUrl(path) {
-  if (!path) return "";
-  if (/^https?:/i.test(String(path))) return path;
-  return assetBase() + path;
+  if (!isSafePublicPath(path)) return "";
+  const raw = String(path).trim();
+  if (raw.startsWith("/")) return raw;
+  return assetBase() + raw;
 }
 
 function seasonJsonUrls() {
@@ -184,7 +194,8 @@ function escapeHtml(str) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function modelOf(s) {
@@ -603,8 +614,8 @@ function totemSvg(survivor, tribe) {
     `<path d="M26 50 Q50 12 74 50 Q50 70 26 50Z" fill="none" stroke="${ink}" stroke-width="3"/>`
   ];
   const mark = marks[seed % marks.length];
-  const letter = survivor.monogram || survivor.name.slice(0, 1);
-  return `<svg class="portrait" viewBox="0 0 100 100" role="img" aria-label="${survivor.name} totem">
+  const letter = escapeHtml(survivor.monogram || survivor.name.slice(0, 1));
+  return `<svg class="portrait" viewBox="0 0 100 100" role="img" aria-label="${escapeHtml(survivor.name)} totem">
     <rect width="100" height="100" fill="#120c08"/>
     <circle cx="50" cy="50" r="46" fill="#1a1410" stroke="${gold}" stroke-width="1.5"/>
     ${mark}

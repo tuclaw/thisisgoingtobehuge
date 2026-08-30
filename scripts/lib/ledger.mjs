@@ -242,6 +242,42 @@ export function markBook(book, quotes, opts = {}) {
   };
 }
 
+function publicPosition(pos) {
+  if (!pos || typeof pos !== "object") return pos;
+  const copy = { ...pos };
+  delete copy.orderId;
+  return copy;
+}
+
+function publicEvent(event) {
+  if (!event || typeof event !== "object") return event;
+  if (event.type === "fill") {
+    return {
+      type: "fill",
+      id: event.id,
+      at: event.at,
+      survivorId: event.survivorId,
+      side: event.side,
+      ticker: event.ticker
+    };
+  }
+  if (event.type === "mark") {
+    const out = {
+      type: "mark",
+      id: event.id,
+      at: event.at,
+      label: event.label,
+      kind: event.kind || "mark"
+    };
+    if (event.dayPctPriorOfficial) out.dayPctPriorOfficial = true;
+    return out;
+  }
+  const out = { type: event.type, id: event.id };
+  if (event.at) out.at = event.at;
+  if (event.label) out.label = event.label;
+  return out;
+}
+
 function snapshotBook(member, book) {
   return {
     bookUsd: book.bookUsd,
@@ -250,7 +286,7 @@ function snapshotBook(member, book) {
     dayPct: book.dayPct,
     priorMarkUsd: book.priorMarkUsd,
     positions: (book.positions || []).map((pos) => {
-      const copy = { ...pos };
+      const copy = publicPosition(pos);
       delete copy.last;
       delete copy.priorClose;
       return copy;
@@ -301,7 +337,7 @@ function publicSurvivor(member, book, lastSession) {
     portrait: member.portrait,
     camp: member.camp,
     model: member.model || member.name,
-    positions: book.positions
+    positions: (book.positions || []).map(publicPosition)
   };
   if (lastSession) out.lastSession = lastSession;
   return out;
@@ -421,12 +457,6 @@ export function deriveSeason(source) {
     dayPctPriorOfficial: lastMark ? Boolean(lastMark.dayPctPriorOfficial) : false,
     quotes,
     snapshots,
-    events: events.map((event) => {
-      if (event.type === "mark") {
-        const { recorded, quotes: markQuotes, ...rest } = event;
-        return rest;
-      }
-      return event;
-    })
+    events: events.map(publicEvent)
   };
 }
