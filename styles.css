@@ -5734,7 +5734,7 @@ body.is-titles .replay-trailer {
 }
 
 .diagram-band .wrap {
-  max-width: 72rem;
+  max-width: 80rem;
 }
 
 .diagram-band-title,
@@ -5757,6 +5757,7 @@ body.is-titles .replay-trailer {
   margin: 0 auto 1.25rem;
   padding: 0;
   aspect-ratio: 1140 / 680;
+  min-height: 28rem;
   border: 1px solid rgba(212, 160, 23, 0.28);
   border-radius: 0.65rem;
   background:
@@ -5776,6 +5777,12 @@ body.is-titles .replay-trailer {
   height: 100%;
   border: 0;
   background: #020617;
+}
+
+@media (max-width: 720px) {
+  .archify-embed {
+    min-height: 20rem;
+  }
 }
 
 .diagram-embed-caption {

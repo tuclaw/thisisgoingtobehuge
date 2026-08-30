@@ -2485,6 +2485,39 @@ function renderSeasonHub(season) {
     .join("");
 }
 
+function startArchifyEmbedFlow(iframe) {
+  if (!iframe || !iframe.contentWindow) return;
+  try {
+    iframe.contentWindow.postMessage({ type: "lts-diagram-flow", on: true }, "*");
+  } catch {
+    /* cross-origin or not ready */
+  }
+}
+
+function initArchifyEmbedFlow() {
+  const root = document.getElementById("island-bot-diagram");
+  const iframe = root && root.querySelector("iframe");
+  if (!root || !iframe || root.dataset.archFlowInit === "1") return;
+  root.dataset.archFlowInit = "1";
+  const start = () => startArchifyEmbedFlow(iframe);
+  iframe.addEventListener("load", start);
+  if (!("IntersectionObserver" in window)) {
+    start();
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        start();
+        io.disconnect();
+      });
+    },
+    { threshold: 0.32, rootMargin: "0px 0px -8% 0px" }
+  );
+  io.observe(root);
+}
+
 function render(season, sourceNote) {
   renderIslandPot(season);
   renderFaces(season);
@@ -2496,6 +2529,7 @@ function render(season, sourceNote) {
   renderHomeEpisodes(season);
   renderHomeTorches(season);
   renderNavWatch(season);
+  initArchifyEmbedFlow();
   initDayFolds();
   initReveals();
   const miss = document.getElementById("json-miss");
@@ -2760,6 +2794,7 @@ function applyDemoTribal(season) {
 }
 
 initContribute();
+initArchifyEmbedFlow();
 loadSeason()
   .then(({ season, note }) => render(applyDemoTribal(season), note))
   .catch((err) => {

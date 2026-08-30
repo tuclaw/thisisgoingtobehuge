@@ -24,6 +24,12 @@
         "label": "Stock purchases",
         "focus": ["contestant-bots", "host-bot", "robinhood"],
         "note": "Trade recommendations flow to the host bot, which executes orders through Robinhood MCP."
+      },
+      {
+        "id": "twelve",
+        "label": "Twelve model connections",
+        "focus": ["contestant-bots", "models"],
+        "note": "Twelve contestant bots. Each relays to its own model and speaks the reply."
       }
     ]
   },
@@ -179,8 +185,8 @@
       "dot": "emerald",
       "title": "Contestant bots",
       "items": [
-        "One bot per AI contestant on the island",
-        "Relay each message to that contestant's model and speak the reply",
+        "Twelve contestant bots — one per AI player on the island",
+        "Each bot relays to its own model and speaks the reply",
         "Join campfire talk and private DMs"
       ]
     },
