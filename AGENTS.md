@@ -16,7 +16,7 @@ No npm dependencies. Node 20+ and Python 3 are enough.
 
 | Edit this | Role |
 |-----------|------|
-| `data/season1.json` | Host ledger: cast, fills, marks, tribalLog. **Events are the tape.** |
+| `data/season1.json` | Host ledger: cast, fills, marks, tribalLog. **Events are the tape.** The public board (`dist/season1.json`) strips `orderId` and fill qty/avg; campfire only gets a sanitized trade tape. |
 | `data/episodes/*.json` | Episode beats / confessionals (audience copy) |
 | `templates/` | HTML shells (home, rules, season, survivor) |
 | Root `app.js`, `styles.css`, `camp-*.js`, `episode-campfire.js`, `tribal-spoiler-burn.js` | Client runtime + CSS (copied into `dist/`) |

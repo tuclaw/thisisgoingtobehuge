@@ -68,6 +68,24 @@ for (const mark of marks) {
   markIds.add(mark.id);
 }
 
+function jsonHasOrderId(value) {
+  if (!value || typeof value !== "object") return false;
+  if (Object.prototype.hasOwnProperty.call(value, "orderId")) return true;
+  return Object.values(value).some(jsonHasOrderId);
+}
+
+check("public-board-strips-orderId", !jsonHasOrderId(board));
+const publicFills = (board.events || []).filter((event) => event && event.type === "fill");
+check("public-fills-keep-tape", publicFills.length === fills.length);
+for (const fill of publicFills) {
+  check(`public-fill-no-brokerage:${fill.id}`, fill.orderId == null && fill.qty == null && fill.avg == null);
+  check(`public-fill-ticker:${fill.id}`, Boolean(fill.ticker) && (fill.side === "buy" || fill.side === "sell"));
+}
+for (const mark of board.events || []) {
+  if (!mark || mark.type !== "mark") continue;
+  check(`public-mark-no-recorded:${mark.id}`, mark.recorded == null && mark.quotes == null);
+}
+
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === source.cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
 check("has-positions", board.survivors.every((s) => Array.isArray(s.positions) && s.positions.length > 0));
