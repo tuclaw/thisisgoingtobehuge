@@ -53,7 +53,8 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   function assetBase() {
@@ -65,15 +66,25 @@
     return (global.CampfireEngine && global.CampfireEngine.cast) || {};
   }
 
+  function isSafePublicPath(path) {
+    const raw = String(path || "").trim();
+    if (!raw) return false;
+    if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return false;
+    if (raw.startsWith("//") || raw.startsWith("\\")) return false;
+    if (raw.includes("..") || raw.includes("\\")) return false;
+    return true;
+  }
+
   function portraitFor(participant) {
     if (!participant) return "";
     if (participant.portrait) {
-      const p = String(participant.portrait);
-      if (/^https?:/i.test(p) || p.indexOf(assetBase()) === 0 || p.indexOf("../") === 0) return p;
+      const p = String(participant.portrait).trim();
+      if (!isSafePublicPath(p)) return "";
+      if (p.startsWith("/") || (assetBase() && p.indexOf(assetBase()) === 0)) return p;
       return assetBase() + p;
     }
     const person = castMap()[participant.id];
-    if (person && person.portrait) return assetBase() + person.portrait;
+    if (person && isSafePublicPath(person.portrait)) return assetBase() + person.portrait;
     return "";
   }
 

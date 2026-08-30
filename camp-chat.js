@@ -15,7 +15,17 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function isSafePublicPath(path) {
+    const raw = String(path || "").trim();
+    if (!raw) return false;
+    if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return false;
+    if (raw.startsWith("//") || raw.startsWith("\\")) return false;
+    if (raw.includes("..") || raw.includes("\\")) return false;
+    return true;
   }
 
   function wait(ms) {
@@ -283,10 +293,15 @@
     if (!animate) row.classList.add("is-visible");
 
     const participant = participants.find((x) => x.id === msg.from) || { id: msg.from };
-    let portrait = participant.portrait || "";
-    if (!portrait && global.CampfireEngine && global.CampfireEngine.cast) {
+    let portrait = "";
+    const rawPortrait = participant.portrait || "";
+    if (isSafePublicPath(rawPortrait)) {
+      portrait = rawPortrait.startsWith("/")
+        ? rawPortrait
+        : (document.documentElement.getAttribute("data-base") || "") + rawPortrait;
+    } else if (!rawPortrait && global.CampfireEngine && global.CampfireEngine.cast) {
       const person = global.CampfireEngine.cast[participant.id || msg.from];
-      if (person && person.portrait) {
+      if (person && isSafePublicPath(person.portrait)) {
         const base = document.documentElement.getAttribute("data-base");
         portrait = (base == null ? "" : base) + person.portrait;
       }

@@ -54,7 +54,8 @@ function escapeHtml(str) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function portraitFor(slug, base) {
@@ -63,7 +64,7 @@ function portraitFor(slug, base) {
 
 function notesHtml(notes) {
   if (!Array.isArray(notes) || !notes.length) return "";
-  return `<div class="beat-note">${notes.map((line) => `<p>${line}</p>`).join("")}</div>`;
+  return `<div class="beat-note">${notes.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}</div>`;
 }
 
 function boothQuoteHtml(quote) {
@@ -149,7 +150,10 @@ function tribalFocusHtml(episode, base) {
   const exitInterview = tribalExitBeat(episode);
   const kicker = escapeHtml((cut && cut.kicker) || "Tribal");
   const title = escapeHtml((cut && cut.title) || "The vote");
-  const body = (cut && cut.body) || "The Askara tribe walks in. The Bidu tribe sits. Nobody wears a necklace. Who goes home stays behind the burn.";
+  const body = escapeHtml(
+    (cut && cut.body) ||
+      "The Askara tribe walks in. The Bidu tribe sits. Nobody wears a necklace. Who goes home stays behind the burn."
+  );
   const conversations =
     prevote && (prevote.items || []).length
       ? `<details class="tribal-conversations" id="tribal-prevote">
@@ -198,7 +202,7 @@ function beatHtml(beat, base, opts = {}) {
   const id = beat.id ? ` id="${escapeHtml(beat.id)}"` : "";
   const kicker = beat.kicker ? `<p class="section-kicker">${escapeHtml(beat.kicker)}</p>` : "";
   const title = beat.title ? `<h2>${escapeHtml(beat.title)}</h2>` : "";
-  const body = beat.body ? `<p>${beat.body}</p>` : "";
+  const body = beat.body ? `<p>${escapeHtml(beat.body)}</p>` : "";
   // After the vote, spoiler + prevote live in #tribal-focus (below the money diagram).
   if (opts.votePosted && (beat.type === "tribal" || beat.id === "tribal-prevote" || beat.id === "exit-interview")) {
     return "";
@@ -446,7 +450,7 @@ function renderEpisodePage(episode, season, base) {
     ${focusBlock}<article class="beat beat-gold" id="latest-books">
       <p class="section-kicker">${escapeHtml(episode.weekBoard.kicker)}</p>
       <h2>${escapeHtml(episode.weekBoard.title)}</h2>
-      <p>${episode.weekBoard.lede}</p>
+      <p>${escapeHtml(episode.weekBoard.lede)}</p>
       <div class="preseason-banner" id="season-banner">${escapeHtml(season.statusLabel || "")}</div>
       <div class="tribe-totals" id="episode-tribe-totals"></div>
       <p class="holdings-kicker" id="holdings-kicker">${escapeHtml(episode.weekBoard.lede)}</p>
