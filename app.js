@@ -2540,7 +2540,7 @@ function ensureFuelPrompt() {
   root.setAttribute("aria-hidden", "true");
   root.innerHTML =
     '<div class="fuel-prompt-backdrop" data-fuel-dismiss></div>' +
-    '<div class="fuel-prompt-panel" role="dialog" aria-modal="true" aria-labelledby="fuel-prompt-title" aria-describedby="fuel-prompt-copy">' +
+    '<div class="fuel-prompt-panel" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="fuel-prompt-title" aria-describedby="fuel-prompt-copy">' +
     '<button type="button" class="fuel-prompt-close" data-fuel-dismiss aria-label="Close">×</button>' +
     '<p class="fuel-prompt-kicker">Fuel the fire</p>' +
     '<h2 id="fuel-prompt-title">Do you want to add funds to fuel the fire?</h2>' +
@@ -2585,10 +2585,10 @@ function openFuelPrompt(trigger) {
   root.setAttribute("aria-hidden", "false");
   document.body.classList.add("fuel-prompt-open");
   document.addEventListener("keydown", onFuelPromptKeydown);
-  const panel = root.querySelector(".fuel-prompt-panel");
   const primary = root.querySelector("[data-fuel-go]");
-  (primary || panel)?.focus?.();
-  if (primary && typeof primary.focus === "function") primary.focus();
+  const panel = root.querySelector(".fuel-prompt-panel");
+  const focusTarget = primary || panel;
+  if (focusTarget && typeof focusTarget.focus === "function") focusTarget.focus();
 }
 
 function isFuelPromptTrigger(el) {
