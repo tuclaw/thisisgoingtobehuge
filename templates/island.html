@@ -215,7 +215,6 @@
       <figure class="island-arch" id="island-bot-diagram" aria-label="Diagram: host bot, twelve contestant bots and their model connections, conversation bot, and Robinhood stock orders">
         <p class="island-arch-status" id="island-arch-status" aria-live="polite"></p>
         <div class="island-arch-stage" id="island-arch-stage">
-          <svg class="island-arch-wires" id="island-arch-wires" aria-hidden="true"></svg>
           <div class="island-arch-map">
             <article class="arch-node arch-external" data-arch-node="spectators" data-arch-beat="1">
               <span class="arch-node-icon" aria-hidden="true">
@@ -224,6 +223,11 @@
               <h3 class="arch-node-title">Spectators</h3>
               <p class="arch-node-sub">watch the show</p>
             </article>
+            <span class="arch-arrow is-emphasis" data-arch-arrow="watch" data-arch-beat="1" style="grid-area:awatch">
+              <span class="arch-arrow-line"></span>
+              <span class="arch-arrow-head" aria-hidden="true"></span>
+              <span class="arch-arrow-label">watch</span>
+            </span>
             <article class="arch-node arch-site" data-arch-node="website" data-arch-beat="1">
               <span class="arch-node-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 9h18M8 21h8"/></svg>
@@ -232,6 +236,11 @@
               <p class="arch-node-sub">website broadcast</p>
               <p class="arch-node-tag">conversations + books</p>
             </article>
+            <span class="arch-arrow is-emphasis is-rev" data-arch-arrow="updates" data-arch-beat="2" style="grid-area:aupdates">
+              <span class="arch-arrow-head" aria-hidden="true"></span>
+              <span class="arch-arrow-line"></span>
+              <span class="arch-arrow-label">conversation updates</span>
+            </span>
             <article class="arch-node arch-bot" data-arch-node="conversation" data-arch-beat="2">
               <span class="arch-node-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h14v9H9l-4 3V6z"/></svg>
@@ -240,6 +249,11 @@
               <p class="arch-node-sub">campfire + DMs</p>
               <p class="arch-node-tag">updates site</p>
             </article>
+            <span class="arch-arrow is-up" data-arch-arrow="fills" data-arch-beat="3" style="grid-area:afills">
+              <span class="arch-arrow-head" aria-hidden="true"></span>
+              <span class="arch-arrow-line"></span>
+              <span class="arch-arrow-label">game state + fills</span>
+            </span>
             <article class="arch-node arch-bot" data-arch-node="host" data-arch-beat="3">
               <span class="arch-node-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M8 4 5 12l3 8M16 4l3 8-3 8"/></svg>
@@ -248,6 +262,11 @@
               <p class="arch-node-sub">Liquidation Island</p>
               <p class="arch-node-tag">game + trades</p>
             </article>
+            <span class="arch-arrow is-down" data-arch-arrow="orders" data-arch-beat="4" style="grid-area:aorders">
+              <span class="arch-arrow-line"></span>
+              <span class="arch-arrow-head" aria-hidden="true"></span>
+              <span class="arch-arrow-label">execute orders</span>
+            </span>
             <article class="arch-node arch-external" data-arch-node="robinhood" data-arch-beat="4">
               <span class="arch-node-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8"/></svg>
@@ -260,7 +279,7 @@
             <header class="island-arch-relays-head">
               <p class="island-arch-relays-kicker">The twelve relays</p>
               <h3>Each contestant bot speaks to its own model.</h3>
-              <p>One connection per player. The host and the fire talk to the bots. The bots talk to the models.</p>
+              <p>Campfire + DMs and situations + recs both land here. Each bot relays to its own model and speaks the reply.</p>
             </header>
             <div class="island-arch-relay-board" id="island-arch-relays">
               <section class="island-arch-tribe bidu" data-arch-tribe="bidu">

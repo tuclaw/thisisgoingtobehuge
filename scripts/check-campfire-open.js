@@ -177,17 +177,17 @@ if (!html.includes("Contestant bot") || !html.includes("The twelve relays")) {
 ].forEach((name) => {
   if (!html.includes(name)) throw new Error("island bot diagram missing contestant " + name);
 });
-if (!css.includes(".island-arch") || !css.includes("--wire-delay")) {
+if (!css.includes(".island-arch") || !css.includes(".arch-arrow")) {
   throw new Error("styles.css missing island-arch presentation styles");
 }
 if (!css.includes("island-arch-in") || !css.includes("island-arch-relay-flow")) {
   throw new Error("styles.css missing island diagram flow animations");
 }
 const appJs = readFileSync(join(root, "app.js"), "utf8");
-if (!appJs.includes("renderIslandBotDiagram") || !appJs.includes("drawIslandArchWires")) {
-  throw new Error("app.js missing island bot diagram renderer / wire drawing");
+if (!appJs.includes("renderIslandBotDiagram") || !html.includes('data-arch-arrow="watch"')) {
+  throw new Error("app.js / island.html missing island bot diagram renderer / gutter arrows");
 }
-if (!appJs.includes("playIslandArchPresentation") || !appJs.includes("ISLAND_ARCH_WIRE_GAP")) {
+if (!appJs.includes("playIslandArchPresentation") || !appJs.includes("ISLAND_ARCH_BEATS")) {
   throw new Error("app.js missing scroll-triggered diagram presentation");
 }
 if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {

@@ -5753,59 +5753,114 @@ body.is-titles .replay-trailer {
   padding: 1.25rem 1.1rem 1.4rem;
 }
 
-.island-arch-wires {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-  z-index: 1;
-}
-
-.island-arch-wires path.arch-wire {
-  fill: none;
-  stroke: #8a9bb0;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
-.island-arch-wires path.arch-wire.is-emphasis {
-  stroke: #34d399;
-  stroke-width: 2.4;
-}
-
-.island-arch-wires path.arch-wire-flow {
-  fill: none;
-  stroke: rgba(52, 211, 153, 0.55);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 7 12;
-  opacity: 0;
-}
-
-.island-arch-wires text {
-  fill: #c4b59a;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-}
-
 .island-arch-map {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(11rem, 1fr) minmax(15rem, 1.25fr) minmax(13rem, 1.1fr);
+  grid-template-columns: minmax(11rem, 1fr) 6.4rem minmax(15rem, 1.3fr) 6.4rem minmax(12rem, 1.15fr);
   grid-template-areas:
-    "spectators website conversation"
-    ".          host      conversation"
-    ".          robinhood .";
-  gap: 2.6rem 3.2rem;
+    "spectators awatch website aupdates conversation"
+    ".          .      afills  .        ."
+    ".          .      host    .        ."
+    ".          .      aorders .        ."
+    ".          .      robinhood .      .";
+  column-gap: 0.35rem;
+  row-gap: 0.2rem;
   align-items: stretch;
-  padding: 0.6rem 0.4rem 1.8rem;
+  padding: 0.6rem 0.2rem 1.5rem;
+}
+
+.arch-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  min-height: 2.6rem;
+  padding: 0 0.15rem;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.arch-arrow-line {
+  display: block;
+  flex: 1 1 auto;
+  height: 2px;
+  min-width: 1.1rem;
+  background: #8a9bb0;
+  transform-origin: center;
+  transform: scaleX(0.15);
+}
+
+.arch-arrow.is-emphasis .arch-arrow-line {
+  background: #34d399;
+  height: 2.5px;
+}
+
+.arch-arrow-head {
+  flex: 0 0 auto;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 8px;
+  border-color: transparent transparent transparent #8a9bb0;
+}
+
+.arch-arrow.is-emphasis .arch-arrow-head {
+  border-left-color: #34d399;
+}
+
+.arch-arrow.is-rev .arch-arrow-head {
+  border-width: 5px 8px 5px 0;
+  border-color: transparent #34d399 transparent transparent;
+}
+
+.arch-arrow.is-up,
+.arch-arrow.is-down {
+  flex-direction: column;
+  min-height: 3.4rem;
+  padding: 0.15rem 0;
+}
+
+.arch-arrow.is-up .arch-arrow-line,
+.arch-arrow.is-down .arch-arrow-line {
+  width: 2px;
+  min-width: 0;
+  height: 1.35rem;
+  flex: 0 0 1.35rem;
+  transform: scaleY(0.15);
+  transform-origin: center;
+}
+
+.arch-arrow.is-up .arch-arrow-head {
+  border-width: 0 5px 8px 5px;
+  border-color: transparent transparent #8a9bb0 transparent;
+}
+
+.arch-arrow.is-down .arch-arrow-head {
+  border-width: 8px 5px 0 5px;
+  border-color: #8a9bb0 transparent transparent transparent;
+}
+
+.arch-arrow-label {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 1.05rem);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: #c4b59a;
+  background: rgba(6, 10, 16, 0.88);
+  padding: 0.08rem 0.35rem;
+  border-radius: 0.25rem;
+}
+
+.arch-arrow.is-up .arch-arrow-label,
+.arch-arrow.is-down .arch-arrow-label {
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .arch-node {
@@ -5894,8 +5949,8 @@ body.is-titles .replay-trailer {
 .island-arch-relays {
   position: relative;
   z-index: 2;
-  margin-top: 0.35rem;
-  padding: 1.45rem 1.2rem 1.2rem;
+  margin-top: 0.85rem;
+  padding: 1.7rem 1.35rem 1.4rem;
   border: 1px dashed rgba(212, 160, 23, 0.38);
   border-radius: 0.9rem;
   background: rgba(6, 10, 16, 0.45);
@@ -5958,9 +6013,9 @@ body.is-titles .replay-trailer {
 
 .arch-relay {
   display: grid;
-  gap: 0.4rem;
-  padding: 0.85rem 0.95rem 0.9rem;
-  border-radius: 0.7rem;
+  gap: 0.55rem;
+  padding: 1.05rem 1.1rem 1.1rem;
+  border-radius: 0.75rem;
   background: rgba(10, 16, 24, 0.72);
   border: 1px solid rgba(148, 163, 184, 0.22);
   opacity: 0;
@@ -5975,7 +6030,7 @@ body.is-titles .replay-trailer {
 .arch-relay-name a {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.98rem;
+  font-size: 1.08rem;
   font-weight: 600;
   color: #f8fafc;
   text-decoration: none;
@@ -5988,8 +6043,8 @@ body.is-titles .replay-trailer {
 }
 
 .arch-relay-name img {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 2.15rem;
+  height: 2.15rem;
   object-fit: cover;
   border-radius: 50%;
   border: 1px solid rgba(232, 213, 176, 0.35);
@@ -6001,20 +6056,20 @@ body.is-titles .replay-trailer {
 
 .arch-relay-line {
   display: grid;
-  grid-template-columns: minmax(6.4rem, 1fr) minmax(3.2rem, 1.1fr) minmax(5.2rem, 0.85fr);
+  grid-template-columns: minmax(7.2rem, 1fr) minmax(2.8rem, 0.85fr) minmax(5.4rem, 0.8fr);
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.55rem;
 }
 
 .arch-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2rem;
-  padding: 0.28rem 0.55rem;
-  border-radius: 0.4rem;
+  min-height: 2.35rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.45rem;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -6034,10 +6089,24 @@ body.is-titles .replay-trailer {
 
 .arch-flow {
   position: relative;
-  height: 0.18rem;
+  height: 0.22rem;
+  margin: 0 0.15rem;
   border-radius: 99px;
   background: rgba(148, 163, 184, 0.28);
-  overflow: hidden;
+  overflow: visible;
+}
+
+.arch-flow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -1px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 7px;
+  border-color: transparent transparent transparent #34d399;
+  transform: translateY(-50%);
 }
 
 .arch-flow::after {
@@ -6048,18 +6117,24 @@ body.is-titles .replay-trailer {
   border-radius: inherit;
   background: linear-gradient(90deg, transparent, #34d399 40%, #f0c14b);
   transform: translateX(-120%);
+  overflow: hidden;
 }
 
 .island-arch.is-presenting .arch-node,
+.island-arch.is-presenting .arch-arrow,
 .island-arch.is-presenting .island-arch-relays,
 .island-arch.is-presenting .arch-relay {
   animation: island-arch-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.island-arch.is-presenting .arch-node[data-arch-beat="1"] { animation-delay: 0.08s; }
-.island-arch.is-presenting .arch-node[data-arch-beat="2"] { animation-delay: 0.48s; }
-.island-arch.is-presenting .arch-node[data-arch-beat="3"] { animation-delay: 0.88s; }
-.island-arch.is-presenting .arch-node[data-arch-beat="4"] { animation-delay: 1.24s; }
+.island-arch.is-presenting .arch-node[data-arch-beat="1"],
+.island-arch.is-presenting .arch-arrow[data-arch-beat="1"] { animation-delay: 0.08s; }
+.island-arch.is-presenting .arch-node[data-arch-beat="2"],
+.island-arch.is-presenting .arch-arrow[data-arch-beat="2"] { animation-delay: 0.48s; }
+.island-arch.is-presenting .arch-node[data-arch-beat="3"],
+.island-arch.is-presenting .arch-arrow[data-arch-beat="3"] { animation-delay: 0.88s; }
+.island-arch.is-presenting .arch-node[data-arch-beat="4"],
+.island-arch.is-presenting .arch-arrow[data-arch-beat="4"] { animation-delay: 1.24s; }
 .island-arch.is-presenting .island-arch-relays { animation-delay: 1.62s; }
 .island-arch.is-presenting .arch-relay { animation-delay: calc(1.86s + (var(--i, 0) * 0.08s)); }
 .island-arch.is-presenting .arch-relay.is-out,
@@ -6067,15 +6142,18 @@ body.is-titles .replay-trailer {
   animation-name: island-arch-in-out;
 }
 
-.island-arch.is-presenting .island-arch-wires path.arch-wire {
-  transition: stroke-dashoffset 0.7s ease;
-  transition-delay: var(--wire-delay, 0s);
-  stroke-dashoffset: 0;
+.island-arch.is-presenting .arch-arrow-line {
+  animation: island-arch-line 0.55s ease forwards;
+  animation-delay: inherit;
 }
 
-.island-arch.is-presented .island-arch-wires path.arch-wire-flow {
-  opacity: 1;
-  animation: island-arch-pulse 1.8s linear infinite;
+.island-arch.is-presenting .arch-arrow.is-up .arch-arrow-line,
+.island-arch.is-presenting .arch-arrow.is-down .arch-arrow-line {
+  animation-name: island-arch-line-v;
+}
+
+.island-arch.is-presented .arch-arrow-line {
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.28);
 }
 
 .island-arch.is-presenting .arch-flow::after {
@@ -6096,8 +6174,12 @@ body.is-titles .replay-trailer {
   }
 }
 
-@keyframes island-arch-pulse {
-  to { stroke-dashoffset: -38; }
+@keyframes island-arch-line {
+  to { transform: scaleX(1); }
+}
+
+@keyframes island-arch-line-v {
+  to { transform: scaleY(1); }
 }
 
 @keyframes island-arch-relay-flow {
@@ -6130,12 +6212,50 @@ body.is-titles .replay-trailer {
     grid-template-columns: 1fr;
     grid-template-areas:
       "spectators"
+      "awatch"
       "website"
+      "aupdates"
       "conversation"
+      "afills"
       "host"
+      "aorders"
       "robinhood";
-    gap: 1.8rem;
+    gap: 0.15rem;
     padding-bottom: 1.2rem;
+  }
+
+  .arch-arrow,
+  .arch-arrow.is-rev {
+    flex-direction: column;
+    min-height: 3.1rem;
+  }
+
+  .arch-arrow-line,
+  .arch-arrow.is-rev .arch-arrow-line {
+    width: 2.5px;
+    min-width: 0;
+    height: 1.2rem;
+    flex: 0 0 1.2rem;
+    transform: scaleY(0.15);
+  }
+
+  .arch-arrow[data-arch-arrow="watch"] .arch-arrow-head {
+    border-width: 8px 5px 0 5px;
+    border-color: #34d399 transparent transparent transparent;
+  }
+
+  .arch-arrow.is-rev {
+    flex-direction: column;
+  }
+
+  .arch-arrow[data-arch-arrow="updates"] .arch-arrow-head {
+    border-width: 0 5px 8px 5px;
+    border-color: transparent transparent #34d399 transparent;
+  }
+
+  .island-arch.is-presenting .arch-arrow[data-arch-arrow="watch"] .arch-arrow-line,
+  .island-arch.is-presenting .arch-arrow[data-arch-arrow="updates"] .arch-arrow-line {
+    animation-name: island-arch-line-v;
   }
 
   .island-arch-relay-board {
@@ -6201,12 +6321,14 @@ body.is-titles .replay-trailer {
   .island-arch.is-presenting .island-arch-relays,
   .island-arch.is-presenting .arch-relay,
   .island-arch.is-presenting .arch-flow::after,
-  .island-arch.is-presented .island-arch-wires path.arch-wire-flow {
+  .island-arch.is-presenting .arch-arrow,
+  .island-arch.is-presenting .arch-arrow-line {
     animation: none !important;
     transition: none !important;
   }
   .reveal,
   .island-arch .arch-node,
+  .island-arch .arch-arrow,
   .island-arch .island-arch-relays,
   .island-arch .arch-relay {
     opacity: 1;
@@ -6215,8 +6337,8 @@ body.is-titles .replay-trailer {
   .island-arch .arch-relay.is-out {
     opacity: 0.55;
   }
-  .island-arch-wires path.arch-wire {
-    stroke-dashoffset: 0;
+  .island-arch .arch-arrow-line {
+    transform: none;
   }
 }
 
