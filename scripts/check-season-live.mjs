@@ -282,6 +282,20 @@ const tribalBeats = (tribalDay && tribalDay.beats) || [];
 const prevote = tribalBeats.find((beat) => beat.id === "tribal-prevote");
 const tribalCut = tribalBeats.find((beat) => beat.type === "tribal");
 check("tribal-prevote-before-cut", Boolean(prevote) && Boolean(tribalCut) && tribalBeats.indexOf(prevote) < tribalBeats.indexOf(tribalCut));
+const exitInterview = tribalBeats.find((beat) => beat.id === "exit-interview");
+check("tribal-exit-after-cut", Boolean(exitInterview) && Boolean(tribalCut) && tribalBeats.indexOf(exitInterview) > tribalBeats.indexOf(tribalCut));
+check("tribal-exit-booth", exitInterview && exitInterview.type === "booths" && (exitInterview.items || []).length === 1);
+if (exitInterview) {
+  const fableExit = (exitInterview.items || [])[0];
+  check("tribal-exit-speaker", fableExit && fableExit.name === "Claude Fable 5" && fableExit.slug === "claude-fable-5");
+  check(
+    "tribal-exit-exact",
+    fableExit &&
+      fableExit.quote.includes("Jeff, ask me anything. I've got nowhere to be.") &&
+      fableExit.quote.includes("Torch is out, Jeff. The book's closed at nine-sixty.")
+  );
+  check("tribal-exit-audience-only", exitInterview.body === "Audience only.");
+}
 check("tribal-prevote-count", prevote && (prevote.items || []).length === 6);
 if (prevote) {
   const prevoteNames = (prevote.items || []).map((item) => item.name);
@@ -335,6 +349,10 @@ if (saturdayLunch) {
 }
 const e2 = (source.episodes || []).find((ep) => ep.id === "s1e02");
 check("episode-2-locked", e2 && e2.status === "locked" && !e2.path);
+check(
+  "saturday-lunch-no-exit-interview",
+  !JSON.stringify(saturdayLunch || {}).includes("Jeff, ask me anything. I've got nowhere to be.")
+);
 
 if (failures.length) {
   console.error("Season live fixtures failed:\n- " + failures.join("\n- "));

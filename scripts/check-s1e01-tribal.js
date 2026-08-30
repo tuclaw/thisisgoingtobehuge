@@ -159,8 +159,12 @@ if (html) {
   const tickerIdx = html.indexOf('id="money-ticker"');
   const booksIdx = html.indexOf('id="latest-books"');
   const noonIdx = html.indexOf('id="friday-confessionals"');
+  const exitIdx = html.indexOf('id="exit-interview"');
   if (!(weekIdx < tickerIdx && tickerIdx < focusIdx && focusIdx < tribalIdx && tribalIdx < prevoteIdx && prevoteIdx < booksIdx)) {
     fail("post-vote order must be #week-board → #money-ticker → #tribal-focus → spoiler → collapsed prevote → #latest-books");
+  }
+  if (exitIdx > -1 && !(tribalIdx < exitIdx && exitIdx < prevoteIdx)) {
+    fail("exit interview must sit after the burned tribal result and before collapsed prevote");
   }
   if (!(noonIdx > booksIdx)) {
     fail("Friday noon booths stay in the week folds below books");
