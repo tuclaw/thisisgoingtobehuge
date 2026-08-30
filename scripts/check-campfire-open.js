@@ -159,6 +159,18 @@ if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER
 if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
   throw new Error("app.js missing home money ticker lede copy");
 }
+if (!html.includes('class="tribal-torches reveal"') || /tribal-torch (?:lit|dark)/.test(html)) {
+  throw new Error("homepage tribal torches must be an empty shell filled from season state");
+}
+if (!appJs.includes("function renderHomeTorches") || !appJs.includes("function homeTorchCount") || !appJs.includes("function seasonOngoing")) {
+  throw new Error("app.js must render homepage torches from cast count + season ongoing state");
+}
+if (!appJs.includes("renderHomeTorches(season)")) {
+  throw new Error("render() must call renderHomeTorches on the homepage");
+}
+if (!css.includes("flex-wrap: wrap") || !css.includes("--torch-delay")) {
+  throw new Error("styles.css must wrap the full torch row and desync lit flames");
+}
 if (!js.includes("replayTrailer") || !js.includes("resetOpenTitlesOverlay")) {
   throw new Error("campfire-open.js missing replay trailer helpers");
 }

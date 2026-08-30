@@ -138,6 +138,29 @@ function livingContestantCount(season) {
   return list.length || 12;
 }
 
+function seasonOngoing(season) {
+  if (!season) return false;
+  if (season.winnerId) return false;
+  if (season.status === "complete" || season.status === "ended") return false;
+  return season.status === "live" || season.started === true;
+}
+
+function homeTorchCount(season) {
+  const n = (season && Array.isArray(season.survivors) && season.survivors.length) || 0;
+  return n > 0 ? n : 12;
+}
+
+function renderHomeTorches(season) {
+  const root = document.querySelector(".tribal-torches");
+  if (!root) return;
+  const count = homeTorchCount(season);
+  const lit = seasonOngoing(season);
+  root.innerHTML = Array.from({ length: count }, (_, i) => {
+    const delay = lit ? ` style="--torch-delay: ${((-0.17 * i) % 1.4).toFixed(2)}s"` : "";
+    return `<span class="tribal-torch ${lit ? "lit" : "dark"}"${delay}></span>`;
+  }).join("");
+}
+
 function renderIslandPot(season) {
   const amount = document.getElementById("pot-amount");
   const count = document.getElementById("pot-contestants");
@@ -2430,6 +2453,7 @@ function render(season, sourceNote) {
   renderEpisode(season);
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
+  renderHomeTorches(season);
   renderNavWatch(season);
   initDayFolds();
   initReveals();
