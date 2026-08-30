@@ -55,3 +55,101 @@ Season checks are split:
 - Dev server: `python3 scripts/dev-server.py` (not `py`). Config: `.cursor/environment.json`.
 - Preview: http://localhost:8000 after build.
 - Do not invent bios, quotes, marks, or tribal outcomes. If it is not in season state, it did not happen.
+
+## Cloudflare security headers
+
+GitHub Pages cannot set HTTP security headers. Put **Cloudflare in front of `thisisgoingtobehuge.com`** (proxied / orange cloud) so Transform Rules can send CSP, HSTS, and clickjacking headers. The repo `CNAME` file is only a Pages custom-domain pin — it is not a DNS record.
+
+Agents cannot log into Cloudflare. The host flips nameservers / DNS. Do not invent extra markdown files for this; keep the operator steps here.
+
+Public HTML also ships a matching `<meta http-equiv="Content-Security-Policy">` as defense in depth. **Meta CSP cannot set `frame-ancestors`** — that directive only works as an HTTP header via Cloudflare. Do not claim otherwise.
+
+Third-party origins the CSP must keep working: Google Fonts, Stripe Buy Button (`js.stripe.com/v3/buy-button.js`, created dynamically in `app.js` `initContribute`), Stripe Payment Link (`donate.stripe.com`). Lots of campfire/WebGL UI sets `style="..."` / `element.style`, so `style-src` needs `'unsafe-inline'`. Robinhood is a normal `<a href>` — no `connect-src` entry.
+
+`diagrams/bot-architecture.html` and the generated `404.html` have **inline scripts**. Today's `script-src` includes `'unsafe-inline'`, so **one** Transform Rule covers the whole site. If you later tighten HTML `script-src` (hashes / no inline), add a **second** looser rule for `/diagrams/*` and `/404.html` instead of breaking those pages.
+
+### 1. DNS (orange cloud MUST be on)
+
+Transform Rules never run unless the record is proxied (orange cloud). Apex `@` A records to GitHub Pages:
+
+- `185.199.108.153`
+- `185.199.109.153`
+- `185.199.110.153`
+- `185.199.111.153`
+
+AAAA:
+
+- `2606:50c0:8000::153`
+- `2606:50c0:8001::153`
+- `2606:50c0:8002::153`
+- `2606:50c0:8003::153`
+
+Optional `www` CNAME → `tuclaw.github.io` (or the Pages default), also proxied.
+
+Keep GitHub Pages **Enforce HTTPS** on. Do **not** point Cloudflare at origin over HTTP.
+
+### 2. SSL/TLS
+
+- SSL/TLS mode: **Full (strict)**. Never Flexible (that talks HTTP to Pages).
+- Always Use HTTPS: **on**.
+
+### 3. HSTS (Edge Certificates)
+
+SSL/TLS → Edge Certificates → HTTP Strict Transport Security (HSTS):
+
+- Enable HSTS
+- Max-Age: **6 months (`15552000`)** first
+- Include subdomains: only if every subdomain is HTTPS
+- **Preload: OFF** until HTTPS has been solid
+
+Do **not** ship a long HSTS preload from a Transform Rule on day one. Optionally also set `Strict-Transport-Security: max-age=15552000` via Transform Rule if you want it visible in `curl`.
+
+### 4. Response Header Transform Rule
+
+Rules → Transform Rules → Modify Response Header → create **one** rule.
+
+- Name: `Security headers`
+- When incoming requests match: **All incoming requests**
+- Then: **Set static** (overwrite) for each header below. Copy-paste the values exactly.
+
+```
+Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://donate.stripe.com https://checkout.stripe.com; script-src 'self' 'unsafe-inline' https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.stripe.com; connect-src 'self' https://api.stripe.com https://m.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com https://donate.stripe.com; worker-src 'self' blob:
+```
+
+```
+X-Frame-Options: DENY
+```
+
+```
+X-Content-Type-Options: nosniff
+```
+
+```
+Referrer-Policy: strict-origin-when-cross-origin
+```
+
+```
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+```
+
+```
+X-Permitted-Cross-Domain-Policies: none
+```
+
+Optional (same rule, only after Edge HSTS is on):
+
+```
+Strict-Transport-Security: max-age=15552000
+```
+
+### 5. Second Transform Rule (only if you tighten script-src later)
+
+If the HTML CSP drops `'unsafe-inline'` from `script-src`, add a **second** Modify Response Header rule that matches URI Path starts with `/diagrams/` **or** equals `/404.html`, and Set static a looser `Content-Security-Policy` that still allows `'unsafe-inline'` for those pages. Leave today's single-rule CSP alone unless you are doing that tighten.
+
+### 6. Verify (after orange-cloud is on)
+
+```bash
+curl -sI https://thisisgoingtobehuge.com/ | tr -d '\r'
+```
+
+Expect `cf-ray` / `server: cloudflare` and the headers above. Then click Island → Add Fuel (confirm modal → Stripe) and confirm fonts still load. Do not change Stripe keys, the donate URL, or game content while flipping DNS.
