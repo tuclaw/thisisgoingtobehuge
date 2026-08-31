@@ -22,10 +22,15 @@ const lastHour = (friday.beats || []).find((beat) => beat.id === "friday-lasthou
 const booths = (friday.beats || []).find((beat) => beat.id === "friday-confessionals");
 if (!lunchBeat) throw new Error("s1e01.json missing friday-lunch beat");
 if (!lastHour || !booths) throw new Error("friday last-hour or noon booths were removed");
-if (beatIds.indexOf("friday-lasthour") > beatIds.indexOf("friday-confessionals")) {
-  throw new Error("friday-lasthour must stay before friday-confessionals");
-}
 if (beatIds.indexOf("friday-lunch") < 0) throw new Error("friday-lunch missing from friday fold");
+if (
+  !(
+    beatIds.indexOf("friday-confessionals") < beatIds.indexOf("friday-lunch") &&
+    beatIds.indexOf("friday-lunch") < beatIds.indexOf("friday-lasthour")
+  )
+) {
+  throw new Error("friday fold order must be noon booths → lunch → last-hour");
+}
 if (lunchBeat.type !== "lunch-chats" || lunchBeat.title !== "Friday lunch · private threads") {
   throw new Error("friday lunch beat title/type mismatch");
 }
@@ -89,6 +94,10 @@ if (html) {
     throw new Error("built friday-lunch is not after Thursday tapes");
   }
   if (boothsIdx < 0) throw new Error("built e01.html lost Friday noon booths");
+  const lastHourIdx = html.indexOf('id="friday-lasthour"');
+  if (!(boothsIdx > -1 && lastHourIdx > -1 && boothsIdx < lunchIdx && lunchIdx < lastHourIdx)) {
+    throw new Error("built friday fold order must be noon booths → lunch → last-hour");
+  }
   // Post-vote: tribal fold is promoted above books; friday lunch still lands in the friday fold.
   expectedThreadIds.forEach((id) => {
     if (!html.includes('id="' + id + '"')) throw new Error("built html missing phone " + id);
