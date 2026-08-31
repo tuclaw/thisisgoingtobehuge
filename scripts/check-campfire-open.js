@@ -168,8 +168,10 @@ if (
 const lettersIdx = html.indexOf('id="letters"');
 const wagerIdx = html.indexOf('id="wager"');
 const castIdx = html.indexOf('id="cast"');
-if (!(castIdx > -1 && lettersIdx > castIdx && wagerIdx > lettersIdx)) {
-  throw new Error("Letters from home must sit between Meet the Contestants and Real Trades");
+const seasonIdx = html.indexOf('id="season"');
+const closeIdx = html.indexOf('id="close"');
+if (!(seasonIdx > -1 && lettersIdx > seasonIdx && closeIdx > lettersIdx)) {
+  throw new Error("Letters from home must sit after The journey is weekly and before the close");
 }
 if (!appJs.includes("function renderLettersFromHome") || !appJs.includes("renderLettersFromHome(season)")) {
   throw new Error("app.js must render Letters from home from the cast + lab CEOs");
