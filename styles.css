@@ -1000,6 +1000,33 @@ img.portrait.photo {
   margin-top: 0.35rem;
 }
 
+/* Prior-episode recap under the week diagram (Episode 2+). */
+.episode-recap {
+  margin: 1.15rem auto 1.35rem;
+  max-width: 32rem;
+  text-align: center;
+}
+
+.episode-recap[hidden] {
+  display: none;
+}
+
+.episode-recap .council-stage {
+  margin: 0 auto;
+  min-height: 0;
+  padding: 1.25rem 1rem 1.15rem;
+  max-width: 32rem;
+}
+
+.episode-recap .tribal-spoiler {
+  width: min(28rem, 100%);
+  margin: 0 auto;
+}
+
+.episode-recap .tribal-spoiler-cover-fallback .spoiler-title {
+  max-width: 20rem;
+}
+
 .tribal-exit {
   display: none;
   margin: 1.35rem 0 0;
@@ -1406,7 +1433,8 @@ img.portrait.photo {
   }
 
   .tribal-spoiler,
-  .tribal-focus .tribal-spoiler {
+  .tribal-focus .tribal-spoiler,
+  .episode-recap .tribal-spoiler {
     width: 100%;
     aspect-ratio: 5 / 3;
     margin-top: 0.2rem;
@@ -1426,6 +1454,14 @@ img.portrait.photo {
   .tribal-spoiler-cover-fallback .spoiler-copy {
     font-size: 0.9rem;
     max-width: 14rem;
+  }
+
+  .episode-recap .council-stage {
+    padding: 0.85rem 0.7rem 0.95rem;
+  }
+
+  .episode-recap .tribal-spoiler-cover-fallback .spoiler-title {
+    max-width: 16rem;
   }
 }
 
