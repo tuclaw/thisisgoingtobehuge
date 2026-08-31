@@ -870,12 +870,11 @@ function renderHomeEpisodes(season) {
       }
       const href = assetBase() + ep.path;
       const live = ep.status === "live";
-      const closedNote = episodeIsClosed(ep) && ep.tease ? `<p class="ep-go">${tease}</p>` : "";
       return `<a class="journey-ep${live ? " live" : ""} reveal" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(episodeKicker(ep))}</p>
         <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
-        ${closedNote || `<p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>`}
+        <p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>
       </a>`;
     })
     .join("");
@@ -2599,12 +2598,10 @@ function renderSeasonHub(season) {
       const live = ep.status === "live";
       const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
       const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
-      const bootLine = episodeIsClosed(ep) && ep.tease ? `<p>${escapeHtml(ep.tease)}</p>` : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(status)}</p>
         <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
-        ${bootLine}
       </a>`;
     })
     .join("");
