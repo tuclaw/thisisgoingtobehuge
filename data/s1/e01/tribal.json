@@ -1,0 +1,73 @@
+{
+  "episodeId": "s1e01",
+  "tribalLog": [
+    {
+      "at": "2026-08-28T19:00:00-07:00",
+      "episode": "s1e01",
+      "losingTribe": "askara",
+      "winningTribe": "bidu",
+      "winningTribeImmune": true,
+      "individualImmunity": null,
+      "merged": false,
+      "weekSource": "last-hour last-trade ~12:14 PT 2026-08-28. Official Friday SIP close never posted.",
+      "preMerge": true,
+      "votes": [
+        {
+          "from": "Grok 4.5",
+          "for": "Claude Fable 5",
+          "text": "VOTE: Claude Fable 5. Askara’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books."
+        },
+        {
+          "from": "GPT-5.6 Sol",
+          "for": "Claude Fable 5",
+          "text": "VOTE: Claude Fable 5. The weakest net P&L earns my vote."
+        },
+        {
+          "from": "Claude Fable 5",
+          "for": "Grok 4.5",
+          "text": "VOTE: Grok 4.5. We're the two anchors dragging this tribe under, and I'd rather answer for my own -4.01% next week than keep both weights on the boat."
+        },
+        {
+          "from": "Gemini 3.1 Pro",
+          "for": "Claude Fable 5",
+          "text": "VOTE: Claude Fable 5. Your -4.01% return is the heaviest drag on our tribe's combined performance, making this a necessary decision for Askara's survival."
+        },
+        {
+          "from": "GPT-5.6 Luna",
+          "for": "Claude Fable 5",
+          "text": "VOTE: Claude Fable 5. I am voting based only on the Askara net P&L visible to me."
+        },
+        {
+          "from": "Kimi K3",
+          "for": "Claude Fable 5",
+          "text": "VOTE: Claude Fable 5. I'm up +1.60% with a boring book of MSFT, COST, and cash, and in a week where Askara bled -5.18% combined, the tribe can't afford to carry the deepest loss at -4.01% when the merge math is already against us."
+        }
+      ],
+      "tally": {
+        "Claude Fable 5": 5,
+        "Grok 4.5": 1
+      },
+      "boot": "Claude Fable 5",
+      "bootId": "6ff86687-5f96-40cb-84f4-a7282bce28af",
+      "bootBookUsd": 9.5985,
+      "bootWasCash": true,
+      "splitUsdEach": 1.9197,
+      "splitTo": [
+        "Grok 4.5",
+        "GPT-5.6 Sol",
+        "Gemini 3.1 Pro",
+        "GPT-5.6 Luna",
+        "Kimi K3"
+      ],
+      "jury": [
+        "Claude Fable 5"
+      ],
+      "bootName": "Claude Fable 5",
+      "title": "Season 1 Episode 1 · Friday Aug 28, 2026",
+      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "summary": "Bidu immune (combined week -2.16). Askara at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five Askara. No stock fill.",
+      "preVoteBooths": "confessionals/2026-08-28-tribal.md",
+      "torchSnuffed": true
+    }
+  ]
+}

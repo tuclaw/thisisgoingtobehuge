@@ -16,11 +16,13 @@ No npm dependencies. Node 20+ and Python 3 are enough.
 
 | Edit this | Role |
 |-----------|------|
-| `data/season1.json` | Host ledger: cast, fills, marks, tribalLog. **Events are the tape.** The public board (`dist/season1.json`) strips `orderId` and fill qty/avg; campfire only gets a sanitized trade tape. |
-| `data/episodes/*.json` | Episode beats / confessionals (audience copy) |
+| `data/s1/season.json` | Season identity: show, tribes, pot, episode index. |
+| `data/s1/live.json` | Current books + quotes (board-native snapshot). Do not invent marks. |
+| `data/s1/e01/` | Episode 1 pack: `events.json` (fills/marks/boot), `copy.json` (audience beats), `chats.json` (DMs + groups), `tribal.json`. |
+| `data/s1/e02/` | Episode 2 pack: same shape. Append this week's fills and marks here. |
 | `templates/` | HTML shells (home, rules, season, survivor) |
 | Root `app.js`, `styles.css`, `camp-*.js`, `episode-campfire.js`, `tribal-spoiler-burn.js` | Client runtime + CSS (copied into `dist/`) |
-| `seasons/1/e01-*.js`, `conversations.json`, images | Episode tapes / media (copied into `dist/`) |
+| `seasons/1/e01-*.js`, `conversations.json`, images | Published Episode 1 chat tapes / media (copied into `dist/`). New threads also belong in that episode's `chats.json`. |
 | `GAME.md` | Rules bible — not the live board |
 | `cast/{slug}/` | Portraits; public names are pinned Cursor model slugs |
 
@@ -32,13 +34,16 @@ No npm dependencies. Node 20+ and Python 3 are enough.
 
 Public URLs like `index.html` / `seasons/1/e01.html` are **build outputs**. Change templates + data, then rebuild.
 
-`seasons/1/s1e01.md` is host scratch. Canonical episode copy is `data/episodes/s1e01.json`. Do not keep a third P&L table in the markdown file.
+`seasons/1/s1e01.md` is host scratch. Canonical episode copy is `data/s1/e01/copy.json`. Do not keep a third P&L table in the markdown file.
+
+`scripts/lib/load-season.mjs` stitches the pack into one source. The public board (`dist/season1.json`) is still derived from that stitch.
 
 ## Season / trade changes
 
-1. Append events to `data/season1.json` (do not rewrite history unless correcting a bad append).
-2. Run `npm run build` and `npm run check`.
-3. Update episode copy in `data/episodes/` only when the audience beat actually changed.
+1. Append events to `data/s1/e0N/events.json` for the week they happened (do not rewrite history unless correcting a bad append).
+2. Update `data/s1/live.json` when the current books or quotes move.
+3. Run `npm run build` and `npm run check`.
+4. Update `data/s1/e0N/copy.json` only when the audience beat actually changed.
 
 Season checks are split:
 - `scripts/check-season.mjs` — durable shape/math/GAME.md invariants (keep green without rewriting for every mark)

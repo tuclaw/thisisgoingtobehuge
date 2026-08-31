@@ -3,11 +3,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { castFromSource, isBoardNative } from "./lib/ledger.mjs";
+import { loadEpisodeCopy, loadSeasonSource } from "./lib/load-season.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const season = JSON.parse(fs.readFileSync(path.join(root, "data/season1.json"), "utf8"));
+const season = loadSeasonSource(root);
 const boardNative = isBoardNative(season);
-const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
+const episode = loadEpisodeCopy(root, "s1e01");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
 const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");

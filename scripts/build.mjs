@@ -12,6 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LEGACY_SLUGS, deriveSeason, castFromSource } from "./lib/ledger.mjs";
 import { collectThreads } from "./lib/collect-threads.mjs";
+import { loadSeasonSource, writeConversationFeed } from "./lib/load-season.mjs";
 import { writeBoard } from "./derive-board.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -592,6 +593,8 @@ function copyStatic() {
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {
     cpSync(conversations, join(dist, "seasons/1/conversations.json"));
+  } else {
+    writeConversationFeed(root, join(dist, "seasons/1/conversations.json"));
   }
 }
 
@@ -646,7 +649,7 @@ ${entries}
 }
 
 export function build(rootDir = root, destDir = dist) {
-  const source = JSON.parse(read(join(rootDir, "data", "season1.json")));
+  const source = loadSeasonSource(rootDir);
   const board = deriveSeason(source);
   if (existsSync(destDir)) rmSync(destDir, { recursive: true, force: true });
   mkdirSync(destDir, { recursive: true });
@@ -661,10 +664,10 @@ export function build(rootDir = root, destDir = dist) {
   const toBuild = [];
   const seen = new Set();
   for (const ep of listed) {
-    let srcRel = ep.source || (ep.id ? `data/episodes/${ep.id}.json` : "");
+    let srcRel = ep.source || (ep.id ? `data/s1/e${String(ep.number).padStart(2, "0")}/copy.json` : "");
     let srcPath = srcRel ? join(rootDir, srcRel) : "";
     if (srcPath && !existsSync(srcPath) && ep.id) {
-      const alt = join(rootDir, "data", "episodes", `${ep.id}.json`);
+      const alt = join(rootDir, "data", "s1", `e${String(ep.number).padStart(2, "0")}`, "copy.json");
       if (existsSync(alt)) srcPath = alt;
     }
     if (!srcPath || !existsSync(srcPath) || seen.has(srcPath)) continue;
@@ -675,7 +678,7 @@ export function build(rootDir = root, destDir = dist) {
     });
   }
   if (!toBuild.length) {
-    const fallback = join(rootDir, "data", "episodes", "s1e01.json");
+    const fallback = join(rootDir, "data", "s1", "e01", "copy.json");
     if (existsSync(fallback)) {
       toBuild.push({ episode: JSON.parse(read(fallback)), out: "seasons/1/e01.html" });
     }

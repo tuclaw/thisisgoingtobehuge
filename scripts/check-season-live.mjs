@@ -7,9 +7,10 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deriveSeason, tickerOf, isBoardNative, castFromSource } from "./lib/ledger.mjs";
+import { loadEpisodeCopy, loadSeasonSource } from "./lib/load-season.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const source = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
+const source = loadSeasonSource(root);
 const board = deriveSeason(source);
 const boardNative = isBoardNative(source);
 const cast = castFromSource(source);
@@ -265,7 +266,7 @@ check("live-opus-lead", opusLive && opusLive.bookUsd === 20.0994 && opusLive.wee
 check("live-grok46-worst", grok46Live && grok46Live.weekPct === -0.11, grok46Live && String(grok46Live.weekPct));
 check("live-fable-last", fableLive && fableLive.bookUsd === 0 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
-const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
+const episodeCopy = loadEpisodeCopy(root, "s1e01");
 const wednesday = (episodeCopy.days || []).find((day) => day.id === "wednesday");
 const wednesdayBeats = (wednesday && wednesday.beats) || [];
 const wednesdayBooks = wednesdayBeats.find((beat) => beat.id === "wednesday-books");
@@ -485,7 +486,7 @@ check("episode-2-live", e2 && e2.status === "live" && e2.path === "seasons/1/e02
 check(
   "episode-2-monday-wire",
   (() => {
-    const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
+    const episode2Copy = loadEpisodeCopy(root, "s1e02");
     const monday = (episode2Copy.days || []).find((day) => day.id === "monday");
     return Boolean(monday && monday.snapshotId === "s1e02-mon-lasthour" && monday.beats?.some((beat) => beat.id === "monday-books"));
   })()
@@ -681,7 +682,7 @@ const noTopUp = fills.filter(
 );
 check("no-episode-2-ten-top-up", noTopUp.length === 0, String(noTopUp.length));
 
-const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
+const episode2Copy = loadEpisodeCopy(root, "s1e02");
 check(
   "e02-no-stale-raise-shortfall",
   !JSON.stringify(episode2Copy).includes("$109.30") &&

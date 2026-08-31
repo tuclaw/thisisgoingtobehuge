@@ -2,16 +2,15 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createRequire } from "node:module";
 import vm from "node:vm";
+import { loadSeasonSource } from "./lib/load-season.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const require = createRequire(import.meta.url);
 const js = readFileSync(join(root, "campfire-open.js"), "utf8");
 const html = readFileSync(join(root, "templates", "island.html"), "utf8");
 const css = readFileSync(join(root, "styles.css"), "utf8");
 const chat = readFileSync(join(root, "camp-chat.js"), "utf8");
-const season = require(join(root, "data", "season1.json"));
+const season = loadSeasonSource(root);
 
 if (html.includes('id="campfire-theater"') || html.includes("campfire-canvas")) {
   throw new Error("templates/island.html must not keep the home campfire theater");

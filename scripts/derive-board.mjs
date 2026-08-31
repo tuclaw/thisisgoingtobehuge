@@ -1,14 +1,16 @@
 #!/usr/bin/env node
-/** Derive the public season board from data/season1.json. */
+/** Derive the public season board from the Season 1 host pack. */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deriveSeason } from "./lib/ledger.mjs";
+import { loadSeasonSource } from "./lib/load-season.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-export function loadSource(sourcePath = join(root, "data", "season1.json")) {
-  return JSON.parse(readFileSync(sourcePath, "utf8"));
+export function loadSource(sourcePath) {
+  if (sourcePath) return JSON.parse(readFileSync(sourcePath, "utf8"));
+  return loadSeasonSource(root);
 }
 
 export function writeBoard(board, destPath) {
@@ -17,7 +19,7 @@ export function writeBoard(board, destPath) {
 }
 
 export function deriveFromRepo(rootDir = root) {
-  const source = loadSource(join(rootDir, "data", "season1.json"));
+  const source = loadSeasonSource(rootDir);
   const board = deriveSeason(source);
   return { source, board };
 }
