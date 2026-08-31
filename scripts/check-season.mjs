@@ -143,6 +143,12 @@ if (boardNative) {
   check("given-is-not-sleeves", source.islandGivenUsd !== start * cast.length);
 }
 check("board-given-total", board.islandGivenUsd === source.islandGivenUsd, String(board.islandGivenUsd));
+check("board-given-start", board.islandGivenStartUsd === source.islandGivenStartUsd, String(board.islandGivenStartUsd));
+check(
+  "board-e2-top-up-each",
+  board.islandEpisode2TopUpEachUsd === source.islandEpisode2TopUpEachUsd,
+  String(board.islandEpisode2TopUpEachUsd)
+);
 check("merged-stays-false-or-true", source.merged === true || source.merged === false);
 
 const firstBoot = (source.events || []).find((event) => event && event.type === "boot");
@@ -210,9 +216,13 @@ for (const s of board.survivors) {
     if (marked != null) return sum + marked;
     return sum + (Number(pos.sizeUsd) || 0);
   }, 0);
+  const giftInvestMark = (source.events || []).find((event) => event && event.id === "s1e02-mon-mid-gift");
+  const cashAddMark = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
+  const e2GiftUsd = giftInvestMark && s.status !== "jury" ? 10 : cashAddMark && s.status !== "jury" ? 10 : 0;
   const gotBootSplit = carryBook != null && carryBook > start + 0.1;
-  const sleeveCap = gotBootSplit && s.status !== "jury" ? carryBook + 0.05 : start + 0.05;
-  check(`sleeve:${s.slug}`, sleeve <= sleeveCap, String(sleeve));
+  const sleeveBasis = carryBook != null ? carryBook : start;
+  const sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + 0.05 : start + 0.05;
+  check(`sleeve:${s.slug}`, sleeve <= sleeveCap, `${sleeve} vs cap ${sleeveCap}`);
 }
 
 for (const tribe of board.tribes) {

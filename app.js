@@ -1806,10 +1806,53 @@ function moneyTickerAllowedRanges() {
     : MONEY_TICKER_RANGES;
 }
 
-function moneyPutInTotal(season) {
+function tickerIsEpisodeTwo(episode) {
+  return Boolean(episode && (episode.id === "s1e02" || Number(episode.number) === 2));
+}
+
+function moneyPutInTotal(season, episode, range) {
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const castN = (season.survivors || []).length || (season.cast || []).length || 12;
-  return roundMoney(start * castN);
+  const original = typeof season.islandGivenStartUsd === "number" ? season.islandGivenStartUsd : start * castN;
+  /* Episode 2 week is funded: dotted island bar is $230 given, not the $120 open. */
+  if (range === "week" && tickerIsEpisodeTwo(episode) && typeof season.islandGivenUsd === "number") {
+    return season.islandGivenUsd;
+  }
+  return original;
+}
+
+function tickerSleevePutIn(season, episode, range) {
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  if (range === "week" && tickerIsEpisodeTwo(episode)) {
+    const extra = typeof season.islandEpisode2TopUpEachUsd === "number" ? season.islandEpisode2TopUpEachUsd : 10;
+    return start + extra;
+  }
+  return start;
+}
+
+function snapshotsInTickerRange(snapshots, episode, range) {
+  const all = Array.isArray(snapshots) ? snapshots.slice() : [];
+  if (!all.length) return [];
+  if (range !== "week") return all;
+  const ep = episode || {};
+  const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
+  const weekEnd = ep.weekEnd
+    ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
+    : ep.tribalAt
+      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
+      : NaN;
+  if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
+  let filtered = all.filter((snap) => {
+    const t = Date.parse(snap.at);
+    return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
+  });
+  /* Episode 2 week starts after the $10 cash add so opening numbers already carry the extra sleeve. */
+  const startId = ep.diagramStartSnapshotId || (tickerIsEpisodeTwo(ep) ? "s1e02-cash-add" : "");
+  if (startId) {
+    const idx = filtered.findIndex((snap) => snap && snap.id === startId);
+    if (idx >= 0) filtered = filtered.slice(idx);
+  }
+  return filtered.length ? filtered : all;
 }
 
 function roundMoney(n) {
@@ -2317,31 +2360,9 @@ function syncMoneyTickerSky(progress) {
 }
 
 function snapshotsForTickerRange(season, range) {
-  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
-  if (!all.length) return [];
-  if (range !== "week") return all;
   /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
-  const bounds = episodeWeekBounds(tickerEpisodeForRange(season));
-  if (!bounds) return all;
-  const filtered = all.filter((snap) => {
-    const t = Date.parse(snap.at);
-    return !Number.isNaN(t) && t >= bounds.startMs && t <= bounds.endMs;
-  });
-  if (filtered.length) return filtered;
-  const prior = [...all].reverse().find((snap) => {
-    const t = Date.parse(snap.at);
-    return !Number.isNaN(t) && t <= bounds.startMs;
-  });
-  if (!prior) return all;
-  return [
-    {
-      ...prior,
-      id: `${prior.id}-week-open`,
-      at: `${bounds.weekStart}T12:00:00-07:00`,
-      label: prior.label || "Week carry",
-      kind: "carry"
-    }
-  ];
+  const ep = tickerEpisodeForRange(season) || currentPageEpisode(season) || season.episode || {};
+  return snapshotsInTickerRange(season.snapshots, ep, range);
 }
 
 function candidateStroke(survivor, indexInTribe) {
@@ -2863,7 +2884,7 @@ function moneyTickerDiagramSeries(season, frames) {
     max = Math.max(max, sleeve) + pad;
     return {
       title: "Contestants",
-      aria: "Contestant sleeves over recorded marks. Dotted line is the $10 put into each book. Voted-out players drop after tribal.",
+      aria: `Contestant sleeves over recorded marks. Dotted line is the $${sleeve.toFixed(0)} put into each book. Voted-out players drop after tribal.`,
       putIn: sleeve,
       putInLabel: `$${sleeve.toFixed(0)} in`,
       min,
@@ -3125,8 +3146,9 @@ function mountMoneyTicker(season, opts) {
   }
   moneyTicker.reducedMotion =
     typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  moneyTicker.sleevePutIn = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
-  moneyTicker.putIn = moneyPutInTotal(season);
+  const pageEp = currentPageEpisode(season) || season.episode || {};
+  moneyTicker.sleevePutIn = tickerSleevePutIn(season, pageEp, moneyTicker.range);
+  moneyTicker.putIn = moneyPutInTotal(season, pageEp, moneyTicker.range);
   const livingPerTribe = Math.max(
     1,
     Math.round(((season.survivors || []).length || 12) / Math.max(1, (season.tribes || []).length || 2))
