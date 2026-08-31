@@ -1786,7 +1786,9 @@ const moneyTicker = {
   raf: null,
   playStartedAt: 0,
   playFromProgress: 0,
-  skyOn: false
+  skyOn: false,
+  chapters: [],
+  chapterIndex: 0
 };
 
 function moneyTickerIsHome() {
@@ -1818,8 +1820,12 @@ function islandHostAddUsd(season) {
   return roundMoney(given - start);
 }
 
-function islandHostAddEpisodeLabel(season) {
-  const n = season && season.episode && Number(season.episode.number);
+function islandHostAddEpisodeLabel(seasonOrEpisode) {
+  const n = Number(
+    seasonOrEpisode && seasonOrEpisode.number != null
+      ? seasonOrEpisode.number
+      : seasonOrEpisode && seasonOrEpisode.episode && seasonOrEpisode.episode.number
+  );
   return Number.isFinite(n) && n > 0 ? `E${n}` : "E2";
 }
 
@@ -2138,6 +2144,43 @@ function syncMoneyTickerSky(progress) {
   if (chart) chart.setAttribute("data-sky-phase", pose.phase);
 }
 
+function listedTickerEpisodes(season) {
+  return (season && Array.isArray(season.episodes) ? season.episodes : []).filter((ep) => {
+    if (!ep || !ep.number || !ep.id) return false;
+    if (ep.status === "locked") return false;
+    return true;
+  });
+}
+
+function snapshotMatchesEpisode(snap, episode) {
+  if (!snap || !episode) return false;
+  const id = String(snap.id || "");
+  const eid = String(episode.id || "");
+  if (eid && id.startsWith(eid)) return true;
+  const t = Date.parse(snap.at);
+  const start = episode.weekStart ? Date.parse(episode.weekStart + "T00:00:00-07:00") : NaN;
+  const end = episode.weekEnd
+    ? Date.parse(episode.weekEnd + "T23:59:59-07:00")
+    : episode.tribalAt
+      ? Date.parse(episode.tribalAt) + 36 * 60 * 60 * 1000
+      : NaN;
+  if (Number.isNaN(t) || Number.isNaN(start) || Number.isNaN(end)) return false;
+  return t >= start && t <= end;
+}
+
+function groupSnapshotsByEpisode(season, snapshots) {
+  const episodes = listedTickerEpisodes(season);
+  const groups = episodes.map((episode) => ({ episode, snaps: [] }));
+  (snapshots || []).forEach((snap) => {
+    const hit =
+      groups.find((g) => String(snap.id || "").startsWith(String(g.episode.id || ""))) ||
+      groups.find((g) => snapshotMatchesEpisode(snap, g.episode)) ||
+      groups[groups.length - 1];
+    if (hit) hit.snaps.push(snap);
+  });
+  return groups.filter((g) => g.snaps.length);
+}
+
 function snapshotsForTickerRange(season, range) {
   const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
   if (!all.length) return [];
@@ -2181,8 +2224,7 @@ function tribeBooksFromFrame(frame, season) {
   return out;
 }
 
-function buildTickerFrames(season, range) {
-  const snaps = snapshotsForTickerRange(season, range);
+function framesFromSnapshots(season, snaps) {
   const sleeve = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const cast = season.survivors || [];
   const tribeIndex = {};
@@ -2192,7 +2234,7 @@ function buildTickerFrames(season, range) {
     s.__tickerTone = candidateStroke(s, tribeIndex[key]);
     tribeIndex[key] += 1;
   });
-  return snaps.map((snap) => {
+  return (snaps || []).map((snap) => {
     const books = {};
     cast.forEach((s) => {
       const row = snap.books && snap.books[s.id];
@@ -2208,6 +2250,90 @@ function buildTickerFrames(season, range) {
     frame.tribes = tribeBooksFromFrame(frame, season);
     return frame;
   });
+}
+
+function buildTickerFrames(season, range) {
+  return framesFromSnapshots(season, snapshotsForTickerRange(season, range));
+}
+
+function buildTickerChapters(season) {
+  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
+  return groupSnapshotsByEpisode(season, all)
+    .map((group) => ({
+      episode: group.episode,
+      frames: framesFromSnapshots(season, group.snaps)
+    }))
+    .filter((ch) => ch.frames.length);
+}
+
+function moneyTickerUsesChapters() {
+  return moneyTicker.range === "season" && Array.isArray(moneyTicker.chapters) && moneyTicker.chapters.length > 0;
+}
+
+function moneyTickerActiveEpisode(season) {
+  if (moneyTickerUsesChapters()) {
+    const ch = moneyTicker.chapters[moneyTicker.chapterIndex];
+    if (ch && ch.episode) return ch.episode;
+  }
+  return currentPageEpisode(season) || (season && season.episode) || null;
+}
+
+function moneyTickerChapterPutIn(season, episode) {
+  const start = moneyPutInTotal(season);
+  const hostAdd = islandHostAddUsd(season);
+  const given = hostAdd != null ? islandGivenUsd(season) : null;
+  const n = episode && Number(episode.number);
+  if (n >= 2 && typeof given === "number" && hostAdd != null) return given;
+  return start;
+}
+
+function setTickerChapter(index, opts) {
+  const chapters = moneyTicker.chapters || [];
+  if (!chapters.length) return false;
+  const i = Math.max(0, Math.min(chapters.length - 1, index));
+  const chapter = chapters[i];
+  moneyTicker.chapterIndex = i;
+  moneyTicker.frames = chapter.frames;
+  moneyTicker.putIn = moneyTickerChapterPutIn(moneyTicker.season, chapter.episode);
+  const end = Math.max(0, chapter.frames.length - 1);
+  if (opts && opts.atEnd) {
+    moneyTicker.index = end;
+    moneyTicker.progress = end;
+  } else {
+    moneyTicker.index = 0;
+    moneyTicker.progress = 0;
+  }
+  return true;
+}
+
+function syncTickerChapterChrome() {
+  const root = moneyTicker.root;
+  if (!root) return;
+  root.querySelectorAll("[data-ticker-chapter]").forEach((btn) => {
+    const i = Number(btn.getAttribute("data-ticker-chapter"));
+    btn.setAttribute("aria-selected", i === moneyTicker.chapterIndex ? "true" : "false");
+  });
+  const scrub = root.querySelector("[data-ticker-scrub]");
+  if (scrub) {
+    scrub.max = String(Math.max(0, moneyTicker.frames.length - 1));
+    if (scrub.value !== String(moneyTicker.progress || 0)) scrub.value = String(moneyTicker.progress || 0);
+  }
+}
+
+function loadTickerChapter(index, opts) {
+  if (!setTickerChapter(index, opts)) return false;
+  if (moneyTicker.root && moneyTicker.root.querySelector(".money-ticker-plot")) {
+    refreshMoneyTickerChart();
+    syncTickerChapterChrome();
+    setMoneyTickerProgress(moneyTicker.progress || 0);
+  }
+  return true;
+}
+
+function advanceTickerChapter() {
+  if (!moneyTickerUsesChapters()) return false;
+  if (moneyTicker.chapterIndex >= moneyTicker.chapters.length - 1) return false;
+  return loadTickerChapter(moneyTicker.chapterIndex + 1);
 }
 
 function stopMoneyTickerPlayback() {
@@ -2254,7 +2380,8 @@ function startMoneyTickerPlayback(opts) {
   if (!moneyTicker.frames.length) return;
   const max = moneyTicker.frames.length - 1;
   if (moneyTicker.reducedMotion) {
-    setMoneyTickerProgress(max);
+    if (moneyTickerUsesChapters()) loadTickerChapter(moneyTicker.chapters.length - 1, { atEnd: true });
+    setMoneyTickerProgress(Math.max(0, moneyTicker.frames.length - 1));
     return;
   }
   const fromStart = !opts || opts.fromStart !== false;
@@ -2282,6 +2409,18 @@ function tickMoneyTickerPlayback(now) {
   setMoneyTickerProgress(progress);
   if (progress >= max - 0.0001) {
     setMoneyTickerProgress(max);
+    if (advanceTickerChapter()) {
+      moneyTicker.playing = true;
+      moneyTicker.playFromProgress = 0;
+      moneyTicker.playStartedAt = performance.now();
+      const playBtn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+      if (playBtn) {
+        playBtn.setAttribute("aria-pressed", "true");
+        playBtn.innerHTML = `<span aria-hidden="true">❚❚</span> Pause`;
+      }
+      moneyTicker.raf = requestAnimationFrame(tickMoneyTickerPlayback);
+      return;
+    }
     stopMoneyTickerPlayback();
     const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
     if (btn) btn.innerHTML = `<span aria-hidden="true">↻</span> Replay`;
@@ -2334,6 +2473,7 @@ function onHomeBooksEvent(event) {
     stopMoneyTickerPlayback();
     moneyTicker.autoplayDone = false;
     moneyTicker.autoplayArmed = false;
+    if (moneyTickerUsesChapters()) loadTickerChapter(0);
     setMoneyTickerProgress(0);
     const playBtn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
     if (playBtn) {
@@ -2672,41 +2812,50 @@ function moneyTickerDiagramSeries(season, frames) {
   }
 
   /* island */
+  const startPutIn = moneyPutInTotal(season);
   const hostAdd = islandHostAddUsd(season);
   const given = hostAdd != null ? islandGivenUsd(season) : null;
-  let min = putIn;
-  let max = putIn;
+  const episode = moneyTickerActiveEpisode(season);
+  const epNum = episode && Number(episode.number);
+  const hostBar = typeof given === "number" && hostAdd != null && epNum >= 2;
+  const chapterBar = moneyTickerUsesChapters() && hostBar;
+  const scalePutIn = chapterBar ? given : startPutIn;
+  let min = scalePutIn;
+  let max = scalePutIn;
   frames.forEach((frame) => {
     if (frame.total < min) min = frame.total;
     if (frame.total > max) max = frame.total;
   });
-  if (typeof given === "number") {
+  if (hostBar) {
     if (given < min) min = given;
     if (given > max) max = given;
+  }
+  if (!chapterBar) {
+    if (startPutIn < min) min = startPutIn;
+    if (startPutIn > max) max = startPutIn;
   }
   const pad = Math.max(0.8, (max - min) * 0.18);
   min -= pad;
   max += pad;
-  const potDown = last && last.total < putIn - 0.00005;
+  const potDown = last && last.total < scalePutIn - 0.00005;
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
-  const putInLabel = `$${putIn.toFixed(0)} in`;
-  const guides = [
-    {
+  const putInLabel = `$${startPutIn.toFixed(0)} in`;
+  const guides = [];
+  const legend = [{ label: "Island pot", color: potStroke }];
+  if (!chapterBar) {
+    guides.push({
       id: "putin",
-      value: putIn,
+      value: startPutIn,
       label: putInLabel,
       className: "money-ticker-putin",
       lineLabel: putInLabel,
       labelClass: "is-putin"
-    }
-  ];
-  const legend = [
-    { label: "Island pot", color: potStroke },
-    { label: putInLabel, color: "rgba(243, 234, 214, 0.92)", swatch: "dash" }
-  ];
+    });
+    legend.push({ label: putInLabel, color: "rgba(243, 234, 214, 0.92)", swatch: "dash" });
+  }
   let aria = "Island pot over recorded marks. Dotted line is money put into the game.";
-  if (typeof given === "number" && hostAdd != null) {
-    const ep = islandHostAddEpisodeLabel(season);
+  if (hostBar) {
+    const ep = islandHostAddEpisodeLabel(episode || season);
     guides.push({
       id: "host-add",
       value: given,
@@ -2716,13 +2865,19 @@ function moneyTickerDiagramSeries(season, frames) {
       labelClass: "is-host-add"
     });
     legend.push({ label: `${ep} host +$${hostAdd.toFixed(0)}`, color: "#f0c14b", swatch: "dash" });
-    aria = `Island pot over recorded marks. Both dotted lines stay on: $${putIn.toFixed(0)} put in, and Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`;
+    aria = chapterBar
+      ? `Island pot for ${episode.title || ep}. Horizontal bar is Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`
+      : `Island pot over recorded marks. Both dotted lines stay on: $${startPutIn.toFixed(0)} put in, and Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`;
   }
+  const title =
+    moneyTickerUsesChapters() && episode
+      ? `Island · ${episode.title || "Episode " + episode.number}`
+      : "Island";
   return {
-    title: "Island",
+    title,
     aria,
-    putIn,
-    putInLabel,
+    putIn: scalePutIn,
+    putInLabel: chapterBar ? `$${given.toFixed(0)} given` : putInLabel,
     guides,
     min,
     max,
@@ -2916,6 +3071,17 @@ function bindMoneyTickerControls() {
       }
       return;
     }
+    const chapterBtn = event.target.closest("[data-ticker-chapter]");
+    if (chapterBtn) {
+      const next = Number(chapterBtn.getAttribute("data-ticker-chapter"));
+      if (!Number.isNaN(next) && next !== moneyTicker.chapterIndex) {
+        const wasPlaying = moneyTicker.playing;
+        stopMoneyTickerPlayback();
+        loadTickerChapter(next);
+        if (wasPlaying) startMoneyTickerPlayback({ fromStart: true });
+      }
+      return;
+    }
     const speedBtn = event.target.closest("[data-ticker-speed]");
     if (speedBtn) {
       const speed = Number(speedBtn.getAttribute("data-ticker-speed"));
@@ -2929,9 +3095,17 @@ function bindMoneyTickerControls() {
         return;
       }
       moneyTicker.autoplayDone = true;
-      startMoneyTickerPlayback({
-        fromStart: (moneyTicker.progress || 0) >= moneyTicker.frames.length - 1 - 0.001
-      });
+      const atEnd = (moneyTicker.progress || 0) >= moneyTicker.frames.length - 1 - 0.001;
+      if (atEnd && moneyTickerUsesChapters()) {
+        if (moneyTicker.chapterIndex < moneyTicker.chapters.length - 1) {
+          loadTickerChapter(moneyTicker.chapterIndex + 1);
+        } else {
+          loadTickerChapter(0);
+        }
+        startMoneyTickerPlayback({ fromStart: true });
+        return;
+      }
+      startMoneyTickerPlayback({ fromStart: atEnd });
     }
   });
 
@@ -2974,14 +3148,21 @@ function mountMoneyTicker(season, opts) {
     Math.round(((season.survivors || []).length || 12) / Math.max(1, (season.tribes || []).length || 2))
   );
   moneyTicker.tribePutIn = roundMoney(moneyTicker.sleevePutIn * livingPerTribe);
-  moneyTicker.frames = buildTickerFrames(season, moneyTicker.range);
+  const keepEnd = opts && opts.keepEnd;
+  moneyTicker.chapters = moneyTicker.range === "season" ? buildTickerChapters(season) : [];
+  moneyTicker.chapterIndex = 0;
+  if (moneyTicker.chapters.length) {
+    const homeStart = homeMode && !keepEnd;
+    setTickerChapter(homeStart ? 0 : moneyTicker.chapters.length - 1, { atEnd: !homeStart });
+  } else {
+    moneyTicker.frames = buildTickerFrames(season, moneyTicker.range);
+  }
   if (!moneyTicker.frames.length) {
     root.innerHTML = "";
     root.hidden = true;
     return;
   }
   root.hidden = false;
-  const keepEnd = opts && opts.keepEnd;
   const end = moneyTicker.frames.length - 1;
   /* Home lands on the start of the books diagram, then the open starts playback. */
   if (homeMode && !keepEnd) {
@@ -3023,9 +3204,22 @@ function mountMoneyTicker(season, opts) {
     })
     .join("");
 
+  const chapterTabs =
+    moneyTickerUsesChapters() && moneyTicker.chapters.length > 1
+      ? `<div class="money-ticker-chapters" role="tablist" aria-label="Episode">
+        ${moneyTicker.chapters
+          .map((ch, i) => {
+            const on = i === moneyTicker.chapterIndex;
+            const label = (ch.episode && ch.episode.title) || `Episode ${ch.episode && ch.episode.number}`;
+            return `<button type="button" role="tab" data-ticker-chapter="${i}" aria-selected="${on ? "true" : "false"}">${escapeHtml(label)}</button>`;
+          })
+          .join("")}
+      </div>`
+      : "";
+
   const lede = homeMode
     ? "See how each tribe and contestant did in the Episode."
-    : "Watch the island, the tribes, or every contestant sleeve. Dotted lines are money put in and the Episode 2 host add.";
+    : "Watch the island, the tribes, or every contestant sleeve. Season plays one episode at a time. Episode 2 moves the bar to $230.";
 
   /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
   const tickerHead = homeMode
@@ -3041,6 +3235,7 @@ function mountMoneyTicker(season, opts) {
       <div class="money-ticker-range" role="tablist" aria-label="Time range">
         ${rangeTabs}
       </div>
+      ${chapterTabs}
       <div class="money-ticker-diagrams" role="tablist" aria-label="Diagram">
         ${diagramTabs}
       </div>

@@ -4698,6 +4698,7 @@ body.is-titles .replay-trailer {
 }
 
 .money-ticker-range,
+.money-ticker-chapters,
 .money-ticker-diagrams {
   display: flex;
   flex-wrap: wrap;
@@ -4706,6 +4707,7 @@ body.is-titles .replay-trailer {
 }
 
 .money-ticker-range button,
+.money-ticker-chapters button,
 .money-ticker-diagrams button {
   appearance: none;
   border: 0;
@@ -4721,12 +4723,17 @@ body.is-titles .replay-trailer {
 }
 
 .money-ticker-range button[aria-selected="true"],
+.money-ticker-chapters button[aria-selected="true"],
 .money-ticker-diagrams button[aria-selected="true"] {
   color: #120c08;
   background: #e89354;
 }
 
 .money-ticker-diagrams button[aria-selected="true"] {
+  background: #f0c14b;
+}
+
+.money-ticker-chapters button[aria-selected="true"] {
   background: #f0c14b;
 }
 
