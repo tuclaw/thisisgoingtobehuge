@@ -155,9 +155,9 @@ function liveSnapshotFromBoard(source, survivors, tribes) {
     };
   }
   return {
-    id: source.liveSnapshotId || "s1e02-mon-mid",
+    id: source.liveSnapshotId || "s1e02-mon-open",
     at: source.markedAt,
-    label: audienceMarkLabel(source.markLabel) || "Mon Aug 31 mid",
+    label: audienceMarkLabel(source.markLabel) || "Mon Aug 31 open",
     kind: "mark",
     tribes: tribeSnap,
     books

@@ -125,8 +125,8 @@ if (!boardNative) {
 } else {
   check("snapshots-for-ticker", Array.isArray(board.snapshots) && board.snapshots.length >= 8, String(board.snapshots && board.snapshots.length));
   check(
-    "live-mid-snapshot",
-    board.snapshots.some((snap) => snap.id === "s1e02-mon-mid" && snap.books && Object.keys(snap.books).length === board.survivors.length)
+    "live-open-snapshot",
+    board.snapshots.some((snap) => snap.id === "s1e02-mon-open" && snap.books && Object.keys(snap.books).length === board.survivors.length)
   );
 }
 
@@ -199,7 +199,12 @@ for (const s of board.survivors) {
   if (!unmarked) {
     check(`book-vs-marks:${s.slug}`, Math.abs(equity - s.bookUsd) < 0.05, `${equity.toFixed(4)} vs ${s.bookUsd}`);
   }
-  const sleeve = s.positions.reduce((sum, pos) => (isCashLeg(pos) ? sum : sum + (Number(pos.sizeUsd) || 0)), 0);
+  const sleeve = s.positions.reduce((sum, pos) => {
+    if (isCashLeg(pos)) return sum;
+    const marked = markedEquity(pos, board.quotes);
+    if (marked != null) return sum + marked;
+    return sum + (Number(pos.sizeUsd) || 0);
+  }, 0);
   const gotBootSplit = carryBook != null && carryBook > start + 0.1;
   const sleeveCap = gotBootSplit && s.status !== "jury" ? carryBook + 0.05 : start + 0.05;
   check(`sleeve:${s.slug}`, sleeve <= sleeveCap, String(sleeve));

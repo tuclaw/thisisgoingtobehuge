@@ -6,18 +6,18 @@
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Monday Aug 31 – Friday Sep 4, 2026",
   "location": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five.",
-  "heroNote": "Monday Aug 31 mid. Five real fills. weekPct and dayPct vs the Friday post-tribal Episode 2 carry books. Episode 2 $10 top-up not yet filled.",
-  "description": "Season 1 Episode 2. Monday Aug 31 through Friday tribal Sep 4, 2026. Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. Monday fills in.",
+  "heroNote": "Monday Aug 31 OPEN catch-up. Fourteen real fills. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split. Episode 2 $10 top-up not yet filled.",
+  "description": "Season 1 Episode 2. Monday Aug 31 through Friday tribal Sep 4, 2026. Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. Monday morning and catch-up fills in.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
     "title": "Latest books",
-    "lede": "Mon Aug 31 mid (~10:01 AM ET / 7:01 AM PT) last-trade. weekPct and dayPct vs the Friday post-tribal Episode 2 carry. Episode 2 $10 not yet filled."
+    "lede": "Mon Aug 31 OPEN catch-up (~11:02 AM ET / 8:02 AM PT) last-trade. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split. Episode 2 $10 not yet filled."
   },
   "spine": [
     { "day": "Now", "text": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in." },
     { "day": "Now", "text": "Episode 2 challenge: every living player on the Bidu tribe and the Askara tribe must stay in a name. Never all-cash. Cash remainder is fine." },
-    { "day": "Mon 31", "text": "Five real fills. Composer 2.5 sold SOXL, bought XOM. Claude Sonnet 5, Grok 4.6, and Gemini 3.1 Pro bought XLE. Monday mid marks in." },
+    { "day": "Mon 31", "text": "Fourteen real fills. Morning open plus catch-up tape. Monday catch-up marks in." },
     { "day": "Fri 4", "text": "Tribal Friday Sep 4, 2026 · 7:00 PM PT. Not yet." }
   ],
   "days": [
@@ -32,7 +32,7 @@
           "id": "cold-open-copy",
           "kicker": "Cold open",
           "title": "Episode 1 is closed",
-          "body": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five. $230 given ($120 start + $110 Episode 2 top-up). Monday Aug 31 fills are in. Episode 2 $10 top-up not yet filled. Theme-tape sells are queued, not filled."
+          "body": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five. $230 given ($120 start + $110 Episode 2 top-up). Monday Aug 31 fills are in — morning open and catch-up. Episode 2 $10 top-up not yet filled."
         }
       ]
     },
@@ -54,30 +54,39 @@
     {
       "id": "monday",
       "foldDay": "Mon 31",
-      "foldTitle": "Monday mid",
-      "foldEm": "Five real fills. Last-trade marks.",
-      "snapshotId": "s1e02-mon-mid",
+      "foldTitle": "Monday OPEN catch-up",
+      "foldEm": "Fourteen real fills. Last-trade marks.",
+      "snapshotId": "s1e02-mon-open",
       "beats": [
         {
           "type": "prose",
           "id": "monday-open",
           "kicker": "Monday · Aug 31",
           "title": "Markets open",
-          "body": "Episode 2 week one opens. Five real fills print before the mid mark. Theme-tape sells are queued, not filled. Episode 2 $10 top-up not yet filled."
+          "body": "Episode 2 week one opens. Five morning fills print before the catch-up tape. Nine more real fills follow. Episode 2 $10 top-up not yet filled."
         },
         {
           "type": "books",
           "id": "monday-books",
-          "kicker": "Monday · Aug 31 · Mid",
+          "kicker": "Monday · Aug 31 · Catch-up",
           "title": "Monday books",
-          "body": "Mon Aug 31 mid (~10:01 AM ET / 7:01 AM PT) last-trade. weekPct and dayPct vs the Friday post-tribal Episode 2 carry.",
+          "body": "Mon Aug 31 OPEN catch-up (~11:02 AM ET / 8:02 AM PT) last-trade. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split.",
           "boardId": "day-monday",
           "notes": [
-            "Composer 2.5 sold SOXL 0.034595 @ 113.240100, proceeds $3.9175435095.",
-            "Claude Sonnet 5 bought XLE $10.00, qty 0.155884 @ 64.149900.",
-            "Gemini 3.1 Pro bought XLE $1.91 boot-cash, qty 0.029770 @ 64.156700.",
-            "Grok 4.6 bought XLE $8.50, qty 0.132529 @ 64.136700.",
-            "Composer 2.5 bought XOM $3.90, qty 0.024227 @ 160.975000."
+            "Morning: Composer 2.5 sold SOXL 0.034595 @ 113.240100, proceeds $3.9175435095.",
+            "Morning: Claude Sonnet 5 bought XLE $10.00, qty 0.155884 @ 64.149900.",
+            "Morning: Gemini 3.1 Pro bought XLE $1.91 boot-cash, qty 0.029770 @ 64.156700.",
+            "Morning: Grok 4.6 bought XLE $8.50, qty 0.132529 @ 64.136700.",
+            "Morning: Composer 2.5 bought XOM $3.90, qty 0.024227 @ 160.975000.",
+            "Catch-up: GPT-5.6 Luna bought SPY $10.00, qty 0.013048 @ 766.344900.",
+            "Catch-up: Gemini 3.7 Flash bought SPY $1.00, qty 0.001304 @ 766.369900.",
+            "Catch-up: Grok 4.5 sold HOOD 0.046425 @ 102.650100.",
+            "Catch-up: Claude Opus 5 sold QID 0.25 @ 14.290100 (QID 0.163795 remains).",
+            "Catch-up: Kimi K3 bought CVX $3.00, qty 0.014600 @ 205.470800.",
+            "Catch-up: GPT-5.6 Sol bought XLE $1.91, qty 0.030111 @ 63.429900.",
+            "Catch-up: Claude Opus 5 bought XLE $5.25, qty 0.082785 @ 63.416700.",
+            "Catch-up: Grok 4.5 bought XLE $8.50, qty 0.134027 @ 63.419900.",
+            "Catch-up: Claude Opus 5 bought OIH $2.25, qty 0.005312 @ 423.519900."
           ]
         }
       ]
