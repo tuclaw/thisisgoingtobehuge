@@ -4835,6 +4835,33 @@ body.is-titles .replay-trailer {
   font-size: 10px;
 }
 
+.money-ticker-day-grid {
+  stroke: rgba(196, 165, 116, 0.14);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.money-ticker-day-tick {
+  stroke: rgba(240, 193, 75, 0.7);
+  stroke-width: 1.25;
+}
+
+.money-ticker-day-dot {
+  fill: #f0c14b;
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-day-grid {
+  stroke: rgba(243, 234, 214, 0.16);
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-day-tick {
+  stroke: rgba(255, 241, 184, 0.8);
+}
+
+.money-ticker-mark-dot {
+  pointer-events: none;
+}
+
 .money-ticker-grid {
   stroke: rgba(196, 165, 116, 0.1);
   stroke-width: 1;
