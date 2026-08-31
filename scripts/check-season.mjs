@@ -4,6 +4,8 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  LEGACY_SLUGS,
+  canonicalCastAsset,
   castFromSource,
   deriveSeason,
   isBoardNative,
@@ -102,13 +104,38 @@ if (!boardNative) {
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
 check("has-positions", board.survivors.every((s) => Array.isArray(s.positions) && s.positions.length > 0));
+for (const s of board.survivors) {
+  check(
+    `portrait-canonical:${s.slug}`,
+    s.portrait === canonicalCastAsset(s.slug, "portrait"),
+    s.portrait
+  );
+  check(
+    `camp-canonical:${s.slug}`,
+    !s.camp || s.camp === canonicalCastAsset(s.slug, "camp"),
+    s.camp
+  );
+  check(
+    `portrait-not-nickname:${s.slug}`,
+    !Object.keys(LEGACY_SLUGS).some((nick) => String(s.portrait || "").includes(`cast/${nick}/`))
+  );
+}
 if (!boardNative) {
   check("snapshots", Array.isArray(board.snapshots) && board.snapshots.length === marks.length);
+} else {
+  check("snapshots-for-ticker", Array.isArray(board.snapshots) && board.snapshots.length >= 8, String(board.snapshots && board.snapshots.length));
+  check(
+    "live-open-snapshot",
+    board.snapshots.some((snap) => snap.id === "s1e02-mon-open" && snap.books && Object.keys(snap.books).length === board.survivors.length)
+  );
 }
 
 const start = board.startingBookUsd;
 if (boardNative) {
   check("given-total", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+  check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
+  check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
+  check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
   check("pot-matches-given", source.islandPotUsd === 230, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
@@ -146,7 +173,9 @@ for (const s of board.survivors) {
   } else if (s.status === "jury" && boardNative && sourceRow && typeof sourceRow.priorMarkUsd === "number") {
     computedWeek = pctRound(((sourceRow.priorMarkUsd - start) / start) * 100);
   } else if (carryBook != null && carryBook > 0) {
-    computedWeek = pctRound(((s.bookUsd - carryBook) / carryBook) * 100);
+    const cashAddMark = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
+    const weekBasis = cashAddMark && s.status !== "jury" ? carryBook + 10 : carryBook;
+    computedWeek = pctRound(((s.bookUsd - weekBasis) / weekBasis) * 100);
   } else if (preBoot != null) {
     computedWeek = pctRound(((preBoot - start) / start) * 100);
   } else {
