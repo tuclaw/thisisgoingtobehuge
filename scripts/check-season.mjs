@@ -132,11 +132,14 @@ if (!boardNative) {
 
 const start = board.startingBookUsd;
 if (boardNative) {
-  check("given-total", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+  check("given-total", source.islandGivenUsd === 240.09, String(source.islandGivenUsd));
   check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
   check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
   check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
-  check("pot-matches-given", source.islandPotUsd === 230, String(source.islandPotUsd));
+  check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
+  check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
+  check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
+  check("pot-matches-given", source.islandPotUsd === 240.09, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
@@ -180,7 +183,11 @@ for (const s of board.survivors) {
     computedWeek = pctRound(((sourceRow.priorMarkUsd - start) / start) * 100);
   } else if (carryBook != null && carryBook > 0) {
     const cashAddMark = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
-    const weekBasis = cashAddMark && s.status !== "jury" ? carryBook + 10 : carryBook;
+    const askaraEvenUp =
+      sourceRow?.tribeId === "askara" && s.status === "active" && typeof source.islandEpisode2EvenUpEachUsd === "number"
+        ? source.islandEpisode2EvenUpEachUsd
+        : 0;
+    const weekBasis = cashAddMark && s.status !== "jury" ? carryBook + 10 + askaraEvenUp : carryBook;
     computedWeek = pctRound(((s.bookUsd - weekBasis) / weekBasis) * 100);
   } else if (preBoot != null) {
     computedWeek = pctRound(((preBoot - start) / start) * 100);
@@ -218,10 +225,14 @@ for (const s of board.survivors) {
   }, 0);
   const giftInvestMark = (source.events || []).find((event) => event && event.id === "s1e02-mon-mid-gift");
   const cashAddMark = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
+  const askaraEvenUp =
+    sourceRow?.tribeId === "askara" && s.status === "active" && typeof source.islandEpisode2EvenUpEachUsd === "number"
+      ? source.islandEpisode2EvenUpEachUsd
+      : 0;
   const e2GiftUsd = giftInvestMark && s.status !== "jury" ? 10 : cashAddMark && s.status !== "jury" ? 10 : 0;
   const gotBootSplit = carryBook != null && carryBook > start + 0.1;
   const sleeveBasis = carryBook != null ? carryBook : start;
-  const sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + 0.05 : start + 0.05;
+  const sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + askaraEvenUp + 0.05 : start + 0.05;
   check(`sleeve:${s.slug}`, sleeve <= sleeveCap, `${sleeve} vs cap ${sleeveCap}`);
 }
 
