@@ -2658,7 +2658,7 @@ function setMoneyTickerProgress(next, opts) {
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
-  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from $${putIn.toFixed(0)} put in`;
+  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
