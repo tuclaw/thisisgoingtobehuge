@@ -200,8 +200,18 @@ if (!(castIdx > -1 && homeVoteIdx > castIdx && homeTribalIdx > homeVoteIdx && be
 if (!html.includes("See who was voted off in episode one")) {
   throw new Error("templates/island.html missing Episode 1 spoiler heading");
 }
-if (!html.includes('id="home-vote-episode"') || !html.includes("Episode 1 Page")) {
-  throw new Error("templates/island.html missing Episode 1 Page button under the spoiler");
+if (!html.includes('id="home-vote-episode"') || !html.includes('href="seasons/1/e01.html">Episode 1 Page')) {
+  throw new Error("templates/island.html Episode 1 Page button must link to seasons/1/e01.html");
+}
+const firstHrefFn = appJs.match(/function firstEpisodeHref\([\s\S]*?\n\}/);
+if (!firstHrefFn) {
+  throw new Error("app.js missing firstEpisodeHref for the home Episode 1 Page button");
+}
+if (!firstHrefFn[0].includes('item.id === "s1e01"') || !firstHrefFn[0].includes("item.number === 1")) {
+  throw new Error("firstEpisodeHref must resolve Episode 1 from the episode list");
+}
+if (firstHrefFn[0].includes("season.episode")) {
+  throw new Error("firstEpisodeHref must not use season.episode (that is the live episode)");
 }
 if (!html.includes("tribal-spoiler-burn.js")) {
   throw new Error("templates/island.html must load tribal-spoiler-burn.js for the home spoiler");
