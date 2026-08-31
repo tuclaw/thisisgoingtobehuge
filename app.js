@@ -3018,9 +3018,7 @@ function wrapTribalSpoiler(innerHtml, options) {
 
 function firstEpisodeHref(season) {
   const episodes = Array.isArray(season && season.episodes) ? season.episodes : [];
-  const ep =
-    (season && season.episode && season.episode.path && season.episode) ||
-    episodes.find((item) => item && (item.number === 1 || item.id === "s1e01"));
+  const ep = episodes.find((item) => item && (item.number === 1 || item.id === "s1e01"));
   return ep && ep.path ? assetUrl(ep.path) : assetUrl("seasons/1/e01.html");
 }
 
