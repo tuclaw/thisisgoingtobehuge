@@ -159,7 +159,9 @@ if (
   !html.includes("Will the contestants get their") ||
   !html.includes("Letters from home") ||
   !html.includes("Help me ask them on twitter") ||
-  !html.includes('id="letter-list"')
+  !html.includes('id="letter-list"') ||
+  !html.includes('id="letter-more"') ||
+  !html.includes("Show more")
 ) {
   throw new Error("templates/island.html missing Letters from home section");
 }
@@ -171,6 +173,13 @@ if (!(castIdx > -1 && lettersIdx > castIdx && wagerIdx > lettersIdx)) {
 }
 if (!appJs.includes("function renderLettersFromHome") || !appJs.includes("renderLettersFromHome(season)")) {
   throw new Error("app.js must render Letters from home from the cast + lab CEOs");
+}
+if (
+  !appJs.includes("function initLettersMore") ||
+  !appJs.includes("LETTERS_PREVIEW_ROWS = 2") ||
+  !appJs.includes('textContent = "Show more"')
+) {
+  throw new Error("app.js must collapse Letters from home to two rows with a Show more control");
 }
 const labJs = readFileSync(join(root, "lab-logos.js"), "utf8");
 [
@@ -209,6 +218,13 @@ if (!labs || typeof labs.ceoFor !== "function") {
 });
 if (!css.includes(".letters-band") || !css.includes(".letter-list") || !css.includes(".letter-handle")) {
   throw new Error("styles.css missing Letters from home styles");
+}
+if (
+  !css.includes(".letter-list:not(.is-open) .letter-item:nth-child(n + 5)") ||
+  !css.includes(".letter-list:not(.is-open) .letter-item:nth-child(n + 3)") ||
+  !css.includes(".letter-more-wrap")
+) {
+  throw new Error("styles.css must collapse Letters from home to two rows until Show more");
 }
 
 if (!html.includes('id="island-bot-diagram"') || !html.includes("archify-embed")) {

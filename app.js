@@ -786,6 +786,45 @@ function castInTribeOrder(season) {
   return people;
 }
 
+const LETTERS_PREVIEW_ROWS = 2;
+const LETTERS_DESKTOP_COLS = 2;
+
+function lettersPreviewCount() {
+  const mobile =
+    typeof window.matchMedia === "function" && window.matchMedia("(max-width: 720px)").matches;
+  return LETTERS_PREVIEW_ROWS * (mobile ? 1 : LETTERS_DESKTOP_COLS);
+}
+
+function syncLettersMore(list, btn) {
+  if (!list || !btn) return;
+  const count = list.querySelectorAll(".letter-item").length;
+  const extra = count > lettersPreviewCount();
+  btn.hidden = !extra;
+  if (!extra) {
+    list.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "Show more";
+  }
+}
+
+function initLettersMore() {
+  const list = document.getElementById("letter-list");
+  const btn = document.getElementById("letter-more");
+  if (!list || !btn || btn.dataset.bound === "1") return;
+  btn.dataset.bound = "1";
+  btn.addEventListener("click", () => {
+    const open = list.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = open ? "Show less" : "Show more";
+  });
+  if (typeof window.matchMedia === "function") {
+    const mq = window.matchMedia("(max-width: 720px)");
+    const onBreak = () => syncLettersMore(list, btn);
+    if (typeof mq.addEventListener === "function") mq.addEventListener("change", onBreak);
+    else if (typeof mq.addListener === "function") mq.addListener(onBreak);
+  }
+}
+
 function renderLettersFromHome(season) {
   const list = document.getElementById("letter-list");
   if (!list) return;
@@ -817,6 +856,14 @@ function renderLettersFromHome(season) {
     .filter(Boolean)
     .join("");
   list.innerHTML = rows;
+  list.classList.remove("is-open");
+  const btn = document.getElementById("letter-more");
+  if (btn) {
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "Show more";
+    syncLettersMore(list, btn);
+  }
+  initLettersMore();
 }
 
 function renderMoneyJourney(season) {

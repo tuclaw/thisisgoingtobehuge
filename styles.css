@@ -5173,10 +5173,28 @@ body.is-titles .replay-trailer {
   gap: 0.7rem;
 }
 
+.letter-list:not(.is-open) .letter-item:nth-child(n + 5) {
+  display: none;
+}
+
 @media (max-width: 720px) {
   .letter-list {
     grid-template-columns: 1fr;
   }
+
+  .letter-list:not(.is-open) .letter-item:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+.letter-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 1.15rem 0 0;
+}
+
+.letter-more-wrap:has(#letter-more[hidden]) {
+  display: none;
 }
 
 .letter-item {
