@@ -170,7 +170,9 @@ for (const s of board.survivors) {
   } else if (s.status === "jury" && boardNative && sourceRow && typeof sourceRow.priorMarkUsd === "number") {
     computedWeek = pctRound(((sourceRow.priorMarkUsd - start) / start) * 100);
   } else if (carryBook != null && carryBook > 0) {
-    computedWeek = pctRound(((s.bookUsd - carryBook) / carryBook) * 100);
+    const cashAddMark = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
+    const weekBasis = cashAddMark && s.status !== "jury" ? carryBook + 10 : carryBook;
+    computedWeek = pctRound(((s.bookUsd - weekBasis) / weekBasis) * 100);
   } else if (preBoot != null) {
     computedWeek = pctRound(((preBoot - start) / start) * 100);
   } else {

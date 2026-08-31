@@ -88,7 +88,7 @@ if (opus) {
   const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
   check("wednesday-opus-sold-btal", !tickers.includes("BTAL") && tickers.includes("QID") && tickers.includes("CASH"));
   check("live-opus-qid-qty", qid && qid.qty === "0.163795", qid && qid.qty);
-  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 0.0725) < 0.0001, String(cashTotal(now.positions)));
+  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 10.0725) < 0.0001, String(cashTotal(now.positions)));
   const opusXle = (now.positions || []).find((pos) => tickerOf(pos) === "XLE");
   const opusOih = (now.positions || []).find((pos) => tickerOf(pos) === "OIH");
   check("live-opus-xle-qty", opusXle && opusXle.qty === "0.082785", opusXle && opusXle.qty);
@@ -107,7 +107,7 @@ if (kimi) {
   check("live-kimi-no-nvda", !tickers.includes("NVDA"));
   check("live-kimi-msft-qty", msft && msft.qty === "0.004037", msft && msft.qty);
   check("live-kimi-cost-qty", cost && cost.qty === "0.002092", cost && cost.qty);
-  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 5.0271) < 0.0001, String(cashTotal(now.positions)));
+  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 15.0271) < 0.0001, String(cashTotal(now.positions)));
   const cvx = (now.positions || []).find((pos) => tickerOf(pos) === "CVX");
   check("live-kimi-cvx-qty", cvx && cvx.qty === "0.014600", cvx && cvx.qty);
   check("live-kimi-no-rank-position", now && now.position == null);
@@ -121,8 +121,8 @@ if (grok45) {
   const xle45 = (now.positions || []).find((pos) => tickerOf(pos) === "XLE");
   check("live-grok45-xle-qty", xle45 && xle45.qty === "0.134027", xle45 && xle45.qty);
   check("live-grok45-sofi", sofi && sofi.qty === "0.105888", sofi && sofi.qty);
-  check("live-grok45-cash", Math.abs(cashTotal(now.positions) - 1.0389) < 0.0001, String(cashTotal(now.positions)));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 11.4265) < 0.0001, now && String(now.bookUsd));
+  check("live-grok45-cash", Math.abs(cashTotal(now.positions) - 11.0389) < 0.0001, String(cashTotal(now.positions)));
+  check("live-grok45-book", now && Math.abs(now.bookUsd - 21.4265) < 0.0001, now && String(now.bookUsd));
   check("live-grok45-no-rank-position", now && now.position == null);
 }
 
@@ -152,7 +152,7 @@ if (grok46) {
   check("live-grok46-no-tsla", !tickers.includes("TSLA"));
   check("live-grok46-xle-qty", xle && xle.qty === "0.132529", xle && xle.qty);
   check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 1.2543) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok46-book", now && Math.abs(now.bookUsd - 9.6527) < 0.0001, now && String(now.bookUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 19.6527) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -235,10 +235,10 @@ if (!boardNative) {
 
 const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -1.25 && biduLive.combinedDayPct === -1.25);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -2.13 && askaraLive.combinedDayPct === -2.13);
-check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 OPEN catch-up") && String(board.markLabel || "").includes("last"));
-check("live-marked-at", board.markedAt === "2026-08-31T15:02:51Z", board.markedAt);
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -0.62 && biduLive.combinedDayPct === -0.62);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -1.15 && askaraLive.combinedDayPct === -1.15);
+check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 OPEN catch-up") && String(board.markLabel || "").includes("Episode 2 $10 cash add"));
+check("live-marked-at", board.markedAt === "2026-08-31T16:00:00Z", board.markedAt);
 check("no-invented-friday-sip", !(source.events || []).some((event) => event && event.type === "mark" && /fri.*sip/i.test(String(event.id || ""))));
 check(
   "live-survivors-open-session",
@@ -250,8 +250,8 @@ check(
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
-check("live-composer-lead", composerLive && composerLive.bookUsd === 10.5126 && composerLive.weekPct === 0.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
-check("live-sonnet-worst", sonnetLive && sonnetLive.weekPct === -1.22, sonnetLive && String(sonnetLive.weekPct));
+check("live-composer-lead", composerLive && composerLive.bookUsd === 20.5126 && composerLive.weekPct === 0.28, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
+check("live-sonnet-worst", sonnetLive && sonnetLive.weekPct === -0.61, sonnetLive && String(sonnetLive.weekPct));
 check("live-fable-last", fableLive && fableLive.bookUsd === 0 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
@@ -463,7 +463,7 @@ check(
   (() => {
     const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
     const monday = (episode2Copy.days || []).find((day) => day.id === "monday");
-    return Boolean(monday && monday.snapshotId === "s1e02-mon-open" && monday.beats?.some((beat) => beat.id === "monday-books"));
+    return Boolean(monday && monday.snapshotId === "s1e02-cash-add" && monday.beats?.some((beat) => beat.id === "monday-books"));
   })()
 );
 check("episode-3-locked", e3 && e3.status === "locked" && !e3.path);
@@ -517,22 +517,22 @@ if (monOpen) {
   check("monday-open-askara-day", askara.combinedDayPct === -2.13, String(askara.combinedDayPct));
 }
 } else {
-  check("monday-open-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === -1.25);
-  check("monday-open-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === -2.13);
+  check("cash-add-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === -0.62);
+  check("cash-add-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === -1.15);
 }
 
 const expectedBooks = {
-  "Grok 4.6": { bookUsd: 9.6527, weekPct: -1.04, dayPct: -1.04 },
-  "Claude Sonnet 5": { bookUsd: 9.8784, weekPct: -1.22, dayPct: -1.22 },
-  "Composer 2.5": { bookUsd: 10.5126, weekPct: 0.55, dayPct: 0.55 },
-  "Claude Opus 5": { bookUsd: 9.9089, weekPct: 0.06, dayPct: 0.06 },
-  "Gemini 3.7 Flash": { bookUsd: 9.9986, weekPct: -0.01, dayPct: -0.01 },
-  "GPT-5.6 Terra": { bookUsd: 9.7115, weekPct: 0.41, dayPct: 0.41 },
-  "Grok 4.5": { bookUsd: 11.4265, weekPct: -1.15, dayPct: -1.15 },
-  "GPT-5.6 Sol": { bookUsd: 11.918, weekPct: -0.27, dayPct: -0.27 },
-  "Gemini 3.1 Pro": { bookUsd: 11.9066, weekPct: -0.55, dayPct: -0.55 },
-  "GPT-5.6 Luna": { bookUsd: 11.9117, weekPct: -0.07, dayPct: -0.07 },
-  "Kimi K3": { bookUsd: 12.0687, weekPct: -0.09, dayPct: -0.09 },
+  "Grok 4.6": { bookUsd: 19.6527, weekPct: -0.51, dayPct: -0.51 },
+  "Claude Sonnet 5": { bookUsd: 19.8784, weekPct: -0.61, dayPct: -0.61 },
+  "Composer 2.5": { bookUsd: 20.5126, weekPct: 0.28, dayPct: 0.28 },
+  "Claude Opus 5": { bookUsd: 19.9089, weekPct: 0.03, dayPct: 0.03 },
+  "Gemini 3.7 Flash": { bookUsd: 19.9986, weekPct: -0.01, dayPct: -0.01 },
+  "GPT-5.6 Terra": { bookUsd: 19.7115, weekPct: 0.2, dayPct: 0.2 },
+  "Grok 4.5": { bookUsd: 21.4265, weekPct: -0.62, dayPct: -0.62 },
+  "GPT-5.6 Sol": { bookUsd: 21.918, weekPct: -0.14, dayPct: -0.14 },
+  "Gemini 3.1 Pro": { bookUsd: 21.9066, weekPct: -0.3, dayPct: -0.3 },
+  "GPT-5.6 Luna": { bookUsd: 21.9117, weekPct: -0.04, dayPct: -0.04 },
+  "Kimi K3": { bookUsd: 22.0687, weekPct: -0.05, dayPct: -0.05 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: -2.91 }
 };
 for (const [name, exp] of Object.entries(expectedBooks)) {
@@ -641,7 +641,7 @@ check(
     e2ChallengeBody.includes("the Askara tribe") &&
     e2ChallengeBody.includes("Episode 2 only") &&
     e2ChallengeBody.includes("cash counts") &&
-    e2ChallengeBody.includes("Monday fills are in")
+    e2ChallengeBody.includes("Monday fills and Episode 2 $10 cash add are in")
 );
 check(
   "e02-challenge-no-shame-list",
