@@ -158,6 +158,7 @@ if (
   !html.includes('id="letters"') ||
   !html.includes("Will the contestants get their") ||
   !html.includes("Letters from home") ||
+  !html.includes("Help me ask them on twitter") ||
   !html.includes('id="letter-list"')
 ) {
   throw new Error("templates/island.html missing Letters from home section");
