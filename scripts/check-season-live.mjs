@@ -238,7 +238,14 @@ const fridayBeats = (friday && friday.beats) || [];
 const fridayBooks = fridayBeats.find((beat) => beat.id === "friday-lasthour");
 const fridayBooths = fridayBeats.find((beat) => beat.id === "friday-confessionals");
 const fridayLunch = fridayBeats.find((beat) => beat.id === "friday-lunch");
-check("friday-lasthour-before-booths", Boolean(fridayBooks) && Boolean(fridayBooths) && fridayBeats.indexOf(fridayBooks) < fridayBeats.indexOf(fridayBooths));
+check(
+  "friday-booths-before-lunch",
+  Boolean(fridayBooths) && Boolean(fridayLunch) && fridayBeats.indexOf(fridayBooths) < fridayBeats.indexOf(fridayLunch)
+);
+check(
+  "friday-lunch-before-lasthour",
+  Boolean(fridayLunch) && Boolean(fridayBooks) && fridayBeats.indexOf(fridayLunch) < fridayBeats.indexOf(fridayBooks)
+);
 check("friday-lunch-beat", Boolean(fridayLunch) && fridayLunch.type === "lunch-chats");
 check("friday-lunch-five-phones", fridayLunch && (fridayLunch.threads || []).length === 5);
 if (fridayLunch) {
