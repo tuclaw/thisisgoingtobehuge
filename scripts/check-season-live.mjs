@@ -43,6 +43,28 @@ check("sold-island-coin-is-event", fills.some((f) => f.side === "sell" && f.tick
 
 const tue = board.snapshots.find((s) => s.id === "s1e01-tue-marks");
 const mon = board.snapshots.find((s) => s.id === "s1e01-mon-open");
+check("ticker-mon-open", Boolean(mon), "missing s1e01-mon-open");
+check("ticker-tue-marks", Boolean(tue), "missing s1e01-tue-marks");
+check(
+  "ticker-live-open",
+  board.snapshots.some((s) => s.id === "s1e02-mon-open"),
+  "missing s1e02-mon-open"
+);
+const listedE1 = (board.episodes || []).find((ep) => ep && ep.id === "s1e01");
+const listedE2 = (board.episodes || []).find((ep) => ep && ep.id === "s1e02");
+check("e1-week-bounds", listedE1 && listedE1.weekStart === "2026-08-24" && listedE1.weekEnd === "2026-08-28");
+check("e2-week-bounds", listedE2 && listedE2.weekStart === "2026-08-31" && listedE2.weekEnd === "2026-09-04");
+if (listedE1 && listedE1.weekStart && listedE1.weekEnd) {
+  const start = Date.parse(listedE1.weekStart + "T00:00:00-07:00");
+  const end = Date.parse(listedE1.weekEnd + "T23:59:59-07:00");
+  const inWeek = board.snapshots.filter((snap) => {
+    const t = Date.parse(snap.at);
+    return !Number.isNaN(t) && t >= start && t <= end;
+  });
+  check("e1-week-has-history", inWeek.some((s) => s.id === "s1e01-mon-open") && inWeek.some((s) => s.id === "s1e01-fri-lasthour"));
+  check("e1-week-excludes-e2-live", !inWeek.some((s) => s.id === "s1e02-mon-open" || s.id === "s1e02-mon-mid"));
+  check("e1-week-enough-frames", inWeek.length >= 6, String(inWeek.length));
+}
 const kimi = cast.find((m) => m.name === "Kimi K3");
 const composer = cast.find((m) => m.name === "Composer 2.5");
 const opus = cast.find((m) => m.name === "Claude Opus 5");

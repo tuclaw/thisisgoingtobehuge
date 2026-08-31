@@ -80,9 +80,10 @@
     const key = String(idOrSlug);
     if (LAB_BY_SLUG[key]) return key;
     if (SLUG_BY_NICK[key]) return SLUG_BY_NICK[key];
-    // portrait path: cast/<slug>/portrait.jpg
+    // portrait path: cast/<slug>/portrait.jpg (or a leftover nickname folder)
     const m = key.match(/cast\/([^/]+)\//);
     if (m && LAB_BY_SLUG[m[1]]) return m[1];
+    if (m && SLUG_BY_NICK[m[1]]) return SLUG_BY_NICK[m[1]];
     return null;
   }
 

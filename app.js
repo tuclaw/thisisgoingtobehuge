@@ -2130,7 +2130,8 @@ function snapshotsForTickerRange(season, range) {
   const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
   if (!all.length) return [];
   if (range !== "week") return all;
-  const ep = season.episode || {};
+  /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
+  const ep = currentPageEpisode(season) || season.episode || {};
   const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
   const weekEnd = ep.weekEnd
     ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
