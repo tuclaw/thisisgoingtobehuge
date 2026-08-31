@@ -492,8 +492,15 @@ function holdLegHtml(pos, season, tribeId) {
   </div>`;
 }
 
+function holdBookWasted(s, season) {
+  if (!s || (s.status !== "jury" && s.status !== "boot")) return false;
+  const ep = currentPageEpisode(season);
+  return Boolean(ep && Number(ep.number) >= 2);
+}
+
 function holdBookHtml(s, tribe, season, rank) {
-  const legs = bookLegs(s);
+  const wasted = holdBookWasted(s, season);
+  const legs = wasted ? [] : bookLegs(s);
   const week = weekPctOf(s);
   const day = dayPctOf(s);
   const model = escapeHtml(modelOf(s));
@@ -506,23 +513,31 @@ function holdBookHtml(s, tribe, season, rank) {
   const bootTag = s.status === "jury" || s.status === "boot" ? `<span class="hold-tag">Voted out · jury</span>` : "";
   const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
   const hasLegs = legs.length > 0;
-  return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}">
-    <button type="button" class="hold-head" aria-expanded="false"${hasLegs ? ` aria-controls="${legsId}"` : ""} ${hasLegs ? "" : "disabled "}>
+  const mark = wasted
+    ? ""
+    : `<span class="hold-mark">
+        <span class="val">${money(s.bookUsd)}</span>
+        <b class="${chgClass(week)}">${pct(week)} week</b>
+        <b class="day ${chgClass(day)}">${pct(day)} today</b>
+      </span>
+      ${immune}${bootTag}`;
+  const wastedStamp = wasted
+    ? `<span class="hold-wasted" aria-hidden="true">WASTED</span>`
+    : "";
+  const wastedLabel = wasted ? ` aria-label="${model} · voted out"` : "";
+  return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}${wasted ? " is-wasted" : ""}">
+    <button type="button" class="hold-head" aria-expanded="false"${hasLegs ? ` aria-controls="${legsId}"` : ""} ${hasLegs ? "" : "disabled "}${wastedLabel}>
       <span class="hold-rank">${pad}</span>
       <span class="hold-face">${face}</span>
       <span class="hold-id">
         <strong>${model}</strong>
         <em>${escapeHtml(tribeName || "")}</em>
       </span>
-      <span class="hold-mark">
-        <span class="val">${money(s.bookUsd)}</span>
-        <b class="${chgClass(week)}">${pct(week)} week</b>
-        <b class="day ${chgClass(day)}">${pct(day)} today</b>
-      </span>
-      ${immune}${bootTag}
+      ${mark}
     </button>
     ${holdChips(legs)}
     <div class="hold-legs" id="${legsId}" hidden>${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
+    ${wastedStamp}
   </article>`;
 }
 
