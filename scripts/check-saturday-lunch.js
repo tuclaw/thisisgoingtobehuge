@@ -76,20 +76,19 @@ if (!tribal.beats.some((beat) => beat.id === "tribal-cut") || !tribal.beats.some
 }
 
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
-if (!e2 || e2.status !== "locked") throw new Error("Episode 2 must stay locked");
-if (e2.path) throw new Error("Episode 2 must stay locked with no path");
-if (fs.existsSync(path.join(root, "data/episodes/s1e02.json"))) {
-  throw new Error("do not publish an Episode 2 page");
-}
-if (fs.existsSync(path.join(root, "dist/seasons/1/e02.html"))) {
-  throw new Error("do not build seasons/1/e02.html");
+if (!e2 || e2.status !== "live") throw new Error("Episode 2 must be live for Monday");
+if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
+if (!fs.existsSync(path.join(root, "data/episodes/s1e02.json"))) {
+  throw new Error("Episode 2 copy missing at data/episodes/s1e02.json");
 }
 
 if (!builder.includes("e01-saturday-lunch.js") || !builder.includes("saturday-lunch")) {
   throw new Error("build.mjs does not render or copy Saturday lunch");
 }
-if (builder.includes("e02.html") || builder.includes("s1e02.json")) {
-  throw new Error("build.mjs must not grow an Episode 2 path");
+
+const e2Copy = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e02.json"), "utf8"));
+if ((e2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch"))) {
+  throw new Error("do not copy Saturday lunch onto Episode 2");
 }
 
 if (episodeCampfire.includes("SATURDAY_LUNCH_CONVERSATIONS")) {
@@ -117,8 +116,15 @@ if (html) {
   if (!(tribalFocus > -1 && weekIdx > -1 && weekIdx < tribalFocus && tribalFocus < satIdx)) {
     throw new Error("saturday lunch must stay in the weekend fold below books, after tribal focus");
   }
-  if (html.includes('href="e02.html"') || html.includes("seasons/1/e02")) {
-    throw new Error("built e01.html leaked an Episode 2 path");
+  if (html.includes("e01-saturday-lunch.js") === false) {
+    throw new Error("built e01.html must keep Saturday lunch");
+  }
+  const e2HtmlPath = path.join(root, "dist/seasons/1/e02.html");
+  if (fs.existsSync(e2HtmlPath)) {
+    const e2html = fs.readFileSync(e2HtmlPath, "utf8");
+    if (e2html.includes('id="saturday-lunch"') || e2html.includes("e01-saturday-lunch.js")) {
+      throw new Error("built e02.html must not mount Saturday lunch");
+    }
   }
   expectedThreadIds.forEach((id) => {
     if (!html.includes('id="' + id + '"')) throw new Error("built html missing phone " + id);

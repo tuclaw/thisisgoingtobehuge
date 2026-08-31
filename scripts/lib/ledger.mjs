@@ -156,14 +156,47 @@ export function applyFill(book, fill, startingBookUsd) {
   };
 }
 
+function eventAtOrBefore(event, throughAt) {
+  if (!throughAt) return true;
+  const at = Date.parse(event && event.at ? event.at : "");
+  const end = Date.parse(throughAt);
+  return Number.isFinite(at) && Number.isFinite(end) && at <= end;
+}
+
 export function fillsThrough(events, throughAt) {
   const fills = (events || []).filter((event) => event && event.type === "fill");
   if (!throughAt) return fills.slice();
-  const end = Date.parse(throughAt);
-  return fills.filter((event) => {
-    const at = Date.parse(event.at || "");
-    return Number.isFinite(at) && at <= end;
-  });
+  return fills.filter((event) => eventAtOrBefore(event, throughAt));
+}
+
+export function applyBoot(books, event, startingBookUsd) {
+  if (!event || !books) return books;
+  const splitUsd =
+    typeof event.splitUsdEach === "number" && Number.isFinite(event.splitUsdEach) ? event.splitUsdEach : 0;
+  const bootId = event.survivorId;
+  if (bootId && books.has(bootId)) {
+    const bootBook = books.get(bootId);
+    books.set(bootId, {
+      ...bootBook,
+      cash: 0,
+      lots: [],
+      cashNote: event.label || bootBook.cashNote,
+      positions: positionsFromLots({ ...bootBook, cashNote: event.label || bootBook.cashNote }, [], 0, startingBookUsd)
+    });
+  }
+  for (const id of event.splitTo || []) {
+    const book = books.get(id);
+    if (!book) continue;
+    const cash = round((Number(book.cash) || 0) + splitUsd, 4);
+    const cashNote = event.splitNote || book.cashNote;
+    books.set(id, {
+      ...book,
+      cash,
+      cashNote,
+      positions: positionsFromLots({ ...book, cashNote }, book.lots, cash, startingBookUsd)
+    });
+  }
+  return books;
 }
 
 export function booksFromFills(cast, events, startingBookUsd, throughAt) {
@@ -171,10 +204,15 @@ export function booksFromFills(cast, events, startingBookUsd, throughAt) {
   for (const member of cast) {
     books.set(member.id, emptyBook(member, startingBookUsd));
   }
-  for (const fill of fillsThrough(events, throughAt)) {
-    const book = books.get(fill.survivorId);
-    if (!book) continue;
-    books.set(fill.survivorId, applyFill(book, fill, startingBookUsd));
+  for (const event of events || []) {
+    if (!event || !eventAtOrBefore(event, throughAt)) continue;
+    if (event.type === "fill") {
+      const book = books.get(event.survivorId);
+      if (!book) continue;
+      books.set(event.survivorId, applyFill(book, event, startingBookUsd));
+    } else if (event.type === "boot") {
+      applyBoot(books, event, startingBookUsd);
+    }
   }
   return books;
 }
