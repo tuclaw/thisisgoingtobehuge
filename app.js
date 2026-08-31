@@ -751,15 +751,18 @@ function renderFaces(season) {
           const model = modelOf(s);
           const slug = slugOf(s);
           const face = s.portrait
-            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
+            ? `<img class="portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
             : totemSvg(s, tribe);
           const mark =
             globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
-              ? LabLogos.labMarkHtml({ slug: slug })
+              ? LabLogos.labMarkHtml({ slug: slug, className: "face-lab-mark" })
               : "";
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}">
-        ${face}
-        <h3>${mark}<span class="face-name">${escapeHtml(model)}</span></h3>
+        <span class="face-photo">${face}</span>
+        <span class="face-id">
+          ${mark ? `<span class="face-lab">${mark}</span>` : ""}
+          <h3 class="face-name">${escapeHtml(model)}</h3>
+        </span>
         <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
       </a>`;
         })
@@ -870,12 +873,11 @@ function renderHomeEpisodes(season) {
       }
       const href = assetBase() + ep.path;
       const live = ep.status === "live";
-      const closedNote = episodeIsClosed(ep) && ep.tease ? `<p class="ep-go">${tease}</p>` : "";
       return `<a class="journey-ep${live ? " live" : ""} reveal" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(episodeKicker(ep))}</p>
         <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
-        ${closedNote || `<p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>`}
+        <p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>
       </a>`;
     })
     .join("");
@@ -2642,12 +2644,10 @@ function renderSeasonHub(season) {
       const live = ep.status === "live";
       const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
       const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
-      const bootLine = episodeIsClosed(ep) && ep.tease ? `<p>${escapeHtml(ep.tease)}</p>` : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(status)}</p>
         <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
-        ${bootLine}
       </a>`;
     })
     .join("");
