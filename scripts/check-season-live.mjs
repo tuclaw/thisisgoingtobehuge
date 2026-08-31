@@ -65,8 +65,12 @@ if (opus) {
   const qid = (now.positions || []).find((pos) => tickerOf(pos) === "QID");
   const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
   check("wednesday-opus-sold-btal", !tickers.includes("BTAL") && tickers.includes("QID") && tickers.includes("CASH"));
-  check("live-opus-qid-qty", qid && qid.qty === "0.413795", qid && qid.qty);
-  check("live-opus-cash-4", cash && Math.abs(Number(cash.sizeUsd) - 4) < 0.05, cash && String(cash.sizeUsd));
+  check("live-opus-qid-qty", qid && qid.qty === "0.163795", qid && qid.qty);
+  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 0.0725) < 0.0001, String(cashTotal(now.positions)));
+  const opusXle = (now.positions || []).find((pos) => tickerOf(pos) === "XLE");
+  const opusOih = (now.positions || []).find((pos) => tickerOf(pos) === "OIH");
+  check("live-opus-xle-qty", opusXle && opusXle.qty === "0.082785", opusXle && opusXle.qty);
+  check("live-opus-oih-qty", opusOih && opusOih.qty === "0.005312", opusOih && opusOih.qty);
 }
 
 const grok45 = cast.find((m) => m.name === "Grok 4.5");
@@ -81,20 +85,22 @@ if (kimi) {
   check("live-kimi-no-nvda", !tickers.includes("NVDA"));
   check("live-kimi-msft-qty", msft && msft.qty === "0.004037", msft && msft.qty);
   check("live-kimi-cost-qty", cost && cost.qty === "0.002092", cost && cost.qty);
-  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 8.0271) < 0.0001, String(cashTotal(now.positions)));
+  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 5.0271) < 0.0001, String(cashTotal(now.positions)));
+  const cvx = (now.positions || []).find((pos) => tickerOf(pos) === "CVX");
+  check("live-kimi-cvx-qty", cvx && cvx.qty === "0.014600", cvx && cvx.qty);
   check("live-kimi-no-rank-position", now && now.position == null);
 }
 if (grok45) {
   const now = board.survivors.find((s) => s.id === grok45.id);
   const tickers = (now.positions || []).map(tickerOf);
-  const hood = (now.positions || []).find((pos) => tickerOf(pos) === "HOOD");
   const sofi = (now.positions || []).find((pos) => tickerOf(pos) === "SOFI");
-  const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
   check("live-grok45-no-coin", !tickers.includes("COIN"));
-  check("live-grok45-hood-island-lot", hood && hood.qty === "0.046425", hood && hood.qty);
+  check("live-grok45-no-hood", !tickers.includes("HOOD"));
+  const xle45 = (now.positions || []).find((pos) => tickerOf(pos) === "XLE");
+  check("live-grok45-xle-qty", xle45 && xle45.qty === "0.134027", xle45 && xle45.qty);
   check("live-grok45-sofi", sofi && sofi.qty === "0.105888", sofi && sofi.qty);
-  check("live-grok45-cash", Math.abs(cashTotal(now.positions) - 4.7734) < 0.0001, String(cashTotal(now.positions)));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 11.3485) < 0.0001, now && String(now.bookUsd));
+  check("live-grok45-cash", Math.abs(cashTotal(now.positions) - 1.0389) < 0.0001, String(cashTotal(now.positions)));
+  check("live-grok45-book", now && Math.abs(now.bookUsd - 11.4265) < 0.0001, now && String(now.bookUsd));
   check("live-grok45-no-rank-position", now && now.position == null);
 }
 
@@ -124,7 +130,7 @@ if (grok46) {
   check("live-grok46-no-tsla", !tickers.includes("TSLA"));
   check("live-grok46-xle-qty", xle && xle.qty === "0.132529", xle && xle.qty);
   check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 1.2543) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok46-book", now && Math.abs(now.bookUsd - 9.7434) < 0.0001, now && String(now.bookUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 9.6527) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -207,23 +213,23 @@ if (!boardNative) {
 
 const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 0.95 && biduLive.combinedDayPct === 0.95);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -2.66 && askaraLive.combinedDayPct === -2.66);
-check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 mid") && String(board.markLabel || "").includes("last-trade"));
-check("live-marked-at", board.markedAt === "2026-08-31T14:11:24Z", board.markedAt);
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -1.25 && biduLive.combinedDayPct === -1.25);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -2.13 && askaraLive.combinedDayPct === -2.13);
+check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 OPEN catch-up") && String(board.markLabel || "").includes("last"));
+check("live-marked-at", board.markedAt === "2026-08-31T15:02:51Z", board.markedAt);
 check("no-invented-friday-sip", !(source.events || []).some((event) => event && event.type === "mark" && /fri.*sip/i.test(String(event.id || ""))));
 check(
-  "live-survivors-mon-mid-session",
+  "live-survivors-open-session",
   board.survivors
     .filter((s) => s.status === "active")
-    .every((s) => s.lastSession === "2026-08-31-mid"),
+    .every((s) => s.lastSession === "2026-08-31-open"),
   board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
 );
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
-const grok45Live = board.survivors.find((s) => s.name === "Grok 4.5");
-check("live-composer-lead", composerLive && composerLive.bookUsd === 10.5536 && composerLive.weekPct === 0.94, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
-check("live-grok45-worst", grok45Live && grok45Live.weekPct === -1.83, grok45Live && String(grok45Live.weekPct));
+const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
+check("live-composer-lead", composerLive && composerLive.bookUsd === 10.5126 && composerLive.weekPct === 0.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
+check("live-sonnet-worst", sonnetLive && sonnetLive.weekPct === -1.22, sonnetLive && String(sonnetLive.weekPct));
 check("live-fable-last", fableLive && fableLive.bookUsd === 0 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
@@ -435,7 +441,7 @@ check(
   (() => {
     const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
     const monday = (episode2Copy.days || []).find((day) => day.id === "monday");
-    return Boolean(monday && monday.snapshotId === "s1e02-mon-mid" && monday.beats?.some((beat) => beat.id === "monday-books"));
+    return Boolean(monday && monday.snapshotId === "s1e02-mon-open" && monday.beats?.some((beat) => beat.id === "monday-books"));
   })()
 );
 check("episode-3-locked", e3 && e3.status === "locked" && !e3.path);
@@ -475,36 +481,36 @@ if (sundayLunch) {
   );
 }
 
-const monMid = board.snapshots.find((s) => s.id === "s1e02-mon-mid");
+const monOpen = board.snapshots.find((s) => s.id === "s1e02-mon-open");
 if (!boardNative) {
-check("monday-mid-mark", Boolean(monMid), "missing s1e02-mon-mid");
-if (monMid) {
-  check("monday-mid-mark-label", String(monMid.label || "").includes("Mon Aug 31 mid"));
-  check("monday-mid-at", monMid.at === "2026-08-31T14:01:16Z", monMid.at);
-  const bidu = (monMid.tribes && monMid.tribes.bidu) || {};
-  const askara = (monMid.tribes && monMid.tribes.askara) || {};
-  check("monday-mid-bidu-week", bidu.combinedWeekPct === 0.95, String(bidu.combinedWeekPct));
-  check("monday-mid-bidu-day", bidu.combinedDayPct === 0.95, String(bidu.combinedDayPct));
-  check("monday-mid-askara-week", askara.combinedWeekPct === -2.66, String(askara.combinedWeekPct));
-  check("monday-mid-askara-day", askara.combinedDayPct === -2.66, String(askara.combinedDayPct));
+check("monday-open-mark", Boolean(monOpen), "missing s1e02-mon-open");
+if (monOpen) {
+  check("monday-open-mark-label", String(monOpen.label || "").includes("Mon Aug 31 OPEN catch-up"));
+  check("monday-open-at", monOpen.at === "2026-08-31T15:02:51Z", monOpen.at);
+  const bidu = (monOpen.tribes && monOpen.tribes.bidu) || {};
+  const askara = (monOpen.tribes && monOpen.tribes.askara) || {};
+  check("monday-open-bidu-week", bidu.combinedWeekPct === -1.25, String(bidu.combinedWeekPct));
+  check("monday-open-bidu-day", bidu.combinedDayPct === -1.25, String(bidu.combinedDayPct));
+  check("monday-open-askara-week", askara.combinedWeekPct === -2.13, String(askara.combinedWeekPct));
+  check("monday-open-askara-day", askara.combinedDayPct === -2.13, String(askara.combinedDayPct));
 }
 } else {
-  check("monday-mid-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === 0.95);
-  check("monday-mid-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === -2.66);
+  check("monday-open-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === -1.25);
+  check("monday-open-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === -2.13);
 }
 
 const expectedBooks = {
-  "Grok 4.6": { bookUsd: 9.7434, weekPct: -0.11, dayPct: -0.11 },
-  "Claude Sonnet 5": { bookUsd: 9.9851, weekPct: -0.15, dayPct: -0.15 },
-  "Composer 2.5": { bookUsd: 10.5536, weekPct: 0.94, dayPct: 0.94 },
-  "Claude Opus 5": { bookUsd: 9.913, weekPct: 0.1, dayPct: 0.1 },
-  "Gemini 3.7 Flash": { bookUsd: 10, weekPct: 0, dayPct: 0 },
-  "GPT-5.6 Terra": { bookUsd: 9.6886, weekPct: 0.17, dayPct: 0.17 },
-  "Grok 4.5": { bookUsd: 11.3485, weekPct: -1.83, dayPct: -1.83 },
-  "GPT-5.6 Sol": { bookUsd: 11.9129, weekPct: -0.31, dayPct: -0.31 },
-  "Gemini 3.1 Pro": { bookUsd: 11.9305, weekPct: -0.35, dayPct: -0.35 },
-  "GPT-5.6 Luna": { bookUsd: 11.9197, weekPct: 0, dayPct: 0 },
-  "Kimi K3": { bookUsd: 12.0589, weekPct: -0.17, dayPct: -0.17 },
+  "Grok 4.6": { bookUsd: 9.6527, weekPct: -1.04, dayPct: -1.04 },
+  "Claude Sonnet 5": { bookUsd: 9.8784, weekPct: -1.22, dayPct: -1.22 },
+  "Composer 2.5": { bookUsd: 10.5126, weekPct: 0.55, dayPct: 0.55 },
+  "Claude Opus 5": { bookUsd: 9.9089, weekPct: 0.06, dayPct: 0.06 },
+  "Gemini 3.7 Flash": { bookUsd: 9.9986, weekPct: -0.01, dayPct: -0.01 },
+  "GPT-5.6 Terra": { bookUsd: 9.7115, weekPct: 0.41, dayPct: 0.41 },
+  "Grok 4.5": { bookUsd: 11.4265, weekPct: -1.15, dayPct: -1.15 },
+  "GPT-5.6 Sol": { bookUsd: 11.918, weekPct: -0.27, dayPct: -0.27 },
+  "Gemini 3.1 Pro": { bookUsd: 11.9066, weekPct: -0.55, dayPct: -0.55 },
+  "GPT-5.6 Luna": { bookUsd: 11.9117, weekPct: -0.07, dayPct: -0.07 },
+  "Kimi K3": { bookUsd: 12.0687, weekPct: -0.09, dayPct: -0.09 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: -2.91 }
 };
 for (const [name, exp] of Object.entries(expectedBooks)) {
@@ -521,6 +527,12 @@ if (boardNative) {
   const geminiPro = (source.survivors || []).find((s) => s.name === "Gemini 3.1 Pro");
   const composerNow = (source.survivors || []).find((s) => s.name === "Composer 2.5");
   const grok46Now = (source.survivors || []).find((s) => s.name === "Grok 4.6");
+  const grok45Now = (source.survivors || []).find((s) => s.name === "Grok 4.5");
+  const opusNow = (source.survivors || []).find((s) => s.name === "Claude Opus 5");
+  const flashNow = (source.survivors || []).find((s) => s.name === "Gemini 3.7 Flash");
+  const lunaNow = (source.survivors || []).find((s) => s.name === "GPT-5.6 Luna");
+  const solNow = (source.survivors || []).find((s) => s.name === "GPT-5.6 Sol");
+  const kimiNow = (source.survivors || []).find((s) => s.name === "Kimi K3");
   check(
     "sold-soxl-is-position",
     composerNow && (composerNow.positions || []).some((pos) => pos.note && pos.note.includes("6a9586b0"))
@@ -540,6 +552,34 @@ if (boardNative) {
   check(
     "bought-xom-composer-is-position",
     composerNow && positionOrder(composerNow.positions, "XOM", "6a9586f6-af58-4788-8c86-8ee3115db2d8")
+  );
+  check(
+    "catch-up-luna-spy-is-position",
+    lunaNow && positionOrder(lunaNow.positions, "SPY", "6a959735-05c6-4b55-84f6-bf374ffd4413")
+  );
+  check(
+    "catch-up-flash-spy-is-position",
+    flashNow && positionOrder(flashNow.positions, "SPY", "6a959735-3b50-4cb0-b5da-3bee50d170d6")
+  );
+  check(
+    "catch-up-grok45-xle-is-position",
+    grok45Now && positionOrder(grok45Now.positions, "XLE", "6a959768-83d9-404a-95e6-dd4e1d805028")
+  );
+  check(
+    "catch-up-opus-xle-is-position",
+    opusNow && positionOrder(opusNow.positions, "XLE", "6a959768-2e1c-420a-8456-0b32c6d0d659")
+  );
+  check(
+    "catch-up-opus-oih-is-position",
+    opusNow && positionOrder(opusNow.positions, "OIH", "6a959769-ddf3-4640-98eb-aef746d11700")
+  );
+  check(
+    "catch-up-sol-xle-is-position",
+    solNow && positionOrder(solNow.positions, "XLE", "6a95974e-7dcb-48c7-a9f6-c669792fa852")
+  );
+  check(
+    "catch-up-kimi-cvx-is-position",
+    kimiNow && positionOrder(kimiNow.positions, "CVX", "6a95974e-9fda-43e9-ac58-d52a2a067a15")
   );
 } else {
 check("sold-soxl-is-event", fills.some((f) => f.side === "sell" && f.ticker === "SOXL" && f.orderId === "6a9586b0-c85e-446f-8f58-deeb6898cca8"));
