@@ -233,6 +233,7 @@ for (const s of board.survivors) {
   const gotBootSplit = carryBook != null && carryBook > start + 0.1;
   const sleeveBasis = carryBook != null ? carryBook : start;
   let sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + askaraEvenUp + 0.05 : start + 0.05;
+  // Remake fixture exception: post-gift intraday marks can drift stock above carry+sleeve cap.
   if (giftInvestMark && s.status !== "jury") {
     sleeveCap = Math.max(sleeveCap, s.bookUsd + 0.05);
   }

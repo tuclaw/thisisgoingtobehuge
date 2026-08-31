@@ -246,7 +246,7 @@ const askaraLive = board.tribes.find((t) => t.id === "askara");
 check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 0.29 && biduLive.combinedDayPct === 0.29);
 check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === 0.12 && askaraLive.combinedDayPct === 0.12);
 check("live-mark-label", board.markLabel === "Mon Aug 31 last-hour · last-trade ~12:36 PM PT");
-check("source-mark-label", source.markLabel === "Mon Aug 31 last-hour · Robinhood last-trade ~12:36 PM PT");
+check("source-mark-label", source.markLabel === "Mon Aug 31 last-hour · last-trade ~12:36 PM PT");
 check("live-marked-at", board.markedAt === "2026-08-31T19:36:30Z", board.markedAt);
 check("no-invented-friday-sip", !(source.events || []).some((event) => event && event.type === "mark" && /fri.*sip/i.test(String(event.id || ""))));
 check(
@@ -711,7 +711,7 @@ check(
     e2ChallengeBody.includes("the Askara tribe") &&
     e2ChallengeBody.includes("Episode 2 only") &&
     e2ChallengeBody.includes("cash counts") &&
-    e2ChallengeBody.includes("Monday last-hour fills are in") &&
+    e2ChallengeBody.includes("Monday fills are in") &&
     e2ChallengeBody.includes("Each living player received $10 more")
 );
 check(
@@ -730,7 +730,7 @@ check(
     rulesHtml.includes("the Bidu tribe") &&
     rulesHtml.includes("the Askara tribe") &&
     rulesHtml.includes("cash counts") &&
-    rulesHtml.includes("Monday last-hour fills are in")
+    rulesHtml.includes("Monday fills are in")
 );
 check("rules-cash-counts-stays", rulesHtml.includes("Stocks or cash. Cash counts."));
 check(
