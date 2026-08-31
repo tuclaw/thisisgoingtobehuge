@@ -103,8 +103,8 @@ if (
 ) {
   throw new Error("app.js season ticker must play each episode graph one at a time");
 }
-if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("moves the bar to $230")) {
-  throw new Error("app.js must say Season plays one episode graph and moves the bar to $230");
+if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("moves the bar to ${givenLede}")) {
+  throw new Error("app.js must say Season plays one episode graph and moves the bar to the live given total");
 }
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
@@ -208,8 +208,8 @@ const seasonSource = JSON.parse(readFileSync(join(root, "data", "season1.json"),
 if (hostHelpers.moneyPutInTotal(seasonSource) !== 120) {
   throw new Error("moneyPutInTotal should stay $120 season start");
 }
-if (hostHelpers.islandHostAddUsd(seasonSource) !== 110) {
-  throw new Error("islandHostAddUsd should be Episode 2 host +$110, got " + hostHelpers.islandHostAddUsd(seasonSource));
+if (hostHelpers.islandHostAddUsd(seasonSource) !== 120.09) {
+  throw new Error("islandHostAddUsd should be Episode 2 host +$120.09, got " + hostHelpers.islandHostAddUsd(seasonSource));
 }
 if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E2") {
   throw new Error("islandHostAddEpisodeLabel should be E2");
@@ -281,8 +281,8 @@ const chapterPutIn = new Function(`
 if (chapterPutIn.moneyTickerChapterPutIn(seasonSource, { number: 1 }) !== 120) {
   throw new Error("Episode 1 chapter bar should stay $120");
 }
-if (chapterPutIn.moneyTickerChapterPutIn(seasonSource, { number: 2 }) !== 230) {
-  throw new Error("Episode 2 chapter bar should move to $230 given");
+if (chapterPutIn.moneyTickerChapterPutIn(seasonSource, { number: 2 }) !== 240.09) {
+  throw new Error("Episode 2 chapter bar should move to $240.09 given");
 }
 
 if (
@@ -292,7 +292,7 @@ if (
   !appJs.includes("diagramStartSnapshotId") ||
   !appJs.includes("s1e02-cash-add")
 ) {
-  throw new Error("app.js must start Episode 2 week at the cash-add with the funded $230 / $20 put-in");
+  throw new Error("app.js must start Episode 2 week at the cash-add with the funded given / $20 put-in");
 }
 
 const tickerStart = appJs.indexOf("function tickerIsEpisodeTwo");
@@ -306,7 +306,7 @@ const tickerHelpers = new Function(`
 `)();
 const e2Season = {
   startingBookUsd: 10,
-  islandGivenUsd: 230,
+  islandGivenUsd: 240.09,
   islandGivenStartUsd: 120,
   islandEpisode2TopUpEachUsd: 10,
   survivors: Array.from({ length: 12 }, (_, i) => ({ id: "s" + i })),
@@ -327,8 +327,8 @@ const e1Ep = { id: "s1e01", number: 1, weekStart: "2026-08-24", weekEnd: "2026-0
 if (!tickerHelpers.tickerIsEpisodeTwo(e2Ep) || tickerHelpers.tickerIsEpisodeTwo(e1Ep)) {
   throw new Error("tickerIsEpisodeTwo should match Episode 2 only");
 }
-if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "week") !== 230) {
-  throw new Error("Episode 2 week island bar must be $230 given");
+if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "week") !== 240.09) {
+  throw new Error("Episode 2 week island bar must be $240.09 given");
 }
 if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "season") !== 120) {
   throw new Error("Episode 2 season bar must stay the $120 open");
@@ -343,7 +343,7 @@ if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "season") !== 20) {
   throw new Error("Episode 2 season sleeves must start at $20 once the extra $10 is on the books");
 }
 if (!appJs.includes("fundedBar") || !appJs.includes('moneyTicker.range === "week"')) {
-  throw new Error("Episode 2 week island must use the funded $230 bar, not the $120 open");
+  throw new Error("Episode 2 week island must use the funded given bar, not the $120 open");
 }
 if (tickerHelpers.tickerSleevePutIn(e2Season, e1Ep, "week") !== 10) {
   throw new Error("Episode 1 week sleeves must stay $10");

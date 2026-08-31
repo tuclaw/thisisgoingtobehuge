@@ -1837,7 +1837,7 @@ function moneyPutInTotal(season, episode, range) {
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const castN = (season.survivors || []).length || (season.cast || []).length || 12;
   const original = typeof season.islandGivenStartUsd === "number" ? season.islandGivenStartUsd : start * castN;
-  /* Episode 2 week is funded: dotted island bar is $230 given, not the $120 open. */
+  /* Episode 2 week is funded: dotted island bar is islandGivenUsd, not the $120 open. */
   if (range === "week" && tickerIsEpisodeTwo(episode) && typeof season.islandGivenUsd === "number") {
     return season.islandGivenUsd;
   }
@@ -2888,7 +2888,7 @@ function moneyTickerDiagramSeries(season, frames) {
   const episode = moneyTickerActiveEpisode(season);
   const epNum = episode && Number(episode.number);
   const hostBar = typeof given === "number" && hostAdd != null && epNum >= 2;
-  /* E2 week and E2 season chapter start at the cash-add — only the $230 given bar. */
+  /* E2 week and E2 season chapter start at the cash-add — only the given bar. */
   const fundedBar = hostBar && (moneyTickerUsesChapters() || moneyTicker.range === "week");
   const scalePutIn = fundedBar ? given : startPutIn;
   let min = scalePutIn;
@@ -2930,15 +2930,15 @@ function moneyTickerDiagramSeries(season, frames) {
     guides.push({
       id: "host-add",
       value: given,
-      label: `$${given.toFixed(0)} given`,
+      label: `${potMoney(given)} given`,
       className: "money-ticker-host-add",
-      lineLabel: `${ep} host +$${hostAdd.toFixed(0)}`,
+      lineLabel: `${ep} host +${potMoney(hostAdd)}`,
       labelClass: "is-host-add"
     });
-    legend.push({ label: `${ep} host +$${hostAdd.toFixed(0)}`, color: "#f0c14b", swatch: "dash" });
+    legend.push({ label: `${ep} host +${potMoney(hostAdd)}`, color: "#f0c14b", swatch: "dash" });
     aria = fundedBar
-      ? `Island pot for ${episode.title || ep}. Horizontal bar is Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`
-      : `Island pot over recorded marks. Both dotted lines stay on: $${startPutIn.toFixed(0)} put in, and Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`;
+      ? `Island pot for ${episode.title || ep}. Horizontal bar is Episode ${ep.slice(1)} host +${potMoney(hostAdd)} at ${potMoney(given)} given.`
+      : `Island pot over recorded marks. Both dotted lines stay on: $${startPutIn.toFixed(0)} put in, and Episode ${ep.slice(1)} host +${potMoney(hostAdd)} at ${potMoney(given)} given.`;
   }
   const title =
     moneyTickerUsesChapters() && episode
@@ -2948,7 +2948,7 @@ function moneyTickerDiagramSeries(season, frames) {
     title,
     aria,
     putIn: scalePutIn,
-    putInLabel: fundedBar ? `$${given.toFixed(0)} given` : putInLabel,
+    putInLabel: fundedBar ? `${potMoney(given)} given` : putInLabel,
     guides,
     min,
     max,
@@ -3289,9 +3289,11 @@ function mountMoneyTicker(season, opts) {
       </div>`
       : "";
 
+  const givenNow = islandGivenUsd(season);
+  const givenLede = typeof givenNow === "number" ? potMoney(givenNow) : "$240.09";
   const lede = homeMode
     ? "See how each tribe and contestant did in the Episode."
-    : "Watch the island, the tribes, or every contestant sleeve. Season plays one episode at a time. Episode 2 moves the bar to $230.";
+    : `Watch the island, the tribes, or every contestant sleeve. Season plays one episode at a time. Episode 2 moves the bar to ${givenLede}.`;
 
   /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
   const tickerHead = homeMode
