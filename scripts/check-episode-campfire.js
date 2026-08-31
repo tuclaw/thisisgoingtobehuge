@@ -133,6 +133,9 @@ if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("dat
 if (!appJs.includes("function survivorLivingAt") || !appJs.includes("Voted-out players drop after tribal")) {
   throw new Error("app.js money ticker must drop voted-out contestants after tribal");
 }
+if (!appJs.includes("function moneyTickerLiveNowX") || !appJs.includes("data-ticker-live-now")) {
+  throw new Error("app.js money ticker must draw a live vertical line for the current point in the week");
+}
 
 const axisStart = appJs.indexOf("function pacificDateParts");
 const axisEnd = appJs.indexOf("function pacificHourDecimal");

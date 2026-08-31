@@ -1947,6 +1947,33 @@ function moneyTickerXFromAxisT(axisT, axisMax) {
   return padL + (max ? (t / max) * w : 0);
 }
 
+function moneyTickerLiveNowX(frames, range) {
+  const mode = range || (moneyTicker && moneyTicker.range) || "week";
+  const now = new Date();
+  const nowIso = now.toISOString();
+  if (mode === "week") {
+    const bounds = episodeWeekBounds(tickerEpisodeForRange(moneyTicker.season));
+    if (!bounds) return null;
+    const nowMs = now.getTime();
+    if (nowMs < bounds.startMs || nowMs > bounds.endMs) return null;
+    return moneyTickerXFromAxisT(weekdaySlotT(nowIso), 5);
+  }
+  const keys = [];
+  const seen = new Set();
+  (frames || []).forEach((frame) => {
+    const parts = pacificDateParts(frame && frame.at);
+    if (!parts || seen.has(parts.key)) return;
+    seen.add(parts.key);
+    keys.push(parts.key);
+  });
+  const parts = pacificDateParts(nowIso);
+  if (!parts) return null;
+  const day = keys.indexOf(parts.key);
+  if (day < 0) return null;
+  const hour = pacificHourDecimal(nowIso);
+  return moneyTickerXFromAxisT(day + Math.min(0.99, hour / 24), Math.max(1, keys.length));
+}
+
 function moneyTickerWeekdayTicks(frames, range) {
   const mode = range || (moneyTicker && moneyTicker.range) || "week";
   if (mode === "week") {
@@ -2845,6 +2872,14 @@ function renderMoneyTickerSvg(season, frames) {
   const playProgress =
     typeof moneyTicker.progress === "number" ? moneyTicker.progress : moneyTicker.index || 0;
   const playX = moneyTickerXAt(playProgress, frames.length);
+  const liveNowX = moneyTickerLiveNowX(frames, moneyTicker.range);
+  const liveNow =
+    liveNowX == null
+      ? ""
+      : `<g class="money-ticker-live-now" data-ticker-live-now>
+        <line x1="${liveNowX.toFixed(2)}" y1="16" x2="${liveNowX.toFixed(2)}" y2="198" />
+        <text x="${liveNowX.toFixed(2)}" y="12" text-anchor="${liveNowX > 600 ? "end" : liveNowX < 70 ? "start" : "middle"}">Live</text>
+      </g>`;
   const frame = frames[Math.min(frames.length - 1, Math.round(playProgress))] || frames[frames.length - 1];
   let dotValue = frame ? frame.total : spec.putIn;
   if (moneyTicker.diagram === "island") {
@@ -2876,6 +2911,7 @@ function renderMoneyTickerSvg(season, frames) {
       }
     </g>
     <line class="money-ticker-playhead" data-ticker-playhead x1="${playX}" y1="16" x2="${playX}" y2="198" />
+    ${liveNow}
     ${xLabels}
   </svg>`;
 }
