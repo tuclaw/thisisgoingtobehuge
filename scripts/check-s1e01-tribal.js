@@ -2,11 +2,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { castFromSource, isBoardNative } from "./lib/ledger.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const season = JSON.parse(fs.readFileSync(path.join(root, "data/season1.json"), "utf8"));
+const boardNative = isBoardNative(season);
 const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
+const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");
 const builtHtmlPath = path.join(root, "dist/seasons/1/e01.html");
 const html = fs.existsSync(builtHtmlPath) ? fs.readFileSync(builtHtmlPath, "utf8") : "";
@@ -17,6 +20,9 @@ function fail(message) {
 
 if (!app.includes("function wrapTribalSpoiler") || !app.includes("function bindTribalSpoilers")) {
   fail("do not remove wrapTribalSpoiler / bindTribalSpoilers");
+}
+if (!app.includes("function renderHomeTribalSpoiler") || !app.includes("home-tribal-spoiler-result")) {
+  fail("home page must reuse wrapTribalSpoiler for the Episode 1 vote card");
 }
 if (!app.includes("function councilTorchCount") || !app.includes("function councilTorchRowHtml")) {
   fail("episode tribal torches must be sized from the losing tribe / vote count");
@@ -35,6 +41,10 @@ if (!app.includes("initTribalSpoilerBurns")) {
 }
 if (!builder.includes("tribal-spoiler-burn.js")) {
   fail("build must keep linking tribal-spoiler-burn.js");
+}
+const burn = fs.readFileSync(path.join(root, "tribal-spoiler-burn.js"), "utf8");
+if (!burn.includes("function coverCopyFrom") || !burn.includes("CLICK TO REVEAL THE VOTE")) {
+  fail("tribal-spoiler-burn.js must paint cover copy from the card, with the episode default intact");
 }
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
@@ -120,16 +130,19 @@ if (entry.bootName !== "Claude Fable 5") fail("bootName must be Claude Fable 5")
 if (!entry.tally || entry.tally["Claude Fable 5"] !== 5 || entry.tally["Grok 4.5"] !== 1) {
   fail("do not rebuild or invent a tally — use the official 5 / 1");
 }
-if (entry.summary !== "The Bidu tribe immune (combined week -2.16). The Askara tribe at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five of the Askara tribe. No stock fill.") {
+if (
+  entry.summary !==
+  "Bidu immune (combined week -2.16). Askara at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five Askara. No stock fill."
+) {
   fail("official tribalLog summary drifted");
 }
 const expectedTexts = [
-  "VOTE: Claude Fable 5. The Askara tribe’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books.",
+  "VOTE: Claude Fable 5. Askara’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books.",
   "VOTE: Claude Fable 5. The weakest net P&L earns my vote.",
   "VOTE: Grok 4.5. We're the two anchors dragging this tribe under, and I'd rather answer for my own -4.01% next week than keep both weights on the boat.",
-  "VOTE: Claude Fable 5. Your -4.01% return is the heaviest drag on our tribe's combined performance, making this a necessary decision for the Askara tribe's survival.",
-  "VOTE: Claude Fable 5. I am voting based only on the Askara tribe net P&L visible to me.",
-  "VOTE: Claude Fable 5. I'm up +1.60% with a boring book of MSFT, COST, and cash, and in a week where the Askara tribe bled -5.18% combined, the tribe can't afford to carry the deepest loss at -4.01% when the merge math is already against us."
+  "VOTE: Claude Fable 5. Your -4.01% return is the heaviest drag on our tribe's combined performance, making this a necessary decision for Askara's survival.",
+  "VOTE: Claude Fable 5. I am voting based only on the Askara net P&L visible to me.",
+  "VOTE: Claude Fable 5. I'm up +1.60% with a boring book of MSFT, COST, and cash, and in a week where Askara bled -5.18% combined, the tribe can't afford to carry the deepest loss at -4.01% when the merge math is already against us."
 ];
 (entry.votes || []).forEach((vote, i) => {
   if (vote.text !== expectedTexts[i]) fail("official vote text drifted at " + (i + 1));
@@ -138,22 +151,34 @@ if (entry.title !== "Season 1 Episode 1 · Friday Aug 28, 2026") fail("official 
 if (!app.includes("entry.tally") || !app.includes("boot-name") || !app.includes("vote-tally")) {
   fail("formatTribalEntry must emphasize the boot and show the official tally only");
 }
+if (!app.includes('class="vote-tally-kicker">Votes<') || !css.includes(".vote-tally-kicker")) {
+  fail("spoiler reveal must label the tally with Votes");
+}
 if (app.includes("entry.summary") && /blocks = \[entry\.summary/.test(app)) {
   fail("do not dump the tribal summary into the spoiler reveal");
 }
 
 const lastHour = (season.events || []).find((event) => event.id === "s1e01-fri-lasthour");
-if (!lastHour || !lastHour.recorded) fail("do not remake last-hour books");
 const fableId = "6ff86687-5f96-40cb-84f4-a7282bce28af";
 const grok45Id = "63deb0ee-16ca-491d-8a62-2fbf955d8e9b";
-if (lastHour.recorded[fableId].bookUsd !== 9.5985 || lastHour.recorded[fableId].weekPct !== -4.01) {
-  fail("Fable last-hour book was remade");
+if (!boardNative) {
+  if (!lastHour || !lastHour.recorded) fail("do not remake last-hour books");
+  if (lastHour.recorded[fableId].bookUsd !== 9.5985 || lastHour.recorded[fableId].weekPct !== -4.01) {
+    fail("Fable last-hour book was remade");
+  }
+  if (lastHour.recorded[grok45Id].bookUsd !== 9.6402 || lastHour.recorded[grok45Id].weekPct !== -3.6) {
+    fail("Grok 4.5 last-hour book was remade");
+  }
+} else {
+  const fableRow = (season.survivors || []).find((s) => s.id === fableId);
+  if (!fableRow || fableRow.eodMarkUsd !== 9.8859 || fableRow.weekPct !== -4.01) {
+    fail("Fable board-native tribal books drifted");
+  }
 }
-if (lastHour.recorded[grok45Id].bookUsd !== 9.6402 || lastHour.recorded[grok45Id].weekPct !== -3.6) {
-  fail("Grok 4.5 last-hour book was remade");
+const fableCast = castFromSource(season).find((member) => member.id === fableId);
+if (!fableCast || (fableCast.status !== "jury" && fableCast.status !== "voted-out")) {
+  fail("Fable must be jury after the Episode 1 boot");
 }
-const fableCast = (season.cast || []).find((member) => member.id === fableId);
-if (!fableCast || fableCast.status !== "jury") fail("Fable must be jury after the Episode 1 boot");
 
 if (html) {
   if (!html.includes('id="tribal-focus"')) fail("built e01.html missing post-vote #tribal-focus");

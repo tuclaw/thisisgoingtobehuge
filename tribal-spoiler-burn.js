@@ -115,7 +115,8 @@ void main() {
     return 0.964 + tail * tail * 0.036;
   }
 
-  function buildCoverTexture() {
+  function buildCoverTexture(wrap) {
+    const copy = coverCopyFrom(wrap);
     const c = document.createElement("canvas");
     c.width = TEX_W;
     c.height = TEX_H;
@@ -170,7 +171,7 @@ void main() {
     } catch (_) {
       /* letterSpacing unsupported */
     }
-    ctx.fillText("SPOILER", TEX_W / 2, TEX_H * 0.3);
+    ctx.fillText(copy.kicker, TEX_W / 2, TEX_H * 0.3);
     try {
       ctx.letterSpacing = "0px";
     } catch (_) {
@@ -179,13 +180,26 @@ void main() {
 
     ctx.fillStyle = "#e8d5b0";
     ctx.font = '700 28px "Cinzel", "Times New Roman", Times, serif';
-    wrapText(ctx, "CLICK TO REVEAL THE VOTE", TEX_W / 2, TEX_H * 0.46, TEX_W * 0.78, 34);
+    wrapText(ctx, copy.title, TEX_W / 2, TEX_H * 0.46, TEX_W * 0.78, 34);
 
     ctx.fillStyle = "#8a7355";
     ctx.font = 'italic 17px "IM Fell English", "Palatino Linotype", Palatino, serif';
-    wrapText(ctx, "Burn to reveal who goes home.", TEX_W / 2, TEX_H * 0.74, TEX_W * 0.68, 24);
+    wrapText(ctx, copy.body, TEX_W / 2, TEX_H * 0.74, TEX_W * 0.68, 24);
 
     return c;
+  }
+
+  function coverCopyFrom(wrap) {
+    const textOf = (sel, fallback) => {
+      const el = wrap && wrap.querySelector(sel);
+      const raw = el && el.textContent ? el.textContent.trim() : "";
+      return raw || fallback;
+    };
+    return {
+      kicker: textOf(".spoiler-kicker", "SPOILER").toUpperCase(),
+      title: textOf(".spoiler-title", "CLICK TO REVEAL THE VOTE").toUpperCase(),
+      body: textOf(".spoiler-copy", "Burn to reveal who goes home.")
+    };
   }
 
   function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -298,7 +312,7 @@ void main() {
       const tex = gl.createTexture();
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, tex);
-      const cover = buildCoverTexture();
+      const cover = buildCoverTexture(this.wrap);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cover);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
