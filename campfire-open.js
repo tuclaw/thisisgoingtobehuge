@@ -1,6 +1,6 @@
 /**
- * Landing cold open — black title cards, a living campfire, then three lunch whispers.
- * Episode 1 Thursday lunch threads on the home beach.
+ * Landing cold open — black title cards, then the Replay the books diagram.
+ * CampfireEngine still powers the Episode 1 feed fire.
  */
 (function (global) {
   "use strict";
@@ -1087,6 +1087,69 @@
     }
   }
 
+  function dispatchHomeBooks(action) {
+    document.dispatchEvent(new CustomEvent("lts-home-books", { detail: { action: action } }));
+  }
+
+  function initHomeOpenLanding() {
+    const hero = document.querySelector(".open-hero");
+    const replayBtn = document.getElementById("replay-trailer");
+    if (!hero && !document.getElementById("open-titles")) {
+      finishOpenTitles();
+      return;
+    }
+
+    let titlesBusy = false;
+
+    function showReplayControl() {
+      if (!replayBtn || prefersReducedMotion()) return;
+      replayBtn.hidden = false;
+      replayBtn.disabled = false;
+    }
+
+    function hideReplayControl() {
+      if (!replayBtn) return;
+      replayBtn.hidden = true;
+      replayBtn.disabled = true;
+    }
+
+    async function revealAfterTitles(force) {
+      titlesBusy = true;
+      hideReplayControl();
+      await playOpenTitles(force ? { force: true } : undefined);
+      window.setTimeout(function () {
+        if (hero) hero.classList.add("is-copy-in");
+        showReplayControl();
+        dispatchHomeBooks("play");
+      }, prefersReducedMotion() ? 80 : 420);
+      titlesBusy = false;
+    }
+
+    async function replayTrailer() {
+      if (titlesBusy || prefersReducedMotion()) return;
+      if (!document.getElementById("open-titles")) return;
+
+      titlesBusy = true;
+      hideReplayControl();
+      dispatchHomeBooks("reset");
+      if (hero) hero.classList.remove("is-copy-in");
+      resetOpenTitlesOverlay();
+      document.body.classList.add("is-titles");
+      window.scrollTo(0, 0);
+
+      await wait(120);
+      await revealAfterTitles(true);
+    }
+
+    if (replayBtn) {
+      replayBtn.addEventListener("click", function () {
+        replayTrailer();
+      });
+    }
+
+    revealAfterTitles(false);
+  }
+
   function initCampfireOpen() {
     const theater = document.getElementById("campfire-theater");
     const canvas = document.getElementById("campfire-canvas");
@@ -1096,12 +1159,17 @@
     const statusEl = document.getElementById("campfire-status");
     const replayBtn = document.getElementById("replay-trailer");
     /* Episode feed landing uses the same theater markup with data-mode="feed". */
-    if (!theater || theater.getAttribute("data-mode") === "feed") {
+    if (theater && theater.getAttribute("data-mode") === "feed") {
       finishOpenTitles();
       return;
     }
+    /* Home landing: title cards, then the books diagram — no campfire. */
+    if (!theater) {
+      initHomeOpenLanding();
+      return;
+    }
     if (!canvas || !facesEl || !threadEl) {
-      finishOpenTitles();
+      initHomeOpenLanding();
       return;
     }
 
@@ -1287,7 +1355,8 @@
     wait: wait,
     escapeHtml: escapeHtml,
     playOpenTitles: playOpenTitles,
-    resetOpenTitlesOverlay: resetOpenTitlesOverlay
+    resetOpenTitlesOverlay: resetOpenTitlesOverlay,
+    dispatchHomeBooks: dispatchHomeBooks
   };
 
   if (document.readyState === "loading") {

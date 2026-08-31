@@ -3083,10 +3083,10 @@ body.is-titles .replay-trailer {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  padding: 0 1.25rem 1.6rem;
-  overflow: hidden;
+  padding: 5.4rem 1.25rem 2rem;
+  overflow-x: hidden;
   text-align: center;
 }
 
@@ -3152,18 +3152,44 @@ body.is-titles .replay-trailer {
 .open-hero .hero-inner {
   position: relative;
   z-index: 3;
-  max-width: 42rem;
+  max-width: min(64rem, 100%);
+  width: 100%;
   padding: 0.15rem 0 0.35rem;
   opacity: 0;
   transform: translateY(0.6rem);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
+.open-hero .replay-trailer {
+  margin-top: 0.35rem;
+  margin-bottom: 0.15rem;
+}
+
+.open-hero .money-ticker {
+  text-align: left;
+  margin-top: 0.85rem;
+}
+
+.open-hero .money-ticker-head,
+.open-hero .money-ticker-lede {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.open-hero .money-ticker-toolbar {
+  justify-content: center;
+}
+
+.open-hero .money-ticker-ctas {
+  margin-top: 1.1rem;
+}
+
 .open-hero .scroll-cue {
   position: relative;
   left: auto;
   bottom: auto;
-  margin: 0 auto 1.15rem;
+  margin: 1.15rem auto 0;
   z-index: 4;
 }
 
@@ -3727,6 +3753,7 @@ body.is-titles .replay-trailer {
 @media (max-width: 560px) {
   .open-hero {
     min-height: calc(100dvh - 8rem);
+    padding-top: 4.6rem;
     padding-bottom: max(1.1rem, env(safe-area-inset-bottom, 0px));
   }
   .open-hero .hero-inner {

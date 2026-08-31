@@ -1221,6 +1221,7 @@ const moneyTicker = {
   reducedMotion: false,
   autoplayArmed: false,
   autoplayDone: false,
+  homeBooksHandler: null,
   scrollObserver: null,
   progress: 0,
   raf: null,
@@ -1717,6 +1718,63 @@ function tickMoneyTickerPlayback(now) {
   moneyTicker.raf = requestAnimationFrame(tickMoneyTickerPlayback);
 }
 
+function applyMoneyTickerAutoDiagram() {
+  const allowed = moneyTickerAllowedDiagrams();
+  /* Episode autoplay opens on Tribes; home stays on Island (only diagram offered). */
+  const autoDiagram = moneyTickerIsHome()
+    ? allowed.includes("island")
+      ? "island"
+      : allowed[0]
+    : allowed.includes("tribes")
+      ? "tribes"
+      : allowed[0];
+  if (autoDiagram === "tribes") {
+    moneyTicker.diagram = "tribes";
+  } else if (autoDiagram && autoDiagram !== moneyTicker.diagram) {
+    moneyTicker.diagram = autoDiagram;
+  }
+  if (!autoDiagram) return;
+  const rootEl = moneyTicker.root;
+  if (!rootEl) return;
+  rootEl.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
+    const id = btn.getAttribute("data-ticker-diagram");
+    btn.setAttribute("aria-selected", id === autoDiagram ? "true" : "false");
+  });
+  refreshMoneyTickerChart();
+}
+
+function kickoffMoneyTickerAutoplay() {
+  if (moneyTicker.autoplayDone || moneyTicker.reducedMotion) return;
+  moneyTicker.autoplayDone = true;
+  moneyTicker.autoplayArmed = false;
+  if (moneyTicker.scrollObserver) {
+    moneyTicker.scrollObserver.disconnect();
+    moneyTicker.scrollObserver = null;
+  }
+  applyMoneyTickerAutoDiagram();
+  setMoneyTickerSpeed(0.5);
+  startMoneyTickerPlayback({ fromStart: true });
+}
+
+function onHomeBooksEvent(event) {
+  const action = event && event.detail && event.detail.action;
+  if (action === "reset") {
+    stopMoneyTickerPlayback();
+    moneyTicker.autoplayDone = false;
+    moneyTicker.autoplayArmed = false;
+    setMoneyTickerProgress(0);
+    const playBtn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
+    if (playBtn) {
+      playBtn.setAttribute("aria-pressed", "false");
+      playBtn.innerHTML = `<span aria-hidden="true">▶</span> Play`;
+    }
+    return;
+  }
+  if (action === "play") {
+    kickoffMoneyTickerAutoplay();
+  }
+}
+
 function armMoneyTickerAutoplay() {
   const root = moneyTicker.root;
   if (!root || moneyTicker.autoplayDone || moneyTicker.reducedMotion) return;
@@ -1726,44 +1784,23 @@ function armMoneyTickerAutoplay() {
   }
   moneyTicker.autoplayArmed = true;
 
-  const kickoff = () => {
-    if (moneyTicker.autoplayDone || moneyTicker.reducedMotion) return;
-    moneyTicker.autoplayDone = true;
-    moneyTicker.autoplayArmed = false;
-    if (moneyTicker.scrollObserver) {
-      moneyTicker.scrollObserver.disconnect();
-      moneyTicker.scrollObserver = null;
+  if (moneyTicker.homeBooksHandler) {
+    document.removeEventListener("lts-home-books", moneyTicker.homeBooksHandler);
+    moneyTicker.homeBooksHandler = null;
+  }
+
+  /* Home: wait for the title cards, then land on the books diagram and play. */
+  if (moneyTickerIsHome()) {
+    moneyTicker.homeBooksHandler = onHomeBooksEvent;
+    document.addEventListener("lts-home-books", moneyTicker.homeBooksHandler);
+    if (!document.body.classList.contains("is-titles")) {
+      kickoffMoneyTickerAutoplay();
     }
-    const allowed = moneyTickerAllowedDiagrams();
-    /* Episode autoplay opens on Tribes; home stays on Island (only diagram offered). */
-    const autoDiagram = moneyTickerIsHome()
-      ? allowed.includes("island")
-        ? "island"
-        : allowed[0]
-      : allowed.includes("tribes")
-        ? "tribes"
-        : allowed[0];
-    if (autoDiagram === "tribes") {
-      moneyTicker.diagram = "tribes";
-    } else if (autoDiagram && autoDiagram !== moneyTicker.diagram) {
-      moneyTicker.diagram = autoDiagram;
-    }
-    if (autoDiagram) {
-      const rootEl = moneyTicker.root;
-      if (rootEl) {
-        rootEl.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
-          const id = btn.getAttribute("data-ticker-diagram");
-          btn.setAttribute("aria-selected", id === autoDiagram ? "true" : "false");
-        });
-        refreshMoneyTickerChart();
-      }
-    }
-    setMoneyTickerSpeed(0.5);
-    startMoneyTickerPlayback({ fromStart: true });
-  };
+    return;
+  }
 
   if (!("IntersectionObserver" in window)) {
-    kickoff();
+    kickoffMoneyTickerAutoplay();
     return;
   }
 
@@ -1771,7 +1808,7 @@ function armMoneyTickerAutoplay() {
     (entries) => {
       const hit = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.35);
       if (!hit) return;
-      kickoff();
+      kickoffMoneyTickerAutoplay();
     },
     { threshold: [0.35, 0.5], rootMargin: "0px 0px -8% 0px" }
   );
@@ -2294,8 +2331,14 @@ function mountMoneyTicker(season, opts) {
   root.hidden = false;
   const keepEnd = opts && opts.keepEnd;
   const end = moneyTicker.frames.length - 1;
-  moneyTicker.index = end;
-  moneyTicker.progress = end;
+  /* Home lands on the start of the books diagram, then the open starts playback. */
+  if (homeMode && !keepEnd) {
+    moneyTicker.index = 0;
+    moneyTicker.progress = 0;
+  } else {
+    moneyTicker.index = end;
+    moneyTicker.progress = end;
+  }
 
   const speeds = MONEY_TICKER_SPEEDS.map((s) => {
     const on = s === moneyTicker.speed;
@@ -2332,11 +2375,16 @@ function mountMoneyTicker(season, opts) {
     ? "See how each tribe and contestant did in the Episode."
     : "Watch the island, the tribes, or every contestant sleeve. Dotted line is money put in.";
 
-  root.innerHTML = `
-    <div class="money-ticker-head">
+  /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
+  const tickerHead = homeMode
+    ? `<p class="money-ticker-lede">${lede}</p>`
+    : `<div class="money-ticker-head">
       <p class="money-ticker-kicker">Replay the books</p>
       <p class="money-ticker-lede">${lede}</p>
-    </div>
+    </div>`;
+
+  root.innerHTML = `
+    ${tickerHead}
     <div class="money-ticker-toolbar">
       <div class="money-ticker-range" role="tablist" aria-label="Time range">
         ${rangeTabs}
