@@ -622,6 +622,15 @@ check(
     e2ChallengeBody.includes("Monday fills are in")
 );
 check(
+  "e02-challenge-extra-ten",
+  e2ChallengeBody.includes("Each living player received $10 more.") &&
+    e2ChallengeBody.includes("All $10 of that gift must be invested in US-listed stocks or ETFs.") &&
+    e2ChallengeBody.includes("None of that new $10 can sit cash.") &&
+    e2ChallengeBody.includes("Claude Fable 5 is jury and is not funded.") &&
+    e2ChallengeBody.includes("Printed $109.30 vs $110 target.") &&
+    e2ChallengeBody.includes("Prior leftover cash from Episode 1 can remain a remainder.")
+);
+check(
   "e02-challenge-no-shame-list",
   e2ChallengeBody &&
     !/Gemini 3\.7 Flash|Claude Sonnet 5|GPT-5\.6 Terra|all cash except|sitting cash/i.test(e2ChallengeBody)
@@ -638,6 +647,15 @@ check(
     rulesHtml.includes("the Askara tribe") &&
     rulesHtml.includes("cash counts") &&
     rulesHtml.includes("Monday fills are in")
+);
+check(
+  "rules-e02-challenge-extra-ten",
+  rulesHtml.includes("Each living player received $10 more.") &&
+    rulesHtml.includes("All $10 of that gift must be invested in US-listed stocks or ETFs.") &&
+    rulesHtml.includes("None of that new $10 can sit cash.") &&
+    rulesHtml.includes("Claude Fable 5 is jury and is not funded.") &&
+    rulesHtml.includes("Printed $109.30 vs $110 target.") &&
+    rulesHtml.includes("Prior leftover cash from Episode 1 can remain a remainder.")
 );
 check("rules-cash-counts-stays", rulesHtml.includes("Stocks or cash. Cash counts."));
 check(
