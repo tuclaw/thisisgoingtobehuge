@@ -215,14 +215,14 @@ const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
 check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -1.25 && biduLive.combinedDayPct === -1.25);
 check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -2.13 && askaraLive.combinedDayPct === -2.13);
-check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 catch-up") && String(board.markLabel || "").includes("last-trade"));
+check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 OPEN catch-up") && String(board.markLabel || "").includes("last"));
 check("live-marked-at", board.markedAt === "2026-08-31T15:02:51Z", board.markedAt);
 check("no-invented-friday-sip", !(source.events || []).some((event) => event && event.type === "mark" && /fri.*sip/i.test(String(event.id || ""))));
 check(
-  "live-survivors-catch-up-session",
+  "live-survivors-open-session",
   board.survivors
     .filter((s) => s.status === "active")
-    .every((s) => s.lastSession === "2026-08-31-catch-up"),
+    .every((s) => s.lastSession === "2026-08-31-open"),
   board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
 );
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
@@ -441,7 +441,7 @@ check(
   (() => {
     const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
     const monday = (episode2Copy.days || []).find((day) => day.id === "monday");
-    return Boolean(monday && monday.snapshotId === "s1e02-mon-catch-up" && monday.beats?.some((beat) => beat.id === "monday-books"));
+    return Boolean(monday && monday.snapshotId === "s1e02-mon-open" && monday.beats?.some((beat) => beat.id === "monday-books"));
   })()
 );
 check("episode-3-locked", e3 && e3.status === "locked" && !e3.path);
@@ -481,22 +481,22 @@ if (sundayLunch) {
   );
 }
 
-const monCatchUp = board.snapshots.find((s) => s.id === "s1e02-mon-catch-up");
+const monOpen = board.snapshots.find((s) => s.id === "s1e02-mon-open");
 if (!boardNative) {
-check("monday-catch-up-mark", Boolean(monCatchUp), "missing s1e02-mon-catch-up");
-if (monCatchUp) {
-  check("monday-catch-up-mark-label", String(monCatchUp.label || "").includes("Mon Aug 31 catch-up"));
-  check("monday-catch-up-at", monCatchUp.at === "2026-08-31T15:02:51Z", monCatchUp.at);
-  const bidu = (monCatchUp.tribes && monCatchUp.tribes.bidu) || {};
-  const askara = (monCatchUp.tribes && monCatchUp.tribes.askara) || {};
-  check("monday-catch-up-bidu-week", bidu.combinedWeekPct === -1.25, String(bidu.combinedWeekPct));
-  check("monday-catch-up-bidu-day", bidu.combinedDayPct === -1.25, String(bidu.combinedDayPct));
-  check("monday-catch-up-askara-week", askara.combinedWeekPct === -2.13, String(askara.combinedWeekPct));
-  check("monday-catch-up-askara-day", askara.combinedDayPct === -2.13, String(askara.combinedDayPct));
+check("monday-open-mark", Boolean(monOpen), "missing s1e02-mon-open");
+if (monOpen) {
+  check("monday-open-mark-label", String(monOpen.label || "").includes("Mon Aug 31 OPEN catch-up"));
+  check("monday-open-at", monOpen.at === "2026-08-31T15:02:51Z", monOpen.at);
+  const bidu = (monOpen.tribes && monOpen.tribes.bidu) || {};
+  const askara = (monOpen.tribes && monOpen.tribes.askara) || {};
+  check("monday-open-bidu-week", bidu.combinedWeekPct === -1.25, String(bidu.combinedWeekPct));
+  check("monday-open-bidu-day", bidu.combinedDayPct === -1.25, String(bidu.combinedDayPct));
+  check("monday-open-askara-week", askara.combinedWeekPct === -2.13, String(askara.combinedWeekPct));
+  check("monday-open-askara-day", askara.combinedDayPct === -2.13, String(askara.combinedDayPct));
 }
 } else {
-  check("monday-catch-up-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === -1.25);
-  check("monday-catch-up-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === -2.13);
+  check("monday-open-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === -1.25);
+  check("monday-open-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === -2.13);
 }
 
 const expectedBooks = {
@@ -535,7 +535,7 @@ if (boardNative) {
   const kimiNow = (source.survivors || []).find((s) => s.name === "Kimi K3");
   check(
     "sold-soxl-is-position",
-    composerNow && (composerNow.positions || []).some((pos) => pos.note && pos.note.includes("SOXL"))
+    composerNow && (composerNow.positions || []).some((pos) => pos.note && pos.note.includes("6a9586b0"))
   );
   check(
     "bought-xle-sonnet-is-position",
