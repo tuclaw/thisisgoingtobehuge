@@ -1664,6 +1664,13 @@ function tribalLogForPage(season) {
   return [];
 }
 
+function priorTribalLog(season) {
+  const all = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+  const ep = currentPageEpisode(season);
+  if (!ep || !ep.id) return [];
+  return all.filter((entry) => entry && entry.episode && entry.episode !== ep.id);
+}
+
 function renderEpisodeDays(season) {
   const pageEp = currentPageEpisode(season);
   const specs =
@@ -3071,6 +3078,7 @@ function renderEpisode(season) {
       bindTribalSpoilers(tribal);
     }
   }
+  renderEpisodeRecapSpoiler(season);
 }
 
 function tallyFromVotes(votes) {
@@ -3126,6 +3134,7 @@ function wrapTribalSpoiler(innerHtml, options) {
   const kicker = opts.kicker || "Spoiler";
   const title = opts.title || "Click to Reveal the Vote";
   const copy = opts.copy || "Burn to reveal who goes home.";
+  const srLabel = opts.srLabel || "Spoiler: tribal results. Click to reveal the vote.";
   return `<div class="tribal-spoiler">
     <div class="tribal-spoiler-result" id="${escapeHtml(resultId)}" aria-hidden="true">${innerHtml}</div>
     <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">
@@ -3135,10 +3144,35 @@ function wrapTribalSpoiler(innerHtml, options) {
         <span class="spoiler-title">${escapeHtml(title)}</span>
         <span class="spoiler-copy">${escapeHtml(copy)}</span>
       </span>
-      <span class="visually-hidden">Spoiler: tribal results. Click to reveal the vote.</span>
+      <span class="visually-hidden">${escapeHtml(srLabel)}</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;
+}
+
+function renderEpisodeRecapSpoiler(season) {
+  const mount = document.getElementById("episode-recap");
+  const stage = document.getElementById("episode-recap-stage");
+  if (!mount || !stage) return;
+  const prior = priorTribalLog(season);
+  if (!prior.length) {
+    mount.hidden = true;
+    stage.innerHTML = "";
+    return;
+  }
+  mount.hidden = false;
+  const items = prior.map((entry) => formatTribalEntry(entry)).join("");
+  const hasE1 = prior.some((entry) => entry.episode === "s1e01");
+  stage.innerHTML = wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`, {
+    resultId: "episode-recap-spoiler-result",
+    kicker: "RECAP",
+    title: hasE1
+      ? "Reveal the results of the Episode 1 tribal council vote"
+      : "Reveal the results of the last tribal council vote",
+    copy: "Burn to reveal who went home.",
+    srLabel: "Recap: prior tribal results. Click to reveal the vote."
+  });
+  bindTribalSpoilers(stage);
 }
 
 function firstEpisodeHref(season) {

@@ -486,6 +486,10 @@ function renderEpisodePage(episode, season, base) {
       </div>
     </article>
 
+    <aside class="episode-recap" id="episode-recap" hidden>
+      <div class="council-stage" id="episode-recap-stage"></div>
+    </aside>
+
     ${focusBlock}<article class="beat beat-gold" id="latest-books">
       <p class="section-kicker">${escapeHtml(episode.weekBoard.kicker)}</p>
       <h2>${escapeHtml(episode.weekBoard.title)}</h2>
