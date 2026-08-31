@@ -1811,6 +1811,18 @@ function moneyPutInTotal(season) {
   return roundMoney(start * castN);
 }
 
+function islandHostAddUsd(season) {
+  const given = islandGivenUsd(season);
+  const start = moneyPutInTotal(season);
+  if (given == null || Number.isNaN(given) || given <= start + 0.00005) return null;
+  return roundMoney(given - start);
+}
+
+function islandHostAddEpisodeLabel(season) {
+  const n = season && season.episode && Number(season.episode.number);
+  return Number.isFinite(n) && n > 0 ? `E${n}` : "E2";
+}
+
 function roundMoney(n) {
   return Math.round(n * 10000) / 10000;
 }
@@ -2590,11 +2602,13 @@ function moneyTickerDiagramSeries(season, frames) {
     const pad = Math.max(0.6, (max - min) * 0.18);
     min = Math.min(min, tribePutIn) - pad;
     max = Math.max(max, tribePutIn) + pad;
+    const putInLabel = `$${tribePutIn.toFixed(0)} in`;
     return {
       title: "Tribes",
       aria: "Tribe book totals over recorded marks. Dotted line is money put into each tribe.",
       putIn: tribePutIn,
-      putInLabel: `$${tribePutIn.toFixed(0)} in`,
+      putInLabel,
+      guides: [{ id: "putin", value: tribePutIn, label: putInLabel, className: "money-ticker-putin" }],
       min,
       max,
       series: tribes.map((tribe) => ({
@@ -2630,11 +2644,13 @@ function moneyTickerDiagramSeries(season, frames) {
     const pad = Math.max(0.35, (max - min) * 0.14);
     min = Math.min(min, sleeve) - pad;
     max = Math.max(max, sleeve) + pad;
+    const putInLabel = `$${sleeve.toFixed(0)} in`;
     return {
       title: "Contestants",
       aria: "Contestant sleeves over recorded marks. Dotted line is the $10 put into each book.",
       putIn: sleeve,
-      putInLabel: `$${sleeve.toFixed(0)} in`,
+      putInLabel,
+      guides: [{ id: "putin", value: sleeve, label: putInLabel, className: "money-ticker-putin" }],
       min,
       max,
       series: cast.map((s, idx) => ({
@@ -2655,22 +2671,45 @@ function moneyTickerDiagramSeries(season, frames) {
   }
 
   /* island */
+  const hostAdd = islandHostAddUsd(season);
+  const given = hostAdd != null ? islandGivenUsd(season) : null;
   let min = putIn;
   let max = putIn;
   frames.forEach((frame) => {
     if (frame.total < min) min = frame.total;
     if (frame.total > max) max = frame.total;
   });
-  const pad = Math.max(0.8, (max - min) * 0.22);
-  min = Math.min(min, putIn) - pad;
-  max = Math.max(max, putIn) + pad;
+  if (typeof given === "number") {
+    if (given < min) min = given;
+    if (given > max) max = given;
+  }
+  const pad = Math.max(0.8, (max - min) * 0.18);
+  min -= pad;
+  max += pad;
   const potDown = last && last.total < putIn - 0.00005;
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
+  const putInLabel = `$${putIn.toFixed(0)} in`;
+  const guides = [{ id: "putin", value: putIn, label: putInLabel, className: "money-ticker-putin" }];
+  const legend = [{ label: "Island pot", color: potStroke }];
+  let aria = "Island pot over recorded marks. Dotted line is money put into the game.";
+  if (typeof given === "number" && hostAdd != null) {
+    const ep = islandHostAddEpisodeLabel(season);
+    guides.push({
+      id: "host-add",
+      value: given,
+      label: `$${given.toFixed(0)} given`,
+      className: "money-ticker-host-add",
+      lineLabel: `${ep} host +$${hostAdd.toFixed(0)}`
+    });
+    legend.push({ label: `${ep} host +$${hostAdd.toFixed(0)}`, color: "#f0c14b", swatch: "dash" });
+    aria = `Island pot over recorded marks. Dotted line is money put into the game. Gold line is Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)}.`;
+  }
   return {
     title: "Island",
-    aria: "Island pot over recorded marks. Dotted line is money put into the game.",
+    aria,
     putIn,
-    putInLabel: `$${putIn.toFixed(0)} in`,
+    putInLabel,
+    guides,
     min,
     max,
     series: [
@@ -2683,10 +2722,56 @@ function moneyTickerDiagramSeries(season, frames) {
         width: 2.6
       }
     ],
-    legend: [{ label: "Island pot", color: potStroke }],
+    legend,
     liveSeries: "total",
     strokeForDot: potStroke
   };
+}
+
+function moneyTickerYAxisLabels(spec, chartTop, chartHeight) {
+  const guides = spec.guides || [];
+  const ticks = guides.map((guide) => ({ value: guide.value, label: guide.label, priority: 0 }));
+  ticks.push({ value: spec.max, label: money(spec.max), priority: 1 });
+  ticks.push({ value: spec.min, label: money(spec.min), priority: 1 });
+  ticks.sort((a, b) => a.priority - b.priority || b.value - a.value);
+  const usedY = [];
+  const usedV = [];
+  const kept = [];
+  ticks.forEach((tick) => {
+    if (typeof tick.value !== "number" || Number.isNaN(tick.value)) return;
+    if (usedV.some((v) => Math.abs(v - tick.value) < 0.0001)) return;
+    const y = moneyTickerY(tick.value, spec.min, spec.max, chartTop, chartHeight);
+    if (usedY.some((sy) => Math.abs(sy - y) < 12)) return;
+    usedY.push(y);
+    usedV.push(tick.value);
+    kept.push({ ...tick, y });
+  });
+  kept.sort((a, b) => a.y - b.y);
+  return kept
+    .map((tick) => {
+      return `<text class="money-ticker-axis" x="2" y="${(tick.y + 4).toFixed(2)}">${escapeHtml(tick.label)}</text>
+      <line class="money-ticker-grid" x1="36" y1="${tick.y.toFixed(2)}" x2="628" y2="${tick.y.toFixed(2)}" />`;
+    })
+    .join("");
+}
+
+function moneyTickerGuideMarkup(spec, chartTop, chartHeight) {
+  const guides = spec.guides && spec.guides.length
+    ? spec.guides
+    : [{ id: "putin", value: spec.putIn, label: spec.putInLabel, className: "money-ticker-putin" }];
+  return guides
+    .map((guide) => {
+      const y = moneyTickerY(guide.value, spec.min, spec.max, chartTop, chartHeight);
+      const lineLabel = guide.lineLabel
+        ? `<text class="money-ticker-guide-label" data-ticker-guide-label="${escapeHtml(guide.id)}" x="622" y="${(y - 5).toFixed(2)}" text-anchor="end">${escapeHtml(guide.lineLabel)}</text>`
+        : "";
+      return `<g data-ticker-guide="${escapeHtml(guide.id)}">
+      <title>${escapeHtml(guide.lineLabel || guide.label)}</title>
+      <line class="${escapeHtml(guide.className)}" x1="36" y1="${y.toFixed(2)}" x2="628" y2="${y.toFixed(2)}" />
+      ${lineLabel}
+    </g>`;
+    })
+    .join("");
 }
 
 function renderMoneyTickerSvg(season, frames) {
@@ -2699,17 +2784,8 @@ function renderMoneyTickerSvg(season, frames) {
   moneyTicker.chartHeight = chartHeight;
   moneyTicker.liveSeries = spec.liveSeries;
 
-  const yTicks = [spec.max, spec.putIn, spec.min];
-  const yLabels = yTicks
-    .map((v) => {
-      const y = moneyTickerY(v, spec.min, spec.max, chartTop, chartHeight);
-      const label = Math.abs(v - spec.putIn) < 0.0001 ? spec.putInLabel : money(v);
-      return `<text class="money-ticker-axis" x="2" y="${(y + 4).toFixed(2)}">${escapeHtml(label)}</text>
-      <line class="money-ticker-grid" x1="36" y1="${y.toFixed(2)}" x2="628" y2="${y.toFixed(2)}" />`;
-    })
-    .join("");
-
-  const putY = moneyTickerY(spec.putIn, spec.min, spec.max, chartTop, chartHeight);
+  const yLabels = moneyTickerYAxisLabels(spec, chartTop, chartHeight);
+  const guideLines = moneyTickerGuideMarkup(spec, chartTop, chartHeight);
   const xLabels = moneyTickerAxisRangeLabels(frames)
     .map((tick) => {
       let anchor = "middle";
@@ -2750,7 +2826,7 @@ function renderMoneyTickerSvg(season, frames) {
     </defs>
     <text class="money-ticker-panel-label" x="36" y="14">${escapeHtml(spec.title)}</text>
     ${yLabels}
-    <line class="money-ticker-putin" x1="36" y1="${putY.toFixed(2)}" x2="628" y2="${putY.toFixed(2)}" />
+    ${guideLines}
     <g clip-path="url(#money-ticker-clip)">
       ${lines}
       ${
@@ -2767,10 +2843,12 @@ function renderMoneyTickerSvg(season, frames) {
 function moneyTickerLegendHtml(season, frames) {
   const spec = moneyTickerDiagramSeries(season, frames);
   return (spec.legend || [])
-    .map(
-      (item) =>
-        `<li><span class="swatch" style="background:${escapeHtml(item.color)}"></span>${escapeHtml(item.label)}</li>`
-    )
+    .map((item) => {
+      const swatchClass = item.swatch === "dash" ? "swatch is-dash" : "swatch";
+      const swatchStyle =
+        item.swatch === "dash" ? `color:${escapeHtml(item.color)}` : `background:${escapeHtml(item.color)}`;
+      return `<li><span class="${swatchClass}" style="${swatchStyle}"></span>${escapeHtml(item.label)}</li>`;
+    })
     .join("");
 }
 

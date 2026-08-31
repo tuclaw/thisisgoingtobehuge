@@ -81,6 +81,17 @@ const appJs = readFileSync(join(root, "app.js"), "utf8");
 if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")) {
   throw new Error("app.js missing money ticker playback (mount + put-in dotted line)");
 }
+if (
+  !appJs.includes("function islandHostAddUsd") ||
+  !appJs.includes("money-ticker-host-add") ||
+  !appJs.includes("data-ticker-guide") ||
+  !appJs.includes("host-add")
+) {
+  throw new Error("app.js island diagram must draw the Episode 2 host +$110 given line");
+}
+if (!appJs.includes("E2 host +$") && !appJs.includes("host +$")) {
+  throw new Error("app.js host-add line must label the Episode 2 pot top-up");
+}
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
   throw new Error("app.js money ticker must offer week and season ranges");
@@ -164,6 +175,32 @@ if (new Set(liveAxisLabels).size !== liveAxisLabels.length) {
   throw new Error("money ticker date-range labels must not repeat");
 }
 
+const givenStart = appJs.indexOf("function islandGivenUsd");
+const givenEnd = appJs.indexOf("function livingContestantCount");
+const hostStart = appJs.indexOf("function moneyPutInTotal");
+const hostEnd = appJs.indexOf("function snapshotTotal");
+if (!(givenStart > -1 && givenEnd > givenStart && hostStart > -1 && hostEnd > hostStart)) {
+  throw new Error("app.js missing island given / host-add helpers");
+}
+const hostHelpers = new Function(`
+  ${appJs.slice(givenStart, givenEnd)}
+  ${appJs.slice(hostStart, hostEnd)}
+  return { islandHostAddUsd, islandHostAddEpisodeLabel, moneyPutInTotal };
+`)();
+const seasonSource = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
+if (hostHelpers.moneyPutInTotal(seasonSource) !== 120) {
+  throw new Error("moneyPutInTotal should stay $120 season start");
+}
+if (hostHelpers.islandHostAddUsd(seasonSource) !== 110) {
+  throw new Error("islandHostAddUsd should be Episode 2 host +$110, got " + hostHelpers.islandHostAddUsd(seasonSource));
+}
+if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E2") {
+  throw new Error("islandHostAddEpisodeLabel should be E2");
+}
+if (hostHelpers.islandHostAddUsd({ startingBookUsd: 10, islandGivenUsd: 120, cast: new Array(12).fill({}) }) != null) {
+  throw new Error("islandHostAddUsd must stay hidden when given equals the opening $120");
+}
+
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
 }
@@ -195,6 +232,9 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
   throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
 }
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
+if (!stylesCss.includes(".money-ticker-host-add") || !stylesCss.includes(".money-ticker-guide-label")) {
+  throw new Error("styles.css missing Episode 2 host-add reference line");
+}
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
 }

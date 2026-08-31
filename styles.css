@@ -4846,6 +4846,37 @@ body.is-titles .replay-trailer {
   stroke-dasharray: 3 4;
 }
 
+.money-ticker-host-add {
+  stroke: rgba(240, 193, 75, 0.95);
+  stroke-width: 1.5;
+  stroke-dasharray: 8 5;
+}
+
+.money-ticker-guide-label {
+  fill: rgba(240, 193, 75, 0.92);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-guide-label {
+  fill: rgba(255, 232, 150, 0.95);
+  paint-order: stroke fill;
+  stroke: rgba(8, 6, 5, 0.45);
+  stroke-width: 2.5;
+}
+
+.money-ticker-legend .swatch.is-dash {
+  width: 1.05rem;
+  height: 0.16rem;
+  border-radius: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    currentColor 0 6px,
+    transparent 6px 10px
+  );
+}
+
 .money-ticker-pot-line {
   opacity: 0.95;
 }
