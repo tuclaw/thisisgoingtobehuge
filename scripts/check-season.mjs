@@ -143,6 +143,12 @@ if (boardNative) {
   check("given-is-not-sleeves", source.islandGivenUsd !== start * cast.length);
 }
 check("board-given-total", board.islandGivenUsd === source.islandGivenUsd, String(board.islandGivenUsd));
+check("board-given-start", board.islandGivenStartUsd === source.islandGivenStartUsd, String(board.islandGivenStartUsd));
+check(
+  "board-e2-top-up-each",
+  board.islandEpisode2TopUpEachUsd === source.islandEpisode2TopUpEachUsd,
+  String(board.islandEpisode2TopUpEachUsd)
+);
 check("merged-stays-false-or-true", source.merged === true || source.merged === false);
 
 const firstBoot = (source.events || []).find((event) => event && event.type === "boot");

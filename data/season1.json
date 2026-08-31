@@ -24,7 +24,8 @@
     "tribalAt": "2026-09-04T19:00:00-07:00",
     "tribalLabel": "Friday Sep 4, 2026 · 7:00 PM PT",
     "path": "seasons/1/e02.html",
-    "source": "episodes/s1e02.md"
+    "source": "episodes/s1e02.md",
+    "diagramStartSnapshotId": "s1e02-cash-add"
   },
   "episodes": [
     {
@@ -75,7 +76,8 @@
       "path": "seasons/1/e02.html",
       "source": "episodes/s1e02.md",
       "weekStart": "2026-08-31",
-      "weekEnd": "2026-09-04"
+      "weekEnd": "2026-09-04",
+      "diagramStartSnapshotId": "s1e02-cash-add"
     },
     {
       "number": 3,
