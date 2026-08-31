@@ -297,6 +297,9 @@ if (!appJs.includes("onHomeBooksEvent") || !appJs.includes('action === "play"') 
 if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(64rem, 100%)")) {
   throw new Error("styles.css missing home hero books diagram layout");
 }
+if (!appJs.includes("money-ticker-host-add") || !css.includes(".money-ticker-host-add")) {
+  throw new Error("home books diagram must show the Episode 2 host +$110 given line");
+}
 const homeVoteIdx = html.indexOf('id="home-vote"');
 const homeTribalIdx = html.indexOf('id="home-tribal"');
 const beachIdx = html.indexOf('id="beach"');

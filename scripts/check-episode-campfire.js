@@ -81,6 +81,31 @@ const appJs = readFileSync(join(root, "app.js"), "utf8");
 if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")) {
   throw new Error("app.js missing money ticker playback (mount + put-in dotted line)");
 }
+if (
+  !appJs.includes("function islandHostAddUsd") ||
+  !appJs.includes("money-ticker-host-add") ||
+  !appJs.includes("data-ticker-guide") ||
+  !appJs.includes("host-add")
+) {
+  throw new Error("app.js island diagram must draw the Episode 2 host +$110 given line");
+}
+if (!appJs.includes("E2 host +$") && !appJs.includes("host +$")) {
+  throw new Error("app.js host-add line must label the Episode 2 pot top-up");
+}
+if (!appJs.includes('lineLabel: putInLabel') || !appJs.includes('labelClass: "is-putin"')) {
+  throw new Error("app.js island diagram must label both the $120 in line and the host-add line");
+}
+if (
+  !appJs.includes("function buildTickerChapters") ||
+  !appJs.includes("function loadTickerChapter") ||
+  !appJs.includes("function advanceTickerChapter") ||
+  !appJs.includes("data-ticker-chapter")
+) {
+  throw new Error("app.js season ticker must play each episode graph one at a time");
+}
+if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("moves the bar to ${givenLede}")) {
+  throw new Error("app.js must say Season plays one episode graph and moves the bar to the live given total");
+}
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
   throw new Error("app.js money ticker must offer week and season ranges");
@@ -167,18 +192,111 @@ if (new Set(liveAxisLabels).size !== liveAxisLabels.length) {
   throw new Error("money ticker date-range labels must not repeat");
 }
 
+const givenStart = appJs.indexOf("function islandGivenUsd");
+const givenEnd = appJs.indexOf("function livingContestantCount");
+const hostStart = appJs.indexOf("function tickerIsEpisodeTwo");
+const hostEnd = appJs.indexOf("function snapshotTotal");
+if (!(givenStart > -1 && givenEnd > givenStart && hostStart > -1 && hostEnd > hostStart)) {
+  throw new Error("app.js missing island given / host-add helpers");
+}
+const hostHelpers = new Function(`
+  ${appJs.slice(givenStart, givenEnd)}
+  ${appJs.slice(hostStart, hostEnd)}
+  return { islandHostAddUsd, islandHostAddEpisodeLabel, moneyPutInTotal };
+`)();
+const seasonSource = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
+if (hostHelpers.moneyPutInTotal(seasonSource) !== 120) {
+  throw new Error("moneyPutInTotal should stay $120 season start");
+}
+if (hostHelpers.islandHostAddUsd(seasonSource) !== 120.09) {
+  throw new Error("islandHostAddUsd should be Episode 2 host +$120.09, got " + hostHelpers.islandHostAddUsd(seasonSource));
+}
+if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E2") {
+  throw new Error("islandHostAddEpisodeLabel should be E2");
+}
+if (hostHelpers.islandHostAddUsd({ startingBookUsd: 10, islandGivenUsd: 120, cast: new Array(12).fill({}) }) != null) {
+  throw new Error("islandHostAddUsd must stay hidden when given equals the opening $120");
+}
+
+const groupStart = appJs.indexOf("function listedTickerEpisodes");
+const groupEnd = appJs.indexOf("function snapshotsForTickerRange");
+if (!(groupStart > -1 && groupEnd > groupStart)) {
+  throw new Error("app.js missing season episode-chapter grouping helpers");
+}
+const chapterHelpers = new Function(`
+  ${appJs.slice(groupStart, groupEnd)}
+  return { listedTickerEpisodes, groupSnapshotsByEpisode, snapshotMatchesEpisode };
+`)();
+const chapterEps = chapterHelpers.listedTickerEpisodes(seasonSource);
+if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02") {
+  throw new Error("listedTickerEpisodes should keep closed + live episodes, got " + chapterEps.map((ep) => ep.id).join("|"));
+}
+const grouped = chapterHelpers.groupSnapshotsByEpisode(seasonSource, [
+  { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z" },
+  { id: "s1e01-fri-lasthour", at: "2026-08-28T19:14:23Z" },
+  { id: "s1e02-carry", at: "2026-08-29T02:00:01Z" },
+  { id: "s1e02-cash-add", at: "2026-08-31T16:00:00Z" },
+  { id: "s1e02-mon-mid-gift", at: "2026-08-31T17:35:00Z" }
+]);
+if (grouped.length !== 2) {
+  throw new Error("groupSnapshotsByEpisode should make two chapters, got " + grouped.length);
+}
+if (grouped[0].episode.id !== "s1e01" || grouped[0].snaps.some((s) => String(s.id).startsWith("s1e02"))) {
+  throw new Error("Episode 1 chapter leaked Episode 2 snaps");
+}
+if (grouped[1].episode.id !== "s1e02" || !grouped[1].snaps.some((s) => s.id === "s1e02-cash-add")) {
+  throw new Error("Episode 2 chapter must include the cash-add snap");
+}
+const startSliceStart = appJs.indexOf("function episodeDiagramStartId");
+const startSliceEnd = appJs.indexOf("function snapshotsInTickerRange");
+if (!(startSliceStart > -1 && startSliceEnd > startSliceStart)) {
+  throw new Error("app.js missing Episode 2 diagram-start slice helpers");
+}
+const startSlice = new Function(`
+  function tickerIsEpisodeTwo(episode) {
+    return Boolean(episode && (episode.id === "s1e02" || Number(episode.number) === 2));
+  }
+  ${appJs.slice(startSliceStart, startSliceEnd)}
+  return { snapshotsFromEpisodeStart, episodeDiagramStartId };
+`)();
+const e2ChapterSnaps = startSlice.snapshotsFromEpisodeStart(grouped[1].snaps, {
+  id: "s1e02",
+  number: 2,
+  diagramStartSnapshotId: "s1e02-cash-add"
+});
+if (e2ChapterSnaps[0].id !== "s1e02-cash-add" || e2ChapterSnaps.some((s) => s.id === "s1e02-carry")) {
+  throw new Error("Episode 2 chapter must start at the cash-add so every living book already has the extra $10");
+}
+const putInStart = appJs.indexOf("function moneyTickerChapterPutIn");
+const putInEnd = appJs.indexOf("function setTickerChapter");
+if (!(putInStart > -1 && putInEnd > putInStart)) {
+  throw new Error("app.js missing moneyTickerChapterPutIn");
+}
+const chapterPutIn = new Function(`
+  ${appJs.slice(givenStart, givenEnd)}
+  ${appJs.slice(hostStart, hostEnd)}
+  ${appJs.slice(putInStart, putInEnd)}
+  return { moneyTickerChapterPutIn };
+`)();
+if (chapterPutIn.moneyTickerChapterPutIn(seasonSource, { number: 1 }) !== 120) {
+  throw new Error("Episode 1 chapter bar should stay $120");
+}
+if (chapterPutIn.moneyTickerChapterPutIn(seasonSource, { number: 2 }) !== 240.09) {
+  throw new Error("Episode 2 chapter bar should move to $240.09 given");
+}
+
 if (
   !appJs.includes("function tickerIsEpisodeTwo") ||
   !appJs.includes("function tickerSleevePutIn") ||
   !appJs.includes("function snapshotsInTickerRange") ||
-  !appJs.includes('diagramStartSnapshotId') ||
+  !appJs.includes("diagramStartSnapshotId") ||
   !appJs.includes("s1e02-cash-add")
 ) {
-  throw new Error("app.js must start Episode 2 week at the cash-add with the funded $230 / $20 put-in");
+  throw new Error("app.js must start Episode 2 week at the cash-add with the funded given / $20 put-in");
 }
 
 const tickerStart = appJs.indexOf("function tickerIsEpisodeTwo");
-const tickerEnd = appJs.indexOf("function roundMoney");
+const tickerEnd = appJs.indexOf("function islandHostAddUsd");
 if (!(tickerStart > -1 && tickerEnd > tickerStart)) {
   throw new Error("app.js missing Episode 2 ticker put-in / week-start helpers");
 }
@@ -188,7 +306,7 @@ const tickerHelpers = new Function(`
 `)();
 const e2Season = {
   startingBookUsd: 10,
-  islandGivenUsd: 230,
+  islandGivenUsd: 240.09,
   islandGivenStartUsd: 120,
   islandEpisode2TopUpEachUsd: 10,
   survivors: Array.from({ length: 12 }, (_, i) => ({ id: "s" + i })),
@@ -209,8 +327,8 @@ const e1Ep = { id: "s1e01", number: 1, weekStart: "2026-08-24", weekEnd: "2026-0
 if (!tickerHelpers.tickerIsEpisodeTwo(e2Ep) || tickerHelpers.tickerIsEpisodeTwo(e1Ep)) {
   throw new Error("tickerIsEpisodeTwo should match Episode 2 only");
 }
-if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "week") !== 230) {
-  throw new Error("Episode 2 week island bar must be $230 given");
+if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "week") !== 240.09) {
+  throw new Error("Episode 2 week island bar must be $240.09 given");
 }
 if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "season") !== 120) {
   throw new Error("Episode 2 season bar must stay the $120 open");
@@ -220,6 +338,12 @@ if (tickerHelpers.moneyPutInTotal(e2Season, e1Ep, "week") !== 120) {
 }
 if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "week") !== 20) {
   throw new Error("Episode 2 week sleeves must start at $20 (original $10 + extra $10)");
+}
+if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "season") !== 20) {
+  throw new Error("Episode 2 season sleeves must start at $20 once the extra $10 is on the books");
+}
+if (!appJs.includes("fundedBar") || !appJs.includes('moneyTicker.range === "week"')) {
+  throw new Error("Episode 2 week island must use the funded given bar, not the $120 open");
 }
 if (tickerHelpers.tickerSleevePutIn(e2Season, e1Ep, "week") !== 10) {
   throw new Error("Episode 1 week sleeves must stay $10");
@@ -272,6 +396,9 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
   throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
 }
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
+if (!stylesCss.includes(".money-ticker-host-add") || !stylesCss.includes(".money-ticker-guide-label")) {
+  throw new Error("styles.css missing Episode 2 host-add reference line");
+}
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
 }
