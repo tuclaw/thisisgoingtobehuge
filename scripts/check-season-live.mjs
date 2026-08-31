@@ -399,11 +399,13 @@ const e1 = (source.episodes || []).find((ep) => ep.id === "s1e01");
 const e2 = (source.episodes || []).find((ep) => ep.id === "s1e02");
 const e3 = (source.episodes || []).find((ep) => ep.id === "s1e03");
 check("episode-1-closed", e1 && e1.status === "closed" && e1.path === "seasons/1/e01.html" && e1.boot === "Claude Fable 5");
+check("episode-1-week-bounds", e1 && e1.weekStart === "2026-08-24" && e1.weekEnd === "2026-08-28");
 check(
   "episode-1-list-tease-no-boot",
   e1 && typeof e1.tease === "string" && !/fable|5–1|5-1|juror|voted out/i.test(e1.tease)
 );
 check("episode-2-live", e2 && e2.status === "live" && e2.path === "seasons/1/e02.html");
+check("episode-2-week-bounds", e2 && e2.weekStart === "2026-08-31" && e2.weekEnd === "2026-09-04");
 check("episode-3-locked", e3 && e3.status === "locked" && !e3.path);
 check(
   "saturday-lunch-no-exit-interview",
