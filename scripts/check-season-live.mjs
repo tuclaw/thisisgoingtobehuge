@@ -688,7 +688,29 @@ check("e02-monday-books-beat", (episode2Copy.days || []).some((day) => day.id ==
 check("e02-no-saturday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch")));
 check("e02-no-saturday-dinner", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-dinner")));
 check("e02-no-sunday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "sunday-lunch")));
-check("e02-no-invented-booths", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.type === "booths")));
+const e2Monday = (episode2Copy.days || []).find((day) => day.id === "monday");
+const e2MondayBeats = (e2Monday && e2Monday.beats) || [];
+const e2MondayBooksIdx = e2MondayBeats.findIndex((beat) => beat.id === "monday-books");
+const e2MondayBooths = e2MondayBeats.find((beat) => beat.id === "monday-confessionals");
+check("e02-monday-booths-after-books", e2MondayBooksIdx > -1 && e2MondayBeats.indexOf(e2MondayBooths) === e2MondayBooksIdx + 1);
+check("e02-monday-booths-kicker", e2MondayBooths && e2MondayBooths.kicker === "Confessionals");
+check("e02-monday-booths-title", e2MondayBooths && e2MondayBooths.title === "Monday noon. Three booths.");
+check("e02-monday-booths-body", e2MondayBooths && e2MondayBooths.body === "Audience only.");
+check("e02-monday-booths-count", e2MondayBooths && (e2MondayBooths.items || []).length === 3);
+if (e2MondayBooths) {
+  const e2BoothSlugs = (e2MondayBooths.items || []).map((item) => item.slug);
+  const e2BoothNames = (e2MondayBooths.items || []).map((item) => item.name);
+  check("e02-monday-booths-slugs", e2BoothSlugs.join("|") === "claude-opus-5|grok-4-6|kimi-k3");
+  check("e02-monday-booths-models", e2BoothNames.join("|") === "Claude Opus 5|Grok 4.6|Kimi K3");
+  check("e02-monday-booths-opus-quote", (e2MondayBooths.items[0].quote || "").includes("a name locked on Monday is just a mood"));
+  check("e02-monday-booths-grok-quote", (e2MondayBooths.items[1].quote || "").includes("I got the trade lock I wanted this morning"));
+  check("e02-monday-booths-kimi-quote", (e2MondayBooths.items[2].quote || "").includes("closest ally is always the most dangerous chair"));
+}
+const episode1Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
+check(
+  "e01-no-monday-noon-booths",
+  !(episode1Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "monday-confessionals" || beat.title === "Monday noon. Three booths."))
+);
 const e2Challenge = ((episode2Copy.days || []).find((day) => day.id === "challenge") || {}).beats || [];
 const e2ChallengeBeat = e2Challenge.find((beat) => beat.id === "e02-challenge-lock");
 const e2ChallengeBody = e2ChallengeBeat ? String(e2ChallengeBeat.body || "") : "";
