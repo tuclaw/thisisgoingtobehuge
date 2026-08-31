@@ -231,8 +231,8 @@ if (
 if (!html.includes('id="island-bot-diagram"') || !html.includes("archify-embed")) {
   throw new Error("templates/island.html missing Archify bot diagram embed");
 }
-if (!/<iframe[^>]+bot-architecture/.test(html)) {
-  throw new Error("home diagram must embed diagrams/bot-architecture.html");
+if (!html.includes("archify-embed-frame") || !/<iframe[^>]+bot-architecture/.test(html)) {
+  throw new Error("home diagram must embed diagrams/bot-architecture.html inside a sized frame");
 }
 const archify = readFileSync(join(root, "diagrams", "bot-architecture.html"), "utf8");
 if (!archify.includes("lts-diagram-flow") || !archify.includes("lts-island-edge-flow")) {
@@ -241,8 +241,40 @@ if (!archify.includes("lts-diagram-flow") || !archify.includes("lts-island-edge-
 if (!archify.includes("font-size: 13px") || !archify.includes("[data-edge-label] text")) {
   throw new Error("bot-architecture.html missing larger embed label type");
 }
+if (
+  !archify.includes('html[data-embed="true"] .diagram-container svg') ||
+  !archify.includes("max-width: 100%") ||
+  !archify.includes("height: auto")
+) {
+  throw new Error("bot-architecture.html embed SVG must scale to the iframe width");
+}
 if (!css.includes(".archify-embed") || !css.includes("min-height: 28rem")) {
   throw new Error("styles.css missing larger Archify embed");
+}
+const embedBlock = css.match(/\.archify-embed\s*\{[^}]+\}/);
+if (
+  !embedBlock ||
+  !embedBlock[0].includes("width: 100%") ||
+  !embedBlock[0].includes("max-width: 100%") ||
+  !embedBlock[0].includes("min-width: 0")
+) {
+  throw new Error("styles.css Archify embed must stay within the parent column");
+}
+const frameBlock = css.match(/\.archify-embed-frame\s*\{[^}]+\}/);
+if (
+  !frameBlock ||
+  !frameBlock[0].includes("width: 100%") ||
+  !frameBlock[0].includes("max-width: 100%") ||
+  !frameBlock[0].includes("min-width: 0") ||
+  !frameBlock[0].includes("aspect-ratio: 1140 / 680")
+) {
+  throw new Error("styles.css Archify frame must size from column width, not a transferred min-width");
+}
+if (!/@media\s*\(min-width:\s*900px\)\s*\{[^}]*\.archify-embed-frame\s*\{[^}]*min-height:\s*28rem/.test(css)) {
+  throw new Error("styles.css must keep the 28rem Archify floor only on wide screens");
+}
+if (!/\.diagram-band\s*\{[^}]*overflow-x:\s*clip/.test(css)) {
+  throw new Error("styles.css diagram band must clip leftover horizontal overflow");
 }
 if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow")) {
   throw new Error("app.js missing scroll-triggered Archify flow");

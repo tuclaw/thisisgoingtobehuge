@@ -392,10 +392,14 @@
 
     /* Gallery/embed mode keeps the generated artifact as the source of truth
        while presenting only its diagram surface inside a proof card. */
+    html[data-embed="true"],
+    html[data-embed="true"] body {
+      max-width: 100%;
+      overflow: hidden;
+    }
     html[data-embed="true"] body {
       min-height: 0;
       padding: 0;
-      overflow: hidden;
       background: var(--bg);
       background-image: none;
     }
@@ -410,14 +414,26 @@
     html[data-embed="true"] .diagram-guide,
     html[data-embed="true"] .node-finder,
     html[data-embed="true"] .guided-views { display: none !important; }
-    html[data-embed="true"] .container { max-width: none; }
+    html[data-embed="true"] .container {
+      max-width: 100%;
+      width: 100%;
+      min-width: 0;
+    }
     html[data-embed="true"] .diagram-container {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
       padding: 0.5rem;
       border: 0;
       border-radius: 0;
       box-shadow: none;
     }
-    html[data-embed="true"] .diagram-container svg { min-width: 0; }
+    html[data-embed="true"] .diagram-container svg {
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+    }
 
     /* Island homepage: larger words, and flowing edges once the parent
        section scrolls the embed into view. */
