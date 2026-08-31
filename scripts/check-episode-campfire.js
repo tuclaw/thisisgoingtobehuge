@@ -148,12 +148,13 @@ if (!appJs.includes("money-ticker-palm")) {
 }
 if (
   !appJs.includes("function moneyTickerWeekdayTicks") ||
+  !appJs.includes("function moneyTickerTapeDays") ||
   !appJs.includes("data-ticker-x-weekday") ||
   !appJs.includes('label: "Monday"') ||
   !appJs.includes("money-ticker-day-full") ||
   !appJs.includes("money-ticker-day-short")
 ) {
-  throw new Error("app.js money ticker x-axis must mark Monday through Friday as day points");
+  throw new Error("app.js money ticker x-axis must mark days actually on the episode tape");
 }
 if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("data-ticker-x-range")) {
   throw new Error("app.js money ticker x-axis must use weekday points, not date-range labels");
@@ -181,6 +182,7 @@ const axisHelpers = new Function(`
     parseEpisodeWeekLabel,
     episodeWeekBounds,
     moneyTickerWeekdayTicks,
+    moneyTickerTapeDays,
     moneyTickerAssignAxis,
     moneyTickerXFromAxisT,
     survivorBootAtMs,
@@ -217,6 +219,18 @@ const seasonAxis = axisHelpers.moneyTickerWeekdayTicks(
 if (seasonAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
   throw new Error("Season diagram should still name Mon–Fri when one trading week is on tape, got " + seasonAxis.join(" | "));
 }
+const fullWeekTape = [
+  { at: "2026-08-24T16:06:00Z" },
+  { at: "2026-08-25T15:25:47Z" },
+  { at: "2026-08-26T20:00:00Z" },
+  { at: "2026-08-28T00:13:00Z" },
+  { at: "2026-08-28T19:14:23Z" }
+];
+axisHelpers.moneyTickerAssignAxis(fullWeekTape, "week");
+const fullWeekAxis = axisHelpers.moneyTickerWeekdayTicks(fullWeekTape, "week").map((tick) => tick.label);
+if (fullWeekAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
+  throw new Error("Complete week tape should still name Mon–Fri, got " + fullWeekAxis.join(" | "));
+}
 
 const mondayTape = [
   { at: "2026-08-31T16:00:00Z" },
@@ -237,6 +251,33 @@ const mondaySpan =
   axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT) - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT);
 if (mondaySpan < 500) {
   throw new Error("Monday-only week marks must travel most of the plot, span was " + mondaySpan.toFixed(1));
+}
+const mondayWeekTicks = axisHelpers.moneyTickerWeekdayTicks(mondayTape, "week");
+if (mondayWeekTicks.map((tick) => tick.label).join(" | ") !== "Monday Aug 31") {
+  throw new Error(
+    "Episode 2 week axis must name the Monday on tape, not a fake Tue–Fri, got " +
+      mondayWeekTicks.map((tick) => tick.label).join(" | ")
+  );
+}
+if (mondayWeekTicks.map((tick) => tick.weekday).join(" | ") !== "Mon 31") {
+  throw new Error(
+    "Episode 2 week axis short label must be Mon 31, got " + mondayWeekTicks.map((tick) => tick.weekday).join(" | ")
+  );
+}
+const mondayTickX = mondayWeekTicks[0] && mondayWeekTicks[0].x;
+const mondayMidX =
+  (axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT) + axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT)) / 2;
+if (!(mondayTickX > mondayMidX - 8 && mondayTickX < mondayMidX + 8)) {
+  throw new Error(
+    "Monday-only week tick must sit on the Monday tape, not a calendar Mon slot, x was " +
+      String(mondayTickX) +
+      " vs mid " +
+      mondayMidX.toFixed(1)
+  );
+}
+const paintedFriday = axisHelpers.moneyTickerXFromAxisT(4.5, 5);
+if (mondayTickX > paintedFriday - 80) {
+  throw new Error("Monday-only week tick must not sit under a painted Friday");
 }
 
 const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };

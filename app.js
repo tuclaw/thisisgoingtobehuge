@@ -2083,8 +2083,8 @@ function survivorLivingAt(season, survivor, iso) {
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
   const n = list.length;
-  /* Tape order, not calendar slots. Same-day marks must travel the plot;
-     weekday ticks stay as labels. Season chapters should call this after load. */
+  /* Tape order, not calendar slots. Same-day marks must travel the plot.
+     Axis ticks come from days actually on the tape, not a painted Mon–Fri. */
   moneyTicker.axisMax = Math.max(1, n - 1);
   list.forEach((frame, i) => {
     frame.axisT = n < 2 ? 0 : i;
@@ -2133,48 +2133,55 @@ function moneyTickerLiveNowX(frames, range) {
   return moneyTickerXFromAxisT(lastT);
 }
 
-function moneyTickerWeekdayTicks(frames, range) {
-  const mode = range || (moneyTicker && moneyTicker.range) || "week";
-  if (mode === "week") {
-    return MONEY_TICKER_WEEKDAYS.map((day, i) => ({
-      x: moneyTickerXFromAxisT(i + 0.5, 5),
-      label: day.label,
-      weekday: day.key
-    }));
-  }
+function moneyTickerFallbackWeekdayTicks() {
+  return MONEY_TICKER_WEEKDAYS.map((day, i) => ({
+    x: moneyTickerXFromAxisT(i + 0.5, 5),
+    label: day.label,
+    weekday: day.key
+  }));
+}
+
+function moneyTickerTapeDays(frames) {
   const days = [];
   const byKey = new Map();
-  (frames || []).forEach((frame) => {
+  (frames || []).forEach((frame, i) => {
     const parts = pacificDateParts(frame && frame.at);
     if (!parts) return;
+    const t = typeof frame.axisT === "number" ? frame.axisT : i;
     if (!byKey.has(parts.key)) {
-      byKey.set(parts.key, {
+      const day = {
         weekday: parts.weekday,
         day: parts.day,
         month: parts.month,
-        key: parts.key
-      });
-      days.push(byKey.get(parts.key));
+        key: parts.key,
+        startT: t,
+        endT: t
+      };
+      byKey.set(parts.key, day);
+      days.push(day);
+      return;
     }
+    byKey.get(parts.key).endT = t;
   });
-  const trading = days.filter((day) => MONEY_TICKER_WEEKDAY_SLOT[day.weekday] != null && day.weekday !== "Sat" && day.weekday !== "Sun");
-  const use = trading.length ? trading : days;
-  if (!use.length) {
-    return MONEY_TICKER_WEEKDAYS.map((day, i) => ({
-      x: moneyTickerXFromAxisT(i + 0.5, 5),
-      label: day.label,
-      weekday: day.key
-    }));
-  }
-  const full =
-    use.length <= 5 && use.every((day) => MONEY_TICKER_WEEKDAYS.some((item) => item.key === day.weekday));
-  const axisMax = Math.max(1, use.length);
-  return use.map((day, i) => {
+  const trading = days.filter(
+    (day) => MONEY_TICKER_WEEKDAY_SLOT[day.weekday] != null && day.weekday !== "Sat" && day.weekday !== "Sun"
+  );
+  return trading.length ? trading : days;
+}
+
+function moneyTickerWeekdayTicks(frames, range) {
+  const use = moneyTickerTapeDays(frames);
+  if (!use.length) return moneyTickerFallbackWeekdayTicks();
+  const complete =
+    use.length === 5 && MONEY_TICKER_WEEKDAYS.every((item, i) => use[i] && use[i].weekday === item.key);
+  const axisMax = moneyTicker.axisMax || Math.max(1, (frames || []).length - 1);
+  return use.map((day) => {
     const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
+    const midT = (Number(day.startT) + Number(day.endT)) / 2;
     return {
-      x: moneyTickerXFromAxisT(i + 0.5, axisMax),
-      label: full && named ? named.label : `${day.weekday} ${day.day}`,
-      weekday: day.weekday
+      x: moneyTickerXFromAxisT(midT, axisMax),
+      label: complete && named ? named.label : `${named ? named.label : day.weekday} ${day.month} ${day.day}`,
+      weekday: complete ? day.weekday : `${day.weekday} ${day.day}`
     };
   });
 }
