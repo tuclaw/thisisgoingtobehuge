@@ -5758,6 +5758,10 @@ body.is-titles .replay-trailer {
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(212, 160, 23, 0.12), transparent 55%);
 }
 
+.diagram-band {
+  overflow-x: clip;
+}
+
 .diagram-band .wrap {
   max-width: 80rem;
   min-width: 0;
@@ -5782,6 +5786,7 @@ body.is-titles .replay-trailer {
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  contain: inline-size;
   margin: 0 auto 1.25rem;
   padding: 0;
   border: 1px solid rgba(212, 160, 23, 0.28);
@@ -5801,7 +5806,6 @@ body.is-titles .replay-trailer {
   max-width: 100%;
   min-width: 0;
   aspect-ratio: 1140 / 680;
-  min-height: 28rem;
   overflow: hidden;
 }
 
@@ -5816,9 +5820,12 @@ body.is-titles .replay-trailer {
   background: #020617;
 }
 
-@media (max-width: 720px) {
+/* 28rem * 1140/680 ≈ 751px transferred min-width. Only apply when
+   the column is already wider than that, so the floor never stretches
+   the page. On a 1120px wrap the aspect height already exceeds 28rem. */
+@media (min-width: 900px) {
   .archify-embed-frame {
-    min-height: 0;
+    min-height: 28rem;
   }
 }
 

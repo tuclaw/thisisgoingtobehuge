@@ -194,8 +194,11 @@ if (
 ) {
   throw new Error("styles.css Archify frame must size from column width, not a transferred min-width");
 }
-if (!/@media\s*\(max-width:\s*720px\)\s*\{[^}]*\.archify-embed-frame\s*\{[^}]*min-height:\s*0/.test(css)) {
-  throw new Error("styles.css must drop Archify frame min-height on small screens");
+if (!/@media\s*\(min-width:\s*900px\)\s*\{[^}]*\.archify-embed-frame\s*\{[^}]*min-height:\s*28rem/.test(css)) {
+  throw new Error("styles.css must keep the 28rem Archify floor only on wide screens");
+}
+if (!/\.diagram-band\s*\{[^}]*overflow-x:\s*clip/.test(css)) {
+  throw new Error("styles.css diagram band must clip leftover horizontal overflow");
 }
 const appJs = readFileSync(join(root, "app.js"), "utf8");
 if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow")) {
