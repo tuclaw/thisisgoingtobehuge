@@ -121,7 +121,9 @@ if (!appJs.includes("money-ticker-palm")) {
 if (
   !appJs.includes("function moneyTickerWeekdayTicks") ||
   !appJs.includes("data-ticker-x-weekday") ||
-  !appJs.includes('label: "Monday"')
+  !appJs.includes('label: "Monday"') ||
+  !appJs.includes("money-ticker-day-full") ||
+  !appJs.includes("money-ticker-day-short")
 ) {
   throw new Error("app.js money ticker x-axis must mark Monday through Friday as day points");
 }

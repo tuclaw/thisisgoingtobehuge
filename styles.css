@@ -4835,6 +4835,19 @@ body.is-titles .replay-trailer {
   font-size: 10px;
 }
 
+.money-ticker-day-short {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .money-ticker-day-full {
+    display: none;
+  }
+  .money-ticker-day-short {
+    display: inherit;
+  }
+}
+
 .money-ticker-day-grid {
   stroke: rgba(196, 165, 116, 0.14);
   stroke-width: 1;

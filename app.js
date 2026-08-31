@@ -2815,11 +2815,13 @@ function renderMoneyTickerSvg(season, frames) {
       let anchor = "middle";
       if (tick.x < 70) anchor = "start";
       else if (tick.x > 600) anchor = "end";
-      return `<g class="money-ticker-day" data-ticker-x-weekday="${escapeHtml(tick.weekday || tick.label)}">
+      const short = tick.weekday || tick.label;
+      return `<g class="money-ticker-day" data-ticker-x-weekday="${escapeHtml(short)}">
         <line class="money-ticker-day-grid" x1="${tick.x.toFixed(2)}" y1="16" x2="${tick.x.toFixed(2)}" y2="198" />
         <line class="money-ticker-day-tick" x1="${tick.x.toFixed(2)}" y1="198" x2="${tick.x.toFixed(2)}" y2="206" />
         <circle class="money-ticker-day-dot" cx="${tick.x.toFixed(2)}" cy="198" r="2.1" />
-        <text class="money-ticker-axis" x="${tick.x.toFixed(2)}" y="216" text-anchor="${anchor}">${escapeHtml(tick.label)}</text>
+        <text class="money-ticker-axis money-ticker-day-full" x="${tick.x.toFixed(2)}" y="216" text-anchor="${anchor}">${escapeHtml(tick.label)}</text>
+        <text class="money-ticker-axis money-ticker-day-short" x="${tick.x.toFixed(2)}" y="216" text-anchor="${anchor}">${escapeHtml(short)}</text>
       </g>`;
     })
     .join("");
