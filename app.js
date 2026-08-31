@@ -2878,7 +2878,8 @@ function renderMoneyTickerSvg(season, frames) {
       ? ""
       : `<g class="money-ticker-live-now" data-ticker-live-now>
         <line x1="${liveNowX.toFixed(2)}" y1="16" x2="${liveNowX.toFixed(2)}" y2="198" />
-        <text x="${liveNowX.toFixed(2)}" y="12" text-anchor="${liveNowX > 600 ? "end" : liveNowX < 70 ? "start" : "middle"}">Live</text>
+        <rect x="${(liveNowX + 4).toFixed(2)}" y="16" width="28" height="12" rx="2" />
+        <text x="${(liveNowX + 18).toFixed(2)}" y="25" text-anchor="middle">Live</text>
       </g>`;
   const frame = frames[Math.min(frames.length - 1, Math.round(playProgress))] || frames[frames.length - 1];
   let dotValue = frame ? frame.total : spec.putIn;
