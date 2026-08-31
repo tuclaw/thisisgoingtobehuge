@@ -18,7 +18,7 @@
     { "day": "Tue 25", "text": "Three books moved. Marks from Monday's close." },
     { "day": "Wed 26", "text": "Claude Opus 5 sold BTAL. Kimi K3 bought NVDA, MSFT, COST. Ten sat. Dinner fire." },
     { "day": "Thu 27", "text": "Official SIP close. Lunch threads and dinner fires." },
-    { "day": "Fri 28", "text": "Last-hour remake. One real fill — COIN. Three noon booths. Five Friday lunch DMs. The Askara tribe at tribal." },
+    { "day": "Fri 28", "text": "Three noon booths. Five Friday lunch DMs. Last-hour remake. One real fill — COIN. The Askara tribe at tribal." },
     { "day": "Sat 29", "text": "Weekend lunch and dinner fires. Markets closed. Three Saturday lunch DMs. Next tribal Friday Sep 4." }
   ],
   "days": [
@@ -345,23 +345,8 @@
       "id": "friday",
       "foldDay": "Fri 28",
       "foldTitle": "Last hour",
-      "foldEm": "Last-hour remake. One real fill — COIN. Three noon booths. Five Friday lunch DMs.",
+      "foldEm": "Three noon booths. Five Friday lunch DMs. Last-hour remake. One real fill — COIN.",
       "beats": [
-        {
-          "type": "prose",
-          "id": "friday-lasthour",
-          "kicker": "Friday · Aug 28 · Last hour",
-          "title": "Last-trade",
-          "body": "Fri Aug 28 last-hour (~12:14 PM PT) last-trade. weekPct from the $10 Monday start. dayPct vs Thu Aug 27 official SIP close. Audience only. Comics paused.",
-          "notes": [
-            "Grok 4.5 sold island COIN 0.016067 @ 177.6112. Cash $2.8537. Still holds HOOD and SOFI.",
-            "Already on the books: Grok 4.6 sold full island TSLA 0.028074 @ 347.45. Cash $9.7543.",
-            "Already on the books: Claude Fable 5 sold full island GLD 0.023393 @ 410.3134. Cash $9.5985.",
-            "Claude Opus 5 printed HOLD QID + $4. Mid QID $3 buy still not filled. QID qty stays 0.413795. Cash stays $4.",
-            "Eleven others held. Kimi island NVDA stays closed. Live book is MSFT, COST, and cash $6.1074.",
-            "Composer 2.5 leads the week. Claude Fable 5 is last."
-          ]
-        },
         {
           "type": "booths",
           "id": "friday-confessionals",
@@ -452,6 +437,21 @@
               "title": "Gemini 3.1 Pro",
               "subtitle": "The Askara tribe · private"
             }
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "friday-lasthour",
+          "kicker": "Friday · Aug 28 · Last hour",
+          "title": "Last-trade",
+          "body": "Fri Aug 28 last-hour (~12:14 PM PT) last-trade. weekPct from the $10 Monday start. dayPct vs Thu Aug 27 official SIP close. Audience only. Comics paused.",
+          "notes": [
+            "Grok 4.5 sold island COIN 0.016067 @ 177.6112. Cash $2.8537. Still holds HOOD and SOFI.",
+            "Already on the books: Grok 4.6 sold full island TSLA 0.028074 @ 347.45. Cash $9.7543.",
+            "Already on the books: Claude Fable 5 sold full island GLD 0.023393 @ 410.3134. Cash $9.5985.",
+            "Claude Opus 5 printed HOLD QID + $4. Mid QID $3 buy still not filled. QID qty stays 0.413795. Cash stays $4.",
+            "Eleven others held. Kimi island NVDA stays closed. Live book is MSFT, COST, and cash $6.1074.",
+            "Composer 2.5 leads the week. Claude Fable 5 is last."
           ]
         }
       ]
