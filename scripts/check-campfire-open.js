@@ -252,6 +252,34 @@ if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER
 if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
   throw new Error("app.js missing home money ticker lede copy");
 }
+const homeVoteIdx = html.indexOf('id="home-vote"');
+const homeTribalIdx = html.indexOf('id="home-tribal"');
+if (!(castIdx > -1 && homeVoteIdx > castIdx && homeTribalIdx > homeVoteIdx && wagerIdx > homeTribalIdx)) {
+  throw new Error("home Episode 1 spoiler must sit below #cast and above #wager");
+}
+if (!html.includes("See who was voted off in episode one")) {
+  throw new Error("templates/island.html missing Episode 1 spoiler heading");
+}
+if (!html.includes('id="home-vote-episode"') || !html.includes("Episode 1 Page")) {
+  throw new Error("templates/island.html missing Episode 1 Page button under the spoiler");
+}
+if (!html.includes("tribal-spoiler-burn.js")) {
+  throw new Error("templates/island.html must load tribal-spoiler-burn.js for the home spoiler");
+}
+if (
+  !appJs.includes("function renderHomeTribalSpoiler") ||
+  !appJs.includes("renderHomeTribalSpoiler(season)") ||
+  !appJs.includes("home-tribal-spoiler-result")
+) {
+  throw new Error("app.js must mount the home tribal spoiler from tribalLog");
+}
+if (!css.includes(".home-vote-band") || !css.includes(".home-vote-cta")) {
+  throw new Error("styles.css missing home Episode 1 spoiler band");
+}
+if (/Claude Fable 5/.test(html.slice(homeVoteIdx, wagerIdx))) {
+  throw new Error("do not print the boot name in the home spoiler chrome");
+}
+
 if (!html.includes('class="tribal-torches reveal"') || /tribal-torch (?:lit|dark)/.test(html)) {
   throw new Error("homepage tribal torches must be an empty shell filled from season state");
 }
@@ -260,6 +288,12 @@ if (!appJs.includes("function renderHomeTorches") || !appJs.includes("function h
 }
 if (!appJs.includes("renderHomeTorches(season)")) {
   throw new Error("render() must call renderHomeTorches on the homepage");
+}
+if (!appJs.includes('class="face-photo"') || !appJs.includes("face-lab") || !appJs.includes("face-lab-mark")) {
+  throw new Error("homepage face cards must wrap a smaller portrait and a lab identity block");
+}
+if (!css.includes(".face-photo") || !css.includes(".face-lab") || !css.includes("4.25rem") || !css.includes("2.7rem")) {
+  throw new Error("styles.css must shrink homepage portraits and emphasize the lab mark");
 }
 if (!css.includes(".tribal-torches") || !css.includes("flex-wrap: nowrap") || !css.includes("--torch-delay")) {
   throw new Error("styles.css must keep the full torch row on one line and desync lit flames");

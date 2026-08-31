@@ -7,6 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const season = JSON.parse(fs.readFileSync(path.join(root, "data/season1.json"), "utf8"));
 const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
+const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");
 const builtHtmlPath = path.join(root, "dist/seasons/1/e01.html");
 const html = fs.existsSync(builtHtmlPath) ? fs.readFileSync(builtHtmlPath, "utf8") : "";
@@ -17,6 +18,9 @@ function fail(message) {
 
 if (!app.includes("function wrapTribalSpoiler") || !app.includes("function bindTribalSpoilers")) {
   fail("do not remove wrapTribalSpoiler / bindTribalSpoilers");
+}
+if (!app.includes("function renderHomeTribalSpoiler") || !app.includes("home-tribal-spoiler-result")) {
+  fail("home page must reuse wrapTribalSpoiler for the Episode 1 vote card");
 }
 if (!app.includes("function councilTorchCount") || !app.includes("function councilTorchRowHtml")) {
   fail("episode tribal torches must be sized from the losing tribe / vote count");
@@ -35,6 +39,10 @@ if (!app.includes("initTribalSpoilerBurns")) {
 }
 if (!builder.includes("tribal-spoiler-burn.js")) {
   fail("build must keep linking tribal-spoiler-burn.js");
+}
+const burn = fs.readFileSync(path.join(root, "tribal-spoiler-burn.js"), "utf8");
+if (!burn.includes("function coverCopyFrom") || !burn.includes("CLICK TO REVEAL THE VOTE")) {
+  fail("tribal-spoiler-burn.js must paint cover copy from the card, with the episode default intact");
 }
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
@@ -89,8 +97,8 @@ expectedBooths.forEach(([slug, name, needle], i) => {
 const chrome = [episode.location, episode.description, episode.heroNote, tribal.foldEm, tribal.foldTitle, cut.title, cut.body]
   .concat((episode.spine || []).map((item) => item.text))
   .join("\n");
-if (/voted off|joins the jury|tally 5|5–1|5-1/i.test(chrome)) {
-  fail("do not print the boot or tally in hero/open copy");
+if (!/Claude Fable 5, 5–1, first juror/.test(chrome)) {
+  fail("closed Episode 1 chrome must print the boot line: Claude Fable 5, 5–1, first juror");
 }
 ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"].forEach((nick) => {
   const boothChrome = (prevote.items || []).map((item) => item.name).join(" ");
@@ -138,6 +146,9 @@ if (entry.title !== "Season 1 Episode 1 · Friday Aug 28, 2026") fail("official 
 if (!app.includes("entry.tally") || !app.includes("boot-name") || !app.includes("vote-tally")) {
   fail("formatTribalEntry must emphasize the boot and show the official tally only");
 }
+if (!app.includes('class="vote-tally-kicker">Votes<') || !css.includes(".vote-tally-kicker")) {
+  fail("spoiler reveal must label the tally with Votes");
+}
 if (app.includes("entry.summary") && /blocks = \[entry\.summary/.test(app)) {
   fail("do not dump the tribal summary into the spoiler reveal");
 }
@@ -153,7 +164,7 @@ if (lastHour.recorded[grok45Id].bookUsd !== 9.6402 || lastHour.recorded[grok45Id
   fail("Grok 4.5 last-hour book was remade");
 }
 const fableCast = (season.cast || []).find((member) => member.id === fableId);
-if (!fableCast || fableCast.status !== "active") fail("do not change Fable cast status on this page cut");
+if (!fableCast || fableCast.status !== "jury") fail("Fable must be jury after the Episode 1 boot");
 
 if (html) {
   if (!html.includes('id="tribal-focus"')) fail("built e01.html missing post-vote #tribal-focus");
@@ -188,8 +199,8 @@ if (html) {
     fail("empty tribal day fold should not render after vote promotion");
   }
   const open = html.slice(0, html.indexOf('id="episode-tribal"'));
-  if (/Voted off:|joins the jury|Tally 5–1/.test(open)) {
-    fail("built open copy leaked the boot before the spoiler");
+  if (!/Claude Fable 5, 5–1, first juror/.test(open) && !/Claude Fable 5 voted out 5–1/.test(open)) {
+    fail("built closed Episode 1 open copy must print the boot line");
   }
   if (!html.includes('href="#week-board"')) fail("skip/scroll cue must point at #week-board");
   if (html.includes("day-rail")) fail("episode page must not render the day-rail TOC");
