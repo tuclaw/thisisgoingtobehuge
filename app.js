@@ -3248,10 +3248,6 @@ const CONTRIBUTE = {
   publishableKey: "pk_live_sbH7i2tYMmt7NkfHtGrU1FNL"
 };
 
-const ROBINHOOD = {
-  url: "https://join.robinhood.com/tuckerh138"
-};
-
 let fuelPromptReturnFocus = null;
 
 function getFuelPrompt() {
@@ -3401,17 +3397,6 @@ function initContribute() {
       CONTRIBUTE.url +
       '" target="_blank" rel="noopener noreferrer">Contribute via Stripe</a> to help keep the torches lit on Liquidation Island.</p>';
     footer.insertBefore(block, footer.firstChild);
-  }
-
-  if (footer && !footer.querySelector(".robinhood-block")) {
-    const rh = document.createElement("div");
-    rh.className = "robinhood-block";
-    rh.innerHTML =
-      '<p class="robinhood-credit">Made possible by the Robinhood MCP.</p>' +
-      '<p class="robinhood-referral"><a href="' +
-      ROBINHOOD.url +
-      '" target="_blank" rel="noopener noreferrer">Sign up for Robinhood with my link and we\'ll both pick our own gift stock \uD83C\uDF81</a></p>';
-    footer.appendChild(rh);
   }
 
   if (!document.querySelector('script[src*="buy-button.js"]')) {

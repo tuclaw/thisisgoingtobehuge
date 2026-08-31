@@ -263,7 +263,19 @@ if (!css.includes("touch-action: manipulation") || !html.includes("replay-traile
   throw new Error("replay trailer must be touch-friendly on mobile");
 }
 
-const fills = (season.events || []).filter((e) => e && e.type === "fill");
+let fills = (season.events || []).filter((e) => e && e.type === "fill");
+if (!fills.length && Array.isArray(season.survivors)) {
+  fills = season.survivors.flatMap((survivor) =>
+    (survivor.positions || [])
+      .filter((pos) => pos.orderId && pos.filledAt)
+      .map((pos) => ({
+        type: "fill",
+        at: pos.filledAt,
+        ticker: pos.ticker,
+        side: String(pos.action || "BUY").toLowerCase() === "sell" ? "sell" : "buy"
+      }))
+  );
+}
 if (fills.length < 1) throw new Error("season1.json has no fill events for trade flash");
 const newest = fills.slice().sort((a, b) => (a.at < b.at ? 1 : -1))[0];
 if (!newest || !newest.ticker) throw new Error("newest fill missing ticker");

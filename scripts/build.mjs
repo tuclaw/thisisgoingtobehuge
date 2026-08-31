@@ -10,7 +10,7 @@ import {
 } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { LEGACY_SLUGS, deriveSeason } from "./lib/ledger.mjs";
+import { LEGACY_SLUGS, deriveSeason, castFromSource } from "./lib/ledger.mjs";
 import { collectThreads } from "./lib/collect-threads.mjs";
 import { writeBoard } from "./derive-board.mjs";
 
@@ -657,8 +657,12 @@ export function build(rootDir = root, destDir = dist) {
   const toBuild = [];
   const seen = new Set();
   for (const ep of listed) {
-    const srcRel = ep.source || (ep.id ? `data/episodes/${ep.id}.json` : "");
-    const srcPath = srcRel ? join(rootDir, srcRel) : "";
+    let srcRel = ep.source || (ep.id ? `data/episodes/${ep.id}.json` : "");
+    let srcPath = srcRel ? join(rootDir, srcRel) : "";
+    if (srcPath && !existsSync(srcPath) && ep.id) {
+      const alt = join(rootDir, "data", "episodes", `${ep.id}.json`);
+      if (existsSync(alt)) srcPath = alt;
+    }
     if (!srcPath || !existsSync(srcPath) || seen.has(srcPath)) continue;
     seen.add(srcPath);
     toBuild.push({
@@ -682,20 +686,21 @@ export function build(rootDir = root, destDir = dist) {
     JSON.stringify({ source: "host-tape", conversations: threads }, null, 2) + "\n"
   );
 
-  for (const member of source.cast) {
+  const cast = castFromSource(source);
+  for (const member of cast) {
     write(
       join(destDir, "survivors", `${member.slug}.html`),
       survivorRedirectHtml(member.slug, member.name)
     );
   }
   for (const [legacy, slug] of Object.entries(LEGACY_SLUGS)) {
-    const member = source.cast.find((c) => c.slug === slug);
+    const member = cast.find((c) => c.slug === slug);
     write(
       join(destDir, "survivors", `${legacy}.html`),
       survivorRedirectHtml(slug, member ? member.name : slug)
     );
   }
-  write(join(destDir, "404.html"), render404(source.cast));
+  write(join(destDir, "404.html"), render404(cast));
   copyStatic();
   return { destDir, survivors: board.survivors.length, snapshots: board.snapshots.length };
 }
