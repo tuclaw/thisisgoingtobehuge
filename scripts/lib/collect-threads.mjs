@@ -1,7 +1,8 @@
-/** Collect host-tape conversations from day scripts + conversations.json. */
+/** Collect host-tape conversations from the episode pack, then day scripts. */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import vm from "node:vm";
+import { hasSeasonPack, loadAllEpisodeChats } from "./load-season.mjs";
 
 const TAPE_FILES = [
   "e01-wednesday-dinner.js",
@@ -79,6 +80,13 @@ function loadTapeWindow(src, filename) {
 export function collectThreads(rootDir) {
   const byId = {};
   const order = [];
+
+  if (hasSeasonPack(rootDir)) {
+    for (const conversation of loadAllEpisodeChats(rootDir)) {
+      addConversation(byId, order, conversation, conversation && conversation.id);
+    }
+    if (order.length) return order.map((id) => byId[id]);
+  }
 
   const feedPath = join(rootDir, "seasons/1/conversations.json");
   try {

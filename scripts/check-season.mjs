@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { hasSeasonPack, loadSeasonSource } from "./lib/load-season.mjs";
 import {
   LEGACY_SLUGS,
   canonicalCastAsset,
@@ -17,7 +18,7 @@ import {
 } from "./lib/ledger.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const source = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
+const source = loadSeasonSource(root);
 const board = deriveSeason(source);
 const boardNative = isBoardNative(source);
 const cast = castFromSource(source);
@@ -26,6 +27,7 @@ const failures = [];
 function check(name, ok, detail) {
   if (!ok) failures.push(detail ? `${name}: ${detail}` : name);
 }
+check("season-pack", hasSeasonPack(root), "data/s1/season.json");
 
 function requireKeys(obj, keys, label) {
   for (const key of keys) {

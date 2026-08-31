@@ -33,8 +33,8 @@ The public site is generated. Season state is a ledger, not a screenshot of the 
 
 - Rules bible: `GAME.md`
 - Agent edit map: `AGENTS.md` (what to touch vs leave alone)
-- Season ledger: `data/season1.json` (cast, events, quotes)
-- Episode copy: `data/episodes/`
+- Season pack: `data/s1/` (`season.json` identity, `live.json` current books, `e01/` / `e02/` events + copy + chats)
+- Episode copy: `data/s1/e0N/copy.json`
 - HTML shells: `templates/`
 - Client CSS/JS: root `styles.css`, `app.js`, camp/episode scripts
 - Derive + stamp `dist/`: `node scripts/build.mjs` (never hand-edit `dist/`)

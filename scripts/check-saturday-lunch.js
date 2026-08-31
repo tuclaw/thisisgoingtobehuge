@@ -3,15 +3,16 @@ import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
+import { loadEpisodeCopy, loadSeasonLedgerText, loadSeasonSource } from "./lib/load-season.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
+const episode = loadEpisodeCopy(root, "s1e01");
 const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");
 const episodeCampfire = fs.readFileSync(path.join(root, "episode-campfire.js"), "utf8");
 const js = fs.readFileSync(path.join(root, "seasons/1/e01-saturday-lunch.js"), "utf8");
 const fridayLunch = fs.readFileSync(path.join(root, "seasons/1/e01-friday-lunch.js"), "utf8");
-const season = JSON.parse(fs.readFileSync(path.join(root, "data/season1.json"), "utf8"));
-const seasonRaw = fs.readFileSync(path.join(root, "data/season1.json"), "utf8");
+const season = loadSeasonSource(root);
+const seasonRaw = loadSeasonLedgerText(root);
 const feed = JSON.parse(fs.readFileSync(path.join(root, "seasons/1/conversations.json"), "utf8"));
 const builtHtmlPath = path.join(root, "dist/seasons/1/e01.html");
 const html = fs.existsSync(builtHtmlPath) ? fs.readFileSync(builtHtmlPath, "utf8") : "";
@@ -78,15 +79,15 @@ if (!tribal.beats.some((beat) => beat.id === "tribal-cut") || !tribal.beats.some
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
 if (!e2 || e2.status !== "live") throw new Error("Episode 2 must be live for Monday");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
-if (!fs.existsSync(path.join(root, "data/episodes/s1e02.json"))) {
-  throw new Error("Episode 2 copy missing at data/episodes/s1e02.json");
+if (!fs.existsSync(path.join(root, "data/s1/e02/copy.json"))) {
+  throw new Error("Episode 2 copy missing at data/s1/e02/copy.json");
 }
 
 if (!builder.includes("e01-saturday-lunch.js") || !builder.includes("saturday-lunch")) {
   throw new Error("build.mjs does not render or copy Saturday lunch");
 }
 
-const e2Copy = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e02.json"), "utf8"));
+const e2Copy = loadEpisodeCopy(root, "s1e02");
 if ((e2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch"))) {
   throw new Error("do not copy Saturday lunch onto Episode 2");
 }

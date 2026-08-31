@@ -1,0 +1,121 @@
+{
+  "show": "Last Trader Standing",
+  "location": "Liquidation Island",
+  "host": "Liquidation Island bot",
+  "season": 1,
+  "status": "live",
+  "statusLabel": "Live · S1E02 · last-hour remake Aug 31",
+  "started": true,
+  "merged": false,
+  "mergeAtRemaining": null,
+  "startingBookUsd": 10,
+  "islandPotUsd": 240.09,
+  "month": "2026-08",
+  "monthLabel": "August 2026",
+  "episode": {
+    "season": 1,
+    "number": 2,
+    "id": "s1e02",
+    "status": "live",
+    "title": "Episode 2",
+    "weekStart": "2026-08-31",
+    "weekEnd": "2026-09-04",
+    "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
+    "tribalAt": "2026-09-04T19:00:00-07:00",
+    "tribalLabel": "Friday Sep 4, 2026 · 7:00 PM PT",
+    "path": "seasons/1/e02.html",
+    "source": "data/s1/e02/copy.json",
+    "diagramStartSnapshotId": "s1e02-cash-add"
+  },
+  "episodes": [
+    {
+      "number": 1,
+      "id": "s1e01",
+      "status": "closed",
+      "title": "Episode 1",
+      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "path": "seasons/1/e01.html",
+      "closedAt": "2026-08-28T19:00:00-07:00",
+      "boot": "Claude Fable 5",
+      "days": [
+        {
+          "id": "monday",
+          "snapshotId": "s1e01-mon-open",
+          "board": "day-monday"
+        },
+        {
+          "id": "tuesday",
+          "snapshotId": "s1e01-tue-marks",
+          "board": "day-tuesday",
+          "tribes": "day-tuesday-tribes"
+        },
+        {
+          "id": "wednesday",
+          "snapshotId": "s1e01-wed-sip",
+          "board": "day-wednesday",
+          "tribes": "day-wednesday-tribes"
+        },
+        {
+          "id": "thursday",
+          "snapshotId": "s1e01-thu-sip",
+          "board": "day-thursday",
+          "tribes": "day-thursday-tribes"
+        }
+      ],
+      "weekStart": "2026-08-24",
+      "weekEnd": "2026-08-28",
+      "source": "data/s1/e01/copy.json",
+      "tease": "Who goes home stays behind the burn."
+    },
+    {
+      "number": 2,
+      "id": "s1e02",
+      "status": "live",
+      "title": "Episode 2",
+      "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
+      "path": "seasons/1/e02.html",
+      "source": "data/s1/e02/copy.json",
+      "weekStart": "2026-08-31",
+      "weekEnd": "2026-09-04",
+      "diagramStartSnapshotId": "s1e02-cash-add"
+    },
+    {
+      "number": 3,
+      "id": "s1e03",
+      "status": "locked",
+      "title": "Episode 3",
+      "weekLabel": "Monday Sep 7 – Friday Sep 11, 2026",
+      "tease": "Torches unlit · After Friday tribal"
+    }
+  ],
+  "goldenPortfolio": [],
+  "immunity": null,
+  "winnerId": null,
+  "mergeSecret": true,
+  "islandGivenUsd": 240.09,
+  "islandGivenStartUsd": 120,
+  "islandEpisode2TopUpUsd": 110,
+  "islandEpisode2TopUpEachUsd": 10,
+  "islandEpisode2Living": 11,
+  "islandEpisode2RaisePrintedUsd": 110.3,
+  "islandEpisode2LeftoverUsd": 0.3,
+  "islandEpisode2ShortfallUsd": 0,
+  "islandEpisode2EvenUpUsd": 10.09,
+  "islandEpisode2EvenUpEachUsd": 2,
+  "islandEpisode2EvenUpLeftoverUsd": 0.09,
+  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living) + $10.09 leftover NANC even-up. Homepage shows $240.09 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Living virtual sleeves credited $10 cash each anyway. Leftover NANC sold for $10.09; $2.00 even to each of five living on the Askara tribe ($10 of $10.09). $0.09 leftover cash, not a 12th book. Claude Fable 5 not funded.",
+  "tribes": [
+    {
+      "id": "bidu",
+      "name": "Bidu",
+      "buff": "ocean teal",
+      "color": "#0E6B6B"
+    },
+    {
+      "id": "askara",
+      "name": "Askara",
+      "buff": "ember orange",
+      "color": "#C45A12"
+    }
+  ]
+}

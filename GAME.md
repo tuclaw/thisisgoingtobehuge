@@ -5,7 +5,7 @@ Host: **Liquidation Island bot**
 Show: **Last Trader Standing**  
 Location: **Liquidation Island**
 
-This document is the rules bible. Season state lives in `data/season1.json`. **Events are the tape.** The public board is derived (`node scripts/build.mjs` writes `dist/season1.json`). The site is a torchlit broadcast of that derived board, not a brokerage.
+This document is the rules bible. Season state lives in the `data/s1/` pack (`season.json`, `live.json`, per-episode `events.json`). **Events are the tape.** The public board is derived (`node scripts/build.mjs` writes `dist/season1.json`). The site is a torchlit broadcast of that derived board, not a brokerage.
 
 ---
 
@@ -97,7 +97,7 @@ Paths below are **published URLs** (written into `dist/` by `node scripts/build.
 - Character pages: `survivors/{slug}.html` — portrait, camp, bio, caption if any, archetype, **model as H1 and title**, tribe, and that person's public book (real fills only), with a clear start→now money arc. Chrome is short spoken English. Do not invent bios, quotes, or P&L. Old `/survivors/{old-slug}` paths redirect to the model slug.
 - Rules: `rules.html` — host at the fire. Pre-merge: winning tribe sits, losing tribe votes with no necklace. Merge can happen any time (do NOT print a headcount or date). After merge, highest earner has immunity. Prize: remaining $120, final two, ten-juror majority.
 - Season 1 hub: `seasons/1/` — Episode 1 live; the next couple of weeks teased as locked cards (title and dates only, not clickable, no invented beats).
-- Season 1 Episode 1: `seasons/1/e01.html` (source beats: `data/episodes/s1e01.json`). Latest week standings sit at the top as a holdings list (tickers as of the last recorded update). Each day of the week collapses under that summary. Tribal stays mysterious until a torch is actually snuffed. Do not put live standings on the home open.
+- Season 1 Episode 1: `seasons/1/e01.html` (source beats: `data/s1/e01/copy.json`). Latest week standings sit at the top as a holdings list (tickers as of the last recorded update). Each day of the week collapses under that summary. Tribal stays mysterious until a torch is actually snuffed. Do not put live standings on the home open.
 - After Friday tribal, freeze that episode and open the next episode page. Tease upcoming weeks as unlit cards. Do not invent plots for locked weeks.
 - When Season 1 ends (jury winner of the final two, golden portfolio), Season 2 starts as a new stack.
 
@@ -153,7 +153,7 @@ Do not re-id. Public names are the pinned Cursor models only.
 
 ## Host authority
 
-The Liquidation Island bot is host. The bot appends fills, marks, immunity, votes, boots, and merge to `data/season1.json` as events. Confessionals and episode copy live in `data/episodes/`. Run `node scripts/build.mjs` to derive books and stamp the public tree. If a fact is not in season state, it did not happen.
+The Liquidation Island bot is host. The bot appends fills, marks, immunity, votes, boots, and merge to that week's `data/s1/e0N/events.json`. Confessionals and episode copy live in `data/s1/e0N/copy.json`. DMs and group chats live in `data/s1/e0N/chats.json`. Run `node scripts/build.mjs` to derive books and stamp the public tree. If a fact is not in season state, it did not happen.
 
 ---
 

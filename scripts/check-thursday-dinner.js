@@ -3,9 +3,10 @@ import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
 import { fileURLToPath } from "node:url";
+import { loadEpisodeCopy } from "./lib/load-season.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
+const episode = loadEpisodeCopy(root, "s1e01");
 const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");
 const js = fs.readFileSync(path.join(root, "seasons/1/e01-thursday-dinner.js"), "utf8");
 const lunch = fs.readFileSync(path.join(root, "seasons/1/e01-thursday-lunch.js"), "utf8");

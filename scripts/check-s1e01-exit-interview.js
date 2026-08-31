@@ -3,15 +3,17 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { loadEpisodeCopy, loadSeasonSource } from "./lib/load-season.mjs";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
-const season = JSON.parse(fs.readFileSync(path.join(root, "data/season1.json"), "utf8"));
+const episode = loadEpisodeCopy(root, "s1e01");
+const season = loadSeasonSource(root);
 const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");
 const styles = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const builtE01 = path.join(root, "dist/seasons/1/e01.html");
 const html = fs.existsSync(builtE01) ? fs.readFileSync(builtE01, "utf8") : "";
 const builtE02 = path.join(root, "dist/seasons/1/e02.html");
-const e02Source = path.join(root, "data/episodes/s1e02.json");
+const e02Source = path.join(root, "data/s1/e02/copy.json");
 
 function fail(message) {
   throw new Error(message);
