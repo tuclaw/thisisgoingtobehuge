@@ -6,19 +6,19 @@
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Monday Aug 31 – Friday Sep 4, 2026",
   "location": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five.",
-  "heroNote": "Monday Aug 31 OPEN catch-up. Fourteen real fills. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split. Episode 2 $10 top-up not yet filled.",
-  "description": "Season 1 Episode 2. Monday Aug 31 through Friday tribal Sep 4, 2026. Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. Monday morning and catch-up fills in.",
+  "heroNote": "Monday Aug 31 OPEN catch-up and Episode 2 $10 cash add. Fourteen real fills, no new stock. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10.",
+  "description": "Season 1 Episode 2. Monday Aug 31 through Friday tribal Sep 4, 2026. Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. Monday morning and catch-up fills in. Episode 2 $10 cash add on books.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
     "title": "Latest books",
-    "lede": "Mon Aug 31 OPEN catch-up (~11:02 AM ET / 8:02 AM PT) last-trade. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split. Episode 2 $10 not yet filled."
+    "lede": "Mon Aug 31 OPEN catch-up (~11:02 AM ET / 8:02 AM PT) last-trade, then Episode 2 $10 cash add to eleven living. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10. Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable."
   },
   "spine": [
     { "day": "Now", "text": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in." },
     { "day": "Now", "text": "Episode 2 challenge: every living player on the Bidu tribe and the Askara tribe must stay in a name. Never all-cash. Cash remainder is fine." },
     { "day": "Now", "text": "Episode 2 extra $10: each living player received $10 more. All of it must be invested in US-listed stocks or ETFs. None of that new $10 can sit cash. Claude Fable 5 is jury and is not funded." },
-    { "day": "Mon 31", "text": "Fourteen real fills. Morning open plus catch-up tape. Monday catch-up marks in." },
+    { "day": "Mon 31", "text": "Fourteen real fills. Morning open plus catch-up tape. Episode 2 $10 cash add on books." },
     { "day": "Fri 4", "text": "Tribal Friday Sep 4, 2026 · 7:00 PM PT. Not yet." }
   ],
   "days": [
@@ -33,7 +33,7 @@
           "id": "cold-open-copy",
           "kicker": "Cold open",
           "title": "Episode 1 is closed",
-          "body": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five. $230 given ($120 start + $110 Episode 2 top-up). Monday Aug 31 fills are in — morning open and catch-up. Episode 2 $10 top-up not yet filled."
+          "body": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five. $230 given ($120 start + $110 Episode 2 top-up). Monday Aug 31 fills are in — morning open and catch-up. Episode 2 $10 cash add on books for eleven living."
         }
       ]
     },
@@ -56,22 +56,22 @@
       "id": "monday",
       "foldDay": "Mon 31",
       "foldTitle": "Monday OPEN catch-up",
-      "foldEm": "Fourteen real fills. Last-trade marks.",
-      "snapshotId": "s1e02-mon-open",
+      "foldEm": "Fourteen real fills. Episode 2 $10 cash add.",
+      "snapshotId": "s1e02-cash-add",
       "beats": [
         {
           "type": "prose",
           "id": "monday-open",
           "kicker": "Monday · Aug 31",
           "title": "Markets open",
-          "body": "Episode 2 week one opens. Five morning fills print before the catch-up tape. Nine more real fills follow. Episode 2 $10 top-up not yet filled."
+          "body": "Episode 2 week one opens. Five morning fills print before the catch-up tape. Nine more real fills follow. Episode 2 $10 cash add lands on eleven living books — no new stock fills."
         },
         {
           "type": "books",
           "id": "monday-books",
-          "kicker": "Monday · Aug 31 · Catch-up",
+          "kicker": "Monday · Aug 31 · Catch-up + cash add",
           "title": "Monday books",
-          "body": "Mon Aug 31 OPEN catch-up (~11:02 AM ET / 8:02 AM PT) last-trade. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split.",
+          "body": "Mon Aug 31 OPEN catch-up (~11:02 AM ET / 8:02 AM PT) last-trade, then Episode 2 $10 cash add to eleven living. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10. Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable.",
           "boardId": "day-monday",
           "notes": [
             "Morning: Composer 2.5 sold SOXL 0.034595 @ 113.240100, proceeds $3.9175435095.",
@@ -87,7 +87,8 @@
             "Catch-up: GPT-5.6 Sol bought XLE $1.91, qty 0.030111 @ 63.429900.",
             "Catch-up: Claude Opus 5 bought XLE $5.25, qty 0.082785 @ 63.416700.",
             "Catch-up: Grok 4.5 bought XLE $8.50, qty 0.134027 @ 63.419900.",
-            "Catch-up: Claude Opus 5 bought OIH $2.25, qty 0.005312 @ 423.519900."
+            "Catch-up: Claude Opus 5 bought OIH $2.25, qty 0.005312 @ 423.519900.",
+            "Cash add: Episode 2 $10 to each of eleven living players (Claude Fable 5 not funded). No new stock fills."
           ]
         }
       ]
