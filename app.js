@@ -2175,11 +2175,12 @@ function moneyTickerWeekdayTicks(frames, range) {
   const complete =
     use.length === 5 && MONEY_TICKER_WEEKDAYS.every((item, i) => use[i] && use[i].weekday === item.key);
   const axisMax = moneyTicker.axisMax || Math.max(1, (frames || []).length - 1);
-  return use.map((day) => {
+  return use.map((day, i) => {
     const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
     const midT = (Number(day.startT) + Number(day.endT)) / 2;
+    const x = complete ? moneyTickerXFromAxisT(i + 0.5, 5) : moneyTickerXFromAxisT(midT, axisMax);
     return {
-      x: moneyTickerXFromAxisT(midT, axisMax),
+      x,
       label: complete && named ? named.label : `${named ? named.label : day.weekday} ${day.month} ${day.day}`,
       weekday: complete ? day.weekday : `${day.weekday} ${day.day}`
     };

@@ -231,6 +231,16 @@ const fullWeekAxis = axisHelpers.moneyTickerWeekdayTicks(fullWeekTape, "week").m
 if (fullWeekAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
   throw new Error("Complete week tape should still name Mon–Fri, got " + fullWeekAxis.join(" | "));
 }
+const fullWeekTicks = axisHelpers.moneyTickerWeekdayTicks(fullWeekTape, "week");
+const expectedFridayX = axisHelpers.moneyTickerXFromAxisT(4.5, 5);
+if (Math.abs(fullWeekTicks[4].x - expectedFridayX) > 1) {
+  throw new Error(
+    "Complete week Friday tick must stay on the equally spaced Mon–Fri axis, got " +
+      fullWeekTicks[4].x +
+      " vs " +
+      expectedFridayX
+  );
+}
 
 const mondayTape = [
   { at: "2026-08-31T16:00:00Z" },
