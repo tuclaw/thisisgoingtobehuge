@@ -39,6 +39,10 @@ if (!app.includes("initTribalSpoilerBurns")) {
 if (!builder.includes("tribal-spoiler-burn.js")) {
   fail("build must keep linking tribal-spoiler-burn.js");
 }
+const burn = fs.readFileSync(path.join(root, "tribal-spoiler-burn.js"), "utf8");
+if (!burn.includes("function coverCopyFrom") || !burn.includes("CLICK TO REVEAL THE VOTE")) {
+  fail("tribal-spoiler-burn.js must paint cover copy from the card, with the episode default intact");
+}
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
 if (!thursday) fail("thursday fold was removed");
