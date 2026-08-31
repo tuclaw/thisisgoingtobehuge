@@ -158,7 +158,7 @@ if (
   !html.includes('id="letters"') ||
   !html.includes("Will the contestants get their") ||
   !html.includes("Letters from home") ||
-  !html.includes("Help me ask them on twitter") ||
+  !html.includes("Help me reach out*") ||
   !html.includes('id="letter-list"') ||
   !html.includes('id="letter-more"') ||
   !html.includes("Show more")
