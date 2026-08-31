@@ -59,7 +59,17 @@ function slugOf(s) {
 
 function survivorHref(sOrName) {
   const slug = typeof sOrName === "object" && sOrName ? slugOf(sOrName) : survivorSlug(sOrName);
-  return assetBase() + "survivors/" + slug + ".html";
+  const page = document.documentElement.getAttribute("data-page");
+  if (page === "island" || page === "episode") {
+    return "#castaway=" + encodeURIComponent(slug);
+  }
+  return assetBase() + "index.html#castaway=" + encodeURIComponent(slug);
+}
+
+function nickIdOf(s) {
+  const slug = slugOf(s);
+  const entry = Object.entries(LEGACY_SLUGS).find((pair) => pair[1] === slug);
+  return entry ? entry[0] : slug;
 }
 
 function liveEpisodePath(season) {
@@ -756,7 +766,7 @@ function renderFaces(season) {
             globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
               ? LabLogos.labMarkHtml({ slug: slug })
               : "";
-          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}">
+          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
         ${face}
         <h3>${mark}<span class="face-name">${escapeHtml(model)}</span></h3>
         <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
@@ -809,7 +819,7 @@ function renderMoneyJourney(season) {
         ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
         : `<span class="money-mono">${escapeHtml(s.monogram || nickOf(s).slice(0, 1) || "?")}</span>`;
       const startPct = Math.max(2, Math.min(98, (start / maxBook) * 100));
-      return `<a class="money-row ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" style="--i:${i}">
+      return `<a class="money-row ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slugOf(s))}" style="--i:${i}">
         <span class="money-rank">${i + 1}</span>
         <span class="money-face">${face}</span>
         <span class="money-id">
@@ -893,77 +903,538 @@ function initReveals() {
   });
 }
 
-function renderSurvivor(season) {
-  const root = document.getElementById("survivor-root");
-  if (!root) return;
-  const slug = document.documentElement.getAttribute("data-survivor");
+const CASTAWAY_DOW = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
+
+let castawaySeason = null;
+let castawayThreads = null;
+let castawayThreadsPromise = null;
+let castawayReturnFocus = null;
+let castawayPlayToken = 0;
+
+function parseCastawayHash(rawHash) {
+  const raw = String(rawHash == null ? location.hash : rawHash).replace(/^#/, "");
+  if (!raw.startsWith("castaway=")) return null;
+  const params = new URLSearchParams(raw);
+  const slug = params.get("castaway");
+  if (!slug) return null;
+  return {
+    slug: LEGACY_SLUGS[slug] || slug,
+    view: params.get("view") || "",
+    thread: params.get("thread") || ""
+  };
+}
+
+function parseCastawayHref(href) {
+  const raw = String(href || "");
+  const hashIndex = raw.indexOf("#");
+  if (hashIndex < 0) return null;
+  return parseCastawayHash(raw.slice(hashIndex));
+}
+
+function isSamePageCastawayHref(href) {
+  const raw = String(href || "");
+  if (raw.charAt(0) === "#") return true;
+  try {
+    const url = new URL(raw, location.href);
+    return url.pathname === location.pathname;
+  } catch {
+    return false;
+  }
+}
+
+function castawayHashFor(slug, extra) {
+  const params = new URLSearchParams();
+  params.set("castaway", slug);
+  if (extra && extra.view) params.set("view", extra.view);
+  if (extra && extra.thread) params.set("thread", extra.thread);
+  return "#" + params.toString();
+}
+
+function threadTimeScore(thread) {
+  const raw = String((thread && thread.dayLabel) || "")
+    .split("·")[0]
+    .trim();
+  const match = raw.match(/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b(?:\s+(.+))?$/i);
+  if (!match) return 0;
+  const day = CASTAWAY_DOW[match[1].toLowerCase()] || 0;
+  const rest = String(match[2] || "")
+    .trim()
+    .toLowerCase();
+  let mins = 0;
+  if (rest === "dinner") mins = 19 * 60;
+  else if (rest === "lunch") mins = 12 * 60 + 30;
+  else {
+    const time = rest.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/i);
+    if (time) {
+      let hour = parseInt(time[1], 10);
+      const minute = parseInt(time[2], 10);
+      const ap = String(time[3] || "").toLowerCase();
+      if (ap === "pm" && hour < 12) hour += 12;
+      if (ap === "am" && hour === 12) hour = 0;
+      mins = hour * 60 + minute;
+    }
+  }
+  return day * 1440 + mins;
+}
+
+function findCastaway(season, slug) {
   const resolved = LEGACY_SLUGS[slug] || slug;
-  const s = (season.survivors || []).find((x) => {
+  return (season.survivors || []).find((x) => {
     const now = slugOf(x);
     const model = survivorSlug(modelOf(x));
     return now === resolved || model === resolved || now === slug || model === slug;
   });
-  if (!s) {
-    root.innerHTML = `<section class="episode-hero"><div class="hero-inner"><h1>Unknown torch</h1><p class="lede">That name is not on this island.</p></div></section>`;
+}
+
+function conversationHasCastaway(conversation, survivor) {
+  if (!conversation || !survivor) return false;
+  const nick = nickIdOf(survivor);
+  const slug = slugOf(survivor);
+  const name = modelOf(survivor);
+  return (conversation.participants || []).some((p) => {
+    if (!p) return false;
+    if (p.id === nick || p.id === slug || LEGACY_SLUGS[p.id] === slug) return true;
+    if (p.name === name || p.name === survivor.name) return true;
+    return survivorSlug(p.name) === slug;
+  });
+}
+
+function collectLiveCastawayThreads() {
+  const keys = [
+    "WEDNESDAY_DINNER_CONVERSATIONS",
+    "THURSDAY_LUNCH_CONVERSATIONS",
+    "THURSDAY_DINNER_CONVERSATIONS",
+    "FRIDAY_LUNCH_CONVERSATIONS",
+    "SATURDAY_LUNCH_CONVERSATIONS",
+    "SATURDAY_DINNER_CONVERSATIONS",
+    "SUNDAY_LUNCH_CONVERSATIONS"
+  ];
+  const byId = {};
+  const order = [];
+  keys.forEach((key) => {
+    const map = window[key];
+    if (!map || typeof map !== "object") return;
+    Object.keys(map).forEach((id) => {
+      const raw = map[id];
+      if (!raw || !Array.isArray(raw.messages) || !raw.messages.length) return;
+      const next = Object.assign({ id: raw.id || id }, raw);
+      if (!next.id) return;
+      if (!byId[next.id]) order.push(next.id);
+      byId[next.id] = next;
+    });
+  });
+  return order.map((id) => byId[id]);
+}
+
+async function loadCastawayThreads() {
+  if (Array.isArray(castawayThreads)) return castawayThreads;
+  if (castawayThreadsPromise) return castawayThreadsPromise;
+  castawayThreadsPromise = (async () => {
+    const paths = [
+      assetBase() + "seasons/1/threads.json",
+      "seasons/1/threads.json",
+      "threads.json",
+      "./threads.json"
+    ];
+    for (let i = 0; i < paths.length; i += 1) {
+      try {
+        const res = await fetch(paths[i], { cache: "no-store" });
+        if (!res.ok) continue;
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : data && data.conversations;
+        if (Array.isArray(list) && list.length) {
+          castawayThreads = list;
+          return list;
+        }
+      } catch {
+        /* try next */
+      }
+    }
+    castawayThreads = collectLiveCastawayThreads();
+    return castawayThreads;
+  })();
+  return castawayThreadsPromise;
+}
+
+function threadsForCastaway(survivor, kind) {
+  const list = (castawayThreads || []).filter((thread) => conversationHasCastaway(thread, survivor));
+  const filtered = kind
+    ? list.filter((thread) => {
+        const count = (thread.participants || []).length;
+        const inferred = thread.kind || (count > 2 ? "group" : "dm");
+        return inferred === kind;
+      })
+    : list;
+  return filtered.slice().sort((a, b) => {
+    const diff = threadTimeScore(b) - threadTimeScore(a);
+    if (diff !== 0) return diff;
+    return String((a && a.id) || "").localeCompare(String((b && b.id) || ""));
+  });
+}
+
+function enrichCastawayThread(thread, season) {
+  const next = Object.assign({}, thread);
+  const cast = (window.CampfireEngine && window.CampfireEngine.cast) || {};
+  const survivors = (season && season.survivors) || [];
+  next.participants = (thread.participants || []).map((p) => {
+    const out = Object.assign({}, p);
+    if (out.portrait && isSafePublicPath(out.portrait)) {
+      if (out.portrait.startsWith("/") || (assetBase() && out.portrait.indexOf(assetBase()) === 0)) {
+        return out;
+      }
+      out.portrait = assetBase() + out.portrait;
+      return out;
+    }
+    const person = cast[p.id];
+    if (person && isSafePublicPath(person.portrait)) {
+      out.portrait = assetBase() + person.portrait;
+      out.tribe = out.tribe || person.tribe;
+      return out;
+    }
+    const match = survivors.find((s) => slugOf(s) === LEGACY_SLUGS[p.id] || slugOf(s) === survivorSlug(p.name));
+    if (match && match.portrait) {
+      out.portrait = assetUrl(match.portrait);
+      out.tribe = out.tribe || match.tribeId;
+    }
+    return out;
+  });
+  return next;
+}
+
+function otherThreadNames(thread, survivor) {
+  const slug = slugOf(survivor);
+  const nick = nickIdOf(survivor);
+  return (thread.participants || [])
+    .filter((p) => p && p.id !== nick && p.id !== slug && survivorSlug(p.name) !== slug)
+    .map((p) => p.name || p.id)
+    .filter(Boolean);
+}
+
+function phoneIconSvg() {
+  return `<svg class="castaway-msg-svg" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9.1 4.2c.8-.8 2-.8 2.8 0l2.1 2.1c.7.7.8 1.8.2 2.6l-1.5 2c-.3.5-.3 1.1.1 1.5 1.4 1.6 3 3.2 4.6 4.6.4.4 1 .4 1.5.1l2-1.5c.8-.6 1.9-.5 2.6.2l2.1 2.1c.8.8.8 2 0 2.8l-1.3 1.3c-1 .9-2.4 1.3-3.8 1.1-3.6-.6-7.7-3.4-11.1-6.8S5.4 8.9 4.8 5.3c-.2-1.4.2-2.8 1.1-3.8L9.1 4.2z"/></svg>`;
+}
+
+function groupIconSvg() {
+  return `<svg class="castaway-msg-svg" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 8.2h12.5c1.4 0 2.5 1.1 2.5 2.5v6.2c0 1.4-1.1 2.5-2.5 2.5h-4.8L10 23.3c-.5.4-1.2 0-1.1-.6l.4-3.3H7c-1.4 0-2.5-1.1-2.5-2.5V10.7C4.5 9.3 5.6 8.2 7 8.2z"/><path fill="currentColor" d="M14.2 5.4h10.3c1.4 0 2.5 1.1 2.5 2.5v5.4c0 1.2-.8 2.2-2 2.4-.2-1.7-1.6-3-3.4-3h-2.1V7.9c0-1.4-1.1-2.5-2.5-2.5h-2.8z" opacity=".72"/></svg>`;
+}
+
+function getCastawaySheet() {
+  return document.getElementById("castaway-sheet");
+}
+
+function ensureCastawaySheet() {
+  let root = getCastawaySheet();
+  if (root) return root;
+  root = document.createElement("div");
+  root.id = "castaway-sheet";
+  root.className = "castaway-sheet";
+  root.hidden = true;
+  root.setAttribute("aria-hidden", "true");
+  root.innerHTML =
+    '<div class="castaway-sheet-backdrop" data-castaway-dismiss></div>' +
+    '<div class="castaway-sheet-panel" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="castaway-sheet-title">' +
+    '<button type="button" class="castaway-sheet-close" data-castaway-dismiss aria-label="Close player">×</button>' +
+    '<div class="castaway-sheet-body" id="castaway-sheet-body"></div>' +
+    "</div>";
+  document.body.appendChild(root);
+  return root;
+}
+
+function hideCastawaySheet() {
+  const root = getCastawaySheet();
+  if (!root || root.hidden) return;
+  castawayPlayToken += 1;
+  root.hidden = true;
+  root.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("castaway-sheet-open");
+  document.removeEventListener("keydown", onCastawaySheetKeydown);
+  const restore = castawayReturnFocus;
+  castawayReturnFocus = null;
+  if (restore && typeof restore.focus === "function") {
+    try {
+      restore.focus();
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
+function closeCastawaySheet() {
+  hideCastawaySheet();
+  if (parseCastawayHash()) {
+    history.replaceState(history.state, "", location.pathname + location.search);
+  }
+}
+
+function onCastawaySheetKeydown(event) {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeCastawaySheet();
     return;
   }
-  const tribe = tribeById(season, s.tribeId);
-  const tribeName = tribeChromeName(tribe || s.tribeId);
-  const model = modelOf(s);
-  const campUrl = s.camp ? assetUrl(s.camp) : "";
-  const campStyle = campUrl ? ` style="--camp:url('${escapeHtml(campUrl)}')"` : "";
-  const portrait = s.portrait
-    ? `<img class="survivor-portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
-    : totemSvg(s, tribe);
-  const caption = s.caption ? `<p class="survivor-caption">${escapeHtml(s.caption)}</p>` : "";
-  const bio = s.bio ? `<p class="survivor-bio">${escapeHtml(s.bio)}</p>` : "";
-  const book = formatBook(s);
-  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
-  const delta = typeof s.bookUsd === "number" ? s.bookUsd - start : 0;
-  const deltaClass = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
-  const mates = (season.survivors || []).filter((x) => x.tribeId === s.tribeId && x.name !== s.name);
-  const mateHtml = mates
-    .map((m) => {
-      const img = m.portrait
-        ? `<img src="${escapeHtml(assetUrl(m.portrait))}" alt="${escapeHtml(modelOf(m))}">`
-        : "";
-      return `<a class="mate-card" href="${escapeHtml(survivorHref(m))}">${img}<span class="mate-model">${escapeHtml(modelOf(m))}</span></a>`;
-    })
-    .join("");
-  document.title = `${model} — Last Trader Standing`;
-  root.innerHTML = `
-    <section class="survivor-hero" id="survivor"${campStyle}>
-      <div class="hero-embers" aria-hidden="true"></div>
-      <div class="hero-inner">
-        <p class="section-kicker">${escapeHtml(tribeName)}</p>
-        <h1>${escapeHtml(model)}</h1>
-      </div>
-    </section>
-    <div class="survivor-sheet ${s.tribeId}">
+  if (event.key !== "Tab") return;
+  const root = getCastawaySheet();
+  if (!root || root.hidden) return;
+  const focusable = root.querySelectorAll(
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function paintCastawaySheet(season, parsed) {
+  const root = ensureCastawaySheet();
+  const body = document.getElementById("castaway-sheet-body");
+  const panel = root.querySelector(".castaway-sheet-panel");
+  if (!body || !parsed) return;
+  const survivor = findCastaway(season, parsed.slug);
+  if (!survivor) {
+    body.innerHTML =
+      '<p class="castaway-empty">That name is not on this island.</p>';
+    return;
+  }
+  const tribe = tribeById(season, survivor.tribeId);
+  const tribeName = tribeChromeName(tribe || survivor.tribeId);
+  const model = modelOf(survivor);
+  if (panel) {
+    panel.className = "castaway-sheet-panel " + escapeHtml(survivor.tribeId || "");
+  }
+  const dms = threadsForCastaway(survivor, "dm");
+  const groups = threadsForCastaway(survivor, "group");
+  const view = parsed.view === "group" || parsed.view === "dm" ? parsed.view : "";
+  const playing = view && parsed.thread
+    ? (view === "group" ? groups : dms).find((thread) => thread.id === parsed.thread)
+    : null;
+
+  if (playing) {
+    const names = (playing.participants || []).map((p) => p.name || p.id).filter(Boolean);
+    const heading = names.length > 2
+      ? names.slice(0, 2).join(" · ") + " +" + (names.length - 2)
+      : names.join(" ↔ ") || playing.title || "Thread";
+    body.innerHTML =
+      '<div class="castaway-phone camp-chat-demo">' +
+      '<div class="camp-chat-header">' +
+      `<button type="button" class="camp-chat-back" data-castaway-view="${escapeHtml(view)}" aria-label="Back to thread list">‹</button>` +
+      '<div class="camp-chat-header-meta">' +
+      `<p class="camp-chat-title">${escapeHtml(playing.title || heading)}</p>` +
+      `<p class="camp-chat-subtitle">${escapeHtml(playing.subtitle || playing.dayLabel || "")}</p>` +
+      "</div></div>" +
+      '<div class="camp-chat-thread" id="castaway-thread" aria-live="polite"></div>' +
+      "</div>";
+    playCastawayThread(playing, season);
+    return;
+  }
+
+  const portrait = survivor.portrait
+    ? `<img class="castaway-portrait" src="${escapeHtml(assetUrl(survivor.portrait))}" alt="${escapeHtml(model)}">`
+    : totemSvg(survivor, tribe);
+  const status = survivor.status === "active" || survivor.status === "immune"
+    ? "In the game"
+    : escapeHtml(survivor.status || "");
+  const list = view === "group" ? groups : view === "dm" ? dms : null;
+  const listHtml = list
+    ? `<div class="castaway-thread-list">
+        <p class="castaway-thread-kicker">${view === "group" ? "Group threads" : "Private DMs"}</p>
+        ${
+          list.length
+            ? `<ul>${list
+                .map((thread) => {
+                  const others = otherThreadNames(thread, survivor);
+                  const label = others.join(" · ") || thread.title || "Thread";
+                  return `<li><button type="button" class="castaway-thread-row" data-castaway-thread="${escapeHtml(thread.id)}">
+                    <span class="castaway-thread-day">${escapeHtml(thread.dayLabel || "")}</span>
+                    <strong>${escapeHtml(label)}</strong>
+                    <em>${escapeHtml(thread.subtitle || thread.title || "")}</em>
+                  </button></li>`;
+                })
+                .join("")}</ul>`
+            : `<p class="castaway-empty">${view === "group" ? "No group fires on the tape yet." : "No private threads on the tape yet."}</p>`
+        }
+      </div>`
+    : "";
+
+  body.innerHTML =
+    `<div class="castaway-card">
       ${portrait}
-      <h2>${escapeHtml(model)}</h2>
-      <div class="survivor-meta">
-        <span>${escapeHtml(tribeName)}</span>
-        <span>${s.status === "active" ? "In the game" : escapeHtml(s.status)}</span>
+      <p class="castaway-kicker">${escapeHtml(tribeName)}</p>
+      <h2 id="castaway-sheet-title">${escapeHtml(model)}</h2>
+      <p class="castaway-status">${status}</p>
+      ${survivor.archetype ? `<p class="castaway-archetype">${escapeHtml(survivor.archetype)}</p>` : ""}
+      ${survivor.bio ? `<p class="castaway-bio">${escapeHtml(survivor.bio)}</p>` : ""}
+      <div class="castaway-stats">
+        <div><span>Book</span>${money(survivor.bookUsd)}</div>
+        <div><span>Day</span>${pct(dayPctOf(survivor))}</div>
+        <div><span>Week</span>${pct(weekPctOf(survivor))}</div>
       </div>
-      <p class="survivor-archetype">${escapeHtml(s.archetype || "")}</p>
-      ${bio}
-      ${caption}
-      <div class="survivor-book">
-        <h3>The money</h3>
-        <p class="survivor-money-arc">Episode snapshot — started at ${money(start)}. Now ${money(s.bookUsd)} <span class="face-week ${deltaClass}">(${delta >= 0 ? "+" : ""}${delta.toFixed(2)})</span> on the week. <a href="${escapeHtml(assetBase() + liveEpisodePath(season) + "#week-board")}">See the week board →</a></p>
-        <p>${book}</p>
-        <div class="survivor-stats">
-          <div class="survivor-stat"><span>Book</span>${money(s.bookUsd)}</div>
-          <div class="survivor-stat"><span>Day %</span>${pct(dayPctOf(s))}</div>
-          <div class="survivor-stat"><span>Week %</span>${pct(weekPctOf(s))}</div>
-        </div>
+      <div class="castaway-actions">
+        <button type="button" class="castaway-msg-btn${view === "dm" ? " is-on" : ""}" data-castaway-view="dm"${dms.length ? "" : " disabled"} aria-pressed="${view === "dm" ? "true" : "false"}">
+          <span class="castaway-msg-icon is-phone">${phoneIconSvg()}</span>
+          <span class="castaway-msg-copy"><b>DMs</b><em>${dms.length ? dms.length + (dms.length === 1 ? " thread" : " threads") : "None yet"}</em></span>
+        </button>
+        <button type="button" class="castaway-msg-btn${view === "group" ? " is-on" : ""}" data-castaway-view="group"${groups.length ? "" : " disabled"} aria-pressed="${view === "group" ? "true" : "false"}">
+          <span class="castaway-msg-icon is-group">${groupIconSvg()}</span>
+          <span class="castaway-msg-copy"><b>Group</b><em>${groups.length ? groups.length + (groups.length === 1 ? " thread" : " threads") : "None yet"}</em></span>
+        </button>
       </div>
-    </div>
-    <aside class="survivor-mates">
-      <h3>${escapeHtml(tribeCampBanner(tribe || s.tribeId))}</h3>
-      <div class="mate-row">${mateHtml}</div>
-    </aside>`;
+      ${listHtml}
+    </div>`;
+}
+
+async function playCastawayThread(thread, season) {
+  const token = ++castawayPlayToken;
+  const el = document.getElementById("castaway-thread");
+  if (!el) return;
+  const conversation = enrichCastawayThread(thread, season);
+  const play = window.CampChat && window.CampChat.playConversation;
+  if (typeof play !== "function") {
+    (conversation.messages || []).forEach((msg) => {
+      const p = document.createElement("p");
+      p.className = "castaway-empty";
+      p.textContent = (msg.from || "") + ": " + (msg.text || "");
+      el.appendChild(p);
+    });
+    return;
+  }
+  const reduce = typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  await play(el, conversation, {
+    typingMs: reduce ? 0 : 900,
+    msgAnimMs: reduce ? 0 : 640,
+    isAborted: function () {
+      return token !== castawayPlayToken;
+    }
+  });
+}
+
+async function openCastawaySheet(slug, extra, trigger) {
+  const season = castawaySeason;
+  if (!season || !slug) return;
+  const parsed = {
+    slug: LEGACY_SLUGS[slug] || slug,
+    view: (extra && extra.view) || "",
+    thread: (extra && extra.thread) || ""
+  };
+  const root = ensureCastawaySheet();
+  if (root.hidden) {
+    castawayReturnFocus =
+      trigger && typeof trigger.focus === "function"
+        ? trigger
+        : document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+    root.hidden = false;
+    root.setAttribute("aria-hidden", "false");
+    document.body.classList.add("castaway-sheet-open");
+    document.addEventListener("keydown", onCastawaySheetKeydown);
+  }
+  await loadCastawayThreads();
+  if (!getCastawaySheet() || getCastawaySheet().hidden) return;
+  paintCastawaySheet(season, parsed);
+  const focusTarget =
+    root.querySelector("[data-castaway-view].is-on") ||
+    root.querySelector(".castaway-sheet-close") ||
+    root.querySelector(".castaway-sheet-panel");
+  if (focusTarget && typeof focusTarget.focus === "function") focusTarget.focus();
+}
+
+function syncCastawayFromHash() {
+  const parsed = parseCastawayHash();
+  if (!parsed) {
+    hideCastawaySheet();
+    return;
+  }
+  openCastawaySheet(parsed.slug, { view: parsed.view, thread: parsed.thread });
+}
+
+function setCastawayLocation(slug, extra, push) {
+  const next = castawayHashFor(slug, extra);
+  if (location.hash === next) {
+    syncCastawayFromHash();
+    return;
+  }
+  if (push) history.pushState({ castaway: true }, "", next);
+  else history.replaceState({ castaway: true }, "", next);
+  syncCastawayFromHash();
+}
+
+function onCastawayDocumentClick(event) {
+  const dismiss = event.target.closest("[data-castaway-dismiss]");
+  if (dismiss && getCastawaySheet() && getCastawaySheet().contains(dismiss)) {
+    event.preventDefault();
+    closeCastawaySheet();
+    return;
+  }
+
+  const viewBtn = event.target.closest("[data-castaway-view]");
+  if (viewBtn && getCastawaySheet() && getCastawaySheet().contains(viewBtn)) {
+    event.preventDefault();
+    const parsed = parseCastawayHash() || {};
+    const nextView = viewBtn.getAttribute("data-castaway-view") || "";
+    const slug = parsed.slug;
+    if (!slug) return;
+    const already = parsed.view === nextView && !parsed.thread;
+    setCastawayLocation(slug, already ? {} : { view: nextView }, true);
+    return;
+  }
+
+  const threadBtn = event.target.closest("[data-castaway-thread]");
+  if (threadBtn && getCastawaySheet() && getCastawaySheet().contains(threadBtn)) {
+    event.preventDefault();
+    const parsed = parseCastawayHash();
+    if (!parsed) return;
+    setCastawayLocation(
+      parsed.slug,
+      { view: parsed.view || "dm", thread: threadBtn.getAttribute("data-castaway-thread") },
+      true
+    );
+    return;
+  }
+
+  const link = event.target.closest("a[href], [data-castaway]");
+  if (!link || link.closest("#castaway-sheet")) return;
+  const href = link.getAttribute("href") || "";
+  const fromHref = parseCastawayHref(href);
+  const fromData = link.getAttribute("data-castaway");
+  const slug = (fromHref && fromHref.slug) || (fromData ? LEGACY_SLUGS[fromData] || fromData : "");
+  if (!slug) return;
+  if (href && !isSamePageCastawayHref(href) && fromHref) return;
+  event.preventDefault();
+  setCastawayLocation(slug, fromHref ? { view: fromHref.view, thread: fromHref.thread } : {}, true);
+}
+
+function initCastawaySheet(season) {
+  castawaySeason = season;
+  const page = document.documentElement.getAttribute("data-page");
+  if (page === "survivor") {
+    const slug =
+      LEGACY_SLUGS[document.documentElement.getAttribute("data-survivor")] ||
+      document.documentElement.getAttribute("data-survivor");
+    if (slug) {
+      location.replace(assetBase() + "index.html#castaway=" + encodeURIComponent(slug));
+      return;
+    }
+  }
+  ensureCastawaySheet();
+  if (!document.documentElement.dataset.castawayBound) {
+    document.documentElement.dataset.castawayBound = "true";
+    document.addEventListener("click", onCastawayDocumentClick, true);
+    window.addEventListener("hashchange", syncCastawayFromHash);
+    window.addEventListener("popstate", syncCastawayFromHash);
+  }
+  loadCastawayThreads();
+  syncCastawayFromHash();
+}
+
+function renderSurvivor(season) {
+  initCastawaySheet(season);
 }
 
 function renderStandings(season) {
@@ -1057,8 +1528,8 @@ function dayCardHtml(s, tribe, opts) {
   }
   return `<article class="day-card ${s.tribeId}">
     <div class="day-card-top">
-      ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s))}">${face}</a>` : ""}
-      <a class="day-id" href="${escapeHtml(survivorHref(s))}">
+      ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slugOf(s))}">${face}</a>` : ""}
+      <a class="day-id" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slugOf(s))}">
         <strong>${model}</strong>
         <em>${escapeHtml(tribeLine(s, tribe))}</em>
       </a>

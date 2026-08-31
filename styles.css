@@ -6377,3 +6377,310 @@ body.is-titles .replay-trailer {
   white-space: nowrap;
   border: 0;
 }
+
+/* —— Castaway overlay (portrait click, not a new page) —— */
+body.castaway-sheet-open {
+  overflow: hidden;
+}
+
+.castaway-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  display: grid;
+  place-items: center;
+  padding: 1.1rem;
+}
+
+.castaway-sheet[hidden] {
+  display: none !important;
+}
+
+.castaway-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 38%, rgba(232, 93, 4, 0.14), transparent 58%),
+    rgba(8, 5, 4, 0.78);
+}
+
+.castaway-sheet-panel {
+  position: relative;
+  z-index: 1;
+  width: min(26.5rem, 100%);
+  max-height: min(92vh, 44rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 1.7rem 1.25rem 1.3rem;
+  color: var(--bone);
+  background:
+    linear-gradient(180deg, rgba(232, 213, 176, 0.08), rgba(18, 12, 8, 0.92)),
+    #16110c;
+  border: 1px solid rgba(232, 213, 176, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.castaway-sheet-panel.bidu {
+  box-shadow: inset 0 0 0 1px rgba(14, 107, 107, 0.35), 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.castaway-sheet-panel.askara {
+  box-shadow: inset 0 0 0 1px rgba(196, 90, 18, 0.4), 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.castaway-sheet-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  z-index: 2;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: -0.55rem -0.35rem 0 0;
+  border: 0;
+  background: rgba(10, 8, 6, 0.55);
+  color: var(--parchment);
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.castaway-sheet-close:hover,
+.castaway-sheet-close:focus-visible {
+  color: var(--gold-bright);
+}
+
+.castaway-card {
+  text-align: center;
+}
+
+.castaway-portrait {
+  width: 132px;
+  height: 165px;
+  object-fit: cover;
+  object-position: center 16%;
+  display: block;
+  margin: 0 auto 0.85rem;
+  border: 2px solid #0E6B6B;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+.castaway-sheet-panel.askara .castaway-portrait {
+  border-color: #C45A12;
+}
+
+.castaway-kicker,
+.castaway-status,
+.castaway-thread-kicker {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.58rem;
+  color: var(--gold);
+}
+
+.castaway-sheet-panel h2 {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  color: var(--gold-bright);
+}
+
+.castaway-status {
+  color: var(--sand);
+}
+
+.castaway-archetype,
+.castaway-bio,
+.castaway-empty {
+  max-width: 22rem;
+  margin: 0.35rem auto;
+  color: var(--sand);
+}
+
+.castaway-archetype {
+  font-style: italic;
+}
+
+.castaway-bio {
+  color: var(--parchment);
+}
+
+.castaway-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  margin: 1rem 0 1.05rem;
+}
+
+.castaway-stats div {
+  padding: 0.55rem 0.4rem;
+  border: 1px solid rgba(232, 213, 176, 0.12);
+  background: rgba(10, 8, 6, 0.45);
+}
+
+.castaway-stats span {
+  display: block;
+  font-family: var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.5rem;
+  color: var(--gold);
+  margin-bottom: 0.2rem;
+}
+
+.castaway-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin: 0.2rem 0 0.9rem;
+}
+
+.castaway-msg-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid rgba(232, 213, 176, 0.18);
+  background: rgba(10, 8, 6, 0.4);
+  color: var(--parchment);
+  text-align: left;
+  cursor: pointer;
+}
+
+.castaway-msg-btn:hover,
+.castaway-msg-btn:focus-visible,
+.castaway-msg-btn.is-on {
+  border-color: rgba(232, 213, 176, 0.42);
+  background: rgba(232, 213, 176, 0.08);
+}
+
+.castaway-msg-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.castaway-msg-icon {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+
+.castaway-msg-icon.is-phone {
+  color: #d8ffe8;
+  background: #30d158;
+  box-shadow: 0 0 0 1px rgba(48, 209, 88, 0.35);
+}
+
+.castaway-msg-icon.is-group {
+  color: #fff;
+  background: #0a84ff;
+  box-shadow: 0 0 0 1px rgba(10, 132, 255, 0.35);
+}
+
+.castaway-msg-copy {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.castaway-msg-copy b {
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.castaway-msg-copy em {
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--sand);
+}
+
+.castaway-thread-list {
+  text-align: left;
+  margin-top: 0.35rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(196, 165, 116, 0.16);
+}
+
+.castaway-thread-list ul {
+  list-style: none;
+  margin: 0.45rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.castaway-thread-row {
+  width: 100%;
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid rgba(232, 213, 176, 0.12);
+  background: rgba(10, 8, 6, 0.4);
+  color: var(--parchment);
+  text-align: left;
+  cursor: pointer;
+}
+
+.castaway-thread-row:hover,
+.castaway-thread-row:focus-visible {
+  border-color: rgba(232, 213, 176, 0.38);
+}
+
+.castaway-thread-day {
+  font-family: var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.52rem;
+  color: var(--gold);
+}
+
+.castaway-thread-row strong {
+  font-size: 0.95rem;
+}
+
+.castaway-thread-row em {
+  font-style: normal;
+  font-size: 0.82rem;
+  color: var(--sand);
+}
+
+.castaway-phone {
+  margin: 0.2rem -0.15rem 0;
+  min-height: 22rem;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.castaway-phone .camp-chat-thread {
+  min-height: 18rem;
+  max-height: min(52vh, 26rem);
+}
+
+.castaway-phone .camp-chat-row {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 560px) {
+  .castaway-sheet {
+    padding: 0.55rem;
+    place-items: end center;
+  }
+
+  .castaway-sheet-panel {
+    width: 100%;
+    max-height: 92vh;
+    padding: 1.35rem 1rem 1.15rem;
+  }
+
+  .castaway-actions {
+    grid-template-columns: 1fr;
+  }
+}
