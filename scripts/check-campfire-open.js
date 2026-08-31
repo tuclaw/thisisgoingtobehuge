@@ -13,19 +13,9 @@ const css = readFileSync(join(root, "styles.css"), "utf8");
 const chat = readFileSync(join(root, "camp-chat.js"), "utf8");
 const season = require(join(root, "data", "season1.json"));
 
-const requiredIds = [
-  "campfire-theater",
-  "campfire-canvas",
-  "campfire-faces",
-  "campfire-trade",
-  "campfire-thread",
-  "campfire-imessage"
-];
-requiredIds.forEach((id) => {
-  if (!html.includes('id="' + id + '"')) {
-    throw new Error("templates/island.html missing #" + id);
-  }
-});
+if (html.includes('id="campfire-theater"') || html.includes("campfire-canvas")) {
+  throw new Error("templates/island.html must not keep the home campfire theater");
+}
 
 if (!html.includes("campfire-open.js")) {
   throw new Error("templates/island.html does not load campfire-open.js");
@@ -136,8 +126,13 @@ if (!html.includes('sessionStorage.getItem("lts-open-titles-seen")')) {
 if (!html.includes('id="replay-trailer"') || !html.includes("Replay trailer")) {
   throw new Error("templates/island.html missing subtle Replay trailer control");
 }
+const taglineIdx = html.indexOf("Outwit. Outlast. Outtrade.");
+const replayIdx = html.indexOf('id="replay-trailer"');
+if (!(taglineIdx > -1 && replayIdx > taglineIdx && replayIdx < html.indexOf('id="money-ticker"'))) {
+  throw new Error("Replay trailer must sit under the tagline, above the books chart");
+}
 if (!html.includes('id="money-ticker"') || !html.includes('data-ticker-mode="home"')) {
-  throw new Error("templates/island.html missing home money ticker in Real Trades section");
+  throw new Error("templates/island.html missing home money ticker in the landing hero");
 }
 if (!html.includes("money-ticker-ctas") || !html.includes("Add Fuel") || !html.includes("Watch Live")) {
   throw new Error("templates/island.html must put Add Fuel + Watch Live below the money ticker");
@@ -145,13 +140,18 @@ if (!html.includes("money-ticker-ctas") || !html.includes("Add Fuel") || !html.i
 if (html.includes('id="island-pot"') || html.includes('id="pot-amount"')) {
   throw new Error("templates/island.html must not keep the duplicate top pot amount above the ticker");
 }
+const markIdx = html.indexOf('class="brand-mark');
 const homeTickerIdx = html.indexOf('id="money-ticker"');
 const homeCtaIdx = html.indexOf("money-ticker-ctas");
+const landingIdx = html.indexOf('id="landing"');
+if (!(landingIdx > -1 && markIdx > landingIdx && homeTickerIdx > markIdx)) {
+  throw new Error("home money ticker must sit under the Last Trader Standing title in the landing hero");
+}
 if (!(homeTickerIdx > -1 && homeCtaIdx > homeTickerIdx)) {
   throw new Error("home Add Fuel / Watch Live CTAs must sit after #money-ticker");
 }
-if (!html.includes('id="wager"') || !html.includes("Real Trades On The Stock Market")) {
-  throw new Error("templates/island.html missing Real Trades wager section");
+if (html.includes('id="wager"') || html.includes("Real Trades On The Stock Market")) {
+  throw new Error("templates/island.html must not keep a separate Real Trades wager section");
 }
 const appJs = readFileSync(join(root, "app.js"), "utf8");
 if (
@@ -166,7 +166,6 @@ if (
   throw new Error("templates/island.html missing Letters from home section");
 }
 const lettersIdx = html.indexOf('id="letters"');
-const wagerIdx = html.indexOf('id="wager"');
 const castIdx = html.indexOf('id="cast"');
 const seasonIdx = html.indexOf('id="season"');
 const closeIdx = html.indexOf('id="close"');
@@ -254,16 +253,39 @@ if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER
 if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
   throw new Error("app.js missing home money ticker lede copy");
 }
+if (!appJs.includes("tickerHead") || !appJs.includes("homeMode") || !appJs.includes("Replay the books")) {
+  throw new Error("app.js must keep Replay the books on the episode ticker and omit it on home");
+}
+if (!js.includes("lts-home-books") || !js.includes("initHomeOpenLanding") || !js.includes('dispatchHomeBooks("play")')) {
+  throw new Error("campfire-open.js must start the home books diagram after the title cards");
+}
+if (!appJs.includes("onHomeBooksEvent") || !appJs.includes('action === "play"') || !appJs.includes("kickoffMoneyTickerAutoplay")) {
+  throw new Error("app.js must play the home books diagram when the title cards finish");
+}
+if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(64rem, 100%)")) {
+  throw new Error("styles.css missing home hero books diagram layout");
+}
 const homeVoteIdx = html.indexOf('id="home-vote"');
 const homeTribalIdx = html.indexOf('id="home-tribal"');
-if (!(castIdx > -1 && homeVoteIdx > castIdx && homeTribalIdx > homeVoteIdx && wagerIdx > homeTribalIdx)) {
-  throw new Error("home Episode 1 spoiler must sit below #cast and above #wager");
+const beachIdx = html.indexOf('id="beach"');
+if (!(castIdx > -1 && homeVoteIdx > castIdx && homeTribalIdx > homeVoteIdx && beachIdx > homeTribalIdx)) {
+  throw new Error("home Episode 1 spoiler must sit below #cast and above #beach");
 }
 if (!html.includes("See who was voted off in episode one")) {
   throw new Error("templates/island.html missing Episode 1 spoiler heading");
 }
-if (!html.includes('id="home-vote-episode"') || !html.includes("Episode 1 Page")) {
-  throw new Error("templates/island.html missing Episode 1 Page button under the spoiler");
+if (!html.includes('id="home-vote-episode"') || !html.includes('href="seasons/1/e01.html">Episode 1 Page')) {
+  throw new Error("templates/island.html Episode 1 Page button must link to seasons/1/e01.html");
+}
+const firstHrefFn = appJs.match(/function firstEpisodeHref\([\s\S]*?\n\}/);
+if (!firstHrefFn) {
+  throw new Error("app.js missing firstEpisodeHref for the home Episode 1 Page button");
+}
+if (!firstHrefFn[0].includes('item.id === "s1e01"') || !firstHrefFn[0].includes("item.number === 1")) {
+  throw new Error("firstEpisodeHref must resolve Episode 1 from the episode list");
+}
+if (/season\.episode(?!s)/.test(firstHrefFn[0])) {
+  throw new Error("firstEpisodeHref must not use season.episode (that is the live episode)");
 }
 if (!html.includes("tribal-spoiler-burn.js")) {
   throw new Error("templates/island.html must load tribal-spoiler-burn.js for the home spoiler");
@@ -278,10 +300,9 @@ if (
 if (!css.includes(".home-vote-band") || !css.includes(".home-vote-cta")) {
   throw new Error("styles.css missing home Episode 1 spoiler band");
 }
-if (/Claude Fable 5/.test(html.slice(homeVoteIdx, wagerIdx))) {
+if (/Claude Fable 5/.test(html.slice(homeVoteIdx, beachIdx))) {
   throw new Error("do not print the boot name in the home spoiler chrome");
 }
-
 if (!html.includes('class="tribal-torches reveal"') || /tribal-torch (?:lit|dark)/.test(html)) {
   throw new Error("homepage tribal torches must be an empty shell filled from season state");
 }
