@@ -751,15 +751,18 @@ function renderFaces(season) {
           const model = modelOf(s);
           const slug = slugOf(s);
           const face = s.portrait
-            ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
+            ? `<img class="portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
             : totemSvg(s, tribe);
           const mark =
             globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
-              ? LabLogos.labMarkHtml({ slug: slug })
+              ? LabLogos.labMarkHtml({ slug: slug, className: "face-lab-mark" })
               : "";
           return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}">
-        ${face}
-        <h3>${mark}<span class="face-name">${escapeHtml(model)}</span></h3>
+        <span class="face-photo">${face}</span>
+        <span class="face-id">
+          ${mark ? `<span class="face-lab">${mark}</span>` : ""}
+          <h3 class="face-name">${escapeHtml(model)}</h3>
+        </span>
         <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
       </a>`;
         })
