@@ -57,6 +57,20 @@ export function castFromSource(source) {
   });
 }
 
+export function canonicalCastAsset(slug, kind = "portrait") {
+  const file = kind === "camp" ? "camp.jpg" : "portrait.jpg";
+  return `cast/${slug}/${file}`;
+}
+
+/** Host ledger sometimes still stores nickname folders (cast/gage/...). Public paths are model slugs. */
+export function remapCastAsset(path, slug, kind = "portrait") {
+  if (slug) return canonicalCastAsset(slug, kind);
+  const raw = String(path || "").trim();
+  const folder = raw.match(/^cast\/([^/]+)\//);
+  if (folder && LEGACY_SLUGS[folder[1]]) return canonicalCastAsset(LEGACY_SLUGS[folder[1]], kind);
+  return raw;
+}
+
 function audienceMarkLabel(label) {
   return String(label || "")
     .replace(/\brobinhood\s+/gi, "")
@@ -83,8 +97,8 @@ function publicSurvivorFromBoard(member) {
     monogram: member.monogram,
     bio: member.bio,
     caption: member.caption,
-    portrait: member.portrait || `cast/${slug}/portrait.jpg`,
-    camp: member.camp || `cast/${slug}/camp.jpg`,
+    portrait: remapCastAsset(member.portrait, slug, "portrait"),
+    camp: remapCastAsset(member.camp, slug, "camp"),
     model: member.model || member.name,
     positions: (member.positions || []).map(publicPosition)
   };
@@ -114,6 +128,94 @@ function fillsFromBoardNative(source) {
   return fills.sort((a, b) => Date.parse(a.at || "") - Date.parse(b.at || ""));
 }
 
+function liveSnapshotFromBoard(source, survivors, tribes) {
+  const books = {};
+  for (const s of survivors) {
+    books[s.id] = {
+      bookUsd: s.bookUsd,
+      weekPct: s.weekPct,
+      monthPct: s.monthPct,
+      dayPct: s.dayPct,
+      priorMarkUsd: s.priorMarkUsd,
+      positions: (s.positions || []).map((pos) => {
+        const copy = publicPosition(pos);
+        delete copy.last;
+        delete copy.priorClose;
+        return copy;
+      })
+    };
+  }
+  const tribeSnap = {};
+  for (const t of tribes) {
+    tribeSnap[t.id] = {
+      combinedWeekPct: t.combinedWeekPct,
+      combinedMonthPct: t.combinedMonthPct,
+      combinedDayPct: t.combinedDayPct,
+      livingCount: t.livingCount
+    };
+  }
+  return {
+    id: source.liveSnapshotId || "s1e02-mon-mid",
+    at: source.markedAt,
+    label: audienceMarkLabel(source.markLabel) || "Mon Aug 31 mid",
+    kind: "mark",
+    tribes: tribeSnap,
+    books
+  };
+}
+
+function snapshotsFromEvents(cast, events, starting, quotes) {
+  const snapshots = [];
+  for (const event of events || []) {
+    if (!event || event.type !== "mark") continue;
+    const books = booksFromFills(cast, events, starting, event.throughAt || event.at);
+    const recorded = event.recorded || {};
+    const marked = new Map();
+    for (const member of cast) {
+      const prior =
+        recorded[member.id] && typeof recorded[member.id].priorMarkUsd === "number"
+          ? recorded[member.id].priorMarkUsd
+          : starting;
+      marked.set(
+        member.id,
+        markBook(books.get(member.id), event.quotes || quotes, {
+          startingBookUsd: starting,
+          priorMarkUsd: prior,
+          recorded: recorded[member.id]
+        })
+      );
+    }
+    const tribes = event.tribes || tribeTotals(cast, marked);
+    const booksOut = {};
+    for (const member of cast) {
+      booksOut[member.id] = snapshotBook(member, marked.get(member.id));
+    }
+    snapshots.push({
+      id: event.id,
+      at: event.at,
+      label: event.label,
+      kind: event.kind || "mark",
+      dayPctPriorOfficial: Boolean(event.dayPctPriorOfficial),
+      tribes,
+      books: booksOut
+    });
+  }
+  return snapshots;
+}
+
+function mergePublicEvents(source) {
+  const fromTape = (source.events || []).map(publicEvent);
+  const fromBoard = fillsFromBoardNative(source).map(publicEvent);
+  const seen = new Set();
+  const out = [];
+  for (const event of [...fromTape, ...fromBoard]) {
+    if (!event || !event.id || seen.has(event.id)) continue;
+    seen.add(event.id);
+    out.push(event);
+  }
+  return out.sort((a, b) => Date.parse(a.at || "") - Date.parse(b.at || "") || String(a.id).localeCompare(String(b.id)));
+}
+
 function deriveBoardNative(source) {
   const survivors = (source.survivors || []).map((s) =>
     publicSurvivorFromBoard({
@@ -133,6 +235,11 @@ function deriveBoardNative(source) {
       tribe.livingCount ??
       survivors.filter((s) => s.tribeId === tribe.id && s.status === "active").length
   }));
+  const cast = castFromSource(source);
+  const starting = typeof source.startingBookUsd === "number" ? source.startingBookUsd : 10;
+  const snapshots = snapshotsFromEvents(cast, source.events || [], starting, source.quotes || {});
+  const live = liveSnapshotFromBoard(source, survivors, tribes);
+  if (live.at && !snapshots.some((snap) => snap.id === live.id)) snapshots.push(live);
 
   return {
     show: source.show,
@@ -162,8 +269,8 @@ function deriveBoardNative(source) {
     markLabel: audienceMarkLabel(source.markLabel),
     dayPctPriorOfficial: Boolean(source.dayPctBasis),
     quotes: source.quotes || {},
-    snapshots: [],
-    events: fillsFromBoardNative(source).map(publicEvent)
+    snapshots,
+    events: mergePublicEvents(source)
   };
 }
 
@@ -524,8 +631,8 @@ function publicSurvivor(member, book, lastSession) {
     monogram: member.monogram,
     bio: member.bio,
     caption: member.caption,
-    portrait: member.portrait,
-    camp: member.camp,
+    portrait: remapCastAsset(member.portrait, slug, "portrait"),
+    camp: remapCastAsset(member.camp, slug, "camp"),
     model: member.model || member.name,
     positions: (book.positions || []).map(publicPosition)
   };
@@ -544,42 +651,7 @@ export function deriveSeason(source) {
   const cast = source.cast || [];
   const events = source.events || [];
   const quotes = source.quotes || {};
-  const snapshots = [];
-
-  for (const event of events) {
-    if (!event || event.type !== "mark") continue;
-    const books = booksFromFills(cast, events, starting, event.throughAt || event.at);
-    const recorded = event.recorded || {};
-    const marked = new Map();
-    for (const member of cast) {
-      const prior =
-        recorded[member.id] && typeof recorded[member.id].priorMarkUsd === "number"
-          ? recorded[member.id].priorMarkUsd
-          : starting;
-      marked.set(
-        member.id,
-        markBook(books.get(member.id), event.quotes || quotes, {
-          startingBookUsd: starting,
-          priorMarkUsd: prior,
-          recorded: recorded[member.id]
-        })
-      );
-    }
-    const tribes = event.tribes || tribeTotals(cast, marked);
-    const booksOut = {};
-    for (const member of cast) {
-      booksOut[member.id] = snapshotBook(member, marked.get(member.id));
-    }
-    snapshots.push({
-      id: event.id,
-      at: event.at,
-      label: event.label,
-      kind: event.kind || "mark",
-      dayPctPriorOfficial: Boolean(event.dayPctPriorOfficial),
-      tribes,
-      books: booksOut
-    });
-  }
+  const snapshots = snapshotsFromEvents(cast, events, starting, quotes);
 
   const last = snapshots[snapshots.length - 1];
   const lastMark = latestMark(events);

@@ -4,6 +4,8 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  LEGACY_SLUGS,
+  canonicalCastAsset,
   castFromSource,
   deriveSeason,
   isBoardNative,
@@ -102,8 +104,30 @@ if (!boardNative) {
 check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
 check("has-positions", board.survivors.every((s) => Array.isArray(s.positions) && s.positions.length > 0));
+for (const s of board.survivors) {
+  check(
+    `portrait-canonical:${s.slug}`,
+    s.portrait === canonicalCastAsset(s.slug, "portrait"),
+    s.portrait
+  );
+  check(
+    `camp-canonical:${s.slug}`,
+    !s.camp || s.camp === canonicalCastAsset(s.slug, "camp"),
+    s.camp
+  );
+  check(
+    `portrait-not-nickname:${s.slug}`,
+    !Object.keys(LEGACY_SLUGS).some((nick) => String(s.portrait || "").includes(`cast/${nick}/`))
+  );
+}
 if (!boardNative) {
   check("snapshots", Array.isArray(board.snapshots) && board.snapshots.length === marks.length);
+} else {
+  check("snapshots-for-ticker", Array.isArray(board.snapshots) && board.snapshots.length >= 8, String(board.snapshots && board.snapshots.length));
+  check(
+    "live-mid-snapshot",
+    board.snapshots.some((snap) => snap.id === "s1e02-mon-mid" && snap.books && Object.keys(snap.books).length === board.survivors.length)
+  );
 }
 
 const start = board.startingBookUsd;

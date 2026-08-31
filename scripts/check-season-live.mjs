@@ -43,6 +43,13 @@ check("sold-island-coin-is-event", fills.some((f) => f.side === "sell" && f.tick
 
 const tue = board.snapshots.find((s) => s.id === "s1e01-tue-marks");
 const mon = board.snapshots.find((s) => s.id === "s1e01-mon-open");
+check("ticker-mon-open", Boolean(mon), "missing s1e01-mon-open");
+check("ticker-tue-marks", Boolean(tue), "missing s1e01-tue-marks");
+check(
+  "ticker-live-mid",
+  board.snapshots.some((s) => s.id === "s1e02-mon-mid"),
+  "missing s1e02-mon-mid"
+);
 const kimi = cast.find((m) => m.name === "Kimi K3");
 const composer = cast.find((m) => m.name === "Composer 2.5");
 const opus = cast.find((m) => m.name === "Claude Opus 5");
