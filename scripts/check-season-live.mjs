@@ -54,6 +54,10 @@ const listedE1 = (board.episodes || []).find((ep) => ep && ep.id === "s1e01");
 const listedE2 = (board.episodes || []).find((ep) => ep && ep.id === "s1e02");
 check("e1-week-bounds", listedE1 && listedE1.weekStart === "2026-08-24" && listedE1.weekEnd === "2026-08-28");
 check("e2-week-bounds", listedE2 && listedE2.weekStart === "2026-08-31" && listedE2.weekEnd === "2026-09-04");
+check(
+  "e2-diagram-starts-at-cash-add",
+  listedE2 && listedE2.diagramStartSnapshotId === "s1e02-cash-add" && source.episode && source.episode.diagramStartSnapshotId === "s1e02-cash-add"
+);
 if (listedE1 && listedE1.weekStart && listedE1.weekEnd) {
   const start = Date.parse(listedE1.weekStart + "T00:00:00-07:00");
   const end = Date.parse(listedE1.weekEnd + "T23:59:59-07:00");
@@ -396,6 +400,9 @@ if (log[0]) {
 check("books-fable-jury-zero", fableLive && fableLive.status === "jury" && fableLive.bookUsd === 0);
 check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 5);
 check("given-total-fixture", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+check("given-start-fixture", source.islandGivenStartUsd === 120, String(source.islandGivenStartUsd));
+check("board-given-start-fixture", board.islandGivenStartUsd === 120, String(board.islandGivenStartUsd));
+check("e2-top-up-each-fixture", source.islandEpisode2TopUpEachUsd === 10 && board.islandEpisode2TopUpEachUsd === 10);
 check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
 check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
 check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
@@ -514,6 +521,23 @@ if (sundayLunch) {
     "sunday-lunch-no-exit-interview",
     !JSON.stringify(sundayLunch || {}).includes("Jeff, ask me anything. I've got nowhere to be.")
   );
+}
+
+const cashAdd = board.snapshots.find((s) => s.id === "s1e02-cash-add");
+check("cash-add-snapshot", Boolean(cashAdd), "missing s1e02-cash-add");
+if (cashAdd) {
+  for (const row of board.survivors || []) {
+    const book = cashAdd.books && cashAdd.books[row.id];
+    if (row.status === "jury") {
+      check(`e2-start-jury:${row.name}`, book && book.bookUsd === 0, book && String(book.bookUsd));
+    } else {
+      check(
+        `e2-start-sleeve:${row.name}`,
+        book && typeof book.bookUsd === "number" && book.bookUsd >= 19,
+        book && String(book.bookUsd)
+      );
+    }
+  }
 }
 
 const monOpen = board.snapshots.find((s) => s.id === "s1e02-mon-open");

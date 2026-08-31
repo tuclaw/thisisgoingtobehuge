@@ -167,6 +167,80 @@ if (new Set(liveAxisLabels).size !== liveAxisLabels.length) {
   throw new Error("money ticker date-range labels must not repeat");
 }
 
+if (
+  !appJs.includes("function tickerIsEpisodeTwo") ||
+  !appJs.includes("function tickerSleevePutIn") ||
+  !appJs.includes("function snapshotsInTickerRange") ||
+  !appJs.includes('diagramStartSnapshotId') ||
+  !appJs.includes("s1e02-cash-add")
+) {
+  throw new Error("app.js must start Episode 2 week at the cash-add with the funded $230 / $20 put-in");
+}
+
+const tickerStart = appJs.indexOf("function tickerIsEpisodeTwo");
+const tickerEnd = appJs.indexOf("function roundMoney");
+if (!(tickerStart > -1 && tickerEnd > tickerStart)) {
+  throw new Error("app.js missing Episode 2 ticker put-in / week-start helpers");
+}
+const tickerHelpers = new Function(`
+  ${appJs.slice(tickerStart, tickerEnd)}
+  return { tickerIsEpisodeTwo, moneyPutInTotal, tickerSleevePutIn, snapshotsInTickerRange };
+`)();
+const e2Season = {
+  startingBookUsd: 10,
+  islandGivenUsd: 230,
+  islandGivenStartUsd: 120,
+  islandEpisode2TopUpEachUsd: 10,
+  survivors: Array.from({ length: 12 }, (_, i) => ({ id: "s" + i })),
+  snapshots: [
+    { id: "s1e02-mon-mid", at: "2026-08-31T14:11:24Z" },
+    { id: "s1e02-mon-open", at: "2026-08-31T15:02:51Z" },
+    { id: "s1e02-cash-add", at: "2026-08-31T16:00:00Z" }
+  ]
+};
+const e2Ep = {
+  id: "s1e02",
+  number: 2,
+  weekStart: "2026-08-31",
+  weekEnd: "2026-09-04",
+  diagramStartSnapshotId: "s1e02-cash-add"
+};
+const e1Ep = { id: "s1e01", number: 1, weekStart: "2026-08-24", weekEnd: "2026-08-28" };
+if (!tickerHelpers.tickerIsEpisodeTwo(e2Ep) || tickerHelpers.tickerIsEpisodeTwo(e1Ep)) {
+  throw new Error("tickerIsEpisodeTwo should match Episode 2 only");
+}
+if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "week") !== 230) {
+  throw new Error("Episode 2 week island bar must be $230 given");
+}
+if (tickerHelpers.moneyPutInTotal(e2Season, e2Ep, "season") !== 120) {
+  throw new Error("Episode 2 season bar must stay the $120 open");
+}
+if (tickerHelpers.moneyPutInTotal(e2Season, e1Ep, "week") !== 120) {
+  throw new Error("Episode 1 week island bar must stay $120");
+}
+if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "week") !== 20) {
+  throw new Error("Episode 2 week sleeves must start at $20 (original $10 + extra $10)");
+}
+if (tickerHelpers.tickerSleevePutIn(e2Season, e1Ep, "week") !== 10) {
+  throw new Error("Episode 1 week sleeves must stay $10");
+}
+const e2Week = tickerHelpers.snapshotsInTickerRange(e2Season.snapshots, e2Ep, "week");
+if (e2Week.length !== 1 || e2Week[0].id !== "s1e02-cash-add") {
+  throw new Error("Episode 2 week must start at s1e02-cash-add, got " + e2Week.map((s) => s.id).join(","));
+}
+const e1Week = tickerHelpers.snapshotsInTickerRange(
+  [
+    { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z" },
+    { id: "s1e01-fri-lasthour", at: "2026-08-28T19:14:23Z" },
+    { id: "s1e02-cash-add", at: "2026-08-31T16:00:00Z" }
+  ],
+  e1Ep,
+  "week"
+);
+if (e1Week.length !== 2 || e1Week.some((s) => s.id === "s1e02-cash-add")) {
+  throw new Error("Episode 1 week must keep E1 marks and exclude the Episode 2 cash-add");
+}
+
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
 }
