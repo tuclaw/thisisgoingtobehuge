@@ -96,13 +96,26 @@ check("pot-is-sleeves", board.islandPotUsd === start * source.cast.length);
 check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
 check("board-given-total", board.islandGivenUsd === source.islandGivenUsd, String(board.islandGivenUsd));
 check("given-is-not-sleeves", source.islandGivenUsd !== start * source.cast.length);
+check("merged-stays-false-or-true", source.merged === true || source.merged === false);
+
+const firstBoot = (source.events || []).find((event) => event && event.type === "boot");
+const lastPreBootMark = firstBoot
+  ? [...(source.events || [])]
+      .filter((event) => event && event.type === "mark" && Date.parse(event.at || "") < Date.parse(firstBoot.at || ""))
+      .pop()
+  : null;
 
 for (const s of board.survivors) {
-  const computedWeek = pctRound(((s.bookUsd - start) / start) * 100);
+  const preBoot =
+    lastPreBootMark && lastPreBootMark.recorded && typeof lastPreBootMark.recorded[s.id]?.bookUsd === "number"
+      ? lastPreBootMark.recorded[s.id].bookUsd
+      : null;
+  const weekBasis = preBoot != null ? preBoot : s.bookUsd;
+  const computedWeek = pctRound(((weekBasis - start) / start) * 100);
   check(
     `weekPct:${s.slug}`,
     Math.abs(computedWeek - s.weekPct) <= 0.02,
-    `${s.weekPct} vs computed ${computedWeek} on ${s.bookUsd}`
+    `${s.weekPct} vs computed ${computedWeek} on basis ${weekBasis} (book ${s.bookUsd})`
   );
   let equity = 0;
   let unmarked = false;
@@ -136,11 +149,17 @@ if (live.length === 1) {
   check("live-episode-has-path", Boolean(live[0].path));
 }
 
-const episodeDays = (source.episode && source.episode.days) || [];
 const snapIds = new Set(board.snapshots.map((snap) => snap.id));
-for (const day of episodeDays) {
+for (const ep of source.episodes || []) {
+  for (const day of ep.days || []) {
+    if (day.snapshotId) {
+      check(`episode-day-snapshot:${ep.id}:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+    }
+  }
+}
+for (const day of (source.episode && source.episode.days) || []) {
   if (day.snapshotId) {
-    check(`episode-day-snapshot:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+    check(`live-episode-day-snapshot:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
   }
 }
 
@@ -161,6 +180,22 @@ for (const [i, council] of log.entries()) {
   check(`tribal-tally-boot:${i}`, Number(tally[council.bootName] || 0) >= 1);
   check(`tribal-summary:${i}`, typeof council.summary === "string" && council.summary.includes(council.bootName));
 }
+
+const listingCopy = (source.episodes || [])
+  .map((ep) => [ep.title, ep.weekLabel, ep.tease].filter(Boolean).join(" "))
+  .join("\n");
+const seasonHub = readFileSync(join(root, "templates", "season.html"), "utf8");
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+const listStart = seasonHub.indexOf('id="episode-list"');
+const listBlock = listStart >= 0 ? seasonHub.slice(listStart, listStart + 1200) : seasonHub;
+for (const name of (source.tribalLog || []).map((entry) => entry && entry.bootName).filter(Boolean)) {
+  check(`episode-list-tease-no-boot:${name}`, !listingCopy.includes(name), name);
+  check(`season-hub-list-no-boot:${name}`, !listBlock.includes(name), name);
+}
+check(
+  "episode-list-no-boot-recap",
+  !appJs.includes("closedNote") && !appJs.includes("bootLine")
+);
 
 if (failures.length) {
   console.error("Season checks failed:\n- " + failures.join("\n- "));

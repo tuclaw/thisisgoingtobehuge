@@ -76,8 +76,9 @@ if (saturdayLunch && JSON.stringify(saturdayLunch).includes(EXACT_PRINT[0])) {
 }
 
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
-if (!e2 || e2.status !== "locked") fail("Episode 2 must stay locked");
-if (e2.path) fail("Episode 2 must stay locked with no path");
+if (!e2 || e2.status !== "live" || e2.path !== "seasons/1/e02.html") {
+  fail("Episode 2 is live; keep the exit interview on Episode 1 only");
+}
 if (fs.existsSync(e02Source)) {
   const e02 = fs.readFileSync(e02Source, "utf8");
   EXACT_PRINT.forEach((line) => {
@@ -91,9 +92,6 @@ if (fs.existsSync(builtE02)) {
       fail("exit interview print leaked onto Episode 2");
     }
   });
-}
-if (builder.includes("e02.html") || builder.includes("s1e02.json")) {
-  fail("build.mjs must not grow an Episode 2 path");
 }
 
 const EXIT_TEASER =

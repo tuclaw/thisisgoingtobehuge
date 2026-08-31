@@ -112,6 +112,7 @@
     const paths = [];
     if (fromAttr) paths.push(fromAttr);
     if (global.EPISODE_CONVERSATIONS) return paths;
+    if (document.documentElement.dataset.page === "episode" && !fromAttr) return paths;
     FEED_PATHS.forEach((p) => {
       if (p.indexOf("seasons/") === 0) paths.push(base + p);
       else paths.push(p);

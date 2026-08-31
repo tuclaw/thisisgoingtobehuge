@@ -2698,6 +2698,11 @@ a.brand:hover {
   box-shadow: inset 0 0 0 1px rgba(14, 107, 107, 0.35), 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 
+.episode-card.closed {
+  border-color: rgba(212, 160, 23, 0.18);
+  opacity: 0.92;
+}
+
 .ep-kicker {
   font-family: var(--font-display);
   letter-spacing: 0.28em;
@@ -5194,10 +5199,12 @@ body.is-titles .replay-trailer {
 }
 
 .face-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--parchment);
   text-align: center;
-  padding: 0 0 0.75rem;
+  padding: 1.15rem 0.5rem 1.15rem;
   background: #140f0b;
   border: 1px solid rgba(196, 165, 116, 0.16);
   transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
@@ -5226,33 +5233,96 @@ body.is-titles .replay-trailer {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(196, 90, 18, 0.45);
 }
 
-.face-card img,
-.face-card .portrait {
+.face-photo {
   display: block;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  height: auto;
+  width: 4.25rem;
+  margin: 0 0 0.15rem;
+}
+
+.face-card .face-photo img,
+.face-card .face-photo .portrait {
+  display: block;
+  width: 4.25rem;
+  height: 4.25rem;
+  aspect-ratio: 1;
   object-fit: cover;
   object-position: center 16%;
-  margin: 0 0 0.65rem;
+  margin: 0;
+  border-radius: 3px;
+  border: 2px solid rgba(232, 213, 176, 0.28);
+  box-shadow: 0 0 0 1px rgba(18, 12, 8, 0.45);
 }
 
-.face-card h3 {
+.face-card.bidu .face-photo img,
+.face-card.bidu .face-photo .portrait {
+  border-color: #0E6B6B;
+}
+
+.face-card.askara .face-photo img,
+.face-card.askara .face-photo .portrait {
+  border-color: #C45A12;
+}
+
+.face-id {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
+  gap: 0.48rem;
+  width: 100%;
+  padding: 0 0.15rem;
+}
+
+.face-lab {
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+  width: 2.7rem;
+  height: 2.7rem;
+  margin-top: -0.95rem;
+  border-radius: 50%;
+  background:
+    linear-gradient(180deg, #f3ead6 0%, #e8d5b0 52%, #d4bc8e 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 230, 0.55),
+    0 0 0 1px rgba(232, 213, 176, 0.22),
+    0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.face-card.bidu .face-lab {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 230, 0.55),
+    0 0 0 1px rgba(14, 107, 107, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.face-card.askara .face-lab {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 230, 0.45),
+    0 0 0 1px rgba(196, 90, 18, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.face-card .face-lab .lab-mark,
+.face-card .lab-mark.face-lab-mark {
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  filter: none;
+  opacity: 1;
+}
+
+.face-card h3,
+.face-card .face-name {
+  display: block;
   font-family: var(--font-display);
-  font-size: 0.78rem;
+  font-size: 1.18rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
   margin: 0;
-  line-height: 1.25;
-  padding: 0 0.35rem;
+  line-height: 1.15;
+  padding: 0;
   color: var(--gold-bright);
-}
-
-.face-card h3 .face-name {
-  min-width: 0;
 }
 
 .face-nick {
@@ -5267,8 +5337,8 @@ body.is-titles .replay-trailer {
   font-family: var(--font-display);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-size: 0.55rem;
-  margin: 0.2rem 0 0.35rem;
+  font-size: 0.58rem;
+  margin: 0.38rem 0 0;
   color: var(--sand);
 }
 
@@ -6361,9 +6431,9 @@ body.is-titles .replay-trailer {
 }
 
 .face-card h3 .lab-mark {
-  width: 0.9em;
-  height: 0.9em;
-  min-width: 0.9em;
+  width: 1.1rem;
+  height: 1.1rem;
+  min-width: 1.1rem;
 }
 
 .visually-hidden {

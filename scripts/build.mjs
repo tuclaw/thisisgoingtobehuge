@@ -137,8 +137,12 @@ function boothsHtml(items, base) {
     .join("\n")}</div>`;
 }
 
-function episodeVotePosted(season) {
-  return Array.isArray(season.tribalLog) && season.tribalLog.length > 0;
+function episodeVotePosted(season, episode) {
+  const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+  if (!log.length) return false;
+  const epId = episode && episode.id;
+  if (epId) return log.some((entry) => entry && entry.episode === epId);
+  return false;
 }
 
 function tribalCutBeat(episode) {
@@ -345,10 +349,20 @@ function episodeHasBeatId(episode, id) {
   return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.id === id));
 }
 
+function episodeWantsCamp(episode) {
+  return (
+    episodeHasBeatType(episode, "camp") ||
+    episodeHasBeatType(episode, "lunch-chats") ||
+    episodeHasBeatType(episode, "dinner-fires") ||
+    episode.conversationFeed
+  );
+}
+
 function renderEpisodePage(episode, season, base) {
   const flame = read(join(templates, "partials", "flame.svg"));
-  const votePosted = episodeVotePosted(season);
+  const votePosted = episodeVotePosted(season, episode);
   const focusHref = "#week-board";
+  const wantsCamp = episodeWantsCamp(episode);
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
   const lunchScripts = [
     episodeHasBeatType(episode, "lunch-chats") || episodeHasBeatId(episode, "thursday-lunch")
@@ -425,7 +439,7 @@ function renderEpisodePage(episode, season, base) {
     </nav>
   </header>
 
-  <section class="episode-hero episode-campfire-hero" id="episode" data-conversation-feed="conversations.json">
+  <section class="episode-hero episode-campfire-hero" id="episode"${wantsCamp && episode.conversationFeed !== false ? ' data-conversation-feed="conversations.json"' : ""}>
     <div class="hero-stage" aria-hidden="true">
       <div class="hero-glow"></div>
       <div class="hero-veil"></div>
@@ -483,12 +497,12 @@ function renderEpisodePage(episode, season, base) {
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 
-    <article class="beat beat-camp" id="camp-whispers">
+    ${wantsCamp ? `<article class="beat beat-camp" id="camp-whispers">
       <p class="section-kicker">Campfire</p>
       <h2>Latest whispers</h2>
       <p class="camp-whispers-lede">The most recent bot threads from camp. Click a thread to listen.</p>
       <div class="camp-chat-demo camp-whispers-feed" id="camp-whispers-feed" aria-live="polite"></div>
-    </article>
+    </article>` : ""}
 
     <ol class="week-spine visually-hidden" id="week-spine" aria-label="This week">
       ${spine}
@@ -639,8 +653,28 @@ export function build(rootDir = root, destDir = dist) {
   write(join(destDir, "rules.html"), injectFallback(read(join(templates, "rules.html")), ""));
   write(join(destDir, "seasons/1/index.html"), injectFallback(read(join(templates, "season.html")), "../../"));
 
-  const episode = JSON.parse(read(join(rootDir, "data", "episodes", "s1e01.json")));
-  write(join(destDir, "seasons/1/e01.html"), renderEpisodePage(episode, board, "../../"));
+  const listed = Array.isArray(source.episodes) ? source.episodes : [];
+  const toBuild = [];
+  const seen = new Set();
+  for (const ep of listed) {
+    const srcRel = ep.source || (ep.id ? `data/episodes/${ep.id}.json` : "");
+    const srcPath = srcRel ? join(rootDir, srcRel) : "";
+    if (!srcPath || !existsSync(srcPath) || seen.has(srcPath)) continue;
+    seen.add(srcPath);
+    toBuild.push({
+      episode: JSON.parse(read(srcPath)),
+      out: ep.path || `seasons/${source.season || 1}/e${String(ep.number).padStart(2, "0")}.html`
+    });
+  }
+  if (!toBuild.length) {
+    const fallback = join(rootDir, "data", "episodes", "s1e01.json");
+    if (existsSync(fallback)) {
+      toBuild.push({ episode: JSON.parse(read(fallback)), out: "seasons/1/e01.html" });
+    }
+  }
+  for (const item of toBuild) {
+    write(join(destDir, item.out), renderEpisodePage(item.episode, board, "../../"));
+  }
 
   const threads = collectThreads(rootDir);
   write(
