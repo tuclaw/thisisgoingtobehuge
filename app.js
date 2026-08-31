@@ -493,6 +493,7 @@ function holdBookHtml(s, tribe, season, rank) {
     : "";
   const pad = rank < 10 ? "0" + rank : String(rank);
   const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
+  const bootTag = s.status === "jury" || s.status === "boot" ? `<span class="hold-tag">Voted out · jury</span>` : "";
   const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
   const hasLegs = legs.length > 0;
   return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}">
@@ -508,7 +509,7 @@ function holdBookHtml(s, tribe, season, rank) {
         <b class="${chgClass(week)}">${pct(week)} week</b>
         <b class="day ${chgClass(day)}">${pct(day)} today</b>
       </span>
-      ${immune}
+      ${immune}${bootTag}
     </button>
     ${holdChips(legs)}
     <div class="hold-legs" id="${legsId}" hidden>${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
@@ -834,6 +835,17 @@ function renderMoneyJourney(season) {
   });
 }
 
+function episodeIsClosed(ep) {
+  return ep && (ep.status === "closed" || ep.status === "cut");
+}
+
+function episodeKicker(ep) {
+  if (!ep) return "Cut";
+  if (ep.status === "live") return "Now burning";
+  if (episodeIsClosed(ep)) return "Closed";
+  return ep.status || "Cut";
+}
+
 function renderHomeEpisodes(season) {
   const root = document.getElementById("home-episodes");
   if (!root) return;
@@ -858,11 +870,12 @@ function renderHomeEpisodes(season) {
       }
       const href = assetBase() + ep.path;
       const live = ep.status === "live";
+      const closedNote = episodeIsClosed(ep) && ep.tease ? `<p class="ep-go">${tease}</p>` : "";
       return `<a class="journey-ep${live ? " live" : ""} reveal" href="${escapeHtml(href)}">
-        <p class="ep-kicker">${live ? "Now burning" : escapeHtml(ep.status || "Cut")}</p>
+        <p class="ep-kicker">${escapeHtml(episodeKicker(ep))}</p>
         <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
-        <p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>
+        ${closedNote || `<p class="ep-go">${live ? "Watch the week unfold →" : "Open episode →"}</p>`}
       </a>`;
     })
     .join("");
@@ -944,7 +957,7 @@ function renderSurvivor(season) {
       <h2>${escapeHtml(model)}</h2>
       <div class="survivor-meta">
         <span>${escapeHtml(tribeName)}</span>
-        <span>${s.status === "active" ? "In the game" : escapeHtml(s.status)}</span>
+        <span>${s.status === "active" ? "In the game" : s.status === "jury" || s.status === "boot" ? "Voted out · jury" : escapeHtml(s.status)}</span>
       </div>
       <p class="survivor-archetype">${escapeHtml(s.archetype || "")}</p>
       ${bio}
@@ -1074,8 +1087,28 @@ function dayCardHtml(s, tribe, opts) {
   </article>`;
 }
 
+function currentPageEpisode(season) {
+  const num = Number(document.documentElement.dataset.episode);
+  if (Number.isFinite(num) && Array.isArray(season.episodes)) {
+    const match = season.episodes.find((ep) => ep && ep.number === num);
+    if (match) return match;
+  }
+  return season.episode || null;
+}
+
+function tribalLogForPage(season) {
+  const all = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+  const ep = currentPageEpisode(season);
+  if (ep && ep.id) return all.filter((entry) => entry && entry.episode === ep.id);
+  return [];
+}
+
 function renderEpisodeDays(season) {
-  const specs = season.episode && Array.isArray(season.episode.days) ? season.episode.days : [];
+  const pageEp = currentPageEpisode(season);
+  const specs =
+    (pageEp && Array.isArray(pageEp.days) && pageEp.days) ||
+    (season.episode && Array.isArray(season.episode.days) && season.episode.days) ||
+    [];
   if (!specs.length) return;
   const snapshots = season.snapshots || [];
   const survivors = season.survivors || [];
@@ -2421,7 +2454,7 @@ function renderEpisode(season) {
     "#tribal-focus > h2, #tribal-cut > h2, #tribal > h2"
   );
   if (tribal) {
-    const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+    const log = tribalLogForPage(season);
     if (log.length === 0) {
       if (tribalHeading) tribalHeading.textContent = "Not yet";
       tribal.innerHTML = `
@@ -2606,13 +2639,15 @@ function renderSeasonHub(season) {
       </div>`;
       }
       const href = episodeFileHref(ep);
-      const status = ep.status === "live" ? "Now playing" : ep.status || "cut";
-      const liveClass = ep.status === "live" ? " live" : "";
       const live = ep.status === "live";
+      const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
+      const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
+      const bootLine = episodeIsClosed(ep) && ep.tease ? `<p>${escapeHtml(ep.tease)}</p>` : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
         <p class="ep-kicker">${escapeHtml(status)}</p>
         <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
         <p>${label}</p>
+        ${bootLine}
       </a>`;
     })
     .join("");

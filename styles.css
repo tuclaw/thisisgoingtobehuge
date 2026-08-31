@@ -2698,6 +2698,11 @@ a.brand:hover {
   box-shadow: inset 0 0 0 1px rgba(14, 107, 107, 0.35), 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 
+.episode-card.closed {
+  border-color: rgba(212, 160, 23, 0.18);
+  opacity: 0.92;
+}
+
 .ep-kicker {
   font-family: var(--font-display);
   letter-spacing: 0.28em;

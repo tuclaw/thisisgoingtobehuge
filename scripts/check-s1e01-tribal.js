@@ -89,8 +89,8 @@ expectedBooths.forEach(([slug, name, needle], i) => {
 const chrome = [episode.location, episode.description, episode.heroNote, tribal.foldEm, tribal.foldTitle, cut.title, cut.body]
   .concat((episode.spine || []).map((item) => item.text))
   .join("\n");
-if (/voted off|joins the jury|tally 5|5–1|5-1/i.test(chrome)) {
-  fail("do not print the boot or tally in hero/open copy");
+if (!/Claude Fable 5, 5–1, first juror/.test(chrome)) {
+  fail("closed Episode 1 chrome must print the boot line: Claude Fable 5, 5–1, first juror");
 }
 ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"].forEach((nick) => {
   const boothChrome = (prevote.items || []).map((item) => item.name).join(" ");
@@ -153,7 +153,7 @@ if (lastHour.recorded[grok45Id].bookUsd !== 9.6402 || lastHour.recorded[grok45Id
   fail("Grok 4.5 last-hour book was remade");
 }
 const fableCast = (season.cast || []).find((member) => member.id === fableId);
-if (!fableCast || fableCast.status !== "active") fail("do not change Fable cast status on this page cut");
+if (!fableCast || fableCast.status !== "jury") fail("Fable must be jury after the Episode 1 boot");
 
 if (html) {
   if (!html.includes('id="tribal-focus"')) fail("built e01.html missing post-vote #tribal-focus");
@@ -188,8 +188,8 @@ if (html) {
     fail("empty tribal day fold should not render after vote promotion");
   }
   const open = html.slice(0, html.indexOf('id="episode-tribal"'));
-  if (/Voted off:|joins the jury|Tally 5–1/.test(open)) {
-    fail("built open copy leaked the boot before the spoiler");
+  if (!/Claude Fable 5, 5–1, first juror/.test(open) && !/Claude Fable 5 voted out 5–1/.test(open)) {
+    fail("built closed Episode 1 open copy must print the boot line");
   }
   if (!html.includes('href="#week-board"')) fail("skip/scroll cue must point at #week-board");
   if (html.includes("day-rail")) fail("episode page must not render the day-rail TOC");
