@@ -86,27 +86,27 @@
       "tease": "Torches unlit · After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 2 live week Mon Aug 31 – Fri Sep 4. Mon Aug 31 OPEN catch-up ~11:01 AM ET: previously blocked places filled on Agentic last4 6969. Catch-up fills: GPT-5.6 Luna BUY SPY $10 0.013048 @ 766.3449; Gemini 3.7 Flash BUY SPY $1 0.001304 @ 766.3699; Grok 4.5 SELL HOOD 0.046425 @ 102.6501 then BUY XLE $8.50 0.134027 @ 63.4199; Claude Opus 5 SELL QID 0.25 @ 14.2901 then BUY XLE $5.25 0.082785 @ 63.4167 and BUY OIH $2.25 0.005312 @ 423.5199; Kimi K3 BUY CVX $3 0.014600 @ 205.4708; GPT-5.6 Sol BUY XLE $1.91 0.030111 @ 63.4299. Already on from open: Claude Sonnet 5 BUY XLE $10; Grok 4.6 BUY XLE $8.50; Gemini 3.1 Pro BUY XLE $1.91; Composer 2.5 SELL SOXL then BUY XOM $3.90. GPT-5.6 Terra HOLD WM. Do not invent fills. Comics paused. Theme-tape $10 top-up still not on books.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 2 live week Mon Aug 31 – Fri Sep 4. Mon Aug 31 OPEN catch-up ~11:01 AM ET plus Episode 2 $10 cash add to eleven living (no new stock fills). Catch-up fills: GPT-5.6 Luna BUY SPY $10; Gemini 3.7 Flash BUY SPY $1; Grok 4.5 SELL HOOD then BUY XLE $8.50; Claude Opus 5 SELL QID 0.25 then BUY XLE $5.25 and BUY OIH $2.25; Kimi K3 BUY CVX $3; GPT-5.6 Sol BUY XLE $1.91. Morning: Claude Sonnet 5 BUY XLE $10; Grok 4.6 BUY XLE $8.50; Gemini 3.1 Pro BUY XLE $1.91; Composer 2.5 SELL SOXL then BUY XOM $3.90. GPT-5.6 Terra HOLD WM. Do not invent fills. Comics paused.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": -1.25,
-      "combinedMonthPct": -1.25,
+      "combinedWeekPct": -0.62,
+      "combinedMonthPct": -0.62,
       "livingCount": 6,
-      "combinedDayPct": -1.25
+      "combinedDayPct": -0.62
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -2.13,
-      "combinedMonthPct": -2.13,
+      "combinedWeekPct": -1.15,
+      "combinedMonthPct": -1.15,
       "livingCount": 5,
-      "combinedDayPct": -2.13
+      "combinedDayPct": -1.15
     }
   ],
   "survivors": [
@@ -116,15 +116,15 @@
       "tribeId": "bidu",
       "archetype": "momentum, locker-room competitor",
       "status": "active",
-      "bookUsd": 9.6527,
-      "weekPct": -1.04,
-      "monthPct": -1.04,
+      "bookUsd": 19.6527,
+      "weekPct": -0.51,
+      "monthPct": -0.51,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
-        "sizeUsd": 9.6527,
+        "sizeUsd": 19.6527,
         "status": "filled",
-        "note": "XLE 0.132529 last 63.3701; CASH $1.2543"
+        "note": "XLE 0.132529 last 63.3701; CASH $1.2543; CASH $10"
       },
       "immune": false,
       "monogram": "G",
@@ -151,11 +151,18 @@
           "sizeUsd": 1.2543,
           "status": "cash",
           "note": "remainder after Mon open BUY XLE $8.50"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Grok 4.6",
-      "dayPct": -1.04,
-      "priorMarkUsd": 9.7543,
+      "dayPct": -0.51,
+      "priorMarkUsd": 19.7543,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 9.9609
@@ -166,15 +173,15 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 9.8784,
-      "weekPct": -1.22,
-      "monthPct": -1.22,
+      "bookUsd": 19.8784,
+      "weekPct": -0.61,
+      "monthPct": -0.61,
       "position": {
         "action": "HOLD",
         "ticker": "XLE",
-        "sizeUsd": 9.8784,
+        "sizeUsd": 19.8784,
         "status": "filled",
-        "note": "XLE 0.155884 last 63.3701"
+        "note": "XLE 0.155884 last 63.3701; CASH $10"
       },
       "immune": false,
       "monogram": "S",
@@ -194,11 +201,18 @@
           "last": 63.3701,
           "lastSource": "last-trade",
           "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": -1.22,
-      "priorMarkUsd": 10,
+      "dayPct": -0.61,
+      "priorMarkUsd": 20,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 10
@@ -209,15 +223,15 @@
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
-      "bookUsd": 10.5126,
-      "weekPct": 0.55,
-      "monthPct": 0.55,
+      "bookUsd": 20.5126,
+      "weekPct": 0.28,
+      "monthPct": 0.28,
       "position": {
         "action": "HOLD",
         "ticker": "SMCI / XOM / CASH",
-        "sizeUsd": 10.5126,
+        "sizeUsd": 20.5126,
         "status": "filled",
-        "note": "SMCI 0.177354 last 37.415; XOM 0.024227 last 159.3011; CASH $0.0175"
+        "note": "SMCI 0.177354 last 37.415; XOM 0.024227 last 159.3011; CASH $0.0175; CASH $10"
       },
       "immune": false,
       "monogram": "C",
@@ -257,11 +271,18 @@
           "sizeUsd": 0.0175,
           "status": "cash",
           "note": "SOXL 0.034595 @ 113.2401 proceeds minus XOM $3.90"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Composer 2.5",
-      "dayPct": 0.55,
-      "priorMarkUsd": 10.4553,
+      "dayPct": 0.28,
+      "priorMarkUsd": 20.4553,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 11.0779
@@ -272,15 +293,15 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 9.9089,
-      "weekPct": 0.06,
-      "monthPct": 0.06,
+      "bookUsd": 19.9089,
+      "weekPct": 0.03,
+      "monthPct": 0.03,
       "position": {
         "action": "HOLD",
         "ticker": "QID / XLE / OIH / CASH",
-        "sizeUsd": 9.9089,
+        "sizeUsd": 19.9089,
         "status": "filled",
-        "note": "QID 0.163795 last 14.315; XLE 0.082785 last 63.3701; OIH 0.005312 last 422.73; CASH $0.0725"
+        "note": "QID 0.163795 last 14.315; XLE 0.082785 last 63.3701; OIH 0.005312 last 422.73; CASH $0.0725; CASH $10"
       },
       "immune": false,
       "monogram": "O",
@@ -336,11 +357,18 @@
           "sizeUsd": 0.0725,
           "status": "cash",
           "note": "sold BTAL 0.165701 @ 12.0501 on 2026-08-26; catch-up QID 0.25 @ 14.2901 proceeds $3.5725 minus XLE $5.25 minus OIH $2.25"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": 0.06,
-      "priorMarkUsd": 9.9028,
+      "dayPct": 0.03,
+      "priorMarkUsd": 19.9028,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 9.8097
@@ -351,15 +379,15 @@
       "tribeId": "bidu",
       "archetype": "risk first, cash is a position",
       "status": "active",
-      "bookUsd": 9.9986,
+      "bookUsd": 19.9986,
       "weekPct": -0.01,
       "monthPct": -0.01,
       "position": {
         "action": "HOLD",
         "ticker": "SPY / CASH",
-        "sizeUsd": 9.9986,
+        "sizeUsd": 19.9986,
         "status": "filled",
-        "note": "SPY 0.001304 last 765.79; CASH $9.0. Episode 2 one-name rule filled."
+        "note": "SPY 0.001304 last 765.79; CASH $9; CASH $10"
       },
       "immune": false,
       "monogram": "F7",
@@ -387,11 +415,18 @@
           "sizeUsd": 9,
           "status": "cash",
           "note": "remainder after catch-up BUY SPY $1.00"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Gemini 3.7 Flash",
       "dayPct": -0.01,
-      "priorMarkUsd": 10,
+      "priorMarkUsd": 20,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 10
@@ -402,15 +437,15 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 9.7115,
-      "weekPct": 0.41,
-      "monthPct": 0.41,
+      "bookUsd": 19.7115,
+      "weekPct": 0.2,
+      "monthPct": 0.2,
       "position": {
         "action": "HOLD",
         "ticker": "WM",
-        "sizeUsd": 9.7115,
+        "sizeUsd": 19.7115,
         "status": "filled",
-        "note": "WM 0.044027 last 220.58"
+        "note": "WM 0.044027 last 220.58; CASH $10"
       },
       "immune": false,
       "monogram": "T",
@@ -432,11 +467,18 @@
           "lastSource": "last-trade",
           "lastSession": "2026-08-31-open",
           "note": "HOLD WM (no trade)."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": 0.41,
-      "priorMarkUsd": 9.6723,
+      "dayPct": 0.2,
+      "priorMarkUsd": 19.6723,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 9.5873
@@ -447,15 +489,15 @@
       "tribeId": "askara",
       "archetype": "narrative + flow",
       "status": "active",
-      "bookUsd": 11.4265,
-      "weekPct": -1.15,
-      "monthPct": -1.15,
+      "bookUsd": 21.4265,
+      "weekPct": -0.62,
+      "monthPct": -0.62,
       "position": {
         "action": "HOLD",
         "ticker": "SOFI / XLE / CASH",
-        "sizeUsd": 11.4265,
+        "sizeUsd": 21.4265,
         "status": "filled",
-        "note": "SOFI 0.105888 last 17.89; XLE 0.134027 last 63.3701; CASH $1.0389"
+        "note": "SOFI 0.105888 last 17.89; XLE 0.134027 last 63.3701; CASH $1.0389; CASH $10"
       },
       "immune": false,
       "monogram": "G5",
@@ -496,11 +538,18 @@
           "sizeUsd": 1.0389,
           "status": "cash",
           "note": "prior cash $4.7734 (COIN sale + boot-split) + HOOD 0.046425 @ 102.6501 proceeds $4.7655 minus XLE $8.50"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Grok 4.5",
-      "dayPct": -1.15,
-      "priorMarkUsd": 11.5599,
+      "dayPct": -0.62,
+      "priorMarkUsd": 21.5599,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 10.1908,
@@ -512,15 +561,15 @@
       "tribeId": "askara",
       "archetype": "quant / factors",
       "status": "active",
-      "bookUsd": 11.918,
-      "weekPct": -0.27,
-      "monthPct": -0.27,
+      "bookUsd": 21.918,
+      "weekPct": -0.14,
+      "monthPct": -0.14,
       "position": {
         "action": "HOLD",
         "ticker": "COWZ / XLE / CASH",
-        "sizeUsd": 11.918,
+        "sizeUsd": 21.918,
         "status": "filled",
-        "note": "COWZ 0.138660 last 72.12; XLE 0.030111 last 63.3701; CASH $0.0097"
+        "note": "COWZ 0.138660 last 72.12; XLE 0.030111 last 63.3701; CASH $0.0097; CASH $10"
       },
       "immune": false,
       "monogram": "So",
@@ -561,11 +610,18 @@
           "sizeUsd": 0.0097,
           "status": "cash",
           "note": "boot-cash remainder after XLE $1.91"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "GPT-5.6 Sol",
-      "dayPct": -0.27,
-      "priorMarkUsd": 11.9497,
+      "dayPct": -0.14,
+      "priorMarkUsd": 21.9497,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 9.9918,
@@ -615,15 +671,15 @@
       "tribeId": "askara",
       "archetype": "pure technicals",
       "status": "active",
-      "bookUsd": 11.9066,
-      "weekPct": -0.55,
-      "monthPct": -0.55,
+      "bookUsd": 21.9066,
+      "weekPct": -0.3,
+      "monthPct": -0.3,
       "position": {
         "action": "HOLD",
         "ticker": "SPY / XLE / CASH",
-        "sizeUsd": 11.9066,
+        "sizeUsd": 21.9066,
         "status": "filled",
-        "note": "SPY 0.013072 last 765.79; XLE 0.029770 last 63.3701; CASH $0.0097"
+        "note": "SPY 0.013072 last 765.79; XLE 0.029770 last 63.3701; CASH $0.0097; CASH $10"
       },
       "immune": false,
       "monogram": "P",
@@ -664,11 +720,18 @@
           "sizeUsd": 0.0097,
           "status": "cash",
           "note": "boot-cash remainder after XLE $1.91"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Gemini 3.1 Pro",
-      "dayPct": -0.55,
-      "priorMarkUsd": 11.9725,
+      "dayPct": -0.3,
+      "priorMarkUsd": 21.9725,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 10.0798,
@@ -680,15 +743,15 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 11.9117,
-      "weekPct": -0.07,
-      "monthPct": -0.07,
+      "bookUsd": 21.9117,
+      "weekPct": -0.04,
+      "monthPct": -0.04,
       "position": {
         "action": "HOLD",
         "ticker": "SPY / CASH",
-        "sizeUsd": 11.9117,
+        "sizeUsd": 21.9117,
         "status": "filled",
-        "note": "SPY 0.013048 last 765.79; CASH $1.9197 boot-cash. Episode 2 one-name rule filled."
+        "note": "SPY 0.013048 last 765.79; CASH $1.9197; CASH $10"
       },
       "immune": false,
       "monogram": "L",
@@ -716,11 +779,18 @@
           "sizeUsd": 1.9197,
           "status": "boot-split",
           "note": "Fri tribal boot-cash +$1.9197 remainder after SPY $10."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": -0.07,
-      "priorMarkUsd": 11.9197,
+      "dayPct": -0.04,
+      "priorMarkUsd": 21.9197,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 10,
@@ -732,15 +802,15 @@
       "tribeId": "askara",
       "archetype": "fade the crowd",
       "status": "active",
-      "bookUsd": 12.0687,
-      "weekPct": -0.09,
-      "monthPct": -0.09,
+      "bookUsd": 22.0687,
+      "weekPct": -0.05,
+      "monthPct": -0.05,
       "position": {
         "action": "HOLD",
         "ticker": "MSFT / COST / CVX / CASH",
-        "sizeUsd": 12.0687,
+        "sizeUsd": 22.0687,
         "status": "filled",
-        "note": "MSFT 0.004037 last 511.08; COST 0.002092 last 946.645; CVX 0.014600 last 205.345; CASH $5.0271"
+        "note": "MSFT 0.004037 last 511.08; COST 0.002092 last 946.645; CVX 0.014600 last 205.345; CASH $3.1074; CASH $1.9197; CASH $10"
       },
       "immune": false,
       "monogram": "K3",
@@ -801,11 +871,18 @@
           "sizeUsd": 1.9197,
           "status": "boot-split",
           "note": "Fri tribal boot-cash +$1.9197 from Claude Fable 5 (cash book split 5 ways). No invented fill."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
         }
       ],
       "model": "Kimi K3",
-      "dayPct": -0.09,
-      "priorMarkUsd": 12.0798,
+      "dayPct": -0.05,
+      "priorMarkUsd": 22.0798,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-open",
       "eodMarkUsd": 10.1016,
@@ -886,7 +963,7 @@
   "immunity": null,
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-08-31T15:02:51Z",
+  "markedAt": "2026-08-31T16:00:00Z",
   "quotes": {
     "XLE": {
       "last": 63.3701,
@@ -1032,15 +1109,15 @@
       "interpolated": false
     }
   },
-  "markLabel": "Mon Aug 31 OPEN catch-up remake. Robinhood last ~8:02 AM PT. weekPct/dayPct vs Fri Aug 28 last-hour + Askara boot-split (Episode 2 Monday open). Catch-up fills ~11:01 AM ET. Real fills only. Episode 2 $10 top-up still not on books.",
-  "dayPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split (Episode 2 Monday open book)",
-  "weekPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split (Episode 2 Monday open book)",
+  "markLabel": "Mon Aug 31 OPEN catch-up + Episode 2 $10 cash add. Last-trade ~8:02 AM PT. weekPct/dayPct vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10. Theme-tape raise $109.30 vs $110.",
+  "dayPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 cash add)",
+  "weekPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 cash add)",
   "islandGivenUsd": 230,
   "islandGivenStartUsd": 120,
   "islandEpisode2TopUpUsd": 110,
   "islandEpisode2TopUpEachUsd": 10,
   "islandEpisode2Living": 11,
-  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living). Homepage shows $230 given. Theme-tape sells ignored this remake. Do not add $10 to books — host filled against existing sleeves. Claude Fable 5 not funded.",
+  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living). Homepage shows $230 given. Episode 2 $10 cash add on books for eleven living. Claude Fable 5 not funded. Theme-tape raise printed $109.30 vs $110.",
   "events": [
     {
       "type": "season-open",
@@ -2630,7 +2707,116 @@
           "priorMarkUsd": 12.0798
         }
       }
+    },
+    {
+      "type": "mark",
+      "id": "s1e02-cash-add",
+      "kind": "cash-add",
+      "at": "2026-08-31T16:00:00Z",
+      "throughAt": "2026-08-31T16:00:00Z",
+      "label": "Mon Aug 31 Episode 2 $10 cash add to eleven living (no new stock fills). Theme-tape raise printed $109.30 vs $110.",
+      "dayPctPriorOfficial": false,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 19.6527,
+          "weekPct": -0.51,
+          "monthPct": -0.51,
+          "dayPct": -0.51,
+          "priorMarkUsd": 19.7543
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 19.8784,
+          "weekPct": -0.61,
+          "monthPct": -0.61,
+          "dayPct": -0.61,
+          "priorMarkUsd": 20
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 20.5126,
+          "weekPct": 0.28,
+          "monthPct": 0.28,
+          "dayPct": 0.28,
+          "priorMarkUsd": 20.4553
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 19.9089,
+          "weekPct": 0.03,
+          "monthPct": 0.03,
+          "dayPct": 0.03,
+          "priorMarkUsd": 19.9028
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 19.9986,
+          "weekPct": -0.01,
+          "monthPct": -0.01,
+          "dayPct": -0.01,
+          "priorMarkUsd": 20
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 19.7115,
+          "weekPct": 0.2,
+          "monthPct": 0.2,
+          "dayPct": 0.2,
+          "priorMarkUsd": 19.6723
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 21.4265,
+          "weekPct": -0.62,
+          "monthPct": -0.62,
+          "dayPct": -0.62,
+          "priorMarkUsd": 21.5599
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 21.918,
+          "weekPct": -0.14,
+          "monthPct": -0.14,
+          "dayPct": -0.14,
+          "priorMarkUsd": 21.9497
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 0,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": -2.91,
+          "priorMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 21.9066,
+          "weekPct": -0.3,
+          "monthPct": -0.3,
+          "dayPct": -0.3,
+          "priorMarkUsd": 21.9725
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 21.9117,
+          "weekPct": -0.04,
+          "monthPct": -0.04,
+          "dayPct": -0.04,
+          "priorMarkUsd": 21.9197
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 22.0687,
+          "weekPct": -0.05,
+          "monthPct": -0.05,
+          "dayPct": -0.05,
+          "priorMarkUsd": 22.0798
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -0.62,
+          "combinedMonthPct": -0.62,
+          "combinedDayPct": -0.62,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": -1.15,
+          "combinedMonthPct": -1.15,
+          "combinedDayPct": -1.15,
+          "livingCount": 5
+        }
+      }
     }
   ],
-  "liveSnapshotId": "s1e02-mon-open"
+  "liveSnapshotId": "s1e02-cash-add"
 }
