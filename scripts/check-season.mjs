@@ -133,6 +133,9 @@ if (!boardNative) {
 const start = board.startingBookUsd;
 if (boardNative) {
   check("given-total", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+  check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
+  check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
+  check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
   check("pot-matches-given", source.islandPotUsd === 230, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);

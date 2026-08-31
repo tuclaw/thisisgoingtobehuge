@@ -393,6 +393,16 @@ if (log[0]) {
 check("books-fable-jury-zero", fableLive && fableLive.status === "jury" && fableLive.bookUsd === 0);
 check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 5);
 check("given-total-fixture", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
+check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
+check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
+check(
+  "episode2-given-note-raise",
+  typeof source.islandGivenNote === "string" &&
+    source.islandGivenNote.includes("$110.30 vs $110 target") &&
+    source.islandGivenNote.includes("30 cents leftover, not a 12th book") &&
+    source.islandGivenNote.includes("Living virtual sleeves credited $10 cash each anyway")
+);
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
 check("homepage-given-copy", home.includes("$230 given. Eleven still in. Two tribes. Friday tribal."));
 check("homepage-points-at-e02", home.includes("seasons/1/e02.html") && home.includes("Walk into Episode 2"));
@@ -617,6 +627,11 @@ const noTopUp = fills.filter(
 check("no-episode-2-ten-top-up", noTopUp.length === 0, String(noTopUp.length));
 
 const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
+check(
+  "e02-no-stale-raise-shortfall",
+  !JSON.stringify(episode2Copy).includes("$109.30") &&
+    !/seventy cents short|70 cents short/i.test(JSON.stringify(episode2Copy))
+);
 const e2Cold = ((episode2Copy.days || []).find((day) => day.id === "cold-open") || {}).beats || [];
 const e2ColdBody = JSON.stringify(e2Cold);
 check("e02-cold-open-boot", e2ColdBody.includes("Claude Fable 5 voted out 5–1") && e2ColdBody.includes("First juror"));
@@ -641,7 +656,8 @@ check(
     e2ChallengeBody.includes("the Askara tribe") &&
     e2ChallengeBody.includes("Episode 2 only") &&
     e2ChallengeBody.includes("cash counts") &&
-    e2ChallengeBody.includes("Monday fills and Episode 2 $10 cash add are in")
+    e2ChallengeBody.includes("Monday fills are in") &&
+    e2ChallengeBody.includes("Each living player received $10 more")
 );
 check(
   "e02-challenge-no-shame-list",

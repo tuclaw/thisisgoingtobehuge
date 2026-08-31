@@ -1109,7 +1109,7 @@
       "interpolated": false
     }
   },
-  "markLabel": "Mon Aug 31 OPEN catch-up + Episode 2 $10 cash add. Last-trade ~8:02 AM PT. weekPct/dayPct vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10. Theme-tape raise $109.30 vs $110.",
+  "markLabel": "Mon Aug 31 OPEN catch-up + Episode 2 $10 cash add. Last-trade ~8:02 AM PT. weekPct/dayPct vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10. Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable.",
   "dayPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 cash add)",
   "weekPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 cash add)",
   "islandGivenUsd": 230,
@@ -1117,7 +1117,10 @@
   "islandEpisode2TopUpUsd": 110,
   "islandEpisode2TopUpEachUsd": 10,
   "islandEpisode2Living": 11,
-  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living). Homepage shows $230 given. Episode 2 $10 cash add on books for eleven living. Claude Fable 5 not funded. Theme-tape raise printed $109.30 vs $110.",
+  "islandEpisode2RaisePrintedUsd": 110.3,
+  "islandEpisode2LeftoverUsd": 0.3,
+  "islandEpisode2ShortfallUsd": 0,
+  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living). Homepage shows $230 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Living virtual sleeves credited $10 cash each anyway. Claude Fable 5 not funded.",
   "events": [
     {
       "type": "season-open",
@@ -2714,7 +2717,7 @@
       "kind": "cash-add",
       "at": "2026-08-31T16:00:00Z",
       "throughAt": "2026-08-31T16:00:00Z",
-      "label": "Mon Aug 31 Episode 2 $10 cash add to eleven living (no new stock fills). Theme-tape raise printed $109.30 vs $110.",
+      "label": "Mon Aug 31 Episode 2 $10 cash add to eleven living (no new stock fills). Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable.",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
