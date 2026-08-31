@@ -11,6 +11,7 @@ import {
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LEGACY_SLUGS, deriveSeason } from "./lib/ledger.mjs";
+import { collectThreads } from "./lib/collect-threads.mjs";
 import { writeBoard } from "./derive-board.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -590,10 +591,28 @@ function copyStatic() {
   }
 }
 
+function survivorRedirectHtml(slug, name) {
+  const dest = `../index.html#castaway=${slug}`;
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="refresh" content="0; url=${dest}" />
+  <link rel="canonical" href="${dest}" />
+  <title>Redirecting to ${escapeHtml(name)}</title>
+  <script>location.replace(${JSON.stringify(dest)} + location.search);</script>
+</head>
+<body>
+  <p><a href="${dest}">Continue to ${escapeHtml(name)}</a></p>
+</body>
+</html>
+`;
+}
+
 function render404(cast) {
   const map = { ...LEGACY_SLUGS };
   const entries = Object.entries(map)
-    .map(([legacy, slug]) => `    "${legacy}": "${slug}.html"`)
+    .map(([legacy, slug]) => `    "${legacy}": "${slug}"`)
     .join(",\n");
   return `<!DOCTYPE html>
 <html lang="en">
@@ -608,7 +627,7 @@ ${entries}
       var parts = location.pathname.replace(/\\/+$/, "").split("/");
       var last = (parts[parts.length - 1] || "").replace(/\\.html$/i, "");
       if (map[last]) {
-        location.replace("/survivors/" + map[last] + location.search + location.hash);
+        location.replace("/index.html#castaway=" + map[last] + location.search);
         return;
       }
       location.replace("/index.html");
@@ -657,19 +676,23 @@ export function build(rootDir = root, destDir = dist) {
     write(join(destDir, item.out), renderEpisodePage(item.episode, board, "../../"));
   }
 
-  const survivorTpl = read(join(templates, "survivor.html"));
-  const redirectTpl = read(join(templates, "redirect.html"));
+  const threads = collectThreads(rootDir);
+  write(
+    join(destDir, "seasons/1/threads.json"),
+    JSON.stringify({ source: "host-tape", conversations: threads }, null, 2) + "\n"
+  );
+
   for (const member of source.cast) {
     write(
       join(destDir, "survivors", `${member.slug}.html`),
-      render(survivorTpl, { slug: member.slug, name: member.name, base: "../" })
+      survivorRedirectHtml(member.slug, member.name)
     );
   }
   for (const [legacy, slug] of Object.entries(LEGACY_SLUGS)) {
     const member = source.cast.find((c) => c.slug === slug);
     write(
       join(destDir, "survivors", `${legacy}.html`),
-      render(redirectTpl, { target: `${slug}.html`, name: member ? member.name : slug })
+      survivorRedirectHtml(slug, member ? member.name : slug)
     );
   }
   write(join(destDir, "404.html"), render404(source.cast));
