@@ -190,7 +190,7 @@ if (!appJs.includes("renderHomeTorches(season)")) {
 if (!appJs.includes('class="face-photo"') || !appJs.includes("face-lab") || !appJs.includes("face-lab-mark")) {
   throw new Error("homepage face cards must wrap a smaller portrait and a lab identity block");
 }
-if (!css.includes(".face-photo") || !css.includes(".face-lab") || !css.includes("5.5rem")) {
+if (!css.includes(".face-photo") || !css.includes(".face-lab") || !css.includes("4.25rem") || !css.includes("2.7rem")) {
   throw new Error("styles.css must shrink homepage portraits and emphasize the lab mark");
 }
 if (!css.includes(".tribal-torches") || !css.includes("flex-wrap: nowrap") || !css.includes("--torch-delay")) {
