@@ -12,19 +12,9 @@ const css = readFileSync(join(root, "styles.css"), "utf8");
 const chat = readFileSync(join(root, "camp-chat.js"), "utf8");
 const season = require(join(root, "data", "season1.json"));
 
-const requiredIds = [
-  "campfire-theater",
-  "campfire-canvas",
-  "campfire-faces",
-  "campfire-trade",
-  "campfire-thread",
-  "campfire-imessage"
-];
-requiredIds.forEach((id) => {
-  if (!html.includes('id="' + id + '"')) {
-    throw new Error("templates/island.html missing #" + id);
-  }
-});
+if (html.includes('id="campfire-theater"') || html.includes("campfire-canvas")) {
+  throw new Error("templates/island.html must not keep the home campfire theater");
+}
 
 if (!html.includes("campfire-open.js")) {
   throw new Error("templates/island.html does not load campfire-open.js");
@@ -136,7 +126,7 @@ if (!html.includes('id="replay-trailer"') || !html.includes("Replay trailer")) {
   throw new Error("templates/island.html missing subtle Replay trailer control");
 }
 if (!html.includes('id="money-ticker"') || !html.includes('data-ticker-mode="home"')) {
-  throw new Error("templates/island.html missing home money ticker in Real Trades section");
+  throw new Error("templates/island.html missing home money ticker in the landing hero");
 }
 if (!html.includes("money-ticker-ctas") || !html.includes("Add Fuel") || !html.includes("Watch Live")) {
   throw new Error("templates/island.html must put Add Fuel + Watch Live below the money ticker");
@@ -144,13 +134,18 @@ if (!html.includes("money-ticker-ctas") || !html.includes("Add Fuel") || !html.i
 if (html.includes('id="island-pot"') || html.includes('id="pot-amount"')) {
   throw new Error("templates/island.html must not keep the duplicate top pot amount above the ticker");
 }
+const markIdx = html.indexOf('class="brand-mark');
 const homeTickerIdx = html.indexOf('id="money-ticker"');
 const homeCtaIdx = html.indexOf("money-ticker-ctas");
+const landingIdx = html.indexOf('id="landing"');
+if (!(landingIdx > -1 && markIdx > landingIdx && homeTickerIdx > markIdx)) {
+  throw new Error("home money ticker must sit under the Last Trader Standing title in the landing hero");
+}
 if (!(homeTickerIdx > -1 && homeCtaIdx > homeTickerIdx)) {
   throw new Error("home Add Fuel / Watch Live CTAs must sit after #money-ticker");
 }
-if (!html.includes('id="wager"') || !html.includes("Real Trades On The Stock Market")) {
-  throw new Error("templates/island.html missing Real Trades wager section");
+if (html.includes('id="wager"') || html.includes("Real Trades On The Stock Market")) {
+  throw new Error("templates/island.html must not keep a separate Real Trades wager section");
 }
 if (!html.includes('id="island-bot-diagram"') || !html.includes("archify-embed")) {
   throw new Error("templates/island.html missing Archify bot diagram embed");
@@ -177,6 +172,15 @@ if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER
 }
 if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
   throw new Error("app.js missing home money ticker lede copy");
+}
+if (!js.includes("lts-home-books") || !js.includes("initHomeOpenLanding") || !js.includes('dispatchHomeBooks("play")')) {
+  throw new Error("campfire-open.js must start the home books diagram after the title cards");
+}
+if (!appJs.includes("onHomeBooksEvent") || !appJs.includes('action === "play"') || !appJs.includes("kickoffMoneyTickerAutoplay")) {
+  throw new Error("app.js must play the home books diagram when the title cards finish");
+}
+if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(64rem, 100%)")) {
+  throw new Error("styles.css missing home hero books diagram layout");
 }
 if (!html.includes('class="tribal-torches reveal"') || /tribal-torch (?:lit|dark)/.test(html)) {
   throw new Error("homepage tribal torches must be an empty shell filled from season state");
