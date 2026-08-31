@@ -2375,11 +2375,16 @@ function mountMoneyTicker(season, opts) {
     ? "See how each tribe and contestant did in the Episode."
     : "Watch the island, the tribes, or every contestant sleeve. Dotted line is money put in.";
 
-  root.innerHTML = `
-    <div class="money-ticker-head">
+  /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
+  const tickerHead = homeMode
+    ? `<p class="money-ticker-lede">${lede}</p>`
+    : `<div class="money-ticker-head">
       <p class="money-ticker-kicker">Replay the books</p>
       <p class="money-ticker-lede">${lede}</p>
-    </div>
+    </div>`;
+
+  root.innerHTML = `
+    ${tickerHead}
     <div class="money-ticker-toolbar">
       <div class="money-ticker-range" role="tablist" aria-label="Time range">
         ${rangeTabs}

@@ -3151,9 +3151,14 @@ body.is-titles .replay-trailer {
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
+.open-hero .replay-trailer {
+  margin-top: 0.35rem;
+  margin-bottom: 0.15rem;
+}
+
 .open-hero .money-ticker {
   text-align: left;
-  margin-top: 1.35rem;
+  margin-top: 0.85rem;
 }
 
 .open-hero .money-ticker-head,

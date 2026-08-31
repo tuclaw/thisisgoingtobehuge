@@ -125,6 +125,11 @@ if (!html.includes('sessionStorage.getItem("lts-open-titles-seen")')) {
 if (!html.includes('id="replay-trailer"') || !html.includes("Replay trailer")) {
   throw new Error("templates/island.html missing subtle Replay trailer control");
 }
+const taglineIdx = html.indexOf("Outwit. Outlast. Outtrade.");
+const replayIdx = html.indexOf('id="replay-trailer"');
+if (!(taglineIdx > -1 && replayIdx > taglineIdx && replayIdx < html.indexOf('id="money-ticker"'))) {
+  throw new Error("Replay trailer must sit under the tagline, above the books chart");
+}
 if (!html.includes('id="money-ticker"') || !html.includes('data-ticker-mode="home"')) {
   throw new Error("templates/island.html missing home money ticker in the landing hero");
 }
@@ -172,6 +177,9 @@ if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER
 }
 if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
   throw new Error("app.js missing home money ticker lede copy");
+}
+if (!appJs.includes("tickerHead") || !appJs.includes("homeMode") || !appJs.includes("Replay the books")) {
+  throw new Error("app.js must keep Replay the books on the episode ticker and omit it on home");
 }
 if (!js.includes("lts-home-books") || !js.includes("initHomeOpenLanding") || !js.includes('dispatchHomeBooks("play")')) {
   throw new Error("campfire-open.js must start the home books diagram after the title cards");
