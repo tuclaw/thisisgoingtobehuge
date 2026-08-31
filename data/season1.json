@@ -9,7 +9,7 @@
   "merged": false,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 230,
+  "islandPotUsd": 240.09,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -88,7 +88,7 @@
       "tease": "Torches unlit · After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 2 live week Mon Aug 31 – Fri Sep 4. Mon Aug 31 OPEN catch-up ~11:01 AM ET plus Episode 2 $10 gift invested into names mid-session ~10:31 AM PT. Every living player put the gift into US-listed stocks or ETFs. Nobody sat the gift in cash. Claude Fable 5 jury $0 unfunded. Comics paused.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 2 live week Mon Aug 31 – Fri Sep 4. Mon Aug 31 OPEN catch-up ~11:01 AM ET plus Episode 2 $10 gift invested into names mid-session ~10:31 AM PT. Leftover NANC sold for $10.09; $2.00 even-up to each of five living on the Askara tribe backdated to Episode 2 Monday open. Every living player put the gift into US-listed stocks or ETFs. Nobody sat the gift in cash. Claude Fable 5 jury $0 unfunded. Comics paused.",
   "tribes": [
     {
       "id": "bidu",
@@ -105,10 +105,10 @@
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -1.16,
-      "combinedMonthPct": -1.16,
+      "combinedWeekPct": -1.06,
+      "combinedMonthPct": -1.06,
       "livingCount": 5,
-      "combinedDayPct": -1.16
+      "combinedDayPct": -1.06
     }
   ],
   "survivors": [
@@ -558,13 +558,13 @@
       "tribeId": "askara",
       "archetype": "narrative + flow",
       "status": "active",
-      "bookUsd": 21.4374,
-      "weekPct": -0.57,
-      "monthPct": -0.57,
+      "bookUsd": 23.4374,
+      "weekPct": -0.52,
+      "monthPct": -0.52,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / XOM / CASH",
-        "sizeUsd": 21.4374,
+        "sizeUsd": 23.4374,
         "status": "filled",
         "note": "XLE + XOM + cash"
       },
@@ -607,10 +607,17 @@
           "sizeUsd": 2.9271,
           "status": "cash",
           "note": "prior cash $1.0389 + SOFI 0.105888 @ 17.832300 proceeds $1.8882"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 2,
+          "status": "cash",
+          "note": "leftover NANC even-up +$2.00 (Episode 2 Monday open; Claude Fable 5 not credited)"
         }
       ],
       "model": "Grok 4.5",
-      "dayPct": -0.57,
+      "dayPct": -0.52,
       "priorMarkUsd": 21.5599,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-mid",
@@ -623,13 +630,13 @@
       "tribeId": "askara",
       "archetype": "quant / factors",
       "status": "active",
-      "bookUsd": 21.9235,
-      "weekPct": -0.12,
-      "monthPct": -0.12,
+      "bookUsd": 23.9235,
+      "weekPct": -0.11,
+      "monthPct": -0.11,
       "position": {
         "action": "HOLD",
         "ticker": "COWZ / XLE / TSLA / CASH",
-        "sizeUsd": 21.9235,
+        "sizeUsd": 23.9235,
         "status": "filled",
         "note": "COWZ + XLE + TSLA + cash"
       },
@@ -685,10 +692,17 @@
           "sizeUsd": 0.0097,
           "status": "cash",
           "note": "boot-cash remainder after XLE $1.91"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 2,
+          "status": "cash",
+          "note": "leftover NANC even-up +$2.00 (Episode 2 Monday open; Claude Fable 5 not credited)"
         }
       ],
       "model": "GPT-5.6 Sol",
-      "dayPct": -0.12,
+      "dayPct": -0.11,
       "priorMarkUsd": 21.9497,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-mid",
@@ -739,13 +753,13 @@
       "tribeId": "askara",
       "archetype": "pure technicals",
       "status": "active",
-      "bookUsd": 21.9059,
-      "weekPct": -0.3,
-      "monthPct": -0.3,
+      "bookUsd": 23.9059,
+      "weekPct": -0.28,
+      "monthPct": -0.28,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / NVDA / CASH",
-        "sizeUsd": 21.9059,
+        "sizeUsd": 23.9059,
         "status": "filled",
         "note": "XLE + NVDA + cash"
       },
@@ -803,10 +817,17 @@
           "sizeUsd": 0.0149,
           "status": "cash",
           "note": "boot-cash remainder $0.0097 + SPY sale proceeds minus gift fills"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 2,
+          "status": "cash",
+          "note": "leftover NANC even-up +$2.00 (Episode 2 Monday open; Claude Fable 5 not credited)"
         }
       ],
       "model": "Gemini 3.1 Pro",
-      "dayPct": -0.3,
+      "dayPct": -0.28,
       "priorMarkUsd": 21.9725,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-mid",
@@ -819,13 +840,13 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 21.9076,
-      "weekPct": -0.06,
-      "monthPct": -0.06,
+      "bookUsd": 23.9076,
+      "weekPct": -0.05,
+      "monthPct": -0.05,
       "position": {
         "action": "HOLD",
         "ticker": "SPY / XLE / CASH",
-        "sizeUsd": 21.9076,
+        "sizeUsd": 23.9076,
         "status": "filled",
         "note": "SPY + XLE + cash"
       },
@@ -868,10 +889,17 @@
           "sizeUsd": 1.9197,
           "status": "boot-split",
           "note": "Fri tribal boot-cash +$1.9197 remainder after gift fills"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 2,
+          "status": "cash",
+          "note": "leftover NANC even-up +$2.00 (Episode 2 Monday open; Claude Fable 5 not credited)"
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": -0.06,
+      "dayPct": -0.05,
       "priorMarkUsd": 21.9197,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-mid",
@@ -884,13 +912,13 @@
       "tribeId": "askara",
       "archetype": "fade the crowd",
       "status": "active",
-      "bookUsd": 22.0562,
-      "weekPct": -0.11,
-      "monthPct": -0.11,
+      "bookUsd": 24.0562,
+      "weekPct": -0.1,
+      "monthPct": -0.1,
       "position": {
         "action": "HOLD",
         "ticker": "MSFT / COST / CVX / CASH",
-        "sizeUsd": 22.0562,
+        "sizeUsd": 24.0562,
         "status": "filled",
         "note": "MSFT + COST + CVX + cash"
       },
@@ -966,10 +994,17 @@
           "sizeUsd": 1.9197,
           "status": "boot-split",
           "note": "Fri tribal boot-cash +$1.9197 from Claude Fable 5"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 2,
+          "status": "cash",
+          "note": "leftover NANC even-up +$2.00 (Episode 2 Monday open; Claude Fable 5 not credited)"
         }
       ],
       "model": "Kimi K3",
-      "dayPct": -0.11,
+      "dayPct": -0.1,
       "priorMarkUsd": 22.0798,
       "lastSource": "last-trade",
       "lastSession": "2026-08-31-mid",
@@ -1252,10 +1287,10 @@
       "interpolated": false
     }
   },
-  "markLabel": "Mon Aug 31 OPEN catch-up + Episode 2 $10 gift invested. Last-trade ~10:35 AM PT. weekPct/dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10. Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable.",
-  "dayPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 gift invested)",
-  "weekPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 gift invested)",
-  "islandGivenUsd": 230,
+  "markLabel": "Mon Aug 31 OPEN catch-up + Episode 2 $10 gift invested. Last-trade ~10:35 AM PT. weekPct/dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10. Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). Leftover NANC even-up $2 to each living on the Askara tribe. No Fable.",
+  "dayPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 + leftover NANC even-up $2 (Mon Aug 31 gift invested)",
+  "weekPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 + leftover NANC even-up $2 (Mon Aug 31 gift invested)",
+  "islandGivenUsd": 240.09,
   "islandGivenStartUsd": 120,
   "islandEpisode2TopUpUsd": 110,
   "islandEpisode2TopUpEachUsd": 10,
@@ -1263,7 +1298,10 @@
   "islandEpisode2RaisePrintedUsd": 110.3,
   "islandEpisode2LeftoverUsd": 0.3,
   "islandEpisode2ShortfallUsd": 0,
-  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living). Homepage shows $230 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Living virtual sleeves credited $10 cash each anyway. Claude Fable 5 not funded.",
+  "islandEpisode2EvenUpUsd": 10.09,
+  "islandEpisode2EvenUpEachUsd": 2,
+  "islandEpisode2EvenUpLeftoverUsd": 0.09,
+  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living) + $10.09 leftover NANC even-up. Homepage shows $240.09 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Living virtual sleeves credited $10 cash each anyway. Leftover NANC sold for $10.09; $2.00 even to each of five living on the Askara tribe ($10 of $10.09). $0.09 leftover cash, not a 12th book. Claude Fable 5 not funded.",
   "events": [
     {
       "type": "season-open",
@@ -2860,7 +2898,7 @@
       "kind": "cash-add",
       "at": "2026-08-31T16:00:00Z",
       "throughAt": "2026-08-31T16:00:00Z",
-      "label": "Mon Aug 31 Episode 2 $10 cash add to eleven living (no new stock fills). Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable.",
+      "label": "Mon Aug 31 Episode 2 $10 cash add to eleven living + leftover NANC even-up $2.00 to each living on the Askara tribe (no new stock fills). Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). Leftover NANC sold $10.09; $0.09 leftover cash, not a 12th book. No Fable.",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -2906,17 +2944,17 @@
           "priorMarkUsd": 19.6723
         },
         "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
-          "bookUsd": 21.4265,
-          "weekPct": -0.62,
-          "monthPct": -0.62,
-          "dayPct": -0.62,
+          "bookUsd": 23.43,
+          "weekPct": -0.55,
+          "monthPct": -0.55,
+          "dayPct": -0.55,
           "priorMarkUsd": 21.5599
         },
         "f3382744-4512-410c-ab0c-d22ec35b22a0": {
-          "bookUsd": 21.918,
-          "weekPct": -0.14,
-          "monthPct": -0.14,
-          "dayPct": -0.14,
+          "bookUsd": 23.92,
+          "weekPct": -0.12,
+          "monthPct": -0.12,
+          "dayPct": -0.12,
           "priorMarkUsd": 21.9497
         },
         "6ff86687-5f96-40cb-84f4-a7282bce28af": {
@@ -2927,24 +2965,24 @@
           "priorMarkUsd": 9.8859
         },
         "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
-          "bookUsd": 21.9066,
-          "weekPct": -0.3,
-          "monthPct": -0.3,
-          "dayPct": -0.3,
+          "bookUsd": 23.91,
+          "weekPct": -0.26,
+          "monthPct": -0.26,
+          "dayPct": -0.26,
           "priorMarkUsd": 21.9725
         },
         "aa75df67-9f84-45a3-9432-bee228d655f6": {
-          "bookUsd": 21.9117,
+          "bookUsd": 23.91,
           "weekPct": -0.04,
           "monthPct": -0.04,
           "dayPct": -0.04,
           "priorMarkUsd": 21.9197
         },
         "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
-          "bookUsd": 22.0687,
-          "weekPct": -0.05,
-          "monthPct": -0.05,
-          "dayPct": -0.05,
+          "bookUsd": 24.07,
+          "weekPct": -0.04,
+          "monthPct": -0.04,
+          "dayPct": -0.04,
           "priorMarkUsd": 22.0798
         }
       },
@@ -2956,9 +2994,9 @@
           "livingCount": 6
         },
         "askara": {
-          "combinedWeekPct": -1.15,
-          "combinedMonthPct": -1.15,
-          "combinedDayPct": -1.15,
+          "combinedWeekPct": -1.06,
+          "combinedMonthPct": -1.06,
+          "combinedDayPct": -1.06,
           "livingCount": 5
         }
       }
@@ -3178,7 +3216,7 @@
       "at": "2026-08-31T17:35:00Z",
       "throughAt": "2026-08-31T17:35:00Z",
       "lastSession": "2026-08-31-mid",
-      "label": "Mon Aug 31 mid · Episode 2 $10 gift invested · last-trade ~10:35 AM PT",
+      "label": "Mon Aug 31 mid · Episode 2 $10 gift invested + leftover NANC even-up · last-trade ~10:35 AM PT",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -3224,17 +3262,17 @@
           "priorMarkUsd": 19.6723
         },
         "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
-          "bookUsd": 21.4374,
-          "weekPct": -0.57,
-          "monthPct": -0.57,
-          "dayPct": -0.57,
+          "bookUsd": 23.4374,
+          "weekPct": -0.52,
+          "monthPct": -0.52,
+          "dayPct": -0.52,
           "priorMarkUsd": 21.5599
         },
         "f3382744-4512-410c-ab0c-d22ec35b22a0": {
-          "bookUsd": 21.9235,
-          "weekPct": -0.12,
-          "monthPct": -0.12,
-          "dayPct": -0.12,
+          "bookUsd": 23.9235,
+          "weekPct": -0.11,
+          "monthPct": -0.11,
+          "dayPct": -0.11,
           "priorMarkUsd": 21.9497
         },
         "6ff86687-5f96-40cb-84f4-a7282bce28af": {
@@ -3245,24 +3283,24 @@
           "priorMarkUsd": 9.8859
         },
         "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
-          "bookUsd": 21.9059,
-          "weekPct": -0.3,
-          "monthPct": -0.3,
-          "dayPct": -0.3,
+          "bookUsd": 23.9059,
+          "weekPct": -0.28,
+          "monthPct": -0.28,
+          "dayPct": -0.28,
           "priorMarkUsd": 21.9725
         },
         "aa75df67-9f84-45a3-9432-bee228d655f6": {
-          "bookUsd": 21.9076,
-          "weekPct": -0.06,
-          "monthPct": -0.06,
-          "dayPct": -0.06,
+          "bookUsd": 23.9076,
+          "weekPct": -0.05,
+          "monthPct": -0.05,
+          "dayPct": -0.05,
           "priorMarkUsd": 21.9197
         },
         "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
-          "bookUsd": 22.0562,
-          "weekPct": -0.11,
-          "monthPct": -0.11,
-          "dayPct": -0.11,
+          "bookUsd": 24.0562,
+          "weekPct": -0.1,
+          "monthPct": -0.1,
+          "dayPct": -0.1,
           "priorMarkUsd": 22.0798
         }
       },
@@ -3274,9 +3312,9 @@
           "livingCount": 6
         },
         "askara": {
-          "combinedWeekPct": -1.16,
-          "combinedMonthPct": -1.16,
-          "combinedDayPct": -1.16,
+          "combinedWeekPct": -1.06,
+          "combinedMonthPct": -1.06,
+          "combinedDayPct": -1.06,
           "livingCount": 5
         }
       }

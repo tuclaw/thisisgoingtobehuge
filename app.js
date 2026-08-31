@@ -492,8 +492,15 @@ function holdLegHtml(pos, season, tribeId) {
   </div>`;
 }
 
+function holdBookWasted(s, season) {
+  if (!s || (s.status !== "jury" && s.status !== "boot")) return false;
+  const ep = currentPageEpisode(season);
+  return Boolean(ep && Number(ep.number) >= 2);
+}
+
 function holdBookHtml(s, tribe, season, rank) {
-  const legs = bookLegs(s);
+  const wasted = holdBookWasted(s, season);
+  const legs = wasted ? [] : bookLegs(s);
   const week = weekPctOf(s);
   const day = dayPctOf(s);
   const model = escapeHtml(modelOf(s));
@@ -506,23 +513,31 @@ function holdBookHtml(s, tribe, season, rank) {
   const bootTag = s.status === "jury" || s.status === "boot" ? `<span class="hold-tag">Voted out · jury</span>` : "";
   const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
   const hasLegs = legs.length > 0;
-  return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}">
-    <button type="button" class="hold-head" aria-expanded="false"${hasLegs ? ` aria-controls="${legsId}"` : ""} ${hasLegs ? "" : "disabled "}>
+  const mark = wasted
+    ? ""
+    : `<span class="hold-mark">
+        <span class="val">${money(s.bookUsd)}</span>
+        <b class="${chgClass(week)}">${pct(week)} week</b>
+        <b class="day ${chgClass(day)}">${pct(day)} today</b>
+      </span>
+      ${immune}${bootTag}`;
+  const wastedStamp = wasted
+    ? `<span class="hold-wasted" aria-hidden="true">WASTED</span>`
+    : "";
+  const wastedLabel = wasted ? ` aria-label="${model} · voted out"` : "";
+  return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}${wasted ? " is-wasted" : ""}">
+    <button type="button" class="hold-head" aria-expanded="false"${hasLegs ? ` aria-controls="${legsId}"` : ""} ${hasLegs ? "" : "disabled "}${wastedLabel}>
       <span class="hold-rank">${pad}</span>
       <span class="hold-face">${face}</span>
       <span class="hold-id">
         <strong>${model}</strong>
         <em>${escapeHtml(tribeName || "")}</em>
       </span>
-      <span class="hold-mark">
-        <span class="val">${money(s.bookUsd)}</span>
-        <b class="${chgClass(week)}">${pct(week)} week</b>
-        <b class="day ${chgClass(day)}">${pct(day)} today</b>
-      </span>
-      ${immune}${bootTag}
+      ${mark}
     </button>
     ${holdChips(legs)}
     <div class="hold-legs" id="${legsId}" hidden>${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
+    ${wastedStamp}
   </article>`;
 }
 
@@ -1662,6 +1677,13 @@ function tribalLogForPage(season) {
   const ep = currentPageEpisode(season);
   if (ep && ep.id) return all.filter((entry) => entry && entry.episode === ep.id);
   return [];
+}
+
+function priorTribalLog(season) {
+  const all = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+  const ep = currentPageEpisode(season);
+  if (!ep || !ep.id) return [];
+  return all.filter((entry) => entry && entry.episode && entry.episode !== ep.id);
 }
 
 function renderEpisodeDays(season) {
@@ -3378,6 +3400,7 @@ function renderEpisode(season) {
       bindTribalSpoilers(tribal);
     }
   }
+  renderEpisodeRecapSpoiler(season);
 }
 
 function tallyFromVotes(votes) {
@@ -3433,6 +3456,7 @@ function wrapTribalSpoiler(innerHtml, options) {
   const kicker = opts.kicker || "Spoiler";
   const title = opts.title || "Click to Reveal the Vote";
   const copy = opts.copy || "Burn to reveal who goes home.";
+  const srLabel = opts.srLabel || "Spoiler: tribal results. Click to reveal the vote.";
   return `<div class="tribal-spoiler">
     <div class="tribal-spoiler-result" id="${escapeHtml(resultId)}" aria-hidden="true">${innerHtml}</div>
     <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">
@@ -3442,10 +3466,35 @@ function wrapTribalSpoiler(innerHtml, options) {
         <span class="spoiler-title">${escapeHtml(title)}</span>
         <span class="spoiler-copy">${escapeHtml(copy)}</span>
       </span>
-      <span class="visually-hidden">Spoiler: tribal results. Click to reveal the vote.</span>
+      <span class="visually-hidden">${escapeHtml(srLabel)}</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;
+}
+
+function renderEpisodeRecapSpoiler(season) {
+  const mount = document.getElementById("episode-recap");
+  const stage = document.getElementById("episode-recap-stage");
+  if (!mount || !stage) return;
+  const prior = priorTribalLog(season);
+  if (!prior.length) {
+    mount.hidden = true;
+    stage.innerHTML = "";
+    return;
+  }
+  mount.hidden = false;
+  const items = prior.map((entry) => formatTribalEntry(entry)).join("");
+  const hasE1 = prior.some((entry) => entry.episode === "s1e01");
+  stage.innerHTML = wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`, {
+    resultId: "episode-recap-spoiler-result",
+    kicker: "RECAP",
+    title: hasE1
+      ? "Reveal the results of the Episode 1 tribal council vote"
+      : "Reveal the results of the last tribal council vote",
+    copy: "Burn to reveal who went home.",
+    srLabel: "Recap: prior tribal results. Click to reveal the vote."
+  });
+  bindTribalSpoilers(stage);
 }
 
 function firstEpisodeHref(season) {
