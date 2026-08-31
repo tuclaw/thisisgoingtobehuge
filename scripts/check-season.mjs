@@ -210,9 +210,13 @@ for (const s of board.survivors) {
     if (marked != null) return sum + marked;
     return sum + (Number(pos.sizeUsd) || 0);
   }, 0);
+  const giftInvestMark = (source.events || []).find((event) => event && event.id === "s1e02-mon-mid-gift");
+  const cashAddMark = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
+  const e2GiftUsd = giftInvestMark && s.status !== "jury" ? 10 : cashAddMark && s.status !== "jury" ? 10 : 0;
   const gotBootSplit = carryBook != null && carryBook > start + 0.1;
-  const sleeveCap = gotBootSplit && s.status !== "jury" ? carryBook + 0.05 : start + 0.05;
-  check(`sleeve:${s.slug}`, sleeve <= sleeveCap, String(sleeve));
+  const sleeveBasis = carryBook != null ? carryBook : start;
+  const sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + 0.05 : start + 0.05;
+  check(`sleeve:${s.slug}`, sleeve <= sleeveCap, `${sleeve} vs cap ${sleeveCap}`);
 }
 
 for (const tribe of board.tribes) {
