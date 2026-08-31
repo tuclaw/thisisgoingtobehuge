@@ -92,6 +92,9 @@ if (
 if (!appJs.includes("E2 host +$") && !appJs.includes("host +$")) {
   throw new Error("app.js host-add line must label the Episode 2 pot top-up");
 }
+if (!appJs.includes('lineLabel: putInLabel') || !appJs.includes('labelClass: "is-putin"')) {
+  throw new Error("app.js island diagram must label both the $120 in line and the host-add line");
+}
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
   throw new Error("app.js money ticker must offer week and season ranges");

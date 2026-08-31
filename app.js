@@ -2690,8 +2690,20 @@ function moneyTickerDiagramSeries(season, frames) {
   const potDown = last && last.total < putIn - 0.00005;
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
   const putInLabel = `$${putIn.toFixed(0)} in`;
-  const guides = [{ id: "putin", value: putIn, label: putInLabel, className: "money-ticker-putin" }];
-  const legend = [{ label: "Island pot", color: potStroke }];
+  const guides = [
+    {
+      id: "putin",
+      value: putIn,
+      label: putInLabel,
+      className: "money-ticker-putin",
+      lineLabel: putInLabel,
+      labelClass: "is-putin"
+    }
+  ];
+  const legend = [
+    { label: "Island pot", color: potStroke },
+    { label: putInLabel, color: "rgba(243, 234, 214, 0.92)", swatch: "dash" }
+  ];
   let aria = "Island pot over recorded marks. Dotted line is money put into the game.";
   if (typeof given === "number" && hostAdd != null) {
     const ep = islandHostAddEpisodeLabel(season);
@@ -2700,10 +2712,11 @@ function moneyTickerDiagramSeries(season, frames) {
       value: given,
       label: `$${given.toFixed(0)} given`,
       className: "money-ticker-host-add",
-      lineLabel: `${ep} host +$${hostAdd.toFixed(0)}`
+      lineLabel: `${ep} host +$${hostAdd.toFixed(0)}`,
+      labelClass: "is-host-add"
     });
     legend.push({ label: `${ep} host +$${hostAdd.toFixed(0)}`, color: "#f0c14b", swatch: "dash" });
-    aria = `Island pot over recorded marks. Dotted line is money put into the game. Gold line is Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)}.`;
+    aria = `Island pot over recorded marks. Both dotted lines stay on: $${putIn.toFixed(0)} put in, and Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`;
   }
   return {
     title: "Island",
@@ -2763,8 +2776,9 @@ function moneyTickerGuideMarkup(spec, chartTop, chartHeight) {
   return guides
     .map((guide) => {
       const y = moneyTickerY(guide.value, spec.min, spec.max, chartTop, chartHeight);
+      const labelClass = ["money-ticker-guide-label", guide.labelClass].filter(Boolean).join(" ");
       const lineLabel = guide.lineLabel
-        ? `<text class="money-ticker-guide-label" data-ticker-guide-label="${escapeHtml(guide.id)}" x="622" y="${(y - 5).toFixed(2)}" text-anchor="end">${escapeHtml(guide.lineLabel)}</text>`
+        ? `<text class="${escapeHtml(labelClass)}" data-ticker-guide-label="${escapeHtml(guide.id)}" x="622" y="${(y - 5).toFixed(2)}" text-anchor="end">${escapeHtml(guide.lineLabel)}</text>`
         : "";
       return `<g data-ticker-guide="${escapeHtml(guide.id)}">
       <title>${escapeHtml(guide.lineLabel || guide.label)}</title>
@@ -3011,7 +3025,7 @@ function mountMoneyTicker(season, opts) {
 
   const lede = homeMode
     ? "See how each tribe and contestant did in the Episode."
-    : "Watch the island, the tribes, or every contestant sleeve. Dotted line is money put in.";
+    : "Watch the island, the tribes, or every contestant sleeve. Dotted lines are money put in and the Episode 2 host add.";
 
   /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
   const tickerHead = homeMode
