@@ -210,7 +210,7 @@ if (!firstHrefFn) {
 if (!firstHrefFn[0].includes('item.id === "s1e01"') || !firstHrefFn[0].includes("item.number === 1")) {
   throw new Error("firstEpisodeHref must resolve Episode 1 from the episode list");
 }
-if (firstHrefFn[0].includes("season.episode")) {
+if (/season\.episode(?!s)/.test(firstHrefFn[0])) {
   throw new Error("firstEpisodeHref must not use season.episode (that is the live episode)");
 }
 if (!html.includes("tribal-spoiler-burn.js")) {
