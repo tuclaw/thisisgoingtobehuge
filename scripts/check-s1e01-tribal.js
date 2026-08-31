@@ -7,6 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const season = JSON.parse(fs.readFileSync(path.join(root, "data/season1.json"), "utf8"));
 const episode = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e01.json"), "utf8"));
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
+const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const builder = fs.readFileSync(path.join(root, "scripts/build.mjs"), "utf8");
 const builtHtmlPath = path.join(root, "dist/seasons/1/e01.html");
 const html = fs.existsSync(builtHtmlPath) ? fs.readFileSync(builtHtmlPath, "utf8") : "";
@@ -17,6 +18,9 @@ function fail(message) {
 
 if (!app.includes("function wrapTribalSpoiler") || !app.includes("function bindTribalSpoilers")) {
   fail("do not remove wrapTribalSpoiler / bindTribalSpoilers");
+}
+if (!app.includes("function renderHomeTribalSpoiler") || !app.includes("home-tribal-spoiler-result")) {
+  fail("home page must reuse wrapTribalSpoiler for the Episode 1 vote card");
 }
 if (!app.includes("function councilTorchCount") || !app.includes("function councilTorchRowHtml")) {
   fail("episode tribal torches must be sized from the losing tribe / vote count");
@@ -35,6 +39,10 @@ if (!app.includes("initTribalSpoilerBurns")) {
 }
 if (!builder.includes("tribal-spoiler-burn.js")) {
   fail("build must keep linking tribal-spoiler-burn.js");
+}
+const burn = fs.readFileSync(path.join(root, "tribal-spoiler-burn.js"), "utf8");
+if (!burn.includes("function coverCopyFrom") || !burn.includes("CLICK TO REVEAL THE VOTE")) {
+  fail("tribal-spoiler-burn.js must paint cover copy from the card, with the episode default intact");
 }
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
@@ -137,6 +145,9 @@ const expectedTexts = [
 if (entry.title !== "Season 1 Episode 1 · Friday Aug 28, 2026") fail("official title drifted");
 if (!app.includes("entry.tally") || !app.includes("boot-name") || !app.includes("vote-tally")) {
   fail("formatTribalEntry must emphasize the boot and show the official tally only");
+}
+if (!app.includes('class="vote-tally-kicker">Votes<') || !css.includes(".vote-tally-kicker")) {
+  fail("spoiler reveal must label the tally with Votes");
 }
 if (app.includes("entry.summary") && /blocks = \[entry\.summary/.test(app)) {
   fail("do not dump the tribal summary into the spoiler reveal");
