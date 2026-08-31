@@ -139,6 +139,9 @@ if (!appJs.includes("function survivorLivingAt") || !appJs.includes("Voted-out p
 if (!appJs.includes("function moneyTickerLiveNowX") || !appJs.includes("data-ticker-live-now")) {
   throw new Error("app.js money ticker must draw a live vertical line for the current point in the week");
 }
+if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
+  throw new Error("app.js must space ticker marks by tape order so same-day frames travel, not calendar weekday slots");
+}
 
 const axisStart = appJs.indexOf("function pacificDateParts");
 const axisEnd = appJs.indexOf("function pacificHourDecimal");
@@ -153,8 +156,11 @@ const axisHelpers = new Function(`
     parseEpisodeWeekLabel,
     episodeWeekBounds,
     moneyTickerWeekdayTicks,
+    moneyTickerAssignAxis,
+    moneyTickerXFromAxisT,
     survivorBootAtMs,
-    survivorLivingAt
+    survivorLivingAt,
+    axisMax: () => moneyTicker.axisMax
   };
 `)();
 if (axisHelpers.formatPacificDateRange("2026-08-24T16:06:00Z", "2026-08-28T19:14:23Z") !== "Aug 24–28") {
@@ -185,6 +191,27 @@ const seasonAxis = axisHelpers.moneyTickerWeekdayTicks(
 ).map((tick) => tick.label);
 if (seasonAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
   throw new Error("Season diagram should still name Mon–Fri when one trading week is on tape, got " + seasonAxis.join(" | "));
+}
+
+const mondayTape = [
+  { at: "2026-08-31T16:00:00Z" },
+  { at: "2026-08-31T17:02:51Z" },
+  { at: "2026-08-31T17:35:00Z" },
+  { at: "2026-08-31T19:36:30Z" }
+];
+axisHelpers.moneyTickerAssignAxis(mondayTape, "week");
+if (mondayTape.map((frame) => frame.axisT).join(",") !== "0,1,2,3") {
+  throw new Error(
+    "Week tape must space same-day marks across the plot, got " + mondayTape.map((frame) => frame.axisT).join(",")
+  );
+}
+if (axisHelpers.axisMax() !== 3) {
+  throw new Error("Monday-only week axisMax should be last-frame index 3, got " + axisHelpers.axisMax());
+}
+const mondaySpan =
+  axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT) - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT);
+if (mondaySpan < 500) {
+  throw new Error("Monday-only week marks must travel most of the plot, span was " + mondaySpan.toFixed(1));
 }
 
 const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };

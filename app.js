@@ -2052,39 +2052,14 @@ function survivorLivingAt(season, survivor, iso) {
   return t < bootAt;
 }
 
-function weekdaySlotT(iso) {
-  const parts = pacificDateParts(iso);
-  const hour = pacificHourDecimal(iso);
-  if (!parts) return hour / 24;
-  if (parts.weekday === "Sat" || parts.weekday === "Sun") return 4.99;
-  const slot = MONEY_TICKER_WEEKDAY_SLOT[parts.weekday];
-  const day = typeof slot === "number" ? slot : 0;
-  return day + Math.min(0.99, hour / 24);
-}
-
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
-  if (range === "week") {
-    moneyTicker.axisMax = 5;
-    list.forEach((frame) => {
-      frame.axisT = weekdaySlotT(frame && frame.at);
-    });
-    return;
-  }
-  const keys = [];
-  const seen = new Set();
-  list.forEach((frame) => {
-    const parts = pacificDateParts(frame && frame.at);
-    if (!parts || seen.has(parts.key)) return;
-    seen.add(parts.key);
-    keys.push(parts.key);
-  });
-  moneyTicker.axisMax = Math.max(1, keys.length);
-  list.forEach((frame) => {
-    const parts = pacificDateParts(frame && frame.at);
-    const day = parts ? Math.max(0, keys.indexOf(parts.key)) : 0;
-    const hour = pacificHourDecimal(frame && frame.at);
-    frame.axisT = day + Math.min(0.99, hour / 24);
+  const n = list.length;
+  /* Tape order, not calendar slots. Same-day marks must travel the plot;
+     weekday ticks stay as labels. Season chapters should call this after load. */
+  moneyTicker.axisMax = Math.max(1, n - 1);
+  list.forEach((frame, i) => {
+    frame.axisT = n < 2 ? 0 : i;
   });
 }
 
@@ -2111,29 +2086,23 @@ function moneyTickerXFromAxisT(axisT, axisMax) {
 
 function moneyTickerLiveNowX(frames, range) {
   const mode = range || (moneyTicker && moneyTicker.range) || "week";
+  const list = frames || [];
   const now = new Date();
   const nowIso = now.toISOString();
+  const last = list[list.length - 1];
+  const lastT = last && typeof last.axisT === "number" ? last.axisT : Math.max(0, list.length - 1);
   if (mode === "week") {
     const bounds = episodeWeekBounds(tickerEpisodeForRange(moneyTicker.season));
     if (!bounds) return null;
     const nowMs = now.getTime();
     if (nowMs < bounds.startMs || nowMs > bounds.endMs) return null;
-    return moneyTickerXFromAxisT(weekdaySlotT(nowIso), 5);
+    if (!list.length) return null;
+    return moneyTickerXFromAxisT(lastT);
   }
-  const keys = [];
-  const seen = new Set();
-  (frames || []).forEach((frame) => {
-    const parts = pacificDateParts(frame && frame.at);
-    if (!parts || seen.has(parts.key)) return;
-    seen.add(parts.key);
-    keys.push(parts.key);
-  });
-  const parts = pacificDateParts(nowIso);
-  if (!parts) return null;
-  const day = keys.indexOf(parts.key);
-  if (day < 0) return null;
-  const hour = pacificHourDecimal(nowIso);
-  return moneyTickerXFromAxisT(day + Math.min(0.99, hour / 24), Math.max(1, keys.length));
+  const today = pacificDateParts(nowIso);
+  const lastDay = last && pacificDateParts(last.at);
+  if (!today || !lastDay || today.key !== lastDay.key) return null;
+  return moneyTickerXFromAxisT(lastT);
 }
 
 function moneyTickerWeekdayTicks(frames, range) {
@@ -2460,7 +2429,7 @@ function stopMoneyTickerPlayback() {
 }
 
 function moneyTickerFullDurationMs() {
-  const segments = Math.max(1, moneyTicker.frames.length - 1);
+  const segments = Math.max(5, moneyTicker.frames.length - 1);
   return (segments * 900) / Math.max(0.05, moneyTicker.speed || 1);
 }
 
