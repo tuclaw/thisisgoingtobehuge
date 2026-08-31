@@ -26,7 +26,13 @@
     "tribalLabel": "Friday Sep 4, 2026 · 7:00 PM PT",
     "path": "seasons/1/e02.html",
     "source": "data/episodes/s1e02.json",
-    "days": []
+    "days": [
+      {
+        "id": "monday",
+        "snapshotId": "s1e02-mon-mid",
+        "board": "day-monday"
+      }
+    ]
   },
   "episodes": [
     {
@@ -73,7 +79,14 @@
       "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
       "path": "seasons/1/e02.html",
       "source": "data/episodes/s1e02.json",
-      "tease": "Now playing"
+      "tease": "Now playing",
+      "days": [
+        {
+          "id": "monday",
+          "snapshotId": "s1e02-mon-mid",
+          "board": "day-monday"
+        }
+      ]
     },
     {
       "number": 3,
@@ -355,12 +368,12 @@
       "asOf": "2026-08-28T19:14:23Z"
     },
     "SMCI": {
-      "last": 37.2235,
+      "last": 37.44,
       "priorClose": 38.46,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "SOXL": {
       "last": 111.3904,
@@ -371,20 +384,20 @@
       "asOf": "2026-08-28T19:14:23Z"
     },
     "WM": {
-      "last": 219.69,
+      "last": 220.06,
       "priorClose": 217.76,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "HOOD": {
-      "last": 104.83,
+      "last": 101.485,
       "priorClose": 109.76,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "COIN": {
       "last": 177.66,
@@ -395,20 +408,20 @@
       "asOf": "2026-08-28T19:14:23Z"
     },
     "SOFI": {
-      "last": 18.13,
+      "last": 17.6,
       "priorClose": 19.18,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "QID": {
-      "last": 14.265,
+      "last": 14.2897,
       "priorClose": 14.04,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "BTAL": {
       "last": 12.065,
@@ -419,12 +432,12 @@
       "asOf": "2026-08-28T19:14:23Z"
     },
     "COWZ": {
-      "last": 72.3351,
+      "last": 72.07,
       "priorClose": 72.06,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "GLD": {
       "last": 410.65,
@@ -435,12 +448,12 @@
       "asOf": "2026-08-28T19:14:23Z"
     },
     "SPY": {
-      "last": 769.03,
+      "last": 766.055,
       "priorClose": 771.1,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "NVDA": {
       "last": 227.98,
@@ -451,20 +464,32 @@
       "asOf": "2026-08-28T19:14:23Z"
     },
     "MSFT": {
-      "last": 514.06,
+      "last": 508.55,
       "priorClose": 505.06,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     },
     "COST": {
-      "last": 945.26,
+      "last": 945.87,
       "priorClose": 934.66,
       "priorCloseDate": "2026-08-27",
       "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
+    },
+    "XLE": {
+      "last": 64.055,
+      "source": "current last",
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
+    },
+    "XOM": {
+      "last": 160.81,
+      "source": "current last",
+      "lastSession": "2026-08-31-mid",
+      "asOf": "2026-08-31T14:01:16Z"
     }
   },
   "events": [
@@ -1635,6 +1660,191 @@
           "combinedWeekPct": -5.18,
           "combinedMonthPct": -5.18,
           "combinedDayPct": -7.62,
+          "livingCount": 5
+        }
+      }
+    },
+    {
+      "type": "fill",
+      "id": "fill-composer-soxl-sell-mon",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "sell",
+      "ticker": "SOXL",
+      "qty": "0.034595",
+      "avg": "113.240100",
+      "sizeUsd": 3.9175435095,
+      "orderId": "6a9586b0-c85e-446f-8f58-deeb6898cca8",
+      "at": "2026-08-31T13:50:41.036Z",
+      "cashAfter": 3.9175435095,
+      "cashNote": "Mon mid sold island SOXL 0.034595 @ 113.240100 order 6a9586b0"
+    },
+    {
+      "type": "fill",
+      "id": "fill-sonnet-xle-mon",
+      "survivorId": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.155884",
+      "avg": "64.149900",
+      "sizeUsd": 10,
+      "orderId": "6a9586b3-4e0c-43ab-8807-5e38102d0a99",
+      "at": "2026-08-31T13:50:43.717Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-gemini-pro-xle-mon",
+      "survivorId": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.029770",
+      "avg": "64.156700",
+      "sizeUsd": 1.91,
+      "orderId": "6a9586ba-0ae7-4913-aa8d-c10e388e26bd",
+      "at": "2026-08-31T13:50:50.950Z",
+      "cashNote": "boot-cash; rounded from $1.9197"
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-46-xle-mon",
+      "survivorId": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.132529",
+      "avg": "64.136700",
+      "sizeUsd": 8.5,
+      "orderId": "6a9586e4-caae-40ae-9373-4b1c56a7a8e8",
+      "at": "2026-08-31T13:51:32.610Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-composer-xom-mon",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "buy",
+      "ticker": "XOM",
+      "qty": "0.024227",
+      "avg": "160.975000",
+      "sizeUsd": 3.9,
+      "orderId": "6a9586f6-af58-4788-8c86-8ee3115db2d8",
+      "at": "2026-08-31T13:51:51.146Z"
+    },
+    {
+      "type": "mark",
+      "id": "s1e02-mon-mid",
+      "kind": "intraday",
+      "at": "2026-08-31T14:01:16Z",
+      "throughAt": "2026-08-31T14:01:16Z",
+      "lastSession": "2026-08-31-mid",
+      "label": "Mon Aug 31 mid (~10:01 AM ET / 7:01 AM PT) last-trade",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.7434,
+          "weekPct": -0.11,
+          "monthPct": -0.11,
+          "dayPct": -0.11,
+          "priorMarkUsd": 9.7543,
+          "eodMarkUsd": 9.9609
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 9.9851,
+          "weekPct": -0.15,
+          "monthPct": -0.15,
+          "dayPct": -0.15,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.5536,
+          "weekPct": 0.94,
+          "monthPct": 0.94,
+          "dayPct": 0.94,
+          "priorMarkUsd": 10.4553,
+          "eodMarkUsd": 11.0779
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.913,
+          "weekPct": 0.1,
+          "monthPct": 0.1,
+          "dayPct": 0.1,
+          "priorMarkUsd": 9.9028,
+          "eodMarkUsd": 9.8097
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10,
+          "eodMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.6886,
+          "weekPct": 0.17,
+          "monthPct": 0.17,
+          "dayPct": 0.17,
+          "priorMarkUsd": 9.6723,
+          "eodMarkUsd": 9.5873
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 11.3485,
+          "weekPct": -1.83,
+          "monthPct": -1.83,
+          "dayPct": -1.83,
+          "priorMarkUsd": 11.5599,
+          "eodMarkUsd": 10.1908
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 11.9129,
+          "weekPct": -0.31,
+          "monthPct": -0.31,
+          "dayPct": -0.31,
+          "priorMarkUsd": 11.9497,
+          "eodMarkUsd": 9.9918
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 0,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": -2.91,
+          "priorMarkUsd": 0,
+          "eodMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 11.9305,
+          "weekPct": -0.35,
+          "monthPct": -0.35,
+          "dayPct": -0.35,
+          "priorMarkUsd": 11.9725,
+          "eodMarkUsd": 10.0798
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 11.9197,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 11.9197,
+          "eodMarkUsd": 10
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 12.0589,
+          "weekPct": -0.17,
+          "monthPct": -0.17,
+          "dayPct": -0.17,
+          "priorMarkUsd": 12.0798,
+          "eodMarkUsd": 10.1016
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 0.95,
+          "combinedMonthPct": 0.95,
+          "combinedDayPct": 0.95,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": -2.66,
+          "combinedMonthPct": -2.66,
+          "combinedDayPct": -2.66,
           "livingCount": 5
         }
       }

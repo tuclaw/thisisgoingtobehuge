@@ -80,7 +80,7 @@ if (grok45) {
   check("live-grok45-hood-island-lot", hood && hood.qty === "0.046425", hood && hood.qty);
   check("live-grok45-sofi", sofi && sofi.qty === "0.105888", sofi && sofi.qty);
   check("live-grok45-cash", cash && Math.abs(Number(cash.sizeUsd) - 4.7734) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 11.5599) < 0.0001, now && String(now.bookUsd));
+  check("live-grok45-book", now && Math.abs(now.bookUsd - 11.3485) < 0.0001, now && String(now.bookUsd));
   check("live-grok45-no-rank-position", now && now.position == null);
 }
 
@@ -103,9 +103,12 @@ check(
 if (grok46) {
   const now = board.survivors.find((s) => s.id === grok46.id);
   const tickers = (now.positions || []).map(tickerOf);
+  const xle = (now.positions || []).find((pos) => tickerOf(pos) === "XLE");
   const cash = (now.positions || []).find((pos) => tickerOf(pos) === "CASH");
   check("live-grok46-no-tsla", !tickers.includes("TSLA"));
-  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 9.7543) < 0.0001, cash && String(cash.sizeUsd));
+  check("live-grok46-xle-qty", xle && xle.qty === "0.132529", xle && xle.qty);
+  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 1.2543) < 0.0001, cash && String(cash.sizeUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 9.7434) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -185,19 +188,21 @@ if (friLastHour) {
 }
 const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === -2.16 && biduLive.combinedDayPct === -5.85);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -5.18 && askaraLive.combinedDayPct === -7.62);
-check("live-mark-label", String(board.markLabel || "").includes("last-hour last-trade") && String(board.markLabel || "").includes("Askara tribe split"));
-check("live-marked-at", board.markedAt === "2026-08-29T02:00:01Z", board.markedAt);
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 0.95 && biduLive.combinedDayPct === 0.95);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -2.66 && askaraLive.combinedDayPct === -2.66);
+check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 mid") && String(board.markLabel || "").includes("last-trade"));
+check("live-marked-at", board.markedAt === "2026-08-31T14:01:16Z", board.markedAt);
 check("no-invented-friday-sip", !(source.events || []).some((event) => event && event.type === "mark" && /fri.*sip/i.test(String(event.id || ""))));
 check(
-  "live-survivors-lasthour-session",
-  board.survivors.every((s) => s.lastSession === "2026-08-28-lasthour"),
+  "live-survivors-mon-mid-session",
+  board.survivors.every((s) => s.lastSession === "2026-08-31-mid"),
   board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
 );
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
-check("live-composer-lead", composerLive && composerLive.bookUsd === 10.4553 && composerLive.weekPct === 4.55, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
+const grok45Live = board.survivors.find((s) => s.name === "Grok 4.5");
+check("live-composer-lead", composerLive && composerLive.bookUsd === 10.5536 && composerLive.weekPct === 0.94, composerLive && `${composerLive.bookUsd} / ${composerLive.weekPct}`);
+check("live-grok45-worst", grok45Live && grok45Live.weekPct === -1.83, grok45Live && String(grok45Live.weekPct));
 check("live-fable-last", fableLive && fableLive.bookUsd === 0 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
@@ -404,6 +409,7 @@ check(
   e1 && typeof e1.tease === "string" && !/fable|5–1|5-1|juror|voted out/i.test(e1.tease)
 );
 check("episode-2-live", e2 && e2.status === "live" && e2.path === "seasons/1/e02.html");
+check("episode-2-monday-wire", e2 && Array.isArray(e2.days) && e2.days.length === 1 && e2.days[0].id === "monday" && e2.days[0].snapshotId === "s1e02-mon-mid" && e2.days[0].board === "day-monday");
 check("episode-3-locked", e3 && e3.status === "locked" && !e3.path);
 check(
   "saturday-lunch-no-exit-interview",
@@ -441,18 +447,31 @@ if (sundayLunch) {
   );
 }
 
+const monMid = board.snapshots.find((s) => s.id === "s1e02-mon-mid");
+check("monday-mid-mark", Boolean(monMid), "missing s1e02-mon-mid");
+if (monMid) {
+  check("monday-mid-mark-label", String(monMid.label || "").includes("Mon Aug 31 mid"));
+  check("monday-mid-at", monMid.at === "2026-08-31T14:01:16Z", monMid.at);
+  const bidu = (monMid.tribes && monMid.tribes.bidu) || {};
+  const askara = (monMid.tribes && monMid.tribes.askara) || {};
+  check("monday-mid-bidu-week", bidu.combinedWeekPct === 0.95, String(bidu.combinedWeekPct));
+  check("monday-mid-bidu-day", bidu.combinedDayPct === 0.95, String(bidu.combinedDayPct));
+  check("monday-mid-askara-week", askara.combinedWeekPct === -2.66, String(askara.combinedWeekPct));
+  check("monday-mid-askara-day", askara.combinedDayPct === -2.66, String(askara.combinedDayPct));
+}
+
 const expectedBooks = {
-  "Grok 4.6": { bookUsd: 9.7543, weekPct: -2.46, dayPct: -2.07 },
-  "Claude Sonnet 5": { bookUsd: 10, weekPct: 0, dayPct: 0 },
-  "Composer 2.5": { bookUsd: 10.4553, weekPct: 4.55, dayPct: -5.62 },
-  "Claude Opus 5": { bookUsd: 9.9028, weekPct: -0.97, dayPct: 0.95 },
+  "Grok 4.6": { bookUsd: 9.7434, weekPct: -0.11, dayPct: -0.11 },
+  "Claude Sonnet 5": { bookUsd: 9.9851, weekPct: -0.15, dayPct: -0.15 },
+  "Composer 2.5": { bookUsd: 10.5536, weekPct: 0.94, dayPct: 0.94 },
+  "Claude Opus 5": { bookUsd: 9.913, weekPct: 0.1, dayPct: 0.1 },
   "Gemini 3.7 Flash": { bookUsd: 10, weekPct: 0, dayPct: 0 },
-  "GPT-5.6 Terra": { bookUsd: 9.6723, weekPct: -3.28, dayPct: 0.89 },
-  "Grok 4.5": { bookUsd: 11.5599, weekPct: -3.6, dayPct: -5.4 },
-  "GPT-5.6 Sol": { bookUsd: 11.9497, weekPct: 0.3, dayPct: 0.38 },
-  "Gemini 3.1 Pro": { bookUsd: 11.9725, weekPct: 0.53, dayPct: -0.27 },
+  "GPT-5.6 Terra": { bookUsd: 9.6886, weekPct: 0.17, dayPct: 0.17 },
+  "Grok 4.5": { bookUsd: 11.3485, weekPct: -1.83, dayPct: -1.83 },
+  "GPT-5.6 Sol": { bookUsd: 11.9129, weekPct: -0.31, dayPct: -0.31 },
+  "Gemini 3.1 Pro": { bookUsd: 11.9305, weekPct: -0.35, dayPct: -0.35 },
   "GPT-5.6 Luna": { bookUsd: 11.9197, weekPct: 0, dayPct: 0 },
-  "Kimi K3": { bookUsd: 12.0798, weekPct: 1.6, dayPct: 0.58 },
+  "Kimi K3": { bookUsd: 12.0589, weekPct: -0.17, dayPct: -0.17 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: -2.91 }
 };
 for (const [name, exp] of Object.entries(expectedBooks)) {
@@ -464,8 +483,16 @@ for (const [name, exp] of Object.entries(expectedBooks)) {
   );
 }
 
-const noNewTen = fills.filter((f) => Date.parse(f.at || "") >= Date.parse("2026-08-29T02:00:00Z") && Number(f.sizeUsd) === 10);
-check("no-episode-2-ten-fills", noNewTen.length === 0, String(noNewTen.length));
+check("sold-soxl-is-event", fills.some((f) => f.side === "sell" && f.ticker === "SOXL" && f.orderId === "6a9586b0-c85e-446f-8f58-deeb6898cca8"));
+check("bought-xle-sonnet-is-event", fills.some((f) => f.survivorId === (source.cast.find((m) => m.name === "Claude Sonnet 5") || {}).id && f.side === "buy" && f.ticker === "XLE" && f.orderId === "6a9586b3-4e0c-43ab-8807-5e38102d0a99"));
+check("bought-xle-gemini-pro-is-event", fills.some((f) => f.survivorId === (source.cast.find((m) => m.name === "Gemini 3.1 Pro") || {}).id && f.side === "buy" && f.ticker === "XLE" && f.orderId === "6a9586ba-0ae7-4913-aa8d-c10e388e26bd"));
+check("bought-xle-grok46-is-event", fills.some((f) => f.survivorId === (grok46 && grok46.id) && f.side === "buy" && f.ticker === "XLE" && f.orderId === "6a9586e4-caae-40ae-9373-4b1c56a7a8e8"));
+check("bought-xom-composer-is-event", fills.some((f) => f.survivorId === (composer && composer.id) && f.side === "buy" && f.ticker === "XOM" && f.orderId === "6a9586f6-af58-4788-8c86-8ee3115db2d8"));
+
+const noTopUp = fills.filter(
+  (f) => Date.parse(f.at || "") >= Date.parse("2026-08-29T02:00:00Z") && Number(f.sizeUsd) === 10 && !f.orderId
+);
+check("no-episode-2-ten-top-up", noTopUp.length === 0, String(noTopUp.length));
 
 const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
 const e2Cold = ((episode2Copy.days || []).find((day) => day.id === "cold-open") || {}).beats || [];
@@ -473,6 +500,7 @@ const e2ColdBody = JSON.stringify(e2Cold);
 check("e02-cold-open-boot", e2ColdBody.includes("Claude Fable 5 voted out 5–1") && e2ColdBody.includes("First juror"));
 check("e02-cold-open-tribes", e2ColdBody.includes("The Bidu tribe has six") && e2ColdBody.includes("The Askara tribe has five"));
 check("e02-cold-open-given", e2ColdBody.includes("$230 given") && e2ColdBody.includes("$110 Episode 2 top-up"));
+check("e02-monday-books-beat", (episode2Copy.days || []).some((day) => day.id === "monday" && (day.beats || []).some((beat) => beat.id === "monday-books" && beat.type === "books")));
 check("e02-no-saturday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch")));
 check("e02-no-saturday-dinner", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-dinner")));
 check("e02-no-sunday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "sunday-lunch")));
@@ -491,7 +519,7 @@ check(
     e2ChallengeBody.includes("the Askara tribe") &&
     e2ChallengeBody.includes("Episode 2 only") &&
     e2ChallengeBody.includes("cash counts") &&
-    e2ChallengeBody.includes("Books still wait for Monday fills")
+    e2ChallengeBody.includes("Monday fills are in")
 );
 check(
   "e02-challenge-no-shame-list",
@@ -509,7 +537,7 @@ check(
     rulesHtml.includes("the Bidu tribe") &&
     rulesHtml.includes("the Askara tribe") &&
     rulesHtml.includes("cash counts") &&
-    rulesHtml.includes("Books still wait for Monday fills")
+    rulesHtml.includes("Monday fills are in")
 );
 check("rules-cash-counts-stays", rulesHtml.includes("Stocks or cash. Cash counts."));
 check(

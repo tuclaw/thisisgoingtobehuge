@@ -99,6 +99,7 @@ check("given-is-not-sleeves", source.islandGivenUsd !== start * source.cast.leng
 check("merged-stays-false-or-true", source.merged === true || source.merged === false);
 
 const firstBoot = (source.events || []).find((event) => event && event.type === "boot");
+const carryMark = (source.events || []).find((event) => event && event.type === "mark" && event.kind === "carry");
 const lastPreBootMark = firstBoot
   ? [...(source.events || [])]
       .filter((event) => event && event.type === "mark" && Date.parse(event.at || "") < Date.parse(firstBoot.at || ""))
@@ -110,12 +111,24 @@ for (const s of board.survivors) {
     lastPreBootMark && lastPreBootMark.recorded && typeof lastPreBootMark.recorded[s.id]?.bookUsd === "number"
       ? lastPreBootMark.recorded[s.id].bookUsd
       : null;
-  const weekBasis = preBoot != null ? preBoot : s.bookUsd;
-  const computedWeek = pctRound(((weekBasis - start) / start) * 100);
+  const carryBook =
+    carryMark && carryMark.recorded && typeof carryMark.recorded[s.id]?.bookUsd === "number"
+      ? carryMark.recorded[s.id].bookUsd
+      : null;
+  let computedWeek;
+  if (s.status === "jury" && preBoot != null) {
+    computedWeek = pctRound(((preBoot - start) / start) * 100);
+  } else if (carryBook != null && carryBook > 0) {
+    computedWeek = pctRound(((s.bookUsd - carryBook) / carryBook) * 100);
+  } else if (preBoot != null) {
+    computedWeek = pctRound(((preBoot - start) / start) * 100);
+  } else {
+    computedWeek = pctRound(((s.bookUsd - start) / start) * 100);
+  }
   check(
     `weekPct:${s.slug}`,
     Math.abs(computedWeek - s.weekPct) <= 0.02,
-    `${s.weekPct} vs computed ${computedWeek} on basis ${weekBasis} (book ${s.bookUsd})`
+    `${s.weekPct} vs computed ${computedWeek} on basis ${carryBook ?? preBoot ?? s.bookUsd} (book ${s.bookUsd})`
   );
   let equity = 0;
   let unmarked = false;
@@ -136,7 +149,9 @@ for (const s of board.survivors) {
     check(`book-vs-marks:${s.slug}`, Math.abs(equity - s.bookUsd) < 0.05, `${equity.toFixed(4)} vs ${s.bookUsd}`);
   }
   const sleeve = s.positions.reduce((sum, pos) => (isCashLeg(pos) ? sum : sum + (Number(pos.sizeUsd) || 0)), 0);
-  check(`sleeve:${s.slug}`, sleeve <= start + 0.05, String(sleeve));
+  const gotBootSplit = carryBook != null && carryBook > start + 0.1;
+  const sleeveCap = gotBootSplit && s.status !== "jury" ? carryBook + 0.05 : start + 0.05;
+  check(`sleeve:${s.slug}`, sleeve <= sleeveCap, String(sleeve));
 }
 
 for (const tribe of board.tribes) {
