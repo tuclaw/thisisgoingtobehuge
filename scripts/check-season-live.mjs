@@ -245,7 +245,8 @@ const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
 check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 0.29 && biduLive.combinedDayPct === 0.29);
 check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === 0.12 && askaraLive.combinedDayPct === 0.12);
-check("live-mark-label", String(board.markLabel || "").includes("Mon Aug 31 last-hour") && String(board.markLabel || "").includes("~12:36 PM PT"));
+check("live-mark-label", board.markLabel === "Mon Aug 31 last-hour · last-trade ~12:36 PM PT");
+check("source-mark-label", source.markLabel === "Mon Aug 31 last-hour · Robinhood last-trade ~12:36 PM PT");
 check("live-marked-at", board.markedAt === "2026-08-31T19:36:30Z", board.markedAt);
 check("no-invented-friday-sip", !(source.events || []).some((event) => event && event.type === "mark" && /fri.*sip/i.test(String(event.id || ""))));
 check(
@@ -421,7 +422,7 @@ check("homepage-given-copy", home.includes("$240.09 given. Eleven still in. Two 
 check("homepage-points-at-e02", home.includes("seasons/1/e02.html") && home.includes("Walk into Episode 2"));
 check("sleeve-pot-stays-240", source.islandPotUsd === 240.09, String(source.islandPotUsd));
 check("merged-stays-false", source.merged === false);
-check("status-label-e02", source.statusLabel === "Live · S1E02 · Mon Aug 31 last-hour remake");
+check("status-label-e02", source.statusLabel === "Live · S1E02 · last-hour remake Aug 31");
 check("live-episode-is-e02", source.episode && source.episode.id === "s1e02" && source.episode.status === "live" && source.episode.path === "seasons/1/e02.html");
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Aug 31 – Friday Sep 4, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 4, 2026 · 7:00 PM PT");
