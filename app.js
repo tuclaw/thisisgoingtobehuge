@@ -1807,10 +1807,63 @@ function moneyTickerAllowedRanges() {
     : MONEY_TICKER_RANGES;
 }
 
-function moneyPutInTotal(season) {
+function tickerIsEpisodeTwo(episode) {
+  return Boolean(episode && (episode.id === "s1e02" || Number(episode.number) === 2));
+}
+
+function moneyPutInTotal(season, episode, range) {
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const castN = (season.survivors || []).length || (season.cast || []).length || 12;
-  return roundMoney(start * castN);
+  const original = typeof season.islandGivenStartUsd === "number" ? season.islandGivenStartUsd : start * castN;
+  /* Episode 2 week is funded: dotted island bar is $230 given, not the $120 open. */
+  if (range === "week" && tickerIsEpisodeTwo(episode) && typeof season.islandGivenUsd === "number") {
+    return season.islandGivenUsd;
+  }
+  return original;
+}
+
+function tickerSleevePutIn(season, episode, range) {
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
+  if (tickerIsEpisodeTwo(episode) && range !== "open") {
+    const extra = typeof season.islandEpisode2TopUpEachUsd === "number" ? season.islandEpisode2TopUpEachUsd : 10;
+    return start + extra;
+  }
+  return start;
+}
+
+function episodeDiagramStartId(episode) {
+  if (!episode) return "";
+  if (episode.diagramStartSnapshotId) return episode.diagramStartSnapshotId;
+  return tickerIsEpisodeTwo(episode) ? "s1e02-cash-add" : "";
+}
+
+function snapshotsFromEpisodeStart(snaps, episode) {
+  const list = Array.isArray(snaps) ? snaps.slice() : [];
+  const startId = episodeDiagramStartId(episode);
+  if (!startId) return list;
+  const idx = list.findIndex((snap) => snap && snap.id === startId);
+  return idx >= 0 ? list.slice(idx) : list;
+}
+
+function snapshotsInTickerRange(snapshots, episode, range) {
+  const all = Array.isArray(snapshots) ? snapshots.slice() : [];
+  if (!all.length) return [];
+  if (range !== "week") return all;
+  const ep = episode || {};
+  const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
+  const weekEnd = ep.weekEnd
+    ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
+    : ep.tribalAt
+      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
+      : NaN;
+  if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
+  let filtered = all.filter((snap) => {
+    const t = Date.parse(snap.at);
+    return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
+  });
+  /* Episode 2 week starts after the $10 cash add so opening numbers already carry the extra sleeve. */
+  filtered = snapshotsFromEpisodeStart(filtered, ep);
+  return filtered.length ? filtered : all;
 }
 
 function islandHostAddUsd(season) {
@@ -2182,23 +2235,9 @@ function groupSnapshotsByEpisode(season, snapshots) {
 }
 
 function snapshotsForTickerRange(season, range) {
-  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
-  if (!all.length) return [];
-  if (range !== "week") return all;
   /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
   const ep = currentPageEpisode(season) || season.episode || {};
-  const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
-  const weekEnd = ep.weekEnd
-    ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
-    : ep.tribalAt
-      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
-      : NaN;
-  if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
-  const filtered = all.filter((snap) => {
-    const t = Date.parse(snap.at);
-    return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
-  });
-  return filtered.length ? filtered : all;
+  return snapshotsInTickerRange(season.snapshots, ep, range);
 }
 
 function candidateStroke(survivor, indexInTribe) {
@@ -2261,7 +2300,7 @@ function buildTickerChapters(season) {
   return groupSnapshotsByEpisode(season, all)
     .map((group) => ({
       episode: group.episode,
-      frames: framesFromSnapshots(season, group.snaps)
+      frames: framesFromSnapshots(season, snapshotsFromEpisodeStart(group.snaps, group.episode))
     }))
     .filter((ch) => ch.frames.length);
 }
@@ -2295,6 +2334,15 @@ function setTickerChapter(index, opts) {
   moneyTicker.chapterIndex = i;
   moneyTicker.frames = chapter.frames;
   moneyTicker.putIn = moneyTickerChapterPutIn(moneyTicker.season, chapter.episode);
+  moneyTicker.sleevePutIn = tickerSleevePutIn(moneyTicker.season, chapter.episode, "season");
+  const livingPerTribe = Math.max(
+    1,
+    Math.round(
+      (((moneyTicker.season && moneyTicker.season.survivors) || []).length || 12) /
+        Math.max(1, ((moneyTicker.season && moneyTicker.season.tribes) || []).length || 2)
+    )
+  );
+  moneyTicker.tribePutIn = roundMoney(moneyTicker.sleevePutIn * livingPerTribe);
   const end = Math.max(0, chapter.frames.length - 1);
   if (opts && opts.atEnd) {
     moneyTicker.index = end;
@@ -2788,7 +2836,7 @@ function moneyTickerDiagramSeries(season, frames) {
     const putInLabel = `$${sleeve.toFixed(0)} in`;
     return {
       title: "Contestants",
-      aria: "Contestant sleeves over recorded marks. Dotted line is the $10 put into each book.",
+      aria: `Contestant sleeves over recorded marks. Dotted line is the $${sleeve.toFixed(0)} put into each book.`,
       putIn: sleeve,
       putInLabel,
       guides: [{ id: "putin", value: sleeve, label: putInLabel, className: "money-ticker-putin" }],
@@ -2818,8 +2866,9 @@ function moneyTickerDiagramSeries(season, frames) {
   const episode = moneyTickerActiveEpisode(season);
   const epNum = episode && Number(episode.number);
   const hostBar = typeof given === "number" && hostAdd != null && epNum >= 2;
-  const chapterBar = moneyTickerUsesChapters() && hostBar;
-  const scalePutIn = chapterBar ? given : startPutIn;
+  /* E2 week and E2 season chapter start at the cash-add — only the $230 given bar. */
+  const fundedBar = hostBar && (moneyTickerUsesChapters() || moneyTicker.range === "week");
+  const scalePutIn = fundedBar ? given : startPutIn;
   let min = scalePutIn;
   let max = scalePutIn;
   frames.forEach((frame) => {
@@ -2830,7 +2879,7 @@ function moneyTickerDiagramSeries(season, frames) {
     if (given < min) min = given;
     if (given > max) max = given;
   }
-  if (!chapterBar) {
+  if (!fundedBar) {
     if (startPutIn < min) min = startPutIn;
     if (startPutIn > max) max = startPutIn;
   }
@@ -2842,7 +2891,7 @@ function moneyTickerDiagramSeries(season, frames) {
   const putInLabel = `$${startPutIn.toFixed(0)} in`;
   const guides = [];
   const legend = [{ label: "Island pot", color: potStroke }];
-  if (!chapterBar) {
+  if (!fundedBar) {
     guides.push({
       id: "putin",
       value: startPutIn,
@@ -2865,7 +2914,7 @@ function moneyTickerDiagramSeries(season, frames) {
       labelClass: "is-host-add"
     });
     legend.push({ label: `${ep} host +$${hostAdd.toFixed(0)}`, color: "#f0c14b", swatch: "dash" });
-    aria = chapterBar
+    aria = fundedBar
       ? `Island pot for ${episode.title || ep}. Horizontal bar is Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`
       : `Island pot over recorded marks. Both dotted lines stay on: $${startPutIn.toFixed(0)} put in, and Episode ${ep.slice(1)} host +$${hostAdd.toFixed(0)} at $${given.toFixed(0)} given.`;
   }
@@ -2877,7 +2926,7 @@ function moneyTickerDiagramSeries(season, frames) {
     title,
     aria,
     putIn: scalePutIn,
-    putInLabel: chapterBar ? `$${given.toFixed(0)} given` : putInLabel,
+    putInLabel: fundedBar ? `$${given.toFixed(0)} given` : putInLabel,
     guides,
     min,
     max,
@@ -3141,8 +3190,9 @@ function mountMoneyTicker(season, opts) {
   }
   moneyTicker.reducedMotion =
     typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  moneyTicker.sleevePutIn = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
-  moneyTicker.putIn = moneyPutInTotal(season);
+  const pageEp = currentPageEpisode(season) || season.episode || {};
+  moneyTicker.sleevePutIn = tickerSleevePutIn(season, pageEp, moneyTicker.range);
+  moneyTicker.putIn = moneyPutInTotal(season, pageEp, moneyTicker.range);
   const livingPerTribe = Math.max(
     1,
     Math.round(((season.survivors || []).length || 12) / Math.max(1, (season.tribes || []).length || 2))
