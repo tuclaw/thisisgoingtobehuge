@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import vm from "node:vm";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const require = createRequire(import.meta.url);
@@ -152,11 +153,86 @@ if (!(homeTickerIdx > -1 && homeCtaIdx > homeTickerIdx)) {
 if (html.includes('id="wager"') || html.includes("Real Trades On The Stock Market")) {
   throw new Error("templates/island.html must not keep a separate Real Trades wager section");
 }
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+if (
+  !html.includes('id="letters"') ||
+  !html.includes("Will the contestants get their") ||
+  !html.includes("Letters from home") ||
+  !html.includes("Help me reach out*") ||
+  !html.includes('id="letter-list"') ||
+  !html.includes('id="letter-more"') ||
+  !html.includes("Show more")
+) {
+  throw new Error("templates/island.html missing Letters from home section");
+}
+const lettersIdx = html.indexOf('id="letters"');
+const castIdx = html.indexOf('id="cast"');
+const seasonIdx = html.indexOf('id="season"');
+const closeIdx = html.indexOf('id="close"');
+if (!(seasonIdx > -1 && lettersIdx > seasonIdx && closeIdx > lettersIdx)) {
+  throw new Error("Letters from home must sit after The journey is weekly and before the close");
+}
+if (!appJs.includes("function renderLettersFromHome") || !appJs.includes("renderLettersFromHome(season)")) {
+  throw new Error("app.js must render Letters from home from the cast + lab CEOs");
+}
+if (
+  !appJs.includes("function initLettersMore") ||
+  !appJs.includes("LETTERS_PREVIEW_ROWS = 2") ||
+  !appJs.includes('textContent = "Show more"')
+) {
+  throw new Error("app.js must collapse Letters from home to two rows with a Show more control");
+}
+const labJs = readFileSync(join(root, "lab-logos.js"), "utf8");
+[
+  "elonmusk",
+  "DarioAmodei",
+  "mntruell",
+  "demishassabis",
+  "sama",
+  "Kimi_Moonshot"
+].forEach((handle) => {
+  if (!labJs.includes('twitter: "' + handle + '"')) {
+    throw new Error("lab-logos.js missing CEO twitter @" + handle);
+  }
+});
+if (!labJs.includes("function ceoFor") || !labJs.includes("function twitterUrlFor")) {
+  throw new Error("lab-logos.js missing CEO twitter helpers");
+}
+const labSandbox = {
+  document: { documentElement: { getAttribute() { return ""; } } }
+};
+vm.createContext(labSandbox);
+vm.runInContext(labJs, labSandbox);
+const labs = labSandbox.LabLogos;
+if (!labs || typeof labs.ceoFor !== "function") {
+  throw new Error("lab-logos.js did not export LabLogos.ceoFor");
+}
+(season.cast || []).forEach((member) => {
+  const ceo = labs.ceoFor(member.slug);
+  if (!ceo || !ceo.name || !ceo.twitter) {
+    throw new Error("lab-logos.js missing CEO twitter for " + member.slug);
+  }
+  const url = labs.twitterUrlFor(member.slug);
+  if (!url || !url.startsWith("https://x.com/")) {
+    throw new Error("lab-logos.js twitter URL must be https://x.com/ for " + member.slug);
+  }
+});
+if (!css.includes(".letters-band") || !css.includes(".letter-list") || !css.includes(".letter-handle")) {
+  throw new Error("styles.css missing Letters from home styles");
+}
+if (
+  !css.includes(".letter-list:not(.is-open) .letter-item:nth-child(n + 5)") ||
+  !css.includes(".letter-list:not(.is-open) .letter-item:nth-child(n + 3)") ||
+  !css.includes(".letter-more-wrap")
+) {
+  throw new Error("styles.css must collapse Letters from home to two rows until Show more");
+}
+
 if (!html.includes('id="island-bot-diagram"') || !html.includes("archify-embed")) {
   throw new Error("templates/island.html missing Archify bot diagram embed");
 }
-if (!/<iframe[^>]+bot-architecture/.test(html)) {
-  throw new Error("home diagram must embed diagrams/bot-architecture.html");
+if (!html.includes("archify-embed-frame") || !/<iframe[^>]+bot-architecture/.test(html)) {
+  throw new Error("home diagram must embed diagrams/bot-architecture.html inside a sized frame");
 }
 const archify = readFileSync(join(root, "diagrams", "bot-architecture.html"), "utf8");
 if (!archify.includes("lts-diagram-flow") || !archify.includes("lts-island-edge-flow")) {
@@ -165,10 +241,41 @@ if (!archify.includes("lts-diagram-flow") || !archify.includes("lts-island-edge-
 if (!archify.includes("font-size: 13px") || !archify.includes("[data-edge-label] text")) {
   throw new Error("bot-architecture.html missing larger embed label type");
 }
+if (
+  !archify.includes('html[data-embed="true"] .diagram-container svg') ||
+  !archify.includes("max-width: 100%") ||
+  !archify.includes("height: auto")
+) {
+  throw new Error("bot-architecture.html embed SVG must scale to the iframe width");
+}
 if (!css.includes(".archify-embed") || !css.includes("min-height: 28rem")) {
   throw new Error("styles.css missing larger Archify embed");
 }
-const appJs = readFileSync(join(root, "app.js"), "utf8");
+const embedBlock = css.match(/\.archify-embed\s*\{[^}]+\}/);
+if (
+  !embedBlock ||
+  !embedBlock[0].includes("width: 100%") ||
+  !embedBlock[0].includes("max-width: 100%") ||
+  !embedBlock[0].includes("min-width: 0")
+) {
+  throw new Error("styles.css Archify embed must stay within the parent column");
+}
+const frameBlock = css.match(/\.archify-embed-frame\s*\{[^}]+\}/);
+if (
+  !frameBlock ||
+  !frameBlock[0].includes("width: 100%") ||
+  !frameBlock[0].includes("max-width: 100%") ||
+  !frameBlock[0].includes("min-width: 0") ||
+  !frameBlock[0].includes("aspect-ratio: 1140 / 680")
+) {
+  throw new Error("styles.css Archify frame must size from column width, not a transferred min-width");
+}
+if (!/@media\s*\(min-width:\s*900px\)\s*\{[^}]*\.archify-embed-frame\s*\{[^}]*min-height:\s*28rem/.test(css)) {
+  throw new Error("styles.css must keep the 28rem Archify floor only on wide screens");
+}
+if (!/\.diagram-band\s*\{[^}]*overflow-x:\s*clip/.test(css)) {
+  throw new Error("styles.css diagram band must clip leftover horizontal overflow");
+}
 if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow")) {
   throw new Error("app.js missing scroll-triggered Archify flow");
 }
@@ -190,7 +297,6 @@ if (!appJs.includes("onHomeBooksEvent") || !appJs.includes('action === "play"') 
 if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(64rem, 100%)")) {
   throw new Error("styles.css missing home hero books diagram layout");
 }
-const castIdx = html.indexOf('id="cast"');
 const homeVoteIdx = html.indexOf('id="home-vote"');
 const homeTribalIdx = html.indexOf('id="home-tribal"');
 const beachIdx = html.indexOf('id="beach"');
@@ -263,7 +369,19 @@ if (!css.includes("touch-action: manipulation") || !html.includes("replay-traile
   throw new Error("replay trailer must be touch-friendly on mobile");
 }
 
-const fills = (season.events || []).filter((e) => e && e.type === "fill");
+let fills = (season.events || []).filter((e) => e && e.type === "fill");
+if (!fills.length && Array.isArray(season.survivors)) {
+  fills = season.survivors.flatMap((survivor) =>
+    (survivor.positions || [])
+      .filter((pos) => pos.orderId && pos.filledAt)
+      .map((pos) => ({
+        type: "fill",
+        at: pos.filledAt,
+        ticker: pos.ticker,
+        side: String(pos.action || "BUY").toLowerCase() === "sell" ? "sell" : "buy"
+      }))
+  );
+}
 if (fills.length < 1) throw new Error("season1.json has no fill events for trade flash");
 const newest = fills.slice().sort((a, b) => (a.at < b.at ? 1 : -1))[0];
 if (!newest || !newest.ticker) throw new Error("newest fill missing ticker");

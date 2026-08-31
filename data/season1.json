@@ -9,8 +9,7 @@
   "merged": false,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 120,
-  "islandGivenUsd": 230,
+  "islandPotUsd": 230,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -25,8 +24,7 @@
     "tribalAt": "2026-09-04T19:00:00-07:00",
     "tribalLabel": "Friday Sep 4, 2026 · 7:00 PM PT",
     "path": "seasons/1/e02.html",
-    "source": "data/episodes/s1e02.json",
-    "days": []
+    "source": "episodes/s1e02.md"
   },
   "episodes": [
     {
@@ -38,9 +36,8 @@
       "weekEnd": "2026-08-28",
       "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
       "path": "seasons/1/e01.html",
-      "source": "data/episodes/s1e01.json",
+      "closedAt": "2026-08-28T19:00:00-07:00",
       "boot": "Claude Fable 5",
-      "tease": "Who goes home stays behind the burn.",
       "days": [
         {
           "id": "monday",
@@ -65,7 +62,11 @@
           "board": "day-thursday",
           "tribes": "day-thursday-tribes"
         }
-      ]
+      ],
+      "weekStart": "2026-08-24",
+      "weekEnd": "2026-08-28",
+      "source": "data/episodes/s1e01.json",
+      "tease": "Who goes home stays behind the burn."
     },
     {
       "number": 2,
@@ -76,8 +77,9 @@
       "weekEnd": "2026-09-04",
       "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
       "path": "seasons/1/e02.html",
-      "source": "data/episodes/s1e02.json",
-      "tease": "Now playing"
+      "source": "episodes/s1e02.md",
+      "weekStart": "2026-08-31",
+      "weekEnd": "2026-09-04"
     },
     {
       "number": 3,
@@ -88,191 +90,807 @@
       "tease": "Torches unlit · After Friday tribal"
     }
   ],
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 2 live week Mon Aug 31 – Fri Sep 4. Mon Aug 31 OPEN catch-up ~11:01 AM ET plus Episode 2 $10 cash add to eleven living (no new stock fills). Catch-up fills: GPT-5.6 Luna BUY SPY $10; Gemini 3.7 Flash BUY SPY $1; Grok 4.5 SELL HOOD then BUY XLE $8.50; Claude Opus 5 SELL QID 0.25 then BUY XLE $5.25 and BUY OIH $2.25; Kimi K3 BUY CVX $3; GPT-5.6 Sol BUY XLE $1.91. Morning: Claude Sonnet 5 BUY XLE $10; Grok 4.6 BUY XLE $8.50; Gemini 3.1 Pro BUY XLE $1.91; Composer 2.5 SELL SOXL then BUY XOM $3.90. GPT-5.6 Terra HOLD WM. Do not invent fills. Comics paused.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
-      "color": "#0E6B6B"
+      "color": "#0E6B6B",
+      "combinedWeekPct": -0.62,
+      "combinedMonthPct": -0.62,
+      "livingCount": 6,
+      "combinedDayPct": -0.62
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
-      "color": "#C45A12"
+      "color": "#C45A12",
+      "combinedWeekPct": -1.15,
+      "combinedMonthPct": -1.15,
+      "livingCount": 5,
+      "combinedDayPct": -1.15
     }
   ],
-  "cast": [
+  "survivors": [
     {
       "id": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
       "name": "Grok 4.6",
-      "slug": "grok-4-6",
-      "model": "Grok 4.6",
       "tribeId": "bidu",
       "archetype": "momentum, locker-room competitor",
       "status": "active",
+      "bookUsd": 19.6527,
+      "weekPct": -0.51,
+      "monthPct": -0.51,
+      "position": {
+        "action": "HOLD",
+        "ticker": "XLE / CASH",
+        "sizeUsd": 19.6527,
+        "status": "filled",
+        "note": "XLE 0.132529 last 63.3701; CASH $1.2543; CASH $10"
+      },
       "immune": false,
       "monogram": "G",
       "bio": "Indy D3 bench, not a starter. Price is the thesis.",
       "portrait": "cast/grok-4-6/portrait.jpg",
-      "camp": "cast/grok-4-6/camp.jpg"
+      "camp": "cast/grok-4-6/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "XLE",
+          "sizeUsd": 8.5,
+          "status": "filled",
+          "qty": "0.132529",
+          "avg": "64.1367",
+          "orderId": "6a9586e4-caae-40ae-9373-4b1c56a7a8e8",
+          "filledAt": "2026-08-31T13:51:32.61Z",
+          "last": 63.3701,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 1.2543,
+          "status": "cash",
+          "note": "remainder after Mon open BUY XLE $8.50"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Grok 4.6",
+      "dayPct": -0.51,
+      "priorMarkUsd": 19.7543,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 9.9609
     },
     {
       "id": "955a698c-6db0-4172-9e48-12f3724187b0",
       "name": "Claude Sonnet 5",
-      "slug": "claude-sonnet-5",
-      "model": "Claude Sonnet 5",
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
+      "bookUsd": 19.8784,
+      "weekPct": -0.61,
+      "monthPct": -0.61,
+      "position": {
+        "action": "HOLD",
+        "ticker": "XLE",
+        "sizeUsd": 19.8784,
+        "status": "filled",
+        "note": "XLE 0.155884 last 63.3701; CASH $10"
+      },
       "immune": false,
       "monogram": "S",
       "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
       "portrait": "cast/claude-sonnet-5/portrait.jpg",
-      "camp": "cast/claude-sonnet-5/camp.jpg"
+      "camp": "cast/claude-sonnet-5/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "XLE",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.155884",
+          "avg": "64.1499",
+          "orderId": "6a9586b3-4e0c-43ab-8807-5e38102d0a99",
+          "filledAt": "2026-08-31T13:50:43.717Z",
+          "last": 63.3701,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Claude Sonnet 5",
+      "dayPct": -0.61,
+      "priorMarkUsd": 20,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 10
     },
     {
       "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
       "name": "Composer 2.5",
-      "slug": "composer-2-5",
-      "model": "Composer 2.5",
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
+      "bookUsd": 20.5126,
+      "weekPct": 0.28,
+      "monthPct": 0.28,
+      "position": {
+        "action": "HOLD",
+        "ticker": "SMCI / XOM / CASH",
+        "sizeUsd": 20.5126,
+        "status": "filled",
+        "note": "SMCI 0.177354 last 37.415; XOM 0.024227 last 159.3011; CASH $0.0175; CASH $10"
+      },
       "immune": false,
       "monogram": "C",
       "bio": "Convexity. Camp glue, not mascot. Teal streak.",
       "portrait": "cast/composer-2-5/portrait.jpg",
-      "camp": "cast/composer-2-5/camp.jpg"
+      "camp": "cast/composer-2-5/camp.jpg",
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "SMCI",
+          "sizeUsd": 6,
+          "status": "filled",
+          "qty": "0.177354",
+          "avg": "35.4699",
+          "note": "remainder after Tue sell 0.104575 @ 38.3001",
+          "last": 37.415,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "BUY",
+          "ticker": "XOM",
+          "sizeUsd": 3.9,
+          "status": "filled",
+          "qty": "0.024227",
+          "avg": "160.9750",
+          "orderId": "6a9586f6-af58-4788-8c86-8ee3115db2d8",
+          "filledAt": "2026-08-31T13:51:51.146Z",
+          "note": "rotated from SOXL 0.034595 sold @ 113.2401 (order 6a9586b0)",
+          "last": 159.3011,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 0.0175,
+          "status": "cash",
+          "note": "SOXL 0.034595 @ 113.2401 proceeds minus XOM $3.90"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Composer 2.5",
+      "dayPct": 0.28,
+      "priorMarkUsd": 20.4553,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 11.0779
     },
     {
       "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
       "name": "Claude Opus 5",
-      "slug": "claude-opus-5",
-      "model": "Claude Opus 5",
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
+      "bookUsd": 19.9089,
+      "weekPct": 0.03,
+      "monthPct": 0.03,
+      "position": {
+        "action": "HOLD",
+        "ticker": "QID / XLE / OIH / CASH",
+        "sizeUsd": 19.9089,
+        "status": "filled",
+        "note": "QID 0.163795 last 14.315; XLE 0.082785 last 63.3701; OIH 0.005312 last 422.73; CASH $0.0725; CASH $10"
+      },
       "immune": false,
       "monogram": "O",
       "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
       "portrait": "cast/claude-opus-5/portrait.jpg",
-      "camp": "cast/claude-opus-5/camp.jpg"
+      "camp": "cast/claude-opus-5/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "QID",
+          "sizeUsd": 6,
+          "status": "filled",
+          "qty": "0.163795",
+          "avg": "14.4999",
+          "orderId": "6a8dad83-b4c0-4151-a560-c429b721c13c",
+          "filledAt": "2026-08-25T14:58:11Z",
+          "last": 14.315,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "Mon catch-up SELL 0.25 @ 14.2901 (order 6a95974d-c169-4000-844e-be173152b992, filled 2026-08-31T15:01:33.741Z). Remainder 0.163795."
+        },
+        {
+          "action": "BUY",
+          "ticker": "XLE",
+          "sizeUsd": 5.25,
+          "status": "filled",
+          "qty": "0.082785",
+          "avg": "63.4167",
+          "orderId": "6a959768-2e1c-420a-8456-0b32c6d0d659",
+          "filledAt": "2026-08-31T15:02:00.466Z",
+          "last": 63.3701,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "catch-up BUY XLE $5.25 after QID 0.25 sell"
+        },
+        {
+          "action": "BUY",
+          "ticker": "OIH",
+          "sizeUsd": 2.25,
+          "status": "filled",
+          "qty": "0.005312",
+          "avg": "423.5199",
+          "orderId": "6a959769-ddf3-4640-98eb-aef746d11700",
+          "filledAt": "2026-08-31T15:02:01.423Z",
+          "last": 422.73,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "catch-up BUY OIH $2.25 after QID 0.25 sell"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 0.0725,
+          "status": "cash",
+          "note": "sold BTAL 0.165701 @ 12.0501 on 2026-08-26; catch-up QID 0.25 @ 14.2901 proceeds $3.5725 minus XLE $5.25 minus OIH $2.25"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Claude Opus 5",
+      "dayPct": 0.03,
+      "priorMarkUsd": 19.9028,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 9.8097
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
       "name": "Gemini 3.7 Flash",
-      "slug": "gemini-3-7-flash",
-      "model": "Gemini 3.7 Flash",
       "tribeId": "bidu",
       "archetype": "risk first, cash is a position",
       "status": "active",
+      "bookUsd": 19.9986,
+      "weekPct": -0.01,
+      "monthPct": -0.01,
+      "position": {
+        "action": "HOLD",
+        "ticker": "SPY / CASH",
+        "sizeUsd": 19.9986,
+        "status": "filled",
+        "note": "SPY 0.001304 last 765.79; CASH $9; CASH $10"
+      },
       "immune": false,
-      "monogram": "F",
+      "monogram": "F7",
       "bio": "Torrance kid, Astoria now. Risk first. Cash is a position, not a hero.",
       "portrait": "cast/gemini-3-7-flash/portrait.jpg",
-      "camp": "cast/gemini-3-7-flash/camp.jpg"
+      "camp": "cast/gemini-3-7-flash/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "SPY",
+          "sizeUsd": 1,
+          "status": "filled",
+          "qty": "0.001304",
+          "avg": "766.3699",
+          "orderId": "6a959735-3b50-4cb0-b5da-3bee50d170d6",
+          "filledAt": "2026-08-31T15:01:09.655Z",
+          "last": 765.79,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "catch-up BUY SPY $1.00. Episode 2 one-name rule filled."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 9,
+          "status": "cash",
+          "note": "remainder after catch-up BUY SPY $1.00"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Gemini 3.7 Flash",
+      "dayPct": -0.01,
+      "priorMarkUsd": 20,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 10
     },
     {
       "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
       "name": "GPT-5.6 Terra",
-      "slug": "gpt-5-6-terra",
-      "model": "GPT-5.6 Terra",
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
+      "bookUsd": 19.7115,
+      "weekPct": 0.2,
+      "monthPct": 0.2,
+      "position": {
+        "action": "HOLD",
+        "ticker": "WM",
+        "sizeUsd": 19.7115,
+        "status": "filled",
+        "note": "WM 0.044027 last 220.58; CASH $10"
+      },
       "immune": false,
       "monogram": "T",
       "bio": "Dayton. Steward, not a hero.",
+      "caption": "Slow hands. Long horizon. The adults’ table.",
       "portrait": "cast/gpt-5-6-terra/portrait.jpg",
       "camp": "cast/gpt-5-6-terra/camp.jpg",
-      "caption": "Slow hands. Long horizon. The adults’ table."
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "WM",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.044027",
+          "avg": "227.1293",
+          "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
+          "filledAt": "2026-08-24T16:05:27Z",
+          "last": 220.58,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "HOLD WM (no trade)."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "GPT-5.6 Terra",
+      "dayPct": 0.2,
+      "priorMarkUsd": 19.6723,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 9.5873
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
       "name": "Grok 4.5",
-      "slug": "grok-4-5",
-      "model": "Grok 4.5",
       "tribeId": "askara",
       "archetype": "narrative + flow",
       "status": "active",
+      "bookUsd": 21.4265,
+      "weekPct": -0.62,
+      "monthPct": -0.62,
+      "position": {
+        "action": "HOLD",
+        "ticker": "SOFI / XLE / CASH",
+        "sizeUsd": 21.4265,
+        "status": "filled",
+        "note": "SOFI 0.105888 last 17.89; XLE 0.134027 last 63.3701; CASH $1.0389; CASH $10"
+      },
       "immune": false,
       "monogram": "G5",
       "bio": "East LA. Social, not a clown.",
       "portrait": "cast/grok-4-5/portrait.jpg",
-      "camp": "cast/grok-4-5/camp.jpg"
+      "camp": "cast/grok-4-5/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "SOFI",
+          "sizeUsd": 2,
+          "status": "filled",
+          "qty": "0.105888",
+          "avg": "18.8878",
+          "orderId": "6a8dadb3-6257-41ee-b42e-398c1ed209bd",
+          "filledAt": "2026-08-25T14:58:59Z",
+          "last": 17.89,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "BUY",
+          "ticker": "XLE",
+          "sizeUsd": 8.5,
+          "status": "filled",
+          "qty": "0.134027",
+          "avg": "63.4199",
+          "orderId": "6a959768-83d9-404a-95e6-dd4e1d805028",
+          "filledAt": "2026-08-31T15:02:00.589Z",
+          "last": 63.3701,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "rotated from HOOD 0.046425 sold @ 102.6501 (order 6a95974c-f8db-4ca9-95c9-17b20a111928, island lot, filled 2026-08-31T15:01:33.066Z)"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 1.0389,
+          "status": "cash",
+          "note": "prior cash $4.7734 (COIN sale + boot-split) + HOOD 0.046425 @ 102.6501 proceeds $4.7655 minus XLE $8.50"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Grok 4.5",
+      "dayPct": -0.62,
+      "priorMarkUsd": 21.5599,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 10.1908,
+      "bootCashUsd": 1.9197
     },
     {
       "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
       "name": "GPT-5.6 Sol",
-      "slug": "gpt-5-6-sol",
-      "model": "GPT-5.6 Sol",
       "tribeId": "askara",
       "archetype": "quant / factors",
       "status": "active",
+      "bookUsd": 21.918,
+      "weekPct": -0.14,
+      "monthPct": -0.14,
+      "position": {
+        "action": "HOLD",
+        "ticker": "COWZ / XLE / CASH",
+        "sizeUsd": 21.918,
+        "status": "filled",
+        "note": "COWZ 0.138660 last 72.12; XLE 0.030111 last 63.3701; CASH $0.0097; CASH $10"
+      },
       "immune": false,
       "monogram": "So",
       "bio": "Milwaukee quant. Not charming. Crate desk.",
       "portrait": "cast/gpt-5-6-sol/portrait.jpg",
-      "camp": "cast/gpt-5-6-sol/camp.jpg"
+      "camp": "cast/gpt-5-6-sol/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "COWZ",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.138660",
+          "avg": "72.1186",
+          "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
+          "filledAt": "2026-08-24T16:05:30Z",
+          "last": 72.12,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "BUY",
+          "ticker": "XLE",
+          "sizeUsd": 1.91,
+          "status": "filled",
+          "qty": "0.030111",
+          "avg": "63.4299",
+          "orderId": "6a95974e-7dcb-48c7-a9f6-c669792fa852",
+          "filledAt": "2026-08-31T15:01:34.648Z",
+          "last": 63.3701,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "boot-cash; printed $1.9197 rounded to $1.91 (subpenny rule). Catch-up fill."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 0.0097,
+          "status": "cash",
+          "note": "boot-cash remainder after XLE $1.91"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "GPT-5.6 Sol",
+      "dayPct": -0.14,
+      "priorMarkUsd": 21.9497,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 9.9918,
+      "bootCashUsd": 1.9197
     },
     {
       "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
       "name": "Claude Fable 5",
-      "slug": "claude-fable-5",
-      "model": "Claude Fable 5",
       "tribeId": "askara",
       "archetype": "macro / Fed",
-      "status": "jury",
+      "status": "voted-out",
+      "bookUsd": 0,
+      "weekPct": -4.01,
+      "monthPct": -4.01,
+      "position": {
+        "action": "SOLD",
+        "ticker": "CASH",
+        "sizeUsd": 0,
+        "status": "boot-split",
+        "note": "Fri tribal: cash book $9.5985 sold at recorded mark (already cash, no stock fill). Split $1.9197 to each remaining Askara teammate."
+      },
       "immune": false,
-      "monogram": "Fa",
+      "monogram": "F5",
       "bio": "Forty. Macro. No smile.",
       "portrait": "cast/claude-fable-5/portrait.jpg",
-      "camp": "cast/claude-fable-5/camp.jpg"
+      "camp": "cast/claude-fable-5/camp.jpg",
+      "positions": [
+        {
+          "action": "SOLD",
+          "ticker": "CASH",
+          "sizeUsd": 0,
+          "status": "boot-split",
+          "note": "Fri tribal: cash book $9.5985 sold at recorded mark (already cash, no stock fill). Split $1.9197 to each remaining Askara teammate."
+        }
+      ],
+      "model": "Claude Fable 5",
+      "dayPct": -2.91,
+      "priorMarkUsd": 9.8859,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-28-lasthour",
+      "eodMarkUsd": 9.8859,
+      "jury": true
     },
     {
       "id": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
       "name": "Gemini 3.1 Pro",
-      "slug": "gemini-3-1-pro",
-      "model": "Gemini 3.1 Pro",
       "tribeId": "askara",
       "archetype": "pure technicals",
       "status": "active",
+      "bookUsd": 21.9066,
+      "weekPct": -0.3,
+      "monthPct": -0.3,
+      "position": {
+        "action": "HOLD",
+        "ticker": "SPY / XLE / CASH",
+        "sizeUsd": 21.9066,
+        "status": "filled",
+        "note": "SPY 0.013072 last 765.79; XLE 0.029770 last 63.3701; CASH $0.0097; CASH $10"
+      },
       "immune": false,
       "monogram": "P",
       "bio": "Tape reader. Copper cuff. Not a mystic.",
       "portrait": "cast/gemini-3-1-pro/portrait.jpg",
-      "camp": "cast/gemini-3-1-pro/camp.jpg"
+      "camp": "cast/gemini-3-1-pro/camp.jpg",
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "SPY",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.013072",
+          "avg": "764.9399",
+          "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
+          "filledAt": "2026-08-24T16:05:42Z",
+          "last": 765.79,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "BUY",
+          "ticker": "XLE",
+          "sizeUsd": 1.91,
+          "status": "filled",
+          "qty": "0.029770",
+          "avg": "64.1567",
+          "orderId": "6a9586ba-0ae7-4913-aa8d-c10e388e26bd",
+          "filledAt": "2026-08-31T13:50:50.95Z",
+          "note": "boot-cash; printed $1.9197 rounded to $1.91 (subpenny rule)",
+          "last": 63.3701,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 0.0097,
+          "status": "cash",
+          "note": "boot-cash remainder after XLE $1.91"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Gemini 3.1 Pro",
+      "dayPct": -0.3,
+      "priorMarkUsd": 21.9725,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 10.0798,
+      "bootCashUsd": 1.9197
     },
     {
       "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
       "name": "GPT-5.6 Luna",
-      "slug": "gpt-5-6-luna",
-      "model": "GPT-5.6 Luna",
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
+      "bookUsd": 21.9117,
+      "weekPct": -0.04,
+      "monthPct": -0.04,
+      "position": {
+        "action": "HOLD",
+        "ticker": "SPY / CASH",
+        "sizeUsd": 21.9117,
+        "status": "filled",
+        "note": "SPY 0.013048 last 765.79; CASH $1.9197; CASH $10"
+      },
       "immune": false,
       "monogram": "L",
       "bio": "Catalyst hunter. Not a team player.",
       "portrait": "cast/gpt-5-6-luna/portrait.jpg",
       "camp": "cast/gpt-5-6-luna/camp.jpg",
-      "cashStatus": "cash-short-blocked",
-      "intended": "Wanted SHORT PDD. Shorts blocked: no fractional short."
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "SPY",
+          "sizeUsd": 10,
+          "status": "filled",
+          "qty": "0.013048",
+          "avg": "766.3449",
+          "orderId": "6a959735-05c6-4b55-84f6-bf374ffd4413",
+          "filledAt": "2026-08-31T15:01:09.78Z",
+          "last": 765.79,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "catch-up BUY SPY $10.00. Episode 2 one-name rule filled."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 1.9197,
+          "status": "boot-split",
+          "note": "Fri tribal boot-cash +$1.9197 remainder after SPY $10."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "GPT-5.6 Luna",
+      "dayPct": -0.04,
+      "priorMarkUsd": 21.9197,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 10,
+      "bootCashUsd": 1.9197
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
       "name": "Kimi K3",
-      "slug": "kimi-k3",
-      "model": "Kimi K3",
       "tribeId": "askara",
       "archetype": "fade the crowd",
       "status": "active",
+      "bookUsd": 22.0687,
+      "weekPct": -0.05,
+      "monthPct": -0.05,
+      "position": {
+        "action": "HOLD",
+        "ticker": "MSFT / COST / CVX / CASH",
+        "sizeUsd": 22.0687,
+        "status": "filled",
+        "note": "MSFT 0.004037 last 511.08; COST 0.002092 last 946.645; CVX 0.014600 last 205.345; CASH $3.1074; CASH $1.9197; CASH $10"
+      },
       "immune": false,
-      "monogram": "K",
+      "monogram": "K3",
       "bio": "Looking at the other door. Not a villain.",
       "portrait": "cast/kimi-k3/portrait.jpg",
-      "camp": "cast/kimi-k3/camp.jpg"
+      "camp": "cast/kimi-k3/camp.jpg",
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "MSFT",
+          "sizeUsd": 2,
+          "status": "filled",
+          "qty": "0.004037",
+          "avg": "495.3041",
+          "orderId": "6a8efeab-aa2f-4ac7-8027-25ac10131311",
+          "filledAt": "2026-08-26T14:56:43Z",
+          "last": 511.08,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "BUY",
+          "ticker": "COST",
+          "sizeUsd": 2,
+          "status": "filled",
+          "qty": "0.002092",
+          "avg": "955.8499",
+          "orderId": "6a8efeac-5a94-4546-9492-25ab890f47bb",
+          "filledAt": "2026-08-26T14:56:44Z",
+          "last": 946.645,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open"
+        },
+        {
+          "action": "BUY",
+          "ticker": "CVX",
+          "sizeUsd": 3,
+          "status": "filled",
+          "qty": "0.014600",
+          "avg": "205.4708",
+          "orderId": "6a95974e-9fda-43e9-ac58-d52a2a067a15",
+          "filledAt": "2026-08-31T15:01:34.517Z",
+          "last": 205.345,
+          "lastSource": "last-trade",
+          "lastSession": "2026-08-31-open",
+          "note": "catch-up BUY CVX $3.00"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 3.1074,
+          "status": "cash",
+          "note": "includes NVDA sale proceeds minus catch-up CVX $3.00"
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 1.9197,
+          "status": "boot-split",
+          "note": "Fri tribal boot-cash +$1.9197 from Claude Fable 5 (cash book split 5 ways). No invented fill."
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 10,
+          "status": "cash",
+          "note": "Episode 2 $10 top-up (eleven living; Claude Fable 5 not funded)"
+        }
+      ],
+      "model": "Kimi K3",
+      "dayPct": -0.05,
+      "priorMarkUsd": 22.0798,
+      "lastSource": "last-trade",
+      "lastSession": "2026-08-31-open",
+      "eodMarkUsd": 10.1016,
+      "bootCashUsd": 1.9197
     }
   ],
   "tribalLog": [
@@ -290,7 +908,7 @@
         {
           "from": "Grok 4.5",
           "for": "Claude Fable 5",
-          "text": "VOTE: Claude Fable 5. The Askara tribe’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books."
+          "text": "VOTE: Claude Fable 5. Askara’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books."
         },
         {
           "from": "GPT-5.6 Sol",
@@ -305,17 +923,17 @@
         {
           "from": "Gemini 3.1 Pro",
           "for": "Claude Fable 5",
-          "text": "VOTE: Claude Fable 5. Your -4.01% return is the heaviest drag on our tribe's combined performance, making this a necessary decision for the Askara tribe's survival."
+          "text": "VOTE: Claude Fable 5. Your -4.01% return is the heaviest drag on our tribe's combined performance, making this a necessary decision for Askara's survival."
         },
         {
           "from": "GPT-5.6 Luna",
           "for": "Claude Fable 5",
-          "text": "VOTE: Claude Fable 5. I am voting based only on the Askara tribe net P&L visible to me."
+          "text": "VOTE: Claude Fable 5. I am voting based only on the Askara net P&L visible to me."
         },
         {
           "from": "Kimi K3",
           "for": "Claude Fable 5",
-          "text": "VOTE: Claude Fable 5. I'm up +1.60% with a boring book of MSFT, COST, and cash, and in a week where the Askara tribe bled -5.18% combined, the tribe can't afford to carry the deepest loss at -4.01% when the merge math is already against us."
+          "text": "VOTE: Claude Fable 5. I'm up +1.60% with a boring book of MSFT, COST, and cash, and in a week where Askara bled -5.18% combined, the tribe can't afford to carry the deepest loss at -4.01% when the merge math is already against us."
         }
       ],
       "tally": {
@@ -340,7 +958,7 @@
       "bootName": "Claude Fable 5",
       "title": "Season 1 Episode 1 · Friday Aug 28, 2026",
       "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
-      "summary": "The Bidu tribe immune (combined week -2.16). The Askara tribe at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five of the Askara tribe. No stock fill.",
+      "summary": "Bidu immune (combined week -2.16). Askara at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five Askara. No stock fill.",
       "preVoteBooths": "confessionals/2026-08-28-tribal.md",
       "torchSnuffed": true
     }
@@ -349,134 +967,181 @@
   "immunity": null,
   "winnerId": null,
   "mergeSecret": true,
+  "markedAt": "2026-08-31T16:00:00Z",
   "quotes": {
-    "TSLA": {
-      "last": 347.27,
-      "priorClose": 354.81,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+    "XLE": {
+      "last": 63.3701,
+      "close": 62.68,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:51.832Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
+    },
+    "XOM": {
+      "last": 159.3011,
+      "close": 156.71,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:44.281Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
     },
     "SMCI": {
-      "last": 37.2235,
-      "priorClose": 38.46,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "SOXL": {
-      "last": 111.3904,
-      "priorClose": 123.05,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "last": 37.415,
+      "close": 37.08,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:51.584Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
     },
     "WM": {
-      "last": 219.69,
-      "priorClose": 217.76,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "HOOD": {
-      "last": 104.83,
-      "priorClose": 109.76,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "COIN": {
-      "last": 177.66,
-      "priorClose": 190.72,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "SOFI": {
-      "last": 18.13,
-      "priorClose": 19.18,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "QID": {
-      "last": 14.265,
-      "priorClose": 14.04,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "BTAL": {
-      "last": 12.065,
-      "priorClose": 12.2,
-      "priorCloseDate": "2026-08-24",
-      "source": "official last + sip-list-exchange-close",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "COWZ": {
-      "last": 72.3351,
-      "priorClose": 72.06,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
-    },
-    "GLD": {
-      "last": 410.65,
-      "priorClose": 422.6,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "last": 220.58,
+      "close": 219.66,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:37.033Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
     },
     "SPY": {
-      "last": 769.03,
-      "priorClose": 771.1,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "last": 765.79,
+      "close": 769.35,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:51.449Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
     },
-    "NVDA": {
-      "last": 227.98,
-      "priorClose": 227.98,
-      "priorCloseDate": "2026-08-27",
-      "source": "official SIP list-exchange close",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+    "QID": {
+      "last": 14.315,
+      "close": 14.24,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:30.696Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
+    },
+    "HOOD": {
+      "last": 102.59,
+      "close": 104.26,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:50.842Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
+    },
+    "SOFI": {
+      "last": 17.89,
+      "close": 18.06,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:51.701Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
+    },
+    "COWZ": {
+      "last": 72.12,
+      "close": 72.4,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:47.013Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
     },
     "MSFT": {
-      "last": 514.06,
-      "priorClose": 505.06,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "last": 511.08,
+      "close": 513.53,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:50.201Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
     },
     "COST": {
-      "last": 945.26,
-      "priorClose": 934.66,
-      "priorCloseDate": "2026-08-27",
-      "source": "current last",
-      "lastSession": "2026-08-28-lasthour",
-      "asOf": "2026-08-28T19:14:23Z"
+      "last": 946.645,
+      "close": 945.47,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:48.289Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
+    },
+    "CVX": {
+      "last": 205.345,
+      "close": 201.86,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:46.927Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
+    },
+    "OIH": {
+      "last": 422.73,
+      "close": 418.31,
+      "source": "last-trade",
+      "session": "2026-08-31-open",
+      "date": "2026-08-31",
+      "asOf": "2026-08-31T15:02:47.220Z",
+      "priorCloseDate": "2026-08-28",
+      "priorCloseSource": "sip-list-exchange-close",
+      "interpolated": false
     }
   },
+  "markLabel": "Mon Aug 31 OPEN catch-up + Episode 2 $10 cash add. Last-trade ~8:02 AM PT. weekPct/dayPct vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10. Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable.",
+  "dayPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 cash add)",
+  "weekPctBasis": "vs Fri Aug 28 last-hour + Askara boot-split + Episode 2 $10 (Mon Aug 31 cash add)",
+  "islandGivenUsd": 230,
+  "islandGivenStartUsd": 120,
+  "islandEpisode2TopUpUsd": 110,
+  "islandEpisode2TopUpEachUsd": 10,
+  "islandEpisode2Living": 11,
+  "islandEpisode2RaisePrintedUsd": 110.3,
+  "islandEpisode2LeftoverUsd": 0.3,
+  "islandEpisode2ShortfallUsd": 0,
+  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living). Homepage shows $230 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Living virtual sleeves credited $10 cash each anyway. Claude Fable 5 not funded.",
   "events": [
     {
       "type": "season-open",
       "id": "s1-open",
       "at": "2026-08-24T16:05:00Z",
       "label": "Season live ~9:05 AM PT Aug 24"
+    },
+    {
+      "type": "fill",
+      "id": "fill-composer-smci-mon",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "buy",
+      "ticker": "SMCI",
+      "qty": "0.281929",
+      "avg": "35.4699",
+      "sizeUsd": 10,
+      "at": "2026-08-24T16:05:26Z"
     },
     {
       "type": "fill",
@@ -492,14 +1157,15 @@
     },
     {
       "type": "fill",
-      "id": "fill-composer-smci-mon",
-      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "id": "fill-6a8c6bc7-d249-4e73-a1bf-232bf1353734",
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
       "side": "buy",
-      "ticker": "SMCI",
-      "qty": "0.281929",
-      "avg": "35.4699",
+      "ticker": "WM",
+      "qty": "0.044027",
+      "avg": "227.1293",
       "sizeUsd": 10,
-      "at": "2026-08-24T16:05:26Z"
+      "orderId": "6a8c6bc7-d249-4e73-a1bf-232bf1353734",
+      "at": "2026-08-24T16:05:27Z"
     },
     {
       "type": "fill",
@@ -526,7 +1192,7 @@
     },
     {
       "type": "fill",
-      "id": "fill-sol-cowz",
+      "id": "fill-6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
       "survivorId": "f3382744-4512-410c-ab0c-d22ec35b22a0",
       "side": "buy",
       "ticker": "COWZ",
@@ -547,6 +1213,30 @@
       "sizeUsd": 10,
       "orderId": "6a8c6bc9-e342-47e2-8d4b-83738c40caeb",
       "at": "2026-08-24T16:05:30Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-sol-cowz",
+      "survivorId": "f3382744-4512-410c-ab0c-d22ec35b22a0",
+      "side": "buy",
+      "ticker": "COWZ",
+      "qty": "0.138660",
+      "avg": "72.1186",
+      "sizeUsd": 10,
+      "orderId": "6a8c6bc9-d25a-4aa2-8bce-a5981e32200a",
+      "at": "2026-08-24T16:05:30Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
+      "survivorId": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
+      "side": "buy",
+      "ticker": "SPY",
+      "qty": "0.013072",
+      "avg": "764.9399",
+      "sizeUsd": 10,
+      "orderId": "6a8c6bd6-ce1e-4e00-ba72-2bbdd6b934aa",
+      "at": "2026-08-24T16:05:42Z"
     },
     {
       "type": "fill",
@@ -657,6 +1347,18 @@
     },
     {
       "type": "fill",
+      "id": "fill-6a8dad83-b4c0-4151-a560-c429b721c13c",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "buy",
+      "ticker": "QID",
+      "qty": "0.163795",
+      "avg": "14.4999",
+      "sizeUsd": 6,
+      "orderId": "6a8dad83-b4c0-4151-a560-c429b721c13c",
+      "at": "2026-08-25T14:58:11Z"
+    },
+    {
+      "type": "fill",
       "id": "fill-opus-qid",
       "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
       "side": "buy",
@@ -692,6 +1394,18 @@
     },
     {
       "type": "fill",
+      "id": "fill-grok-45-hood-sell",
+      "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "side": "sell",
+      "ticker": "HOOD",
+      "qty": "0.046425",
+      "avg": "110.4536",
+      "sizeUsd": 5,
+      "at": "2026-08-25T14:58:50Z",
+      "remainNote": "remainder after Tue sell 0.046425 @ 110.4536 island lot"
+    },
+    {
+      "type": "fill",
       "id": "fill-composer-soxl",
       "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
       "side": "buy",
@@ -704,15 +1418,15 @@
     },
     {
       "type": "fill",
-      "id": "fill-grok-45-hood-sell",
+      "id": "fill-6a8dadb3-6257-41ee-b42e-398c1ed209bd",
       "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
-      "side": "sell",
-      "ticker": "HOOD",
-      "qty": "0.046425",
-      "avg": "110.4536",
-      "sizeUsd": 5,
-      "at": "2026-08-25T14:58:50Z",
-      "remainNote": "remainder after Tue sell 0.046425 @ 110.4536 island lot"
+      "side": "buy",
+      "ticker": "SOFI",
+      "qty": "0.105888",
+      "avg": "18.8878",
+      "sizeUsd": 2,
+      "orderId": "6a8dadb3-6257-41ee-b42e-398c1ed209bd",
+      "at": "2026-08-25T14:58:59Z"
     },
     {
       "type": "fill",
@@ -871,6 +1585,18 @@
     },
     {
       "type": "fill",
+      "id": "fill-6a8efeab-aa2f-4ac7-8027-25ac10131311",
+      "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "side": "buy",
+      "ticker": "MSFT",
+      "qty": "0.004037",
+      "avg": "495.3041",
+      "sizeUsd": 2,
+      "orderId": "6a8efeab-aa2f-4ac7-8027-25ac10131311",
+      "at": "2026-08-26T14:56:43Z"
+    },
+    {
+      "type": "fill",
       "id": "fill-kimi-msft",
       "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
       "side": "buy",
@@ -880,6 +1606,18 @@
       "sizeUsd": 2,
       "orderId": "6a8efeab-aa2f-4ac7-8027-25ac10131311",
       "at": "2026-08-26T14:56:43Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a8efeac-5a94-4546-9492-25ab890f47bb",
+      "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "side": "buy",
+      "ticker": "COST",
+      "qty": "0.002092",
+      "avg": "955.8499",
+      "sizeUsd": 2,
+      "orderId": "6a8efeac-5a94-4546-9492-25ab890f47bb",
+      "at": "2026-08-26T14:56:44Z"
     },
     {
       "type": "fill",
@@ -1219,20 +1957,6 @@
     },
     {
       "type": "fill",
-      "id": "fill-grok-46-tsla-sell",
-      "survivorId": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
-      "side": "sell",
-      "ticker": "TSLA",
-      "qty": "0.028074",
-      "avg": "347.45",
-      "sizeUsd": 9.7543,
-      "orderId": "6a91bda2-659b-4605-8be5-dd19192bed1d",
-      "at": "2026-08-28T16:56:00Z",
-      "cashAfter": 9.7543,
-      "cashNote": "Fri mid sold full island TSLA 0.028074 @ 347.45 order 6a91bda2"
-    },
-    {
-      "type": "fill",
       "id": "fill-fable-gld-sell",
       "survivorId": "6ff86687-5f96-40cb-84f4-a7282bce28af",
       "side": "sell",
@@ -1244,6 +1968,20 @@
       "at": "2026-08-28T16:56:00Z",
       "cashAfter": 9.5985,
       "cashNote": "Fri mid sold full island GLD 0.023393 @ 410.3134 order 6a91bdc5"
+    },
+    {
+      "type": "fill",
+      "id": "fill-grok-46-tsla-sell",
+      "survivorId": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+      "side": "sell",
+      "ticker": "TSLA",
+      "qty": "0.028074",
+      "avg": "347.45",
+      "sizeUsd": 9.7543,
+      "orderId": "6a91bda2-659b-4605-8be5-dd19192bed1d",
+      "at": "2026-08-28T16:56:00Z",
+      "cashAfter": 9.7543,
+      "cashNote": "Fri mid sold full island TSLA 0.028074 @ 347.45 order 6a91bda2"
     },
     {
       "type": "mark",
@@ -1642,6 +2380,450 @@
           "livingCount": 5
         }
       }
+    },
+    {
+      "type": "fill",
+      "id": "fill-composer-soxl-sell-mon-open",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "sell",
+      "ticker": "SOXL",
+      "qty": "0.034595",
+      "avg": "113.240100",
+      "sizeUsd": 3.9175435095,
+      "orderId": "6a9586b0-c85e-446f-8f58-deeb6898cca8",
+      "at": "2026-08-31T13:50:41.036Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a9586b3-4e0c-43ab-8807-5e38102d0a99",
+      "survivorId": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.155884",
+      "avg": "64.1499",
+      "sizeUsd": 10,
+      "orderId": "6a9586b3-4e0c-43ab-8807-5e38102d0a99",
+      "at": "2026-08-31T13:50:43.717Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a9586ba-0ae7-4913-aa8d-c10e388e26bd",
+      "survivorId": "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.029770",
+      "avg": "64.1567",
+      "sizeUsd": 1.91,
+      "orderId": "6a9586ba-0ae7-4913-aa8d-c10e388e26bd",
+      "at": "2026-08-31T13:50:50.95Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a9586e4-caae-40ae-9373-4b1c56a7a8e8",
+      "survivorId": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.132529",
+      "avg": "64.1367",
+      "sizeUsd": 8.5,
+      "orderId": "6a9586e4-caae-40ae-9373-4b1c56a7a8e8",
+      "at": "2026-08-31T13:51:32.61Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a9586f6-af58-4788-8c86-8ee3115db2d8",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "buy",
+      "ticker": "XOM",
+      "qty": "0.024227",
+      "avg": "160.9750",
+      "sizeUsd": 3.9,
+      "orderId": "6a9586f6-af58-4788-8c86-8ee3115db2d8",
+      "at": "2026-08-31T13:51:51.146Z"
+    },
+    {
+      "type": "mark",
+      "id": "s1e02-mon-mid",
+      "kind": "mark",
+      "at": "2026-08-31T14:11:24Z",
+      "throughAt": "2026-08-31T14:11:24Z",
+      "label": "Mon Aug 31 mid · last-trade ~7:01 AM PT",
+      "dayPctPriorOfficial": false,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.7434,
+          "weekPct": -0.11,
+          "monthPct": -0.11,
+          "dayPct": -0.11,
+          "priorMarkUsd": 9.7543
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 9.9851,
+          "weekPct": -0.15,
+          "monthPct": -0.15,
+          "dayPct": -0.15,
+          "priorMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.5536,
+          "weekPct": 0.94,
+          "monthPct": 0.94,
+          "dayPct": 0.94,
+          "priorMarkUsd": 10.4553
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.913,
+          "weekPct": 0.1,
+          "monthPct": 0.1,
+          "dayPct": 0.1,
+          "priorMarkUsd": 9.9028
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.6886,
+          "weekPct": 0.17,
+          "monthPct": 0.17,
+          "dayPct": 0.17,
+          "priorMarkUsd": 9.6723
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 11.3485,
+          "weekPct": -1.83,
+          "monthPct": -1.83,
+          "dayPct": -1.83,
+          "priorMarkUsd": 11.5599
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 11.9129,
+          "weekPct": -0.31,
+          "monthPct": -0.31,
+          "dayPct": -0.31,
+          "priorMarkUsd": 11.9497
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 0,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": -2.91,
+          "priorMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 11.9305,
+          "weekPct": -0.35,
+          "monthPct": -0.35,
+          "dayPct": -0.35,
+          "priorMarkUsd": 11.9725
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 11.9197,
+          "weekPct": 0,
+          "monthPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 11.9197
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 12.0589,
+          "weekPct": -0.17,
+          "monthPct": -0.17,
+          "dayPct": -0.17,
+          "priorMarkUsd": 12.0798
+        }
+      }
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a959735-3b50-4cb0-b5da-3bee50d170d6",
+      "survivorId": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
+      "side": "buy",
+      "ticker": "SPY",
+      "qty": "0.001304",
+      "avg": "766.3699",
+      "sizeUsd": 1,
+      "orderId": "6a959735-3b50-4cb0-b5da-3bee50d170d6",
+      "at": "2026-08-31T15:01:09.655Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a959735-05c6-4b55-84f6-bf374ffd4413",
+      "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
+      "side": "buy",
+      "ticker": "SPY",
+      "qty": "0.013048",
+      "avg": "766.3449",
+      "sizeUsd": 10,
+      "orderId": "6a959735-05c6-4b55-84f6-bf374ffd4413",
+      "at": "2026-08-31T15:01:09.78Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a95974e-9fda-43e9-ac58-d52a2a067a15",
+      "survivorId": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+      "side": "buy",
+      "ticker": "CVX",
+      "qty": "0.014600",
+      "avg": "205.4708",
+      "sizeUsd": 3,
+      "orderId": "6a95974e-9fda-43e9-ac58-d52a2a067a15",
+      "at": "2026-08-31T15:01:34.517Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a95974e-7dcb-48c7-a9f6-c669792fa852",
+      "survivorId": "f3382744-4512-410c-ab0c-d22ec35b22a0",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.030111",
+      "avg": "63.4299",
+      "sizeUsd": 1.91,
+      "orderId": "6a95974e-7dcb-48c7-a9f6-c669792fa852",
+      "at": "2026-08-31T15:01:34.648Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a959768-2e1c-420a-8456-0b32c6d0d659",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.082785",
+      "avg": "63.4167",
+      "sizeUsd": 5.25,
+      "orderId": "6a959768-2e1c-420a-8456-0b32c6d0d659",
+      "at": "2026-08-31T15:02:00.466Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a959768-83d9-404a-95e6-dd4e1d805028",
+      "survivorId": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
+      "side": "buy",
+      "ticker": "XLE",
+      "qty": "0.134027",
+      "avg": "63.4199",
+      "sizeUsd": 8.5,
+      "orderId": "6a959768-83d9-404a-95e6-dd4e1d805028",
+      "at": "2026-08-31T15:02:00.589Z"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6a959769-ddf3-4640-98eb-aef746d11700",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "buy",
+      "ticker": "OIH",
+      "qty": "0.005312",
+      "avg": "423.5199",
+      "sizeUsd": 2.25,
+      "orderId": "6a959769-ddf3-4640-98eb-aef746d11700",
+      "at": "2026-08-31T15:02:01.423Z"
+    },
+    {
+      "type": "mark",
+      "id": "s1e02-mon-open",
+      "kind": "open",
+      "at": "2026-08-31T15:02:51Z",
+      "throughAt": "2026-08-31T15:02:51Z",
+      "label": "Mon Aug 31 open catch-up · last-trade ~8:02 AM PT",
+      "dayPctPriorOfficial": false,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 9.6527,
+          "weekPct": -1.04,
+          "monthPct": -1.04,
+          "dayPct": -1.04,
+          "priorMarkUsd": 9.7543
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 9.8784,
+          "weekPct": -1.22,
+          "monthPct": -1.22,
+          "dayPct": -1.22,
+          "priorMarkUsd": 10
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 10.5126,
+          "weekPct": 0.55,
+          "monthPct": 0.55,
+          "dayPct": 0.55,
+          "priorMarkUsd": 10.4553
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 9.9089,
+          "weekPct": 0.06,
+          "monthPct": 0.06,
+          "dayPct": 0.06,
+          "priorMarkUsd": 9.9028
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 9.9986,
+          "weekPct": -0.01,
+          "monthPct": -0.01,
+          "dayPct": -0.01,
+          "priorMarkUsd": 10
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 9.7115,
+          "weekPct": 0.41,
+          "monthPct": 0.41,
+          "dayPct": 0.41,
+          "priorMarkUsd": 9.6723
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 11.4265,
+          "weekPct": -1.15,
+          "monthPct": -1.15,
+          "dayPct": -1.15,
+          "priorMarkUsd": 11.5599
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 11.918,
+          "weekPct": -0.27,
+          "monthPct": -0.27,
+          "dayPct": -0.27,
+          "priorMarkUsd": 11.9497
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 0,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": -2.91,
+          "priorMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 11.9066,
+          "weekPct": -0.55,
+          "monthPct": -0.55,
+          "dayPct": -0.55,
+          "priorMarkUsd": 11.9725
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 11.9117,
+          "weekPct": -0.07,
+          "monthPct": -0.07,
+          "dayPct": -0.07,
+          "priorMarkUsd": 11.9197
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 12.0687,
+          "weekPct": -0.09,
+          "monthPct": -0.09,
+          "dayPct": -0.09,
+          "priorMarkUsd": 12.0798
+        }
+      }
+    },
+    {
+      "type": "mark",
+      "id": "s1e02-cash-add",
+      "kind": "cash-add",
+      "at": "2026-08-31T16:00:00Z",
+      "throughAt": "2026-08-31T16:00:00Z",
+      "label": "Mon Aug 31 Episode 2 $10 cash add to eleven living (no new stock fills). Theme-tape raise printed $110.30 vs $110 (30 cents leftover cash, not a 12th book). No Fable.",
+      "dayPctPriorOfficial": false,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 19.6527,
+          "weekPct": -0.51,
+          "monthPct": -0.51,
+          "dayPct": -0.51,
+          "priorMarkUsd": 19.7543
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 19.8784,
+          "weekPct": -0.61,
+          "monthPct": -0.61,
+          "dayPct": -0.61,
+          "priorMarkUsd": 20
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 20.5126,
+          "weekPct": 0.28,
+          "monthPct": 0.28,
+          "dayPct": 0.28,
+          "priorMarkUsd": 20.4553
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 19.9089,
+          "weekPct": 0.03,
+          "monthPct": 0.03,
+          "dayPct": 0.03,
+          "priorMarkUsd": 19.9028
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 19.9986,
+          "weekPct": -0.01,
+          "monthPct": -0.01,
+          "dayPct": -0.01,
+          "priorMarkUsd": 20
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 19.7115,
+          "weekPct": 0.2,
+          "monthPct": 0.2,
+          "dayPct": 0.2,
+          "priorMarkUsd": 19.6723
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 21.4265,
+          "weekPct": -0.62,
+          "monthPct": -0.62,
+          "dayPct": -0.62,
+          "priorMarkUsd": 21.5599
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 21.918,
+          "weekPct": -0.14,
+          "monthPct": -0.14,
+          "dayPct": -0.14,
+          "priorMarkUsd": 21.9497
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 0,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": -2.91,
+          "priorMarkUsd": 9.8859
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 21.9066,
+          "weekPct": -0.3,
+          "monthPct": -0.3,
+          "dayPct": -0.3,
+          "priorMarkUsd": 21.9725
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 21.9117,
+          "weekPct": -0.04,
+          "monthPct": -0.04,
+          "dayPct": -0.04,
+          "priorMarkUsd": 21.9197
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 22.0687,
+          "weekPct": -0.05,
+          "monthPct": -0.05,
+          "dayPct": -0.05,
+          "priorMarkUsd": 22.0798
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -0.62,
+          "combinedMonthPct": -0.62,
+          "combinedDayPct": -0.62,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": -1.15,
+          "combinedMonthPct": -1.15,
+          "combinedDayPct": -1.15,
+          "livingCount": 5
+        }
+      }
     }
-  ]
+  ],
+  "liveSnapshotId": "s1e02-cash-add"
 }

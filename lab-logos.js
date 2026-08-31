@@ -38,12 +38,36 @@
   };
 
   const LAB_META = {
-    anthropic: { name: "Anthropic", file: "anthropic.svg" },
-    openai: { name: "OpenAI", file: "openai.svg" },
-    "google-gemini": { name: "Google", file: "google-gemini.svg" },
-    xai: { name: "xAI", file: "xai.svg" },
-    cursor: { name: "Cursor", file: "cursor.svg" },
-    moonshot: { name: "Moonshot", file: "moonshot.svg" }
+    anthropic: {
+      name: "Anthropic",
+      file: "anthropic.svg",
+      ceo: { name: "Dario Amodei", twitter: "DarioAmodei" }
+    },
+    openai: {
+      name: "OpenAI",
+      file: "openai.svg",
+      ceo: { name: "Sam Altman", twitter: "sama" }
+    },
+    "google-gemini": {
+      name: "Google",
+      file: "google-gemini.svg",
+      ceo: { name: "Demis Hassabis", twitter: "demishassabis" }
+    },
+    xai: {
+      name: "xAI",
+      file: "xai.svg",
+      ceo: { name: "Elon Musk", twitter: "elonmusk" }
+    },
+    cursor: {
+      name: "Cursor",
+      file: "cursor.svg",
+      ceo: { name: "Michael Truell", twitter: "mntruell" }
+    },
+    moonshot: {
+      name: "Moonshot",
+      file: "moonshot.svg",
+      ceo: { name: "Yang Zhilin", twitter: "Kimi_Moonshot" }
+    }
   };
 
   function basePrefix() {
@@ -56,9 +80,10 @@
     const key = String(idOrSlug);
     if (LAB_BY_SLUG[key]) return key;
     if (SLUG_BY_NICK[key]) return SLUG_BY_NICK[key];
-    // portrait path: cast/<slug>/portrait.jpg
+    // portrait path: cast/<slug>/portrait.jpg (or a leftover nickname folder)
     const m = key.match(/cast\/([^/]+)\//);
     if (m && LAB_BY_SLUG[m[1]]) return m[1];
+    if (m && SLUG_BY_NICK[m[1]]) return SLUG_BY_NICK[m[1]];
     return null;
   }
 
@@ -85,6 +110,17 @@
   function labNameFor(idOrSlug) {
     const meta = labMeta(labIdForSlug(idOrSlug));
     return meta ? meta.name : "";
+  }
+
+  function ceoFor(idOrSlug) {
+    const meta = labMeta(labIdForSlug(idOrSlug));
+    return meta && meta.ceo ? meta.ceo : null;
+  }
+
+  function twitterUrlFor(idOrSlug) {
+    const ceo = ceoFor(idOrSlug);
+    if (!ceo || !ceo.twitter) return "";
+    return "https://x.com/" + encodeURIComponent(ceo.twitter);
   }
 
   function escapeAttr(str) {
@@ -121,6 +157,8 @@
     logoUrlForSlug: logoUrlFor,
     labNameFor,
     labNameForSlug: labNameFor,
+    ceoFor,
+    twitterUrlFor,
     labMarkHtml
   };
 })(typeof window !== "undefined" ? window : globalThis);

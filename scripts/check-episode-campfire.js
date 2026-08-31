@@ -94,6 +94,9 @@ if (
 if (!appJs.includes("data-ticker-diagram") || !appJs.includes("MONEY_TICKER_DIAGRAMS")) {
   throw new Error("app.js money ticker missing diagram tab wiring");
 }
+if (!appJs.includes("currentPageEpisode(season)") || !appJs.includes("Page episode, not the live week")) {
+  throw new Error("app.js week ticker must filter snapshots by the page episode, not the live week");
+}
 if (!appJs.includes("jaggedSeriesSamples")) {
   throw new Error("app.js money ticker must use jagged Robinhood-style paths, not boxy step H/V");
 }

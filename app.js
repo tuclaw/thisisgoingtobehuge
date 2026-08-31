@@ -786,6 +786,100 @@ function renderFaces(season) {
     .join("");
 }
 
+function castInTribeOrder(season) {
+  const tribes = season.tribes || [];
+  const people = [];
+  tribes.forEach((tribe) => {
+    (season.survivors || [])
+      .filter((s) => s && s.tribeId === tribe.id)
+      .forEach((s) => people.push(s));
+  });
+  if (!people.length) {
+    (season.survivors || []).forEach((s) => people.push(s));
+  }
+  return people;
+}
+
+const LETTERS_PREVIEW_ROWS = 2;
+const LETTERS_DESKTOP_COLS = 2;
+
+function lettersPreviewCount() {
+  const mobile =
+    typeof window.matchMedia === "function" && window.matchMedia("(max-width: 720px)").matches;
+  return LETTERS_PREVIEW_ROWS * (mobile ? 1 : LETTERS_DESKTOP_COLS);
+}
+
+function syncLettersMore(list, btn) {
+  if (!list || !btn) return;
+  const count = list.querySelectorAll(".letter-item").length;
+  const extra = count > lettersPreviewCount();
+  btn.hidden = !extra;
+  if (!extra) {
+    list.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "Show more";
+  }
+}
+
+function initLettersMore() {
+  const list = document.getElementById("letter-list");
+  const btn = document.getElementById("letter-more");
+  if (!list || !btn || btn.dataset.bound === "1") return;
+  btn.dataset.bound = "1";
+  btn.addEventListener("click", () => {
+    const open = list.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = open ? "Show less" : "Show more";
+  });
+  if (typeof window.matchMedia === "function") {
+    const mq = window.matchMedia("(max-width: 720px)");
+    const onBreak = () => syncLettersMore(list, btn);
+    if (typeof mq.addEventListener === "function") mq.addEventListener("change", onBreak);
+    else if (typeof mq.addListener === "function") mq.addListener(onBreak);
+  }
+}
+
+function renderLettersFromHome(season) {
+  const list = document.getElementById("letter-list");
+  if (!list) return;
+  const Labs = globalThis.LabLogos;
+  const rows = castInTribeOrder(season)
+    .map((s) => {
+      const slug = slugOf(s);
+      const model = modelOf(s);
+      const ceo = Labs && typeof Labs.ceoFor === "function" ? Labs.ceoFor(slug) : null;
+      if (!ceo || !ceo.twitter || !ceo.name) return "";
+      const href =
+        Labs && typeof Labs.twitterUrlFor === "function"
+          ? Labs.twitterUrlFor(slug)
+          : "https://x.com/" + encodeURIComponent(ceo.twitter);
+      if (!href) return "";
+      const mark =
+        Labs && typeof Labs.labMarkHtml === "function" ? Labs.labMarkHtml({ slug: slug }) : "";
+      return `<li class="letter-item ${escapeHtml(s.tribeId || "")}">
+      <a class="letter-row" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">
+        ${mark}
+        <span class="letter-copy">
+          <span class="letter-model">${escapeHtml(model)}</span>
+          <span class="letter-from">Letter from ${escapeHtml(ceo.name)}</span>
+        </span>
+        <span class="letter-handle">@${escapeHtml(ceo.twitter)}</span>
+      </a>
+    </li>`;
+    })
+    .filter(Boolean)
+    .join("");
+  list.innerHTML = rows;
+  list.classList.remove("is-open");
+  const btn = document.getElementById("letter-more");
+  if (btn) {
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "Show more";
+    syncLettersMore(list, btn);
+  }
+  initLettersMore();
+}
+
 function renderMoneyJourney(season) {
   const race = document.getElementById("money-race");
   const totals = document.getElementById("home-tribe-totals");
@@ -1844,13 +1938,16 @@ function episodeWeekBounds(ep) {
   if (!weekStart || !weekEnd) {
     const parsed = parseEpisodeWeekLabel(ep.weekLabel);
     if (parsed) {
-      weekStart = parsed.weekStart;
-      weekEnd = parsed.weekEnd;
+      weekStart = weekStart || parsed.weekStart;
+      weekEnd = weekEnd || parsed.weekEnd;
     }
   }
-  if (!weekStart || !weekEnd) return null;
-  const startMs = Date.parse(`${weekStart}T00:00:00-07:00`);
-  const endMs = Date.parse(`${weekEnd}T23:59:59-07:00`);
+  const startMs = weekStart ? Date.parse(`${weekStart}T00:00:00-07:00`) : NaN;
+  const endMs = weekEnd
+    ? Date.parse(`${weekEnd}T23:59:59-07:00`)
+    : ep.tribalAt
+      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
+      : NaN;
   if (Number.isNaN(startMs) || Number.isNaN(endMs)) return null;
   return { startMs, endMs, weekStart, weekEnd };
 }
@@ -2223,6 +2320,7 @@ function snapshotsForTickerRange(season, range) {
   const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
   if (!all.length) return [];
   if (range !== "week") return all;
+  /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
   const bounds = episodeWeekBounds(tickerEpisodeForRange(season));
   if (!bounds) return all;
   const filtered = all.filter((snap) => {
@@ -3439,6 +3537,7 @@ function initArchifyEmbedFlow() {
 function render(season, sourceNote) {
   renderIslandPot(season);
   renderFaces(season);
+  renderLettersFromHome(season);
   renderSurvivor(season);
   renderStandings(season);
   renderSeasonHub(season);
@@ -3493,10 +3592,6 @@ const CONTRIBUTE = {
   url: "https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00",
   buyButtonId: "buy_btn_1U8ZoTCE93DBZfRIsfo7VX3P",
   publishableKey: "pk_live_sbH7i2tYMmt7NkfHtGrU1FNL"
-};
-
-const ROBINHOOD = {
-  url: "https://join.robinhood.com/tuckerh138"
 };
 
 let fuelPromptReturnFocus = null;
@@ -3648,17 +3743,6 @@ function initContribute() {
       CONTRIBUTE.url +
       '" target="_blank" rel="noopener noreferrer">Contribute via Stripe</a> to help keep the torches lit on Liquidation Island.</p>';
     footer.insertBefore(block, footer.firstChild);
-  }
-
-  if (footer && !footer.querySelector(".robinhood-block")) {
-    const rh = document.createElement("div");
-    rh.className = "robinhood-block";
-    rh.innerHTML =
-      '<p class="robinhood-credit">Made possible by the Robinhood MCP.</p>' +
-      '<p class="robinhood-referral"><a href="' +
-      ROBINHOOD.url +
-      '" target="_blank" rel="noopener noreferrer">Sign up for Robinhood with my link and we\'ll both pick our own gift stock \uD83C\uDF81</a></p>';
-    footer.appendChild(rh);
   }
 
   if (!document.querySelector('script[src*="buy-button.js"]')) {

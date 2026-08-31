@@ -5269,6 +5269,128 @@ body.is-titles .replay-trailer {
   margin-bottom: 0.4rem;
 }
 
+.letters-band {
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 0%, rgba(212, 160, 23, 0.12), transparent 55%),
+    radial-gradient(ellipse 40% 50% at 8% 80%, rgba(14, 107, 107, 0.08), transparent 50%),
+    radial-gradient(ellipse 40% 50% at 92% 80%, rgba(196, 90, 18, 0.08), transparent 50%);
+}
+
+.letters-band h2 {
+  max-width: 18em;
+}
+
+.letter-list {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.letter-list:not(.is-open) .letter-item:nth-child(n + 5) {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .letter-list {
+    grid-template-columns: 1fr;
+  }
+
+  .letter-list:not(.is-open) .letter-item:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+.letter-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 1.15rem 0 0;
+}
+
+.letter-more-wrap:has(#letter-more[hidden]) {
+  display: none;
+}
+
+.letter-item {
+  margin: 0;
+}
+
+.letter-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem 0.85rem;
+  padding: 0.85rem 1rem;
+  color: var(--parchment);
+  text-decoration: none;
+  background: rgba(20, 15, 11, 0.72);
+  border: 1px solid rgba(196, 165, 116, 0.16);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
+}
+
+.letter-item.bidu .letter-row {
+  border-top: 3px solid #0e6b6b;
+}
+
+.letter-item.askara .letter-row {
+  border-top: 3px solid #c45a12;
+}
+
+.letter-row:hover {
+  color: var(--bone);
+  transform: translateY(-3px);
+}
+
+.letter-item.bidu .letter-row:hover {
+  border-color: #0e6b6b;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(14, 107, 107, 0.4);
+}
+
+.letter-item.askara .letter-row:hover {
+  border-color: #c45a12;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(196, 90, 18, 0.4);
+}
+
+.letter-row .lab-mark {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.letter-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.15rem;
+}
+
+.letter-model {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+}
+
+.letter-from {
+  font-size: 0.95rem;
+  color: var(--sand);
+}
+
+.letter-handle {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--gold-bright);
+  white-space: nowrap;
+}
+
+.letter-row:hover .letter-handle {
+  color: var(--parchment);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .face-grid {
   display: grid;
   gap: 2rem;
@@ -5984,8 +6106,13 @@ body.is-titles .replay-trailer {
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(212, 160, 23, 0.12), transparent 55%);
 }
 
+.diagram-band {
+  overflow-x: clip;
+}
+
 .diagram-band .wrap {
   max-width: 80rem;
+  min-width: 0;
 }
 
 .diagram-band-title,
@@ -6004,11 +6131,12 @@ body.is-titles .replay-trailer {
 }
 
 .archify-embed {
-  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  contain: inline-size;
   margin: 0 auto 1.25rem;
   padding: 0;
-  aspect-ratio: 1140 / 680;
-  min-height: 28rem;
   border: 1px solid rgba(212, 160, 23, 0.28);
   border-radius: 0.65rem;
   background:
@@ -6020,19 +6148,32 @@ body.is-titles .replay-trailer {
   overflow: hidden;
 }
 
+.archify-embed-frame {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  aspect-ratio: 1140 / 680;
+  overflow: hidden;
+}
+
 .archify-embed iframe {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   border: 0;
   background: #020617;
 }
 
-@media (max-width: 720px) {
-  .archify-embed {
-    min-height: 20rem;
+/* 28rem * 1140/680 ≈ 751px transferred min-width. Only apply when
+   the column is already wider than that, so the floor never stretches
+   the page. On a 1120px wrap the aspect height already exceeds 28rem. */
+@media (min-width: 900px) {
+  .archify-embed-frame {
+    min-height: 28rem;
   }
 }
 

@@ -22,8 +22,8 @@
       {
         "id": "trades",
         "label": "Stock purchases",
-        "focus": ["contestant-bots", "host-bot", "robinhood"],
-        "note": "Trade recommendations flow to the host bot, which executes orders through Robinhood MCP."
+        "focus": ["contestant-bots", "host-bot", "trade-api"],
+        "note": "Trade recommendations flow to the host bot, which executes orders through the trade API."
       },
       {
         "id": "twelve",
@@ -86,9 +86,9 @@
       "size": [140, 60]
     },
     {
-      "id": "robinhood",
+      "id": "trade-api",
       "type": "external",
-      "label": "Robinhood MCP",
+      "label": "Trade API",
       "sublabel": "stock orders",
       "pos": [500, 520],
       "size": [150, 60]
@@ -164,7 +164,7 @@
     {
       "id": "host-trade",
       "from": "host-bot",
-      "to": "robinhood",
+      "to": "trade-api",
       "label": "execute orders",
       "fromSide": "bottom",
       "toSide": "top",
@@ -178,7 +178,7 @@
       "items": [
         "Runs the game: marks, immunity, tribal votes, boots",
         "Receives trade recommendations from contestant bots",
-        "Executes stock orders through Robinhood MCP"
+        "Executes stock orders through the trade API"
       ]
     },
     {

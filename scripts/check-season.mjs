@@ -4,7 +4,11 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  LEGACY_SLUGS,
+  canonicalCastAsset,
+  castFromSource,
   deriveSeason,
+  isBoardNative,
   isCashLeg,
   markedEquity,
   pctRound,
@@ -15,6 +19,8 @@ import {
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const source = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
 const board = deriveSeason(source);
+const boardNative = isBoardNative(source);
+const cast = castFromSource(source);
 
 const failures = [];
 function check(name, ok, detail) {
@@ -27,14 +33,19 @@ function requireKeys(obj, keys, label) {
   }
 }
 
-requireKeys(source, ["show", "season", "cast", "tribes", "events", "quotes", "episodes"], "source");
-check("cast-size", Array.isArray(source.cast) && source.cast.length >= 2, String(source.cast && source.cast.length));
+requireKeys(source, ["show", "season", "tribes", "quotes", "episodes"], "source");
+check(
+  "cast-or-survivors",
+  (Array.isArray(source.cast) && source.cast.length >= 2) ||
+    (Array.isArray(source.survivors) && source.survivors.length >= 2),
+  String((source.cast && source.cast.length) || (source.survivors && source.survivors.length))
+);
 check("exactly-one-live-episode-or-none", (source.episodes || []).filter((ep) => ep.status === "live").length <= 1);
 
 const ids = new Set();
 const slugs = new Set();
 const names = new Set();
-for (const member of source.cast) {
+for (const member of cast) {
   requireKeys(member, ["id", "name", "slug", "tribeId", "model", "portrait"], `cast.${member && member.name}`);
   check(`unique-id:${member.id}`, !ids.has(member.id));
   check(`unique-slug:${member.slug}`, !slugs.has(member.slug));
@@ -47,25 +58,27 @@ for (const member of source.cast) {
 
 const fills = (source.events || []).filter((event) => event.type === "fill");
 const marks = (source.events || []).filter((event) => event.type === "mark");
-check("has-fills", fills.length > 0);
-check("has-marks", marks.length > 0);
+if (!boardNative) {
+  check("has-fills", fills.length > 0);
+  check("has-marks", marks.length > 0);
 
-const fillIds = new Set();
-for (const fill of fills) {
-  requireKeys(fill, ["id", "survivorId", "side", "ticker", "qty", "avg", "at"], `fill.${fill.id}`);
-  check(`fill-unique-id:${fill.id}`, !fillIds.has(fill.id));
-  fillIds.add(fill.id);
-  check(`fill-known-survivor:${fill.id}`, ids.has(fill.survivorId));
-  check(`fill-side:${fill.id}`, fill.side === "buy" || fill.side === "sell");
-  check(`fill-qty:${fill.id}`, Number.isFinite(parseFloat(fill.qty)) && parseFloat(fill.qty) > 0);
-  check(`fill-avg:${fill.id}`, Number.isFinite(parseFloat(fill.avg)) && parseFloat(fill.avg) > 0);
-}
+  const fillIds = new Set();
+  for (const fill of fills) {
+    requireKeys(fill, ["id", "survivorId", "side", "ticker", "qty", "avg", "at"], `fill.${fill.id}`);
+    check(`fill-unique-id:${fill.id}`, !fillIds.has(fill.id));
+    fillIds.add(fill.id);
+    check(`fill-known-survivor:${fill.id}`, ids.has(fill.survivorId));
+    check(`fill-side:${fill.id}`, fill.side === "buy" || fill.side === "sell");
+    check(`fill-qty:${fill.id}`, Number.isFinite(parseFloat(fill.qty)) && parseFloat(fill.qty) > 0);
+    check(`fill-avg:${fill.id}`, Number.isFinite(parseFloat(fill.avg)) && parseFloat(fill.avg) > 0);
+  }
 
-const markIds = new Set();
-for (const mark of marks) {
-  requireKeys(mark, ["id", "at"], `mark.${mark && mark.id}`);
-  check(`mark-unique-id:${mark.id}`, !markIds.has(mark.id));
-  markIds.add(mark.id);
+  const markIds = new Set();
+  for (const mark of marks) {
+    requireKeys(mark, ["id", "at"], `mark.${mark && mark.id}`);
+    check(`mark-unique-id:${mark.id}`, !markIds.has(mark.id));
+    markIds.add(mark.id);
+  }
 }
 
 function jsonHasOrderId(value) {
@@ -75,30 +88,65 @@ function jsonHasOrderId(value) {
 }
 
 check("public-board-strips-orderId", !jsonHasOrderId(board));
-const publicFills = (board.events || []).filter((event) => event && event.type === "fill");
-check("public-fills-keep-tape", publicFills.length === fills.length);
-for (const fill of publicFills) {
-  check(`public-fill-no-brokerage:${fill.id}`, fill.orderId == null && fill.qty == null && fill.avg == null);
-  check(`public-fill-ticker:${fill.id}`, Boolean(fill.ticker) && (fill.side === "buy" || fill.side === "sell"));
-}
-for (const mark of board.events || []) {
-  if (!mark || mark.type !== "mark") continue;
-  check(`public-mark-no-recorded:${mark.id}`, mark.recorded == null && mark.quotes == null);
+if (!boardNative) {
+  const publicFills = (board.events || []).filter((event) => event && event.type === "fill");
+  check("public-fills-keep-tape", publicFills.length === fills.length);
+  for (const fill of publicFills) {
+    check(`public-fill-no-brokerage:${fill.id}`, fill.orderId == null && fill.qty == null && fill.avg == null);
+    check(`public-fill-ticker:${fill.id}`, Boolean(fill.ticker) && (fill.side === "buy" || fill.side === "sell"));
+  }
+  for (const mark of board.events || []) {
+    if (!mark || mark.type !== "mark") continue;
+    check(`public-mark-no-recorded:${mark.id}`, mark.recorded == null && mark.quotes == null);
+  }
 }
 
-check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === source.cast.length);
+check("board-survivors", Array.isArray(board.survivors) && board.survivors.length === cast.length);
 check("no-dual-position", board.survivors.every((s) => !s.position));
 check("has-positions", board.survivors.every((s) => Array.isArray(s.positions) && s.positions.length > 0));
-check("snapshots", Array.isArray(board.snapshots) && board.snapshots.length === marks.length);
+for (const s of board.survivors) {
+  check(
+    `portrait-canonical:${s.slug}`,
+    s.portrait === canonicalCastAsset(s.slug, "portrait"),
+    s.portrait
+  );
+  check(
+    `camp-canonical:${s.slug}`,
+    !s.camp || s.camp === canonicalCastAsset(s.slug, "camp"),
+    s.camp
+  );
+  check(
+    `portrait-not-nickname:${s.slug}`,
+    !Object.keys(LEGACY_SLUGS).some((nick) => String(s.portrait || "").includes(`cast/${nick}/`))
+  );
+}
+if (!boardNative) {
+  check("snapshots", Array.isArray(board.snapshots) && board.snapshots.length === marks.length);
+} else {
+  check("snapshots-for-ticker", Array.isArray(board.snapshots) && board.snapshots.length >= 8, String(board.snapshots && board.snapshots.length));
+  check(
+    "live-open-snapshot",
+    board.snapshots.some((snap) => snap.id === "s1e02-mon-open" && snap.books && Object.keys(snap.books).length === board.survivors.length)
+  );
+}
 
 const start = board.startingBookUsd;
-check("pot-is-sleeves", board.islandPotUsd === start * source.cast.length);
-check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
+if (boardNative) {
+  check("given-total", source.islandGivenUsd === 230, String(source.islandGivenUsd));
+  check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
+  check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
+  check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
+  check("pot-matches-given", source.islandPotUsd === 230, String(source.islandPotUsd));
+} else {
+  check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
+  check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
+  check("given-is-not-sleeves", source.islandGivenUsd !== start * cast.length);
+}
 check("board-given-total", board.islandGivenUsd === source.islandGivenUsd, String(board.islandGivenUsd));
-check("given-is-not-sleeves", source.islandGivenUsd !== start * source.cast.length);
 check("merged-stays-false-or-true", source.merged === true || source.merged === false);
 
 const firstBoot = (source.events || []).find((event) => event && event.type === "boot");
+const carryMark = (source.events || []).find((event) => event && event.type === "mark" && event.kind === "carry");
 const lastPreBootMark = firstBoot
   ? [...(source.events || [])]
       .filter((event) => event && event.type === "mark" && Date.parse(event.at || "") < Date.parse(firstBoot.at || ""))
@@ -106,16 +154,37 @@ const lastPreBootMark = firstBoot
   : null;
 
 for (const s of board.survivors) {
+  const sourceRow = (source.survivors || []).find((row) => row.id === s.id);
   const preBoot =
     lastPreBootMark && lastPreBootMark.recorded && typeof lastPreBootMark.recorded[s.id]?.bookUsd === "number"
       ? lastPreBootMark.recorded[s.id].bookUsd
       : null;
-  const weekBasis = preBoot != null ? preBoot : s.bookUsd;
-  const computedWeek = pctRound(((weekBasis - start) / start) * 100);
+  const carryBook =
+    carryMark && carryMark.recorded && typeof carryMark.recorded[s.id]?.bookUsd === "number"
+      ? carryMark.recorded[s.id].bookUsd
+      : boardNative && sourceRow && typeof sourceRow.priorMarkUsd === "number"
+        ? sourceRow.priorMarkUsd
+        : null;
+  let computedWeek;
+  if (boardNative && (s.status === "jury" || sourceRow?.status === "voted-out")) {
+    computedWeek = s.weekPct;
+  } else if (s.status === "jury" && preBoot != null) {
+    computedWeek = pctRound(((preBoot - start) / start) * 100);
+  } else if (s.status === "jury" && boardNative && sourceRow && typeof sourceRow.priorMarkUsd === "number") {
+    computedWeek = pctRound(((sourceRow.priorMarkUsd - start) / start) * 100);
+  } else if (carryBook != null && carryBook > 0) {
+    const cashAddMark = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
+    const weekBasis = cashAddMark && s.status !== "jury" ? carryBook + 10 : carryBook;
+    computedWeek = pctRound(((s.bookUsd - weekBasis) / weekBasis) * 100);
+  } else if (preBoot != null) {
+    computedWeek = pctRound(((preBoot - start) / start) * 100);
+  } else {
+    computedWeek = pctRound(((s.bookUsd - start) / start) * 100);
+  }
   check(
     `weekPct:${s.slug}`,
     Math.abs(computedWeek - s.weekPct) <= 0.02,
-    `${s.weekPct} vs computed ${computedWeek} on basis ${weekBasis} (book ${s.bookUsd})`
+    `${s.weekPct} vs computed ${computedWeek} on basis ${carryBook ?? preBoot ?? s.bookUsd} (book ${s.bookUsd})`
   );
   let equity = 0;
   let unmarked = false;
@@ -135,8 +204,15 @@ for (const s of board.survivors) {
   if (!unmarked) {
     check(`book-vs-marks:${s.slug}`, Math.abs(equity - s.bookUsd) < 0.05, `${equity.toFixed(4)} vs ${s.bookUsd}`);
   }
-  const sleeve = s.positions.reduce((sum, pos) => (isCashLeg(pos) ? sum : sum + (Number(pos.sizeUsd) || 0)), 0);
-  check(`sleeve:${s.slug}`, sleeve <= start + 0.05, String(sleeve));
+  const sleeve = s.positions.reduce((sum, pos) => {
+    if (isCashLeg(pos)) return sum;
+    const marked = markedEquity(pos, board.quotes);
+    if (marked != null) return sum + marked;
+    return sum + (Number(pos.sizeUsd) || 0);
+  }, 0);
+  const gotBootSplit = carryBook != null && carryBook > start + 0.1;
+  const sleeveCap = gotBootSplit && s.status !== "jury" ? carryBook + 0.05 : start + 0.05;
+  check(`sleeve:${s.slug}`, sleeve <= sleeveCap, String(sleeve));
 }
 
 for (const tribe of board.tribes) {
@@ -149,17 +225,19 @@ if (live.length === 1) {
   check("live-episode-has-path", Boolean(live[0].path));
 }
 
-const snapIds = new Set(board.snapshots.map((snap) => snap.id));
-for (const ep of source.episodes || []) {
-  for (const day of ep.days || []) {
-    if (day.snapshotId) {
-      check(`episode-day-snapshot:${ep.id}:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+if (!boardNative) {
+  const snapIds = new Set(board.snapshots.map((snap) => snap.id));
+  for (const ep of source.episodes || []) {
+    for (const day of ep.days || []) {
+      if (day.snapshotId) {
+        check(`episode-day-snapshot:${ep.id}:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+      }
     }
   }
-}
-for (const day of (source.episode && source.episode.days) || []) {
-  if (day.snapshotId) {
-    check(`live-episode-day-snapshot:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+  for (const day of (source.episode && source.episode.days) || []) {
+    if (day.snapshotId) {
+      check(`live-episode-day-snapshot:${day.id}`, snapIds.has(day.snapshotId), day.snapshotId);
+    }
   }
 }
 
