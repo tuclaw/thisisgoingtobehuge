@@ -6485,24 +6485,10 @@ body.castaway-sheet-open {
   color: var(--gold-bright);
 }
 
-.castaway-status {
-  color: var(--sand);
-}
-
-.castaway-archetype,
-.castaway-bio,
 .castaway-empty {
   max-width: 22rem;
   margin: 0.35rem auto;
   color: var(--sand);
-}
-
-.castaway-archetype {
-  font-style: italic;
-}
-
-.castaway-bio {
-  color: var(--parchment);
 }
 
 .castaway-stats {

@@ -30,6 +30,9 @@ function fail(message) {
   if (!appJs.includes(needle)) fail("app.js missing castaway overlay piece: " + needle);
 });
 
+if (appJs.includes("castaway-archetype") || appJs.includes("castaway-bio") || appJs.includes("castaway-status")) {
+  fail("castaway sheet must not print status/archetype/bio copy");
+}
 if (appJs.includes('survivors/" + slug + ".html')) {
   fail("app.js still sends portraits to survivors/*.html");
 }

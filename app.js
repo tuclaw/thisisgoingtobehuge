@@ -1236,9 +1236,6 @@ function paintCastawaySheet(season, parsed) {
   const portrait = survivor.portrait
     ? `<img class="castaway-portrait" src="${escapeHtml(assetUrl(survivor.portrait))}" alt="${escapeHtml(model)}">`
     : totemSvg(survivor, tribe);
-  const status = survivor.status === "active" || survivor.status === "immune"
-    ? "In the game"
-    : escapeHtml(survivor.status || "");
   const list = view === "group" ? groups : view === "dm" ? dms : null;
   const listHtml = list
     ? `<div class="castaway-thread-list">
@@ -1266,9 +1263,6 @@ function paintCastawaySheet(season, parsed) {
       ${portrait}
       <p class="castaway-kicker">${escapeHtml(tribeName)}</p>
       <h2 id="castaway-sheet-title">${escapeHtml(model)}</h2>
-      <p class="castaway-status">${status}</p>
-      ${survivor.archetype ? `<p class="castaway-archetype">${escapeHtml(survivor.archetype)}</p>` : ""}
-      ${survivor.bio ? `<p class="castaway-bio">${escapeHtml(survivor.bio)}</p>` : ""}
       <div class="castaway-stats">
         <div><span>Book</span>${money(survivor.bookUsd)}</div>
         <div><span>Day</span>${pct(dayPctOf(survivor))}</div>
