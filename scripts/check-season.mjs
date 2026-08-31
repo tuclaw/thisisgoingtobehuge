@@ -181,6 +181,22 @@ for (const [i, council] of log.entries()) {
   check(`tribal-summary:${i}`, typeof council.summary === "string" && council.summary.includes(council.bootName));
 }
 
+const listingCopy = (source.episodes || [])
+  .map((ep) => [ep.title, ep.weekLabel, ep.tease].filter(Boolean).join(" "))
+  .join("\n");
+const seasonHub = readFileSync(join(root, "templates", "season.html"), "utf8");
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+const listStart = seasonHub.indexOf('id="episode-list"');
+const listBlock = listStart >= 0 ? seasonHub.slice(listStart, listStart + 1200) : seasonHub;
+for (const name of (source.tribalLog || []).map((entry) => entry && entry.bootName).filter(Boolean)) {
+  check(`episode-list-tease-no-boot:${name}`, !listingCopy.includes(name), name);
+  check(`season-hub-list-no-boot:${name}`, !listBlock.includes(name), name);
+}
+check(
+  "episode-list-no-boot-recap",
+  !appJs.includes("closedNote") && !appJs.includes("bootLine")
+);
+
 if (failures.length) {
   console.error("Season checks failed:\n- " + failures.join("\n- "));
   process.exit(1);
