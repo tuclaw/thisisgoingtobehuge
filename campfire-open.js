@@ -94,18 +94,37 @@
   }
 
   function tradesFromSeason(data) {
-    if (!data || !Array.isArray(data.events)) return [];
+    if (!data) return [];
     const byId = {};
     (data.survivors || data.cast || []).forEach(function (s) {
       if (s && s.id) byId[s.id] = s;
     });
     const trades = [];
-    data.events.forEach(function (ev) {
-      if (!ev || ev.type !== "fill") return;
-      const castId = castIdFromSurvivor(byId[ev.survivorId]);
-      const trade = normalizeTrade(ev, castId);
-      if (trade) trades.push(trade);
-    });
+    if (Array.isArray(data.events) && data.events.length) {
+      data.events.forEach(function (ev) {
+        if (!ev || ev.type !== "fill") return;
+        const castId = castIdFromSurvivor(byId[ev.survivorId]);
+        const trade = normalizeTrade(ev, castId);
+        if (trade) trades.push(trade);
+      });
+    } else {
+      (data.survivors || []).forEach(function (survivor) {
+        const castId = castIdFromSurvivor(survivor);
+        (survivor.positions || []).forEach(function (pos) {
+          if (!pos.orderId || !pos.filledAt) return;
+          const trade = normalizeTrade(
+            {
+              id: pos.orderId,
+              side: String(pos.action || "BUY").toLowerCase() === "sell" ? "sell" : "buy",
+              ticker: pos.ticker,
+              at: pos.filledAt
+            },
+            castId
+          );
+          if (trade) trades.push(trade);
+        });
+      });
+    }
     trades.sort(function (a, b) {
       if (a.at === b.at) return 0;
       return a.at < b.at ? 1 : -1;

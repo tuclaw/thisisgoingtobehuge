@@ -15,6 +15,158 @@ export const LEGACY_SLUGS = {
   reed: "kimi-k3"
 };
 
+export const MODEL_SLUGS = {
+  "Grok 4.6": "grok-4-6",
+  "Claude Sonnet 5": "claude-sonnet-5",
+  "Composer 2.5": "composer-2-5",
+  "Claude Opus 5": "claude-opus-5",
+  "Gemini 3.7 Flash": "gemini-3-7-flash",
+  "GPT-5.6 Terra": "gpt-5-6-terra",
+  "Grok 4.5": "grok-4-5",
+  "GPT-5.6 Sol": "gpt-5-6-sol",
+  "Claude Fable 5": "claude-fable-5",
+  "Gemini 3.1 Pro": "gemini-3-1-pro",
+  "GPT-5.6 Luna": "gpt-5-6-luna",
+  "Kimi K3": "kimi-k3"
+};
+
+export function isBoardNative(source) {
+  return Array.isArray(source?.survivors) && source.survivors.length > 0 && !Array.isArray(source.cast);
+}
+
+export function castFromSource(source) {
+  if (Array.isArray(source.cast) && source.cast.length) return source.cast;
+  return (source.survivors || []).map((s) => {
+    const slug = MODEL_SLUGS[s.name] || slugify(s.model || s.name);
+    const member = {
+      id: s.id,
+      name: s.name,
+      slug,
+      model: s.model || s.name,
+      tribeId: s.tribeId,
+      archetype: s.archetype,
+      status: s.status === "voted-out" ? "jury" : s.status,
+      immune: Boolean(s.immune),
+      monogram: s.monogram,
+      bio: s.bio,
+      portrait: `cast/${slug}/portrait.jpg`,
+      camp: `cast/${slug}/camp.jpg`
+    };
+    if (s.caption) member.caption = s.caption;
+    return member;
+  });
+}
+
+function audienceMarkLabel(label) {
+  return String(label || "")
+    .replace(/\brobinhood\s+/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function publicSurvivorFromBoard(member) {
+  const slug = member.slug || MODEL_SLUGS[member.name] || slugify(member.model || member.name);
+  const status = member.status === "voted-out" ? "jury" : member.status;
+  const out = {
+    id: member.id,
+    name: member.name,
+    slug,
+    tribeId: member.tribeId,
+    archetype: member.archetype,
+    status,
+    bookUsd: member.bookUsd,
+    weekPct: member.weekPct,
+    monthPct: member.monthPct,
+    dayPct: member.dayPct,
+    priorMarkUsd: member.priorMarkUsd,
+    immune: Boolean(member.immune),
+    monogram: member.monogram,
+    bio: member.bio,
+    caption: member.caption,
+    portrait: member.portrait || `cast/${slug}/portrait.jpg`,
+    camp: member.camp || `cast/${slug}/camp.jpg`,
+    model: member.model || member.name,
+    positions: (member.positions || []).map(publicPosition)
+  };
+  if (member.lastSession) out.lastSession = member.lastSession;
+  if (member.lastSource) out.lastSource = member.lastSource;
+  if (member.eodMarkUsd != null) out.eodMarkUsd = member.eodMarkUsd;
+  return out;
+}
+
+function fillsFromBoardNative(source) {
+  const fills = [];
+  for (const survivor of source.survivors || []) {
+    for (const pos of survivor.positions || []) {
+      if (!pos.orderId || !pos.filledAt) continue;
+      const ticker = tickerOf(pos);
+      if (!ticker || ticker === "CASH") continue;
+      fills.push({
+        type: "fill",
+        id: `fill-${pos.orderId}`,
+        at: pos.filledAt,
+        survivorId: survivor.id,
+        side: String(pos.action || "BUY").toLowerCase() === "sell" ? "sell" : "buy",
+        ticker
+      });
+    }
+  }
+  return fills.sort((a, b) => Date.parse(a.at || "") - Date.parse(b.at || ""));
+}
+
+function deriveBoardNative(source) {
+  const survivors = (source.survivors || []).map((s) =>
+    publicSurvivorFromBoard({
+      ...s,
+      slug: MODEL_SLUGS[s.name] || slugify(s.model || s.name)
+    })
+  );
+  const tribes = (source.tribes || []).map((tribe) => ({
+    id: tribe.id,
+    name: tribe.name,
+    buff: tribe.buff,
+    color: tribe.color,
+    combinedWeekPct: tribe.combinedWeekPct ?? 0,
+    combinedMonthPct: tribe.combinedMonthPct ?? 0,
+    combinedDayPct: tribe.combinedDayPct ?? 0,
+    livingCount:
+      tribe.livingCount ??
+      survivors.filter((s) => s.tribeId === tribe.id && s.status === "active").length
+  }));
+
+  return {
+    show: source.show,
+    location: source.location,
+    host: source.host,
+    season: source.season,
+    status: source.status,
+    statusLabel: source.statusLabel,
+    started: source.started,
+    merged: source.merged,
+    mergeAtRemaining: source.mergeAtRemaining,
+    startingBookUsd: source.startingBookUsd,
+    islandPotUsd: source.islandPotUsd,
+    islandGivenUsd: source.islandGivenUsd,
+    month: source.month,
+    monthLabel: source.monthLabel,
+    episode: source.episode,
+    episodes: source.episodes || [],
+    tribes,
+    survivors,
+    tribalLog: source.tribalLog || [],
+    goldenPortfolio: source.goldenPortfolio || [],
+    immunity: source.immunity ?? null,
+    winnerId: source.winnerId ?? null,
+    mergeSecret: source.mergeSecret !== false,
+    markedAt: source.markedAt,
+    markLabel: audienceMarkLabel(source.markLabel),
+    dayPctPriorOfficial: Boolean(source.dayPctBasis),
+    quotes: source.quotes || {},
+    snapshots: [],
+    events: fillsFromBoardNative(source).map(publicEvent)
+  };
+}
+
 export function slugify(name) {
   return String(name || "")
     .toLowerCase()
@@ -387,6 +539,7 @@ export function latestMark(events) {
 }
 
 export function deriveSeason(source) {
+  if (isBoardNative(source)) return deriveBoardNative(source);
   const starting = typeof source.startingBookUsd === "number" ? source.startingBookUsd : 10;
   const cast = source.cast || [];
   const events = source.events || [];
