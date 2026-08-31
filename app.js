@@ -772,6 +772,53 @@ function renderFaces(season) {
     .join("");
 }
 
+function castInTribeOrder(season) {
+  const tribes = season.tribes || [];
+  const people = [];
+  tribes.forEach((tribe) => {
+    (season.survivors || [])
+      .filter((s) => s && s.tribeId === tribe.id)
+      .forEach((s) => people.push(s));
+  });
+  if (!people.length) {
+    (season.survivors || []).forEach((s) => people.push(s));
+  }
+  return people;
+}
+
+function renderLettersFromHome(season) {
+  const list = document.getElementById("letter-list");
+  if (!list) return;
+  const Labs = globalThis.LabLogos;
+  const rows = castInTribeOrder(season)
+    .map((s) => {
+      const slug = slugOf(s);
+      const model = modelOf(s);
+      const ceo = Labs && typeof Labs.ceoFor === "function" ? Labs.ceoFor(slug) : null;
+      if (!ceo || !ceo.twitter || !ceo.name) return "";
+      const href =
+        Labs && typeof Labs.twitterUrlFor === "function"
+          ? Labs.twitterUrlFor(slug)
+          : "https://x.com/" + encodeURIComponent(ceo.twitter);
+      if (!href) return "";
+      const mark =
+        Labs && typeof Labs.labMarkHtml === "function" ? Labs.labMarkHtml({ slug: slug }) : "";
+      return `<li class="letter-item ${escapeHtml(s.tribeId || "")}">
+      <a class="letter-row" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">
+        ${mark}
+        <span class="letter-copy">
+          <span class="letter-model">${escapeHtml(model)}</span>
+          <span class="letter-from">Letter from ${escapeHtml(ceo.name)}</span>
+        </span>
+        <span class="letter-handle">@${escapeHtml(ceo.twitter)}</span>
+      </a>
+    </li>`;
+    })
+    .filter(Boolean)
+    .join("");
+  list.innerHTML = rows;
+}
+
 function renderMoneyJourney(season) {
   const race = document.getElementById("money-race");
   const totals = document.getElementById("home-tribe-totals");
@@ -2611,6 +2658,7 @@ function initArchifyEmbedFlow() {
 function render(season, sourceNote) {
   renderIslandPot(season);
   renderFaces(season);
+  renderLettersFromHome(season);
   renderSurvivor(season);
   renderStandings(season);
   renderSeasonHub(season);
