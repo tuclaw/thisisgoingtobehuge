@@ -5280,6 +5280,56 @@ body.is-titles .replay-trailer {
   color: #ffb27a;
 }
 
+.home-vote-band {
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 100%, rgba(232, 93, 4, 0.16), transparent 55%),
+    #0a0708;
+  text-align: center;
+}
+
+.home-vote-band .wrap.narrow {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-vote-band h2,
+.home-vote-band .lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-vote-band .council-stage {
+  margin: 1.4rem auto 0;
+  min-height: 0;
+  padding: 1.4rem 1.1rem 1.3rem;
+  max-width: 32rem;
+}
+
+.home-vote-band .tribal-spoiler {
+  width: min(28rem, 100%);
+  margin-top: 0;
+}
+
+.home-vote-band .tribal-spoiler-cover-fallback .spoiler-title {
+  max-width: 18rem;
+}
+
+.home-vote-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.4rem;
+}
+
+@media (max-width: 640px) {
+  .home-vote-band .council-stage {
+    padding: 0.9rem 0.7rem 1rem;
+  }
+
+  .home-vote-band .tribal-spoiler-cover-fallback .spoiler-title {
+    max-width: 16rem;
+  }
+}
+
 .face-card .cast-model {
   margin: 0.15rem 0 0;
 }

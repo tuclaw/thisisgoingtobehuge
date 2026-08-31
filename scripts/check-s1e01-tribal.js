@@ -18,6 +18,9 @@ function fail(message) {
 if (!app.includes("function wrapTribalSpoiler") || !app.includes("function bindTribalSpoilers")) {
   fail("do not remove wrapTribalSpoiler / bindTribalSpoilers");
 }
+if (!app.includes("function renderHomeTribalSpoiler") || !app.includes("home-tribal-spoiler-result")) {
+  fail("home page must reuse wrapTribalSpoiler for the Episode 1 vote card");
+}
 if (!app.includes("function councilTorchCount") || !app.includes("function councilTorchRowHtml")) {
   fail("episode tribal torches must be sized from the losing tribe / vote count");
 }

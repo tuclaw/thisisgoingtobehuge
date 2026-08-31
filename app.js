@@ -2447,20 +2447,55 @@ function formatTribalEntry(entry) {
   </li>`;
 }
 
-function wrapTribalSpoiler(innerHtml) {
+function wrapTribalSpoiler(innerHtml, options) {
+  const opts = options && typeof options === "object" ? options : {};
+  const resultId = opts.resultId || "tribal-spoiler-result";
+  const kicker = opts.kicker || "Spoiler";
+  const title = opts.title || "Click to Reveal the Vote";
+  const copy = opts.copy || "Burn to reveal who goes home.";
   return `<div class="tribal-spoiler">
-    <div class="tribal-spoiler-result" id="tribal-spoiler-result" aria-hidden="true">${innerHtml}</div>
-    <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="tribal-spoiler-result">
+    <div class="tribal-spoiler-result" id="${escapeHtml(resultId)}" aria-hidden="true">${innerHtml}</div>
+    <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
       <span class="tribal-spoiler-cover-fallback">
-        <span class="spoiler-kicker">Spoiler</span>
-        <span class="spoiler-title">Click to Reveal the Vote</span>
-        <span class="spoiler-copy">Burn to reveal who goes home.</span>
+        <span class="spoiler-kicker">${escapeHtml(kicker)}</span>
+        <span class="spoiler-title">${escapeHtml(title)}</span>
+        <span class="spoiler-copy">${escapeHtml(copy)}</span>
       </span>
       <span class="visually-hidden">Spoiler: tribal results. Click to reveal the vote.</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;
+}
+
+function firstEpisodeHref(season) {
+  const episodes = Array.isArray(season && season.episodes) ? season.episodes : [];
+  const ep =
+    (season && season.episode && season.episode.path && season.episode) ||
+    episodes.find((item) => item && (item.number === 1 || item.id === "s1e01"));
+  return ep && ep.path ? assetUrl(ep.path) : assetUrl("seasons/1/e01.html");
+}
+
+function renderHomeTribalSpoiler(season) {
+  const stage = document.getElementById("home-tribal");
+  const band = document.getElementById("home-vote");
+  if (!stage) return;
+  const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+  if (log.length === 0) {
+    if (band) band.hidden = true;
+    stage.innerHTML = "";
+    return;
+  }
+  if (band) band.removeAttribute("hidden");
+  const items = log.map((entry) => formatTribalEntry(entry)).join("");
+  stage.innerHTML = wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`, {
+    resultId: "home-tribal-spoiler-result",
+    title: "See who was voted off in episode one",
+    copy: "Burn to reveal who goes home."
+  });
+  bindTribalSpoilers(stage);
+  const cta = document.getElementById("home-vote-episode");
+  if (cta) cta.setAttribute("href", firstEpisodeHref(season));
 }
 
 function bindTribalSpoilers(root) {
@@ -2617,6 +2652,7 @@ function render(season, sourceNote) {
   renderEpisode(season);
   renderMoneyJourney(season);
   renderHomeEpisodes(season);
+  renderHomeTribalSpoiler(season);
   renderHomeTorches(season);
   renderNavWatch(season);
   initArchifyEmbedFlow();
