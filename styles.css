@@ -1310,10 +1310,19 @@ img.portrait.photo {
     0 2px 0 #3a2410;
 }
 
+.vote-tally-kicker {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 1.15rem 0 0;
+}
+
 .vote-tally {
   list-style: none;
-  margin: 1.15rem auto 0;
-  padding: 0.85rem 0 0;
+  margin: 0.45rem auto 0;
+  padding: 0.55rem 0 0;
   width: min(18rem, 100%);
   border-top: 1px solid rgba(196, 165, 116, 0.2);
   display: grid;

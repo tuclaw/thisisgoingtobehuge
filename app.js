@@ -2438,7 +2438,7 @@ function formatTribalEntry(entry) {
   const boot = entry.bootName || entry.boot || entry.bootId || "—";
   const tallyRows = formatTribalTally(entry);
   const tallyHtml = tallyRows
-    ? `<ul class="vote-tally" aria-label="Votes">${tallyRows}</ul>`
+    ? `<p class="vote-tally-kicker">Votes</p><ul class="vote-tally" aria-label="Votes">${tallyRows}</ul>`
     : "";
   return `<li class="tribal-vote-entry">
     <p class="boot-kicker">The tribe has spoken</p>
