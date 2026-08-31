@@ -190,6 +190,35 @@ if (!appJs.includes("onHomeBooksEvent") || !appJs.includes('action === "play"') 
 if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(64rem, 100%)")) {
   throw new Error("styles.css missing home hero books diagram layout");
 }
+const castIdx = html.indexOf('id="cast"');
+const homeVoteIdx = html.indexOf('id="home-vote"');
+const homeTribalIdx = html.indexOf('id="home-tribal"');
+const beachIdx = html.indexOf('id="beach"');
+if (!(castIdx > -1 && homeVoteIdx > castIdx && homeTribalIdx > homeVoteIdx && beachIdx > homeTribalIdx)) {
+  throw new Error("home Episode 1 spoiler must sit below #cast and above #beach");
+}
+if (!html.includes("See who was voted off in episode one")) {
+  throw new Error("templates/island.html missing Episode 1 spoiler heading");
+}
+if (!html.includes('id="home-vote-episode"') || !html.includes("Episode 1 Page")) {
+  throw new Error("templates/island.html missing Episode 1 Page button under the spoiler");
+}
+if (!html.includes("tribal-spoiler-burn.js")) {
+  throw new Error("templates/island.html must load tribal-spoiler-burn.js for the home spoiler");
+}
+if (
+  !appJs.includes("function renderHomeTribalSpoiler") ||
+  !appJs.includes("renderHomeTribalSpoiler(season)") ||
+  !appJs.includes("home-tribal-spoiler-result")
+) {
+  throw new Error("app.js must mount the home tribal spoiler from tribalLog");
+}
+if (!css.includes(".home-vote-band") || !css.includes(".home-vote-cta")) {
+  throw new Error("styles.css missing home Episode 1 spoiler band");
+}
+if (/Claude Fable 5/.test(html.slice(homeVoteIdx, beachIdx))) {
+  throw new Error("do not print the boot name in the home spoiler chrome");
+}
 if (!html.includes('class="tribal-torches reveal"') || /tribal-torch (?:lit|dark)/.test(html)) {
   throw new Error("homepage tribal torches must be an empty shell filled from season state");
 }
