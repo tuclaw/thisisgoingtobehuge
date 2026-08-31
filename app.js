@@ -1809,6 +1809,7 @@ const moneyTicker = {
   playStartedAt: 0,
   playFromProgress: 0,
   skyOn: false,
+  axisMax: 5,
   chapters: [],
   chapterIndex: 0
 };
@@ -1979,45 +1980,203 @@ function formatPacificDateRange(startIso, endIso) {
   return `${start.month} ${start.day}, ${start.year}–${end.month} ${end.day}, ${end.year}`;
 }
 
-function moneyTickerAxisRangeLabels(frames) {
+const MONEY_TICKER_WEEKDAYS = [
+  { key: "Mon", label: "Monday" },
+  { key: "Tue", label: "Tuesday" },
+  { key: "Wed", label: "Wednesday" },
+  { key: "Thu", label: "Thursday" },
+  { key: "Fri", label: "Friday" }
+];
+const MONEY_TICKER_WEEKDAY_SLOT = { Sun: 0, Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 4 };
+
+function parseEpisodeWeekLabel(label) {
+  const text = String(label || "");
+  const hits = [
+    ...text.matchAll(
+      /\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{1,2})\b/gi
+    )
+  ];
+  const yearHit = text.match(/\b(20\d{2})\b/);
+  const year = yearHit ? Number(yearHit[1]) : NaN;
+  if (hits.length < 2 || !Number.isFinite(year)) return null;
+  const months = {
+    jan: 0,
+    feb: 1,
+    mar: 2,
+    apr: 3,
+    may: 4,
+    jun: 5,
+    jul: 6,
+    aug: 7,
+    sep: 8,
+    oct: 9,
+    nov: 10,
+    dec: 11
+  };
+  const toYmd = (monthName, day) => {
+    const month = months[String(monthName).slice(0, 3).toLowerCase()];
+    if (month == null || !Number.isFinite(Number(day))) return "";
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(Number(day)).padStart(2, "0")}`;
+  };
+  const weekStart = toYmd(hits[0][1], hits[0][2]);
+  const weekEnd = toYmd(hits[hits.length - 1][1], hits[hits.length - 1][2]);
+  if (!weekStart || !weekEnd) return null;
+  return { weekStart, weekEnd };
+}
+
+function episodeWeekBounds(ep) {
+  if (!ep) return null;
+  let weekStart = ep.weekStart;
+  let weekEnd = ep.weekEnd;
+  if (!weekStart || !weekEnd) {
+    const parsed = parseEpisodeWeekLabel(ep.weekLabel);
+    if (parsed) {
+      weekStart = weekStart || parsed.weekStart;
+      weekEnd = weekEnd || parsed.weekEnd;
+    }
+  }
+  const startMs = weekStart ? Date.parse(`${weekStart}T00:00:00-07:00`) : NaN;
+  const endMs = weekEnd
+    ? Date.parse(`${weekEnd}T23:59:59-07:00`)
+    : ep.tribalAt
+      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
+      : NaN;
+  if (Number.isNaN(startMs) || Number.isNaN(endMs)) return null;
+  return { startMs, endMs, weekStart, weekEnd };
+}
+
+function tickerEpisodeForRange(season) {
+  if (typeof document !== "undefined" && document.documentElement) {
+    if (document.documentElement.getAttribute("data-page") === "episode") {
+      return currentPageEpisode(season) || season.episode || null;
+    }
+  }
+  return season.episode || null;
+}
+
+function survivorBootAtMs(season, survivor) {
+  if (!survivor) return null;
+  const log = Array.isArray(season && season.tribalLog) ? season.tribalLog : [];
+  for (let i = 0; i < log.length; i += 1) {
+    const entry = log[i];
+    if (!entry || !entry.at) continue;
+    const t = Date.parse(entry.at);
+    if (Number.isNaN(t)) continue;
+    if (entry.bootId && entry.bootId === survivor.id) return t;
+    const bootName = entry.bootName || entry.boot;
+    if (bootName && (bootName === survivor.name || bootName === survivor.model)) return t;
+  }
+  return null;
+}
+
+function survivorLivingAt(season, survivor, iso) {
+  if (!survivor) return false;
+  const bootAt = survivorBootAtMs(season, survivor);
+  if (bootAt == null) {
+    return !survivor.status || survivor.status === "active" || survivor.status === "immune";
+  }
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return true;
+  return t < bootAt;
+}
+
+function moneyTickerAssignAxis(frames, range) {
+  const list = frames || [];
+  const n = list.length;
+  /* Tape order, not calendar slots. Same-day marks must travel the plot;
+     weekday ticks stay as labels. Season chapters should call this after load. */
+  moneyTicker.axisMax = Math.max(1, n - 1);
+  list.forEach((frame, i) => {
+    frame.axisT = n < 2 ? 0 : i;
+  });
+}
+
+function moneyTickerAxisTAt(t, frames) {
+  const list = frames || moneyTicker.frames || [];
+  if (!list.length) return 0;
+  const max = list.length - 1;
+  const u = Math.max(0, Math.min(max, t));
+  const i0 = Math.floor(u);
+  const i1 = Math.min(max, i0 + 1);
+  const a = typeof list[i0].axisT === "number" ? list[i0].axisT : i0;
+  const b = typeof list[i1].axisT === "number" ? list[i1].axisT : i1;
+  return lerp(a, b, u - i0);
+}
+
+function moneyTickerXFromAxisT(axisT, axisMax) {
+  const padL = 36;
+  const padR = 12;
+  const w = 640 - padL - padR;
+  const max = axisMax || moneyTicker.axisMax || 5;
+  const t = Math.max(0, Math.min(max, Number(axisT) || 0));
+  return padL + (max ? (t / max) * w : 0);
+}
+
+function moneyTickerLiveNowX(frames, range) {
+  const mode = range || (moneyTicker && moneyTicker.range) || "week";
+  const list = frames || [];
+  const now = new Date();
+  const nowIso = now.toISOString();
+  const last = list[list.length - 1];
+  const lastT = last && typeof last.axisT === "number" ? last.axisT : Math.max(0, list.length - 1);
+  if (mode === "week") {
+    const bounds = episodeWeekBounds(tickerEpisodeForRange(moneyTicker.season));
+    if (!bounds) return null;
+    const nowMs = now.getTime();
+    if (nowMs < bounds.startMs || nowMs > bounds.endMs) return null;
+    if (!list.length) return null;
+    return moneyTickerXFromAxisT(lastT);
+  }
+  const today = pacificDateParts(nowIso);
+  const lastDay = last && pacificDateParts(last.at);
+  if (!today || !lastDay || today.key !== lastDay.key) return null;
+  return moneyTickerXFromAxisT(lastT);
+}
+
+function moneyTickerWeekdayTicks(frames, range) {
+  const mode = range || (moneyTicker && moneyTicker.range) || "week";
+  if (mode === "week") {
+    return MONEY_TICKER_WEEKDAYS.map((day, i) => ({
+      x: moneyTickerXFromAxisT(i + 0.5, 5),
+      label: day.label,
+      weekday: day.key
+    }));
+  }
   const days = [];
   const byKey = new Map();
-  (frames || []).forEach((frame, i) => {
+  (frames || []).forEach((frame) => {
     const parts = pacificDateParts(frame && frame.at);
     if (!parts) return;
-    const day = byKey.get(parts.key);
-    if (!day) {
-      const next = {
-        startIndex: i,
-        endIndex: i,
-        startAt: frame.at,
-        endAt: frame.at
-      };
-      byKey.set(parts.key, next);
-      days.push(next);
-      return;
+    if (!byKey.has(parts.key)) {
+      byKey.set(parts.key, {
+        weekday: parts.weekday,
+        day: parts.day,
+        month: parts.month,
+        key: parts.key
+      });
+      days.push(byKey.get(parts.key));
     }
-    day.endIndex = i;
-    day.endAt = frame.at;
   });
-  if (!days.length) return [];
-  const rangeCount = days.length <= 2 ? 1 : days.length <= 6 ? 2 : 3;
-  const labels = [];
-  for (let r = 0; r < rangeCount; r += 1) {
-    const from = Math.round((r * (days.length - 1)) / rangeCount);
-    const to = Math.round(((r + 1) * (days.length - 1)) / rangeCount);
-    if (to < from) continue;
-    const startDay = days[from];
-    const endDay = days[to];
-    const label = formatPacificDateRange(startDay.startAt, endDay.endAt);
-    if (!label) continue;
-    if (labels.length && labels[labels.length - 1].label === label) continue;
-    labels.push({
-      x: moneyTickerXAt((startDay.startIndex + endDay.endIndex) / 2, frames.length),
-      label
-    });
+  const trading = days.filter((day) => MONEY_TICKER_WEEKDAY_SLOT[day.weekday] != null && day.weekday !== "Sat" && day.weekday !== "Sun");
+  const use = trading.length ? trading : days;
+  if (!use.length) {
+    return MONEY_TICKER_WEEKDAYS.map((day, i) => ({
+      x: moneyTickerXFromAxisT(i + 0.5, 5),
+      label: day.label,
+      weekday: day.key
+    }));
   }
-  return labels;
+  const full =
+    use.length <= 5 && use.every((day) => MONEY_TICKER_WEEKDAYS.some((item) => item.key === day.weekday));
+  const axisMax = Math.max(1, use.length);
+  return use.map((day, i) => {
+    const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
+    return {
+      x: moneyTickerXFromAxisT(i + 0.5, axisMax),
+      label: full && named ? named.label : `${day.weekday} ${day.day}`,
+      weekday: day.weekday
+    };
+  });
 }
 
 function pacificHourDecimal(dateOrIso) {
@@ -2258,7 +2417,7 @@ function groupSnapshotsByEpisode(season, snapshots) {
 
 function snapshotsForTickerRange(season, range) {
   /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
-  const ep = currentPageEpisode(season) || season.episode || {};
+  const ep = tickerEpisodeForRange(season) || currentPageEpisode(season) || season.episode || {};
   return snapshotsInTickerRange(season.snapshots, ep, range);
 }
 
@@ -2276,6 +2435,7 @@ function tribeBooksFromFrame(frame, season) {
     out[tribe.id] = 0;
   });
   (season.survivors || []).forEach((s) => {
+    if (!survivorLivingAt(season, s, frame && frame.at)) return;
     const id = s.tribeId;
     if (!id) return;
     if (out[id] == null) out[id] = 0;
@@ -2295,7 +2455,7 @@ function framesFromSnapshots(season, snaps) {
     s.__tickerTone = candidateStroke(s, tribeIndex[key]);
     tribeIndex[key] += 1;
   });
-  return (snaps || []).map((snap) => {
+  const frames = (snaps || []).map((snap) => {
     const books = {};
     cast.forEach((s) => {
       const row = snap.books && snap.books[s.id];
@@ -2311,6 +2471,8 @@ function framesFromSnapshots(season, snaps) {
     frame.tribes = tribeBooksFromFrame(frame, season);
     return frame;
   });
+  moneyTickerAssignAxis(frames);
+  return frames;
 }
 
 function buildTickerFrames(season, range) {
@@ -2424,7 +2586,7 @@ function stopMoneyTickerPlayback() {
 }
 
 function moneyTickerFullDurationMs() {
-  const segments = Math.max(1, moneyTicker.frames.length - 1);
+  const segments = Math.max(5, moneyTicker.frames.length - 1);
   return (segments * 900) / Math.max(0.05, moneyTicker.speed || 1);
 }
 
@@ -2722,7 +2884,11 @@ function setMoneyTickerProgress(next, opts) {
   syncMoneyTickerSky(progress);
 }
 
-function moneyTickerXAt(t, count) {
+function moneyTickerXAt(t, count, frames) {
+  const list = frames || moneyTicker.frames;
+  if (list && list.length && typeof list[0].axisT === "number") {
+    return moneyTickerXFromAxisT(moneyTickerAxisTAt(t, list));
+  }
   const padL = 36;
   const padR = 12;
   const w = 640 - padL - padR;
@@ -2776,14 +2942,25 @@ function jaggedSeriesSamples(values, seriesKey, valueSpan) {
   return samples;
 }
 
-function tickerPathForSeries(values, min, max, top, height, seriesKey) {
+function tickerLivingRun(values) {
+  let start = 0;
+  while (start < values.length && values[start] == null) start += 1;
+  let end = start;
+  while (end < values.length && values[end] != null) end += 1;
+  return { start, end };
+}
+
+function tickerPathForSeries(values, min, max, top, height, seriesKey, frames) {
   if (!values.length) return "";
+  const run = tickerLivingRun(values);
+  if (run.end <= run.start) return "";
+  const slice = values.slice(run.start, run.end);
   const span = max - min || 1;
-  const samples = jaggedSeriesSamples(values, seriesKey, span);
+  const samples = jaggedSeriesSamples(slice, seriesKey, span);
   const count = values.length;
   return samples
     .map((pt, i) => {
-      const x = moneyTickerXAt(pt.t, count);
+      const x = moneyTickerXAt(pt.t + run.start, count, frames);
       const y = moneyTickerY(pt.v, min, max, top, height);
       return `${i === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)}`;
     })
@@ -2843,13 +3020,27 @@ function moneyTickerDiagramSeries(season, frames) {
     const cast = season.survivors || [];
     let min = sleeve;
     let max = sleeve;
-    frames.forEach((frame) => {
-      cast.forEach((s) => {
+    const series = [];
+    cast.forEach((s, idx) => {
+      const values = frames.map((frame) => {
+        if (!survivorLivingAt(season, s, frame.at)) return null;
         const v = frame.books[s.id];
+        return typeof v === "number" ? v : null;
+      });
+      if (!values.some((v) => v != null)) return;
+      values.forEach((v) => {
         if (typeof v === "number") {
           if (v < min) min = v;
           if (v > max) max = v;
         }
+      });
+      series.push({
+        id: s.id,
+        label: modelOf(s),
+        color: s.__tickerTone || "#d4a017",
+        values,
+        seed: idx + 11,
+        width: 1.45
       });
     });
     const pad = Math.max(0.35, (max - min) * 0.14);
@@ -2858,26 +3049,19 @@ function moneyTickerDiagramSeries(season, frames) {
     const putInLabel = `$${sleeve.toFixed(0)} in`;
     return {
       title: "Contestants",
-      aria: `Contestant sleeves over recorded marks. Dotted line is the $${sleeve.toFixed(0)} put into each book.`,
+      aria: `Contestant sleeves over recorded marks. Dotted line is the $${sleeve.toFixed(0)} put into each book. Voted-out players drop after tribal.`,
       putIn: sleeve,
       putInLabel,
       guides: [{ id: "putin", value: sleeve, label: putInLabel, className: "money-ticker-putin" }],
       min,
       max,
-      series: cast.map((s, idx) => ({
-        id: s.id,
-        label: modelOf(s),
-        color: s.__tickerTone || "#d4a017",
-        values: frames.map((f) => f.books[s.id]),
-        seed: idx + 11,
-        width: 1.45
+      series,
+      legend: series.map((item) => ({
+        label: item.label,
+        color: item.color
       })),
-      legend: cast.map((s) => ({
-        label: modelOf(s),
-        color: s.__tickerTone || "#d4a017"
-      })),
-      liveSeries: cast[0] ? cast[0].id : "total",
-      strokeForDot: cast[0] && cast[0].__tickerTone ? cast[0].__tickerTone : "#e89354"
+      liveSeries: series[0] ? series[0].id : "total",
+      strokeForDot: series[0] ? series[0].color : "#e89354"
     };
   }
 
@@ -3027,25 +3211,50 @@ function renderMoneyTickerSvg(season, frames) {
 
   const yLabels = moneyTickerYAxisLabels(spec, chartTop, chartHeight);
   const guideLines = moneyTickerGuideMarkup(spec, chartTop, chartHeight);
-  const xLabels = moneyTickerAxisRangeLabels(frames)
+  const xLabels = moneyTickerWeekdayTicks(frames, moneyTicker.range)
     .map((tick) => {
       let anchor = "middle";
       if (tick.x < 70) anchor = "start";
       else if (tick.x > 600) anchor = "end";
-      return `<text class="money-ticker-axis" data-ticker-x-range="${escapeHtml(tick.label)}" x="${tick.x.toFixed(2)}" y="214" text-anchor="${anchor}">${escapeHtml(tick.label)}</text>`;
+      const short = tick.weekday || tick.label;
+      return `<g class="money-ticker-day" data-ticker-x-weekday="${escapeHtml(short)}">
+        <line class="money-ticker-day-grid" x1="${tick.x.toFixed(2)}" y1="16" x2="${tick.x.toFixed(2)}" y2="198" />
+        <line class="money-ticker-day-tick" x1="${tick.x.toFixed(2)}" y1="198" x2="${tick.x.toFixed(2)}" y2="206" />
+        <circle class="money-ticker-day-dot" cx="${tick.x.toFixed(2)}" cy="198" r="2.1" />
+        <text class="money-ticker-axis money-ticker-day-full" x="${tick.x.toFixed(2)}" y="216" text-anchor="${anchor}">${escapeHtml(tick.label)}</text>
+        <text class="money-ticker-axis money-ticker-day-short" x="${tick.x.toFixed(2)}" y="216" text-anchor="${anchor}">${escapeHtml(short)}</text>
+      </g>`;
     })
     .join("");
 
   const lines = spec.series
     .map((series) => {
-      const d = tickerPathForSeries(series.values, spec.min, spec.max, chartTop, chartHeight, series.seed);
-      return `<path class="money-ticker-line" data-series="${escapeHtml(series.id)}" d="${d}" stroke="${escapeHtml(series.color)}" fill="none" stroke-width="${series.width || 1.6}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"><title>${escapeHtml(series.label)}</title></path>`;
+      const d = tickerPathForSeries(series.values, spec.min, spec.max, chartTop, chartHeight, series.seed, frames);
+      const run = tickerLivingRun(series.values);
+      const livingCount = run.end - run.start;
+      let markDot = "";
+      if (livingCount === 1) {
+        const idx = run.start;
+        const x = moneyTickerXAt(idx, frames.length, frames);
+        const y = moneyTickerY(series.values[idx], spec.min, spec.max, chartTop, chartHeight);
+        markDot = `<circle class="money-ticker-mark-dot" data-series="${escapeHtml(series.id)}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="3" fill="${escapeHtml(series.color)}" />`;
+      }
+      return `<path class="money-ticker-line" data-series="${escapeHtml(series.id)}" d="${d}" stroke="${escapeHtml(series.color)}" fill="none" stroke-width="${series.width || 1.6}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"><title>${escapeHtml(series.label)}</title></path>${markDot}`;
     })
     .join("");
 
   const playProgress =
     typeof moneyTicker.progress === "number" ? moneyTicker.progress : moneyTicker.index || 0;
   const playX = moneyTickerXAt(playProgress, frames.length);
+  const liveNowX = moneyTickerLiveNowX(frames, moneyTicker.range);
+  const liveNow =
+    liveNowX == null
+      ? ""
+      : `<g class="money-ticker-live-now" data-ticker-live-now>
+        <line x1="${liveNowX.toFixed(2)}" y1="16" x2="${liveNowX.toFixed(2)}" y2="198" />
+        <rect x="${(liveNowX + 4).toFixed(2)}" y="16" width="28" height="12" rx="2" />
+        <text x="${(liveNowX + 18).toFixed(2)}" y="25" text-anchor="middle">Live</text>
+      </g>`;
   const frame = frames[Math.min(frames.length - 1, Math.round(playProgress))] || frames[frames.length - 1];
   let dotValue = frame ? frame.total : spec.putIn;
   if (moneyTicker.diagram === "island") {
@@ -3077,6 +3286,7 @@ function renderMoneyTickerSvg(season, frames) {
       }
     </g>
     <line class="money-ticker-playhead" data-ticker-playhead x1="${playX}" y1="16" x2="${playX}" y2="198" />
+    ${liveNow}
     ${xLabels}
   </svg>`;
 }
@@ -3293,7 +3503,7 @@ function mountMoneyTicker(season, opts) {
   const givenLede = typeof givenNow === "number" ? potMoney(givenNow) : "$240.09";
   const lede = homeMode
     ? "See how each tribe and contestant did in the Episode."
-    : `Watch the island, the tribes, or every contestant sleeve. Season plays one episode at a time. Episode 2 moves the bar to ${givenLede}.`;
+    : `Watch the island, the tribes, or every contestant sleeve. Monday through Friday. Voted-out players drop after tribal. Season plays one episode at a time. Episode 2 moves the bar to ${givenLede}.`;
 
   /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
   const tickerHead = homeMode

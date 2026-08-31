@@ -147,27 +147,46 @@ if (!appJs.includes("money-ticker-palm")) {
   throw new Error("app.js money ticker sky must include a palm tree on the island");
 }
 if (
-  !appJs.includes("function formatPacificDateRange") ||
-  !appJs.includes("function moneyTickerAxisRangeLabels") ||
-  !appJs.includes("data-ticker-x-range")
+  !appJs.includes("function moneyTickerWeekdayTicks") ||
+  !appJs.includes("data-ticker-x-weekday") ||
+  !appJs.includes('label: "Monday"') ||
+  !appJs.includes("money-ticker-day-full") ||
+  !appJs.includes("money-ticker-day-short")
 ) {
-  throw new Error("app.js money ticker x-axis must label Pacific date ranges, not weekday ticks");
+  throw new Error("app.js money ticker x-axis must mark Monday through Friday as day points");
 }
-if (appJs.includes('pacificDayLabel(frame.at).replace(/,.*/, "")')) {
-  throw new Error("app.js money ticker x-axis must not strip timestamps down to weekday-only labels");
+if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("data-ticker-x-range")) {
+  throw new Error("app.js money ticker x-axis must use weekday points, not date-range labels");
+}
+if (!appJs.includes("function survivorLivingAt") || !appJs.includes("Voted-out players drop after tribal")) {
+  throw new Error("app.js money ticker must drop voted-out contestants after tribal");
+}
+if (!appJs.includes("function moneyTickerLiveNowX") || !appJs.includes("data-ticker-live-now")) {
+  throw new Error("app.js money ticker must draw a live vertical line for the current point in the week");
+}
+if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
+  throw new Error("app.js must space ticker marks by tape order so same-day frames travel, not calendar weekday slots");
 }
 
 const axisStart = appJs.indexOf("function pacificDateParts");
 const axisEnd = appJs.indexOf("function pacificHourDecimal");
 if (!(axisStart > -1 && axisEnd > axisStart)) {
-  throw new Error("app.js missing Pacific date-range helpers before pacificHourDecimal");
+  throw new Error("app.js missing Pacific weekday helpers before pacificHourDecimal");
 }
 const axisHelpers = new Function(`
-  function moneyTickerXAt(t, count) {
-    return count <= 1 ? 0 : t / (count - 1);
-  }
+  const moneyTicker = { axisMax: 5, range: "week", frames: [] };
   ${appJs.slice(axisStart, axisEnd)}
-  return { formatPacificDateRange, moneyTickerAxisRangeLabels };
+  return {
+    formatPacificDateRange,
+    parseEpisodeWeekLabel,
+    episodeWeekBounds,
+    moneyTickerWeekdayTicks,
+    moneyTickerAssignAxis,
+    moneyTickerXFromAxisT,
+    survivorBootAtMs,
+    survivorLivingAt,
+    axisMax: () => moneyTicker.axisMax
+  };
 `)();
 if (axisHelpers.formatPacificDateRange("2026-08-24T16:06:00Z", "2026-08-28T19:14:23Z") !== "Aug 24–28") {
   throw new Error("formatPacificDateRange should compact a same-month span to Aug 24–28");
@@ -175,21 +194,70 @@ if (axisHelpers.formatPacificDateRange("2026-08-24T16:06:00Z", "2026-08-28T19:14
 if (axisHelpers.formatPacificDateRange("2026-08-31T16:00:00Z", "2026-09-04T19:00:00Z") !== "Aug 31–Sep 4") {
   throw new Error("formatPacificDateRange should keep both months when a span crosses months");
 }
-const liveAxis = axisHelpers.moneyTickerAxisRangeLabels([
-  { at: "2026-08-24T16:06:00Z" },
-  { at: "2026-08-25T15:25:47Z" },
-  { at: "2026-08-26T20:00:00Z" },
-  { at: "2026-08-28T00:13:00Z" },
-  { at: "2026-08-28T14:01:56Z" },
-  { at: "2026-08-28T16:57:36Z" },
-  { at: "2026-08-28T19:14:23Z" }
-]);
-const liveAxisLabels = liveAxis.map((tick) => tick.label);
-if (liveAxisLabels.join(" | ") !== "Aug 24–26 | Aug 26–28") {
-  throw new Error("Episode 1 marks must axis-label as Aug 24–26 and Aug 26–28, got " + liveAxisLabels.join(" | "));
+if (JSON.stringify(axisHelpers.parseEpisodeWeekLabel("Monday Aug 24 – Friday Aug 28, 2026")) !== JSON.stringify({ weekStart: "2026-08-24", weekEnd: "2026-08-28" })) {
+  throw new Error("parseEpisodeWeekLabel should read Episode 1 as Aug 24–28");
 }
-if (new Set(liveAxisLabels).size !== liveAxisLabels.length) {
-  throw new Error("money ticker date-range labels must not repeat");
+if (JSON.stringify(axisHelpers.parseEpisodeWeekLabel("Monday Aug 31 – Friday Sep 4, 2026")) !== JSON.stringify({ weekStart: "2026-08-31", weekEnd: "2026-09-04" })) {
+  throw new Error("parseEpisodeWeekLabel should read Episode 2 as Aug 31–Sep 4");
+}
+const weekAxis = axisHelpers.moneyTickerWeekdayTicks([], "week").map((tick) => tick.label);
+if (weekAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
+  throw new Error("Week diagram must note Monday through Friday as points, got " + weekAxis.join(" | "));
+}
+const seasonAxis = axisHelpers.moneyTickerWeekdayTicks(
+  [
+    { at: "2026-08-24T16:06:00Z" },
+    { at: "2026-08-25T15:25:47Z" },
+    { at: "2026-08-26T20:00:00Z" },
+    { at: "2026-08-28T00:13:00Z" },
+    { at: "2026-08-28T19:14:23Z" }
+  ],
+  "season"
+).map((tick) => tick.label);
+if (seasonAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
+  throw new Error("Season diagram should still name Mon–Fri when one trading week is on tape, got " + seasonAxis.join(" | "));
+}
+
+const mondayTape = [
+  { at: "2026-08-31T16:00:00Z" },
+  { at: "2026-08-31T17:02:51Z" },
+  { at: "2026-08-31T17:35:00Z" },
+  { at: "2026-08-31T19:36:30Z" }
+];
+axisHelpers.moneyTickerAssignAxis(mondayTape, "week");
+if (mondayTape.map((frame) => frame.axisT).join(",") !== "0,1,2,3") {
+  throw new Error(
+    "Week tape must space same-day marks across the plot, got " + mondayTape.map((frame) => frame.axisT).join(",")
+  );
+}
+if (axisHelpers.axisMax() !== 3) {
+  throw new Error("Monday-only week axisMax should be last-frame index 3, got " + axisHelpers.axisMax());
+}
+const mondaySpan =
+  axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT) - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT);
+if (mondaySpan < 500) {
+  throw new Error("Monday-only week marks must travel most of the plot, span was " + mondaySpan.toFixed(1));
+}
+
+const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };
+const bootSeason = {
+  tribalLog: [
+    {
+      at: "2026-08-28T19:00:00-07:00",
+      bootId: "6ff86687-5f96-40cb-84f4-a7282bce28af",
+      boot: "Claude Fable 5",
+      bootName: "Claude Fable 5"
+    }
+  ]
+};
+if (!axisHelpers.survivorLivingAt(bootSeason, fable, "2026-08-28T19:14:23Z")) {
+  throw new Error("Claude Fable 5 must still be on the Episode 1 diagram through Friday last-hour");
+}
+if (axisHelpers.survivorLivingAt(bootSeason, fable, "2026-08-29T02:00:01Z")) {
+  throw new Error("Claude Fable 5 must drop from the diagram after Friday tribal");
+}
+if (axisHelpers.survivorLivingAt(bootSeason, fable, "2026-08-31T12:00:00-07:00")) {
+  throw new Error("Claude Fable 5 must stay off the Episode 2 diagram after the vote");
 }
 
 const givenStart = appJs.indexOf("function islandGivenUsd");
