@@ -5760,6 +5760,7 @@ body.is-titles .replay-trailer {
 
 .diagram-band .wrap {
   max-width: 80rem;
+  min-width: 0;
 }
 
 .diagram-band-title,
@@ -5778,11 +5779,11 @@ body.is-titles .replay-trailer {
 }
 
 .archify-embed {
-  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin: 0 auto 1.25rem;
   padding: 0;
-  aspect-ratio: 1140 / 680;
-  min-height: 28rem;
   border: 1px solid rgba(212, 160, 23, 0.28);
   border-radius: 0.65rem;
   background:
@@ -5794,19 +5795,30 @@ body.is-titles .replay-trailer {
   overflow: hidden;
 }
 
+.archify-embed-frame {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  aspect-ratio: 1140 / 680;
+  min-height: 28rem;
+  overflow: hidden;
+}
+
 .archify-embed iframe {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   border: 0;
   background: #020617;
 }
 
 @media (max-width: 720px) {
-  .archify-embed {
-    min-height: 20rem;
+  .archify-embed-frame {
+    min-height: 0;
   }
 }
 
