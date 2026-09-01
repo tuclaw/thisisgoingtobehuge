@@ -480,7 +480,7 @@ function renderEpisodePage(episode, season, base) {
 
   <div class="wrap" id="episode-root">
     <article class="beat beat-gold" id="week-board">
-      <section class="money-ticker reveal" id="money-ticker" aria-label="Island money playback"></section>
+      <section class="money-ticker reveal" id="money-ticker" aria-label="Island percentage playback"></section>
       <div class="money-ticker-ctas reveal">
         <a class="btn ember pot-fuel" href="https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00" target="_blank" rel="noopener noreferrer">Add Fuel</a>
       </div>
