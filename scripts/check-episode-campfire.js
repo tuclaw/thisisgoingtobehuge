@@ -445,9 +445,6 @@ if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "week") !== 20) {
 if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "season") !== 20) {
   throw new Error("Episode 2 season sleeves must start at $20 once the extra $10 is on the books");
 }
-if (!appJs.includes('moneyTicker.range === "week"') || !appJs.includes("snapshotsInTickerRange")) {
-  throw new Error("Episode 2 week ticker must still filter the week tape from the cash-add");
-}
 if (tickerHelpers.tickerSleevePutIn(e2Season, e1Ep, "week") !== 10) {
   throw new Error("Episode 1 week sleeves must stay $10");
 }

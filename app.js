@@ -2179,7 +2179,8 @@ function moneyTickerWeekdayTicks(frames, range) {
     }));
   }
   const full =
-    use.length <= 5 && use.every((day) => MONEY_TICKER_WEEKDAYS.some((item) => item.key === day.weekday));
+    use.length === 5 &&
+    MONEY_TICKER_WEEKDAYS.every((item, i) => use[i] && use[i].weekday === item.key);
   return use.map((day, i) => {
     const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
     const axisT = typeof day.axisT === "number" ? day.axisT : i + 0.5;
