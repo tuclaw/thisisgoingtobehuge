@@ -69,26 +69,22 @@ if (log.some((entry) => entry && entry.episode === "s1e02")) {
 }
 
 if (e02Html) {
-  if (e02Html.includes("Replay the books")) {
-    fail("e02.html must not print Replay the books ticker copy");
+  if (e02Html.includes("hero-listen") || e02Html.includes("Replay the books")) {
+    fail("e02.html must not print the hero listen line or Replay the books ticker copy");
   }
-  if (e02Html.includes("hero-listen") && !/Tue Sep 1 open · last-trade/.test(e02Html)) {
-    fail("e02.html hero listen line must be the Tue Sep 1 open books beat when present");
-  }
-  if (e02Html.includes("holdings-kicker") && !/Tue Sep 1 open · last-trade/.test(e02Html)) {
-    fail("e02.html holdings kicker must be the Tue Sep 1 open books beat when present");
-  }
-  if (e02Html.includes("season-banner") && !/open remake Sep 1/.test(e02Html)) {
-    fail("e02.html status banner must be the Tue Sep 1 open remake label when present");
+  if (e02Html.includes("holdings-kicker") || e02Html.includes("season-banner")) {
+    fail("e02.html must not print the ranked-by-week kicker or status banner");
   }
   const booksStart = e02Html.indexOf('id="latest-books"');
   const booksEnd = e02Html.indexOf('id="camp-whispers"');
   const booksChunk = booksStart > -1 ? e02Html.slice(booksStart, booksEnd > booksStart ? booksEnd : booksStart + 2500) : "";
-  if (booksChunk.includes("Marks only") || booksChunk.includes("Gemini 3.1 Pro leads the week")) {
-    fail("e02.html latest books must not print stale Mon official-close lede");
-  }
-  if (!/Grok 4\.6 leads the week/.test(booksChunk)) {
-    fail("e02.html latest books must name Grok 4.6 as week leader at Tue Sep 1 open");
+  if (
+    booksChunk.includes("Marks only") ||
+    booksChunk.includes("leads the week") ||
+    booksChunk.includes("weekPct vs") ||
+    booksChunk.includes("Tue Sep 1 open")
+  ) {
+    fail("e02.html latest books must not print the mark-status lede");
   }
   if (!e02Html.includes('id="episode-recap"')) fail("built e02.html missing #episode-recap");
   if (!e02Html.includes("tribal-spoiler-burn.js")) fail("built e02.html must keep tribal-spoiler-burn.js");
