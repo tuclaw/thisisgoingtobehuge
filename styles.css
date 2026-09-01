@@ -4936,6 +4936,10 @@ body.is-titles .replay-trailer {
   font-size: 10px;
 }
 
+.money-ticker-x-range-label {
+  letter-spacing: 0.04em;
+}
+
 .money-ticker-day-short {
   display: none;
 }

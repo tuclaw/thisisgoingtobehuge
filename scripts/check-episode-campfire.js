@@ -142,19 +142,20 @@ if (!appJs.includes("money-ticker-palm")) {
   throw new Error("app.js money ticker sky must include a palm tree on the island");
 }
 if (
-  !appJs.includes("function moneyTickerWeekdayTicks") ||
-  !appJs.includes("function moneyTickerTapeDays") ||
-  !appJs.includes("function moneyTickerClockTicks") ||
+  !appJs.includes("function moneyTickerAxisMarks") ||
+  !appJs.includes("function moneyTickerWeekRangeLabel") ||
+  !appJs.includes("function moneyTickerEpisodeMarks") ||
   !appJs.includes("function pacificClockLabel") ||
-  !appJs.includes("data-ticker-x-weekday") ||
-  !appJs.includes('label: "Monday"') ||
+  !appJs.includes("data-ticker-x-range") ||
+  !appJs.includes("data-ticker-x-episode") ||
+  !appJs.includes("money-ticker-x-range-label") ||
   !appJs.includes("money-ticker-day-full") ||
   !appJs.includes("money-ticker-day-short")
 ) {
-  throw new Error("app.js money ticker x-axis must mark the tape clock so playhead time matches the plot");
+  throw new Error("app.js money ticker x-axis must use a week date range or season episode markers");
 }
-if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("data-ticker-x-range")) {
-  throw new Error("app.js money ticker x-axis must use weekday points, not date-range labels");
+if (appJs.includes("function moneyTickerWeekdayTicks") || appJs.includes("data-ticker-x-weekday")) {
+  throw new Error("app.js money ticker x-axis must not paint weekday or clock-tick points");
 }
 if (!appJs.includes("function survivorLivingAt") || !appJs.includes("Voted-out players drop after tribal")) {
   throw new Error("app.js money ticker must drop voted-out contestants after tribal");
@@ -181,9 +182,9 @@ const axisHelpers = new Function(`
     formatPacificDateRange,
     parseEpisodeWeekLabel,
     episodeWeekBounds,
-    moneyTickerWeekdayTicks,
-    moneyTickerTapeDays,
-    moneyTickerClockTicks,
+    moneyTickerAxisMarks,
+    moneyTickerWeekRangeLabel,
+    moneyTickerEpisodeMarks,
     pacificClockLabel,
     moneyTickerAssignAxis,
     moneyTickerProgressFromAxisT,
@@ -206,52 +207,52 @@ if (JSON.stringify(axisHelpers.parseEpisodeWeekLabel("Monday Aug 24 – Friday A
 if (JSON.stringify(axisHelpers.parseEpisodeWeekLabel("Monday Aug 31 – Friday Sep 4, 2026")) !== JSON.stringify({ weekStart: "2026-08-31", weekEnd: "2026-09-04" })) {
   throw new Error("parseEpisodeWeekLabel should read Episode 2 as Aug 31–Sep 4");
 }
-const weekAxis = axisHelpers.moneyTickerWeekdayTicks([], "week").map((tick) => tick.label);
-if (weekAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
-  throw new Error("Week diagram must note Monday through Friday as points, got " + weekAxis.join(" | "));
-}
-const seasonAxis = axisHelpers.moneyTickerWeekdayTicks(
-  [
-    { at: "2026-08-24T16:06:00Z" },
-    { at: "2026-08-25T15:25:47Z" },
-    { at: "2026-08-26T20:00:00Z" },
-    { at: "2026-08-28T00:13:00Z" },
-    { at: "2026-08-28T19:14:23Z" }
-  ],
-  "season"
-).map((tick) => tick.label);
-if (seasonAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
-  throw new Error("Season diagram should still name Mon–Fri when one trading week is on tape, got " + seasonAxis.join(" | "));
+const episode2Season = {
+  episode: { id: "s1e02", number: 2, title: "Episode 2", weekStart: "2026-08-31", weekEnd: "2026-09-04" },
+  episodes: [
+    { id: "s1e01", number: 1, title: "Episode 1", weekStart: "2026-08-24", weekEnd: "2026-08-28" },
+    { id: "s1e02", number: 2, title: "Episode 2", weekStart: "2026-08-31", weekEnd: "2026-09-04" }
+  ]
+};
+const weekAxis = axisHelpers.moneyTickerAxisMarks([], "week", episode2Season).map((tick) => tick.label);
+if (weekAxis.join(" | ") !== "Aug 31–Sep 4") {
+  throw new Error("Week diagram must leave the episode date range, got " + weekAxis.join(" | "));
 }
 const fullWeekTape = [
-  { at: "2026-08-24T16:06:00Z" },
-  { at: "2026-08-25T15:25:47Z" },
-  { at: "2026-08-26T20:00:00Z" },
-  { at: "2026-08-28T00:13:00Z" },
-  { at: "2026-08-28T19:14:23Z" }
+  { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z" },
+  { id: "s1e01-tue-marks", at: "2026-08-25T15:25:47Z" },
+  { id: "s1e01-wed-sip", at: "2026-08-26T20:00:00Z" },
+  { id: "s1e01-thu-sip", at: "2026-08-28T00:13:00Z" },
+  { id: "s1e01-fri-close", at: "2026-08-28T19:14:23Z" }
 ];
 axisHelpers.moneyTickerAssignAxis(fullWeekTape, "week");
-const fullWeekAxis = axisHelpers.moneyTickerWeekdayTicks(fullWeekTape, "week").map((tick) => tick.label);
-if (fullWeekAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
-  throw new Error("Complete week tape should still name Mon–Fri, got " + fullWeekAxis.join(" | "));
+const fullWeekAxis = axisHelpers
+  .moneyTickerAxisMarks(fullWeekTape, "week", {
+    episode: { id: "s1e01", number: 1, title: "Episode 1", weekStart: "2026-08-24", weekEnd: "2026-08-28" }
+  })
+  .map((tick) => tick.label);
+if (fullWeekAxis.join(" | ") !== "Aug 24–28") {
+  throw new Error("Complete week tape should leave Aug 24–28, got " + fullWeekAxis.join(" | "));
 }
-const fullWeekTicks = axisHelpers.moneyTickerWeekdayTicks(fullWeekTape, "week");
-const expectedFridayX = axisHelpers.moneyTickerXFromAxisT(fullWeekTape[4].axisT);
-if (Math.abs(fullWeekTicks[4].x - expectedFridayX) > 1) {
-  throw new Error(
-    "Friday tick must sit on Friday's clock, got " + fullWeekTicks[4].x + " vs " + expectedFridayX
-  );
+if (fullWeekAxis.length !== 1) {
+  throw new Error("Week axis must be one date-range caption, not day points");
 }
-const twoWeekAxis = axisHelpers.moneyTickerWeekdayTicks(
-  [
-    { at: "2026-08-24T16:06:00Z", axisT: 0 },
-    { at: "2026-08-28T19:14:23Z", axisT: 4 },
-    { at: "2026-08-31T16:00:00Z", axisT: 8 }
-  ],
-  "season"
-).map((tick) => tick.label);
-if (twoWeekAxis.join(" | ") !== "Mon 24 | Fri 28 | Mon 31") {
-  throw new Error("Combined season tape should label each trading day, got " + twoWeekAxis.join(" | "));
+const twoWeekTape = [
+  { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z" },
+  { id: "s1e01-fri-close", at: "2026-08-28T19:14:23Z" },
+  { id: "s1e02-cash-add", at: "2026-08-31T16:00:00Z" }
+];
+axisHelpers.moneyTickerAssignAxis(twoWeekTape, "season");
+const twoWeekAxis = axisHelpers.moneyTickerAxisMarks(twoWeekTape, "season", episode2Season).map((tick) => tick.label);
+if (twoWeekAxis.join(" | ") !== "Episode 1 | Episode 2") {
+  throw new Error("Season tape should mark episodes, got " + twoWeekAxis.join(" | "));
+}
+const twoWeekMarks = axisHelpers.moneyTickerAxisMarks(twoWeekTape, "season", episode2Season);
+if (twoWeekMarks[0].kind !== "episode" || twoWeekMarks[1].kind !== "episode") {
+  throw new Error("Season axis marks must be episode markers");
+}
+if (!(twoWeekMarks[0].x < twoWeekMarks[1].x)) {
+  throw new Error("Episode 1 marker must sit left of Episode 2");
 }
 
 const pctHelpStart = appJs.indexOf("function tickerAxisPct");
@@ -328,31 +329,22 @@ const mondaySpan =
 if (mondaySpan < 500) {
   throw new Error("Monday-only week marks must travel most of the plot, span was " + mondaySpan.toFixed(1));
 }
-const mondayWeekTicks = axisHelpers.moneyTickerWeekdayTicks(mondayTape, "week");
-const mondayClocks = mondayTape.map((frame) => axisHelpers.pacificClockLabel(frame.at));
-if (mondayWeekTicks.map((tick) => tick.label).join(" | ") !== mondayClocks.join(" | ")) {
+const mondayWeekTicks = axisHelpers.moneyTickerAxisMarks(mondayTape, "week", episode2Season);
+if (mondayWeekTicks.map((tick) => tick.label).join(" | ") !== "Aug 31–Sep 4") {
   throw new Error(
-    "Monday-only week axis must mark each print's clock, got " +
-      mondayWeekTicks.map((tick) => tick.label).join(" | ") +
-      " vs " +
-      mondayClocks.join(" | ")
+    "Monday-only week axis must leave the episode date range, got " +
+      mondayWeekTicks.map((tick) => tick.label).join(" | ")
   );
 }
-if (mondayWeekTicks.some((tick) => /Tue|Wed|Thu|Fri/.test(tick.label + " " + tick.weekday))) {
-  throw new Error("Monday-only week axis must not invent Tue–Fri");
+if (mondayWeekTicks.some((tick) => tick.kind !== "range" || /Tue|Wed|Thu|Fri|AM|PM/.test(tick.label))) {
+  throw new Error("Monday-only week axis must not invent weekday or clock-tick points");
 }
-const lastTick = mondayWeekTicks[mondayWeekTicks.length - 1];
-const lastX = axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT);
-if (!lastTick || Math.abs(lastTick.x - lastX) > 1) {
+const mondayTapeRange = axisHelpers.moneyTickerAxisMarks(mondayTape, "week");
+if (mondayTapeRange.map((tick) => tick.label).join(" | ") !== "Aug 31") {
   throw new Error(
-    "Playhead at last-hour must sit on the last clock tick, tick x " +
-      (lastTick && lastTick.x) +
-      " vs frame x " +
-      lastX
+    "Week axis without episode bounds should collapse same-day tape to Aug 31, got " +
+      mondayTapeRange.map((tick) => tick.label).join(" | ")
   );
-}
-if (Math.abs(mondayWeekTicks[0].x - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT)) > 1) {
-  throw new Error("First Monday print must sit on the first clock tick");
 }
 if (Math.abs(axisHelpers.moneyTickerProgressFromAxisT(mondayTape[2].axisT, mondayTape) - 2) > 0.001) {
   throw new Error("Scrub at 10:35 AM must land on the mid-gift mark");
@@ -570,6 +562,9 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
   throw new Error("styles.css missing the even / 0% reference line");
+}
+if (!stylesCss.includes(".money-ticker-x-range-label")) {
+  throw new Error("styles.css missing the week date-range x-axis caption");
 }
 if (
   !stylesCss.includes("width: calc(592 / 640 * 100%)") ||
