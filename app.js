@@ -2134,6 +2134,24 @@ function moneyTickerScrubAxisT(progress, frames) {
   return Math.max(0, Math.min(1, t));
 }
 
+function moneyTickerSnapAxisT(axisT, frames) {
+  const list = frames || moneyTicker.frames || [];
+  const target = Math.max(0, Math.min(1, Number(axisT) || 0));
+  if (!list.length) return target;
+  const x = moneyTickerXFromAxisT(target);
+  let best = target;
+  let bestDist = 8;
+  list.forEach((frame, i) => {
+    const t = typeof frame.axisT === "number" ? frame.axisT : i / Math.max(1, list.length - 1);
+    const dist = Math.abs(moneyTickerXFromAxisT(t) - x);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = t;
+    }
+  });
+  return best;
+}
+
 function moneyTickerXFromAxisT(axisT, axisMax) {
   const padL = 36;
   const padR = 12;
@@ -3495,7 +3513,7 @@ function bindMoneyTickerControls() {
     if (!scrub) return;
     moneyTicker.autoplayDone = true;
     stopMoneyTickerPlayback();
-    setMoneyTickerIndex(moneyTickerProgressFromAxisT(Number(scrub.value)));
+    setMoneyTickerIndex(moneyTickerProgressFromAxisT(moneyTickerSnapAxisT(Number(scrub.value))));
   });
 }
 

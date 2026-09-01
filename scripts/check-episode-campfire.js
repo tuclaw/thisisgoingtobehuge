@@ -192,6 +192,7 @@ const axisHelpers = new Function(`
     pacificClockLabel,
     moneyTickerAssignAxis,
     moneyTickerProgressFromAxisT,
+    moneyTickerSnapAxisT,
     moneyTickerXFromAxisT,
     survivorBootAtMs,
     survivorLivingAt,
