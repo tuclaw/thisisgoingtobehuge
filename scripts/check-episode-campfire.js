@@ -535,6 +535,12 @@ const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 if (!stylesCss.includes(".money-ticker-host-add") || !stylesCss.includes(".money-ticker-guide-label")) {
   throw new Error("styles.css missing Episode 2 host-add reference line");
 }
+if (
+  !stylesCss.includes("width: calc(592 / 640 * 100%)") ||
+  !stylesCss.includes("margin-left: calc(36 / 640 * 100%)")
+) {
+  throw new Error("styles.css money ticker scrubber must share the plot's 36/12 padding so the thumb sits on the clock");
+}
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
 }
