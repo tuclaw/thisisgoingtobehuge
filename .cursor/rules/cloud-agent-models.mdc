@@ -1,0 +1,18 @@
+---
+description: Cloud agents and sub-agents must use Cursor Grok or Composer, never Sonnet 4.5
+alwaysApply: true
+---
+
+# Cloud agent model pin
+
+This repo's cloud agents and every sub-agent they spawn use **Cursor Grok** or **Composer** only.
+
+Allowed Task `model` slugs:
+
+- `cursor-grok-4.6-high-fast` (default for computerUse, videoReview, debug, generalPurpose)
+- `composer-2.5` (default for explore and bash-style sweeps)
+- `cursor-grok-4.5-high`, `cursor-grok-4.5-high-fast`, `composer-2.5-fast`
+
+When you call the Task tool, **pass `model` on every call**. Do not omit it. Do not pass `inherit` unless the parent is already one of the slugs above. Do not pass any Claude Sonnet 4.x slug.
+
+This pin is for Cursor host/dev agents. It does not re-id Season 1 contestants.
