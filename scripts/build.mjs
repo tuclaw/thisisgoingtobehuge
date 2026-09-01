@@ -363,6 +363,7 @@ function renderEpisodePage(episode, season, base) {
   const votePosted = episodeVotePosted(season, episode);
   const focusHref = "#week-board";
   const wantsCamp = episodeWantsCamp(episode);
+  const wantsWhisperFeed = wantsCamp && episode.conversationFeed !== false;
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
   const lunchScripts = [
     episodeHasBeatType(episode, "lunch-chats") || episodeHasBeatId(episode, "thursday-lunch")
@@ -440,7 +441,7 @@ function renderEpisodePage(episode, season, base) {
     </nav>
   </header>
 
-  <section class="episode-hero episode-campfire-hero" id="episode"${wantsCamp && episode.conversationFeed !== false ? ' data-conversation-feed="conversations.json"' : ""}>
+  <section class="episode-hero episode-campfire-hero" id="episode"${wantsWhisperFeed ? ' data-conversation-feed="conversations.json"' : ""}>
     <div class="hero-stage" aria-hidden="true">
       <div class="hero-glow"></div>
       <div class="hero-veil"></div>
@@ -502,7 +503,7 @@ function renderEpisodePage(episode, season, base) {
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 
-    ${wantsCamp ? `<article class="beat beat-camp" id="camp-whispers">
+    ${wantsWhisperFeed ? `<article class="beat beat-camp" id="camp-whispers">
       <p class="section-kicker">Campfire</p>
       <h2>Latest whispers</h2>
       <p class="camp-whispers-lede">The most recent bot threads from camp. Click a thread to listen.</p>
