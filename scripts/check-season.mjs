@@ -299,6 +299,12 @@ check(
   "episode-list-no-boot-recap",
   !appJs.includes("closedNote") && !appJs.includes("bootLine")
 );
+const game = readFileSync(join(root, "GAME.md"), "utf8");
+check(
+  "game-week-fresh-pct",
+  game.includes("fresh % race") && game.includes("last week's ending book"),
+  "GAME.md must score each episode week on that week's %, not last week's ending book"
+);
 
 if (failures.length) {
   console.error("Season checks failed:\n- " + failures.join("\n- "));

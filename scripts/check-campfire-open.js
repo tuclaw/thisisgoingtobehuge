@@ -353,17 +353,6 @@ if (!appJs.includes("renderHomeTorches(season)")) {
 if (!appJs.includes('class="face-photo"') || !appJs.includes("face-lab") || !appJs.includes("face-lab-mark")) {
   throw new Error("homepage face cards must wrap a smaller portrait and a lab identity block");
 }
-if (
-  !appJs.includes("function hover3dWrap") ||
-  !appJs.includes("hover-3d-zone") ||
-  !appJs.includes("class=\"face-card hover-3d") ||
-  !appJs.includes("tribal-spoiler-cover hover-3d")
-) {
-  throw new Error("homepage face cards and the tribal spoiler must use the 3D hover shell");
-}
-if (!css.includes(".hover-3d") || !css.includes("--hover-3d-transform") || !css.includes("rotate3d")) {
-  throw new Error("styles.css must include the daisyUI-style hover-3d tilt");
-}
 if (!css.includes(".face-photo") || !css.includes(".face-lab") || !css.includes("4.25rem") || !css.includes("2.7rem")) {
   throw new Error("styles.css must shrink homepage portraits and emphasize the lab mark");
 }

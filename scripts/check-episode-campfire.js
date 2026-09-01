@@ -76,6 +76,9 @@ if (!episodeHtml.includes('id="week-board"')) {
 if (!episodeHtml.includes('id="camp-whispers"') || !episodeHtml.includes("camp-whispers-feed")) {
   throw new Error("episode renderer missing recent camp whispers section below week-board");
 }
+if (!episodeHtml.includes("wantsWhisperFeed") || !episodeHtml.includes("conversationFeed !== false")) {
+  throw new Error("episode renderer must gate latest whispers on conversationFeed, not just dinner-fires");
+}
 if (!episodeHtml.includes('id="money-ticker"')) {
   throw new Error("episode renderer missing money ticker playback mount on week-board");
 }
@@ -106,17 +109,43 @@ if (
 ) {
   throw new Error("app.js money ticker must plot week % on a percentage y-axis");
 }
-if (!appJs.includes('lineLabel: "even"') || !appJs.includes('labelClass: "is-putin"') || !appJs.includes('label: "0%"')) {
-  throw new Error("app.js money ticker must draw a 0% even line, not a money put-in bar");
+if (appJs.includes('lineLabel: "even"') || appJs.includes('{ label: "even"')) {
+  throw new Error("app.js money ticker must not print the word even on the 0% guide");
+}
+if (!appJs.includes('labelClass: "is-putin"') || !appJs.includes('label: "0%"')) {
+  throw new Error("app.js money ticker must draw a 0% guide, not a money put-in bar");
 }
 if (appJs.includes("function buildTickerChapters") || appJs.includes("data-ticker-chapter") || appJs.includes("function advanceTickerChapter")) {
   throw new Error("app.js season ticker must play one combined percentage tape, not episode chapters");
 }
-if (appJs.includes("Season plays every episode on one percentage tape") || appJs.includes("Watch the island, the tribes")) {
-  throw new Error("episode money ticker must not print Replay the books lede copy");
+if (
+  appJs.includes("Watch the island, the tribes") ||
+  appJs.includes("Watch the island pot in dollars") ||
+  appJs.includes("Season plays one episode at a time") ||
+  appJs.includes("Season plays every episode on one percentage tape") ||
+  appJs.includes("moves the island bar to")
+) {
+  throw new Error("app.js episode ticker must not print a long lede above the diagram");
 }
 if (appJs.includes("money-ticker-host-add") && appJs.includes("Island pot over recorded marks. Both dotted lines stay on")) {
   throw new Error("app.js island diagram must not plot host-add money bars on the percentage axis");
+}
+if (!appJs.includes("weekPct from this week's open — not last week's ending book")) {
+  throw new Error("app.js holdings kicker must say weekPct is from this week's open");
+}
+if (
+  !appJs.includes("function moneyTickerLiveFoot") ||
+  !appJs.includes("live: potMoney(cash)")
+) {
+  throw new Error("app.js ticker foot must show island cash only");
+}
+if (
+  appJs.includes("${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}") ||
+  appJs.includes("${potMoney(cash)} · ${tickerAxisPct(totalPct)}") ||
+  appJs.includes('liveKind: "tribes"') ||
+  appJs.includes('liveKind: "pair"')
+) {
+  throw new Error("app.js ticker foot must not pair dollars with week % or tribe %");
 }
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
@@ -173,11 +202,20 @@ if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("dat
 if (!appJs.includes("function survivorLivingAt") || !appJs.includes("Voted-out players drop after tribal")) {
   throw new Error("app.js money ticker must drop voted-out contestants after tribal");
 }
-if (!appJs.includes("function moneyTickerLiveNowX") || !appJs.includes("data-ticker-live-now")) {
-  throw new Error("app.js money ticker must draw a live vertical line for the current point in the week");
+if (appJs.includes("function moneyTickerLiveNowX") || appJs.includes("data-ticker-live-now")) {
+  throw new Error("app.js money ticker must not draw a live vertical line at the end of the tape");
+}
+if (appJs.includes("live.textContent = tickerAxisPct") || appJs.includes("from even")) {
+  throw new Error("app.js money ticker footer must show cash, not week % from even");
+}
+if (!appJs.includes("live.textContent = potMoney") || !appJs.includes("cash: snapshotTotal(snap)")) {
+  throw new Error("app.js money ticker footer must show pot cash from each snapshot");
 }
 if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
-  throw new Error("app.js must space ticker marks by tape order so same-day frames travel, not calendar weekday slots");
+  throw new Error("app.js must not pin same-day marks to a single weekday slot x");
+}
+if (!appJs.includes("function pacificSessionU") || !appJs.includes("frame.axisT = slot + u")) {
+  throw new Error("app.js must place ticker marks on weekday session time so Friday does not swallow the tape");
 }
 
 const axisStart = appJs.indexOf("function pacificDateParts");
@@ -195,6 +233,8 @@ const axisHelpers = new Function(`
     moneyTickerWeekdayTicks,
     moneyTickerAssignAxis,
     moneyTickerXFromAxisT,
+    pacificSessionU,
+    moneyTickerTradingDay,
     survivorBootAtMs,
     survivorLivingAt,
     axisMax: () => moneyTicker.axisMax
@@ -271,6 +311,31 @@ if (pctHelpers.bookWeekPctFromSnap({ bookUsd: 10 }) != null) {
   throw new Error("bookWeekPctFromSnap must not invent a percentage from bookUsd");
 }
 
+const footStart = appJs.indexOf("function lerpFrameNum");
+const footEnd = appJs.indexOf("function setMoneyTickerIndex");
+if (!(footStart > -1 && footEnd > footStart)) {
+  throw new Error("app.js missing moneyTickerLiveFoot helpers");
+}
+const liveFoot = new Function(`
+  const moneyTicker = { putIn: 240.09 };
+  function roundMoney(n) { return Math.round(n * 10000) / 10000; }
+  function potMoney(n) { return "$" + n.toFixed(2); }
+  function money(n) { return "$" + n.toFixed(2); }
+  ${appJs.slice(footStart, footEnd)}
+  return { moneyTickerLiveFoot };
+`)();
+const islandFoot = liveFoot.moneyTickerLiveFoot(
+  { cash: 240.26, total: 0.83 },
+  { cash: 240.26, total: 0.83 },
+  0
+);
+if (islandFoot.live !== "$240.26" || islandFoot.pot !== "$240.26") {
+  throw new Error("ticker foot should be island cash only, got " + islandFoot.live);
+}
+if (!islandFoot.chg.includes("$0.17") || !islandFoot.chg.includes("$240.09")) {
+  throw new Error("ticker chg should be dollars from put-in, got " + islandFoot.chg);
+}
+
 const scaleStart = appJs.indexOf("function tickerPctScale");
 const scaleEnd = appJs.indexOf("function moneyTickerDiagramSeries");
 if (!(scaleStart > -1 && scaleEnd > scaleStart)) {
@@ -284,8 +349,12 @@ const scale = scaleHelpers.tickerPctScale([-5.18, 1.27], 1.2);
 if (!(scale.min < -5.18 && scale.max > 1.27 && scale.min < 0 && scale.max > 0)) {
   throw new Error("tickerPctScale must keep 0% on the y-axis and pad the tape, got " + JSON.stringify(scale));
 }
-if (scaleHelpers.tickerEvenGuide().value !== 0 || scaleHelpers.tickerEvenGuide().label !== "0%") {
-  throw new Error("tickerEvenGuide must be the 0% even line");
+if (
+  scaleHelpers.tickerEvenGuide().value !== 0 ||
+  scaleHelpers.tickerEvenGuide().label !== "0%" ||
+  scaleHelpers.tickerEvenGuide().lineLabel
+) {
+  throw new Error("tickerEvenGuide must be an unlabeled 0% line");
 }
 
 const mondayTape = [
@@ -295,18 +364,51 @@ const mondayTape = [
   { at: "2026-08-31T19:36:30Z" }
 ];
 axisHelpers.moneyTickerAssignAxis(mondayTape, "week");
-if (mondayTape.map((frame) => frame.axisT).join(",") !== "0,1,2,3") {
-  throw new Error(
-    "Week tape must space same-day marks across the plot, got " + mondayTape.map((frame) => frame.axisT).join(",")
-  );
+const mondaySlots = mondayTape.map((frame) => frame.axisT);
+if (mondaySlots.some((t) => t < 0 || t > 1.0001)) {
+  throw new Error("Monday-only week marks must stay in Monday's session, got " + mondaySlots.join(","));
 }
-if (axisHelpers.axisMax() !== 3) {
-  throw new Error("Monday-only week axisMax should be last-frame index 3, got " + axisHelpers.axisMax());
+if (!(mondaySlots[0] < mondaySlots[1] && mondaySlots[1] < mondaySlots[2] && mondaySlots[2] < mondaySlots[3])) {
+  throw new Error("Monday marks must travel through the session, got " + mondaySlots.join(","));
+}
+if (axisHelpers.axisMax() !== 5) {
+  throw new Error("Week axisMax should stay 5 weekday slots, got " + axisHelpers.axisMax());
 }
 const mondaySpan =
   axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT) - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT);
-if (mondaySpan < 500) {
-  throw new Error("Monday-only week marks must travel most of the plot, span was " + mondaySpan.toFixed(1));
+if (mondaySpan > 160) {
+  throw new Error("Monday-only week marks must not stretch into Friday, span was " + mondaySpan.toFixed(1));
+}
+
+const e1WeekTape = [
+  { at: "2026-08-24T16:06:00Z" },
+  { at: "2026-08-25T15:25:47Z" },
+  { at: "2026-08-26T20:00:00Z" },
+  { at: "2026-08-28T00:13:00Z" },
+  { at: "2026-08-28T14:01:56Z" },
+  { at: "2026-08-28T16:57:36Z" },
+  { at: "2026-08-28T19:14:23Z" }
+];
+axisHelpers.moneyTickerAssignAxis(e1WeekTape, "week");
+if (e1WeekTape[3].daySlot !== 3 || e1WeekTape[3].axisT >= 4) {
+  throw new Error(
+    "Thu SIP stamped Friday UTC must stay in Thursday's Pacific session, got daySlot " +
+      e1WeekTape[3].daySlot +
+      " axisT " +
+      e1WeekTape[3].axisT
+  );
+}
+if (e1WeekTape.slice(4).some((frame) => frame.daySlot !== 4)) {
+  throw new Error("Friday marks must sit in Friday's session slot");
+}
+if (!(e1WeekTape[4].axisT < e1WeekTape[5].axisT && e1WeekTape[5].axisT < e1WeekTape[6].axisT)) {
+  throw new Error(
+    "Friday open / mid / last-hour must travel inside Friday, got " +
+      e1WeekTape.slice(4).map((frame) => frame.axisT).join(",")
+  );
+}
+if (e1WeekTape[6].axisT > 5.0001 || e1WeekTape[0].axisT < 0) {
+  throw new Error("Week session axis must stay inside Monday–Friday, got last " + e1WeekTape[6].axisT);
 }
 
 const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };
@@ -482,6 +584,46 @@ if (e1Week.length !== 2 || e1Week.some((s) => s.id === "s1e02-cash-add")) {
   throw new Error("Episode 1 week must keep E1 marks and exclude the Episode 2 cash-add");
 }
 
+const tribePctStart = appJs.indexOf("function tribePctsFromFrame");
+const tribePctEnd = appJs.indexOf("function framesFromSnapshots");
+if (!(tribePctStart > -1 && tribePctEnd > tribePctStart)) {
+  throw new Error("app.js missing tribePctsFromFrame before framesFromSnapshots");
+}
+const tribePctHelpers = new Function(`
+  function survivorLivingAt(season, survivor) {
+    return !survivor.status || survivor.status === "active" || survivor.status === "immune";
+  }
+  function roundMoney(n) {
+    return Math.round(n * 10000) / 10000;
+  }
+  ${appJs.slice(tribePctStart, tribePctEnd)}
+  return { tribePctsFromFrame };
+`)();
+const summed = tribePctHelpers.tribePctsFromFrame(
+  { at: "2026-08-31T20:00:00Z", books: { a: 0.2, b: 1.1, c: 0.5, d: -4.01 } },
+  {
+    tribes: [{ id: "bidu" }, { id: "askara" }],
+    survivors: [
+      { id: "a", tribeId: "bidu", status: "active" },
+      { id: "b", tribeId: "bidu", status: "active" },
+      { id: "c", tribeId: "askara", status: "active" },
+      { id: "d", tribeId: "askara", status: "jury" }
+    ]
+  },
+  null
+);
+if (summed.bidu !== 1.3 || summed.askara !== 0.5) {
+  throw new Error("tribePctsFromFrame should sum living week % and skip boots, got " + JSON.stringify(summed));
+}
+const fromSnap = tribePctHelpers.tribePctsFromFrame(
+  { at: "2026-08-31T20:00:00Z", books: { a: 9 } },
+  { tribes: [{ id: "bidu" }], survivors: [{ id: "a", tribeId: "bidu", status: "active" }] },
+  { tribes: { bidu: { combinedWeekPct: 0.38 } } }
+);
+if (fromSnap.bidu !== 0.38) {
+  throw new Error("tribePctsFromFrame should prefer snapshot combinedWeekPct, got " + JSON.stringify(fromSnap));
+}
+
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
 }
@@ -513,8 +655,11 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
   throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
 }
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
+if (stylesCss.includes(".money-ticker-live.is-pair") || stylesCss.includes(".money-ticker-live.is-tribes")) {
+  throw new Error("styles.css must not keep side-by-side ticker foot sizes");
+}
 if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
-  throw new Error("styles.css missing the even / 0% reference line");
+  throw new Error("styles.css missing the 0% reference line");
 }
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
@@ -547,6 +692,13 @@ if (
   !episodeJs.includes("FRIDAY_LUNCH_CONVERSATIONS")
 ) {
   throw new Error("episode-campfire.js missing latest-first conversation resolution");
+}
+if (
+  !episodeJs.includes("function allowSampleFallback") ||
+  !episodeJs.includes("function isEpisodePage") ||
+  !episodeJs.includes("allowSampleFallback() && global.CampChat")
+) {
+  throw new Error("episode pages must not fall back to CampChat sample tapes");
 }
 if (!readFileSync(join(root, "camp-chat.js"), "utf8").includes("camp-chat-avatar")) {
   throw new Error("camp-chat.js missing contestant avatar bubbles");
@@ -626,41 +778,41 @@ if (latest.length !== 2 || latest.some((c) => !c.id.startsWith("new-fri"))) {
   throw new Error("latest-day filter should keep only Friday threads");
 }
 
-if (!appJs.includes("function holdBookWasted") || !appJs.includes('class="hold-wasted"') || !appJs.includes("WASTED")) {
-  throw new Error("app.js must stamp a GTA WASTED overlay on Episode 2+ jury books");
+if (appJs.includes("WASTED") || appJs.includes("hold-wasted") || stylesCss.includes("hold-wasted") || episodeHtml.includes("family=Anton")) {
+  throw new Error("Episode 2 jury row must fade quietly — no WASTED stamp or Anton lettering");
 }
-if (!appJs.includes("wasted ? [] : bookLegs(s)")) {
-  throw new Error("wasted books must drop holdings chips and expandable legs");
+if (!appJs.includes("function holdBookFaded") || !appJs.includes("is-faded")) {
+  throw new Error("app.js must fade Episode 2+ jury books");
 }
-if (!appJs.includes("is-wasted") || !stylesCss.includes(".hold-book.is-wasted") || !stylesCss.includes(".hold-wasted")) {
-  throw new Error("styles.css missing Episode 2 wasted book treatment");
+if (!appJs.includes("faded ? [] : bookLegs(s)")) {
+  throw new Error("faded books must drop holdings chips and expandable legs");
 }
-if (!stylesCss.includes("--font-wasted") || !episodeHtml.includes("family=Anton")) {
-  throw new Error("Episode 2 wasted stamp must load Anton for the GTA lettering");
+if (!stylesCss.includes(".hold-book.is-faded") || !stylesCss.includes("grayscale(1)")) {
+  throw new Error("styles.css missing Episode 2 faded book treatment");
 }
-const wastedStart = appJs.indexOf("function holdBookWasted");
-const wastedEnd = appJs.indexOf("function holdBookHtml");
-if (!(wastedStart > -1 && wastedEnd > wastedStart)) {
-  throw new Error("app.js missing holdBookWasted before holdBookHtml");
+const fadedStart = appJs.indexOf("function holdBookFaded");
+const fadedEnd = appJs.indexOf("function holdBookHtml");
+if (!(fadedStart > -1 && fadedEnd > fadedStart)) {
+  throw new Error("app.js missing holdBookFaded before holdBookHtml");
 }
-const wastedFn = new Function(`
+const fadedFn = new Function(`
   let pageEp = null;
   function currentPageEpisode() { return pageEp; }
-  ${appJs.slice(wastedStart, wastedEnd)}
+  ${appJs.slice(fadedStart, fadedEnd)}
   return {
     setPage(ep) { pageEp = ep; },
-    holdBookWasted
+    holdBookFaded
   };
 `)();
-wastedFn.setPage({ id: "s1e02", number: 2 });
-if (!wastedFn.holdBookWasted({ status: "jury" })) {
-  throw new Error("Episode 2 jury row must be wasted");
+fadedFn.setPage({ id: "s1e02", number: 2 });
+if (!fadedFn.holdBookFaded({ status: "jury" })) {
+  throw new Error("Episode 2 jury row must fade");
 }
-if (wastedFn.holdBookWasted({ status: "active" })) {
+if (fadedFn.holdBookFaded({ status: "active" })) {
   throw new Error("living Episode 2 books must keep their numbers");
 }
-wastedFn.setPage({ id: "s1e01", number: 1 });
-if (wastedFn.holdBookWasted({ status: "jury" })) {
+fadedFn.setPage({ id: "s1e01", number: 1 });
+if (fadedFn.holdBookFaded({ status: "jury" })) {
   throw new Error("Episode 1 must still show the boot's numbers");
 }
 

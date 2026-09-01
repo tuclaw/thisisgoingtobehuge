@@ -363,6 +363,7 @@ function renderEpisodePage(episode, season, base) {
   const votePosted = episodeVotePosted(season, episode);
   const focusHref = "#week-board";
   const wantsCamp = episodeWantsCamp(episode);
+  const wantsWhisperFeed = wantsCamp && episode.conversationFeed !== false;
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
   const lunchScripts = [
     episodeHasBeatType(episode, "lunch-chats") || episodeHasBeatId(episode, "thursday-lunch")
@@ -414,7 +415,7 @@ function renderEpisodePage(episode, season, base) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <title>Season ${episode.season || season.season} ${escapeHtml(episode.title)} — Last Trader Standing</title>
   <meta name="description" content="${escapeHtml(episode.description || episode.location || "")}" />
   <link rel="stylesheet" href="${base}styles.css" />${lunchCss}
@@ -440,7 +441,7 @@ function renderEpisodePage(episode, season, base) {
     </nav>
   </header>
 
-  <section class="episode-hero episode-campfire-hero" id="episode"${wantsCamp && episode.conversationFeed !== false ? ' data-conversation-feed="conversations.json"' : ""}>
+  <section class="episode-hero episode-campfire-hero" id="episode"${wantsWhisperFeed ? ' data-conversation-feed="conversations.json"' : ""}>
     <div class="hero-stage" aria-hidden="true">
       <div class="hero-glow"></div>
       <div class="hero-veil"></div>
@@ -502,7 +503,7 @@ function renderEpisodePage(episode, season, base) {
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 
-    ${wantsCamp ? `<article class="beat beat-camp" id="camp-whispers">
+    ${wantsWhisperFeed ? `<article class="beat beat-camp" id="camp-whispers">
       <p class="section-kicker">Campfire</p>
       <h2>Latest whispers</h2>
       <p class="camp-whispers-lede">The most recent bot threads from camp. Click a thread to listen.</p>
