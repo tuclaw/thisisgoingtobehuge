@@ -1,0 +1,18 @@
+---
+description: Host/dev agents use Cursor Grok or Composer; other models are ask-brain only
+alwaysApply: true
+---
+
+# Cloud agent model pin
+
+This repo's cloud agents and every sub-agent they spawn use **Cursor Grok** or **Composer** only.
+
+Allowed Task `model` slugs:
+
+- `cursor-grok-4.6-high-fast` (default for computerUse, videoReview, debug, generalPurpose)
+- `composer-2.5` (default for explore and bash-style sweeps)
+- `cursor-grok-4.5-high`, `cursor-grok-4.5-high-fast`, `composer-2.5-fast`
+
+**The only exception** is a contestant `ask-brain` call with that player's pinned `--model` from `GAME.md`. Do not pass contestant slugs (Claude Sonnet 5, Opus, Gemini, GPT, Kimi, Fable, and the rest) to Task or any host/dev sub-agent.
+
+When you call the Task tool, **pass `model` on every call**. Do not omit it. Do not pass `inherit` unless the parent is already one of the slugs above. Do not pass any Claude Sonnet 4.x slug.

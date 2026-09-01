@@ -297,8 +297,8 @@ if (!appJs.includes("onHomeBooksEvent") || !appJs.includes('action === "play"') 
 if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(64rem, 100%)")) {
   throw new Error("styles.css missing home hero books diagram layout");
 }
-if (!appJs.includes("money-ticker-host-add") || !css.includes(".money-ticker-host-add")) {
-  throw new Error("home books diagram must show the Episode 2 host +$110 given line");
+if (!appJs.includes("tickerEvenGuide") || !appJs.includes('label: "0%"') || !css.includes(".money-ticker-putin")) {
+  throw new Error("home books diagram must plot week % against a 0% even line");
 }
 const homeVoteIdx = html.indexOf('id="home-vote"');
 const homeTribalIdx = html.indexOf('id="home-tribal"');
@@ -349,6 +349,17 @@ if (!appJs.includes("renderHomeTorches(season)")) {
 }
 if (!appJs.includes('class="face-photo"') || !appJs.includes("face-lab") || !appJs.includes("face-lab-mark")) {
   throw new Error("homepage face cards must wrap a smaller portrait and a lab identity block");
+}
+if (
+  !appJs.includes("function hover3dWrap") ||
+  !appJs.includes("hover-3d-zone") ||
+  !appJs.includes("class=\"face-card hover-3d") ||
+  !appJs.includes("tribal-spoiler-cover hover-3d")
+) {
+  throw new Error("homepage face cards and the tribal spoiler must use the 3D hover shell");
+}
+if (!css.includes(".hover-3d") || !css.includes("--hover-3d-transform") || !css.includes("rotate3d")) {
+  throw new Error("styles.css must include the daisyUI-style hover-3d tilt");
 }
 if (!css.includes(".face-photo") || !css.includes(".face-lab") || !css.includes("4.25rem") || !css.includes("2.7rem")) {
   throw new Error("styles.css must shrink homepage portraits and emphasize the lab mark");

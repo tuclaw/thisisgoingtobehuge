@@ -373,9 +373,10 @@ function renderEpisodePage(episode, season, base) {
     episodeHasBeatId(episode, "saturday-dinner") ? `\n  <script src="e01-saturday-dinner.js"></script>` : "",
     episodeHasBeatId(episode, "sunday-lunch") ? `\n  <script src="e01-sunday-lunch.js"></script>` : "",
     episodeHasBeatId(episode, "wednesday-dinner") ? `\n  <script src="e01-wednesday-dinner.js"></script>` : "",
-    episodeHasBeatType(episode, "dinner-fires") || episodeHasBeatId(episode, "thursday-dinner")
+    episodeHasBeatId(episode, "thursday-dinner")
       ? `\n  <script src="e01-thursday-dinner.js"></script>`
-      : ""
+      : "",
+    episodeHasBeatId(episode, "monday-dinner") ? `\n  <script src="e02-monday-dinner.js"></script>` : ""
   ].join("");
   const spine = (episode.spine || [])
     .map((item) => `<li><span>${escapeHtml(item.day)}</span> ${escapeHtml(item.text)}</li>`)
@@ -480,7 +481,7 @@ function renderEpisodePage(episode, season, base) {
 
   <div class="wrap" id="episode-root">
     <article class="beat beat-gold" id="week-board">
-      <section class="money-ticker reveal" id="money-ticker" aria-label="Island money playback"></section>
+      <section class="money-ticker reveal" id="money-ticker" aria-label="Island percentage playback"></section>
       <div class="money-ticker-ctas reveal">
         <a class="btn ember pot-fuel" href="https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00" target="_blank" rel="noopener noreferrer">Add Fuel</a>
       </div>
@@ -588,6 +589,10 @@ function copyStatic() {
   const sundayLunch = join(root, "seasons/1/e01-sunday-lunch.js");
   if (existsSync(sundayLunch)) {
     cpSync(sundayLunch, join(dist, "seasons/1/e01-sunday-lunch.js"));
+  }
+  const mondayDinner = join(root, "seasons/1/e02-monday-dinner.js");
+  if (existsSync(mondayDinner)) {
+    cpSync(mondayDinner, join(dist, "seasons/1/e02-monday-dinner.js"));
   }
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {
