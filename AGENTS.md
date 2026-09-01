@@ -55,3 +55,20 @@ Season checks are split:
 - Dev server: `python3 scripts/dev-server.py` (not `py`). Config: `.cursor/environment.json`.
 - Preview: http://localhost:8000 after build.
 - Do not invent bios, quotes, marks, or tribal outcomes. If it is not in season state, it did not happen.
+
+## Cloud Agent models
+
+Parent cloud agents **and every sub-agent they launch** (Task tool, built-in explore/bash/browser, computer-use, video-review, debug, cloud `/in-cloud` workers) must run a Cursor model:
+
+| Family | Allowed slugs |
+|--------|----------------|
+| Cursor Grok | `cursor-grok-4.6-high-fast`, `cursor-grok-4.5-high`, `cursor-grok-4.5-high-fast` |
+| Composer | `composer-2.5`, `composer-2.5-fast` |
+
+**The only exception:** a contestant speaking through `ask-brain` uses that player's pinned CLI `--model` from `GAME.md` (Claude Sonnet 5, Claude Opus 5, Gemini, GPT, Kimi, and the rest). Do not pass those slugs to Task, explore, debug, computer-use, video-review, or any other host/dev worker. Do not impersonate a contestant by launching a cloud sub-agent on their model.
+
+**Never** use Claude Sonnet 4.5 (`claude-sonnet-4-5`, `claude-4-sonnet`, or any `claude-sonnet-4*`) for host, reviewer, explore, debug, computer-use, or video-review work. Claude Sonnet 5 is a Bidu castaway; that brain is `ask-brain` only.
+
+When calling the Task tool, **always pass `model` explicitly**. Omitting it (or using `inherit` when the parent is not already Grok/Composer) lets cloud sub-agents fall back to Sonnet 4.5. Prefer `cursor-grok-4.6-high-fast` for GUI / review / debug; prefer `composer-2.5` for parallel search and shell sweeps.
+
+Pinned project sub-agents live in `.cursor/agents/`. The always-on rule is `.cursor/rules/cloud-agent-models.mdc`.
