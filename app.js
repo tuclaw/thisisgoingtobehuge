@@ -763,11 +763,6 @@ function councilTorchRowHtml(season, entry) {
 }
 
 
-function hover3dWrap(innerHtml) {
-  const zones = Array.from({ length: 8 }, () => '<span class="hover-3d-zone" aria-hidden="true"></span>').join("");
-  return `<span class="hover-3d-face">${innerHtml}</span>${zones}`;
-}
-
 function renderFaces(season) {
   const grid = document.getElementById("face-grid");
   if (!grid) return;
@@ -786,14 +781,14 @@ function renderFaces(season) {
             globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
               ? LabLogos.labMarkHtml({ slug: slug, className: "face-lab-mark" })
               : "";
-          return `<a class="face-card hover-3d ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">${hover3dWrap(`
+          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
         <span class="face-photo">${face}</span>
         <span class="face-id">
           ${mark ? `<span class="face-lab">${mark}</span>` : ""}
           <h3 class="face-name">${escapeHtml(model)}</h3>
         </span>
         <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
-      `)}</a>`;
+      </a>`;
         })
         .join("");
       const buff = tribe.buff ? ` · ${escapeHtml(tribe.buff)}` : "";
@@ -1992,6 +1987,47 @@ const MONEY_TICKER_WEEKDAYS = [
   { key: "Fri", label: "Friday" }
 ];
 const MONEY_TICKER_WEEKDAY_SLOT = { Sun: 0, Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 4 };
+const MONEY_TICKER_SESSION_OPEN = 6.5;
+const MONEY_TICKER_SESSION_CLOSE = 16;
+
+function pacificSessionU(iso) {
+  const d = iso instanceof Date ? iso : new Date(iso);
+  if (Number.isNaN(d.getTime())) return 0.5;
+  let hour = 12;
+  try {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour: "numeric",
+      minute: "numeric",
+      hourCycle: "h23"
+    }).formatToParts(d);
+    const h = Number((parts.find((p) => p.type === "hour") || {}).value);
+    const m = Number((parts.find((p) => p.type === "minute") || {}).value);
+    if (!Number.isNaN(h) && !Number.isNaN(m)) hour = h + m / 60;
+  } catch {
+    hour = 12;
+  }
+  if (hour <= MONEY_TICKER_SESSION_OPEN) return 0;
+  if (hour >= MONEY_TICKER_SESSION_CLOSE) return 1;
+  return (hour - MONEY_TICKER_SESSION_OPEN) / (MONEY_TICKER_SESSION_CLOSE - MONEY_TICKER_SESSION_OPEN);
+}
+
+function moneyTickerTradingDay(iso) {
+  const parts = pacificDateParts(iso);
+  if (!parts) return null;
+  if (parts.weekday === "Sat") {
+    return { key: parts.key, weekday: "Fri", slotHint: 4 };
+  }
+  if (parts.weekday === "Sun") {
+    return { key: parts.key, weekday: "Mon", slotHint: 0 };
+  }
+  const slotHint = MONEY_TICKER_WEEKDAY_SLOT[parts.weekday];
+  return {
+    key: parts.key,
+    weekday: parts.weekday,
+    slotHint: typeof slotHint === "number" ? slotHint : 0
+  };
+}
 
 function parseEpisodeWeekLabel(label) {
   const text = String(label || "");
@@ -2097,13 +2133,39 @@ function bookWeekPctFromSnap(row) {
 
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
-  const n = list.length;
-  /* Tape order, not calendar slots. Same-day marks must travel the plot;
-     weekday ticks stay as labels. */
-  moneyTicker.axisMax = Math.max(1, n - 1);
-  list.forEach((frame, i) => {
-    frame.axisT = n < 2 ? 0 : i;
+  const mode = range || (moneyTicker && moneyTicker.range) || "week";
+  /*
+    Weekday session time, not tape order. Extra Friday marks (open / mid /
+    last-hour, no official SIP) used to steal half the plot and make playback
+    crawl. Same-day marks still travel — inside that day's session.
+  */
+  if (mode === "week") {
+    moneyTicker.axisMax = 5;
+    list.forEach((frame) => {
+      const day = moneyTickerTradingDay(frame && frame.at);
+      const slot = day && typeof day.slotHint === "number" ? day.slotHint : 0;
+      const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
+      frame.daySlot = slot;
+      frame.axisT = slot + u;
+    });
+    return;
+  }
+
+  const dayIndex = new Map();
+  let nextSlot = 0;
+  list.forEach((frame) => {
+    const day = moneyTickerTradingDay(frame && frame.at);
+    const key = day ? day.key : `frame-${nextSlot}`;
+    if (!dayIndex.has(key)) {
+      dayIndex.set(key, nextSlot);
+      nextSlot += 1;
+    }
+    const slot = dayIndex.get(key);
+    const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
+    frame.daySlot = slot;
+    frame.axisT = slot + u;
   });
+  moneyTicker.axisMax = Math.max(1, nextSlot);
 }
 
 function moneyTickerAxisTAt(t, frames) {
@@ -2127,27 +2189,6 @@ function moneyTickerXFromAxisT(axisT, axisMax) {
   return padL + (max ? (t / max) * w : 0);
 }
 
-function moneyTickerLiveNowX(frames, range) {
-  const mode = range || (moneyTicker && moneyTicker.range) || "week";
-  const list = frames || [];
-  const now = new Date();
-  const nowIso = now.toISOString();
-  const last = list[list.length - 1];
-  const lastT = last && typeof last.axisT === "number" ? last.axisT : Math.max(0, list.length - 1);
-  if (mode === "week") {
-    const bounds = episodeWeekBounds(tickerEpisodeForRange(moneyTicker.season));
-    if (!bounds) return null;
-    const nowMs = now.getTime();
-    if (nowMs < bounds.startMs || nowMs > bounds.endMs) return null;
-    if (!list.length) return null;
-    return moneyTickerXFromAxisT(lastT);
-  }
-  const today = pacificDateParts(nowIso);
-  const lastDay = last && pacificDateParts(last.at);
-  if (!today || !lastDay || today.key !== lastDay.key) return null;
-  return moneyTickerXFromAxisT(lastT);
-}
-
 function moneyTickerWeekdayTicks(frames, range) {
   const mode = range || (moneyTicker && moneyTicker.range) || "week";
   if (mode === "week") {
@@ -2163,12 +2204,18 @@ function moneyTickerWeekdayTicks(frames, range) {
     const parts = pacificDateParts(frame && frame.at);
     if (!parts) return;
     if (!byKey.has(parts.key)) {
+      const slot =
+        typeof frame.daySlot === "number"
+          ? frame.daySlot
+          : typeof frame.axisT === "number"
+            ? Math.floor(Number(frame.axisT))
+            : days.length;
       byKey.set(parts.key, {
         weekday: parts.weekday,
         day: parts.day,
         month: parts.month,
         key: parts.key,
-        axisT: typeof frame.axisT === "number" ? frame.axisT : index
+        daySlot: slot
       });
       days.push(byKey.get(parts.key));
     }
@@ -2187,9 +2234,9 @@ function moneyTickerWeekdayTicks(frames, range) {
     MONEY_TICKER_WEEKDAYS.every((item, i) => use[i] && use[i].weekday === item.key);
   return use.map((day, i) => {
     const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
-    const axisT = typeof day.axisT === "number" ? day.axisT : i + 0.5;
+    const slot = typeof day.daySlot === "number" ? day.daySlot : i;
     return {
-      x: moneyTickerXFromAxisT(axisT),
+      x: moneyTickerXFromAxisT(slot + 0.5),
       label: full && named ? named.label : `${day.weekday} ${day.day}`,
       weekday: day.weekday
     };
@@ -2466,7 +2513,7 @@ function tribePctsFromFrame(frame, season, snap) {
   return out;
 }
 
-function framesFromSnapshots(season, snaps) {
+function framesFromSnapshots(season, snaps, range) {
   const cast = season.survivors || [];
   const tribeIndex = {};
   cast.forEach((s) => {
@@ -2487,7 +2534,7 @@ function framesFromSnapshots(season, snaps) {
         at: snap.at,
         label: snap.label || pacificDayLabel(snap.at),
         books,
-        potUsd: snapshotTotal(snap)
+        cash: snapshotTotal(snap)
       };
       frame.tribes = tribePctsFromFrame(frame, season, snap);
       frame.total = roundMoney(
@@ -2495,12 +2542,12 @@ function framesFromSnapshots(season, snaps) {
       );
       return frame;
     });
-  moneyTickerAssignAxis(frames);
+  moneyTickerAssignAxis(frames, range);
   return frames;
 }
 
 function buildTickerFrames(season, range) {
-  return framesFromSnapshots(season, snapshotsForTickerRange(season, range));
+  return framesFromSnapshots(season, snapshotsForTickerRange(season, range), range);
 }
 
 function moneyTickerActiveEpisode(season) {
@@ -2524,9 +2571,36 @@ function stopMoneyTickerPlayback() {
   }
 }
 
+function moneyTickerAxisSpan(frames) {
+  const list = frames || moneyTicker.frames || [];
+  if (list.length < 2) return 1;
+  const a = typeof list[0].axisT === "number" ? list[0].axisT : 0;
+  const b = typeof list[list.length - 1].axisT === "number" ? list[list.length - 1].axisT : list.length - 1;
+  return Math.max(0.25, b - a);
+}
+
+function moneyTickerAxisTToProgress(axisT, frames) {
+  const list = frames || moneyTicker.frames || [];
+  if (!list.length) return 0;
+  const lastI = list.length - 1;
+  const firstT = typeof list[0].axisT === "number" ? list[0].axisT : 0;
+  const lastT = typeof list[lastI].axisT === "number" ? list[lastI].axisT : lastI;
+  if (axisT <= firstT) return 0;
+  if (axisT >= lastT) return lastI;
+  for (let i = 0; i < lastI; i += 1) {
+    const a = typeof list[i].axisT === "number" ? list[i].axisT : i;
+    const b = typeof list[i + 1].axisT === "number" ? list[i + 1].axisT : i + 1;
+    if (axisT <= b) {
+      const u = b === a ? 1 : (axisT - a) / (b - a);
+      return i + Math.max(0, Math.min(1, u));
+    }
+  }
+  return lastI;
+}
+
 function moneyTickerFullDurationMs() {
-  const segments = Math.max(5, moneyTicker.frames.length - 1);
-  return (segments * 900) / Math.max(0.05, moneyTicker.speed || 1);
+  const span = Math.max(1, moneyTickerAxisSpan());
+  return (span * 900) / Math.max(0.05, moneyTicker.speed || 1);
 }
 
 function setMoneyTickerSpeed(speed) {
@@ -2572,10 +2646,13 @@ function startMoneyTickerPlayback(opts) {
 
 function tickMoneyTickerPlayback(now) {
   if (!moneyTicker.playing) return;
-  const max = Math.max(0, moneyTicker.frames.length - 1);
+  const frames = moneyTicker.frames;
+  const max = Math.max(0, frames.length - 1);
   const full = moneyTickerFullDurationMs();
-  const rate = max / full;
-  const progress = Math.min(max, moneyTicker.playFromProgress + (now - moneyTicker.playStartedAt) * rate);
+  const span = Math.max(0.0001, moneyTickerAxisSpan(frames));
+  const fromAxis = moneyTickerAxisTAt(moneyTicker.playFromProgress, frames);
+  const axisNow = fromAxis + (now - moneyTicker.playStartedAt) * (span / full);
+  const progress = Math.min(max, moneyTickerAxisTToProgress(axisNow, frames));
   setMoneyTickerProgress(progress);
   if (progress >= max - 0.0001) {
     setMoneyTickerProgress(max);
@@ -2714,15 +2791,15 @@ function lerpFrameNum(a, b, u, key) {
 }
 
 function moneyTickerLiveFoot(a, b, u) {
-  const potUsd = roundMoney(lerpFrameNum(a, b, u, "potUsd"));
+  const cash = roundMoney(lerpFrameNum(a, b, u, "cash"));
   const putIn = moneyTicker.putIn;
-  const delta = putIn ? roundMoney(potUsd - putIn) : 0;
-  const down = putIn ? potUsd < putIn - 0.00005 : false;
-  const up = putIn ? potUsd > putIn + 0.00005 : false;
+  const delta = putIn ? roundMoney(cash - putIn) : 0;
+  const down = putIn ? cash < putIn - 0.00005 : false;
+  const up = putIn ? cash > putIn + 0.00005 : false;
   const arrow = up ? "▲" : down ? "▼" : "●";
   return {
-    pot: potMoney(potUsd),
-    live: potMoney(potUsd),
+    pot: potMoney(cash),
+    live: potMoney(cash),
     chg: putIn
       ? `${arrow} ${money(Math.abs(delta))} from ${potMoney(putIn)} put in`
       : "",
@@ -2749,19 +2826,20 @@ function setMoneyTickerProgress(next, opts) {
   moneyTicker.index = u < 0.5 ? i0 : i1;
 
   const foot = moneyTickerLiveFoot(a, b, u);
+  const cash = roundMoney(lerpFrameNum(a, b, u, "cash"));
   const down = Boolean(foot.down);
   const up = Boolean(foot.up);
   const chgClass = up ? "up" : down ? "down" : "flat";
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
-    amount.textContent = foot.pot;
+    amount.textContent = potMoney(cash);
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
-    live.textContent = foot.live;
+    live.textContent = potMoney(cash);
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
@@ -3140,15 +3218,6 @@ function renderMoneyTickerSvg(season, frames) {
   const playProgress =
     typeof moneyTicker.progress === "number" ? moneyTicker.progress : moneyTicker.index || 0;
   const playX = moneyTickerXAt(playProgress, frames.length);
-  const liveNowX = moneyTickerLiveNowX(frames, moneyTicker.range);
-  const liveNow =
-    liveNowX == null
-      ? ""
-      : `<g class="money-ticker-live-now" data-ticker-live-now>
-        <line x1="${liveNowX.toFixed(2)}" y1="16" x2="${liveNowX.toFixed(2)}" y2="198" />
-        <rect x="${(liveNowX + 4).toFixed(2)}" y="16" width="28" height="12" rx="2" />
-        <text x="${(liveNowX + 18).toFixed(2)}" y="25" text-anchor="middle">Live</text>
-      </g>`;
   const frame = frames[Math.min(frames.length - 1, Math.round(playProgress))] || frames[frames.length - 1];
   let dotValue = frame ? frame.total : spec.putIn;
   if (moneyTicker.diagram === "island") {
@@ -3180,7 +3249,6 @@ function renderMoneyTickerSvg(season, frames) {
       }
     </g>
     <line class="money-ticker-playhead" data-ticker-playhead x1="${playX}" y1="16" x2="${playX}" y2="198" />
-    ${liveNow}
     ${xLabels}
   </svg>`;
 }
@@ -3387,7 +3455,7 @@ function mountMoneyTicker(season, opts) {
     </div>
     <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>
     <div class="money-ticker-foot">
-      <p class="money-ticker-live" data-ticker-live></p>
+      <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].cash))}</p>
       <p class="money-ticker-chg" data-ticker-live-chg></p>
     </div>`;
 
@@ -3519,7 +3587,7 @@ function wrapTribalSpoiler(innerHtml, options) {
   const srLabel = opts.srLabel || "Spoiler: tribal results. Click to reveal the vote.";
   return `<div class="tribal-spoiler">
     <div class="tribal-spoiler-result" id="${escapeHtml(resultId)}" aria-hidden="true">${innerHtml}</div>
-    <button type="button" class="tribal-spoiler-cover hover-3d" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">${hover3dWrap(`
+    <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
       <span class="tribal-spoiler-cover-fallback">
         <span class="spoiler-kicker">${escapeHtml(kicker)}</span>
@@ -3527,7 +3595,7 @@ function wrapTribalSpoiler(innerHtml, options) {
         <span class="spoiler-copy">${escapeHtml(copy)}</span>
       </span>
       <span class="visually-hidden">${escapeHtml(srLabel)}</span>
-    `)}</button>
+    </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;
 }

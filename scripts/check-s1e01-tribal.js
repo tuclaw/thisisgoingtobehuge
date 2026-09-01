@@ -21,9 +21,6 @@ function fail(message) {
 if (!app.includes("function wrapTribalSpoiler") || !app.includes("function bindTribalSpoilers")) {
   fail("do not remove wrapTribalSpoiler / bindTribalSpoilers");
 }
-if (!app.includes("function hover3dWrap") || !app.includes("tribal-spoiler-cover hover-3d")) {
-  fail("tribal spoiler cover must keep the 3D hover shell");
-}
 if (!app.includes("function renderHomeTribalSpoiler") || !app.includes("home-tribal-spoiler-result")) {
   fail("home page must reuse wrapTribalSpoiler for the Episode 1 vote card");
 }

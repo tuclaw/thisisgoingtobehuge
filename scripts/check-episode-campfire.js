@@ -114,13 +114,13 @@ if (!appJs.includes("weekPct from this week's open — not last week's ending bo
 }
 if (
   !appJs.includes("function moneyTickerLiveFoot") ||
-  !appJs.includes("potUsd") ||
-  !appJs.includes("live: potMoney(potUsd)")
+  !appJs.includes("live: potMoney(cash)")
 ) {
   throw new Error("app.js ticker foot must show island cash only");
 }
 if (
   appJs.includes("${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}") ||
+  appJs.includes("${potMoney(cash)} · ${tickerAxisPct(totalPct)}") ||
   appJs.includes('liveKind: "tribes"') ||
   appJs.includes('liveKind: "pair"')
 ) {
@@ -181,11 +181,20 @@ if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("dat
 if (!appJs.includes("function survivorLivingAt") || !appJs.includes("Voted-out players drop after tribal")) {
   throw new Error("app.js money ticker must drop voted-out contestants after tribal");
 }
-if (!appJs.includes("function moneyTickerLiveNowX") || !appJs.includes("data-ticker-live-now")) {
-  throw new Error("app.js money ticker must draw a live vertical line for the current point in the week");
+if (appJs.includes("function moneyTickerLiveNowX") || appJs.includes("data-ticker-live-now")) {
+  throw new Error("app.js money ticker must not draw a live vertical line at the end of the tape");
+}
+if (appJs.includes("live.textContent = tickerAxisPct") || appJs.includes("from even")) {
+  throw new Error("app.js money ticker footer must show cash, not week % from even");
+}
+if (!appJs.includes("live.textContent = potMoney") || !appJs.includes("cash: snapshotTotal(snap)")) {
+  throw new Error("app.js money ticker footer must show pot cash from each snapshot");
 }
 if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
-  throw new Error("app.js must space ticker marks by tape order so same-day frames travel, not calendar weekday slots");
+  throw new Error("app.js must not pin same-day marks to a single weekday slot x");
+}
+if (!appJs.includes("function pacificSessionU") || !appJs.includes("frame.axisT = slot + u")) {
+  throw new Error("app.js must place ticker marks on weekday session time so Friday does not swallow the tape");
 }
 
 const axisStart = appJs.indexOf("function pacificDateParts");
@@ -203,6 +212,8 @@ const axisHelpers = new Function(`
     moneyTickerWeekdayTicks,
     moneyTickerAssignAxis,
     moneyTickerXFromAxisT,
+    pacificSessionU,
+    moneyTickerTradingDay,
     survivorBootAtMs,
     survivorLivingAt,
     axisMax: () => moneyTicker.axisMax
@@ -293,8 +304,8 @@ const liveFoot = new Function(`
   return { moneyTickerLiveFoot };
 `)();
 const islandFoot = liveFoot.moneyTickerLiveFoot(
-  { potUsd: 240.26, total: 0.83 },
-  { potUsd: 240.26, total: 0.83 },
+  { cash: 240.26, total: 0.83 },
+  { cash: 240.26, total: 0.83 },
   0
 );
 if (islandFoot.live !== "$240.26" || islandFoot.pot !== "$240.26") {
@@ -332,18 +343,51 @@ const mondayTape = [
   { at: "2026-08-31T19:36:30Z" }
 ];
 axisHelpers.moneyTickerAssignAxis(mondayTape, "week");
-if (mondayTape.map((frame) => frame.axisT).join(",") !== "0,1,2,3") {
-  throw new Error(
-    "Week tape must space same-day marks across the plot, got " + mondayTape.map((frame) => frame.axisT).join(",")
-  );
+const mondaySlots = mondayTape.map((frame) => frame.axisT);
+if (mondaySlots.some((t) => t < 0 || t > 1.0001)) {
+  throw new Error("Monday-only week marks must stay in Monday's session, got " + mondaySlots.join(","));
 }
-if (axisHelpers.axisMax() !== 3) {
-  throw new Error("Monday-only week axisMax should be last-frame index 3, got " + axisHelpers.axisMax());
+if (!(mondaySlots[0] < mondaySlots[1] && mondaySlots[1] < mondaySlots[2] && mondaySlots[2] < mondaySlots[3])) {
+  throw new Error("Monday marks must travel through the session, got " + mondaySlots.join(","));
+}
+if (axisHelpers.axisMax() !== 5) {
+  throw new Error("Week axisMax should stay 5 weekday slots, got " + axisHelpers.axisMax());
 }
 const mondaySpan =
   axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT) - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT);
-if (mondaySpan < 500) {
-  throw new Error("Monday-only week marks must travel most of the plot, span was " + mondaySpan.toFixed(1));
+if (mondaySpan > 160) {
+  throw new Error("Monday-only week marks must not stretch into Friday, span was " + mondaySpan.toFixed(1));
+}
+
+const e1WeekTape = [
+  { at: "2026-08-24T16:06:00Z" },
+  { at: "2026-08-25T15:25:47Z" },
+  { at: "2026-08-26T20:00:00Z" },
+  { at: "2026-08-28T00:13:00Z" },
+  { at: "2026-08-28T14:01:56Z" },
+  { at: "2026-08-28T16:57:36Z" },
+  { at: "2026-08-28T19:14:23Z" }
+];
+axisHelpers.moneyTickerAssignAxis(e1WeekTape, "week");
+if (e1WeekTape[3].daySlot !== 3 || e1WeekTape[3].axisT >= 4) {
+  throw new Error(
+    "Thu SIP stamped Friday UTC must stay in Thursday's Pacific session, got daySlot " +
+      e1WeekTape[3].daySlot +
+      " axisT " +
+      e1WeekTape[3].axisT
+  );
+}
+if (e1WeekTape.slice(4).some((frame) => frame.daySlot !== 4)) {
+  throw new Error("Friday marks must sit in Friday's session slot");
+}
+if (!(e1WeekTape[4].axisT < e1WeekTape[5].axisT && e1WeekTape[5].axisT < e1WeekTape[6].axisT)) {
+  throw new Error(
+    "Friday open / mid / last-hour must travel inside Friday, got " +
+      e1WeekTape.slice(4).map((frame) => frame.axisT).join(",")
+  );
+}
+if (e1WeekTape[6].axisT > 5.0001 || e1WeekTape[0].axisT < 0) {
+  throw new Error("Week session axis must stay inside Monday–Friday, got last " + e1WeekTape[6].axisT);
 }
 
 const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };
