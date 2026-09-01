@@ -5604,66 +5604,64 @@ body.is-titles .replay-trailer {
 .hover-3d > :nth-child(8) { grid-area: 3 / 2 / 4 / 3; }
 .hover-3d > :nth-child(9) { grid-area: 3 / 3 / 4 / 4; }
 
-@media (hover: hover) and (pointer: fine) {
-  .hover-3d:hover {
-    --hover-3d-ease: linear(0, 0.708 15.2%, 0.927 23.6%, 1.067 33%, 1.12 41%, 1.13 50.2%, 1.019 83.2%, 1);
-  }
+.hover-3d:hover {
+  --hover-3d-ease: linear(0, 0.708 15.2%, 0.927 23.6%, 1.067 33%, 1.12 41%, 1.13 50.2%, 1.019 83.2%, 1);
+}
 
-  .hover-3d:hover > :first-child {
-    scale: 1.05;
-  }
+.hover-3d:hover > :first-child {
+  scale: 1.05;
+}
 
-  .hover-3d:hover > :first-child::before {
-    opacity: 1;
-  }
+.hover-3d:hover > :first-child::before {
+  opacity: 1;
+}
 
-  .hover-3d:has(> :nth-child(2):hover) {
-    --hover-3d-transform: -1, 1;
-    --hover-3d-shine: 0% 0%;
-    --hover-3d-shadow: -0.5rem -0.5rem;
-  }
+.hover-3d:has(> :nth-child(2):hover) {
+  --hover-3d-transform: -1, 1;
+  --hover-3d-shine: 0% 0%;
+  --hover-3d-shadow: -0.5rem -0.5rem;
+}
 
-  .hover-3d:has(> :nth-child(3):hover) {
-    --hover-3d-transform: -1, 0;
-    --hover-3d-shine: 100% 0%;
-    --hover-3d-shadow: 0rem -0.5rem;
-  }
+.hover-3d:has(> :nth-child(3):hover) {
+  --hover-3d-transform: -1, 0;
+  --hover-3d-shine: 100% 0%;
+  --hover-3d-shadow: 0rem -0.5rem;
+}
 
-  .hover-3d:has(> :nth-child(4):hover) {
-    --hover-3d-transform: -1, -1;
-    --hover-3d-shine: 200% 0%;
-    --hover-3d-shadow: 0.5rem -0.5rem;
-  }
+.hover-3d:has(> :nth-child(4):hover) {
+  --hover-3d-transform: -1, -1;
+  --hover-3d-shine: 200% 0%;
+  --hover-3d-shadow: 0.5rem -0.5rem;
+}
 
-  .hover-3d:has(> :nth-child(5):hover) {
-    --hover-3d-transform: 0, 1;
-    --hover-3d-shine: 0% 100%;
-    --hover-3d-shadow: -0.5rem 0rem;
-  }
+.hover-3d:has(> :nth-child(5):hover) {
+  --hover-3d-transform: 0, 1;
+  --hover-3d-shine: 0% 100%;
+  --hover-3d-shadow: -0.5rem 0rem;
+}
 
-  .hover-3d:has(> :nth-child(6):hover) {
-    --hover-3d-transform: 0, -1;
-    --hover-3d-shine: 200% 100%;
-    --hover-3d-shadow: 0.5rem 0rem;
-  }
+.hover-3d:has(> :nth-child(6):hover) {
+  --hover-3d-transform: 0, -1;
+  --hover-3d-shine: 200% 100%;
+  --hover-3d-shadow: 0.5rem 0rem;
+}
 
-  .hover-3d:has(> :nth-child(7):hover) {
-    --hover-3d-transform: 1, 1;
-    --hover-3d-shine: 0% 200%;
-    --hover-3d-shadow: -0.5rem 0.5rem;
-  }
+.hover-3d:has(> :nth-child(7):hover) {
+  --hover-3d-transform: 1, 1;
+  --hover-3d-shine: 0% 200%;
+  --hover-3d-shadow: -0.5rem 0.5rem;
+}
 
-  .hover-3d:has(> :nth-child(8):hover) {
-    --hover-3d-transform: 1, 0;
-    --hover-3d-shine: 100% 200%;
-    --hover-3d-shadow: 0rem 0.5rem;
-  }
+.hover-3d:has(> :nth-child(8):hover) {
+  --hover-3d-transform: 1, 0;
+  --hover-3d-shine: 100% 200%;
+  --hover-3d-shadow: 0rem 0.5rem;
+}
 
-  .hover-3d:has(> :nth-child(9):hover) {
-    --hover-3d-transform: 1, -1;
-    --hover-3d-shine: 200% 200%;
-    --hover-3d-shadow: 0.5rem 0.5rem;
-  }
+.hover-3d:has(> :nth-child(9):hover) {
+  --hover-3d-transform: 1, -1;
+  --hover-3d-shine: 200% 200%;
+  --hover-3d-shadow: 0.5rem 0.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
