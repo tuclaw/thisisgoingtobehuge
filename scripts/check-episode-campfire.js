@@ -191,6 +191,7 @@ const axisHelpers = new Function(`
     moneyTickerClockTicks,
     pacificClockLabel,
     moneyTickerAssignAxis,
+    moneyTickerProgressFromAxisT,
     moneyTickerXFromAxisT,
     survivorBootAtMs,
     survivorLivingAt,
@@ -298,6 +299,12 @@ if (!lastTick || Math.abs(lastTick.x - lastX) > 1) {
 }
 if (Math.abs(mondayWeekTicks[0].x - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT)) > 1) {
   throw new Error("First Monday print must sit on the first clock tick");
+}
+if (Math.abs(axisHelpers.moneyTickerProgressFromAxisT(mondayTape[2].axisT, mondayTape) - 2) > 0.001) {
+  throw new Error("Scrub at 10:35 AM must land on the mid-gift mark");
+}
+if (Math.abs(axisHelpers.moneyTickerProgressFromAxisT(1, mondayTape) - 3) > 0.001) {
+  throw new Error("Scrub at the clock end must land on last-hour");
 }
 
 const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };

@@ -2113,6 +2113,27 @@ function moneyTickerAxisTAt(t, frames) {
   return lerp(a, b, u - i0);
 }
 
+function moneyTickerProgressFromAxisT(axisT, frames) {
+  const list = frames || moneyTicker.frames || [];
+  if (!list.length) return 0;
+  if (list.length === 1) return 0;
+  const target = Math.max(0, Math.min(1, Number(axisT) || 0));
+  const last = list.length - 1;
+  for (let i = 0; i < last; i += 1) {
+    const a = typeof list[i].axisT === "number" ? list[i].axisT : i / last;
+    const b = typeof list[i + 1].axisT === "number" ? list[i + 1].axisT : (i + 1) / last;
+    if (target <= b || i === last - 1) {
+      return i + (target - a) / (b - a || 1);
+    }
+  }
+  return last;
+}
+
+function moneyTickerScrubAxisT(progress, frames) {
+  const t = moneyTickerAxisTAt(progress, frames);
+  return Math.max(0, Math.min(1, t));
+}
+
 function moneyTickerXFromAxisT(axisT, axisMax) {
   const padL = 36;
   const padR = 12;
@@ -2624,8 +2645,9 @@ function syncTickerChapterChrome() {
   });
   const scrub = root.querySelector("[data-ticker-scrub]");
   if (scrub) {
-    scrub.max = String(Math.max(0, moneyTicker.frames.length - 1));
-    if (scrub.value !== String(moneyTicker.progress || 0)) scrub.value = String(moneyTicker.progress || 0);
+    scrub.max = "1";
+    const axisT = moneyTickerScrubAxisT(moneyTicker.progress || 0);
+    if (scrub.value !== String(axisT)) scrub.value = String(axisT);
   }
 }
 
@@ -2911,7 +2933,8 @@ function setMoneyTickerProgress(next, opts) {
 
   const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
   if (scrub) {
-    const scrubVal = String(progress);
+    const scrubVal = String(moneyTickerScrubAxisT(progress));
+    if (scrub.max !== "1") scrub.max = "1";
     if (scrub.value !== scrubVal) scrub.value = scrubVal;
   }
 
@@ -3472,7 +3495,7 @@ function bindMoneyTickerControls() {
     if (!scrub) return;
     moneyTicker.autoplayDone = true;
     stopMoneyTickerPlayback();
-    setMoneyTickerIndex(Number(scrub.value));
+    setMoneyTickerIndex(moneyTickerProgressFromAxisT(Number(scrub.value)));
   });
 }
 
@@ -3607,7 +3630,7 @@ function mountMoneyTicker(season, opts) {
       <div class="money-ticker-plot">${renderMoneyTickerSvg(season, moneyTicker.frames)}</div>
     </div>
     <div class="money-ticker-transport">
-      <input class="money-ticker-scrub" data-ticker-scrub type="range" min="0" max="${moneyTicker.frames.length - 1}" value="${moneyTicker.progress || moneyTicker.index}" step="0.01" aria-label="Scrub marks" />
+      <input class="money-ticker-scrub" data-ticker-scrub type="range" min="0" max="1" value="${moneyTickerScrubAxisT(moneyTicker.progress || moneyTicker.index)}" step="0.001" aria-label="Scrub marks" />
       <div class="money-ticker-controls">
         <button type="button" class="money-ticker-play" data-ticker-play aria-pressed="false"><span aria-hidden="true">▶</span> Play</button>
         <div class="money-ticker-speeds" role="group" aria-label="Playback speed">${speeds}</div>
