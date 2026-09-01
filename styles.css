@@ -24,7 +24,6 @@
   --font-body: "IM Fell English", "Palatino Linotype", Palatino, "Book Antiqua", serif;
   --font-ui: "Source Serif 4", Georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --font-wasted: "Anton", Impact, "Arial Narrow", sans-serif;
 }
 
 *,
@@ -1856,61 +1855,13 @@ a.brand:hover {
   background: rgba(232, 213, 176, 0.04);
 }
 
-.hold-book.is-wasted {
-  position: relative;
-  background: rgba(6, 4, 6, 0.35);
-}
-
-.hold-book.is-wasted .hold-face {
-  filter: grayscale(1) brightness(0.68) contrast(1.08);
-}
-
-.hold-book.is-wasted .hold-id {
+.hold-book.is-faded {
   opacity: 0.42;
+  filter: grayscale(1);
 }
 
-.hold-wasted {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  z-index: 2;
-  display: block;
-  padding: 0.22em 0 0.16em;
-  background: rgba(10, 8, 10, 0.72);
-  color: #d11224;
-  font-family: var(--font-wasted);
-  font-size: clamp(1.45rem, 5.2vw, 2rem);
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
-  text-align: center;
-  text-transform: uppercase;
-  line-height: 1;
-  pointer-events: none;
-  transform: translateY(-50%) scaleY(1.12);
-  text-shadow:
-    0 0 12px rgba(176, 16, 28, 0.55),
-    0 1px 0 #000;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hold-wasted {
-    animation: hold-wasted-in 0.55s ease-out both;
-  }
-}
-
-@keyframes hold-wasted-in {
-  from {
-    opacity: 0;
-    filter: blur(3px);
-    transform: translateY(-50%) scale(1.16) scaleY(1.12);
-  }
-  to {
-    opacity: 1;
-    filter: none;
-    transform: translateY(-50%) scaleY(1.12);
-  }
+.hold-book.is-faded .hold-face {
+  filter: brightness(0.78);
 }
 
 .hold-head {
