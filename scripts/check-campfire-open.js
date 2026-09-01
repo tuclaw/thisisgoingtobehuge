@@ -285,8 +285,11 @@ if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER
 if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
   throw new Error("app.js missing home money ticker lede copy");
 }
-if (!appJs.includes("tickerHead") || !appJs.includes("homeMode") || !appJs.includes("Replay the books")) {
-  throw new Error("app.js must keep Replay the books on the episode ticker and omit it on home");
+if (!appJs.includes("tickerHead") || !appJs.includes("homeMode")) {
+  throw new Error("app.js must keep a home-only money ticker lede");
+}
+if (appJs.includes("Replay the books") || appJs.includes("Watch the island, the tribes")) {
+  throw new Error("episode money ticker must not print Replay the books copy");
 }
 if (!js.includes("lts-home-books") || !js.includes("initHomeOpenLanding") || !js.includes('dispatchHomeBooks("play")')) {
   throw new Error("campfire-open.js must start the home books diagram after the title cards");

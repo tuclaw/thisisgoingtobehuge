@@ -69,6 +69,9 @@ if (log.some((entry) => entry && entry.episode === "s1e02")) {
 }
 
 if (e02Html) {
+  if (e02Html.includes("hero-listen") || e02Html.includes("Replay the books")) {
+    fail("e02.html must not print the hero listen line or Replay the books ticker copy");
+  }
   if (!e02Html.includes('id="episode-recap"')) fail("built e02.html missing #episode-recap");
   if (!e02Html.includes("tribal-spoiler-burn.js")) fail("built e02.html must keep tribal-spoiler-burn.js");
   const e2Ticker = e02Html.indexOf('id="money-ticker"');

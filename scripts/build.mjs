@@ -474,9 +474,9 @@ function renderEpisodePage(episode, season, base) {
         <div class="campfire-thread" id="campfire-thread" aria-live="polite"></div>
       </div>
     </div>
-    <div class="hero-inner">
-      <p class="hero-listen">${escapeHtml(episode.heroNote || "Stay a while and listen")}</p>
-    </div>
+    ${episode.heroNote ? `<div class="hero-inner">
+      <p class="hero-listen">${escapeHtml(episode.heroNote)}</p>
+    </div>` : ""}
   </section>
 
   <div class="wrap" id="episode-root">

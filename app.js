@@ -3335,17 +3335,10 @@ function mountMoneyTicker(season, opts) {
     })
     .join("");
 
-  const lede = homeMode
-    ? "See how each tribe and contestant did in the Episode."
-    : "Watch the island, the tribes, or every contestant sleeve as week %. Monday through Friday. Voted-out players drop after tribal. Season plays every episode on one percentage tape.";
-
-  /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
+  /* Home keeps a short books lede. Episode pages drop the ticker kicker/lede. */
   const tickerHead = homeMode
-    ? `<p class="money-ticker-lede">${lede}</p>`
-    : `<div class="money-ticker-head">
-      <p class="money-ticker-kicker">Replay the books</p>
-      <p class="money-ticker-lede">${lede}</p>
-    </div>`;
+    ? `<p class="money-ticker-lede">See how each tribe and contestant did in the Episode.</p>`
+    : "";
 
   root.innerHTML = `
     ${tickerHead}
