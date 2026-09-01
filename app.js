@@ -3419,12 +3419,10 @@ function mountMoneyTicker(season, opts) {
     })
     .join("");
 
-  /* Home keeps a short lede. Episode drops the paragraph above the diagram. */
+  /* Home keeps a short books lede. Episode pages drop the ticker kicker/lede. */
   const tickerHead = homeMode
     ? `<p class="money-ticker-lede">See how each tribe and contestant did in the Episode.</p>`
-    : `<div class="money-ticker-head">
-      <p class="money-ticker-kicker">Replay the books</p>
-    </div>`;
+    : "";
 
   root.innerHTML = `
     ${tickerHead}

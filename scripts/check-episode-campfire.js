@@ -50,8 +50,25 @@ if (!episodeHtml.includes('class="hero-head"')) {
 if (episodeHtml.includes('class="location"') || episodeHtml.includes("host-line") || episodeHtml.includes("hero-note")) {
   throw new Error("episode renderer still prints location/host/hero-note chrome under the campfire");
 }
-if (!episodeHtml.includes("hero-listen") || !episodeHtml.includes("Stay a while and listen")) {
-  throw new Error("episode renderer missing subtle stay-a-while listen line");
+if (!episodeHtml.includes("hero-listen") || !episodeHtml.includes("episode.heroNote")) {
+  throw new Error("episode renderer must still support a hero listen line when an episode has a note");
+}
+if (episodeHtml.includes("Stay a while and listen")) {
+  throw new Error("episode renderer must not force a stay-a-while listen fallback");
+}
+const episode1Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
+const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
+if (episode1Copy.heroNote !== "Stay a while and listen") {
+  throw new Error("Episode 1 must keep its stay-a-while listen line");
+}
+if (episode2Copy.heroNote) {
+  throw new Error("Episode 2 must not print a hero listen line");
+}
+if (episode2Copy.weekBoard && episode2Copy.weekBoard.lede) {
+  throw new Error("Episode 2 must not print week-board lede, status banner, or ranked-by-week kicker");
+}
+if (!episodeHtml.includes("weekBoard.lede") || !episodeHtml.includes("holdings-kicker") || !episodeHtml.includes("season-banner")) {
+  throw new Error("episode renderer must still support week-board lede, banner, and holdings kicker when an episode has copy");
 }
 if (!episodeHtml.includes('id="week-board"')) {
   throw new Error("episode renderer lost week-board structure below landing");
@@ -102,6 +119,7 @@ if (appJs.includes("function buildTickerChapters") || appJs.includes("data-ticke
   throw new Error("app.js season ticker must play one combined percentage tape, not episode chapters");
 }
 if (
+  appJs.includes("Watch the island, the tribes") ||
   appJs.includes("Watch the island pot in dollars") ||
   appJs.includes("Season plays one episode at a time") ||
   appJs.includes("Season plays every episode on one percentage tape") ||
