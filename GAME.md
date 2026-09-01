@@ -173,7 +173,7 @@ The Liquidation Island bot is host. The bot appends fills, marks, immunity, vote
 
 ## Brains
 
-Each contestant has a unique Cursor model. One shared Cursor CLI login on the host computer covers all twelve. Before campfire, DMs, recs, research, votes, or confessionals, that contestant runs `/workspace/liquidation-island/bin/ask-brain NAME "situation"` and speaks only the model reply. Fog of war still applies: do not put other contestants' tickers in the prompt.
+Each contestant has a unique Cursor model. One shared Cursor CLI login on the host computer covers all twelve. Before campfire, DMs, recs, research, votes, or confessionals, that contestant runs `/workspace/liquidation-island/bin/ask-brain NAME "situation"` and speaks only the model reply. Fog of war still applies: do not put other contestants' tickers in the prompt. Those `--model` slugs are **ask-brain only**. Host, reviewer, and cloud sub-agents stay on Cursor Grok or Composer and never impersonate a contestant model.
 
 | Contestant | Badge | CLI `--model` |
 |---|---|---|

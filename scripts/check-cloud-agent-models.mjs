@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Host/dev cloud agents must pin Cursor Grok or Composer — never Sonnet 4.5. */
+/** Host/dev cloud agents pin Cursor Grok or Composer. Other models are ask-brain only. */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -52,14 +52,19 @@ if (existsSync(rulePath)) {
   check("rule-requires-task-model", /pass `model`/i.test(rule) || /Task tool/.test(rule));
   check("rule-names-grok", /cursor-grok-4\.6-high-fast/.test(rule));
   check("rule-names-composer", /composer-2\.5/.test(rule));
-  check("rule-bans-sonnet", /Sonnet 4\.5/.test(rule));
+  check("rule-bans-sonnet", /Sonnet 4\.x/.test(rule) || /Sonnet 4\.5/.test(rule));
+  check("rule-ask-brain-only", /ask-brain/.test(rule));
 }
 
 const agentsMd = readFileSync(join(root, "AGENTS.md"), "utf8");
 check("agents-md-section", /## Cloud Agent models/.test(agentsMd));
 check("agents-md-task-explicit", /always pass `model` explicitly/.test(agentsMd));
 check("agents-md-bans-sonnet", /Never\*\* use Claude Sonnet 4\.5/.test(agentsMd) || /\*\*Never\*\* use Claude Sonnet 4\.5/.test(agentsMd));
-check("agents-md-keeps-cast", /does \*\*not\*\* change Season 1 contestant brains/.test(agentsMd));
+check("agents-md-ask-brain-only", /only exception/.test(agentsMd) && /ask-brain/.test(agentsMd));
+
+const gameMd = readFileSync(join(root, "GAME.md"), "utf8");
+check("game-md-ask-brain-only", /ask-brain only/.test(gameMd));
+check("game-md-host-stays-grok-composer", /Host, reviewer, and cloud sub-agents stay on Cursor Grok or Composer/.test(gameMd));
 
 if (failures.length) {
   console.error("cloud-agent-models failed:\n" + failures.map((f) => `  - ${f}`).join("\n"));
