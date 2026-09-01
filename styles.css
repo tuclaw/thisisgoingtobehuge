@@ -1555,6 +1555,32 @@ footer strong {
   color: var(--smoke);
 }
 
+.repo-link {
+  margin: 1.15rem 0 0;
+}
+
+.repo-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--sand);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.repo-link a:hover,
+.repo-link a:focus-visible {
+  color: var(--gold-bright);
+}
+
+.github-mark {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+}
+
 /* —— Fuel contribute prompt —— */
 body.fuel-prompt-open {
   overflow: hidden;
@@ -6258,6 +6284,39 @@ body.is-titles .replay-trailer {
 .close-band .hero-actions {
   justify-content: center;
   margin-top: 1.6rem;
+}
+
+.laugh-band {
+  padding-top: 2.4rem;
+  padding-bottom: 3.2rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(232, 93, 4, 0.08), transparent 55%);
+}
+
+.laugh-band .lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.laugh-embed {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0;
+  border: 1px solid rgba(212, 160, 23, 0.28);
+  border-radius: 0.65rem;
+  background: #0d1117;
+  box-shadow:
+    0 1.2rem 3rem rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(212, 160, 23, 0.12);
+  overflow: hidden;
+}
+
+.laugh-embed img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
