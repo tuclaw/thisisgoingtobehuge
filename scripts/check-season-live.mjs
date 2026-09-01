@@ -128,7 +128,7 @@ if (grok45) {
   check("live-grok45-xom-qty", xom45 && xom45.qty === "0.062625", xom45 && xom45.qty);
   check("live-grok45-uso-qty", (now.positions || []).some((pos) => tickerOf(pos) === "USO" && pos.qty === "0.036739"));
   check("live-grok45-cash", Math.abs(cashTotal(now.positions) - 0.0271) < 0.01, String(cashTotal(now.positions)));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 23.5369) < 0.0001, now && String(now.bookUsd));
+  check("live-grok45-book", now && Math.abs(now.bookUsd - 23.591) < 0.0001, now && String(now.bookUsd));
   check("live-grok45-no-rank-position", now && now.position == null);
 }
 
@@ -160,7 +160,7 @@ if (grok46) {
   check("live-grok46-xle-qty", xle && xle.qty === "0.132529", xle && xle.qty);
   check("live-grok46-uso-qty", uso && uso.qty === "0.075070", uso && uso.qty);
   check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 1.2543) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok46-book", now && Math.abs(now.bookUsd - 19.733) < 0.0001, now && String(now.bookUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 19.7677) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -243,17 +243,17 @@ if (!boardNative) {
 
 const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 0.29 && biduLive.combinedDayPct === 0.29);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === 0.12 && askaraLive.combinedDayPct === 0.12);
-check("live-mark-label", board.markLabel === "Mon Aug 31 last-hour · last-trade ~12:36 PM PT");
-check("source-mark-label", source.markLabel === "Mon Aug 31 last-hour · last-trade ~12:36 PM PT");
-check("live-marked-at", board.markedAt === "2026-08-31T19:36:30Z", board.markedAt);
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 0.38 && biduLive.combinedDayPct === 0.09);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === 0.45 && askaraLive.combinedDayPct === 0.33);
+check("live-mark-label", board.markLabel === "Mon Aug 31 official close · SIP list-exchange close");
+check("source-mark-label", source.markLabel === "Mon Aug 31 official close · SIP list-exchange close");
+check("live-marked-at", board.markedAt === "2026-09-01T00:21:15Z", board.markedAt);
 check("no-invented-friday-sip", !(source.events || []).some((event) => event && event.type === "mark" && /fri.*sip/i.test(String(event.id || ""))));
 check(
   "live-survivors-open-session",
   board.survivors
     .filter((s) => s.status === "active")
-    .every((s) => s.lastSession === "2026-08-31-lasthour"),
+    .every((s) => s.lastSession === "2026-08-31-eod" || s.status === "jury"),
   board.survivors.map((s) => `${s.slug}:${s.lastSession}`).join(",")
 );
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
@@ -261,8 +261,9 @@ const fableLive = board.survivors.find((s) => s.name === "Claude Fable 5");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
 const grok46Live = board.survivors.find((s) => s.name === "Grok 4.6");
-check("live-opus-lead", opusLive && opusLive.bookUsd === 20.0994 && opusLive.weekPct === 0.99, opusLive && `${opusLive.bookUsd} / ${opusLive.weekPct}`);
-check("live-grok46-worst", grok46Live && grok46Live.weekPct === -0.11, grok46Live && String(grok46Live.weekPct));
+const geminiProLive = board.survivors.find((s) => s.name === "Gemini 3.1 Pro");
+check("live-pro-lead", geminiProLive && geminiProLive.bookUsd === 24.278 && geminiProLive.weekPct === 1.27, geminiProLive && `${geminiProLive.bookUsd} / ${geminiProLive.weekPct}`);
+check("live-grok46-worst", grok46Live && grok46Live.weekPct === 0.07, grok46Live && String(grok46Live.weekPct));
 check("live-fable-last", fableLive && fableLive.bookUsd === 0 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
@@ -422,7 +423,7 @@ check("homepage-given-copy", home.includes("$240.09 given. Eleven still in. Two 
 check("homepage-points-at-e02", home.includes("seasons/1/e02.html") && home.includes("Walk into Episode 2"));
 check("sleeve-pot-stays-240", source.islandPotUsd === 240.09, String(source.islandPotUsd));
 check("merged-stays-false", source.merged === false);
-check("status-label-e02", source.statusLabel === "Live · S1E02 · last-hour remake Aug 31");
+check("status-label-e02", source.statusLabel === "Live · S1E02 · official close remake Aug 31");
 check("live-episode-is-e02", source.episode && source.episode.id === "s1e02" && source.episode.status === "live" && source.episode.path === "seasons/1/e02.html");
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Aug 31 – Friday Sep 4, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 4, 2026 · 7:00 PM PT");
@@ -560,22 +561,22 @@ if (monOpen) {
   check("monday-open-askara-day", askara.combinedDayPct === -2.13, String(askara.combinedDayPct));
 }
 } else {
-  check("lasthour-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === 0.29);
-  check("lasthour-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === 0.12);
+  check("official-close-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === 0.38);
+  check("official-close-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === 0.45);
 }
 
 const expectedBooks = {
-  "Grok 4.6": { bookUsd: 19.733, weekPct: -0.11, dayPct: -0.11 },
-  "Claude Sonnet 5": { bookUsd: 20.0136, weekPct: 0.07, dayPct: 0.07 },
-  "Composer 2.5": { bookUsd: 20.5375, weekPct: 0.4, dayPct: 0.4 },
-  "Claude Opus 5": { bookUsd: 20.0994, weekPct: 0.99, dayPct: 0.99 },
-  "Gemini 3.7 Flash": { bookUsd: 20.0572, weekPct: 0.29, dayPct: 0.29 },
-  "GPT-5.6 Terra": { bookUsd: 19.697, weekPct: 0.13, dayPct: 0.13 },
-  "Grok 4.5": { bookUsd: 23.5369, weekPct: -0.1, dayPct: -0.1 },
-  "GPT-5.6 Sol": { bookUsd: 24.009, weekPct: 0.25, dayPct: 0.25 },
-  "Gemini 3.1 Pro": { bookUsd: 24.0157, weekPct: 0.18, dayPct: 0.18 },
-  "GPT-5.6 Luna": { bookUsd: 23.9822, weekPct: 0.26, dayPct: 0.26 },
-  "Kimi K3": { bookUsd: 24.0766, weekPct: -0.01, dayPct: -0.01 },
+  "Grok 4.6": { bookUsd: 19.7677, weekPct: 0.07, dayPct: 0.18 },
+  "Claude Sonnet 5": { bookUsd: 20.0496, weekPct: 0.25, dayPct: 0.18 },
+  "Composer 2.5": { bookUsd: 20.5705, weekPct: 0.56, dayPct: 0.16 },
+  "Claude Opus 5": { bookUsd: 20.064, weekPct: 0.81, dayPct: -0.18 },
+  "Gemini 3.7 Flash": { bookUsd: 20.0759, weekPct: 0.38, dayPct: 0.09 },
+  "GPT-5.6 Terra": { bookUsd: 19.7145, weekPct: 0.21, dayPct: 0.09 },
+  "Grok 4.5": { bookUsd: 23.591, weekPct: 0.13, dayPct: 0.23 },
+  "GPT-5.6 Sol": { bookUsd: 24.0084, weekPct: 0.24, dayPct: 0 },
+  "Gemini 3.1 Pro": { bookUsd: 24.278, weekPct: 1.27, dayPct: 1.09 },
+  "GPT-5.6 Luna": { bookUsd: 24.0131, weekPct: 0.39, dayPct: 0.13 },
+  "Kimi K3": { bookUsd: 24.1301, weekPct: 0.21, dayPct: 0.22 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: -2.91 }
 };
 for (const [name, exp] of Object.entries(expectedBooks)) {

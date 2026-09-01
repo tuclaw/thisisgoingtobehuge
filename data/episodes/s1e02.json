@@ -6,13 +6,13 @@
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Monday Aug 31 – Friday Sep 4, 2026",
   "location": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. The Bidu tribe has six. The Askara tribe has five.",
-  "heroNote": "Mon Aug 31 last-hour (~12:36 PM PT) last-trade. Eleven real fills. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10.",
+  "heroNote": "Mon Aug 31 official close · SIP list-exchange close. No new fills since last-hour. weekPct vs Episode 2 Monday open; dayPct vs Mon Aug 31 last-hour.",
   "description": "Season 1 Episode 2. Monday Aug 31 through Friday tribal Sep 4, 2026. Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in. Monday last-hour remake. Eleven real fills. Claude Sonnet 5, Gemini 3.7 Flash, GPT-5.6 Terra sat.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
     "title": "Latest books",
-    "lede": "Mon Aug 31 last-hour (~12:36 PM PT) last-trade. Eleven real fills. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10. Claude Sonnet 5, Gemini 3.7 Flash, GPT-5.6 Terra sat. No Fable."
+    "lede": "Mon Aug 31 official close · SIP list-exchange close. Marks only — no new fills since last-hour. weekPct vs Episode 2 Monday open; dayPct vs Mon Aug 31 last-hour. Gemini 3.1 Pro leads the week. Grok 4.6 is worst among the living. No Fable."
   },
   "spine": [
     { "day": "Now", "text": "Episode 1 is closed. Claude Fable 5 voted out 5–1. First juror. Eleven still in." },
@@ -69,9 +69,9 @@
         {
           "type": "books",
           "id": "monday-books",
-          "kicker": "Monday · Aug 31 · Last hour",
+          "kicker": "Monday · Aug 31 · Official close",
           "title": "Monday books",
-          "body": "Mon Aug 31 last-hour · last-trade ~12:36 PM PT. Eleven real fills. weekPct and dayPct vs Fri Aug 28 last-hour + the Askara tribe boot-split + Episode 2 $10 + leftover NANC even-up $2 to each living on the Askara tribe. Claude Sonnet 5, Gemini 3.7 Flash, GPT-5.6 Terra sat. Claude Opus 5 leads the week. Grok 4.6 is worst among the living. No Fable.",
+          "body": "Mon Aug 31 official close · SIP list-exchange close. Marks only — no new fills since last-hour. weekPct vs Episode 2 Monday open (gift + Askara even-up already in the open book); dayPct vs Mon Aug 31 last-hour. Eleven last-hour fills still on the tape below. Gemini 3.1 Pro leads the week. Grok 4.6 is worst among the living. No Fable.",
           "boardId": "day-monday",
           "notes": [
             "Last-hour: Composer 2.5 sold SMCI 0.120000 @ 37.300100.",
