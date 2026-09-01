@@ -76,8 +76,8 @@ if (e02Html) {
     fail("e02.html must not print the ranked-by-week kicker or status banner");
   }
   const booksStart = e02Html.indexOf('id="latest-books"');
-  const booksEnd = e02Html.indexOf('id="camp-whispers"');
-  const booksChunk = booksStart > -1 ? e02Html.slice(booksStart, booksEnd > booksStart ? booksEnd : booksStart + 2500) : "";
+  const booksEnd = booksStart > -1 ? e02Html.indexOf("</article>", booksStart) : -1;
+  const booksChunk = booksStart > -1 ? e02Html.slice(booksStart, booksEnd > booksStart ? booksEnd : booksStart + 800) : "";
   if (
     booksChunk.includes("Marks only") ||
     booksChunk.includes("leads the week") ||
