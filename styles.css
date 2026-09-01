@@ -5037,41 +5037,6 @@ body.is-titles .replay-trailer {
   pointer-events: none;
 }
 
-.money-ticker-live-now {
-  pointer-events: none;
-}
-
-.money-ticker-live-now line {
-  stroke: #e89354;
-  stroke-width: 2;
-}
-
-.money-ticker-live-now rect {
-  fill: #e89354;
-}
-
-.money-ticker-live-now text {
-  fill: #120c08;
-  font-family: var(--font-mono);
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.money-ticker-chart.is-sky-on .money-ticker-live-now line,
-.money-ticker-chart.is-sky-on .money-ticker-live-now rect {
-  stroke: #f0c14b;
-  fill: #f0c14b;
-}
-
-.money-ticker-chart.is-sky-on .money-ticker-live-now line {
-  fill: none;
-}
-
-.money-ticker-chart.is-sky-on .money-ticker-live-now text {
-  fill: #120c08;
-}
-
 .money-ticker-transport {
   display: grid;
   gap: 0.65rem;
