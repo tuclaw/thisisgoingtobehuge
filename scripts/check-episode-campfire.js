@@ -103,8 +103,12 @@ if (
 ) {
   throw new Error("app.js season ticker must play each episode graph one at a time");
 }
-if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("moves the island bar to ${givenLede}")) {
-  throw new Error("app.js must say Season plays one episode graph and moves the island bar to the live given total");
+if (
+  appJs.includes("Watch the island pot in dollars") ||
+  appJs.includes("Season plays one episode at a time") ||
+  appJs.includes("moves the island bar to")
+) {
+  throw new Error("app.js episode ticker must not print the island-pot lede above the diagram");
 }
 if (
   !appJs.includes("function tribeWeekPctFromFrame") ||

@@ -3546,18 +3546,11 @@ function mountMoneyTicker(season, opts) {
       </div>`
       : "";
 
-  const givenNow = islandGivenUsd(season);
-  const givenLede = typeof givenNow === "number" ? potMoney(givenNow) : "$240.09";
-  const lede = homeMode
-    ? "See how each tribe and contestant did in the Episode."
-    : `Watch the island pot in dollars. Tribes and contestants race this week's %. Each episode starts flat — not from last week's ending book. Voted-out players drop after tribal. Season plays one episode at a time. Episode 2 moves the island bar to ${givenLede}.`;
-
-  /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
+  /* Home keeps a short lede. Episode drops the paragraph above the diagram. */
   const tickerHead = homeMode
-    ? `<p class="money-ticker-lede">${lede}</p>`
+    ? `<p class="money-ticker-lede">See how each tribe and contestant did in the Episode.</p>`
     : `<div class="money-ticker-head">
       <p class="money-ticker-kicker">Replay the books</p>
-      <p class="money-ticker-lede">${lede}</p>
     </div>`;
 
   root.innerHTML = `
