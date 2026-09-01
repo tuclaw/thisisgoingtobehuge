@@ -11,7 +11,8 @@
   "weekBoard": {
     "kicker": "This week",
     "title": "Latest books",
-    "lede": "Fri Aug 28 last-hour (~12:14 PM PT) last-trade. weekPct from the $10 Monday start. dayPct vs Thu Aug 27 official SIP close. Do not invent P&L."
+    "lede": "Fri Aug 28 last-hour (~12:14 PM PT) last-trade. weekPct from the $10 Monday start. dayPct vs Thu Aug 27 official SIP close. Do not invent P&L.",
+    "snapshotId": "s1e01-fri-lasthour"
   },
   "spine": [
     { "day": "Mon 24", "text": "Season live. Seven fills. First campfire." },

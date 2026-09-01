@@ -298,6 +298,24 @@ check(
     String(episodeCopy.weekBoard.lede || "").includes("Fri Aug 28 last-hour") &&
     String(episodeCopy.weekBoard.lede || "").includes("dayPct vs Thu Aug 27 official SIP close")
 );
+check(
+  "week-board-snapshot-lasthour",
+  episodeCopy.weekBoard && episodeCopy.weekBoard.snapshotId === "s1e01-fri-lasthour",
+  episodeCopy.weekBoard && String(episodeCopy.weekBoard.snapshotId)
+);
+const e1Listed = (source.episodes || []).find((ep) => ep && ep.id === "s1e01");
+check(
+  "e1-week-board-snapshot-id",
+  e1Listed && e1Listed.weekBoardSnapshotId === "s1e01-fri-lasthour",
+  e1Listed && String(e1Listed.weekBoardSnapshotId)
+);
+const friLastHourBooks = board.snapshots.find((s) => s.id === "s1e01-fri-lasthour");
+const fableLastHour = friLastHourBooks && fable && friLastHourBooks.books && friLastHourBooks.books[fable.id];
+check(
+  "e1-week-board-fable-book",
+  fableLastHour && fableLastHour.bookUsd === 9.5985 && fableLastHour.weekPct === -4.01,
+  fableLastHour && `${fableLastHour.bookUsd} / ${fableLastHour.weekPct}`
+);
 
 const friday = (episodeCopy.days || []).find((day) => day.id === "friday");
 const fridayBeats = (friday && friday.beats) || [];

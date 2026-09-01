@@ -815,5 +815,31 @@ fadedFn.setPage({ id: "s1e01", number: 1 });
 if (fadedFn.holdBookFaded({ status: "jury" })) {
   throw new Error("Episode 1 must still show the boot's numbers");
 }
+if (
+  !appJs.includes("function episodeWeekBoardSnapshot") ||
+  !appJs.includes("function overlaySurvivorBook") ||
+  !appJs.includes("function episodeHoldingsSurvivors")
+) {
+  throw new Error("Episode 1 latest books must overlay the pinned week-board snapshot, not the live $0 jury book");
+}
+if (!appJs.includes('snapshotById(season, "s1e01-fri-lasthour")')) {
+  throw new Error("closed Episode 1 must fall back to s1e01-fri-lasthour books");
+}
+const overlayStart = appJs.indexOf("function overlaySurvivorBook");
+const overlayEnd = appJs.indexOf("function episodeHoldingsSurvivors");
+if (!(overlayStart > -1 && overlayEnd > overlayStart)) {
+  throw new Error("app.js missing overlaySurvivorBook before episodeHoldingsSurvivors");
+}
+const overlayFn = new Function(`
+  ${appJs.slice(overlayStart, overlayEnd)}
+  return overlaySurvivorBook;
+`)();
+const overlaid = overlayFn(
+  { id: "fable", bookUsd: 0, weekPct: -4.01, dayPct: -2.91, status: "jury", positions: [{ ticker: "CASH", sizeUsd: 0 }] },
+  { bookUsd: 9.5985, weekPct: -4.01, dayPct: -2.91, positions: [{ ticker: "CASH", sizeUsd: 9.5985 }] }
+);
+if (!overlaid || overlaid.bookUsd !== 9.5985 || overlaid.positions[0].sizeUsd !== 9.5985) {
+  throw new Error("Episode 1 holdings overlay must restore the last-hour book, not keep the live $0 jury row");
+}
 
 console.log("episode campfire checks passed (" + feed.conversations.length + " latest threads)");
