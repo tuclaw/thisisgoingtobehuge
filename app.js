@@ -2713,43 +2713,19 @@ function lerpFrameNum(a, b, u, key) {
   return v0 + (v1 - v0) * u;
 }
 
-function lerpTribePct(a, b, u, tribeId) {
-  const va = a && a.tribes && a.tribes[tribeId];
-  const vb = b && b.tribes && b.tribes[tribeId];
-  const v0 = typeof va === "number" ? va : 0;
-  const v1 = typeof vb === "number" ? vb : v0;
-  return v0 + (v1 - v0) * u;
-}
-
 function moneyTickerLiveFoot(a, b, u) {
   const potUsd = roundMoney(lerpFrameNum(a, b, u, "potUsd"));
-  const totalPct = roundMoney(lerpFrameNum(a, b, u, "total"));
   const putIn = moneyTicker.putIn;
-  if (moneyTicker.diagram === "tribes") {
-    const tribes = (moneyTicker.season && moneyTicker.season.tribes) || [];
-    const parts = tribes.map((tribe) => {
-      return `${tribeChromeName(tribe)} ${tickerAxisPct(lerpTribePct(a, b, u, tribe.id))}`;
-    });
-    return {
-      pot: potMoney(potUsd),
-      live: parts.join(" · ") || "—",
-      liveKind: "tribes",
-      chg: "Combined week % from even",
-      up: false,
-      down: false
-    };
-  }
   const delta = putIn ? roundMoney(potUsd - putIn) : 0;
-  const down = totalPct < -0.00005;
-  const up = totalPct > 0.00005;
+  const down = putIn ? potUsd < putIn - 0.00005 : false;
+  const up = putIn ? potUsd > putIn + 0.00005 : false;
   const arrow = up ? "▲" : down ? "▼" : "●";
   return {
     pot: potMoney(potUsd),
-    live: `${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}`,
-    liveKind: "pair",
+    live: potMoney(potUsd),
     chg: putIn
       ? `${arrow} ${money(Math.abs(delta))} from ${potMoney(putIn)} put in`
-      : `${arrow} ${tickerAxisPct(totalPct)} from even`,
+      : "",
     up,
     down
   };
@@ -2786,8 +2762,6 @@ function setMoneyTickerProgress(next, opts) {
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
     live.textContent = foot.live;
-    live.classList.toggle("is-pair", foot.liveKind === "pair");
-    live.classList.toggle("is-tribes", foot.liveKind === "tribes");
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
@@ -2955,7 +2929,6 @@ function tickerEvenGuide() {
     value: 0,
     label: "0%",
     className: "money-ticker-putin",
-    lineLabel: "even",
     labelClass: "is-putin"
   };
 }
@@ -2977,7 +2950,7 @@ function moneyTickerDiagramSeries(season, frames) {
     const scale = tickerPctScale(values, 1.4);
     return {
       title: "Tribes",
-      aria: "Tribe combined week % over recorded marks. Dotted line is even.",
+      aria: "Tribe combined week % over recorded marks. Dotted line is 0%.",
       putIn: 0,
       putInLabel: "0%",
       guides: [even],
@@ -3026,7 +2999,7 @@ function moneyTickerDiagramSeries(season, frames) {
     const scale = tickerPctScale(values, 1.2);
     return {
       title: "Contestants",
-      aria: "Contestant week % over recorded marks. Dotted line is even. Voted-out players drop after tribal.",
+      aria: "Contestant week % over recorded marks. Dotted line is 0%. Voted-out players drop after tribal.",
       putIn: 0,
       putInLabel: "0%",
       guides: [even],
@@ -3049,7 +3022,7 @@ function moneyTickerDiagramSeries(season, frames) {
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
   return {
     title: "Island",
-    aria: "Island combined week % over recorded marks. Dotted line is even.",
+    aria: "Island combined week % over recorded marks. Dotted line is 0%.",
     putIn: 0,
     putInLabel: "0%",
     guides: [even],
@@ -3066,8 +3039,7 @@ function moneyTickerDiagramSeries(season, frames) {
       }
     ],
     legend: [
-      { label: "Island combined %", color: potStroke },
-      { label: "even", color: "rgba(243, 234, 214, 0.92)", swatch: "dash" }
+      { label: "Island combined %", color: potStroke }
     ],
     liveSeries: "total",
     strokeForDot: potStroke

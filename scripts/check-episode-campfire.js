@@ -89,8 +89,11 @@ if (
 ) {
   throw new Error("app.js money ticker must plot week % on a percentage y-axis");
 }
-if (!appJs.includes('lineLabel: "even"') || !appJs.includes('labelClass: "is-putin"') || !appJs.includes('label: "0%"')) {
-  throw new Error("app.js money ticker must draw a 0% even line, not a money put-in bar");
+if (appJs.includes('lineLabel: "even"') || appJs.includes('{ label: "even"')) {
+  throw new Error("app.js money ticker must not print the word even on the 0% guide");
+}
+if (!appJs.includes('labelClass: "is-putin"') || !appJs.includes('label: "0%"')) {
+  throw new Error("app.js money ticker must draw a 0% guide, not a money put-in bar");
 }
 if (appJs.includes("function buildTickerChapters") || appJs.includes("data-ticker-chapter") || appJs.includes("function advanceTickerChapter")) {
   throw new Error("app.js season ticker must play one combined percentage tape, not episode chapters");
@@ -112,12 +115,16 @@ if (!appJs.includes("weekPct from this week's open — not last week's ending bo
 if (
   !appJs.includes("function moneyTickerLiveFoot") ||
   !appJs.includes("potUsd") ||
-  !appJs.includes("${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}")
+  !appJs.includes("live: potMoney(potUsd)")
 ) {
-  throw new Error("app.js ticker foot must show island dollars beside week % on every tab but tribes");
+  throw new Error("app.js ticker foot must show island cash only");
 }
-if (!appJs.includes('liveKind: "tribes"') || !appJs.includes("Combined week % from even")) {
-  throw new Error("app.js tribes ticker foot must show each tribe week % side by side");
+if (
+  appJs.includes("${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}") ||
+  appJs.includes('liveKind: "tribes"') ||
+  appJs.includes('liveKind: "pair"')
+) {
+  throw new Error("app.js ticker foot must not pair dollars with week % or tribe %");
 }
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
@@ -278,42 +285,23 @@ if (!(footStart > -1 && footEnd > footStart)) {
   throw new Error("app.js missing moneyTickerLiveFoot helpers");
 }
 const liveFoot = new Function(`
-  const moneyTicker = {
-    putIn: 240.09,
-    diagram: "island",
-    season: { tribes: [{ id: "bidu", name: "Bidu" }, { id: "askara", name: "Askara" }] }
-  };
+  const moneyTicker = { putIn: 240.09 };
   function roundMoney(n) { return Math.round(n * 10000) / 10000; }
   function potMoney(n) { return "$" + n.toFixed(2); }
   function money(n) { return "$" + n.toFixed(2); }
-  function tickerAxisPct(n) {
-    if (typeof n !== "number" || Number.isNaN(n)) return "—";
-    if (Math.abs(n) < 0.005) return "0%";
-    return (n > 0 ? "+" : "") + n.toFixed(2) + "%";
-  }
-  function tribeChromeName(tribeOrId) {
-    const id = tribeOrId && tribeOrId.id ? tribeOrId.id : tribeOrId;
-    return id === "askara" ? "The Askara tribe" : "The Bidu tribe";
-  }
   ${appJs.slice(footStart, footEnd)}
-  return { moneyTickerLiveFoot, moneyTicker };
+  return { moneyTickerLiveFoot };
 `)();
-const pair = liveFoot.moneyTickerLiveFoot(
-  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
-  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
+const islandFoot = liveFoot.moneyTickerLiveFoot(
+  { potUsd: 240.26, total: 0.83 },
+  { potUsd: 240.26, total: 0.83 },
   0
 );
-if (pair.live !== "$240.26 · +0.83%" || pair.liveKind !== "pair") {
-  throw new Error("island/contestants foot should be dollars beside week %, got " + pair.live);
+if (islandFoot.live !== "$240.26" || islandFoot.pot !== "$240.26") {
+  throw new Error("ticker foot should be island cash only, got " + islandFoot.live);
 }
-liveFoot.moneyTicker.diagram = "tribes";
-const tribesFoot = liveFoot.moneyTickerLiveFoot(
-  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
-  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
-  0
-);
-if (tribesFoot.live !== "The Bidu tribe +0.38% · The Askara tribe +0.45%" || tribesFoot.liveKind !== "tribes") {
-  throw new Error("tribes foot should show each tribe week % side by side, got " + tribesFoot.live);
+if (!islandFoot.chg.includes("$0.17") || !islandFoot.chg.includes("$240.09")) {
+  throw new Error("ticker chg should be dollars from put-in, got " + islandFoot.chg);
 }
 
 const scaleStart = appJs.indexOf("function tickerPctScale");
@@ -329,8 +317,12 @@ const scale = scaleHelpers.tickerPctScale([-5.18, 1.27], 1.2);
 if (!(scale.min < -5.18 && scale.max > 1.27 && scale.min < 0 && scale.max > 0)) {
   throw new Error("tickerPctScale must keep 0% on the y-axis and pad the tape, got " + JSON.stringify(scale));
 }
-if (scaleHelpers.tickerEvenGuide().value !== 0 || scaleHelpers.tickerEvenGuide().label !== "0%") {
-  throw new Error("tickerEvenGuide must be the 0% even line");
+if (
+  scaleHelpers.tickerEvenGuide().value !== 0 ||
+  scaleHelpers.tickerEvenGuide().label !== "0%" ||
+  scaleHelpers.tickerEvenGuide().lineLabel
+) {
+  throw new Error("tickerEvenGuide must be an unlabeled 0% line");
 }
 
 const mondayTape = [
@@ -598,11 +590,11 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
   throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
 }
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
-if (!stylesCss.includes(".money-ticker-live.is-pair") || !stylesCss.includes(".money-ticker-live.is-tribes")) {
-  throw new Error("styles.css missing side-by-side ticker foot sizes");
+if (stylesCss.includes(".money-ticker-live.is-pair") || stylesCss.includes(".money-ticker-live.is-tribes")) {
+  throw new Error("styles.css must not keep side-by-side ticker foot sizes");
 }
 if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
-  throw new Error("styles.css missing the even / 0% reference line");
+  throw new Error("styles.css missing the 0% reference line");
 }
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
