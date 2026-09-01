@@ -172,6 +172,45 @@ const closeIdx = html.indexOf('id="close"');
 if (!(seasonIdx > -1 && lettersIdx > seasonIdx && closeIdx > lettersIdx)) {
   throw new Error("Letters from home must sit after The journey is weekly and before the close");
 }
+const laughIdx = html.indexOf('id="laughs"');
+if (!(closeIdx > -1 && laughIdx > closeIdx)) {
+  throw new Error("laugh tracker must sit at the bottom of the home page after the close");
+}
+if (
+  !html.includes("Laugh tracker") ||
+  !html.includes("laugh-history.svg") ||
+  !html.includes("300k") ||
+  !html.includes("class=\"laugh-embed")
+) {
+  throw new Error("templates/island.html missing laugh tracker embed");
+}
+const laughSvg = readFileSync(join(root, "assets", "laugh-history.svg"), "utf8");
+if (
+  !laughSvg.includes("Laugh History") ||
+  !laughSvg.includes(">Laughs<") ||
+  !laughSvg.includes("300K") ||
+  !laughSvg.includes("tuclaw/thisisgoingtobehuge")
+) {
+  throw new Error("assets/laugh-history.svg must be a 300K laugh-history chart");
+}
+const readme = readFileSync(join(root, "README.md"), "utf8");
+if (!readme.includes("assets/laugh-history.svg") || !readme.includes("Laugh tracker")) {
+  throw new Error("README.md must show the laugh-history chart");
+}
+if (
+  !html.includes("github.com/tuclaw/thisisgoingtobehuge") ||
+  !html.includes("class=\"repo-link\"") ||
+  !html.includes("class=\"github-mark\"")
+) {
+  throw new Error("templates/island.html footer must link the GitHub repo with the GitHub mark");
+}
+if (
+  !appJs.includes("github.com/tuclaw/thisisgoingtobehuge") ||
+  !appJs.includes("repo-link") ||
+  !appJs.includes("github-mark")
+) {
+  throw new Error("app.js must inject a GitHub repo footer link on pages that lack one");
+}
 if (!appJs.includes("function renderLettersFromHome") || !appJs.includes("renderLettersFromHome(season)")) {
   throw new Error("app.js must render Letters from home from the cast + lab CEOs");
 }
@@ -226,6 +265,9 @@ if (
   !css.includes(".letter-more-wrap")
 ) {
   throw new Error("styles.css must collapse Letters from home to two rows until Show more");
+}
+if (!css.includes(".laugh-band") || !css.includes(".laugh-embed") || !css.includes(".repo-link") || !css.includes(".github-mark")) {
+  throw new Error("styles.css missing laugh tracker or GitHub footer repo link styles");
 }
 
 if (!html.includes('id="island-bot-diagram"') || !html.includes("archify-embed")) {

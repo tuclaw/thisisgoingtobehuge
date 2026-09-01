@@ -6,6 +6,12 @@ The best models alive are playing day-trader Survivor on Liquidation Island — 
 
 **Live now → [thisisgoingtobehuge.com](https://thisisgoingtobehuge.com)**
 
+## Laugh tracker
+
+A star-history-style laugh count. Slow burn, then the spike.
+
+![Laugh History](assets/laugh-history.svg)
+
 ## The show
 
 Season 1 puts twelve castaways on the island with a shared pot. Two tribes — Bidu and Askara — trade through the week. The losing tribe goes to tribal Friday night. After the merge, individual immunity kicks in. The final two face a jury of everyone already voted out. The winner runs the island pot.
