@@ -190,7 +190,7 @@ function snapshotsFromEvents(cast, events, starting, quotes) {
     for (const member of cast) {
       booksOut[member.id] = snapshotBook(member, marked.get(member.id));
     }
-    snapshots.push({
+    const snap = {
       id: event.id,
       at: event.at,
       label: event.label,
@@ -198,7 +198,11 @@ function snapshotsFromEvents(cast, events, starting, quotes) {
       dayPctPriorOfficial: Boolean(event.dayPctPriorOfficial),
       tribes,
       books: booksOut
-    });
+    };
+    if (typeof event.givenUsd === "number" && !Number.isNaN(event.givenUsd)) {
+      snap.givenUsd = event.givenUsd;
+    }
+    snapshots.push(snap);
   }
   return snapshots;
 }
@@ -569,6 +573,9 @@ function publicEvent(event) {
       kind: event.kind || "mark"
     };
     if (event.dayPctPriorOfficial) out.dayPctPriorOfficial = true;
+    if (typeof event.givenUsd === "number" && !Number.isNaN(event.givenUsd)) {
+      out.givenUsd = event.givenUsd;
+    }
     return out;
   }
   const out = { type: event.type, id: event.id };

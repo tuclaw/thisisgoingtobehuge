@@ -555,6 +555,9 @@ if (sundayLunch) {
 
 const cashAdd = board.snapshots.find((s) => s.id === "s1e02-cash-add");
 check("cash-add-snapshot", Boolean(cashAdd), "missing s1e02-cash-add");
+check("cash-add-given", Boolean(cashAdd && cashAdd.givenUsd === 240.09), cashAdd && String(cashAdd.givenUsd));
+const cashAddEvent = (source.events || []).find((event) => event && event.id === "s1e02-cash-add");
+check("cash-add-event-given", Boolean(cashAddEvent && cashAddEvent.givenUsd === 240.09), cashAddEvent && String(cashAddEvent.givenUsd));
 if (cashAdd) {
   for (const row of board.survivors || []) {
     const book = cashAdd.books && cashAdd.books[row.id];
