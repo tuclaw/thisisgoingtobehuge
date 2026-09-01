@@ -105,6 +105,15 @@
     return c;
   }
 
+  function isEpisodePage() {
+    return document.documentElement.dataset.page === "episode";
+  }
+
+  function allowSampleFallback() {
+    /* Demo tapes stay on camp-chat.html. Episode pages with no host feed stay empty. */
+    return !isEpisodePage();
+  }
+
   function resolveFeedPaths() {
     const base = assetBase();
     const custom = document.querySelector("[data-conversation-feed]");
@@ -112,7 +121,7 @@
     const paths = [];
     if (fromAttr) paths.push(fromAttr);
     if (global.EPISODE_CONVERSATIONS) return paths;
-    if (document.documentElement.dataset.page === "episode" && !fromAttr) return paths;
+    if (isEpisodePage() && !fromAttr) return paths;
     FEED_PATHS.forEach((p) => {
       if (p.indexOf("seasons/") === 0) paths.push(base + p);
       else paths.push(p);
@@ -221,7 +230,7 @@
         /* try next */
       }
     }
-    if (global.CampChat && global.CampChat.samples) {
+    if (allowSampleFallback() && global.CampChat && global.CampChat.samples) {
       const samples = global.CampChat.samples;
       return {
         updatedAt: null,

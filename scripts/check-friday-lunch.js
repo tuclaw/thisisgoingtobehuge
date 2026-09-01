@@ -86,6 +86,9 @@ if (html) {
   if (!html.includes('id="friday-lunch"') || !html.includes("e01-friday-lunch.js")) {
     throw new Error("built e01.html missing Friday lunch mount");
   }
+  if (!html.includes('id="camp-whispers"') || !html.includes('data-conversation-feed="conversations.json"')) {
+    throw new Error("Episode 1 must keep latest whispers on the Friday lunch host feed");
+  }
   const lunchIdx = html.indexOf('id="friday-lunch"');
   const thuLunch = html.indexOf('id="thursday-lunch"');
   const thuDinner = html.indexOf('id="thursday-dinner"');

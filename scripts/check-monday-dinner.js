@@ -72,6 +72,9 @@ if (builder.includes('episodeHasBeatType(episode, "dinner-fires") || episodeHasB
   throw new Error("build.mjs must not include thursday dinner via dinner-fires type");
 }
 
+if (episode.conversationFeed !== false) {
+  throw new Error("Episode 2 conversationFeed must stay false until a live Episode 2 host cut exists");
+}
 if (episodeCampfire.includes("MONDAY_DINNER_CONVERSATIONS")) {
   throw new Error("comics paused: do not wire Monday dinner into campfire pings");
 }
@@ -85,6 +88,12 @@ if (html) {
   }
   if (html.includes("e01-thursday-dinner.js")) {
     throw new Error("built e02.html must not mount Thursday dinner");
+  }
+  if (html.includes('id="camp-whispers"') || html.includes("data-conversation-feed")) {
+    throw new Error("Episode 2 conversationFeed is false — do not mount latest whispers or Episode 1 feed");
+  }
+  if (html.includes("Wed 6:02 PM") || html.includes("You finally bought tech")) {
+    throw new Error("Episode 2 must not bake the camp-chat sample tape");
   }
   const boothsIdx = html.indexOf('id="monday-confessionals"');
   const dinnerIdx = html.indexOf('id="monday-dinner"');
