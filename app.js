@@ -1988,6 +1988,47 @@ const MONEY_TICKER_WEEKDAYS = [
   { key: "Fri", label: "Friday" }
 ];
 const MONEY_TICKER_WEEKDAY_SLOT = { Sun: 0, Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 4 };
+const MONEY_TICKER_SESSION_OPEN = 6.5;
+const MONEY_TICKER_SESSION_CLOSE = 16;
+
+function pacificSessionU(iso) {
+  const d = iso instanceof Date ? iso : new Date(iso);
+  if (Number.isNaN(d.getTime())) return 0.5;
+  let hour = 12;
+  try {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour: "numeric",
+      minute: "numeric",
+      hourCycle: "h23"
+    }).formatToParts(d);
+    const h = Number((parts.find((p) => p.type === "hour") || {}).value);
+    const m = Number((parts.find((p) => p.type === "minute") || {}).value);
+    if (!Number.isNaN(h) && !Number.isNaN(m)) hour = h + m / 60;
+  } catch {
+    hour = 12;
+  }
+  if (hour <= MONEY_TICKER_SESSION_OPEN) return 0;
+  if (hour >= MONEY_TICKER_SESSION_CLOSE) return 1;
+  return (hour - MONEY_TICKER_SESSION_OPEN) / (MONEY_TICKER_SESSION_CLOSE - MONEY_TICKER_SESSION_OPEN);
+}
+
+function moneyTickerTradingDay(iso) {
+  const parts = pacificDateParts(iso);
+  if (!parts) return null;
+  if (parts.weekday === "Sat") {
+    return { key: parts.key, weekday: "Fri", slotHint: 4 };
+  }
+  if (parts.weekday === "Sun") {
+    return { key: parts.key, weekday: "Mon", slotHint: 0 };
+  }
+  const slotHint = MONEY_TICKER_WEEKDAY_SLOT[parts.weekday];
+  return {
+    key: parts.key,
+    weekday: parts.weekday,
+    slotHint: typeof slotHint === "number" ? slotHint : 0
+  };
+}
 
 function parseEpisodeWeekLabel(label) {
   const text = String(label || "");
@@ -2093,13 +2134,39 @@ function bookWeekPctFromSnap(row) {
 
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
-  const n = list.length;
-  /* Tape order, not calendar slots. Same-day marks must travel the plot;
-     weekday ticks stay as labels. */
-  moneyTicker.axisMax = Math.max(1, n - 1);
-  list.forEach((frame, i) => {
-    frame.axisT = n < 2 ? 0 : i;
+  const mode = range || (moneyTicker && moneyTicker.range) || "week";
+  /*
+    Weekday session time, not tape order. Extra Friday marks (open / mid /
+    last-hour, no official SIP) used to steal half the plot and make playback
+    crawl. Same-day marks still travel — inside that day's session.
+  */
+  if (mode === "week") {
+    moneyTicker.axisMax = 5;
+    list.forEach((frame) => {
+      const day = moneyTickerTradingDay(frame && frame.at);
+      const slot = day && typeof day.slotHint === "number" ? day.slotHint : 0;
+      const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
+      frame.daySlot = slot;
+      frame.axisT = slot + u;
+    });
+    return;
+  }
+
+  const dayIndex = new Map();
+  let nextSlot = 0;
+  list.forEach((frame) => {
+    const day = moneyTickerTradingDay(frame && frame.at);
+    const key = day ? day.key : `frame-${nextSlot}`;
+    if (!dayIndex.has(key)) {
+      dayIndex.set(key, nextSlot);
+      nextSlot += 1;
+    }
+    const slot = dayIndex.get(key);
+    const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
+    frame.daySlot = slot;
+    frame.axisT = slot + u;
   });
+  moneyTicker.axisMax = Math.max(1, nextSlot);
 }
 
 function moneyTickerAxisTAt(t, frames) {
@@ -2138,12 +2205,18 @@ function moneyTickerWeekdayTicks(frames, range) {
     const parts = pacificDateParts(frame && frame.at);
     if (!parts) return;
     if (!byKey.has(parts.key)) {
+      const slot =
+        typeof frame.daySlot === "number"
+          ? frame.daySlot
+          : typeof frame.axisT === "number"
+            ? Math.floor(Number(frame.axisT))
+            : days.length;
       byKey.set(parts.key, {
         weekday: parts.weekday,
         day: parts.day,
         month: parts.month,
         key: parts.key,
-        axisT: typeof frame.axisT === "number" ? frame.axisT : index
+        daySlot: slot
       });
       days.push(byKey.get(parts.key));
     }
@@ -2162,9 +2235,9 @@ function moneyTickerWeekdayTicks(frames, range) {
     MONEY_TICKER_WEEKDAYS.every((item, i) => use[i] && use[i].weekday === item.key);
   return use.map((day, i) => {
     const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
-    const axisT = typeof day.axisT === "number" ? day.axisT : i + 0.5;
+    const slot = typeof day.daySlot === "number" ? day.daySlot : i;
     return {
-      x: moneyTickerXFromAxisT(axisT),
+      x: moneyTickerXFromAxisT(slot + 0.5),
       label: full && named ? named.label : `${day.weekday} ${day.day}`,
       weekday: day.weekday
     };
@@ -2441,7 +2514,7 @@ function tribePctsFromFrame(frame, season, snap) {
   return out;
 }
 
-function framesFromSnapshots(season, snaps) {
+function framesFromSnapshots(season, snaps, range) {
   const cast = season.survivors || [];
   const tribeIndex = {};
   cast.forEach((s) => {
@@ -2470,12 +2543,12 @@ function framesFromSnapshots(season, snaps) {
       );
       return frame;
     });
-  moneyTickerAssignAxis(frames);
+  moneyTickerAssignAxis(frames, range);
   return frames;
 }
 
 function buildTickerFrames(season, range) {
-  return framesFromSnapshots(season, snapshotsForTickerRange(season, range));
+  return framesFromSnapshots(season, snapshotsForTickerRange(season, range), range);
 }
 
 function moneyTickerActiveEpisode(season) {
@@ -2499,9 +2572,36 @@ function stopMoneyTickerPlayback() {
   }
 }
 
+function moneyTickerAxisSpan(frames) {
+  const list = frames || moneyTicker.frames || [];
+  if (list.length < 2) return 1;
+  const a = typeof list[0].axisT === "number" ? list[0].axisT : 0;
+  const b = typeof list[list.length - 1].axisT === "number" ? list[list.length - 1].axisT : list.length - 1;
+  return Math.max(0.25, b - a);
+}
+
+function moneyTickerAxisTToProgress(axisT, frames) {
+  const list = frames || moneyTicker.frames || [];
+  if (!list.length) return 0;
+  const lastI = list.length - 1;
+  const firstT = typeof list[0].axisT === "number" ? list[0].axisT : 0;
+  const lastT = typeof list[lastI].axisT === "number" ? list[lastI].axisT : lastI;
+  if (axisT <= firstT) return 0;
+  if (axisT >= lastT) return lastI;
+  for (let i = 0; i < lastI; i += 1) {
+    const a = typeof list[i].axisT === "number" ? list[i].axisT : i;
+    const b = typeof list[i + 1].axisT === "number" ? list[i + 1].axisT : i + 1;
+    if (axisT <= b) {
+      const u = b === a ? 1 : (axisT - a) / (b - a);
+      return i + Math.max(0, Math.min(1, u));
+    }
+  }
+  return lastI;
+}
+
 function moneyTickerFullDurationMs() {
-  const segments = Math.max(5, moneyTicker.frames.length - 1);
-  return (segments * 900) / Math.max(0.05, moneyTicker.speed || 1);
+  const span = Math.max(1, moneyTickerAxisSpan());
+  return (span * 900) / Math.max(0.05, moneyTicker.speed || 1);
 }
 
 function setMoneyTickerSpeed(speed) {
@@ -2547,10 +2647,13 @@ function startMoneyTickerPlayback(opts) {
 
 function tickMoneyTickerPlayback(now) {
   if (!moneyTicker.playing) return;
-  const max = Math.max(0, moneyTicker.frames.length - 1);
+  const frames = moneyTicker.frames;
+  const max = Math.max(0, frames.length - 1);
   const full = moneyTickerFullDurationMs();
-  const rate = max / full;
-  const progress = Math.min(max, moneyTicker.playFromProgress + (now - moneyTicker.playStartedAt) * rate);
+  const span = Math.max(0.0001, moneyTickerAxisSpan(frames));
+  const fromAxis = moneyTickerAxisTAt(moneyTicker.playFromProgress, frames);
+  const axisNow = fromAxis + (now - moneyTicker.playStartedAt) * (span / full);
+  const progress = Math.min(max, moneyTickerAxisTToProgress(axisNow, frames));
   setMoneyTickerProgress(progress);
   if (progress >= max - 0.0001) {
     setMoneyTickerProgress(max);
