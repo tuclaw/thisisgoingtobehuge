@@ -638,7 +638,7 @@ if (boardNative) {
   );
   check(
     "bought-uso-grok46-is-position",
-    grok46Now && positionOrder(grok46Now.positions, "USO", "6a962001-a1b2-4c3d-8e9f-001122334455")
+    grok46Now && positionOrder(grok46Now.positions, "USO", "6a96d93c-143e-44bd-8127-42ac0963c2d9")
   );
   check("live-grok46-no-xle-position", grok46Now && !(grok46Now.positions || []).some((pos) => tickerOf(pos) === "XLE"));
   check(
@@ -675,9 +675,13 @@ if (boardNative) {
   );
   const terraNow = (source.survivors || []).find((s) => s.name === "GPT-5.6 Terra");
   check("gift-grok46-uso-is-position", grok46Now && positionOrder(grok46Now.positions, "USO", "6a95ba5e-4e7a-4d8d-890d-60c0e577eb59"));
-  check("tue-open-composer-smci-sell", fills.some((f) => f.orderId === "6a962003-a1b2-4c3d-8e9f-001122334455"));
-  check("tue-open-pro-ncra-sell", fills.some((f) => f.orderId === "6a962006-a1b2-4c3d-8e9f-001122334455"));
-  check("tue-open-kimi-msft-sell", fills.some((f) => f.orderId === "6a962007-a1b2-4c3d-8e9f-001122334455"));
+  check("tue-open-grok46-xle-sell", fills.some((f) => f.orderId === "6a96d687-d846-4267-b69e-ee7d4dc5176f"));
+  check("tue-open-grok46-uso-buy", fills.some((f) => f.orderId === "6a96d93c-143e-44bd-8127-42ac0963c2d9"));
+  check("tue-open-composer-smci-sell", fills.some((f) => f.orderId === "6a96d688-f26e-46fc-812b-2873b23dd1d8"));
+  check("tue-open-opus-oih-sell", fills.some((f) => f.orderId === "6a96d68b-af97-4b54-a323-5bc8b5dbd79d"));
+  check("tue-open-sol-tsla-sell", fills.some((f) => f.orderId === "6a96d690-146d-4722-9786-04f29ef2317f"));
+  check("tue-open-pro-ncra-sell", fills.some((f) => f.orderId === "6a96d6b6-6ef0-432b-a4d3-4fc5eb664f54"));
+  check("tue-open-kimi-msft-sell", fills.some((f) => f.orderId === "6a96d6b5-ad73-403a-a365-c85bc3890881"));
   check("lasthour-composer-smci-sell", fills.some((f) => f.orderId === "6a95d505-61ec-4aeb-8ebc-29c6929e6a0b"));
   check("lasthour-pro-ncra-buy", fills.some((f) => f.orderId === "6a95d7a6-7eae-4b91-afae-d48baa4f1ff7"));
   check("lasthour-opus-qid-sell", fills.some((f) => f.orderId === "6a95d519-0231-4608-9da2-7156de271530"));
