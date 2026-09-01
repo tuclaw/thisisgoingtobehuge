@@ -2805,67 +2805,6 @@ function sampleJaggedValue(values, seriesKey, progress, valueSpan) {
   return values[max];
 }
 
-function moneyTickerLiveFoot(a, b, u) {
-  const total = roundMoney(lerp(a.total, b.total, u));
-  const pot = potMoney(total);
-  if (moneyTicker.diagram === "tribes") {
-    const tribes = (moneyTicker.season && moneyTicker.season.tribes) || [];
-    const parts = tribes.map((tribe) => {
-      const va = a.tribeWeekPct && a.tribeWeekPct[tribe.id];
-      const vb = b.tribeWeekPct && b.tribeWeekPct[tribe.id];
-      const v0 = typeof va === "number" ? va : 0;
-      const v1 = typeof vb === "number" ? vb : v0;
-      return `${tribeChromeName(tribe)} ${pct(v0 + (v1 - v0) * u)}`;
-    });
-    return {
-      pot,
-      live: parts.join(" · ") || "Week %",
-      chg: "Combined week % from this week's open",
-      up: false,
-      down: false
-    };
-  }
-  if (moneyTicker.diagram === "contestants") {
-    const cast = (moneyTicker.season && moneyTicker.season.survivors) || [];
-    const at = u < 0.5 ? a : b;
-    let leader = null;
-    let best = -Infinity;
-    cast.forEach((s) => {
-      if (!survivorLivingAt(moneyTicker.season, s, at.at)) return;
-      const va = a.weekPct && a.weekPct[s.id];
-      const vb = b.weekPct && b.weekPct[s.id];
-      if (typeof va !== "number" && typeof vb !== "number") return;
-      const v0 = typeof va === "number" ? va : 0;
-      const v1 = typeof vb === "number" ? vb : v0;
-      const v = v0 + (v1 - v0) * u;
-      if (v > best) {
-        best = v;
-        leader = s;
-      }
-    });
-    return {
-      pot,
-      live: leader ? `${modelOf(leader)} ${pct(best)}` : "Week %",
-      chg: "Week % from this week's open — not last week's book",
-      up: best > 0.00005,
-      down: best < -0.00005
-    };
-  }
-  const putIn = moneyTicker.putIn;
-  const delta = roundMoney(total - putIn);
-  const pctChange = putIn ? (delta / putIn) * 100 : 0;
-  const down = delta < -0.00005;
-  const up = delta > 0.00005;
-  const arrow = up ? "▲" : down ? "▼" : "●";
-  return {
-    pot,
-    live: pot,
-    chg: `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`,
-    up,
-    down
-  };
-}
-
 function setMoneyTickerIndex(next, opts) {
   setMoneyTickerProgress(next, opts);
 }
@@ -2883,32 +2822,37 @@ function setMoneyTickerProgress(next, opts) {
   const b = frames[i1];
   moneyTicker.index = u < 0.5 ? i0 : i1;
 
-  const foot = moneyTickerLiveFoot(a, b, u);
-  const down = Boolean(foot.down);
-  const up = Boolean(foot.up);
+  const total = roundMoney(lerp(a.total, b.total, u));
+  const putIn = moneyTicker.putIn;
+  const delta = roundMoney(total - putIn);
+  const pctChange = putIn ? (delta / putIn) * 100 : 0;
+  const down = delta < -0.00005;
+  const up = delta > 0.00005;
   const chgClass = up ? "up" : down ? "down" : "flat";
+  const arrow = up ? "▲" : down ? "▼" : "●";
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
-    amount.textContent = foot.pot || potMoney(roundMoney(lerp(a.total, b.total, u)));
+    amount.textContent = potMoney(total);
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
-    live.textContent = foot.live;
+    live.textContent = potMoney(total);
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
+  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
-    chg.textContent = foot.chg;
+    chg.textContent = chgText;
   }
   const liveChg = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live-chg]");
   if (liveChg) {
     liveChg.className = "money-ticker-chg " + chgClass;
-    liveChg.textContent = foot.chg;
+    liveChg.textContent = chgText;
   }
 
   const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
@@ -3054,6 +2998,7 @@ function tickerFormatValue(spec, value) {
 function moneyTickerDiagramSeries(season, frames) {
   const diagram = moneyTicker.diagram || "island";
   const last = frames[frames.length - 1];
+  /* Week range and each season episode chapter plot this week's %, not last week's ending book. */
 
   if (diagram === "tribes") {
     const tribes = season.tribes || [];

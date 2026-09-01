@@ -109,9 +109,10 @@ if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("mo
 if (
   !appJs.includes("function tribeWeekPctFromFrame") ||
   !appJs.includes("frame.tribeWeekPct") ||
-  !appJs.includes('unit: "pct"')
+  !appJs.includes('unit: "pct"') ||
+  !appJs.includes("each season episode chapter plot this week's %")
 ) {
-  throw new Error("app.js tribes/contestants diagrams must race this week's % from a flat open");
+  throw new Error("app.js tribes/contestants diagrams must race this week's % from a flat open on week and episode chapters");
 }
 if (
   appJs.includes("Tribe book totals over recorded marks") ||
@@ -119,8 +120,11 @@ if (
 ) {
   throw new Error("app.js tribes/contestants diagrams must not plot last week's ending dollar books");
 }
-if (!appJs.includes("function moneyTickerLiveFoot") || !appJs.includes("Combined week % from this week's open")) {
-  throw new Error("app.js ticker foot must read week % on tribes/contestants, not put-in dollars");
+if (appJs.includes("function moneyTickerLiveFoot") || appJs.includes("Combined week % from this week's open")) {
+  throw new Error("app.js ticker foot must stay the island pot in dollars on every diagram");
+}
+if (!appJs.includes("from ${potMoney(putIn)} put in") || !appJs.includes("live.textContent = potMoney(total)")) {
+  throw new Error("app.js ticker live number must stay pot dollars under the diagram");
 }
 if (!appJs.includes("weekPct from this week's open — not last week's ending book")) {
   throw new Error("app.js holdings kicker must say weekPct is from this week's open");
