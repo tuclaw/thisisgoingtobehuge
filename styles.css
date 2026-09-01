@@ -4936,6 +4936,10 @@ body.is-titles .replay-trailer {
   font-size: 10px;
 }
 
+.money-ticker-x-range-label {
+  letter-spacing: 0.04em;
+}
+
 .money-ticker-day-short {
   display: none;
 }
@@ -5078,7 +5082,11 @@ body.is-titles .replay-trailer {
 }
 
 .money-ticker-scrub {
-  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  width: calc(592 / 640 * 100%);
+  margin-left: calc(36 / 640 * 100%);
+  margin-right: calc(12 / 640 * 100%);
   accent-color: #e89354;
   cursor: pointer;
 }
