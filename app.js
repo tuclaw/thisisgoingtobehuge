@@ -2123,27 +2123,6 @@ function moneyTickerXFromAxisT(axisT, axisMax) {
   return padL + (max ? (t / max) * w : 0);
 }
 
-function moneyTickerLiveNowX(frames, range) {
-  const mode = range || (moneyTicker && moneyTicker.range) || "week";
-  const list = frames || [];
-  const now = new Date();
-  const nowIso = now.toISOString();
-  const last = list[list.length - 1];
-  const lastT = last && typeof last.axisT === "number" ? last.axisT : Math.max(0, list.length - 1);
-  if (mode === "week") {
-    const bounds = episodeWeekBounds(tickerEpisodeForRange(moneyTicker.season));
-    if (!bounds) return null;
-    const nowMs = now.getTime();
-    if (nowMs < bounds.startMs || nowMs > bounds.endMs) return null;
-    if (!list.length) return null;
-    return moneyTickerXFromAxisT(lastT);
-  }
-  const today = pacificDateParts(nowIso);
-  const lastDay = last && pacificDateParts(last.at);
-  if (!today || !lastDay || today.key !== lastDay.key) return null;
-  return moneyTickerXFromAxisT(lastT);
-}
-
 function moneyTickerWeekdayTicks(frames, range) {
   const mode = range || (moneyTicker && moneyTicker.range) || "week";
   if (mode === "week") {
@@ -2482,7 +2461,8 @@ function framesFromSnapshots(season, snaps) {
         id: snap.id,
         at: snap.at,
         label: snap.label || pacificDayLabel(snap.at),
-        books
+        books,
+        cash: snapshotTotal(snap)
       };
       frame.tribes = tribePctsFromFrame(frame, season, snap);
       frame.total = roundMoney(
@@ -2719,25 +2699,30 @@ function setMoneyTickerProgress(next, opts) {
   const b = frames[i1];
   moneyTicker.index = u < 0.5 ? i0 : i1;
 
-  const total = roundMoney(lerp(a.total, b.total, u));
-  const down = total < -0.00005;
-  const up = total > 0.00005;
+  const cashA = typeof a.cash === "number" ? a.cash : 0;
+  const cashB = typeof b.cash === "number" ? b.cash : 0;
+  const cash = roundMoney(lerp(cashA, cashB, u));
+  const putIn = moneyTicker.putIn;
+  const delta = roundMoney(cash - putIn);
+  const pctChange = putIn ? (delta / putIn) * 100 : 0;
+  const down = delta < -0.00005;
+  const up = delta > 0.00005;
   const chgClass = up ? "up" : down ? "down" : "flat";
   const arrow = up ? "▲" : down ? "▼" : "●";
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
-    amount.textContent = tickerAxisPct(total);
+    amount.textContent = potMoney(cash);
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
-    live.textContent = tickerAxisPct(total);
+    live.textContent = potMoney(cash);
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
-  const chgText = `${arrow} ${tickerAxisPct(total)} from even`;
+  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
@@ -3115,15 +3100,6 @@ function renderMoneyTickerSvg(season, frames) {
   const playProgress =
     typeof moneyTicker.progress === "number" ? moneyTicker.progress : moneyTicker.index || 0;
   const playX = moneyTickerXAt(playProgress, frames.length);
-  const liveNowX = moneyTickerLiveNowX(frames, moneyTicker.range);
-  const liveNow =
-    liveNowX == null
-      ? ""
-      : `<g class="money-ticker-live-now" data-ticker-live-now>
-        <line x1="${liveNowX.toFixed(2)}" y1="16" x2="${liveNowX.toFixed(2)}" y2="198" />
-        <rect x="${(liveNowX + 4).toFixed(2)}" y="16" width="28" height="12" rx="2" />
-        <text x="${(liveNowX + 18).toFixed(2)}" y="25" text-anchor="middle">Live</text>
-      </g>`;
   const frame = frames[Math.min(frames.length - 1, Math.round(playProgress))] || frames[frames.length - 1];
   let dotValue = frame ? frame.total : spec.putIn;
   if (moneyTicker.diagram === "island") {
@@ -3155,7 +3131,6 @@ function renderMoneyTickerSvg(season, frames) {
       }
     </g>
     <line class="money-ticker-playhead" data-ticker-playhead x1="${playX}" y1="16" x2="${playX}" y2="198" />
-    ${liveNow}
     ${xLabels}
   </svg>`;
 }
@@ -3367,7 +3342,7 @@ function mountMoneyTicker(season, opts) {
     </div>
     <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>
     <div class="money-ticker-foot">
-      <p class="money-ticker-live" data-ticker-live>${escapeHtml(tickerAxisPct(moneyTicker.frames[moneyTicker.index].total))}</p>
+      <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].cash))}</p>
       <p class="money-ticker-chg" data-ticker-live-chg></p>
     </div>`;
 

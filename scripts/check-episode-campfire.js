@@ -156,8 +156,14 @@ if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("dat
 if (!appJs.includes("function survivorLivingAt") || !appJs.includes("Voted-out players drop after tribal")) {
   throw new Error("app.js money ticker must drop voted-out contestants after tribal");
 }
-if (!appJs.includes("function moneyTickerLiveNowX") || !appJs.includes("data-ticker-live-now")) {
-  throw new Error("app.js money ticker must draw a live vertical line for the current point in the week");
+if (appJs.includes("function moneyTickerLiveNowX") || appJs.includes("data-ticker-live-now")) {
+  throw new Error("app.js money ticker must not draw a live vertical line at the end of the tape");
+}
+if (appJs.includes("live.textContent = tickerAxisPct") || appJs.includes("from even")) {
+  throw new Error("app.js money ticker footer must show cash, not week % from even");
+}
+if (!appJs.includes("live.textContent = potMoney") || !appJs.includes("cash: snapshotTotal(snap)")) {
+  throw new Error("app.js money ticker footer must show pot cash from each snapshot");
 }
 if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
   throw new Error("app.js must space ticker marks by tape order so same-day frames travel, not calendar weekday slots");
