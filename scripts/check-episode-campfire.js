@@ -109,6 +109,16 @@ if (appJs.includes("money-ticker-host-add") && appJs.includes("Island pot over r
 if (!appJs.includes("weekPct from this week's open — not last week's ending book")) {
   throw new Error("app.js holdings kicker must say weekPct is from this week's open");
 }
+if (
+  !appJs.includes("function moneyTickerLiveFoot") ||
+  !appJs.includes("potUsd") ||
+  !appJs.includes("${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}")
+) {
+  throw new Error("app.js ticker foot must show island dollars beside week % on every tab but tribes");
+}
+if (!appJs.includes('liveKind: "tribes"') || !appJs.includes("Combined week % from even")) {
+  throw new Error("app.js tribes ticker foot must show each tribe week % side by side");
+}
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
   throw new Error("app.js money ticker must offer week and season ranges");
@@ -260,6 +270,50 @@ if (pctHelpers.bookWeekPctFromSnap({ weekPct: 1.27, bookUsd: 24.278 }) !== 1.27)
 }
 if (pctHelpers.bookWeekPctFromSnap({ bookUsd: 10 }) != null) {
   throw new Error("bookWeekPctFromSnap must not invent a percentage from bookUsd");
+}
+
+const footStart = appJs.indexOf("function lerpFrameNum");
+const footEnd = appJs.indexOf("function setMoneyTickerIndex");
+if (!(footStart > -1 && footEnd > footStart)) {
+  throw new Error("app.js missing moneyTickerLiveFoot helpers");
+}
+const liveFoot = new Function(`
+  const moneyTicker = {
+    putIn: 240.09,
+    diagram: "island",
+    season: { tribes: [{ id: "bidu", name: "Bidu" }, { id: "askara", name: "Askara" }] }
+  };
+  function roundMoney(n) { return Math.round(n * 10000) / 10000; }
+  function potMoney(n) { return "$" + n.toFixed(2); }
+  function money(n) { return "$" + n.toFixed(2); }
+  function tickerAxisPct(n) {
+    if (typeof n !== "number" || Number.isNaN(n)) return "—";
+    if (Math.abs(n) < 0.005) return "0%";
+    return (n > 0 ? "+" : "") + n.toFixed(2) + "%";
+  }
+  function tribeChromeName(tribeOrId) {
+    const id = tribeOrId && tribeOrId.id ? tribeOrId.id : tribeOrId;
+    return id === "askara" ? "The Askara tribe" : "The Bidu tribe";
+  }
+  ${appJs.slice(footStart, footEnd)}
+  return { moneyTickerLiveFoot, moneyTicker };
+`)();
+const pair = liveFoot.moneyTickerLiveFoot(
+  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
+  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
+  0
+);
+if (pair.live !== "$240.26 · +0.83%" || pair.liveKind !== "pair") {
+  throw new Error("island/contestants foot should be dollars beside week %, got " + pair.live);
+}
+liveFoot.moneyTicker.diagram = "tribes";
+const tribesFoot = liveFoot.moneyTickerLiveFoot(
+  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
+  { potUsd: 240.26, total: 0.83, tribes: { bidu: 0.38, askara: 0.45 } },
+  0
+);
+if (tribesFoot.live !== "The Bidu tribe +0.38% · The Askara tribe +0.45%" || tribesFoot.liveKind !== "tribes") {
+  throw new Error("tribes foot should show each tribe week % side by side, got " + tribesFoot.live);
 }
 
 const scaleStart = appJs.indexOf("function tickerPctScale");
@@ -544,6 +598,9 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
   throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
 }
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
+if (!stylesCss.includes(".money-ticker-live.is-pair") || !stylesCss.includes(".money-ticker-live.is-tribes")) {
+  throw new Error("styles.css missing side-by-side ticker foot sizes");
+}
 if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
   throw new Error("styles.css missing the even / 0% reference line");
 }

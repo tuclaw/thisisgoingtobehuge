@@ -2486,7 +2486,8 @@ function framesFromSnapshots(season, snaps) {
         id: snap.id,
         at: snap.at,
         label: snap.label || pacificDayLabel(snap.at),
-        books
+        books,
+        potUsd: snapshotTotal(snap)
       };
       frame.tribes = tribePctsFromFrame(frame, season, snap);
       frame.total = roundMoney(
@@ -2706,6 +2707,54 @@ function sampleJaggedValue(values, seriesKey, progress, valueSpan) {
   return values[max];
 }
 
+function lerpFrameNum(a, b, u, key) {
+  const v0 = a && typeof a[key] === "number" ? a[key] : 0;
+  const v1 = b && typeof b[key] === "number" ? b[key] : v0;
+  return v0 + (v1 - v0) * u;
+}
+
+function lerpTribePct(a, b, u, tribeId) {
+  const va = a && a.tribes && a.tribes[tribeId];
+  const vb = b && b.tribes && b.tribes[tribeId];
+  const v0 = typeof va === "number" ? va : 0;
+  const v1 = typeof vb === "number" ? vb : v0;
+  return v0 + (v1 - v0) * u;
+}
+
+function moneyTickerLiveFoot(a, b, u) {
+  const potUsd = roundMoney(lerpFrameNum(a, b, u, "potUsd"));
+  const totalPct = roundMoney(lerpFrameNum(a, b, u, "total"));
+  const putIn = moneyTicker.putIn;
+  if (moneyTicker.diagram === "tribes") {
+    const tribes = (moneyTicker.season && moneyTicker.season.tribes) || [];
+    const parts = tribes.map((tribe) => {
+      return `${tribeChromeName(tribe)} ${tickerAxisPct(lerpTribePct(a, b, u, tribe.id))}`;
+    });
+    return {
+      pot: potMoney(potUsd),
+      live: parts.join(" · ") || "—",
+      liveKind: "tribes",
+      chg: "Combined week % from even",
+      up: false,
+      down: false
+    };
+  }
+  const delta = putIn ? roundMoney(potUsd - putIn) : 0;
+  const down = totalPct < -0.00005;
+  const up = totalPct > 0.00005;
+  const arrow = up ? "▲" : down ? "▼" : "●";
+  return {
+    pot: potMoney(potUsd),
+    live: `${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}`,
+    liveKind: "pair",
+    chg: putIn
+      ? `${arrow} ${money(Math.abs(delta))} from ${potMoney(putIn)} put in`
+      : `${arrow} ${tickerAxisPct(totalPct)} from even`,
+    up,
+    down
+  };
+}
+
 function setMoneyTickerIndex(next, opts) {
   setMoneyTickerProgress(next, opts);
 }
@@ -2723,34 +2772,34 @@ function setMoneyTickerProgress(next, opts) {
   const b = frames[i1];
   moneyTicker.index = u < 0.5 ? i0 : i1;
 
-  const total = roundMoney(lerp(a.total, b.total, u));
-  const down = total < -0.00005;
-  const up = total > 0.00005;
+  const foot = moneyTickerLiveFoot(a, b, u);
+  const down = Boolean(foot.down);
+  const up = Boolean(foot.up);
   const chgClass = up ? "up" : down ? "down" : "flat";
-  const arrow = up ? "▲" : down ? "▼" : "●";
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
-    amount.textContent = tickerAxisPct(total);
+    amount.textContent = foot.pot;
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
-    live.textContent = tickerAxisPct(total);
+    live.textContent = foot.live;
+    live.classList.toggle("is-pair", foot.liveKind === "pair");
+    live.classList.toggle("is-tribes", foot.liveKind === "tribes");
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
-  const chgText = `${arrow} ${tickerAxisPct(total)} from even`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
-    chg.textContent = chgText;
+    chg.textContent = foot.chg;
   }
   const liveChg = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live-chg]");
   if (liveChg) {
     liveChg.className = "money-ticker-chg " + chgClass;
-    liveChg.textContent = chgText;
+    liveChg.textContent = foot.chg;
   }
 
   const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
@@ -3366,7 +3415,7 @@ function mountMoneyTicker(season, opts) {
     </div>
     <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>
     <div class="money-ticker-foot">
-      <p class="money-ticker-live" data-ticker-live>${escapeHtml(tickerAxisPct(moneyTicker.frames[moneyTicker.index].total))}</p>
+      <p class="money-ticker-live" data-ticker-live></p>
       <p class="money-ticker-chg" data-ticker-live-chg></p>
     </div>`;
 
