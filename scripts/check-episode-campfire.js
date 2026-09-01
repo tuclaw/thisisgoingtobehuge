@@ -61,11 +61,15 @@ const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e
 if (episode1Copy.heroNote !== "Stay a while and listen") {
   throw new Error("Episode 1 must keep its stay-a-while listen line");
 }
-if (episode2Copy.heroNote) {
-  throw new Error("Episode 2 must not print a hero listen line");
+if (episode2Copy.heroNote && !/Tue Sep 1 open · last-trade/.test(episode2Copy.heroNote)) {
+  throw new Error("Episode 2 hero listen line must be the Tue Sep 1 open books beat when present");
 }
-if (episode2Copy.weekBoard && episode2Copy.weekBoard.lede) {
-  throw new Error("Episode 2 must not print week-board lede, status banner, or ranked-by-week kicker");
+if (
+  episode2Copy.weekBoard &&
+  episode2Copy.weekBoard.lede &&
+  !/Tue Sep 1 open · last-trade/.test(episode2Copy.weekBoard.lede)
+) {
+  throw new Error("Episode 2 week-board lede must be the Tue Sep 1 open books beat when present");
 }
 if (!episodeHtml.includes("weekBoard.lede") || !episodeHtml.includes("holdings-kicker") || !episodeHtml.includes("season-banner")) {
   throw new Error("episode renderer must still support week-board lede, banner, and holdings kicker when an episode has copy");
