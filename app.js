@@ -581,11 +581,10 @@ function renderEpisodeHoldings(season) {
     const label = season.markLabel ? String(season.markLabel).trim() : "";
     const when = formatMarkedAt(season.markedAt);
     if (label) {
-      const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
       const priorNote = season.dayPctPriorOfficial
         ? "dayPct versus the prior official mark."
         : "dayPct versus the prior session; that prior may not be SIP official settled.";
-      kicker.textContent = `Ranked by week %. ${label}. weekPct from the $${start} week open. ${priorNote}`;
+      kicker.textContent = `Ranked by week %. ${label}. weekPct from this week's open — not last week's ending book. ${priorNote}`;
     } else if (when) {
       kicker.textContent = `Ranked by week %. Tickers as of ${when}.`;
     } else {
@@ -2781,6 +2780,30 @@ function sampleJaggedValue(values, seriesKey, progress, valueSpan) {
   return values[max];
 }
 
+function lerpFrameNum(a, b, u, key) {
+  const v0 = a && typeof a[key] === "number" ? a[key] : 0;
+  const v1 = b && typeof b[key] === "number" ? b[key] : v0;
+  return v0 + (v1 - v0) * u;
+}
+
+function moneyTickerLiveFoot(a, b, u) {
+  const cash = roundMoney(lerpFrameNum(a, b, u, "cash"));
+  const putIn = moneyTicker.putIn;
+  const delta = putIn ? roundMoney(cash - putIn) : 0;
+  const down = putIn ? cash < putIn - 0.00005 : false;
+  const up = putIn ? cash > putIn + 0.00005 : false;
+  const arrow = up ? "▲" : down ? "▼" : "●";
+  return {
+    pot: potMoney(cash),
+    live: potMoney(cash),
+    chg: putIn
+      ? `${arrow} ${money(Math.abs(delta))} from ${potMoney(putIn)} put in`
+      : "",
+    up,
+    down
+  };
+}
+
 function setMoneyTickerIndex(next, opts) {
   setMoneyTickerProgress(next, opts);
 }
@@ -2798,16 +2821,11 @@ function setMoneyTickerProgress(next, opts) {
   const b = frames[i1];
   moneyTicker.index = u < 0.5 ? i0 : i1;
 
-  const cashA = typeof a.cash === "number" ? a.cash : 0;
-  const cashB = typeof b.cash === "number" ? b.cash : 0;
-  const cash = roundMoney(lerp(cashA, cashB, u));
-  const putIn = moneyTicker.putIn;
-  const delta = roundMoney(cash - putIn);
-  const pctChange = putIn ? (delta / putIn) * 100 : 0;
-  const down = delta < -0.00005;
-  const up = delta > 0.00005;
+  const foot = moneyTickerLiveFoot(a, b, u);
+  const cash = roundMoney(lerpFrameNum(a, b, u, "cash"));
+  const down = Boolean(foot.down);
+  const up = Boolean(foot.up);
   const chgClass = up ? "up" : down ? "down" : "flat";
-  const arrow = up ? "▲" : down ? "▼" : "●";
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
@@ -2821,16 +2839,15 @@ function setMoneyTickerProgress(next, opts) {
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
-  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
-    chg.textContent = chgText;
+    chg.textContent = foot.chg;
   }
   const liveChg = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live-chg]");
   if (liveChg) {
     liveChg.className = "money-ticker-chg " + chgClass;
-    liveChg.textContent = chgText;
+    liveChg.textContent = foot.chg;
   }
 
   const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
@@ -2986,7 +3003,6 @@ function tickerEvenGuide() {
     value: 0,
     label: "0%",
     className: "money-ticker-putin",
-    lineLabel: "even",
     labelClass: "is-putin"
   };
 }
@@ -3008,7 +3024,7 @@ function moneyTickerDiagramSeries(season, frames) {
     const scale = tickerPctScale(values, 1.4);
     return {
       title: "Tribes",
-      aria: "Tribe combined week % over recorded marks. Dotted line is even.",
+      aria: "Tribe combined week % over recorded marks. Dotted line is 0%.",
       putIn: 0,
       putInLabel: "0%",
       guides: [even],
@@ -3038,8 +3054,8 @@ function moneyTickerDiagramSeries(season, frames) {
     cast.forEach((s, idx) => {
       const line = frames.map((frame) => {
         if (!survivorLivingAt(season, s, frame.at)) return null;
-        const v = frame.books[s.id];
-        return typeof v === "number" ? v : null;
+        const v = frame.books && frame.books[s.id];
+        return typeof v === "number" ? v : 0;
       });
       if (!line.some((v) => v != null)) return;
       line.forEach((v) => {
@@ -3057,7 +3073,7 @@ function moneyTickerDiagramSeries(season, frames) {
     const scale = tickerPctScale(values, 1.2);
     return {
       title: "Contestants",
-      aria: "Contestant week % over recorded marks. Dotted line is even. Voted-out players drop after tribal.",
+      aria: "Contestant week % over recorded marks. Dotted line is 0%. Voted-out players drop after tribal.",
       putIn: 0,
       putInLabel: "0%",
       guides: [even],
@@ -3080,7 +3096,7 @@ function moneyTickerDiagramSeries(season, frames) {
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
   return {
     title: "Island",
-    aria: "Island combined week % over recorded marks. Dotted line is even.",
+    aria: "Island combined week % over recorded marks. Dotted line is 0%.",
     putIn: 0,
     putInLabel: "0%",
     guides: [even],
@@ -3097,8 +3113,7 @@ function moneyTickerDiagramSeries(season, frames) {
       }
     ],
     legend: [
-      { label: "Island combined %", color: potStroke },
-      { label: "even", color: "rgba(243, 234, 214, 0.92)", swatch: "dash" }
+      { label: "Island combined %", color: potStroke }
     ],
     liveSeries: "total",
     strokeForDot: potStroke
@@ -3404,16 +3419,11 @@ function mountMoneyTicker(season, opts) {
     })
     .join("");
 
-  const lede = homeMode
-    ? "See how each tribe and contestant did in the Episode."
-    : "Watch the island, the tribes, or every contestant sleeve as week %. Monday through Friday. Voted-out players drop after tribal. Season plays every episode on one percentage tape.";
-
-  /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
+  /* Home keeps a short lede. Episode drops the paragraph above the diagram. */
   const tickerHead = homeMode
-    ? `<p class="money-ticker-lede">${lede}</p>`
+    ? `<p class="money-ticker-lede">See how each tribe and contestant did in the Episode.</p>`
     : `<div class="money-ticker-head">
       <p class="money-ticker-kicker">Replay the books</p>
-      <p class="money-ticker-lede">${lede}</p>
     </div>`;
 
   root.innerHTML = `

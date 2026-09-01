@@ -89,17 +89,42 @@ if (
 ) {
   throw new Error("app.js money ticker must plot week % on a percentage y-axis");
 }
-if (!appJs.includes('lineLabel: "even"') || !appJs.includes('labelClass: "is-putin"') || !appJs.includes('label: "0%"')) {
-  throw new Error("app.js money ticker must draw a 0% even line, not a money put-in bar");
+if (appJs.includes('lineLabel: "even"') || appJs.includes('{ label: "even"')) {
+  throw new Error("app.js money ticker must not print the word even on the 0% guide");
+}
+if (!appJs.includes('labelClass: "is-putin"') || !appJs.includes('label: "0%"')) {
+  throw new Error("app.js money ticker must draw a 0% guide, not a money put-in bar");
 }
 if (appJs.includes("function buildTickerChapters") || appJs.includes("data-ticker-chapter") || appJs.includes("function advanceTickerChapter")) {
   throw new Error("app.js season ticker must play one combined percentage tape, not episode chapters");
 }
-if (!appJs.includes("Season plays every episode on one percentage tape") || !appJs.includes("as week %")) {
-  throw new Error("app.js must say Season plays every episode on one percentage tape");
+if (
+  appJs.includes("Watch the island pot in dollars") ||
+  appJs.includes("Season plays one episode at a time") ||
+  appJs.includes("Season plays every episode on one percentage tape") ||
+  appJs.includes("moves the island bar to")
+) {
+  throw new Error("app.js episode ticker must not print a long lede above the diagram");
 }
 if (appJs.includes("money-ticker-host-add") && appJs.includes("Island pot over recorded marks. Both dotted lines stay on")) {
   throw new Error("app.js island diagram must not plot host-add money bars on the percentage axis");
+}
+if (!appJs.includes("weekPct from this week's open — not last week's ending book")) {
+  throw new Error("app.js holdings kicker must say weekPct is from this week's open");
+}
+if (
+  !appJs.includes("function moneyTickerLiveFoot") ||
+  !appJs.includes("live: potMoney(cash)")
+) {
+  throw new Error("app.js ticker foot must show island cash only");
+}
+if (
+  appJs.includes("${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}") ||
+  appJs.includes("${potMoney(cash)} · ${tickerAxisPct(totalPct)}") ||
+  appJs.includes('liveKind: "tribes"') ||
+  appJs.includes('liveKind: "pair"')
+) {
+  throw new Error("app.js ticker foot must not pair dollars with week % or tribe %");
 }
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
@@ -265,6 +290,31 @@ if (pctHelpers.bookWeekPctFromSnap({ bookUsd: 10 }) != null) {
   throw new Error("bookWeekPctFromSnap must not invent a percentage from bookUsd");
 }
 
+const footStart = appJs.indexOf("function lerpFrameNum");
+const footEnd = appJs.indexOf("function setMoneyTickerIndex");
+if (!(footStart > -1 && footEnd > footStart)) {
+  throw new Error("app.js missing moneyTickerLiveFoot helpers");
+}
+const liveFoot = new Function(`
+  const moneyTicker = { putIn: 240.09 };
+  function roundMoney(n) { return Math.round(n * 10000) / 10000; }
+  function potMoney(n) { return "$" + n.toFixed(2); }
+  function money(n) { return "$" + n.toFixed(2); }
+  ${appJs.slice(footStart, footEnd)}
+  return { moneyTickerLiveFoot };
+`)();
+const islandFoot = liveFoot.moneyTickerLiveFoot(
+  { cash: 240.26, total: 0.83 },
+  { cash: 240.26, total: 0.83 },
+  0
+);
+if (islandFoot.live !== "$240.26" || islandFoot.pot !== "$240.26") {
+  throw new Error("ticker foot should be island cash only, got " + islandFoot.live);
+}
+if (!islandFoot.chg.includes("$0.17") || !islandFoot.chg.includes("$240.09")) {
+  throw new Error("ticker chg should be dollars from put-in, got " + islandFoot.chg);
+}
+
 const scaleStart = appJs.indexOf("function tickerPctScale");
 const scaleEnd = appJs.indexOf("function moneyTickerDiagramSeries");
 if (!(scaleStart > -1 && scaleEnd > scaleStart)) {
@@ -278,8 +328,12 @@ const scale = scaleHelpers.tickerPctScale([-5.18, 1.27], 1.2);
 if (!(scale.min < -5.18 && scale.max > 1.27 && scale.min < 0 && scale.max > 0)) {
   throw new Error("tickerPctScale must keep 0% on the y-axis and pad the tape, got " + JSON.stringify(scale));
 }
-if (scaleHelpers.tickerEvenGuide().value !== 0 || scaleHelpers.tickerEvenGuide().label !== "0%") {
-  throw new Error("tickerEvenGuide must be the 0% even line");
+if (
+  scaleHelpers.tickerEvenGuide().value !== 0 ||
+  scaleHelpers.tickerEvenGuide().label !== "0%" ||
+  scaleHelpers.tickerEvenGuide().lineLabel
+) {
+  throw new Error("tickerEvenGuide must be an unlabeled 0% line");
 }
 
 const mondayTape = [
@@ -509,6 +563,46 @@ if (e1Week.length !== 2 || e1Week.some((s) => s.id === "s1e02-cash-add")) {
   throw new Error("Episode 1 week must keep E1 marks and exclude the Episode 2 cash-add");
 }
 
+const tribePctStart = appJs.indexOf("function tribePctsFromFrame");
+const tribePctEnd = appJs.indexOf("function framesFromSnapshots");
+if (!(tribePctStart > -1 && tribePctEnd > tribePctStart)) {
+  throw new Error("app.js missing tribePctsFromFrame before framesFromSnapshots");
+}
+const tribePctHelpers = new Function(`
+  function survivorLivingAt(season, survivor) {
+    return !survivor.status || survivor.status === "active" || survivor.status === "immune";
+  }
+  function roundMoney(n) {
+    return Math.round(n * 10000) / 10000;
+  }
+  ${appJs.slice(tribePctStart, tribePctEnd)}
+  return { tribePctsFromFrame };
+`)();
+const summed = tribePctHelpers.tribePctsFromFrame(
+  { at: "2026-08-31T20:00:00Z", books: { a: 0.2, b: 1.1, c: 0.5, d: -4.01 } },
+  {
+    tribes: [{ id: "bidu" }, { id: "askara" }],
+    survivors: [
+      { id: "a", tribeId: "bidu", status: "active" },
+      { id: "b", tribeId: "bidu", status: "active" },
+      { id: "c", tribeId: "askara", status: "active" },
+      { id: "d", tribeId: "askara", status: "jury" }
+    ]
+  },
+  null
+);
+if (summed.bidu !== 1.3 || summed.askara !== 0.5) {
+  throw new Error("tribePctsFromFrame should sum living week % and skip boots, got " + JSON.stringify(summed));
+}
+const fromSnap = tribePctHelpers.tribePctsFromFrame(
+  { at: "2026-08-31T20:00:00Z", books: { a: 9 } },
+  { tribes: [{ id: "bidu" }], survivors: [{ id: "a", tribeId: "bidu", status: "active" }] },
+  { tribes: { bidu: { combinedWeekPct: 0.38 } } }
+);
+if (fromSnap.bidu !== 0.38) {
+  throw new Error("tribePctsFromFrame should prefer snapshot combinedWeekPct, got " + JSON.stringify(fromSnap));
+}
+
 if (!openJs.includes("CampfireEngine")) {
   throw new Error("campfire-open.js missing CampfireEngine export");
 }
@@ -540,8 +634,11 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
   throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
 }
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
+if (stylesCss.includes(".money-ticker-live.is-pair") || stylesCss.includes(".money-ticker-live.is-tribes")) {
+  throw new Error("styles.css must not keep side-by-side ticker foot sizes");
+}
 if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
-  throw new Error("styles.css missing the even / 0% reference line");
+  throw new Error("styles.css missing the 0% reference line");
 }
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
