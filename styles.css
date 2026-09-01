@@ -5546,7 +5546,7 @@ body.is-titles .replay-trailer {
 .hover-3d {
   display: grid;
   width: 100%;
-  perspective: 75rem;
+  perspective: 36rem;
   --hover-3d-transform: 0, 0;
   --hover-3d-shine: 100% 100%;
   --hover-3d-shadow: 0rem 0rem;
@@ -5565,7 +5565,7 @@ body.is-titles .replay-trailer {
   grid-area: 1 / 1 / 4 / 4;
   min-width: 0;
   min-height: 0;
-  transform: rotate3d(var(--hover-3d-transform), 0, 10deg);
+  transform: rotate3d(var(--hover-3d-transform), 0, 16deg);
   transition:
     transform var(--hover-3d-ease) 500ms,
     scale var(--hover-3d-ease) 500ms;
@@ -5609,7 +5609,7 @@ body.is-titles .replay-trailer {
 }
 
 .hover-3d:hover > :first-child {
-  scale: 1.05;
+  scale: 1.06;
 }
 
 .hover-3d:hover > :first-child::before {
