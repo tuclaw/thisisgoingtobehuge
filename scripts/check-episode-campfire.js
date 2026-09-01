@@ -144,6 +144,16 @@ if (
   throw new Error("app.js ticker foot must show island cash only");
 }
 if (
+  !appJs.includes("function tickerPutInAt") ||
+  !appJs.includes("function framePutIn") ||
+  !appJs.includes("up from")
+) {
+  throw new Error("app.js ticker foot must say up from a host-add-aware funded pot");
+}
+if (appJs.includes("from ${potMoney(putIn)} put in")) {
+  throw new Error("app.js ticker chg must not keep the static put-in phrase");
+}
+if (
   appJs.includes("${potMoney(potUsd)} · ${tickerAxisPct(totalPct)}") ||
   appJs.includes("${potMoney(cash)} · ${tickerAxisPct(totalPct)}") ||
   appJs.includes('liveKind: "tribes"') ||
@@ -336,8 +346,16 @@ const islandFoot = liveFoot.moneyTickerLiveFoot(
 if (islandFoot.live !== "$240.26" || islandFoot.pot !== "$240.26") {
   throw new Error("ticker foot should be island cash only, got " + islandFoot.live);
 }
-if (!islandFoot.chg.includes("$0.17") || !islandFoot.chg.includes("$240.09")) {
-  throw new Error("ticker chg should be dollars from put-in, got " + islandFoot.chg);
+if (!islandFoot.chg.includes("$0.17") || !islandFoot.chg.includes("$240.09") || !islandFoot.chg.includes("up from")) {
+  throw new Error("ticker chg should be dollars up from the funded pot, got " + islandFoot.chg);
+}
+const e1Foot = liveFoot.moneyTickerLiveFoot(
+  { cash: 118.4, putIn: 120 },
+  { cash: 118.4, putIn: 120 },
+  0
+);
+if (!e1Foot.chg.includes("down from") || !e1Foot.chg.includes("$120.00")) {
+  throw new Error("ticker chg should say down from the opening pot, got " + e1Foot.chg);
 }
 
 const scaleStart = appJs.indexOf("function tickerPctScale");
@@ -446,7 +464,7 @@ if (!(givenStart > -1 && givenEnd > givenStart && hostStart > -1 && hostEnd > ho
 const hostHelpers = new Function(`
   ${appJs.slice(givenStart, givenEnd)}
   ${appJs.slice(hostStart, hostEnd)}
-  return { islandHostAddUsd, islandHostAddEpisodeLabel, moneyPutInTotal };
+  return { islandHostAddUsd, islandHostAddEpisodeLabel, moneyPutInTotal, tickerPutInAt };
 `)();
 const seasonSource = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
 if (hostHelpers.moneyPutInTotal(seasonSource) !== 120) {
@@ -460,6 +478,40 @@ if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E2") {
 }
 if (hostHelpers.islandHostAddUsd({ startingBookUsd: 10, islandGivenUsd: 120, cast: new Array(12).fill({}) }) != null) {
   throw new Error("islandHostAddUsd must stay hidden when given equals the opening $120");
+}
+const e1OpenAt = "2026-08-24T16:06:00Z";
+const e2AddAt = "2026-08-31T16:00:00Z";
+if (hostHelpers.tickerPutInAt(seasonSource, e1OpenAt) !== 120) {
+  throw new Error("tickerPutInAt before the host add should stay $120, got " + hostHelpers.tickerPutInAt(seasonSource, e1OpenAt));
+}
+if (hostHelpers.tickerPutInAt(seasonSource, e2AddAt) !== 240.09) {
+  throw new Error("tickerPutInAt at the cash-add should be $240.09, got " + hostHelpers.tickerPutInAt(seasonSource, e2AddAt));
+}
+const raised = {
+  ...seasonSource,
+  islandGivenUsd: 350
+};
+if (hostHelpers.tickerPutInAt(raised, e1OpenAt) !== 120) {
+  throw new Error("a later pot raise must not rewrite Episode 1 put-in, got " + hostHelpers.tickerPutInAt(raised, e1OpenAt));
+}
+if (hostHelpers.tickerPutInAt(raised, e2AddAt) !== 350) {
+  throw new Error("tickerPutInAt should follow a newer islandGivenUsd after the last host add, got " + hostHelpers.tickerPutInAt(raised, e2AddAt));
+}
+const nextAdd = {
+  startingBookUsd: 10,
+  islandGivenStartUsd: 120,
+  islandGivenUsd: 350,
+  survivors: Array.from({ length: 12 }, (_, i) => ({ id: "s" + i })),
+  snapshots: [
+    { id: "s1e02-cash-add", kind: "cash-add", givenUsd: 240.09, at: e2AddAt },
+    { id: "s1e03-cash-add", kind: "cash-add", givenUsd: 350, at: "2026-09-08T16:00:00Z" }
+  ]
+};
+if (hostHelpers.tickerPutInAt(nextAdd, "2026-09-01T16:00:00Z") !== 240.09) {
+  throw new Error("between host adds, put-in should stay the prior given, got " + hostHelpers.tickerPutInAt(nextAdd, "2026-09-01T16:00:00Z"));
+}
+if (hostHelpers.tickerPutInAt(nextAdd, "2026-09-08T16:00:00Z") !== 350) {
+  throw new Error("the next host add should step put-in to the new given, got " + hostHelpers.tickerPutInAt(nextAdd, "2026-09-08T16:00:00Z"));
 }
 
 const groupStart = appJs.indexOf("function listedTickerEpisodes");
@@ -528,7 +580,7 @@ if (!(tickerStart > -1 && tickerEnd > tickerStart)) {
 }
 const tickerHelpers = new Function(`
   ${appJs.slice(tickerStart, tickerEnd)}
-  return { tickerIsEpisodeTwo, moneyPutInTotal, tickerSleevePutIn, snapshotsInTickerRange };
+  return { tickerIsEpisodeTwo, moneyPutInTotal, tickerSleevePutIn, snapshotsInTickerRange, tickerPutInAt };
 `)();
 const e2Season = {
   startingBookUsd: 10,
@@ -570,6 +622,12 @@ if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "season") !== 20) {
 }
 if (tickerHelpers.tickerSleevePutIn(e2Season, e1Ep, "week") !== 10) {
   throw new Error("Episode 1 week sleeves must stay $10");
+}
+if (tickerHelpers.tickerPutInAt(e2Season, "2026-08-24T16:06:00Z") !== 120) {
+  throw new Error("Episode 1 marks must stay up from the $120 open");
+}
+if (tickerHelpers.tickerPutInAt(e2Season, "2026-08-31T16:00:00Z") !== 240.09) {
+  throw new Error("Episode 2 cash-add marks must be up from $240.09 given");
 }
 const e2Week = tickerHelpers.snapshotsInTickerRange(e2Season.snapshots, e2Ep, "week");
 if (e2Week.length !== 1 || e2Week[0].id !== "s1e02-cash-add") {

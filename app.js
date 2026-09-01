@@ -1873,15 +1873,71 @@ function tickerIsEpisodeTwo(episode) {
   return Boolean(episode && (episode.id === "s1e02" || Number(episode.number) === 2));
 }
 
-function moneyPutInTotal(season, episode, range) {
+function islandGivenStartUsd(season) {
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const castN = (season.survivors || []).length || (season.cast || []).length || 12;
-  const original = typeof season.islandGivenStartUsd === "number" ? season.islandGivenStartUsd : start * castN;
+  if (typeof season.islandGivenStartUsd === "number" && !Number.isNaN(season.islandGivenStartUsd)) {
+    return season.islandGivenStartUsd;
+  }
+  return start * castN;
+}
+
+function moneyPutInTotal(season, episode, range) {
+  const original = islandGivenStartUsd(season);
   /* Episode 2 week is funded: dotted island bar is islandGivenUsd, not the $120 open. */
   if (range === "week" && tickerIsEpisodeTwo(episode) && typeof season.islandGivenUsd === "number") {
     return season.islandGivenUsd;
   }
   return original;
+}
+
+function isHostPotAdd(item) {
+  if (!item) return false;
+  if (item.kind === "cash-add" || item.kind === "host-add") return true;
+  return /cash-add|host-add/i.test(String(item.id || ""));
+}
+
+function hostPotAdds(season) {
+  const fromSnaps = (season.snapshots || []).filter(isHostPotAdd);
+  if (fromSnaps.length) return fromSnaps;
+  return (season.events || []).filter((event) => event && event.type === "mark" && isHostPotAdd(event));
+}
+
+/* Funded pot at a mark. Host cash-adds step the baseline; a newer islandGivenUsd
+   follows after the latest add so the “up from” line moves when the pot is topped up. */
+function tickerPutInAt(season, iso) {
+  const start = islandGivenStartUsd(season);
+  const liveGiven =
+    typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)
+      ? season.islandGivenUsd
+      : null;
+  const adds = hostPotAdds(season)
+    .map((item) => {
+      const at = Date.parse(item && item.at);
+      const given =
+        typeof item.givenUsd === "number" && !Number.isNaN(item.givenUsd) ? item.givenUsd : liveGiven;
+      return { at, given };
+    })
+    .filter((item) => !Number.isNaN(item.at) && item.given != null)
+    .sort((a, b) => a.at - b.at);
+  const t = iso ? Date.parse(iso) : NaN;
+  let putIn = start;
+  let lastStamped = start;
+  adds.forEach((add) => {
+    if (Number.isNaN(t) || t >= add.at) {
+      putIn = add.given;
+      lastStamped = add.given;
+    }
+  });
+  const lastAdd = adds.length ? adds[adds.length - 1] : null;
+  const afterLastAdd = !lastAdd || Number.isNaN(t) || t >= lastAdd.at;
+  if (afterLastAdd && liveGiven != null && liveGiven > lastStamped + 0.00005) {
+    return liveGiven;
+  }
+  if (!adds.length && liveGiven != null && liveGiven > start + 0.00005) {
+    return liveGiven;
+  }
+  return putIn;
 }
 
 function tickerSleevePutIn(season, episode, range) {
@@ -2574,7 +2630,8 @@ function framesFromSnapshots(season, snaps, range) {
         at: snap.at,
         label: snap.label || pacificDayLabel(snap.at),
         books,
-        cash: snapshotTotal(snap)
+        cash: snapshotTotal(snap),
+        putIn: tickerPutInAt(season, snap.at)
       };
       frame.tribes = tribePctsFromFrame(frame, season, snap);
       frame.total = roundMoney(
@@ -2830,19 +2887,23 @@ function lerpFrameNum(a, b, u, key) {
   return v0 + (v1 - v0) * u;
 }
 
+function framePutIn(frame) {
+  if (frame && typeof frame.putIn === "number" && !Number.isNaN(frame.putIn)) return frame.putIn;
+  return moneyTicker.putIn;
+}
+
 function moneyTickerLiveFoot(a, b, u) {
   const cash = roundMoney(lerpFrameNum(a, b, u, "cash"));
-  const putIn = moneyTicker.putIn;
+  const putIn = u >= 0.5 ? framePutIn(b) : framePutIn(a);
   const delta = putIn ? roundMoney(cash - putIn) : 0;
   const down = putIn ? cash < putIn - 0.00005 : false;
   const up = putIn ? cash > putIn + 0.00005 : false;
   const arrow = up ? "▲" : down ? "▼" : "●";
+  const rel = up ? "up from" : down ? "down from" : "from";
   return {
     pot: potMoney(cash),
     live: potMoney(cash),
-    chg: putIn
-      ? `${arrow} ${money(Math.abs(delta))} from ${potMoney(putIn)} put in`
-      : "",
+    chg: putIn ? `${arrow} ${money(Math.abs(delta))} ${rel} ${potMoney(putIn)}` : "",
     up,
     down
   };
