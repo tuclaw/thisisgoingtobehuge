@@ -585,11 +585,10 @@ function renderEpisodeHoldings(season) {
     const label = season.markLabel ? String(season.markLabel).trim() : "";
     const when = formatMarkedAt(season.markedAt);
     if (label) {
-      const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
       const priorNote = season.dayPctPriorOfficial
         ? "dayPct versus the prior official mark."
         : "dayPct versus the prior session; that prior may not be SIP official settled.";
-      kicker.textContent = `Ranked by week %. ${label}. weekPct from the $${start} week open. ${priorNote}`;
+      kicker.textContent = `Ranked by week %. ${label}. weekPct from this week's open — not last week's ending book. ${priorNote}`;
     } else if (when) {
       kicker.textContent = `Ranked by week %. Tickers as of ${when}.`;
     } else {
@@ -2445,6 +2444,26 @@ function tribeBooksFromFrame(frame, season) {
   return out;
 }
 
+function tribeWeekPctFromFrame(frame, season, snap) {
+  const out = {};
+  (season.tribes || []).forEach((tribe) => {
+    const rec = snap && snap.tribes && snap.tribes[tribe.id];
+    if (rec && typeof rec.combinedWeekPct === "number") {
+      out[tribe.id] = rec.combinedWeekPct;
+      return;
+    }
+    let sum = 0;
+    (season.survivors || []).forEach((s) => {
+      if (s.tribeId !== tribe.id) return;
+      if (!survivorLivingAt(season, s, frame && frame.at)) return;
+      const v = frame.weekPct && frame.weekPct[s.id];
+      if (typeof v === "number") sum += v;
+    });
+    out[tribe.id] = Math.round(sum * 100) / 100;
+  });
+  return out;
+}
+
 function framesFromSnapshots(season, snaps) {
   const sleeve = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const cast = season.survivors || [];
@@ -2457,18 +2476,22 @@ function framesFromSnapshots(season, snaps) {
   });
   const frames = (snaps || []).map((snap) => {
     const books = {};
+    const weekPct = {};
     cast.forEach((s) => {
       const row = snap.books && snap.books[s.id];
       books[s.id] = row && typeof row.bookUsd === "number" ? row.bookUsd : sleeve;
+      weekPct[s.id] = row && typeof row.weekPct === "number" ? row.weekPct : 0;
     });
     const frame = {
       id: snap.id,
       at: snap.at,
       label: snap.label || pacificDayLabel(snap.at),
       total: snapshotTotal(snap),
-      books
+      books,
+      weekPct
     };
     frame.tribes = tribeBooksFromFrame(frame, season);
+    frame.tribeWeekPct = tribeWeekPctFromFrame(frame, season, snap);
     return frame;
   });
   moneyTickerAssignAxis(frames);
@@ -2782,6 +2805,67 @@ function sampleJaggedValue(values, seriesKey, progress, valueSpan) {
   return values[max];
 }
 
+function moneyTickerLiveFoot(a, b, u) {
+  const total = roundMoney(lerp(a.total, b.total, u));
+  const pot = potMoney(total);
+  if (moneyTicker.diagram === "tribes") {
+    const tribes = (moneyTicker.season && moneyTicker.season.tribes) || [];
+    const parts = tribes.map((tribe) => {
+      const va = a.tribeWeekPct && a.tribeWeekPct[tribe.id];
+      const vb = b.tribeWeekPct && b.tribeWeekPct[tribe.id];
+      const v0 = typeof va === "number" ? va : 0;
+      const v1 = typeof vb === "number" ? vb : v0;
+      return `${tribeChromeName(tribe)} ${pct(v0 + (v1 - v0) * u)}`;
+    });
+    return {
+      pot,
+      live: parts.join(" · ") || "Week %",
+      chg: "Combined week % from this week's open",
+      up: false,
+      down: false
+    };
+  }
+  if (moneyTicker.diagram === "contestants") {
+    const cast = (moneyTicker.season && moneyTicker.season.survivors) || [];
+    const at = u < 0.5 ? a : b;
+    let leader = null;
+    let best = -Infinity;
+    cast.forEach((s) => {
+      if (!survivorLivingAt(moneyTicker.season, s, at.at)) return;
+      const va = a.weekPct && a.weekPct[s.id];
+      const vb = b.weekPct && b.weekPct[s.id];
+      if (typeof va !== "number" && typeof vb !== "number") return;
+      const v0 = typeof va === "number" ? va : 0;
+      const v1 = typeof vb === "number" ? vb : v0;
+      const v = v0 + (v1 - v0) * u;
+      if (v > best) {
+        best = v;
+        leader = s;
+      }
+    });
+    return {
+      pot,
+      live: leader ? `${modelOf(leader)} ${pct(best)}` : "Week %",
+      chg: "Week % from this week's open — not last week's book",
+      up: best > 0.00005,
+      down: best < -0.00005
+    };
+  }
+  const putIn = moneyTicker.putIn;
+  const delta = roundMoney(total - putIn);
+  const pctChange = putIn ? (delta / putIn) * 100 : 0;
+  const down = delta < -0.00005;
+  const up = delta > 0.00005;
+  const arrow = up ? "▲" : down ? "▼" : "●";
+  return {
+    pot,
+    live: pot,
+    chg: `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`,
+    up,
+    down
+  };
+}
+
 function setMoneyTickerIndex(next, opts) {
   setMoneyTickerProgress(next, opts);
 }
@@ -2799,37 +2883,32 @@ function setMoneyTickerProgress(next, opts) {
   const b = frames[i1];
   moneyTicker.index = u < 0.5 ? i0 : i1;
 
-  const total = roundMoney(lerp(a.total, b.total, u));
-  const putIn = moneyTicker.putIn;
-  const delta = roundMoney(total - putIn);
-  const pctChange = putIn ? (delta / putIn) * 100 : 0;
-  const down = delta < -0.00005;
-  const up = delta > 0.00005;
+  const foot = moneyTickerLiveFoot(a, b, u);
+  const down = Boolean(foot.down);
+  const up = Boolean(foot.up);
   const chgClass = up ? "up" : down ? "down" : "flat";
-  const arrow = up ? "▲" : down ? "▼" : "●";
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
-    amount.textContent = potMoney(total);
+    amount.textContent = foot.pot || potMoney(roundMoney(lerp(a.total, b.total, u)));
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
-    live.textContent = potMoney(total);
+    live.textContent = foot.live;
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
-  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
-    chg.textContent = chgText;
+    chg.textContent = foot.chg;
   }
   const liveChg = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live-chg]");
   if (liveChg) {
     liveChg.className = "money-ticker-chg " + chgClass;
-    liveChg.textContent = chgText;
+    liveChg.textContent = foot.chg;
   }
 
   const scrub = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-scrub]");
@@ -2967,20 +3046,22 @@ function tickerPathForSeries(values, min, max, top, height, seriesKey, frames) {
     .join(" ");
 }
 
+function tickerFormatValue(spec, value) {
+  if (spec && spec.unit === "pct") return pct(value);
+  return money(value);
+}
+
 function moneyTickerDiagramSeries(season, frames) {
-  const sleeve = moneyTicker.sleevePutIn;
-  const putIn = moneyTicker.putIn;
-  const tribePutIn = moneyTicker.tribePutIn;
   const diagram = moneyTicker.diagram || "island";
   const last = frames[frames.length - 1];
 
   if (diagram === "tribes") {
     const tribes = season.tribes || [];
-    let min = tribePutIn;
-    let max = tribePutIn;
+    let min = 0;
+    let max = 0;
     frames.forEach((frame) => {
       tribes.forEach((tribe) => {
-        const v = frame.tribes && frame.tribes[tribe.id];
+        const v = frame.tribeWeekPct && frame.tribeWeekPct[tribe.id];
         if (typeof v === "number") {
           if (v < min) min = v;
           if (v > max) max = v;
@@ -2988,22 +3069,34 @@ function moneyTickerDiagramSeries(season, frames) {
       });
     });
     const pad = Math.max(0.6, (max - min) * 0.18);
-    min = Math.min(min, tribePutIn) - pad;
-    max = Math.max(max, tribePutIn) + pad;
-    const putInLabel = `$${tribePutIn.toFixed(0)} in`;
+    min -= pad;
+    max += pad;
     return {
       title: "Tribes",
-      aria: "Tribe book totals over recorded marks. Dotted line is money put into each tribe.",
-      putIn: tribePutIn,
-      putInLabel,
-      guides: [{ id: "putin", value: tribePutIn, label: putInLabel, className: "money-ticker-putin" }],
+      aria: "Tribe combined week % over recorded marks. Each episode starts at this week's open (0%). Last week's ending book is not the start.",
+      unit: "pct",
+      putIn: 0,
+      putInLabel: "week open",
+      guides: [
+        {
+          id: "putin",
+          value: 0,
+          label: "week open",
+          className: "money-ticker-putin",
+          lineLabel: "0%",
+          labelClass: "is-putin"
+        }
+      ],
       min,
       max,
       series: tribes.map((tribe) => ({
         id: tribe.id,
         label: tribeChromeName(tribe),
         color: tribe.color || (tribe.id === "askara" ? "#C45A12" : "#0E6B6B"),
-        values: frames.map((f) => (f.tribes && f.tribes[tribe.id]) || tribePutIn),
+        values: frames.map((f) => {
+          const v = f.tribeWeekPct && f.tribeWeekPct[tribe.id];
+          return typeof v === "number" ? v : 0;
+        }),
         seed: tribe.id === "askara" ? 42 : 17,
         width: 2.2
       })),
@@ -3018,14 +3111,14 @@ function moneyTickerDiagramSeries(season, frames) {
 
   if (diagram === "contestants") {
     const cast = season.survivors || [];
-    let min = sleeve;
-    let max = sleeve;
+    let min = 0;
+    let max = 0;
     const series = [];
     cast.forEach((s, idx) => {
       const values = frames.map((frame) => {
         if (!survivorLivingAt(season, s, frame.at)) return null;
-        const v = frame.books[s.id];
-        return typeof v === "number" ? v : null;
+        const v = frame.weekPct && frame.weekPct[s.id];
+        return typeof v === "number" ? v : 0;
       });
       if (!values.some((v) => v != null)) return;
       values.forEach((v) => {
@@ -3043,16 +3136,25 @@ function moneyTickerDiagramSeries(season, frames) {
         width: 1.45
       });
     });
-    const pad = Math.max(0.35, (max - min) * 0.14);
-    min = Math.min(min, sleeve) - pad;
-    max = Math.max(max, sleeve) + pad;
-    const putInLabel = `$${sleeve.toFixed(0)} in`;
+    const pad = Math.max(0.6, (max - min) * 0.18);
+    min -= pad;
+    max += pad;
     return {
       title: "Contestants",
-      aria: `Contestant sleeves over recorded marks. Dotted line is the $${sleeve.toFixed(0)} put into each book. Voted-out players drop after tribal.`,
-      putIn: sleeve,
-      putInLabel,
-      guides: [{ id: "putin", value: sleeve, label: putInLabel, className: "money-ticker-putin" }],
+      aria: "Contestant week % over recorded marks. Each episode starts at this week's open (0%), not last week's ending book. Voted-out players drop after tribal.",
+      unit: "pct",
+      putIn: 0,
+      putInLabel: "week open",
+      guides: [
+        {
+          id: "putin",
+          value: 0,
+          label: "week open",
+          className: "money-ticker-putin",
+          lineLabel: "0%",
+          labelClass: "is-putin"
+        }
+      ],
       min,
       max,
       series,
@@ -3155,8 +3257,8 @@ function moneyTickerDiagramSeries(season, frames) {
 function moneyTickerYAxisLabels(spec, chartTop, chartHeight) {
   const guides = spec.guides || [];
   const ticks = guides.map((guide) => ({ value: guide.value, label: guide.label, priority: 0 }));
-  ticks.push({ value: spec.max, label: money(spec.max), priority: 1 });
-  ticks.push({ value: spec.min, label: money(spec.min), priority: 1 });
+  ticks.push({ value: spec.max, label: tickerFormatValue(spec, spec.max), priority: 1 });
+  ticks.push({ value: spec.min, label: tickerFormatValue(spec, spec.min), priority: 1 });
   ticks.sort((a, b) => a.priority - b.priority || b.value - a.value);
   const usedY = [];
   const usedV = [];
@@ -3503,7 +3605,7 @@ function mountMoneyTicker(season, opts) {
   const givenLede = typeof givenNow === "number" ? potMoney(givenNow) : "$240.09";
   const lede = homeMode
     ? "See how each tribe and contestant did in the Episode."
-    : `Watch the island, the tribes, or every contestant sleeve. Monday through Friday. Voted-out players drop after tribal. Season plays one episode at a time. Episode 2 moves the bar to ${givenLede}.`;
+    : `Watch the island pot in dollars. Tribes and contestants race this week's %. Each episode starts flat — not from last week's ending book. Voted-out players drop after tribal. Season plays one episode at a time. Episode 2 moves the island bar to ${givenLede}.`;
 
   /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
   const tickerHead = homeMode

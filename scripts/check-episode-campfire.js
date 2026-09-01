@@ -103,8 +103,27 @@ if (
 ) {
   throw new Error("app.js season ticker must play each episode graph one at a time");
 }
-if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("moves the bar to ${givenLede}")) {
-  throw new Error("app.js must say Season plays one episode graph and moves the bar to the live given total");
+if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("moves the island bar to ${givenLede}")) {
+  throw new Error("app.js must say Season plays one episode graph and moves the island bar to the live given total");
+}
+if (
+  !appJs.includes("function tribeWeekPctFromFrame") ||
+  !appJs.includes("frame.tribeWeekPct") ||
+  !appJs.includes('unit: "pct"')
+) {
+  throw new Error("app.js tribes/contestants diagrams must race this week's % from a flat open");
+}
+if (
+  appJs.includes("Tribe book totals over recorded marks") ||
+  appJs.includes("Contestant sleeves over recorded marks")
+) {
+  throw new Error("app.js tribes/contestants diagrams must not plot last week's ending dollar books");
+}
+if (!appJs.includes("function moneyTickerLiveFoot") || !appJs.includes("Combined week % from this week's open")) {
+  throw new Error("app.js ticker foot must read week % on tribes/contestants, not put-in dollars");
+}
+if (!appJs.includes("weekPct from this week's open — not last week's ending book")) {
+  throw new Error("app.js holdings kicker must say weekPct is from this week's open");
 }
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
@@ -431,6 +450,43 @@ const e1Week = tickerHelpers.snapshotsInTickerRange(
 );
 if (e1Week.length !== 2 || e1Week.some((s) => s.id === "s1e02-cash-add")) {
   throw new Error("Episode 1 week must keep E1 marks and exclude the Episode 2 cash-add");
+}
+
+const tribePctStart = appJs.indexOf("function tribeWeekPctFromFrame");
+const tribePctEnd = appJs.indexOf("function framesFromSnapshots");
+if (!(tribePctStart > -1 && tribePctEnd > tribePctStart)) {
+  throw new Error("app.js missing tribeWeekPctFromFrame before framesFromSnapshots");
+}
+const tribePctHelpers = new Function(`
+  function survivorLivingAt(season, survivor) {
+    return !survivor.status || survivor.status === "active" || survivor.status === "immune";
+  }
+  ${appJs.slice(tribePctStart, tribePctEnd)}
+  return { tribeWeekPctFromFrame };
+`)();
+const summed = tribePctHelpers.tribeWeekPctFromFrame(
+  { at: "2026-08-31T20:00:00Z", weekPct: { a: 0.2, b: 1.1, c: 0.5, d: -4.01 } },
+  {
+    tribes: [{ id: "bidu" }, { id: "askara" }],
+    survivors: [
+      { id: "a", tribeId: "bidu", status: "active" },
+      { id: "b", tribeId: "bidu", status: "active" },
+      { id: "c", tribeId: "askara", status: "active" },
+      { id: "d", tribeId: "askara", status: "jury" }
+    ]
+  },
+  null
+);
+if (summed.bidu !== 1.3 || summed.askara !== 0.5) {
+  throw new Error("tribeWeekPctFromFrame should sum living week % and skip boots, got " + JSON.stringify(summed));
+}
+const fromSnap = tribePctHelpers.tribeWeekPctFromFrame(
+  { at: "2026-08-31T20:00:00Z", weekPct: { a: 9 } },
+  { tribes: [{ id: "bidu" }], survivors: [{ id: "a", tribeId: "bidu", status: "active" }] },
+  { tribes: { bidu: { combinedWeekPct: 0.38 } } }
+);
+if (fromSnap.bidu !== 0.38) {
+  throw new Error("tribeWeekPctFromFrame should prefer snapshot combinedWeekPct, got " + JSON.stringify(fromSnap));
 }
 
 if (!openJs.includes("CampfireEngine")) {

@@ -76,6 +76,7 @@ A tribe’s **combined week %** is the sum of its living members’ week-to-date
 
 - Scoring period is the trading week ending Friday, island time (America/Los_Angeles).
 - Week % is the percentage change of the survivor’s book over that week, after any prior boot-cash infusions already in the book at week open.
+- Each episode week is a fresh % race. Do not rank tribes or players from last week's ending book — only this week's week % (and combined week %) decide the challenge.
 - Tribe totals are the combined (summed) week % of living members.
 
 
