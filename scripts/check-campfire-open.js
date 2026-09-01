@@ -297,6 +297,9 @@ if (!appJs.includes("onHomeBooksEvent") || !appJs.includes('action === "play"') 
 if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(64rem, 100%)")) {
   throw new Error("styles.css missing home hero books diagram layout");
 }
+if (!appJs.includes("tickerEvenGuide") || !appJs.includes('label: "0%"') || !css.includes(".money-ticker-putin")) {
+  throw new Error("home books diagram must plot week % against a 0% even line");
+}
 const homeVoteIdx = html.indexOf('id="home-vote"');
 const homeTribalIdx = html.indexOf('id="home-tribal"');
 const beachIdx = html.indexOf('id="beach"');

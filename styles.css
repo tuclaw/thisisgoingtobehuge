@@ -1000,6 +1000,33 @@ img.portrait.photo {
   margin-top: 0.35rem;
 }
 
+/* Prior-episode recap under the week diagram (Episode 2+). */
+.episode-recap {
+  margin: 1.15rem auto 1.35rem;
+  max-width: 32rem;
+  text-align: center;
+}
+
+.episode-recap[hidden] {
+  display: none;
+}
+
+.episode-recap .council-stage {
+  margin: 0 auto;
+  min-height: 0;
+  padding: 1.25rem 1rem 1.15rem;
+  max-width: 32rem;
+}
+
+.episode-recap .tribal-spoiler {
+  width: min(28rem, 100%);
+  margin: 0 auto;
+}
+
+.episode-recap .tribal-spoiler-cover-fallback .spoiler-title {
+  max-width: 20rem;
+}
+
 .tribal-exit {
   display: none;
   margin: 1.35rem 0 0;
@@ -1406,7 +1433,8 @@ img.portrait.photo {
   }
 
   .tribal-spoiler,
-  .tribal-focus .tribal-spoiler {
+  .tribal-focus .tribal-spoiler,
+  .episode-recap .tribal-spoiler {
     width: 100%;
     aspect-ratio: 5 / 3;
     margin-top: 0.2rem;
@@ -1426,6 +1454,14 @@ img.portrait.photo {
   .tribal-spoiler-cover-fallback .spoiler-copy {
     font-size: 0.9rem;
     max-width: 14rem;
+  }
+
+  .episode-recap .council-stage {
+    padding: 0.85rem 0.7rem 0.95rem;
+  }
+
+  .episode-recap .tribal-spoiler-cover-fallback .spoiler-title {
+    max-width: 16rem;
   }
 }
 
@@ -4707,6 +4743,7 @@ body.is-titles .replay-trailer {
 }
 
 .money-ticker-range,
+.money-ticker-chapters,
 .money-ticker-diagrams {
   display: flex;
   flex-wrap: wrap;
@@ -4715,6 +4752,7 @@ body.is-titles .replay-trailer {
 }
 
 .money-ticker-range button,
+.money-ticker-chapters button,
 .money-ticker-diagrams button {
   appearance: none;
   border: 0;
@@ -4730,12 +4768,17 @@ body.is-titles .replay-trailer {
 }
 
 .money-ticker-range button[aria-selected="true"],
+.money-ticker-chapters button[aria-selected="true"],
 .money-ticker-diagrams button[aria-selected="true"] {
   color: #120c08;
   background: #e89354;
 }
 
 .money-ticker-diagrams button[aria-selected="true"] {
+  background: #f0c14b;
+}
+
+.money-ticker-chapters button[aria-selected="true"] {
   background: #f0c14b;
 }
 
@@ -4844,6 +4887,46 @@ body.is-titles .replay-trailer {
   font-size: 10px;
 }
 
+.money-ticker-day-short {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .money-ticker-day-full {
+    display: none;
+  }
+  .money-ticker-day-short {
+    display: inherit;
+  }
+}
+
+.money-ticker-day-grid {
+  stroke: rgba(196, 165, 116, 0.14);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.money-ticker-day-tick {
+  stroke: rgba(240, 193, 75, 0.7);
+  stroke-width: 1.25;
+}
+
+.money-ticker-day-dot {
+  fill: #f0c14b;
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-day-grid {
+  stroke: rgba(243, 234, 214, 0.16);
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-day-tick {
+  stroke: rgba(255, 241, 184, 0.8);
+}
+
+.money-ticker-mark-dot {
+  pointer-events: none;
+}
+
 .money-ticker-grid {
   stroke: rgba(196, 165, 116, 0.1);
   stroke-width: 1;
@@ -4853,6 +4936,41 @@ body.is-titles .replay-trailer {
   stroke: rgba(243, 234, 214, 0.85);
   stroke-width: 1.4;
   stroke-dasharray: 3 4;
+}
+
+.money-ticker-host-add {
+  stroke: rgba(240, 193, 75, 0.95);
+  stroke-width: 1.5;
+  stroke-dasharray: 8 5;
+}
+
+.money-ticker-guide-label {
+  fill: rgba(240, 193, 75, 0.92);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}
+
+.money-ticker-guide-label.is-putin {
+  fill: rgba(243, 234, 214, 0.92);
+}
+
+.money-ticker-chart.is-sky-on .money-ticker-guide-label {
+  fill: rgba(255, 232, 150, 0.95);
+  paint-order: stroke fill;
+  stroke: rgba(8, 6, 5, 0.45);
+  stroke-width: 2.5;
+}
+
+.money-ticker-legend .swatch.is-dash {
+  width: 1.05rem;
+  height: 0.16rem;
+  border-radius: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    currentColor 0 6px,
+    transparent 6px 10px
+  );
 }
 
 .money-ticker-pot-line {
