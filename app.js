@@ -564,10 +564,53 @@ function bindHoldingsSelection(root) {
   });
 }
 
+function episodeWeekBoardSnapshot(season) {
+  const ep = currentPageEpisode(season);
+  if (!ep) return null;
+  const pinned = ep.weekBoardSnapshotId || (ep.weekBoard && ep.weekBoard.snapshotId);
+  if (pinned) return snapshotById(season, pinned);
+  /* Closed Episode 1 still shows Friday last-hour books, not the post-boot $0 jury row. */
+  if (ep.status === "closed" && Number(ep.number) === 1) {
+    return snapshotById(season, "s1e01-fri-lasthour");
+  }
+  return null;
+}
+
+function overlaySurvivorBook(survivor, row) {
+  if (!survivor || !row) return survivor;
+  return {
+    ...survivor,
+    bookUsd: row.bookUsd,
+    weekPct: row.weekPct,
+    monthPct: row.monthPct,
+    dayPct: row.dayPct,
+    priorMarkUsd: row.priorMarkUsd,
+    positions: row.positions || survivor.positions
+  };
+}
+
+function episodeHoldingsSurvivors(season) {
+  const snap = episodeWeekBoardSnapshot(season);
+  const survivors = season.survivors || [];
+  if (!snap || !snap.books) return survivors;
+  return survivors.map((s) => overlaySurvivorBook(s, snap.books[s.id]));
+}
+
+function episodeHoldingsTribes(season) {
+  const snap = episodeWeekBoardSnapshot(season);
+  const tribes = season.tribes || [];
+  if (!snap || !snap.tribes) return tribes;
+  return tribes.map((t) => {
+    const tot = snap.tribes[t.id];
+    return tot ? { ...t, ...tot } : t;
+  });
+}
+
 function renderEpisodeHoldings(season) {
   const root = document.getElementById("episode-holdings");
   if (!root) return;
-  const ranked = [...(season.survivors || [])].sort((a, b) => {
+  const snap = episodeWeekBoardSnapshot(season);
+  const ranked = [...episodeHoldingsSurvivors(season)].sort((a, b) => {
     const w = weekPctOf(b) - weekPctOf(a);
     if (w !== 0) return w;
     return modelOf(a).localeCompare(modelOf(b));
@@ -578,10 +621,11 @@ function renderEpisodeHoldings(season) {
   bindHoldingsSelection(root);
   const kicker = document.getElementById("holdings-kicker");
   if (kicker) {
-    const label = season.markLabel ? String(season.markLabel).trim() : "";
-    const when = formatMarkedAt(season.markedAt);
+    const label = (snap && snap.label) || (season.markLabel ? String(season.markLabel).trim() : "");
+    const when = snap && snap.at ? formatMarkedAt(snap.at) : formatMarkedAt(season.markedAt);
+    const priorOfficial = snap ? Boolean(snap.dayPctPriorOfficial) : Boolean(season.dayPctPriorOfficial);
     if (label) {
-      const priorNote = season.dayPctPriorOfficial
+      const priorNote = priorOfficial
         ? "dayPct versus the prior official mark."
         : "dayPct versus the prior session; that prior may not be SIP official settled.";
       kicker.textContent = `Ranked by week %. ${label}. weekPct from this week's open — not last week's ending book. ${priorNote}`;
@@ -3466,7 +3510,7 @@ function renderEpisode(season) {
   renderEpisodeDays(season);
   const totals = document.getElementById("episode-tribe-totals");
   if (totals) {
-    totals.innerHTML = (season.tribes || [])
+    totals.innerHTML = episodeHoldingsTribes(season)
       .map((t) => {
         return `<div class="total-card ${t.id}">
         <h3>${escapeHtml(tribeChromeName(t))}</h3>

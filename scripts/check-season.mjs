@@ -250,6 +250,24 @@ if (live.length === 1) {
   check("live-episode-has-path", Boolean(live[0].path));
 }
 
+const snapIds = new Set((board.snapshots || []).map((snap) => snap.id));
+for (const ep of source.episodes || []) {
+  if (ep.status !== "closed" || !ep.boot) continue;
+  check(
+    `closed-week-board-snapshot:${ep.id}`,
+    Boolean(ep.weekBoardSnapshotId) && snapIds.has(ep.weekBoardSnapshotId),
+    ep.weekBoardSnapshotId
+  );
+  const snap = (board.snapshots || []).find((row) => row && row.id === ep.weekBoardSnapshotId);
+  const bootMember = board.survivors.find((member) => member && member.name === ep.boot);
+  const bootBook = snap && bootMember && snap.books && snap.books[bootMember.id];
+  check(
+    `closed-week-board-boot-book:${ep.id}`,
+    bootBook && typeof bootBook.bookUsd === "number" && bootBook.bookUsd > 0,
+    bootBook && String(bootBook.bookUsd)
+  );
+}
+
 if (!boardNative) {
   const snapIds = new Set(board.snapshots.map((snap) => snap.id));
   for (const ep of source.episodes || []) {
