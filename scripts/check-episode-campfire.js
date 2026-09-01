@@ -59,6 +59,9 @@ if (!episodeHtml.includes('id="week-board"')) {
 if (!episodeHtml.includes('id="camp-whispers"') || !episodeHtml.includes("camp-whispers-feed")) {
   throw new Error("episode renderer missing recent camp whispers section below week-board");
 }
+if (!episodeHtml.includes("wantsWhisperFeed") || !episodeHtml.includes("conversationFeed !== false")) {
+  throw new Error("episode renderer must gate latest whispers on conversationFeed, not just dinner-fires");
+}
 if (!episodeHtml.includes('id="money-ticker"')) {
   throw new Error("episode renderer missing money ticker playback mount on week-board");
 }
@@ -530,6 +533,13 @@ if (
   !episodeJs.includes("FRIDAY_LUNCH_CONVERSATIONS")
 ) {
   throw new Error("episode-campfire.js missing latest-first conversation resolution");
+}
+if (
+  !episodeJs.includes("function allowSampleFallback") ||
+  !episodeJs.includes("function isEpisodePage") ||
+  !episodeJs.includes("allowSampleFallback() && global.CampChat")
+) {
+  throw new Error("episode pages must not fall back to CampChat sample tapes");
 }
 if (!readFileSync(join(root, "camp-chat.js"), "utf8").includes("camp-chat-avatar")) {
   throw new Error("camp-chat.js missing contestant avatar bubbles");
