@@ -653,41 +653,41 @@ if (latest.length !== 2 || latest.some((c) => !c.id.startsWith("new-fri"))) {
   throw new Error("latest-day filter should keep only Friday threads");
 }
 
-if (!appJs.includes("function holdBookWasted") || !appJs.includes('class="hold-wasted"') || !appJs.includes("WASTED")) {
-  throw new Error("app.js must stamp a GTA WASTED overlay on Episode 2+ jury books");
+if (appJs.includes("WASTED") || appJs.includes("hold-wasted") || stylesCss.includes("hold-wasted") || episodeHtml.includes("family=Anton")) {
+  throw new Error("Episode 2 jury row must fade quietly — no WASTED stamp or Anton lettering");
 }
-if (!appJs.includes("wasted ? [] : bookLegs(s)")) {
-  throw new Error("wasted books must drop holdings chips and expandable legs");
+if (!appJs.includes("function holdBookFaded") || !appJs.includes("is-faded")) {
+  throw new Error("app.js must fade Episode 2+ jury books");
 }
-if (!appJs.includes("is-wasted") || !stylesCss.includes(".hold-book.is-wasted") || !stylesCss.includes(".hold-wasted")) {
-  throw new Error("styles.css missing Episode 2 wasted book treatment");
+if (!appJs.includes("faded ? [] : bookLegs(s)")) {
+  throw new Error("faded books must drop holdings chips and expandable legs");
 }
-if (!stylesCss.includes("--font-wasted") || !episodeHtml.includes("family=Anton")) {
-  throw new Error("Episode 2 wasted stamp must load Anton for the GTA lettering");
+if (!stylesCss.includes(".hold-book.is-faded") || !stylesCss.includes("grayscale(1)")) {
+  throw new Error("styles.css missing Episode 2 faded book treatment");
 }
-const wastedStart = appJs.indexOf("function holdBookWasted");
-const wastedEnd = appJs.indexOf("function holdBookHtml");
-if (!(wastedStart > -1 && wastedEnd > wastedStart)) {
-  throw new Error("app.js missing holdBookWasted before holdBookHtml");
+const fadedStart = appJs.indexOf("function holdBookFaded");
+const fadedEnd = appJs.indexOf("function holdBookHtml");
+if (!(fadedStart > -1 && fadedEnd > fadedStart)) {
+  throw new Error("app.js missing holdBookFaded before holdBookHtml");
 }
-const wastedFn = new Function(`
+const fadedFn = new Function(`
   let pageEp = null;
   function currentPageEpisode() { return pageEp; }
-  ${appJs.slice(wastedStart, wastedEnd)}
+  ${appJs.slice(fadedStart, fadedEnd)}
   return {
     setPage(ep) { pageEp = ep; },
-    holdBookWasted
+    holdBookFaded
   };
 `)();
-wastedFn.setPage({ id: "s1e02", number: 2 });
-if (!wastedFn.holdBookWasted({ status: "jury" })) {
-  throw new Error("Episode 2 jury row must be wasted");
+fadedFn.setPage({ id: "s1e02", number: 2 });
+if (!fadedFn.holdBookFaded({ status: "jury" })) {
+  throw new Error("Episode 2 jury row must fade");
 }
-if (wastedFn.holdBookWasted({ status: "active" })) {
+if (fadedFn.holdBookFaded({ status: "active" })) {
   throw new Error("living Episode 2 books must keep their numbers");
 }
-wastedFn.setPage({ id: "s1e01", number: 1 });
-if (wastedFn.holdBookWasted({ status: "jury" })) {
+fadedFn.setPage({ id: "s1e01", number: 1 });
+if (fadedFn.holdBookFaded({ status: "jury" })) {
   throw new Error("Episode 1 must still show the boot's numbers");
 }
 
