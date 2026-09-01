@@ -1,0 +1,14 @@
+---
+description: Episode 2 landing chrome stays empty; remakes must not restore mark-status copy
+alwaysApply: true
+---
+
+# Episode 2 chrome — do not restore
+
+The live Episode 2 page has no mark-status listen line, week-board lede, status banner, or holdings kicker.
+
+- Keep `data/episodes/s1e02.json` `heroNote` and `weekBoard.lede` as empty strings.
+- Do not write live `markLabel`, weekPct/dayPct basis, fill counts, or "X leads the week" recap into those fields.
+- Books recap goes in the day fold only (`days[].beats` books body).
+- Episode 1 may keep `heroNote`: `Stay a while and listen`. Do not copy a mark dump onto Episode 2.
+- If a remake or checker wants that chrome back, leave the fields empty and update the checker instead.

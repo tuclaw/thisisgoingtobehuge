@@ -38,7 +38,7 @@ Public URLs like `index.html` / `seasons/1/e01.html` are **build outputs**. Chan
 
 1. Append events to `data/season1.json` (do not rewrite history unless correcting a bad append).
 2. Run `npm run build` and `npm run check`.
-3. Update episode copy in `data/episodes/` only when the audience beat actually changed.
+3. Update episode copy in `data/episodes/` only when the audience beat actually changed. Remakes update the day fold (`days[].beats` books body). Do **not** restore Episode 2 `heroNote` or `weekBoard.lede`.
 
 Season checks are split:
 - `scripts/check-season.mjs` — durable shape/math/GAME.md invariants (keep green without rewriting for every mark)
@@ -49,6 +49,17 @@ Season checks are split:
 - Prefer `templates/` for structure, root CSS/JS for behavior and look.
 - Home is a Survivor cold open (brand, one line, CTA) — not a dashboard. Live standings live on the episode page.
 - Prefer `npm run check` before claiming UI work is done; some checks need a prior build (`dist/`).
+
+## Episode 2 chrome (do not restore)
+
+PR #129 stripped mark-status chrome from the live Episode 2 page. Leave it gone.
+
+- `data/episodes/s1e02.json` `heroNote` stays `""`. No listen line under the campfire.
+- `weekBoard.lede` stays `""`. That also hides the status banner and holdings kicker.
+- Do not dump live `markLabel`, weekPct/dayPct basis, fill counts, or leader/laggard recap into those fields on a remake.
+- Books recap belongs in the day fold (`days[].beats` books body), not landing chrome.
+- Episode 1 may keep `heroNote`: `Stay a while and listen`. Do not copy that onto Episode 2 as a mark-status paragraph.
+- If `npm run check` fails because Episode 2 `heroNote` / `lede` is empty, fix the checker. Do not put the chrome back.
 
 ## Cloud Agent notes
 
