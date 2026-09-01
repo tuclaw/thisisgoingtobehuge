@@ -2080,11 +2080,22 @@ function survivorLivingAt(season, survivor, iso) {
   return t < bootAt;
 }
 
+function tickerAxisPct(n) {
+  if (typeof n !== "number" || Number.isNaN(n)) return "—";
+  if (Math.abs(n) < 0.005) return "0%";
+  return pct(n);
+}
+
+function bookWeekPctFromSnap(row) {
+  if (row && typeof row.weekPct === "number" && !Number.isNaN(row.weekPct)) return row.weekPct;
+  return null;
+}
+
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
   const n = list.length;
   /* Tape order, not calendar slots. Same-day marks must travel the plot;
-     weekday ticks stay as labels. Season chapters should call this after load. */
+     weekday ticks stay as labels. */
   moneyTicker.axisMax = Math.max(1, n - 1);
   list.forEach((frame, i) => {
     frame.axisT = n < 2 ? 0 : i;
@@ -2144,7 +2155,7 @@ function moneyTickerWeekdayTicks(frames, range) {
   }
   const days = [];
   const byKey = new Map();
-  (frames || []).forEach((frame) => {
+  (frames || []).forEach((frame, index) => {
     const parts = pacificDateParts(frame && frame.at);
     if (!parts) return;
     if (!byKey.has(parts.key)) {
@@ -2152,7 +2163,8 @@ function moneyTickerWeekdayTicks(frames, range) {
         weekday: parts.weekday,
         day: parts.day,
         month: parts.month,
-        key: parts.key
+        key: parts.key,
+        axisT: typeof frame.axisT === "number" ? frame.axisT : index
       });
       days.push(byKey.get(parts.key));
     }
@@ -2168,11 +2180,11 @@ function moneyTickerWeekdayTicks(frames, range) {
   }
   const full =
     use.length <= 5 && use.every((day) => MONEY_TICKER_WEEKDAYS.some((item) => item.key === day.weekday));
-  const axisMax = Math.max(1, use.length);
   return use.map((day, i) => {
     const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
+    const axisT = typeof day.axisT === "number" ? day.axisT : i + 0.5;
     return {
-      x: moneyTickerXFromAxisT(i + 0.5, axisMax),
+      x: moneyTickerXFromAxisT(axisT),
       label: full && named ? named.label : `${day.weekday} ${day.day}`,
       weekday: day.weekday
     };
@@ -2429,24 +2441,27 @@ function candidateStroke(survivor, indexInTribe) {
   return bases[indexInTribe % bases.length];
 }
 
-function tribeBooksFromFrame(frame, season) {
+function tribePctsFromFrame(frame, season, snap) {
   const out = {};
   (season.tribes || []).forEach((tribe) => {
-    out[tribe.id] = 0;
-  });
-  (season.survivors || []).forEach((s) => {
-    if (!survivorLivingAt(season, s, frame && frame.at)) return;
-    const id = s.tribeId;
-    if (!id) return;
-    if (out[id] == null) out[id] = 0;
-    const v = frame.books && frame.books[s.id];
-    if (typeof v === "number") out[id] = roundMoney(out[id] + v);
+    const fromSnap = snap && snap.tribes && snap.tribes[tribe.id];
+    if (fromSnap && typeof fromSnap.combinedWeekPct === "number" && !Number.isNaN(fromSnap.combinedWeekPct)) {
+      out[tribe.id] = fromSnap.combinedWeekPct;
+      return;
+    }
+    let sum = 0;
+    (season.survivors || []).forEach((s) => {
+      if (s.tribeId !== tribe.id) return;
+      if (!survivorLivingAt(season, s, frame && frame.at)) return;
+      const v = frame.books && frame.books[s.id];
+      if (typeof v === "number") sum += v;
+    });
+    out[tribe.id] = roundMoney(sum);
   });
   return out;
 }
 
 function framesFromSnapshots(season, snaps) {
-  const sleeve = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const cast = season.survivors || [];
   const tribeIndex = {};
   cast.forEach((s) => {
@@ -2455,22 +2470,25 @@ function framesFromSnapshots(season, snaps) {
     s.__tickerTone = candidateStroke(s, tribeIndex[key]);
     tribeIndex[key] += 1;
   });
-  const frames = (snaps || []).map((snap) => {
-    const books = {};
-    cast.forEach((s) => {
-      const row = snap.books && snap.books[s.id];
-      books[s.id] = row && typeof row.bookUsd === "number" ? row.bookUsd : sleeve;
+  const frames = (snaps || [])
+    .filter((snap) => snap && snap.books)
+    .map((snap) => {
+      const books = {};
+      cast.forEach((s) => {
+        books[s.id] = bookWeekPctFromSnap(snap.books && snap.books[s.id]);
+      });
+      const frame = {
+        id: snap.id,
+        at: snap.at,
+        label: snap.label || pacificDayLabel(snap.at),
+        books
+      };
+      frame.tribes = tribePctsFromFrame(frame, season, snap);
+      frame.total = roundMoney(
+        Object.values(frame.tribes).reduce((acc, v) => acc + (typeof v === "number" ? v : 0), 0)
+      );
+      return frame;
     });
-    const frame = {
-      id: snap.id,
-      at: snap.at,
-      label: snap.label || pacificDayLabel(snap.at),
-      total: snapshotTotal(snap),
-      books
-    };
-    frame.tribes = tribeBooksFromFrame(frame, season);
-    return frame;
-  });
   moneyTickerAssignAxis(frames);
   return frames;
 }
@@ -2479,93 +2497,8 @@ function buildTickerFrames(season, range) {
   return framesFromSnapshots(season, snapshotsForTickerRange(season, range));
 }
 
-function buildTickerChapters(season) {
-  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
-  return groupSnapshotsByEpisode(season, all)
-    .map((group) => ({
-      episode: group.episode,
-      frames: framesFromSnapshots(season, snapshotsFromEpisodeStart(group.snaps, group.episode))
-    }))
-    .filter((ch) => ch.frames.length);
-}
-
-function moneyTickerUsesChapters() {
-  return moneyTicker.range === "season" && Array.isArray(moneyTicker.chapters) && moneyTicker.chapters.length > 0;
-}
-
 function moneyTickerActiveEpisode(season) {
-  if (moneyTickerUsesChapters()) {
-    const ch = moneyTicker.chapters[moneyTicker.chapterIndex];
-    if (ch && ch.episode) return ch.episode;
-  }
   return currentPageEpisode(season) || (season && season.episode) || null;
-}
-
-function moneyTickerChapterPutIn(season, episode) {
-  const start = moneyPutInTotal(season);
-  const hostAdd = islandHostAddUsd(season);
-  const given = hostAdd != null ? islandGivenUsd(season) : null;
-  const n = episode && Number(episode.number);
-  if (n >= 2 && typeof given === "number" && hostAdd != null) return given;
-  return start;
-}
-
-function setTickerChapter(index, opts) {
-  const chapters = moneyTicker.chapters || [];
-  if (!chapters.length) return false;
-  const i = Math.max(0, Math.min(chapters.length - 1, index));
-  const chapter = chapters[i];
-  moneyTicker.chapterIndex = i;
-  moneyTicker.frames = chapter.frames;
-  moneyTicker.putIn = moneyTickerChapterPutIn(moneyTicker.season, chapter.episode);
-  moneyTicker.sleevePutIn = tickerSleevePutIn(moneyTicker.season, chapter.episode, "season");
-  const livingPerTribe = Math.max(
-    1,
-    Math.round(
-      (((moneyTicker.season && moneyTicker.season.survivors) || []).length || 12) /
-        Math.max(1, ((moneyTicker.season && moneyTicker.season.tribes) || []).length || 2)
-    )
-  );
-  moneyTicker.tribePutIn = roundMoney(moneyTicker.sleevePutIn * livingPerTribe);
-  const end = Math.max(0, chapter.frames.length - 1);
-  if (opts && opts.atEnd) {
-    moneyTicker.index = end;
-    moneyTicker.progress = end;
-  } else {
-    moneyTicker.index = 0;
-    moneyTicker.progress = 0;
-  }
-  return true;
-}
-
-function syncTickerChapterChrome() {
-  const root = moneyTicker.root;
-  if (!root) return;
-  root.querySelectorAll("[data-ticker-chapter]").forEach((btn) => {
-    const i = Number(btn.getAttribute("data-ticker-chapter"));
-    btn.setAttribute("aria-selected", i === moneyTicker.chapterIndex ? "true" : "false");
-  });
-  const scrub = root.querySelector("[data-ticker-scrub]");
-  if (scrub) {
-    scrub.max = String(Math.max(0, moneyTicker.frames.length - 1));
-    if (scrub.value !== String(moneyTicker.progress || 0)) scrub.value = String(moneyTicker.progress || 0);
-  }
-}
-
-function loadTickerChapter(index, opts) {
-  if (!setTickerChapter(index, opts)) return false;
-  if (moneyTicker.root && moneyTicker.root.querySelector(".money-ticker-plot")) {
-    refreshMoneyTickerChart();
-    syncTickerChapterChrome();
-    setMoneyTickerProgress(moneyTicker.progress || 0);
-  }
-  return true;
-}
-
-function advanceTickerChapter() {
-  if (!moneyTickerUsesChapters()) return false;
-  if (moneyTicker.chapterIndex >= moneyTicker.chapters.length - 1) return false;
-  return loadTickerChapter(moneyTicker.chapterIndex + 1);
 }
 
 function stopMoneyTickerPlayback() {
@@ -2612,7 +2545,6 @@ function startMoneyTickerPlayback(opts) {
   if (!moneyTicker.frames.length) return;
   const max = moneyTicker.frames.length - 1;
   if (moneyTicker.reducedMotion) {
-    if (moneyTickerUsesChapters()) loadTickerChapter(moneyTicker.chapters.length - 1, { atEnd: true });
     setMoneyTickerProgress(Math.max(0, moneyTicker.frames.length - 1));
     return;
   }
@@ -2641,18 +2573,6 @@ function tickMoneyTickerPlayback(now) {
   setMoneyTickerProgress(progress);
   if (progress >= max - 0.0001) {
     setMoneyTickerProgress(max);
-    if (advanceTickerChapter()) {
-      moneyTicker.playing = true;
-      moneyTicker.playFromProgress = 0;
-      moneyTicker.playStartedAt = performance.now();
-      const playBtn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
-      if (playBtn) {
-        playBtn.setAttribute("aria-pressed", "true");
-        playBtn.innerHTML = `<span aria-hidden="true">❚❚</span> Pause`;
-      }
-      moneyTicker.raf = requestAnimationFrame(tickMoneyTickerPlayback);
-      return;
-    }
     stopMoneyTickerPlayback();
     const btn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
     if (btn) btn.innerHTML = `<span aria-hidden="true">↻</span> Replay`;
@@ -2705,7 +2625,6 @@ function onHomeBooksEvent(event) {
     stopMoneyTickerPlayback();
     moneyTicker.autoplayDone = false;
     moneyTicker.autoplayArmed = false;
-    if (moneyTickerUsesChapters()) loadTickerChapter(0);
     setMoneyTickerProgress(0);
     const playBtn = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-play]");
     if (playBtn) {
@@ -2800,27 +2719,24 @@ function setMoneyTickerProgress(next, opts) {
   moneyTicker.index = u < 0.5 ? i0 : i1;
 
   const total = roundMoney(lerp(a.total, b.total, u));
-  const putIn = moneyTicker.putIn;
-  const delta = roundMoney(total - putIn);
-  const pctChange = putIn ? (delta / putIn) * 100 : 0;
-  const down = delta < -0.00005;
-  const up = delta > 0.00005;
+  const down = total < -0.00005;
+  const up = total > 0.00005;
   const chgClass = up ? "up" : down ? "down" : "flat";
   const arrow = up ? "▲" : down ? "▼" : "●";
 
   const amount = document.getElementById("pot-amount");
   if (amount) {
-    amount.textContent = potMoney(total);
+    amount.textContent = tickerAxisPct(total);
     amount.classList.toggle("is-ticker-down", down);
     amount.classList.toggle("is-ticker-up", up);
   }
   const live = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-live]");
   if (live) {
-    live.textContent = potMoney(total);
+    live.textContent = tickerAxisPct(total);
     live.classList.toggle("is-ticker-down", down);
     live.classList.toggle("is-ticker-up", up);
   }
-  const chgText = `${arrow} ${money(Math.abs(delta))} (${pct(pctChange).replace("+", "")}) from ${potMoney(putIn)} put in`;
+  const chgText = `${arrow} ${tickerAxisPct(total)} from even`;
   const chg = document.getElementById("money-ticker-chg");
   if (chg) {
     chg.className = "money-ticker-chg " + chgClass;
@@ -2967,43 +2883,57 @@ function tickerPathForSeries(values, min, max, top, height, seriesKey, frames) {
     .join(" ");
 }
 
+function tickerPctScale(values, padFloor) {
+  let min = 0;
+  let max = 0;
+  (values || []).forEach((v) => {
+    if (typeof v !== "number" || Number.isNaN(v)) return;
+    if (v < min) min = v;
+    if (v > max) max = v;
+  });
+  const pad = Math.max(padFloor || 1.2, (max - min) * 0.18);
+  return { min: min - pad, max: max + pad };
+}
+
+function tickerEvenGuide() {
+  return {
+    id: "putin",
+    value: 0,
+    label: "0%",
+    className: "money-ticker-putin",
+    lineLabel: "even",
+    labelClass: "is-putin"
+  };
+}
+
 function moneyTickerDiagramSeries(season, frames) {
-  const sleeve = moneyTicker.sleevePutIn;
-  const putIn = moneyTicker.putIn;
-  const tribePutIn = moneyTicker.tribePutIn;
   const diagram = moneyTicker.diagram || "island";
   const last = frames[frames.length - 1];
+  const even = tickerEvenGuide();
 
   if (diagram === "tribes") {
     const tribes = season.tribes || [];
-    let min = tribePutIn;
-    let max = tribePutIn;
+    const values = [];
     frames.forEach((frame) => {
       tribes.forEach((tribe) => {
         const v = frame.tribes && frame.tribes[tribe.id];
-        if (typeof v === "number") {
-          if (v < min) min = v;
-          if (v > max) max = v;
-        }
+        if (typeof v === "number") values.push(v);
       });
     });
-    const pad = Math.max(0.6, (max - min) * 0.18);
-    min = Math.min(min, tribePutIn) - pad;
-    max = Math.max(max, tribePutIn) + pad;
-    const putInLabel = `$${tribePutIn.toFixed(0)} in`;
+    const scale = tickerPctScale(values, 1.4);
     return {
       title: "Tribes",
-      aria: "Tribe book totals over recorded marks. Dotted line is money put into each tribe.",
-      putIn: tribePutIn,
-      putInLabel,
-      guides: [{ id: "putin", value: tribePutIn, label: putInLabel, className: "money-ticker-putin" }],
-      min,
-      max,
+      aria: "Tribe combined week % over recorded marks. Dotted line is even.",
+      putIn: 0,
+      putInLabel: "0%",
+      guides: [even],
+      min: scale.min,
+      max: scale.max,
       series: tribes.map((tribe) => ({
         id: tribe.id,
         label: tribeChromeName(tribe),
         color: tribe.color || (tribe.id === "askara" ? "#C45A12" : "#0E6B6B"),
-        values: frames.map((f) => (f.tribes && f.tribes[tribe.id]) || tribePutIn),
+        values: frames.map((f) => (f.tribes && typeof f.tribes[tribe.id] === "number" ? f.tribes[tribe.id] : 0)),
         seed: tribe.id === "askara" ? 42 : 17,
         width: 2.2
       })),
@@ -3018,43 +2948,36 @@ function moneyTickerDiagramSeries(season, frames) {
 
   if (diagram === "contestants") {
     const cast = season.survivors || [];
-    let min = sleeve;
-    let max = sleeve;
     const series = [];
+    const values = [];
     cast.forEach((s, idx) => {
-      const values = frames.map((frame) => {
+      const line = frames.map((frame) => {
         if (!survivorLivingAt(season, s, frame.at)) return null;
         const v = frame.books[s.id];
         return typeof v === "number" ? v : null;
       });
-      if (!values.some((v) => v != null)) return;
-      values.forEach((v) => {
-        if (typeof v === "number") {
-          if (v < min) min = v;
-          if (v > max) max = v;
-        }
+      if (!line.some((v) => v != null)) return;
+      line.forEach((v) => {
+        if (typeof v === "number") values.push(v);
       });
       series.push({
         id: s.id,
         label: modelOf(s),
         color: s.__tickerTone || "#d4a017",
-        values,
+        values: line,
         seed: idx + 11,
         width: 1.45
       });
     });
-    const pad = Math.max(0.35, (max - min) * 0.14);
-    min = Math.min(min, sleeve) - pad;
-    max = Math.max(max, sleeve) + pad;
-    const putInLabel = `$${sleeve.toFixed(0)} in`;
+    const scale = tickerPctScale(values, 1.2);
     return {
       title: "Contestants",
-      aria: `Contestant sleeves over recorded marks. Dotted line is the $${sleeve.toFixed(0)} put into each book. Voted-out players drop after tribal.`,
-      putIn: sleeve,
-      putInLabel,
-      guides: [{ id: "putin", value: sleeve, label: putInLabel, className: "money-ticker-putin" }],
-      min,
-      max,
+      aria: "Contestant week % over recorded marks. Dotted line is even. Voted-out players drop after tribal.",
+      putIn: 0,
+      putInLabel: "0%",
+      guides: [even],
+      min: scale.min,
+      max: scale.max,
       series,
       legend: series.map((item) => ({
         label: item.label,
@@ -3066,87 +2989,32 @@ function moneyTickerDiagramSeries(season, frames) {
   }
 
   /* island */
-  const startPutIn = moneyPutInTotal(season);
-  const hostAdd = islandHostAddUsd(season);
-  const given = hostAdd != null ? islandGivenUsd(season) : null;
-  const episode = moneyTickerActiveEpisode(season);
-  const epNum = episode && Number(episode.number);
-  const hostBar = typeof given === "number" && hostAdd != null && epNum >= 2;
-  /* E2 week and E2 season chapter start at the cash-add — only the given bar. */
-  const fundedBar = hostBar && (moneyTickerUsesChapters() || moneyTicker.range === "week");
-  const scalePutIn = fundedBar ? given : startPutIn;
-  let min = scalePutIn;
-  let max = scalePutIn;
-  frames.forEach((frame) => {
-    if (frame.total < min) min = frame.total;
-    if (frame.total > max) max = frame.total;
-  });
-  if (hostBar) {
-    if (given < min) min = given;
-    if (given > max) max = given;
-  }
-  if (!fundedBar) {
-    if (startPutIn < min) min = startPutIn;
-    if (startPutIn > max) max = startPutIn;
-  }
-  const pad = Math.max(0.8, (max - min) * 0.18);
-  min -= pad;
-  max += pad;
-  const potDown = last && last.total < scalePutIn - 0.00005;
+  const values = frames.map((f) => f.total);
+  const scale = tickerPctScale(values, 1.6);
+  const potDown = last && last.total < -0.00005;
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
-  const putInLabel = `$${startPutIn.toFixed(0)} in`;
-  const guides = [];
-  const legend = [{ label: "Island pot", color: potStroke }];
-  if (!fundedBar) {
-    guides.push({
-      id: "putin",
-      value: startPutIn,
-      label: putInLabel,
-      className: "money-ticker-putin",
-      lineLabel: putInLabel,
-      labelClass: "is-putin"
-    });
-    legend.push({ label: putInLabel, color: "rgba(243, 234, 214, 0.92)", swatch: "dash" });
-  }
-  let aria = "Island pot over recorded marks. Dotted line is money put into the game.";
-  if (hostBar) {
-    const ep = islandHostAddEpisodeLabel(episode || season);
-    guides.push({
-      id: "host-add",
-      value: given,
-      label: `${potMoney(given)} given`,
-      className: "money-ticker-host-add",
-      lineLabel: `${ep} host +${potMoney(hostAdd)}`,
-      labelClass: "is-host-add"
-    });
-    legend.push({ label: `${ep} host +${potMoney(hostAdd)}`, color: "#f0c14b", swatch: "dash" });
-    aria = fundedBar
-      ? `Island pot for ${episode.title || ep}. Horizontal bar is Episode ${ep.slice(1)} host +${potMoney(hostAdd)} at ${potMoney(given)} given.`
-      : `Island pot over recorded marks. Both dotted lines stay on: $${startPutIn.toFixed(0)} put in, and Episode ${ep.slice(1)} host +${potMoney(hostAdd)} at ${potMoney(given)} given.`;
-  }
-  const title =
-    moneyTickerUsesChapters() && episode
-      ? `Island · ${episode.title || "Episode " + episode.number}`
-      : "Island";
   return {
-    title,
-    aria,
-    putIn: scalePutIn,
-    putInLabel: fundedBar ? `${potMoney(given)} given` : putInLabel,
-    guides,
-    min,
-    max,
+    title: "Island",
+    aria: "Island combined week % over recorded marks. Dotted line is even.",
+    putIn: 0,
+    putInLabel: "0%",
+    guides: [even],
+    min: scale.min,
+    max: scale.max,
     series: [
       {
         id: "island",
-        label: "Island pot",
+        label: "Island combined %",
         color: potStroke,
-        values: frames.map((f) => f.total),
+        values,
         seed: 7,
         width: 2.6
       }
     ],
-    legend,
+    legend: [
+      { label: "Island combined %", color: potStroke },
+      { label: "even", color: "rgba(243, 234, 214, 0.92)", swatch: "dash" }
+    ],
     liveSeries: "total",
     strokeForDot: potStroke
   };
@@ -3155,8 +3023,8 @@ function moneyTickerDiagramSeries(season, frames) {
 function moneyTickerYAxisLabels(spec, chartTop, chartHeight) {
   const guides = spec.guides || [];
   const ticks = guides.map((guide) => ({ value: guide.value, label: guide.label, priority: 0 }));
-  ticks.push({ value: spec.max, label: money(spec.max), priority: 1 });
-  ticks.push({ value: spec.min, label: money(spec.min), priority: 1 });
+  ticks.push({ value: spec.max, label: tickerAxisPct(spec.max), priority: 1 });
+  ticks.push({ value: spec.min, label: tickerAxisPct(spec.min), priority: 1 });
   ticks.sort((a, b) => a.priority - b.priority || b.value - a.value);
   const usedY = [];
   const usedV = [];
@@ -3352,17 +3220,6 @@ function bindMoneyTickerControls() {
       }
       return;
     }
-    const chapterBtn = event.target.closest("[data-ticker-chapter]");
-    if (chapterBtn) {
-      const next = Number(chapterBtn.getAttribute("data-ticker-chapter"));
-      if (!Number.isNaN(next) && next !== moneyTicker.chapterIndex) {
-        const wasPlaying = moneyTicker.playing;
-        stopMoneyTickerPlayback();
-        loadTickerChapter(next);
-        if (wasPlaying) startMoneyTickerPlayback({ fromStart: true });
-      }
-      return;
-    }
     const speedBtn = event.target.closest("[data-ticker-speed]");
     if (speedBtn) {
       const speed = Number(speedBtn.getAttribute("data-ticker-speed"));
@@ -3377,15 +3234,6 @@ function bindMoneyTickerControls() {
       }
       moneyTicker.autoplayDone = true;
       const atEnd = (moneyTicker.progress || 0) >= moneyTicker.frames.length - 1 - 0.001;
-      if (atEnd && moneyTickerUsesChapters()) {
-        if (moneyTicker.chapterIndex < moneyTicker.chapters.length - 1) {
-          loadTickerChapter(moneyTicker.chapterIndex + 1);
-        } else {
-          loadTickerChapter(0);
-        }
-        startMoneyTickerPlayback({ fromStart: true });
-        return;
-      }
       startMoneyTickerPlayback({ fromStart: atEnd });
     }
   });
@@ -3431,14 +3279,9 @@ function mountMoneyTicker(season, opts) {
   );
   moneyTicker.tribePutIn = roundMoney(moneyTicker.sleevePutIn * livingPerTribe);
   const keepEnd = opts && opts.keepEnd;
-  moneyTicker.chapters = moneyTicker.range === "season" ? buildTickerChapters(season) : [];
+  moneyTicker.chapters = [];
   moneyTicker.chapterIndex = 0;
-  if (moneyTicker.chapters.length) {
-    const homeStart = homeMode && !keepEnd;
-    setTickerChapter(homeStart ? 0 : moneyTicker.chapters.length - 1, { atEnd: !homeStart });
-  } else {
-    moneyTicker.frames = buildTickerFrames(season, moneyTicker.range);
-  }
+  moneyTicker.frames = buildTickerFrames(season, moneyTicker.range);
   if (!moneyTicker.frames.length) {
     root.innerHTML = "";
     root.hidden = true;
@@ -3486,24 +3329,9 @@ function mountMoneyTicker(season, opts) {
     })
     .join("");
 
-  const chapterTabs =
-    moneyTickerUsesChapters() && moneyTicker.chapters.length > 1
-      ? `<div class="money-ticker-chapters" role="tablist" aria-label="Episode">
-        ${moneyTicker.chapters
-          .map((ch, i) => {
-            const on = i === moneyTicker.chapterIndex;
-            const label = (ch.episode && ch.episode.title) || `Episode ${ch.episode && ch.episode.number}`;
-            return `<button type="button" role="tab" data-ticker-chapter="${i}" aria-selected="${on ? "true" : "false"}">${escapeHtml(label)}</button>`;
-          })
-          .join("")}
-      </div>`
-      : "";
-
-  const givenNow = islandGivenUsd(season);
-  const givenLede = typeof givenNow === "number" ? potMoney(givenNow) : "$240.09";
   const lede = homeMode
     ? "See how each tribe and contestant did in the Episode."
-    : `Watch the island, the tribes, or every contestant sleeve. Monday through Friday. Voted-out players drop after tribal. Season plays one episode at a time. Episode 2 moves the bar to ${givenLede}.`;
+    : "Watch the island, the tribes, or every contestant sleeve as week %. Monday through Friday. Voted-out players drop after tribal. Season plays every episode on one percentage tape.";
 
   /* Home puts Replay trailer under the tagline; episode keeps the books kicker. */
   const tickerHead = homeMode
@@ -3519,7 +3347,6 @@ function mountMoneyTicker(season, opts) {
       <div class="money-ticker-range" role="tablist" aria-label="Time range">
         ${rangeTabs}
       </div>
-      ${chapterTabs}
       <div class="money-ticker-diagrams" role="tablist" aria-label="Diagram">
         ${diagramTabs}
       </div>
@@ -3539,7 +3366,7 @@ function mountMoneyTicker(season, opts) {
     </div>
     <ul class="money-ticker-legend">${moneyTickerLegendHtml(season, moneyTicker.frames)}</ul>
     <div class="money-ticker-foot">
-      <p class="money-ticker-live" data-ticker-live>${escapeHtml(potMoney(moneyTicker.frames[moneyTicker.index].total))}</p>
+      <p class="money-ticker-live" data-ticker-live>${escapeHtml(tickerAxisPct(moneyTicker.frames[moneyTicker.index].total))}</p>
       <p class="money-ticker-chg" data-ticker-live-chg></p>
     </div>`;
 

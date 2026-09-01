@@ -82,29 +82,24 @@ if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")
   throw new Error("app.js missing money ticker playback (mount + put-in dotted line)");
 }
 if (
-  !appJs.includes("function islandHostAddUsd") ||
-  !appJs.includes("money-ticker-host-add") ||
-  !appJs.includes("data-ticker-guide") ||
-  !appJs.includes("host-add")
+  !appJs.includes("function tickerAxisPct") ||
+  !appJs.includes("function tickerPctScale") ||
+  !appJs.includes("function tickerEvenGuide") ||
+  !appJs.includes("function bookWeekPctFromSnap")
 ) {
-  throw new Error("app.js island diagram must draw the Episode 2 host +$110 given line");
+  throw new Error("app.js money ticker must plot week % on a percentage y-axis");
 }
-if (!appJs.includes("E2 host +$") && !appJs.includes("host +$")) {
-  throw new Error("app.js host-add line must label the Episode 2 pot top-up");
+if (!appJs.includes('lineLabel: "even"') || !appJs.includes('labelClass: "is-putin"') || !appJs.includes('label: "0%"')) {
+  throw new Error("app.js money ticker must draw a 0% even line, not a money put-in bar");
 }
-if (!appJs.includes('lineLabel: putInLabel') || !appJs.includes('labelClass: "is-putin"')) {
-  throw new Error("app.js island diagram must label both the $120 in line and the host-add line");
+if (appJs.includes("function buildTickerChapters") || appJs.includes("data-ticker-chapter") || appJs.includes("function advanceTickerChapter")) {
+  throw new Error("app.js season ticker must play one combined percentage tape, not episode chapters");
 }
-if (
-  !appJs.includes("function buildTickerChapters") ||
-  !appJs.includes("function loadTickerChapter") ||
-  !appJs.includes("function advanceTickerChapter") ||
-  !appJs.includes("data-ticker-chapter")
-) {
-  throw new Error("app.js season ticker must play each episode graph one at a time");
+if (!appJs.includes("Season plays every episode on one percentage tape") || !appJs.includes("as week %")) {
+  throw new Error("app.js must say Season plays every episode on one percentage tape");
 }
-if (!appJs.includes("Season plays one episode at a time") || !appJs.includes("moves the bar to ${givenLede}")) {
-  throw new Error("app.js must say Season plays one episode graph and moves the bar to the live given total");
+if (appJs.includes("money-ticker-host-add") && appJs.includes("Island pot over recorded marks. Both dotted lines stay on")) {
+  throw new Error("app.js island diagram must not plot host-add money bars on the percentage axis");
 }
 if (!appJs.includes('MONEY_TICKER_RANGES = ["week", "season"]') &&
   (!appJs.includes('data-ticker-range="week"') || !appJs.includes('data-ticker-range="season"'))) {
@@ -216,6 +211,64 @@ const seasonAxis = axisHelpers.moneyTickerWeekdayTicks(
 ).map((tick) => tick.label);
 if (seasonAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Friday") {
   throw new Error("Season diagram should still name Mon–Fri when one trading week is on tape, got " + seasonAxis.join(" | "));
+}
+const twoWeekAxis = axisHelpers.moneyTickerWeekdayTicks(
+  [
+    { at: "2026-08-24T16:06:00Z", axisT: 0 },
+    { at: "2026-08-28T19:14:23Z", axisT: 4 },
+    { at: "2026-08-31T16:00:00Z", axisT: 8 }
+  ],
+  "season"
+).map((tick) => tick.label);
+if (twoWeekAxis.join(" | ") !== "Mon 24 | Fri 28 | Mon 31") {
+  throw new Error("Combined season tape should label each trading day, got " + twoWeekAxis.join(" | "));
+}
+
+const pctHelpStart = appJs.indexOf("function tickerAxisPct");
+const pctHelpEnd = appJs.indexOf("function moneyTickerAssignAxis");
+if (!(pctHelpStart > -1 && pctHelpEnd > pctHelpStart)) {
+  throw new Error("app.js missing tickerAxisPct / bookWeekPctFromSnap");
+}
+const pctHelpers = new Function(`
+  function pct(n) {
+    if (typeof n !== "number" || Number.isNaN(n)) return "—";
+    const sign = n > 0 ? "+" : "";
+    return sign + n.toFixed(2) + "%";
+  }
+  ${appJs.slice(pctHelpStart, pctHelpEnd)}
+  return { tickerAxisPct, bookWeekPctFromSnap };
+`)();
+if (pctHelpers.tickerAxisPct(0) !== "0%") {
+  throw new Error("tickerAxisPct(0) should be 0%, got " + pctHelpers.tickerAxisPct(0));
+}
+if (pctHelpers.tickerAxisPct(-2.16) !== "-2.16%") {
+  throw new Error("tickerAxisPct should keep signed percentages, got " + pctHelpers.tickerAxisPct(-2.16));
+}
+if (pctHelpers.tickerAxisPct(1.27) !== "+1.27%") {
+  throw new Error("tickerAxisPct should prefix plus on gains, got " + pctHelpers.tickerAxisPct(1.27));
+}
+if (pctHelpers.bookWeekPctFromSnap({ weekPct: 1.27, bookUsd: 24.278 }) !== 1.27) {
+  throw new Error("bookWeekPctFromSnap must read the ledger weekPct, not a money amount");
+}
+if (pctHelpers.bookWeekPctFromSnap({ bookUsd: 10 }) != null) {
+  throw new Error("bookWeekPctFromSnap must not invent a percentage from bookUsd");
+}
+
+const scaleStart = appJs.indexOf("function tickerPctScale");
+const scaleEnd = appJs.indexOf("function moneyTickerDiagramSeries");
+if (!(scaleStart > -1 && scaleEnd > scaleStart)) {
+  throw new Error("app.js missing tickerPctScale");
+}
+const scaleHelpers = new Function(`
+  ${appJs.slice(scaleStart, scaleEnd)}
+  return { tickerPctScale, tickerEvenGuide };
+`)();
+const scale = scaleHelpers.tickerPctScale([-5.18, 1.27], 1.2);
+if (!(scale.min < -5.18 && scale.max > 1.27 && scale.min < 0 && scale.max > 0)) {
+  throw new Error("tickerPctScale must keep 0% on the y-axis and pad the tape, got " + JSON.stringify(scale));
+}
+if (scaleHelpers.tickerEvenGuide().value !== 0 || scaleHelpers.tickerEvenGuide().label !== "0%") {
+  throw new Error("tickerEvenGuide must be the 0% even line");
 }
 
 const mondayTape = [
@@ -335,24 +388,6 @@ const e2ChapterSnaps = startSlice.snapshotsFromEpisodeStart(grouped[1].snaps, {
 if (e2ChapterSnaps[0].id !== "s1e02-cash-add" || e2ChapterSnaps.some((s) => s.id === "s1e02-carry")) {
   throw new Error("Episode 2 chapter must start at the cash-add so every living book already has the extra $10");
 }
-const putInStart = appJs.indexOf("function moneyTickerChapterPutIn");
-const putInEnd = appJs.indexOf("function setTickerChapter");
-if (!(putInStart > -1 && putInEnd > putInStart)) {
-  throw new Error("app.js missing moneyTickerChapterPutIn");
-}
-const chapterPutIn = new Function(`
-  ${appJs.slice(givenStart, givenEnd)}
-  ${appJs.slice(hostStart, hostEnd)}
-  ${appJs.slice(putInStart, putInEnd)}
-  return { moneyTickerChapterPutIn };
-`)();
-if (chapterPutIn.moneyTickerChapterPutIn(seasonSource, { number: 1 }) !== 120) {
-  throw new Error("Episode 1 chapter bar should stay $120");
-}
-if (chapterPutIn.moneyTickerChapterPutIn(seasonSource, { number: 2 }) !== 240.09) {
-  throw new Error("Episode 2 chapter bar should move to $240.09 given");
-}
-
 if (
   !appJs.includes("function tickerIsEpisodeTwo") ||
   !appJs.includes("function tickerSleevePutIn") ||
@@ -410,8 +445,8 @@ if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "week") !== 20) {
 if (tickerHelpers.tickerSleevePutIn(e2Season, e2Ep, "season") !== 20) {
   throw new Error("Episode 2 season sleeves must start at $20 once the extra $10 is on the books");
 }
-if (!appJs.includes("fundedBar") || !appJs.includes('moneyTicker.range === "week"')) {
-  throw new Error("Episode 2 week island must use the funded given bar, not the $120 open");
+if (!appJs.includes('moneyTicker.range === "week"') || !appJs.includes("snapshotsInTickerRange")) {
+  throw new Error("Episode 2 week ticker must still filter the week tape from the cash-add");
 }
 if (tickerHelpers.tickerSleevePutIn(e2Season, e1Ep, "week") !== 10) {
   throw new Error("Episode 1 week sleeves must stay $10");
@@ -464,8 +499,8 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
   throw new Error("episode-campfire.js must stamp data-slot on ping buttons for mobile layout");
 }
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
-if (!stylesCss.includes(".money-ticker-host-add") || !stylesCss.includes(".money-ticker-guide-label")) {
-  throw new Error("styles.css missing Episode 2 host-add reference line");
+if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
+  throw new Error("styles.css missing the even / 0% reference line");
 }
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
