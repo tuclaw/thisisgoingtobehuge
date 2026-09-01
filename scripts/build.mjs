@@ -494,10 +494,10 @@ function renderEpisodePage(episode, season, base) {
     ${focusBlock}<article class="beat beat-gold" id="latest-books">
       <p class="section-kicker">${escapeHtml(episode.weekBoard.kicker)}</p>
       <h2>${escapeHtml(episode.weekBoard.title)}</h2>
-      <p>${escapeHtml(episode.weekBoard.lede)}</p>
-      <div class="preseason-banner" id="season-banner">${escapeHtml(season.statusLabel || "")}</div>
+      ${episode.weekBoard.lede ? `<p>${escapeHtml(episode.weekBoard.lede)}</p>` : ""}
+      ${episode.weekBoard.lede ? `<div class="preseason-banner" id="season-banner">${escapeHtml(season.statusLabel || "")}</div>` : ""}
       <div class="tribe-totals" id="episode-tribe-totals"></div>
-      <p class="holdings-kicker" id="holdings-kicker">${escapeHtml(episode.weekBoard.lede)}</p>
+      ${episode.weekBoard.lede ? `<p class="holdings-kicker" id="holdings-kicker">${escapeHtml(episode.weekBoard.lede)}</p>` : ""}
       <div class="holdings" id="episode-holdings"></div>
       <p class="json-miss hidden" id="json-miss"></p>
     </article>

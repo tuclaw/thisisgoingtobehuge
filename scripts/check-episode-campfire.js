@@ -64,6 +64,12 @@ if (episode1Copy.heroNote !== "Stay a while and listen") {
 if (episode2Copy.heroNote) {
   throw new Error("Episode 2 must not print a hero listen line");
 }
+if (episode2Copy.weekBoard && episode2Copy.weekBoard.lede) {
+  throw new Error("Episode 2 must not print week-board lede, status banner, or ranked-by-week kicker");
+}
+if (!episodeHtml.includes("weekBoard.lede") || !episodeHtml.includes("holdings-kicker") || !episodeHtml.includes("season-banner")) {
+  throw new Error("episode renderer must still support week-board lede, banner, and holdings kicker when an episode has copy");
+}
 if (!episodeHtml.includes('id="week-board"')) {
   throw new Error("episode renderer lost week-board structure below landing");
 }
@@ -106,8 +112,8 @@ if (!appJs.includes('lineLabel: "even"') || !appJs.includes('labelClass: "is-put
 if (appJs.includes("function buildTickerChapters") || appJs.includes("data-ticker-chapter") || appJs.includes("function advanceTickerChapter")) {
   throw new Error("app.js season ticker must play one combined percentage tape, not episode chapters");
 }
-if (!appJs.includes("Season plays every episode on one percentage tape") || !appJs.includes("as week %")) {
-  throw new Error("app.js must say Season plays every episode on one percentage tape");
+if (appJs.includes("Season plays every episode on one percentage tape") || appJs.includes("Watch the island, the tribes")) {
+  throw new Error("episode money ticker must not print Replay the books lede copy");
 }
 if (appJs.includes("money-ticker-host-add") && appJs.includes("Island pot over recorded marks. Both dotted lines stay on")) {
   throw new Error("app.js island diagram must not plot host-add money bars on the percentage axis");
