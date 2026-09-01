@@ -2082,12 +2082,22 @@ function survivorLivingAt(season, survivor, iso) {
 
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
-  const n = list.length;
-  /* Tape order, not calendar slots. Same-day marks must travel the plot.
-     Axis ticks come from days actually on the tape, not a painted Mon–Fri. */
-  moneyTicker.axisMax = Math.max(1, n - 1);
+  const times = list.map((frame) => Date.parse(frame && frame.at));
+  const valid = times.filter((t) => !Number.isNaN(t));
+  const tMin = valid.length ? Math.min.apply(null, valid) : 0;
+  const tMax = valid.length ? Math.max.apply(null, valid) : 0;
+  const span = tMax - tMin;
+  /* Clock time, not tape index or weekday slots. Playhead stamp and x share this scale. */
+  moneyTicker.axisMax = 1;
+  moneyTicker.tMin = tMin;
+  moneyTicker.tMax = tMax;
   list.forEach((frame, i) => {
-    frame.axisT = n < 2 ? 0 : i;
+    const t = times[i];
+    if (Number.isNaN(t) || span <= 0) {
+      frame.axisT = list.length < 2 ? 0 : i / Math.max(1, list.length - 1);
+      return;
+    }
+    frame.axisT = (t - tMin) / span;
   });
 }
 
@@ -2133,6 +2143,26 @@ function moneyTickerLiveNowX(frames, range) {
   return moneyTickerXFromAxisT(lastT);
 }
 
+function pacificClockLabel(iso) {
+  if (!iso) return "";
+  try {
+    const d = iso instanceof Date ? iso : new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  } catch {
+    return "";
+  }
+}
+
+function pacificClockShort(iso) {
+  const label = pacificClockLabel(iso);
+  return label.replace(/\s*[AP]M$/i, "").trim();
+}
+
 function moneyTickerFallbackWeekdayTicks() {
   return MONEY_TICKER_WEEKDAYS.map((day, i) => ({
     x: moneyTickerXFromAxisT(i + 0.5, 5),
@@ -2155,13 +2185,17 @@ function moneyTickerTapeDays(frames) {
         month: parts.month,
         key: parts.key,
         startT: t,
-        endT: t
+        endT: t,
+        startAt: frame.at,
+        endAt: frame.at
       };
       byKey.set(parts.key, day);
       days.push(day);
       return;
     }
-    byKey.get(parts.key).endT = t;
+    const day = byKey.get(parts.key);
+    day.endT = t;
+    day.endAt = frame.at;
   });
   const trading = days.filter(
     (day) => MONEY_TICKER_WEEKDAY_SLOT[day.weekday] != null && day.weekday !== "Sat" && day.weekday !== "Sun"
@@ -2169,18 +2203,53 @@ function moneyTickerTapeDays(frames) {
   return trading.length ? trading : days;
 }
 
+function moneyTickerThinMarks(marks, maxN) {
+  const list = marks || [];
+  const cap = Math.max(2, maxN || 5);
+  if (list.length <= cap) return list;
+  const out = [list[0]];
+  const inner = cap - 2;
+  for (let i = 1; i <= inner; i += 1) {
+    const idx = Math.round((i * (list.length - 1)) / (inner + 1));
+    if (idx > 0 && idx < list.length - 1 && out[out.length - 1] !== list[idx]) out.push(list[idx]);
+  }
+  out.push(list[list.length - 1]);
+  return out;
+}
+
+function moneyTickerClockTicks(frames) {
+  const seen = new Set();
+  const marks = [];
+  (frames || []).forEach((frame, i) => {
+    const parts = pacificDateParts(frame && frame.at);
+    const clock = pacificClockLabel(frame && frame.at);
+    if (!clock) return;
+    const key = `${parts ? parts.key : ""}|${clock}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const axisT = typeof frame.axisT === "number" ? frame.axisT : i;
+    marks.push({
+      x: moneyTickerXFromAxisT(axisT),
+      label: clock,
+      weekday: pacificClockShort(frame.at) || clock,
+      at: frame.at
+    });
+  });
+  return moneyTickerThinMarks(marks, 5);
+}
+
 function moneyTickerWeekdayTicks(frames, range) {
   const use = moneyTickerTapeDays(frames);
   if (!use.length) return moneyTickerFallbackWeekdayTicks();
+  if (use.length === 1) return moneyTickerClockTicks(frames);
   const complete =
     use.length === 5 && MONEY_TICKER_WEEKDAYS.every((item, i) => use[i] && use[i].weekday === item.key);
-  const axisMax = moneyTicker.axisMax || Math.max(1, (frames || []).length - 1);
-  return use.map((day, i) => {
+  const axisMax = moneyTicker.axisMax || 1;
+  return use.map((day) => {
     const named = MONEY_TICKER_WEEKDAYS.find((item) => item.key === day.weekday);
     const midT = (Number(day.startT) + Number(day.endT)) / 2;
-    const x = complete ? moneyTickerXFromAxisT(i + 0.5, 5) : moneyTickerXFromAxisT(midT, axisMax);
     return {
-      x,
+      x: moneyTickerXFromAxisT(midT, axisMax),
       label: complete && named ? named.label : `${named ? named.label : day.weekday} ${day.month} ${day.day}`,
       weekday: complete ? day.weekday : `${day.weekday} ${day.day}`
     };

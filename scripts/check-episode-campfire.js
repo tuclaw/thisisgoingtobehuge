@@ -149,12 +149,14 @@ if (!appJs.includes("money-ticker-palm")) {
 if (
   !appJs.includes("function moneyTickerWeekdayTicks") ||
   !appJs.includes("function moneyTickerTapeDays") ||
+  !appJs.includes("function moneyTickerClockTicks") ||
+  !appJs.includes("function pacificClockLabel") ||
   !appJs.includes("data-ticker-x-weekday") ||
   !appJs.includes('label: "Monday"') ||
   !appJs.includes("money-ticker-day-full") ||
   !appJs.includes("money-ticker-day-short")
 ) {
-  throw new Error("app.js money ticker x-axis must mark days actually on the episode tape");
+  throw new Error("app.js money ticker x-axis must mark the tape clock so playhead time matches the plot");
 }
 if (appJs.includes("function moneyTickerAxisRangeLabels") || appJs.includes("data-ticker-x-range")) {
   throw new Error("app.js money ticker x-axis must use weekday points, not date-range labels");
@@ -166,7 +168,10 @@ if (!appJs.includes("function moneyTickerLiveNowX") || !appJs.includes("data-tic
   throw new Error("app.js money ticker must draw a live vertical line for the current point in the week");
 }
 if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
-  throw new Error("app.js must space ticker marks by tape order so same-day frames travel, not calendar weekday slots");
+  throw new Error("app.js must space ticker marks by clock time so the playhead matches the x-axis, not weekday slots");
+}
+if (appJs.includes("frame.axisT = n < 2 ? 0 : i") && !appJs.includes("frame.axisT = (t - tMin) / span")) {
+  throw new Error("app.js must map ticker x from mark timestamps, not tape index");
 }
 
 const axisStart = appJs.indexOf("function pacificDateParts");
@@ -183,6 +188,8 @@ const axisHelpers = new Function(`
     episodeWeekBounds,
     moneyTickerWeekdayTicks,
     moneyTickerTapeDays,
+    moneyTickerClockTicks,
+    pacificClockLabel,
     moneyTickerAssignAxis,
     moneyTickerXFromAxisT,
     survivorBootAtMs,
@@ -232,13 +239,10 @@ if (fullWeekAxis.join(" | ") !== "Monday | Tuesday | Wednesday | Thursday | Frid
   throw new Error("Complete week tape should still name Mon–Fri, got " + fullWeekAxis.join(" | "));
 }
 const fullWeekTicks = axisHelpers.moneyTickerWeekdayTicks(fullWeekTape, "week");
-const expectedFridayX = axisHelpers.moneyTickerXFromAxisT(4.5, 5);
+const expectedFridayX = axisHelpers.moneyTickerXFromAxisT(fullWeekTape[4].axisT);
 if (Math.abs(fullWeekTicks[4].x - expectedFridayX) > 1) {
   throw new Error(
-    "Complete week Friday tick must stay on the equally spaced Mon–Fri axis, got " +
-      fullWeekTicks[4].x +
-      " vs " +
-      expectedFridayX
+    "Friday tick must sit on Friday's clock, got " + fullWeekTicks[4].x + " vs " + expectedFridayX
   );
 }
 
@@ -249,13 +253,20 @@ const mondayTape = [
   { at: "2026-08-31T19:36:30Z" }
 ];
 axisHelpers.moneyTickerAssignAxis(mondayTape, "week");
-if (mondayTape.map((frame) => frame.axisT).join(",") !== "0,1,2,3") {
+if (mondayTape[0].axisT !== 0 || mondayTape[3].axisT !== 1) {
   throw new Error(
-    "Week tape must space same-day marks across the plot, got " + mondayTape.map((frame) => frame.axisT).join(",")
+    "Monday tape must pin first/last marks to the clock ends, got " + mondayTape.map((frame) => frame.axisT).join(",")
   );
 }
-if (axisHelpers.axisMax() !== 3) {
-  throw new Error("Monday-only week axisMax should be last-frame index 3, got " + axisHelpers.axisMax());
+const midHour = Date.parse("2026-08-31T17:35:00Z");
+const t0 = Date.parse(mondayTape[0].at);
+const t1 = Date.parse(mondayTape[3].at);
+const expectedMidT = (midHour - t0) / (t1 - t0);
+if (Math.abs(mondayTape[2].axisT - expectedMidT) > 0.001) {
+  throw new Error("Monday mid mark must sit on its clock, axisT " + mondayTape[2].axisT + " vs " + expectedMidT);
+}
+if (axisHelpers.axisMax() !== 1) {
+  throw new Error("Time axisMax should be 1, got " + axisHelpers.axisMax());
 }
 const mondaySpan =
   axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT) - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT);
@@ -263,31 +274,30 @@ if (mondaySpan < 500) {
   throw new Error("Monday-only week marks must travel most of the plot, span was " + mondaySpan.toFixed(1));
 }
 const mondayWeekTicks = axisHelpers.moneyTickerWeekdayTicks(mondayTape, "week");
-if (mondayWeekTicks.map((tick) => tick.label).join(" | ") !== "Monday Aug 31") {
+const mondayClocks = mondayTape.map((frame) => axisHelpers.pacificClockLabel(frame.at));
+if (mondayWeekTicks.map((tick) => tick.label).join(" | ") !== mondayClocks.join(" | ")) {
   throw new Error(
-    "Episode 2 week axis must name the Monday on tape, not a fake Tue–Fri, got " +
-      mondayWeekTicks.map((tick) => tick.label).join(" | ")
+    "Monday-only week axis must mark each print's clock, got " +
+      mondayWeekTicks.map((tick) => tick.label).join(" | ") +
+      " vs " +
+      mondayClocks.join(" | ")
   );
 }
-if (mondayWeekTicks.map((tick) => tick.weekday).join(" | ") !== "Mon 31") {
+if (mondayWeekTicks.some((tick) => /Tue|Wed|Thu|Fri/.test(tick.label + " " + tick.weekday))) {
+  throw new Error("Monday-only week axis must not invent Tue–Fri");
+}
+const lastTick = mondayWeekTicks[mondayWeekTicks.length - 1];
+const lastX = axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT);
+if (!lastTick || Math.abs(lastTick.x - lastX) > 1) {
   throw new Error(
-    "Episode 2 week axis short label must be Mon 31, got " + mondayWeekTicks.map((tick) => tick.weekday).join(" | ")
+    "Playhead at last-hour must sit on the last clock tick, tick x " +
+      (lastTick && lastTick.x) +
+      " vs frame x " +
+      lastX
   );
 }
-const mondayTickX = mondayWeekTicks[0] && mondayWeekTicks[0].x;
-const mondayMidX =
-  (axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT) + axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT)) / 2;
-if (!(mondayTickX > mondayMidX - 8 && mondayTickX < mondayMidX + 8)) {
-  throw new Error(
-    "Monday-only week tick must sit on the Monday tape, not a calendar Mon slot, x was " +
-      String(mondayTickX) +
-      " vs mid " +
-      mondayMidX.toFixed(1)
-  );
-}
-const paintedFriday = axisHelpers.moneyTickerXFromAxisT(4.5, 5);
-if (mondayTickX > paintedFriday - 80) {
-  throw new Error("Monday-only week tick must not sit under a painted Friday");
+if (Math.abs(mondayWeekTicks[0].x - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT)) > 1) {
+  throw new Error("First Monday print must sit on the first clock tick");
 }
 
 const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };
