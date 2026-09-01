@@ -764,6 +764,11 @@ function councilTorchRowHtml(season, entry) {
 }
 
 
+function hover3dWrap(innerHtml) {
+  const zones = Array.from({ length: 8 }, () => '<span class="hover-3d-zone" aria-hidden="true"></span>').join("");
+  return `<span class="hover-3d-face">${innerHtml}</span>${zones}`;
+}
+
 function renderFaces(season) {
   const grid = document.getElementById("face-grid");
   if (!grid) return;
@@ -782,14 +787,14 @@ function renderFaces(season) {
             globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
               ? LabLogos.labMarkHtml({ slug: slug, className: "face-lab-mark" })
               : "";
-          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
+          return `<a class="face-card hover-3d ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">${hover3dWrap(`
         <span class="face-photo">${face}</span>
         <span class="face-id">
           ${mark ? `<span class="face-lab">${mark}</span>` : ""}
           <h3 class="face-name">${escapeHtml(model)}</h3>
         </span>
         <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
-      </a>`;
+      `)}</a>`;
         })
         .join("");
       const buff = tribe.buff ? ` · ${escapeHtml(tribe.buff)}` : "";
@@ -3671,7 +3676,7 @@ function wrapTribalSpoiler(innerHtml, options) {
   const srLabel = opts.srLabel || "Spoiler: tribal results. Click to reveal the vote.";
   return `<div class="tribal-spoiler">
     <div class="tribal-spoiler-result" id="${escapeHtml(resultId)}" aria-hidden="true">${innerHtml}</div>
-    <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">
+    <button type="button" class="tribal-spoiler-cover hover-3d" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">${hover3dWrap(`
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
       <span class="tribal-spoiler-cover-fallback">
         <span class="spoiler-kicker">${escapeHtml(kicker)}</span>
@@ -3679,7 +3684,7 @@ function wrapTribalSpoiler(innerHtml, options) {
         <span class="spoiler-copy">${escapeHtml(copy)}</span>
       </span>
       <span class="visually-hidden">${escapeHtml(srLabel)}</span>
-    </button>
+    `)}</button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
   </div>`;
 }
