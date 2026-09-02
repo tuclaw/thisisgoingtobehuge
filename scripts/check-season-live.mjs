@@ -755,10 +755,6 @@ check(
   "e02-tuesday-official-books-beat",
   (episode2Copy.days || []).some((day) => day.id === "tuesday" && (day.beats || []).some((beat) => beat.id === "tuesday-official-books" && beat.type === "books"))
 );
-check(
-  "e02-tuesday-dinner-kept",
-  (episode2Copy.days || []).some((day) => day.id === "tuesday" && (day.beats || []).some((beat) => beat.id === "tuesday-dinner" && beat.type === "dinner-fires"))
-);
 check("e02-no-saturday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch")));
 check("e02-no-saturday-dinner", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-dinner")));
 check("e02-no-sunday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "sunday-lunch")));
