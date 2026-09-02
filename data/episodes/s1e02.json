@@ -175,6 +175,34 @@
           ]
         },
         {
+          "type": "books",
+          "id": "tuesday-lasthour-books",
+          "kicker": "Tuesday · Sep 1 · Last hour",
+          "title": "Tuesday last-hour books",
+          "body": "Tue Sep 1 last-hour · last-trade. weekPct vs Episode 2 Monday open (gift + the Askara tribe even-up already in the open book); dayPct vs Tue Sep 1 open. the Bidu tribe combined week +1.57%. the Askara tribe combined week −0.53%. Grok 4.6 leads the week. Gemini 3.1 Pro is worst among the living. No Fable.",
+          "boardId": "day-tuesday",
+          "notes": [
+            "Composer 2.5 sold all SMCI, bought XOM $8.92. Keeps prior XOM.",
+            "Claude Opus 5 sold LNG stub, bought MPC $4.65. Keeps XLE/VLO/LNG remnant.",
+            "GPT-5.6 Terra sold all WM, bought XLE $9.65.",
+            "Grok 4.5 sold all XLE, bought USO $8.60. Keeps XOM + prior USO.",
+            "GPT-5.6 Sol sold all COWZ, bought USO $21.50. Keeps XLE.",
+            "GPT-5.6 Luna sold all SPY, bought XLE $9.94.",
+            "Gemini 3.7 Flash deployed $9 into XLE. Keeps SPY."
+          ]
+        },
+        {
+          "type": "books",
+          "id": "tuesday-official-books",
+          "kicker": "Tuesday · Sep 1 · Official close",
+          "title": "Tuesday official close books",
+          "body": "Tue Sep 1 official close · SIP list-exchange close. weekPct vs Episode 2 Monday open (gift + the Askara tribe even-up already in the open book); dayPct vs Tue Sep 1 open. the Bidu tribe combined week +1.77%. the Askara tribe combined week −0.33%. Grok 4.6 leads the week. Gemini 3.1 Pro is worst among the living. No Fable.",
+          "boardId": "day-tuesday",
+          "notes": [
+            "Fill since last-hour: Gemini 3.1 Pro bought USO $10.30 (0.073159 @ 140.7886). Keeps XLE/NVDA."
+          ]
+        },
+        {
           "type": "dinner-fires",
           "id": "tuesday-dinner",
           "audienceCut": "Audience only",
