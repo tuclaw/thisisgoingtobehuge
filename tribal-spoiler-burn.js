@@ -164,27 +164,14 @@ void main() {
 
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "#c4a574";
-    ctx.font = '400 15px "Cinzel", "Times New Roman", Times, serif';
-    try {
-      ctx.letterSpacing = "0.28em";
-    } catch (_) {
-      /* letterSpacing unsupported */
-    }
-    ctx.fillText(copy.kicker, TEX_W / 2, TEX_H * 0.3);
-    try {
-      ctx.letterSpacing = "0px";
-    } catch (_) {
-      /* letterSpacing unsupported */
-    }
 
     ctx.fillStyle = "#e8d5b0";
-    ctx.font = '700 28px "Cinzel", "Times New Roman", Times, serif';
-    wrapText(ctx, copy.title, TEX_W / 2, TEX_H * 0.46, TEX_W * 0.78, 34);
+    ctx.font = '700 18px "Cinzel", "Times New Roman", Times, serif';
+    wrapText(ctx, copy.title, TEX_W / 2, TEX_H * 0.7, TEX_W * 0.82, 22);
 
     ctx.fillStyle = "#8a7355";
-    ctx.font = 'italic 17px "IM Fell English", "Palatino Linotype", Palatino, serif';
-    wrapText(ctx, copy.body, TEX_W / 2, TEX_H * 0.74, TEX_W * 0.68, 24);
+    ctx.font = 'italic 16px "IM Fell English", "Palatino Linotype", Palatino, serif';
+    wrapText(ctx, copy.body, TEX_W / 2, TEX_H * 0.86, TEX_W * 0.7, 22);
 
     return c;
   }
