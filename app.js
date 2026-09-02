@@ -3686,7 +3686,7 @@ function wrapTribalSpoiler(innerHtml, options) {
   const opts = options && typeof options === "object" ? options : {};
   const resultId = opts.resultId || "tribal-spoiler-result";
   const kicker = opts.kicker || "Spoiler";
-  const title = opts.title || "Click to Reveal the Vote";
+  const title = opts.title || "Reveal the Vote";
   const copy = opts.copy || "Burn to reveal who goes home.";
   const srLabel = opts.srLabel || "Spoiler: tribal results. Click to reveal the vote.";
   return `<div class="tribal-spoiler">
@@ -3694,10 +3694,12 @@ function wrapTribalSpoiler(innerHtml, options) {
     <button type="button" class="tribal-spoiler-cover" aria-expanded="false" aria-controls="${escapeHtml(resultId)}">
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
       <span class="tribal-spoiler-cover-fallback">
-        <span class="spoiler-kicker">${escapeHtml(kicker)}</span>
+        <span class="spoiler-click-gap" aria-hidden="true"></span>
         <span class="spoiler-title">${escapeHtml(title)}</span>
         <span class="spoiler-copy">${escapeHtml(copy)}</span>
       </span>
+      <span class="spoiler-kicker" aria-hidden="true">${escapeHtml(kicker)}</span>
+      <span class="spoiler-click" aria-hidden="true">CLICK</span>
       <span class="visually-hidden">${escapeHtml(srLabel)}</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>

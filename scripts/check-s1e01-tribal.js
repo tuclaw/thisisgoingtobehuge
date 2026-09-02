@@ -46,6 +46,18 @@ const burn = fs.readFileSync(path.join(root, "tribal-spoiler-burn.js"), "utf8");
 if (!burn.includes("function coverCopyFrom") || !burn.includes("CLICK TO REVEAL THE VOTE")) {
   fail("tribal-spoiler-burn.js must paint cover copy from the card, with the episode default intact");
 }
+if (!app.includes('class="spoiler-click"') || !app.includes(">CLICK<")) {
+  fail("spoiler cover must include a big CLICK cue");
+}
+if (!css.includes(".tribal-spoiler-cover .spoiler-click")) {
+  fail("spoiler CLICK must be styled on the cover");
+}
+if (!css.includes(".tribal-spoiler-cover .spoiler-kicker") || !css.includes("spoiler-click-glow")) {
+  fail("spoiler label must stay on the live cover and CLICK must glow");
+}
+if (burn.includes("copy.click") || /fillText\(\s*copy\.click/.test(burn)) {
+  fail("do not paint a second CLICK on the burn texture");
+}
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
 if (!thursday) fail("thursday fold was removed");
