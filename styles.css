@@ -1239,21 +1239,33 @@ img.portrait.photo {
   width: 100%;
 }
 
-.tribal-spoiler-cover-fallback .spoiler-kicker {
-  font-family: var(--font-display);
-  font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--sand);
+.tribal-spoiler-cover .spoiler-kicker {
+  position: absolute;
+  left: 0.6rem;
+  right: 0.6rem;
+  top: 0.72rem;
+  z-index: 3;
+  display: block;
   margin: 0;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: clamp(0.92rem, 2.8vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  text-align: center;
+  text-shadow:
+    0 0 10px rgba(255, 220, 120, 0.7),
+    0 0 22px rgba(232, 93, 4, 0.45);
 }
 
 .tribal-spoiler-cover .spoiler-click {
   position: absolute;
   left: 0;
   right: 0;
-  top: 44%;
+  top: 48%;
   z-index: 3;
   display: block;
   margin: 0;
@@ -1264,10 +1276,15 @@ img.portrait.photo {
   letter-spacing: 0.14em;
   line-height: 0.88;
   text-transform: uppercase;
-  color: var(--gold-bright);
+  color: #ffe7a0;
   text-align: center;
-  text-shadow: none;
+  text-shadow:
+    0 0 8px rgba(255, 240, 180, 0.95),
+    0 0 22px rgba(240, 193, 75, 0.85),
+    0 0 42px rgba(232, 93, 4, 0.7),
+    0 0 68px rgba(232, 93, 4, 0.35);
   transform: translateY(-50%);
+  animation: spoiler-click-glow 1.55s ease-in-out infinite;
 }
 
 .tribal-spoiler-cover-fallback .spoiler-title {
@@ -1313,7 +1330,9 @@ img.portrait.photo {
     drop-shadow(0 0 56px rgba(255, 50, 0, 0.25));
 }
 
+.tribal-spoiler.is-burning .spoiler-kicker,
 .tribal-spoiler.is-burning .spoiler-click,
+.tribal-spoiler.is-revealed .spoiler-kicker,
 .tribal-spoiler.is-revealed .spoiler-click {
   display: none;
 }
@@ -1337,6 +1356,25 @@ img.portrait.photo {
 @keyframes spoiler-result-in {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes spoiler-click-glow {
+  0%,
+  100% {
+    color: #f6d56a;
+    text-shadow:
+      0 0 8px rgba(255, 236, 170, 0.8),
+      0 0 20px rgba(240, 193, 75, 0.65),
+      0 0 38px rgba(232, 93, 4, 0.45);
+  }
+  50% {
+    color: #fff4c8;
+    text-shadow:
+      0 0 12px rgba(255, 250, 220, 1),
+      0 0 28px rgba(255, 200, 80, 0.95),
+      0 0 52px rgba(232, 93, 4, 0.8),
+      0 0 78px rgba(255, 120, 30, 0.4);
+  }
 }
 
 @keyframes spoiler-cover-glow {
@@ -1443,7 +1481,8 @@ img.portrait.photo {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tribal-spoiler-cover {
+  .tribal-spoiler-cover,
+  .tribal-spoiler-cover .spoiler-click {
     animation: none;
   }
   .tribal-spoiler.is-burning .tribal-spoiler-cover {
@@ -1494,6 +1533,12 @@ img.portrait.photo {
   .tribal-spoiler-cover-fallback {
     gap: 0.12rem;
     padding: 0.85rem 0.75rem;
+  }
+
+  .tribal-spoiler-cover .spoiler-kicker {
+    top: 0.55rem;
+    font-size: clamp(0.82rem, 3.6vw, 1rem);
+    letter-spacing: 0.26em;
   }
 
   .tribal-spoiler-cover .spoiler-click {

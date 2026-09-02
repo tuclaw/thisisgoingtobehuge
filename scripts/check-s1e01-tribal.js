@@ -52,6 +52,9 @@ if (!app.includes('class="spoiler-click"') || !app.includes(">CLICK<")) {
 if (!css.includes(".tribal-spoiler-cover .spoiler-click")) {
   fail("spoiler CLICK must be styled on the cover");
 }
+if (!css.includes(".tribal-spoiler-cover .spoiler-kicker") || !css.includes("spoiler-click-glow")) {
+  fail("spoiler label must stay on the live cover and CLICK must glow");
+}
 if (burn.includes("copy.click") || /fillText\(\s*copy\.click/.test(burn)) {
   fail("do not paint a second CLICK on the burn texture");
 }

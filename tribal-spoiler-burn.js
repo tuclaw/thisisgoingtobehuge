@@ -164,23 +164,10 @@ void main() {
 
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "#c4a574";
-    ctx.font = '400 14px "Cinzel", "Times New Roman", Times, serif';
-    try {
-      ctx.letterSpacing = "0.28em";
-    } catch (_) {
-      /* letterSpacing unsupported */
-    }
-    ctx.fillText(copy.kicker, TEX_W / 2, TEX_H * 0.17);
-    try {
-      ctx.letterSpacing = "0px";
-    } catch (_) {
-      /* letterSpacing unsupported */
-    }
 
     ctx.fillStyle = "#e8d5b0";
     ctx.font = '700 18px "Cinzel", "Times New Roman", Times, serif';
-    wrapText(ctx, copy.title, TEX_W / 2, TEX_H * 0.68, TEX_W * 0.82, 22);
+    wrapText(ctx, copy.title, TEX_W / 2, TEX_H * 0.7, TEX_W * 0.82, 22);
 
     ctx.fillStyle = "#8a7355";
     ctx.font = 'italic 16px "IM Fell English", "Palatino Linotype", Palatino, serif';
