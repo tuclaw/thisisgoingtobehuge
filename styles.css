@@ -1266,12 +1266,9 @@ img.portrait.photo {
   text-transform: uppercase;
   color: var(--gold-bright);
   text-align: center;
-  text-shadow:
-    0 0 28px rgba(232, 93, 4, 0.55),
-    0 0 56px rgba(240, 193, 75, 0.28),
-    0 2px 0 #3a2410;
+  text-shadow: 0 0 36px rgba(232, 93, 4, 0.45);
   transform: translateY(-50%);
-  animation: spoiler-click-pulse 1.35s ease-in-out infinite;
+  animation: spoiler-click-pulse 1.6s ease-in-out infinite;
 }
 
 .tribal-spoiler-cover-fallback .spoiler-title {
@@ -1346,12 +1343,14 @@ img.portrait.photo {
 @keyframes spoiler-click-pulse {
   0%,
   100% {
-    transform: translateY(-50%) scale(1);
+    transform: translateY(-50%);
     opacity: 1;
+    filter: brightness(1);
   }
   50% {
-    transform: translateY(-50%) scale(1.07);
-    opacity: 0.86;
+    transform: translateY(-50%);
+    opacity: 1;
+    filter: brightness(1.18);
   }
 }
 
