@@ -3681,7 +3681,7 @@ function wrapTribalSpoiler(innerHtml, options) {
   const opts = options && typeof options === "object" ? options : {};
   const resultId = opts.resultId || "tribal-spoiler-result";
   const kicker = opts.kicker || "Spoiler";
-  const title = opts.title || "Click to Reveal the Vote";
+  const title = opts.title || "Reveal the Vote";
   const copy = opts.copy || "Burn to reveal who goes home.";
   const srLabel = opts.srLabel || "Spoiler: tribal results. Click to reveal the vote.";
   return `<div class="tribal-spoiler">

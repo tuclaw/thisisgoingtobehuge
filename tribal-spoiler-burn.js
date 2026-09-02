@@ -178,23 +178,6 @@ void main() {
       /* letterSpacing unsupported */
     }
 
-    ctx.fillStyle = "#f0c14b";
-    ctx.font = '700 88px "Cinzel", "Times New Roman", Times, serif';
-    try {
-      ctx.letterSpacing = "0.14em";
-    } catch (_) {
-      /* letterSpacing unsupported */
-    }
-    ctx.shadowColor = "rgba(232, 93, 4, 0.55)";
-    ctx.shadowBlur = 32;
-    ctx.fillText(copy.click, TEX_W / 2, TEX_H * 0.44);
-    ctx.shadowBlur = 0;
-    try {
-      ctx.letterSpacing = "0px";
-    } catch (_) {
-      /* letterSpacing unsupported */
-    }
-
     ctx.fillStyle = "#e8d5b0";
     ctx.font = '700 18px "Cinzel", "Times New Roman", Times, serif';
     wrapText(ctx, copy.title, TEX_W / 2, TEX_H * 0.68, TEX_W * 0.82, 22);
@@ -214,7 +197,6 @@ void main() {
     };
     return {
       kicker: textOf(".spoiler-kicker", "SPOILER").toUpperCase(),
-      click: textOf(".spoiler-click", "CLICK").toUpperCase(),
       title: textOf(".spoiler-title", "CLICK TO REVEAL THE VOTE").toUpperCase(),
       body: textOf(".spoiler-copy", "Burn to reveal who goes home.")
     };

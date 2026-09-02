@@ -49,8 +49,11 @@ if (!burn.includes("function coverCopyFrom") || !burn.includes("CLICK TO REVEAL 
 if (!app.includes('class="spoiler-click"') || !app.includes(">CLICK<")) {
   fail("spoiler cover must include a big CLICK cue");
 }
-if (!css.includes(".tribal-spoiler-cover .spoiler-click") || !burn.includes("copy.click")) {
-  fail("spoiler CLICK must be styled and painted on the burn card");
+if (!css.includes(".tribal-spoiler-cover .spoiler-click")) {
+  fail("spoiler CLICK must be styled on the cover");
+}
+if (burn.includes("copy.click") || /fillText\(\s*copy\.click/.test(burn)) {
+  fail("do not paint a second CLICK on the burn texture");
 }
 
 const thursday = (episode.days || []).find((day) => day.id === "thursday");
