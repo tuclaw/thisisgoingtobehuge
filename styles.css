@@ -1202,6 +1202,7 @@ img.portrait.photo {
   box-shadow:
     inset 0 0 0 1px rgba(212, 160, 23, 0.12),
     0 0 40px rgba(232, 93, 4, 0.08);
+  animation: spoiler-cover-glow 1.8s ease-in-out infinite;
 }
 
 .tribal-spoiler-cover:focus-visible {
@@ -1221,15 +1222,21 @@ img.portrait.photo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  padding: 1.4rem 1.2rem;
+  justify-content: flex-start;
+  gap: 0.2rem;
+  padding: 1.1rem 1rem 1rem;
   text-align: center;
   pointer-events: none;
   background:
     radial-gradient(ellipse at 50% 100%, rgba(232, 93, 4, 0.14), transparent 50%),
     linear-gradient(180deg, #140e0b, #0b0809);
   box-shadow: inset 0 0 0 1px rgba(212, 160, 23, 0.14);
+}
+
+.tribal-spoiler-cover-fallback .spoiler-click-gap {
+  flex: 1 1 4.6rem;
+  min-height: 3.8rem;
+  width: 100%;
 }
 
 .tribal-spoiler-cover-fallback .spoiler-kicker {
@@ -1242,16 +1249,41 @@ img.portrait.photo {
   margin: 0;
 }
 
+.tribal-spoiler-cover .spoiler-click {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44%;
+  z-index: 3;
+  display: block;
+  margin: 0;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 14vw, 5.1rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  text-align: center;
+  text-shadow:
+    0 0 28px rgba(232, 93, 4, 0.55),
+    0 0 56px rgba(240, 193, 75, 0.28),
+    0 2px 0 #3a2410;
+  transform: translateY(-50%);
+  animation: spoiler-click-pulse 1.35s ease-in-out infinite;
+}
+
 .tribal-spoiler-cover-fallback .spoiler-title {
   font-family: var(--font-display);
-  font-size: clamp(1.05rem, 3.2vw, 1.45rem);
+  font-size: clamp(0.78rem, 2.4vw, 0.98rem);
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1.25;
   text-transform: uppercase;
   color: var(--parchment);
   margin: 0;
-  max-width: 15.5rem;
+  max-width: 18rem;
   text-shadow: 0 0 28px rgba(232, 93, 4, 0.2);
 }
 
@@ -1280,8 +1312,14 @@ img.portrait.photo {
 }
 
 .tribal-spoiler.is-burning .tribal-spoiler-cover {
+  animation: none;
   filter: drop-shadow(0 0 28px rgba(255, 120, 0, 0.55))
     drop-shadow(0 0 56px rgba(255, 50, 0, 0.25));
+}
+
+.tribal-spoiler.is-burning .spoiler-click,
+.tribal-spoiler.is-revealed .spoiler-click {
+  display: none;
 }
 
 .tribal-spoiler.is-revealed .tribal-spoiler-cover,
@@ -1303,6 +1341,32 @@ img.portrait.photo {
 @keyframes spoiler-result-in {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes spoiler-click-pulse {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.07);
+    opacity: 0.86;
+  }
+}
+
+@keyframes spoiler-cover-glow {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 1px rgba(212, 160, 23, 0.12),
+      0 0 40px rgba(232, 93, 4, 0.08);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 1px rgba(240, 193, 75, 0.42),
+      0 0 58px rgba(232, 93, 4, 0.32);
+  }
 }
 
 .tribal-vote-list {
@@ -1395,6 +1459,10 @@ img.portrait.photo {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .tribal-spoiler-cover,
+  .tribal-spoiler-cover .spoiler-click {
+    animation: none;
+  }
   .tribal-spoiler.is-burning .tribal-spoiler-cover {
     filter: none;
   }
@@ -1441,14 +1509,19 @@ img.portrait.photo {
   }
 
   .tribal-spoiler-cover-fallback {
-    gap: 0.35rem;
-    padding: 1rem 0.9rem;
+    gap: 0.12rem;
+    padding: 0.85rem 0.75rem;
+  }
+
+  .tribal-spoiler-cover .spoiler-click {
+    font-size: clamp(2.8rem, 18vw, 3.8rem);
+    letter-spacing: 0.1em;
   }
 
   .tribal-spoiler-cover-fallback .spoiler-title {
-    font-size: clamp(0.98rem, 4.4vw, 1.2rem);
+    font-size: clamp(0.72rem, 3.2vw, 0.88rem);
     letter-spacing: 0.05em;
-    max-width: 12.5rem;
+    max-width: 16rem;
   }
 
   .tribal-spoiler-cover-fallback .spoiler-copy {

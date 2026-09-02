@@ -3690,9 +3690,11 @@ function wrapTribalSpoiler(innerHtml, options) {
       <canvas class="tribal-spoiler-canvas" aria-hidden="true"></canvas>
       <span class="tribal-spoiler-cover-fallback">
         <span class="spoiler-kicker">${escapeHtml(kicker)}</span>
+        <span class="spoiler-click-gap" aria-hidden="true"></span>
         <span class="spoiler-title">${escapeHtml(title)}</span>
         <span class="spoiler-copy">${escapeHtml(copy)}</span>
       </span>
+      <span class="spoiler-click" aria-hidden="true">CLICK</span>
       <span class="visually-hidden">${escapeHtml(srLabel)}</span>
     </button>
     <canvas class="tribal-spoiler-particles" aria-hidden="true"></canvas>
