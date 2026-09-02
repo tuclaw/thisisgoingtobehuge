@@ -290,6 +290,16 @@ if (
 ) {
   throw new Error("bot-architecture.html embed SVG must scale to the iframe width");
 }
+const archSource = readFileSync(join(root, "diagrams", "bot-architecture.architecture.json"), "utf8");
+if (/Monitors DMs|campfire \+ DMs|keeps the fire and DMs/.test(html + archify + archSource)) {
+  throw new Error("conversation bot must stay out of DMs so contestant context stays isolated");
+}
+if (!archify.includes("isolated context") || !archSource.includes("isolated context")) {
+  throw new Error("bot diagram must isolate each contestant context");
+}
+if (!html.includes("isolated context") || html.includes("keeps the fire and DMs")) {
+  throw new Error("home diagram lede must say contestant bots keep isolated context");
+}
 if (!css.includes(".archify-embed") || !css.includes("min-height: 28rem")) {
   throw new Error("styles.css missing larger Archify embed");
 }

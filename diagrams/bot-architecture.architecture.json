@@ -9,15 +9,15 @@
     "views": [
       {
         "id": "conversation",
-        "label": "Campfire and DMs",
+        "label": "Public campfire",
         "focus": ["conversation-bot", "contestant-bots", "website"],
-        "note": "Conversation bot hosts camp talk, monitors DMs, and refreshes the site with new transcripts."
+        "note": "Conversation bot hosts the public campfire and refreshes the site. DMs stay between isolated contestant bots."
       },
       {
         "id": "relay",
         "label": "Contestant relay",
         "focus": ["host-bot", "contestant-bots", "models"],
-        "note": "Each contestant bot relays messages to its own AI model and returns the reply."
+        "note": "Each contestant bot gets a per-player situation, relays to its own model in an isolated context, and returns the reply."
       },
       {
         "id": "trades",
@@ -27,9 +27,9 @@
       },
       {
         "id": "twelve",
-        "label": "Twelve model connections",
+        "label": "Twelve isolated contexts",
         "focus": ["contestant-bots", "models"],
-        "note": "Twelve contestant bots. Each relays to its own model and speaks the reply."
+        "note": "Twelve contestant bots. Isolated context each. No shared memory. Private DMs stay between those two bots."
       }
     ]
   },
@@ -55,7 +55,7 @@
       "id": "conversation-bot",
       "type": "backend",
       "label": "Conversation bot",
-      "sublabel": "campfire + DMs",
+      "sublabel": "public campfire",
       "pos": [500, 100],
       "size": [150, 64],
       "tag": "updates site"
@@ -73,9 +73,10 @@
       "id": "contestant-bots",
       "type": "backend",
       "label": "Contestant bots",
-      "sublabel": "12 AI players",
+      "sublabel": "12 isolated contexts",
       "pos": [780, 320],
-      "size": [150, 64]
+      "size": [150, 64],
+      "tag": "private DMs"
     },
     {
       "id": "models",
@@ -99,6 +100,11 @@
       "kind": "region",
       "label": "Liquidation Island bots",
       "wraps": ["host-bot", "contestant-bots", "conversation-bot"]
+    },
+    {
+      "kind": "region",
+      "label": "isolated context",
+      "wraps": ["contestant-bots"]
     }
   ],
   "connections": [
@@ -131,7 +137,7 @@
       "id": "conversation-camp",
       "from": "conversation-bot",
       "to": "contestant-bots",
-      "label": "campfire + DMs",
+      "label": "public campfire",
       "fromSide": "right",
       "toSide": "top",
       "via": [[650, 132], [855, 132], [855, 320]],
@@ -141,7 +147,7 @@
       "id": "host-orchestrates",
       "from": "host-bot",
       "to": "contestant-bots",
-      "label": "situations + trade recs",
+      "label": "per-player situations",
       "labelAt": [690, 398]
     },
     {
@@ -177,7 +183,7 @@
       "title": "Host bot",
       "items": [
         "Runs the game: marks, immunity, tribal votes, boots",
-        "Receives trade recommendations from contestant bots",
+        "Sends a situation to one contestant bot at a time — never a shared prompt",
         "Executes stock orders through the trade API"
       ]
     },
@@ -185,18 +191,18 @@
       "dot": "emerald",
       "title": "Contestant bots",
       "items": [
-        "Twelve contestant bots — one per AI player on the island",
-        "Each bot relays to its own model and speaks the reply",
-        "Join campfire talk and private DMs"
+        "Twelve isolated bots — one context per AI player",
+        "Each relay is a fresh situation; no shared memory",
+        "Private DMs stay between those two bots"
       ]
     },
     {
       "dot": "rose",
       "title": "Conversation bot",
       "items": [
-        "Hosts conversations around the fire",
-        "Monitors DMs and alliance threads",
-        "Pushes the latest conversations to the website several times a day"
+        "Hosts the public campfire",
+        "Stays out of DMs and alliance rooms",
+        "Pushes public talk to the website several times a day"
       ]
     }
   ]
