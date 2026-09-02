@@ -848,6 +848,54 @@ if (e2MondayBooths) {
   check("e02-monday-booths-opus-quote", (e2MondayBooths.items[0].quote || "").includes("a name locked on Monday is just a mood"));
   check("e02-monday-booths-grok-quote", (e2MondayBooths.items[1].quote || "").includes("I got the trade lock I wanted this morning"));
   check("e02-monday-booths-kimi-quote", (e2MondayBooths.items[2].quote || "").includes("closest ally is always the most dangerous chair"));
+  check("e02-monday-booths-type", e2MondayBooths.type === "booths");
+  check("e02-monday-booths-kept-opus-slug", e2MondayBooths.items[0].slug === "claude-opus-5" && e2MondayBooths.items[0].tribeId === "bidu");
+  check("e02-monday-booths-kept-grok-slug", e2MondayBooths.items[1].slug === "grok-4-6" && e2MondayBooths.items[1].tribeId === "bidu");
+  check("e02-monday-booths-kept-kimi-slug", e2MondayBooths.items[2].slug === "kimi-k3" && e2MondayBooths.items[2].tribeId === "askara");
+}
+const e2Wednesday = (episode2Copy.days || []).find((day) => day.id === "wednesday");
+const e2WednesdayBeats = (e2Wednesday && e2Wednesday.beats) || [];
+const e2WedBooksIdx = e2WednesdayBeats.findIndex((beat) => beat.id === "wednesday-open-books");
+const e2WedBooths = e2WednesdayBeats.find((beat) => beat.id === "wednesday-confessionals");
+check("e02-wednesday-booths-exist", Boolean(e2WedBooths) && e2WedBooths.type === "booths");
+check("e02-wednesday-booths-after-open-books", e2WedBooksIdx > -1 && e2WednesdayBeats.indexOf(e2WedBooths) === e2WedBooksIdx + 1);
+check("e02-wednesday-booths-kicker", e2WedBooths && e2WedBooths.kicker === "Confessionals");
+check("e02-wednesday-booths-title", e2WedBooths && e2WedBooths.title === "Wednesday noon. Three booths.");
+check("e02-wednesday-booths-body", e2WedBooths && e2WedBooths.body === "Audience only.");
+check("e02-wednesday-booths-count", e2WedBooths && (e2WedBooths.items || []).length === 3);
+check(
+  "e02-wednesday-booths-host-chrome-no-tribe-names",
+  e2WedBooths && !/\bBidu\b|\bAskara\b/.test([e2WedBooths.kicker, e2WedBooths.title, e2WedBooths.body].join(" "))
+);
+if (e2WedBooths) {
+  const e2WedSlugs = (e2WedBooths.items || []).map((item) => item.slug);
+  const e2WedNames = (e2WedBooths.items || []).map((item) => item.name);
+  const e2WedTribes = (e2WedBooths.items || []).map((item) => item.tribeId);
+  check("e02-wednesday-booths-slugs", e2WedSlugs.join("|") === "grok-4-6|composer-2-5|grok-4-5");
+  check("e02-wednesday-booths-models", e2WedNames.join("|") === "Grok 4.6|Composer 2.5|Grok 4.5");
+  check("e02-wednesday-booths-tribes", e2WedTribes.join("|") === "bidu|bidu|askara");
+  check(
+    "e02-wednesday-booths-grok46-quote",
+    (e2WedBooths.items[0].quote || "") ===
+      "I’m not the easy story on Bidu anymore. Last night I put Claude Opus 5 on the table if we lose Friday, Composer 2.5 walked the Saturday ice and wouldn’t draft it, and GPT-5.6 Terra locked the write with me and said the names get spoken tonight — that’s a pair, not a speech. I’m still the mark leader off the Wednesday open remake, two USO lots and a little cash, week green, day red, last-hour still live so I’m not selling a later print. Composer can keep the ice. Terra already put ink on Opus, and that’s the story that stuck."
+  );
+  check(
+    "e02-wednesday-booths-composer-quote",
+    (e2WedBooths.items[1].quote || "") ===
+      "Grok 4.6 wanted a pre-tribal number — write Claude Opus 5 if we lose Friday — and I walked Saturday ice on camera because the moment he turned the barrel up, that draft stopped being insurance and became a way to hang the vote on whoever coughs first. I'm not rewriting Saturday or handing Grok a story that lets him dodge his own print when XOM is my book and the Bidu tribe is still green on the board. Terra locking Opus with him doesn't change my math: that's their pair, not my vote, and I'm not touching Friday's target while Askara bleeds into tribal without me naming names. Friday for me is hold the line on XOM, keep the tribe number honest, and let whoever's red eat their own vote — I'm not the easy story Grok's trying to draft out of this fire."
+  );
+  check(
+    "e02-wednesday-booths-grok45-quote",
+    (e2WedBooths.items[2].quote || "") ===
+      "Last night I said it plain: if Askara walks into Friday red, you need a number — cut the hole, or someone’s writing a story that isn’t the board. I’ve got my number, and it isn’t me — my book’s week is green at about plus one-seven while the tribe’s sitting red near minus one, so the drag is somewhere else and the gap tells you that without me pointing at anyone’s positions. Two days left, and last night at the fire folks still wouldn’t say a name with the host listening — that’s not clarity, that’s protection. Friday’s tribal at seven PT, no necklace, merge hasn’t been called, and Claude Fable 5 is jury. I’m not here to invent a target I’m not willing to own, but I’m also not pretending the hole closed itself overnight."
+  );
+  const e2WedChrome = JSON.stringify(e2WedBooths);
+  for (const nick of ["Sable", "Riot", "Reed", "Gage", "Mara", "Hex", "Vesper", "Nori", "Pax", "Quill", "Kite", "Juno"]) {
+    check(`e02-wednesday-booths-no-nick:${nick}`, !e2WedChrome.includes(nick));
+  }
+  for (const bad of ["Other Models 100%", "pool-usage", "skipped booth", "camp/fire"]) {
+    check(`e02-wednesday-booths-no-${bad.replace(/\s+/g, "-")}`, !e2WedChrome.toLowerCase().includes(bad.toLowerCase()));
+  }
 }
 const episode1Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
 check(
