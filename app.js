@@ -3526,7 +3526,7 @@ function mountMoneyTicker(season, opts) {
 
   /* Home keeps a short books lede. Episode pages drop the ticker kicker/lede. */
   const tickerHead = homeMode
-    ? `<p class="money-ticker-lede">See how each tribe and contestant did in the Episode.</p>`
+    ? `<p class="money-ticker-lede">See how each tribe and contestant is doing in the live Episode.</p>`
     : "";
 
   root.innerHTML = `

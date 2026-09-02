@@ -324,7 +324,7 @@ if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow
 if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {
   throw new Error("app.js missing home money ticker Season/Island-only tab config");
 }
-if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
+if (!appJs.includes("See how each tribe and contestant is doing in the live Episode.")) {
   throw new Error("app.js missing home money ticker lede copy");
 }
 if (!appJs.includes("tickerHead") || !appJs.includes("homeMode")) {
