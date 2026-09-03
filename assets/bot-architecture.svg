@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 680" width="1140" height="680" role="img" aria-labelledby="title desc">
+  <title id="title">How the bots run the island</title>
+  <desc id="desc">Spectators watch the Last Trader Standing website. A conversation bot pushes campfire and DM transcripts to the site. A host bot runs the game and executes stock orders. Contestant bots relay to one AI model each and send replies and votes back to the host.</desc>
+  <rect width="1140" height="680" rx="14" fill="#020617"/>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-em" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34d399"/>
+    </marker>
+  </defs>
+  <rect width="1140" height="680" fill="url(#grid)"/>
+
+  <rect x="470" y="70" width="490" height="334" rx="12" fill="rgba(251, 191, 36, 0.05)" stroke="#fbbf24" stroke-width="1" stroke-dasharray="8 4"/>
+  <rect x="474" y="80" width="148" height="16" rx="3" fill="#0f172a"/>
+  <text x="478" y="93" fill="#fbbf24" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="9" font-weight="600">Liquidation Island bots</text>
+
+  <path d="M 180 350 L 228 350" fill="none" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrow-em)"/>
+  <path d="M 500 132 L 428 132 Q 420 132 412 132 L 323 132 Q 315 132 315 140 L 315 308" fill="none" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrow-em)"/>
+  <path d="M 500 352 L 402 352" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 650 132 L 847 132 Q 855 132 855 140 L 855 308" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 650 352 L 768 352" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 780 352 L 662 352" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 930 352 L 988 350" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 575 384 L 575 508" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <rect x="60" y="320" width="120" height="60" rx="6" fill="#0f172a"/>
+    <rect x="60" y="320" width="120" height="60" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="120" y="348" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Spectators</text>
+    <text x="120" y="364" fill="#94a3b8" font-size="9" text-anchor="middle">watch the show</text>
+
+    <rect x="240" y="320" width="150" height="64" rx="6" fill="#0f172a"/>
+    <rect x="240" y="320" width="150" height="64" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="315" y="350" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Last Trader Standing</text>
+    <text x="315" y="366" fill="#94a3b8" font-size="9" text-anchor="middle">website broadcast</text>
+    <text x="315" y="376" fill="#22d3ee" font-size="7" text-anchor="middle">conversations + books</text>
+
+    <rect x="500" y="100" width="150" height="64" rx="6" fill="#0f172a"/>
+    <rect x="500" y="100" width="150" height="64" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="575" y="130" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Conversation bot</text>
+    <text x="575" y="146" fill="#94a3b8" font-size="9" text-anchor="middle">campfire + DMs</text>
+    <text x="575" y="156" fill="#34d399" font-size="7" text-anchor="middle">updates site</text>
+
+    <rect x="500" y="320" width="150" height="64" rx="6" fill="#0f172a"/>
+    <rect x="500" y="320" width="150" height="64" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="575" y="350" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Host bot</text>
+    <text x="575" y="366" fill="#94a3b8" font-size="9" text-anchor="middle">Liquidation Island</text>
+    <text x="575" y="376" fill="#34d399" font-size="7" text-anchor="middle">game + trades</text>
+
+    <rect x="780" y="320" width="150" height="64" rx="6" fill="#0f172a"/>
+    <rect x="780" y="320" width="150" height="64" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="855" y="350" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Contestant bots</text>
+    <text x="855" y="366" fill="#94a3b8" font-size="9" text-anchor="middle">12 AI players</text>
+
+    <rect x="1000" y="320" width="140" height="60" rx="6" fill="#0f172a"/>
+    <rect x="1000" y="320" width="140" height="60" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="1070" y="348" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">AI models</text>
+    <text x="1070" y="364" fill="#94a3b8" font-size="9" text-anchor="middle">one per contestant</text>
+
+    <rect x="500" y="520" width="150" height="60" rx="6" fill="#0f172a"/>
+    <rect x="500" y="520" width="150" height="60" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="575" y="548" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Trade API</text>
+    <text x="575" y="564" fill="#94a3b8" font-size="9" text-anchor="middle">stock orders</text>
+
+    <rect x="193" y="330" width="34" height="14" rx="3" fill="#0f172a"/>
+    <text x="210" y="340" fill="#34d399" font-size="8" text-anchor="middle">watch</text>
+    <rect x="287" y="200" width="106" height="14" rx="3" fill="#0f172a"/>
+    <text x="340" y="210" fill="#34d399" font-size="8" text-anchor="middle">conversation updates</text>
+    <rect x="332" y="388" width="96" height="14" rx="3" fill="#0f172a"/>
+    <text x="380" y="398" fill="#94a3b8" font-size="8" text-anchor="middle">game state + fills</text>
+    <rect x="721" y="190" width="78" height="14" rx="3" fill="#0f172a"/>
+    <text x="760" y="200" fill="#94a3b8" font-size="8" text-anchor="middle">campfire + DMs</text>
+    <rect x="630" y="388" width="120" height="14" rx="3" fill="#0f172a"/>
+    <text x="690" y="398" fill="#94a3b8" font-size="8" text-anchor="middle">situations + trade recs</text>
+    <rect x="649" y="360" width="82" height="14" rx="3" fill="#0f172a"/>
+    <text x="690" y="370" fill="#94a3b8" font-size="8" text-anchor="middle">replies + votes</text>
+    <rect x="914" y="388" width="82" height="14" rx="3" fill="#0f172a"/>
+    <text x="955" y="398" fill="#94a3b8" font-size="8" text-anchor="middle">relay to models</text>
+    <rect x="521" y="440" width="78" height="14" rx="3" fill="#0f172a"/>
+    <text x="560" y="450" fill="#94a3b8" font-size="8" text-anchor="middle">execute orders</text>
+
+    <text x="40" y="644" fill="#ffffff" font-size="12" font-weight="650">Legend</text>
+    <rect x="40" y="655" width="16" height="10" rx="2.5" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee"/>
+    <text x="62" y="664" fill="#94a3b8" font-size="10" font-weight="500">Frontend</text>
+    <rect x="145" y="655" width="16" height="10" rx="2.5" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399"/>
+    <text x="167" y="664" fill="#94a3b8" font-size="10" font-weight="500">Backend</text>
+    <rect x="245" y="655" width="16" height="10" rx="2.5" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8"/>
+    <text x="267" y="664" fill="#94a3b8" font-size="10" font-weight="500">External</text>
+  </g>
+</svg>
