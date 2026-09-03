@@ -779,10 +779,16 @@ const e2WedOpenIdx = e2WedBeats.findIndex((beat) => beat.id === "wednesday-open-
 const e2WedLastHourIdx = e2WedBeats.findIndex((beat) => beat.id === "wednesday-lasthour-books");
 const e2WedOfficialIdx = e2WedBeats.findIndex((beat) => beat.id === "wednesday-official-books");
 const e2WedConfIdx = e2WedBeats.findIndex((beat) => beat.id === "wednesday-confessionals");
+const e2WedDinnerIdx = e2WedBeats.findIndex((beat) => beat.id === "wednesday-dinner");
 check("e02-wednesday-lasthour-after-open", e2WedOpenIdx > -1 && e2WedLastHourIdx === e2WedOpenIdx + 1);
 check("e02-wednesday-official-after-lasthour", e2WedLastHourIdx > -1 && e2WedOfficialIdx === e2WedLastHourIdx + 1);
 if (e2WedConfIdx > -1) {
   check("e02-kept-wednesday-confessionals", e2WedConfIdx > e2WedOfficialIdx);
+  if (e2WedDinnerIdx > -1) {
+    check("e02-wednesday-dinner-after-confessionals", e2WedDinnerIdx > e2WedConfIdx);
+  }
+} else if (e2WedDinnerIdx > -1) {
+  check("e02-wednesday-dinner-after-official", e2WedDinnerIdx > e2WedOfficialIdx);
 }
 const e2DayIds = (episode2Copy.days || []).map((day) => day.id);
 check(
@@ -792,6 +798,10 @@ check(
 check(
   "e02-kept-tuesday-dinner",
   (episode2Copy.days || []).some((day) => day.id === "tuesday" && (day.beats || []).some((beat) => beat.id === "tuesday-dinner"))
+);
+check(
+  "e02-kept-wednesday-dinner",
+  (episode2Copy.days || []).some((day) => day.id === "wednesday" && (day.beats || []).some((beat) => beat.id === "wednesday-dinner" && beat.type === "dinner-fires"))
 );
 check(
   "e02-kept-monday-dinner",
