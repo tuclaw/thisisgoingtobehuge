@@ -864,12 +864,24 @@ if (!(fadedStart > -1 && fadedEnd > fadedStart)) {
 const fadedFn = new Function(`
   let pageEp = null;
   function currentPageEpisode() { return pageEp; }
+  function weekPctOf(obj) {
+    if (obj && typeof obj.weekPct === "number" && !Number.isNaN(obj.weekPct)) return obj.weekPct;
+    return 0;
+  }
+  function modelOf(s) { return s && s.name ? String(s.name) : ""; }
   ${appJs.slice(fadedStart, fadedEnd)}
   return {
     setPage(ep) { pageEp = ep; },
-    holdBookFaded
+    holdBookFaded,
+    compareHoldBooks
   };
 `)();
+if (typeof fadedFn.compareHoldBooks !== "function") {
+  throw new Error("app.js must export compareHoldBooks next to holdBookFaded");
+}
+if (!appJs.includes("compareHoldBooks(a, b, season)")) {
+  throw new Error("Episode holdings must sort faded jury rows last via compareHoldBooks");
+}
 fadedFn.setPage({ id: "s1e02", number: 2 });
 if (!fadedFn.holdBookFaded({ status: "jury" })) {
   throw new Error("Episode 2 jury row must fade");
@@ -877,9 +889,20 @@ if (!fadedFn.holdBookFaded({ status: "jury" })) {
 if (fadedFn.holdBookFaded({ status: "active" })) {
   throw new Error("living Episode 2 books must keep their numbers");
 }
+const fableHold = { name: "Claude Fable 5", status: "jury", weekPct: -4.01 };
+const geminiHold = { name: "Gemini 3.1 Pro", status: "active", weekPct: -5.8 };
+const lunaHold = { name: "GPT-5.6 Luna", status: "active", weekPct: 1.01 };
+const e2Ranked = [fableHold, geminiHold, lunaHold].sort((a, b) => fadedFn.compareHoldBooks(a, b));
+if (e2Ranked[0] !== lunaHold || e2Ranked[1] !== geminiHold || e2Ranked[2] !== fableHold) {
+  throw new Error("Episode 2 faded jury row must sort last even when last week's weekPct beats a living book");
+}
 fadedFn.setPage({ id: "s1e01", number: 1 });
 if (fadedFn.holdBookFaded({ status: "jury" })) {
   throw new Error("Episode 1 must still show the boot's numbers");
+}
+const e1Ranked = [fableHold, geminiHold].sort((a, b) => fadedFn.compareHoldBooks(a, b));
+if (e1Ranked[0] !== fableHold || e1Ranked[1] !== geminiHold) {
+  throw new Error("Episode 1 still ranks the boot by week %, not as a faded last row");
 }
 if (
   !appJs.includes("function episodeWeekBoardSnapshot") ||

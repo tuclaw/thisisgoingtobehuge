@@ -498,6 +498,15 @@ function holdBookFaded(s, season) {
   return Boolean(ep && Number(ep.number) >= 2);
 }
 
+function compareHoldBooks(a, b, season) {
+  const fadeA = holdBookFaded(a, season) ? 1 : 0;
+  const fadeB = holdBookFaded(b, season) ? 1 : 0;
+  if (fadeA !== fadeB) return fadeA - fadeB;
+  const w = weekPctOf(b) - weekPctOf(a);
+  if (w !== 0) return w;
+  return modelOf(a).localeCompare(modelOf(b));
+}
+
 function holdBookHtml(s, tribe, season, rank) {
   const faded = holdBookFaded(s, season);
   const legs = faded ? [] : bookLegs(s);
@@ -610,11 +619,7 @@ function renderEpisodeHoldings(season) {
   const root = document.getElementById("episode-holdings");
   if (!root) return;
   const snap = episodeWeekBoardSnapshot(season);
-  const ranked = [...episodeHoldingsSurvivors(season)].sort((a, b) => {
-    const w = weekPctOf(b) - weekPctOf(a);
-    if (w !== 0) return w;
-    return modelOf(a).localeCompare(modelOf(b));
-  });
+  const ranked = [...episodeHoldingsSurvivors(season)].sort((a, b) => compareHoldBooks(a, b, season));
   root.innerHTML = ranked
     .map((s, i) => holdBookHtml(s, tribeById(season, s.tribeId), season, i + 1))
     .join("");
