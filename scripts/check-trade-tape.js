@@ -84,8 +84,9 @@ const board = deriveSeason(source);
 const publicFills = (board.events || []).filter((event) => event && event.type === "fill");
 const sourceFills = (source.events || []).filter((event) => event && event.type === "fill");
 if (!publicFills.length) fail("derived board lost the fill tape");
-if (publicFills.length !== sourceFills.length) {
-  fail("public fill count must match the host tape");
+const publicIds = new Set(publicFills.map((fill) => fill.id));
+for (const fill of sourceFills) {
+  if (!publicIds.has(fill.id)) fail("public board dropped host fill: " + fill.id);
 }
 for (const fill of publicFills) {
   if (fill.orderId != null || fill.qty != null || fill.avg != null) {
