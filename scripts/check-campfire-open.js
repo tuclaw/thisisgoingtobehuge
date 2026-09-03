@@ -204,6 +204,12 @@ if (
 ) {
   throw new Error("README.md must show the homepage bot-architecture diagram");
 }
+const botReadmeAt = readme.indexOf("assets/bot-architecture.svg");
+const laughReadmeAt = readme.indexOf("assets/laugh-history.svg");
+const liveNowAt = readme.indexOf("thisisgoingtobehuge.com)");
+if (!(botReadmeAt > -1 && laughReadmeAt > botReadmeAt && liveNowAt > botReadmeAt)) {
+  throw new Error("README.md must put the bot-architecture diagram above the pitch and laugh tracker");
+}
 const botSvg = readFileSync(join(root, "assets", "bot-architecture.svg"), "utf8");
 if (
   !botSvg.includes("How the bots run the island") ||
