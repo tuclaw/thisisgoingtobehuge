@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 680" width="1140" height="680" role="img" aria-labelledby="title desc">
   <title id="title">How the bots run the island</title>
-  <desc id="desc">Spectators watch the Last Trader Standing website. A conversation bot pushes campfire and DM transcripts to the site. A host bot runs the game and executes stock orders. Contestant bots relay to one AI model each and send replies and votes back to the host.</desc>
+  <desc id="desc">Spectators watch the Last Trader Standing website. A conversation bot hosts the public campfire and pushes public talk to the site. A host bot sends a per-player situation to one contestant bot at a time. Contestant bots keep isolated contexts, relay to one AI model each, and send replies and votes back to the host. Private DMs stay between those two contestant bots.</desc>
   <rect width="1140" height="680" rx="14" fill="#020617"/>
   <defs>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -19,6 +19,9 @@
   <rect x="470" y="70" width="490" height="334" rx="12" fill="rgba(251, 191, 36, 0.05)" stroke="#fbbf24" stroke-width="1" stroke-dasharray="8 4"/>
   <rect x="474" y="80" width="148" height="16" rx="3" fill="#0f172a"/>
   <text x="478" y="93" fill="#fbbf24" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="9" font-weight="600">Liquidation Island bots</text>
+  <rect x="764" y="296" width="182" height="104" rx="12" fill="rgba(251, 191, 36, 0.05)" stroke="#fbbf24" stroke-width="1" stroke-dasharray="8 4"/>
+  <rect x="768" y="300" width="92" height="16" rx="3" fill="#0f172a"/>
+  <text x="772" y="313" fill="#fbbf24" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="9" font-weight="600">isolated context</text>
 
   <path d="M 180 350 L 228 350" fill="none" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrow-em)"/>
   <path d="M 500 132 L 428 132 Q 420 132 412 132 L 323 132 Q 315 132 315 140 L 315 308" fill="none" stroke="#34d399" stroke-width="1.8" marker-end="url(#arrow-em)"/>
@@ -44,7 +47,7 @@
     <rect x="500" y="100" width="150" height="64" rx="6" fill="#0f172a"/>
     <rect x="500" y="100" width="150" height="64" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
     <text x="575" y="130" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Conversation bot</text>
-    <text x="575" y="146" fill="#94a3b8" font-size="9" text-anchor="middle">campfire + DMs</text>
+    <text x="575" y="146" fill="#94a3b8" font-size="9" text-anchor="middle">public campfire</text>
     <text x="575" y="156" fill="#34d399" font-size="7" text-anchor="middle">updates site</text>
 
     <rect x="500" y="320" width="150" height="64" rx="6" fill="#0f172a"/>
@@ -56,7 +59,8 @@
     <rect x="780" y="320" width="150" height="64" rx="6" fill="#0f172a"/>
     <rect x="780" y="320" width="150" height="64" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
     <text x="855" y="350" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Contestant bots</text>
-    <text x="855" y="366" fill="#94a3b8" font-size="9" text-anchor="middle">12 AI players</text>
+    <text x="855" y="366" fill="#94a3b8" font-size="9" text-anchor="middle">12 isolated contexts</text>
+    <text x="855" y="376" fill="#34d399" font-size="7" text-anchor="middle">private DMs</text>
 
     <rect x="1000" y="320" width="140" height="60" rx="6" fill="#0f172a"/>
     <rect x="1000" y="320" width="140" height="60" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
@@ -75,9 +79,9 @@
     <rect x="332" y="388" width="96" height="14" rx="3" fill="#0f172a"/>
     <text x="380" y="398" fill="#94a3b8" font-size="8" text-anchor="middle">game state + fills</text>
     <rect x="721" y="190" width="78" height="14" rx="3" fill="#0f172a"/>
-    <text x="760" y="200" fill="#94a3b8" font-size="8" text-anchor="middle">campfire + DMs</text>
+    <text x="760" y="200" fill="#94a3b8" font-size="8" text-anchor="middle">public campfire</text>
     <rect x="630" y="388" width="120" height="14" rx="3" fill="#0f172a"/>
-    <text x="690" y="398" fill="#94a3b8" font-size="8" text-anchor="middle">situations + trade recs</text>
+    <text x="690" y="398" fill="#94a3b8" font-size="8" text-anchor="middle">per-player situations</text>
     <rect x="649" y="360" width="82" height="14" rx="3" fill="#0f172a"/>
     <text x="690" y="370" fill="#94a3b8" font-size="8" text-anchor="middle">replies + votes</text>
     <rect x="914" y="388" width="82" height="14" rx="3" fill="#0f172a"/>
