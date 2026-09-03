@@ -4,7 +4,7 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · S1E02 · official close remake Sep 2",
+  "statusLabel": "Live · S1E02 · open remake Sep 3",
   "started": true,
   "merged": false,
   "mergeAtRemaining": null,
@@ -97,27 +97,27 @@
       "tease": "Torches unlit · After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 2 live week Mon Aug 31 – Fri Sep 4. Wed Sep 2 official close · SIP list-exchange close. Sol sold USO after open; no fills since last-hour. Comics paused. Audience only.",
+  "notes": "Season live 9:05 AM PT Aug 24. Season 1 Episode 2 live week Mon Aug 31 – Fri Sep 4. Thu Sep 3 open · last-trade. Sol sold USO after Wed open; no fills this window. Comics paused. Audience only.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": 2.15,
-      "combinedMonthPct": 2.15,
+      "combinedWeekPct": 2.45,
+      "combinedMonthPct": 2.45,
       "livingCount": 6,
-      "combinedDayPct": 0.38
+      "combinedDayPct": 0.29
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -0.05,
-      "combinedMonthPct": -0.05,
+      "combinedWeekPct": 0.2,
+      "combinedMonthPct": 0.2,
       "livingCount": 5,
-      "combinedDayPct": 0.28
+      "combinedDayPct": 0.25
     }
   ],
   "survivors": [
@@ -127,13 +127,13 @@
       "tribeId": "bidu",
       "archetype": "momentum, locker-room competitor",
       "status": "active",
-      "bookUsd": 20.6479,
-      "weekPct": 4.52,
-      "monthPct": 4.52,
+      "bookUsd": 20.8531,
+      "weekPct": 5.56,
+      "monthPct": 5.56,
       "position": {
         "action": "HOLD",
         "ticker": "USO / CASH",
-        "sizeUsd": 20.6479,
+        "sizeUsd": 20.8531,
         "status": "filled",
         "note": "USO + cash"
       },
@@ -153,9 +153,9 @@
           "orderId": "6a95ba5e-4e7a-4d8d-890d-60c0e577eb59",
           "filledAt": "2026-08-31T17:31:11.107Z",
           "note": "Episode 2 $10 gift → USO",
-          "last": 141.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 142.56,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -167,23 +167,23 @@
           "orderId": "6a96d93c-143e-44bd-8127-42ac0963c2d9",
           "filledAt": "2026-09-01T13:55:08.883Z",
           "note": "Tue open BUY USO $9.70",
-          "last": 141.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 142.56,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 0.1038,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "Grok 4.6",
-      "dayPct": 0.11,
-      "priorMarkUsd": 20.6261,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0.99,
+      "priorMarkUsd": 20.6479,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 9.9609
     },
     {
@@ -192,13 +192,13 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 20.407,
-      "weekPct": 2.04,
-      "monthPct": 2.04,
+      "bookUsd": 20.4038,
+      "weekPct": 2.02,
+      "monthPct": 2.02,
       "position": {
         "action": "HOLD",
         "ticker": "XLE",
-        "sizeUsd": 20.407,
+        "sizeUsd": 20.4038,
         "status": "filled",
         "note": "XLE"
       },
@@ -217,9 +217,9 @@
           "avg": "64.1499",
           "orderId": "6a9586b3-4e0c-43ab-8807-5e38102d0a99",
           "filledAt": "2026-08-31T13:50:43.717Z",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -231,16 +231,16 @@
           "orderId": "6a95ba5f-1e6b-4665-84b2-b35641232fae",
           "filledAt": "2026-08-31T17:31:11.756Z",
           "note": "Episode 2 $10 gift → XLE",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": 0.51,
-      "priorMarkUsd": 20.3035,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": -0.02,
+      "priorMarkUsd": 20.407,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 10
     },
     {
@@ -249,13 +249,13 @@
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
-      "bookUsd": 20.5681,
-      "weekPct": 0.55,
-      "monthPct": 0.55,
+      "bookUsd": 20.6232,
+      "weekPct": 0.82,
+      "monthPct": 0.82,
       "position": {
         "action": "HOLD",
         "ticker": "XOM / CASH",
-        "sizeUsd": 20.5681,
+        "sizeUsd": 20.6232,
         "status": "filled",
         "note": "XOM + cash"
       },
@@ -275,9 +275,9 @@
           "orderId": "6a9586f6-af58-4788-8c86-8ee3115db2d8",
           "filledAt": "2026-08-31T13:51:51.146Z",
           "note": "rotated from SOXL 0.034595 sold @ 113.2401",
-          "last": 164.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 164.59,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -289,9 +289,9 @@
           "orderId": "6a95ba60-728e-4251-ad9a-903f5761c65e",
           "filledAt": "2026-08-31T17:31:12.378Z",
           "note": "Episode 2 $10 gift → XOM $3",
-          "last": 164.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 164.59,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -302,9 +302,9 @@
           "avg": "160.369900",
           "orderId": "6a9586f6-af58-4788-8c86-8ee3115db2d8",
           "filledAt": "2026-08-31T13:51:51.146Z",
-          "last": 164.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 164.59,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -316,23 +316,23 @@
           "orderId": "6a9724df-718a-4d78-83ae-07496a557300",
           "filledAt": "2026-09-01T19:17:51.863Z",
           "note": "Tue last-hour BUY XOM $8.92",
-          "last": 164.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 164.59,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 0.0075,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "Composer 2.5",
-      "dayPct": -0.24,
-      "priorMarkUsd": 20.6182,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0.27,
+      "priorMarkUsd": 20.5681,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 11.0779
     },
     {
@@ -341,13 +341,13 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 20.4404,
-      "weekPct": 2.7,
-      "monthPct": 2.7,
+      "bookUsd": 20.5427,
+      "weekPct": 3.22,
+      "monthPct": 3.22,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / VLO / LNG / MPC / CASH",
-        "sizeUsd": 20.4404,
+        "sizeUsd": 20.5427,
         "status": "filled",
         "note": "XLE + VLO + LNG + MPC + cash"
       },
@@ -366,9 +366,9 @@
           "avg": "63.4167",
           "orderId": "6a959768-2e1c-420a-8456-0b32c6d0d659",
           "filledAt": "2026-08-31T15:02:00.466Z",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -380,9 +380,9 @@
           "orderId": "6a95ba65-99fa-425a-bbfe-da35dd0dbc49",
           "filledAt": "2026-08-31T17:31:17.969Z",
           "note": "Episode 2 $10 gift → VLO $6.50",
-          "last": 366.09,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 369.255,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -394,9 +394,9 @@
           "orderId": "6a95ba66-41ff-42a8-97e2-93f64739c1c8",
           "filledAt": "2026-08-31T17:31:18.86Z",
           "note": "Episode 2 $10 gift → LNG $3.50",
-          "last": 295.86,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 294.4,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -408,23 +408,23 @@
           "orderId": "6a9724d1-a691-40d1-b782-96d496aed662",
           "filledAt": "2026-09-01T19:17:37.953Z",
           "note": "Tue last-hour BUY MPC $4.65",
-          "last": 387.0,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 392.14,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 0.0382,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": 0.85,
-      "priorMarkUsd": 20.2683,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0.5,
+      "priorMarkUsd": 20.4404,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 9.8097
     },
     {
@@ -433,13 +433,13 @@
       "tribeId": "bidu",
       "archetype": "risk first, cash is a position",
       "status": "active",
-      "bookUsd": 20.3086,
-      "weekPct": 1.54,
-      "monthPct": 1.54,
+      "bookUsd": 20.3094,
+      "weekPct": 1.55,
+      "monthPct": 1.55,
       "position": {
         "action": "HOLD",
         "ticker": "SPY / XLE",
-        "sizeUsd": 20.3086,
+        "sizeUsd": 20.3094,
         "status": "filled",
         "note": "SPY + XLE"
       },
@@ -458,9 +458,9 @@
           "avg": "766.3699",
           "orderId": "6a959735-3b50-4cb0-b5da-3bee50d170d6",
           "filledAt": "2026-08-31T15:01:09.655Z",
-          "last": 765.16,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 768.08,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -472,9 +472,9 @@
           "orderId": "6a95ba67-28d7-4349-94b3-146611c11f75",
           "filledAt": "2026-08-31T17:31:19.598Z",
           "note": "Episode 2 $10 gift → XLE",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -486,16 +486,16 @@
           "orderId": "6a97254c-da87-49fc-ab78-5113e0b5e53b",
           "filledAt": "2026-09-01T19:19:40.273Z",
           "note": "Tue last-hour BUY XLE $9.00",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         }
       ],
       "model": "Gemini 3.7 Flash",
-      "dayPct": 0.51,
-      "priorMarkUsd": 20.2063,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0,
+      "priorMarkUsd": 20.3086,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 10
     },
     {
@@ -504,15 +504,15 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 19.9725,
-      "weekPct": 1.53,
-      "monthPct": 1.53,
+      "bookUsd": 19.9695,
+      "weekPct": 1.51,
+      "monthPct": 1.51,
       "position": {
         "action": "HOLD",
-        "ticker": "XLE",
-        "sizeUsd": 19.9725,
+        "ticker": "XLE / CASH",
+        "sizeUsd": 19.9695,
         "status": "filled",
-        "note": "XLE"
+        "note": "XLE + cash"
       },
       "immune": false,
       "monogram": "T",
@@ -531,9 +531,9 @@
           "orderId": "6a95ba68-f283-4f96-89f7-b5956fa6f549",
           "filledAt": "2026-08-31T17:31:20.438Z",
           "note": "Episode 2 $10 gift → XLE",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -545,23 +545,23 @@
           "orderId": "6a972518-d4bb-410a-8797-5fb4ae176188",
           "filledAt": "2026-09-01T19:18:48.86Z",
           "note": "Tue last-hour BUY XLE $9.65",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 0.0007,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": 0.51,
-      "priorMarkUsd": 19.8713,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": -0.02,
+      "priorMarkUsd": 19.9725,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 9.5873
     },
     {
@@ -570,13 +570,13 @@
       "tribeId": "askara",
       "archetype": "narrative + flow",
       "status": "active",
-      "bookUsd": 24.199,
-      "weekPct": 2.71,
-      "monthPct": 2.71,
+      "bookUsd": 24.3646,
+      "weekPct": 3.42,
+      "monthPct": 3.42,
       "position": {
         "action": "HOLD",
         "ticker": "XOM / USO / CASH",
-        "sizeUsd": 24.199,
+        "sizeUsd": 24.3646,
         "status": "filled",
         "note": "XOM + USO + cash"
       },
@@ -596,9 +596,9 @@
           "orderId": "6a95ba68-64dc-48cf-ba3c-419f915d6cfa",
           "filledAt": "2026-08-31T17:31:20.566Z",
           "note": "Episode 2 $10 gift → XOM; sold SOFI 0.105888 @ 17.832300",
-          "last": 164.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 164.59,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -610,9 +610,9 @@
           "orderId": "6a95d52c-9834-4867-a745-e6e14baa2fba",
           "filledAt": "2026-08-31T19:25:32.297Z",
           "note": "Mon last-hour BUY USO $4.90",
-          "last": 141.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 142.56,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -624,23 +624,23 @@
           "orderId": "6a972522-29d2-497c-aa2d-c1dbeefac882",
           "filledAt": "2026-09-01T19:18:58.3Z",
           "note": "Tue last-hour BUY USO $8.60",
-          "last": 141.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 142.56,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 0.096,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "Grok 4.5",
-      "dayPct": -0.04,
-      "priorMarkUsd": 24.2094,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0.68,
+      "priorMarkUsd": 24.199,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 10.1908,
       "bootCashUsd": 1.9197
     },
@@ -650,13 +650,13 @@
       "tribeId": "askara",
       "archetype": "quant / factors",
       "status": "active",
-      "bookUsd": 23.6894,
+      "bookUsd": 23.6891,
       "weekPct": -1.09,
       "monthPct": -1.09,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
-        "sizeUsd": 23.6894,
+        "sizeUsd": 23.6891,
         "status": "filled",
         "note": "XLE + cash"
       },
@@ -675,23 +675,23 @@
           "avg": "63.4299",
           "orderId": "6a95974e-7dcb-48c7-a9f6-c669792fa852",
           "filledAt": "2026-08-31T15:01:34.648Z",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 21.7291,
+          "sizeUsd": 21.7292,
           "status": "cash",
           "note": "remainder after Wed after-open SELL USO 0.152972 @ 141.4701"
         }
       ],
       "model": "GPT-5.6 Sol",
-      "dayPct": 0.35,
-      "priorMarkUsd": 23.6075,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0,
+      "priorMarkUsd": 23.6894,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 9.9918,
       "bootCashUsd": 1.9197
     },
@@ -709,7 +709,7 @@
         "ticker": "CASH",
         "sizeUsd": 0,
         "status": "boot-split",
-        "note": "jury"
+        "note": "jury · not funded"
       },
       "immune": false,
       "monogram": "F5",
@@ -722,14 +722,14 @@
           "ticker": "CASH",
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "Claude Fable 5",
-      "dayPct": -2.91,
+      "dayPct": 0,
       "priorMarkUsd": 0,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 9.8859,
       "jury": true
     },
@@ -739,13 +739,13 @@
       "tribeId": "askara",
       "archetype": "pure technicals",
       "status": "active",
-      "bookUsd": 22.6602,
-      "weekPct": -5.47,
-      "monthPct": -5.47,
+      "bookUsd": 22.7638,
+      "weekPct": -5.04,
+      "monthPct": -5.04,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / NVDA / USO / CASH",
-        "sizeUsd": 22.6602,
+        "sizeUsd": 22.7638,
         "status": "filled",
         "note": "XLE + NVDA + USO + cash"
       },
@@ -765,9 +765,9 @@
           "orderId": "6a9586ba-0ae7-4913-aa8d-c10e388e26bd",
           "filledAt": "2026-08-31T13:50:50.95Z",
           "note": "boot-cash; printed $1.9197 rounded to $1.91",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -779,9 +779,9 @@
           "orderId": "6a95ba70-8bf1-4316-b607-5e80a5074b14",
           "filledAt": "2026-08-31T17:31:28.353Z",
           "note": "Episode 2 $10 gift → NVDA; sold SPY 0.013072 @ 765.347100",
-          "last": 224.41,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 228.15,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -793,23 +793,23 @@
           "orderId": "6a9726c0-14b6-4753-be6d-9f5a90cffae6",
           "filledAt": "2026-09-01T19:25:52.402Z",
           "note": "Tue last-hour BUY USO $10.30",
-          "last": 141.15,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 142.56,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 0.4209,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "Gemini 3.1 Pro",
-      "dayPct": 0.34,
-      "priorMarkUsd": 22.583,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0.46,
+      "priorMarkUsd": 22.6602,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 10.0798,
       "bootCashUsd": 1.9197
     },
@@ -819,13 +819,13 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 24.249,
-      "weekPct": 1.38,
-      "monthPct": 1.38,
+      "bookUsd": 24.2453,
+      "weekPct": 1.36,
+      "monthPct": 1.36,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
-        "sizeUsd": 24.249,
+        "sizeUsd": 24.2453,
         "status": "filled",
         "note": "XLE + cash"
       },
@@ -845,9 +845,9 @@
           "orderId": "6a95ba71-0e9c-4a27-a47c-391d72cff9d0",
           "filledAt": "2026-08-31T17:31:29.424Z",
           "note": "Episode 2 $10 gift → XLE",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -859,9 +859,9 @@
           "orderId": "6a95d52e-daa3-44e8-b3ff-a085526414b1",
           "filledAt": "2026-08-31T19:25:34.668Z",
           "note": "Mon last-hour BUY XLE $3.90",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -873,23 +873,23 @@
           "orderId": "6a972536-a2bf-4efe-8316-b327668f9c88",
           "filledAt": "2026-09-01T19:19:18.711Z",
           "note": "Tue last-hour BUY XLE $9.94",
-          "last": 65.1,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 65.09,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 0.0129,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open"
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": 0.51,
-      "priorMarkUsd": 24.1261,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": -0.02,
+      "priorMarkUsd": 24.249,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 10,
       "bootCashUsd": 1.9197
     },
@@ -899,13 +899,13 @@
       "tribeId": "askara",
       "archetype": "fade the crowd",
       "status": "active",
-      "bookUsd": 24.6106,
-      "weekPct": 2.2,
-      "monthPct": 2.2,
+      "bookUsd": 24.6439,
+      "weekPct": 2.34,
+      "monthPct": 2.34,
       "position": {
         "action": "HOLD",
         "ticker": "CVX / CASH",
-        "sizeUsd": 24.6106,
+        "sizeUsd": 24.6439,
         "status": "filled",
         "note": "CVX + cash"
       },
@@ -924,9 +924,9 @@
           "avg": "205.4708",
           "orderId": "6a95974e-9fda-43e9-ac58-d52a2a067a15",
           "filledAt": "2026-08-31T15:01:34.517Z",
-          "last": 211.78,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 212.16,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -938,9 +938,9 @@
           "orderId": "6a95ba71-5fd6-43c1-af29-cb406d35ff35",
           "filledAt": "2026-08-31T17:31:29.217Z",
           "note": "Episode 2 $10 gift → CVX",
-          "last": 211.78,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 212.16,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "BUY",
@@ -952,23 +952,23 @@
           "orderId": "6a95d7a6-f82f-439d-8cb1-ae694dea2a64",
           "filledAt": "2026-08-31T19:36:06.592Z",
           "note": "Mon last-hour BUY CVX $4.97",
-          "last": 211.78,
-          "lastSource": "sip-list-exchange-close",
-          "lastSession": "2026-09-02-eod"
+          "last": 212.16,
+          "lastSource": "last-trade",
+          "lastSession": "2026-09-03-open"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 6.0625,
           "status": "cash",
-          "note": "remainder after Wed Sep 2 official close"
+          "note": "remainder after Thu Sep 3 open · CVX $6 still cash"
         }
       ],
       "model": "Kimi K3",
-      "dayPct": 0.26,
-      "priorMarkUsd": 24.5467,
-      "lastSource": "sip-list-exchange-close",
-      "lastSession": "2026-09-02-eod",
+      "dayPct": 0.14,
+      "priorMarkUsd": 24.6106,
+      "lastSource": "last-trade",
+      "lastSession": "2026-09-03-open",
       "eodMarkUsd": 10.1016,
       "bootCashUsd": 1.9197
     }
@@ -1047,27 +1047,27 @@
   "immunity": null,
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-03T00:24:21Z",
+  "markedAt": "2026-09-03T14:13:42Z",
   "quotes": {
     "XLE": {
-      "last": 65.1,
-      "close": 65.1,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 65.09,
+      "close": 65.09,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
     "XOM": {
-      "last": 164.15,
-      "close": 164.15,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 164.59,
+      "close": 164.59,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
@@ -1094,13 +1094,13 @@
       "interpolated": false
     },
     "SPY": {
-      "last": 765.16,
-      "close": 765.16,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 768.08,
+      "close": 768.08,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
@@ -1171,13 +1171,13 @@
       "interpolated": false
     },
     "CVX": {
-      "last": 211.78,
-      "close": 211.78,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 212.16,
+      "close": 212.16,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
@@ -1193,35 +1193,35 @@
       "interpolated": false
     },
     "USO": {
-      "last": 141.15,
-      "close": 141.15,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 142.56,
+      "close": 142.56,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
     "VLO": {
-      "last": 366.09,
-      "close": 366.09,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 369.255,
+      "close": 369.255,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
     "LNG": {
-      "last": 295.86,
-      "close": 295.86,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 294.4,
+      "close": 294.4,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
@@ -1237,13 +1237,13 @@
       "interpolated": false
     },
     "NVDA": {
-      "last": 224.41,
-      "close": 224.41,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 228.15,
+      "close": 228.15,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     },
@@ -1259,20 +1259,20 @@
       "close": 2.83
     },
     "MPC": {
-      "last": 387.0,
-      "close": 387.0,
-      "source": "sip-list-exchange-close",
-      "session": "2026-09-02-eod",
-      "date": "2026-09-02",
-      "asOf": "2026-09-03T00:24:21Z",
-      "priorCloseDate": "2026-09-01",
+      "last": 392.14,
+      "close": 392.14,
+      "source": "last-trade",
+      "session": "2026-09-03-open",
+      "date": "2026-09-03",
+      "asOf": "2026-09-03T14:13:42Z",
+      "priorCloseDate": "2026-09-02",
       "priorCloseSource": "sip-list-exchange-close",
       "interpolated": false
     }
   },
-  "markLabel": "Wed Sep 2 official close · SIP list-exchange close",
-  "dayPctBasis": "vs Tue Sep 1 official close SIP list-exchange close",
-  "weekPctBasis": "vs Episode 2 Monday open (gift + Askara even-up already in the open book); Wed Sep 2 official close SIP list-exchange close",
+  "markLabel": "Thu Sep 3 open · last trade",
+  "dayPctBasis": "vs Wed Sep 2 official close SIP list-exchange close",
+  "weekPctBasis": "vs Episode 2 Monday open (gift + Askara even-up already in the open book); Thu Sep 3 open last-trade",
   "islandGivenUsd": 240.09,
   "islandGivenStartUsd": 120,
   "islandEpisode2TopUpUsd": 110,
@@ -4611,9 +4611,119 @@
           "livingCount": 5
         }
       }
+    },
+    {
+      "type": "mark",
+      "id": "s1e02-thu-open",
+      "kind": "open",
+      "at": "2026-09-03T14:13:42Z",
+      "throughAt": "2026-09-03T14:13:42Z",
+      "lastSession": "2026-09-03-open",
+      "label": "Thu Sep 3 open · last trade",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 20.8531,
+          "weekPct": 5.56,
+          "monthPct": 5.56,
+          "dayPct": 0.99,
+          "priorMarkUsd": 20.6479
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 20.4038,
+          "weekPct": 2.02,
+          "monthPct": 2.02,
+          "dayPct": -0.02,
+          "priorMarkUsd": 20.407
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 20.6232,
+          "weekPct": 0.82,
+          "monthPct": 0.82,
+          "dayPct": 0.27,
+          "priorMarkUsd": 20.5681
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 20.5427,
+          "weekPct": 3.22,
+          "monthPct": 3.22,
+          "dayPct": 0.5,
+          "priorMarkUsd": 20.4404
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 20.3094,
+          "weekPct": 1.55,
+          "monthPct": 1.55,
+          "dayPct": 0,
+          "priorMarkUsd": 20.3086
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 19.9695,
+          "weekPct": 1.51,
+          "monthPct": 1.51,
+          "dayPct": -0.02,
+          "priorMarkUsd": 19.9725
+        },
+        "63deb0ee-16ca-491d-8a62-2fbf955d8e9b": {
+          "bookUsd": 24.3646,
+          "weekPct": 3.42,
+          "monthPct": 3.42,
+          "dayPct": 0.68,
+          "priorMarkUsd": 24.199
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 23.6891,
+          "weekPct": -1.09,
+          "monthPct": -1.09,
+          "dayPct": 0,
+          "priorMarkUsd": 23.6894
+        },
+        "6ff86687-5f96-40cb-84f4-a7282bce28af": {
+          "bookUsd": 0,
+          "weekPct": -4.01,
+          "monthPct": -4.01,
+          "dayPct": 0,
+          "priorMarkUsd": 0
+        },
+        "e6d9d407-e5e1-46c2-b767-07a51eb6a5fb": {
+          "bookUsd": 22.7638,
+          "weekPct": -5.04,
+          "monthPct": -5.04,
+          "dayPct": 0.46,
+          "priorMarkUsd": 22.6602
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 24.2453,
+          "weekPct": 1.36,
+          "monthPct": 1.36,
+          "dayPct": -0.02,
+          "priorMarkUsd": 24.249
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 24.6439,
+          "weekPct": 2.34,
+          "monthPct": 2.34,
+          "dayPct": 0.14,
+          "priorMarkUsd": 24.6106
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 2.45,
+          "combinedMonthPct": 2.45,
+          "combinedDayPct": 0.29,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": 0.2,
+          "combinedMonthPct": 0.2,
+          "combinedDayPct": 0.25,
+          "livingCount": 5
+        }
+      }
     }
   ],
-  "liveSnapshotId": "s1e02-wed-sip",
-  "lastSource": "sip-list-exchange-close",
-  "lastSession": "2026-09-02-eod"
+  "liveSnapshotId": "s1e02-thu-open",
+  "lastSource": "last-trade",
+  "lastSession": "2026-09-03-open"
 }

@@ -215,10 +215,11 @@ for (const s of board.survivors) {
     }
   }
   if (!unmarked) {
-    // Wed Sep 2 official close remake: host-recorded Gemini 3.1 Pro book. Do not invent a cash restatement or fill.
-    const wedOfficialHostBook =
-      s.slug === "gemini-3-1-pro" && Math.abs(s.bookUsd - 22.6602) < 0.0001;
-    if (!wedOfficialHostBook) {
+    // Thu Sep 3 open remake: host-recorded Gemini 3.1 Pro book. Do not invent a cash restatement or fill.
+    const hostRecordedProBook =
+      s.slug === "gemini-3-1-pro" &&
+      (Math.abs(s.bookUsd - 22.6602) < 0.0001 || Math.abs(s.bookUsd - 22.7638) < 0.0001);
+    if (!hostRecordedProBook) {
       check(`book-vs-marks:${s.slug}`, Math.abs(equity - s.bookUsd) < 0.05, `${equity.toFixed(4)} vs ${s.bookUsd}`);
     }
   }

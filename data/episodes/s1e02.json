@@ -315,6 +315,28 @@
       ]
     },
     {
+      "id": "thursday",
+      "foldDay": "Thu 3",
+      "foldTitle": "Thursday open",
+      "foldEm": "Marks only. No fills.",
+      "snapshotId": "s1e02-thu-open",
+      "beats": [
+        {
+          "type": "books",
+          "id": "thursday-open-books",
+          "kicker": "Thursday · Sep 3 · Open",
+          "title": "Thursday open books",
+          "body": "Thu Sep 3 open · last-trade. weekPct vs Episode 2 Monday open (gift + the Askara tribe even-up already in the open book); dayPct vs Wed Sep 2 official close. the Bidu tribe combined week +2.45%. the Askara tribe combined week +0.20%. Grok 4.6 leads the week. Gemini 3.1 Pro is worst among the living. No Fable.",
+          "boardId": "day-thursday",
+          "notes": [
+            "Marks only — no fills this window. Everyone HOLDs.",
+            "GPT-5.6 Sol holds XLE + cash (USO sale after Wed open already on tape).",
+            "Kimi K3 still holds CVX + cash. The leftover $6 is cash — no invented fill."
+          ]
+        }
+      ]
+    },
+    {
       "id": "tribal",
       "foldDay": "Fri 4",
       "foldTitle": "Tribal",
