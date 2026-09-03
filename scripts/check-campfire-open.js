@@ -324,8 +324,17 @@ if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow
 if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {
   throw new Error("app.js missing home money ticker Season/Island-only tab config");
 }
-if (!appJs.includes("See how each tribe and contestant is doing in the live Episode.")) {
+if (!appJs.includes("See how each tribe and contestant is doing in the") || !appJs.includes("live Episode")) {
   throw new Error("app.js missing home money ticker lede copy");
+}
+if (!appJs.includes('class="money-ticker-lede-link"') || !appJs.includes(">live Episode</a>")) {
+  throw new Error("home money ticker lede must hyperlink live Episode");
+}
+if (!appJs.includes("assetUrl(liveEpisodePath(season))")) {
+  throw new Error("home money ticker lede must point live Episode at the live episode path");
+}
+if (!css.includes(".money-ticker-lede-link") || !css.includes("text-underline-offset")) {
+  throw new Error("styles.css missing home money ticker live Episode link treatment");
 }
 if (!appJs.includes("tickerHead") || !appJs.includes("homeMode")) {
   throw new Error("app.js must keep a home-only money ticker lede");
