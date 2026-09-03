@@ -508,6 +508,13 @@ function renderEpisodePage(episode, season, base) {
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 
+    <article class="beat beat-gold" id="trade-tape">
+      <p class="section-kicker">The tape</p>
+      <h2>Buys and sells</h2>
+      <p>Each mark is a real fill. An empty lane means they sat.</p>
+      <div class="trade-tape" id="trade-tape-root"></div>
+    </article>
+
     ${wantsWhisperFeed ? `<article class="beat beat-camp" id="camp-whispers">
       <p class="section-kicker">Campfire</p>
       <h2>Latest whispers</h2>

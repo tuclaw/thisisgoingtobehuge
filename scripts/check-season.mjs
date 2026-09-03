@@ -94,6 +94,10 @@ if (!boardNative) {
   for (const fill of publicFills) {
     check(`public-fill-no-brokerage:${fill.id}`, fill.orderId == null && fill.qty == null && fill.avg == null);
     check(`public-fill-ticker:${fill.id}`, Boolean(fill.ticker) && (fill.side === "buy" || fill.side === "sell"));
+    const src = fills.find((row) => row && row.id === fill.id);
+    if (src && typeof src.sizeUsd === "number" && !Number.isNaN(src.sizeUsd)) {
+      check(`public-fill-size:${fill.id}`, fill.sizeUsd === src.sizeUsd);
+    }
   }
   for (const mark of board.events || []) {
     if (!mark || mark.type !== "mark") continue;

@@ -81,6 +81,9 @@ if (!episodeHtml.includes("weekBoard.lede") || !episodeHtml.includes("holdings-k
 if (!episodeHtml.includes('id="week-board"')) {
   throw new Error("episode renderer lost week-board structure below landing");
 }
+if (!episodeHtml.includes('id="trade-tape"') || !episodeHtml.includes("trade-tape-root")) {
+  throw new Error("episode renderer missing #trade-tape buys/sells board after latest books");
+}
 if (!episodeHtml.includes('id="camp-whispers"') || !episodeHtml.includes("camp-whispers-feed")) {
   throw new Error("episode renderer missing recent camp whispers section below week-board");
 }

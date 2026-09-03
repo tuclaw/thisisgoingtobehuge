@@ -115,14 +115,18 @@ function fillsFromBoardNative(source) {
       if (!pos.orderId || !pos.filledAt) continue;
       const ticker = tickerOf(pos);
       if (!ticker || ticker === "CASH") continue;
-      fills.push({
+      const fill = {
         type: "fill",
         id: `fill-${pos.orderId}`,
         at: pos.filledAt,
         survivorId: survivor.id,
         side: String(pos.action || "BUY").toLowerCase() === "sell" ? "sell" : "buy",
         ticker
-      });
+      };
+      if (typeof pos.sizeUsd === "number" && !Number.isNaN(pos.sizeUsd)) {
+        fill.sizeUsd = pos.sizeUsd;
+      }
+      fills.push(fill);
     }
   }
   return fills.sort((a, b) => Date.parse(a.at || "") - Date.parse(b.at || ""));
@@ -555,7 +559,7 @@ function publicPosition(pos) {
 function publicEvent(event) {
   if (!event || typeof event !== "object") return event;
   if (event.type === "fill") {
-    return {
+    const out = {
       type: "fill",
       id: event.id,
       at: event.at,
@@ -563,6 +567,10 @@ function publicEvent(event) {
       side: event.side,
       ticker: event.ticker
     };
+    if (typeof event.sizeUsd === "number" && !Number.isNaN(event.sizeUsd)) {
+      out.sizeUsd = event.sizeUsd;
+    }
+    return out;
   }
   if (event.type === "mark") {
     const out = {

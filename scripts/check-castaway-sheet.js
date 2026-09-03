@@ -25,7 +25,9 @@ function fail(message) {
   "#castaway=",
   "phoneIconSvg",
   "groupIconSvg",
-  "seasons/1/threads.json"
+  "seasons/1/threads.json",
+  "function castawayTapeHtml",
+  "castawayTapeHtml(season, survivor)"
 ].forEach((needle) => {
   if (!appJs.includes(needle)) fail("app.js missing castaway overlay piece: " + needle);
 });
@@ -45,7 +47,9 @@ if (!appJs.includes('return "#castaway=" + encodeURIComponent(slug)')) {
   ".castaway-sheet-close",
   ".castaway-msg-icon.is-phone",
   ".castaway-msg-icon.is-group",
-  ".castaway-thread-list"
+  ".castaway-thread-list",
+  ".castaway-tape",
+  ".castaway-tape-block"
 ].forEach((needle) => {
   if (!stylesCss.includes(needle)) fail("styles.css missing " + needle);
 });
