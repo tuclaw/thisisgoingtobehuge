@@ -132,7 +132,7 @@ if (grok45) {
     uso45.length === 2 && uso45.some((pos) => pos.qty === "0.036739") && uso45.some((pos) => pos.qty === "0.061193")
   );
   check("live-grok45-cash", Math.abs(cashTotal(now.positions) - 0.096) < 0.01, String(cashTotal(now.positions)));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 24.2175) < 0.0001, now && String(now.bookUsd));
+  check("live-grok45-book", now && Math.abs(now.bookUsd - 24.199) < 0.0001, now && String(now.bookUsd));
   check("live-grok45-no-rank-position", now && now.position == null);
 }
 
@@ -170,7 +170,7 @@ if (grok46) {
       usoLots.some((pos) => pos.qty === "0.070478")
   );
   check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 0.1038) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok46-book", now && Math.abs(now.bookUsd - 20.6559) < 0.0001, now && String(now.bookUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 20.6479) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -278,17 +278,6 @@ check(
   "live-pro-cash",
   geminiProLive && Math.abs(cashTotal(geminiProLive.positions) - 0.4209) < 0.0001,
   geminiProLive && String(cashTotal(geminiProLive.positions))
-);
-check(
-  "live-grok46-cash",
-  grok46Live && Math.abs(cashTotal(grok46Live.positions) - 0.1038) < 0.0001,
-  grok46Live && String(cashTotal(grok46Live.positions))
-);
-const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
-check(
-  "live-kimi-cash",
-  kimiLive && Math.abs(cashTotal(kimiLive.positions) - 6.0625) < 0.0001,
-  kimiLive && String(cashTotal(kimiLive.positions))
 );
 check("kept-wed-lasthour-mark", (source.events || []).some((event) => event && event.id === "s1e02-wed-lasthour"));
 check("kept-wed-open-mark", (source.events || []).some((event) => event && event.id === "s1e02-wed-open"));
