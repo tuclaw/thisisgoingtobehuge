@@ -570,21 +570,30 @@ function fillNotional(fill) {
   return null;
 }
 
+function fillConsistency(fill) {
+  const qty = fillQty(fill);
+  const avg = parseFloat(fill && fill.avg);
+  const size = fillNotional(fill);
+  if (qty == null || !Number.isFinite(avg) || size == null) return Number.POSITIVE_INFINITY;
+  return Math.abs(qty * avg - size);
+}
+
 function uniqueHostFills(events) {
   const fills = (events || []).filter((event) => event && event.type === "fill");
   fills.sort(
     (a, b) =>
       Date.parse(a.at || "") - Date.parse(b.at || "") || String(a.id || "").localeCompare(String(b.id || ""))
   );
-  const seen = new Set();
-  const out = [];
+  const best = new Map();
   for (const fill of fills) {
     const key = [fill.survivorId, fill.side, String(fill.ticker || "").toUpperCase(), fill.at].join("|");
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push(fill);
+    const prev = best.get(key);
+    if (!prev || fillConsistency(fill) < fillConsistency(prev)) best.set(key, fill);
   }
-  return out;
+  return [...best.values()].sort(
+    (a, b) =>
+      Date.parse(a.at || "") - Date.parse(b.at || "") || String(a.id || "").localeCompare(String(b.id || ""))
+  );
 }
 
 /** FIFO realized P&L on sells. Uses host qty/avg; public board only gets the %. */

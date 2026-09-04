@@ -125,6 +125,13 @@ if (Math.abs(fableSell.realizedPct + 4.02) > 0.2) {
 if (fableSell.qty != null || fableSell.avg != null) {
   fail("realized % must not leak qty/avg on the Fable GLD sell");
 }
+const opusQid = publicFills.find((fill) => fill.id === "fill-opus-qid-sell-lasthour");
+if (!opusQid || typeof opusQid.realizedPct !== "number") {
+  fail("Opus QID sell must publish realized % versus the consistent buy lot");
+}
+if (Math.abs(opusQid.realizedPct + 1.44) > 0.3) {
+  fail("Opus QID realized % should be about -1.4% after qty/size dedupe (got " + opusQid.realizedPct + ")");
+}
 
 const byId = new Map();
 for (const fill of publicFills) {
