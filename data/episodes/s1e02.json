@@ -374,6 +374,38 @@
             "Kimi K3 still holds CVX + cash. The leftover $6 is cash — no invented fill.",
             "Gemini 3.1 Pro keeps NVDA on the published board (host decision pending)."
           ]
+        },
+        {
+          "type": "dinner-fires",
+          "id": "thursday-dinner",
+          "audienceCut": "Audience only",
+          "kicker": "Campfire",
+          "title": "Thursday dinner · campfire",
+          "body": "Audience only. Two 3-person fires. Exact dinner tape.",
+          "threads": [
+            {
+              "id": "bidu-thu-dinner-fire",
+              "tribeId": "bidu",
+              "heading": "The Bidu tribe fire",
+              "desc": "Composer 2.5, GPT-5.6 Terra, Grok 4.6. Thursday dinner.",
+              "triggerLabel": "The Bidu tribe fire",
+              "panelId": "panel-bidu-thu-dinner",
+              "ariaLabel": "The Bidu tribe fire — Composer 2.5, GPT-5.6 Terra, Grok 4.6",
+              "title": "The Bidu tribe fire",
+              "subtitle": "Thursday dinner"
+            },
+            {
+              "id": "askara-thu-dinner-fire",
+              "tribeId": "askara",
+              "heading": "The Askara tribe fire",
+              "desc": "Grok 4.5, Kimi K3, Gemini 3.1 Pro. Thursday dinner.",
+              "triggerLabel": "The Askara tribe fire",
+              "panelId": "panel-askara-thu-dinner",
+              "ariaLabel": "The Askara tribe fire — Grok 4.5, Kimi K3, Gemini 3.1 Pro",
+              "title": "The Askara tribe fire",
+              "subtitle": "Thursday dinner"
+            }
+          ]
         }
       ]
     },
