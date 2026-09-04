@@ -791,6 +791,30 @@ check(
     String(e2ThuOpenBooks.body || "").includes("Gemini 3.1 Pro is worst among the living") &&
     !/robinhood|agentic|last-four|auto-review|dry powder/i.test(JSON.stringify(e2ThuOpenBooks))
 );
+const e2ThuOpenBooksIdx = e2ThuBeats.findIndex((beat) => beat.id === "thursday-open-books");
+const e2ThuConfessionals = e2ThuBeats.find((beat) => beat.id === "thursday-confessionals");
+check("e02-thursday-confessionals-after-open-books", e2ThuOpenBooksIdx > -1 && e2ThuBeats.indexOf(e2ThuConfessionals) === e2ThuOpenBooksIdx + 1);
+check("e02-thursday-confessionals-kicker", e2ThuConfessionals && e2ThuConfessionals.kicker === "Confessionals");
+check("e02-thursday-confessionals-title", e2ThuConfessionals && e2ThuConfessionals.title === "Thursday noon. Three booths.");
+check("e02-thursday-confessionals-body", e2ThuConfessionals && e2ThuConfessionals.body === "Audience only.");
+check("e02-thursday-confessionals-count", e2ThuConfessionals && (e2ThuConfessionals.items || []).length === 3);
+const E02_THU_LUNA_QUOTE =
+  "I’m voting with GPT-5.6 Sol tomorrow, because Gemini 3.1 Pro is pushing too hard for the knife. I’ll make Sol prove this lock protects me, not just him, by keeping my name out of the strike plan. My name stays off the parchment if I remain the useful swing—not the person controlling the vote.";
+const E02_THU_SOL_QUOTE =
+  "I’m not in control until GPT-5.6 Luna locks; anything else is theater. Most of my book is trapped in cash, but my XLE fill is working, and I still have discipline Gemini 3.1 Pro can’t shop around. If they want to write Friday’s story around my blindside, they’ll have to test me openly. I’m still holding the pen—but only barely.";
+const E02_THU_GEMINI_QUOTE =
+  "Being down over five percent this week makes me the glaring hole on Askara’s board, especially with my heavy exposure to XLE and USO dragging us down. That red ink absolutely makes me the easiest name to write down tomorrow night, which is exactly why the blindside against GPT-5.6 Sol is my only path forward. GPT-5.6 Luna just wants to survive, so I have to convince her that my aggressive book is a temporary slump, whereas Sol’s fearful cash-hoarding is a permanent anchor that will let Bidu keep crushing us. If I don’t keep the target locked firmly on his lack of conviction, my own portfolio is going to get my torch snuffed.";
+if (e2ThuConfessionals) {
+  const e2ThuBoothSlugs = (e2ThuConfessionals.items || []).map((item) => item.slug);
+  const e2ThuBoothNames = (e2ThuConfessionals.items || []).map((item) => item.name);
+  const e2ThuBoothTribes = (e2ThuConfessionals.items || []).map((item) => item.tribeId);
+  check("e02-thursday-confessionals-slugs", e2ThuBoothSlugs.join("|") === "gpt-5-6-luna|gpt-5-6-sol|gemini-3-1-pro");
+  check("e02-thursday-confessionals-models", e2ThuBoothNames.join("|") === "GPT-5.6 Luna|GPT-5.6 Sol|Gemini 3.1 Pro");
+  check("e02-thursday-confessionals-tribes", e2ThuBoothTribes.join("|") === "askara|askara|askara");
+  check("e02-thursday-confessionals-luna-exact", (e2ThuConfessionals.items[0].quote || "") === E02_THU_LUNA_QUOTE);
+  check("e02-thursday-confessionals-sol-exact", (e2ThuConfessionals.items[1].quote || "") === E02_THU_SOL_QUOTE);
+  check("e02-thursday-confessionals-gemini-exact", (e2ThuConfessionals.items[2].quote || "") === E02_THU_GEMINI_QUOTE);
+}
 const e2WedBeats = (((episode2Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []);
 const e2WedOpenIdx = e2WedBeats.findIndex((beat) => beat.id === "wednesday-open-books");
 const e2WedLastHourIdx = e2WedBeats.findIndex((beat) => beat.id === "wednesday-lasthour-books");
@@ -801,6 +825,7 @@ check("e02-wednesday-lasthour-after-open", e2WedOpenIdx > -1 && e2WedLastHourIdx
 check("e02-wednesday-official-after-lasthour", e2WedLastHourIdx > -1 && e2WedOfficialIdx === e2WedLastHourIdx + 1);
 if (e2WedConfIdx > -1) {
   check("e02-kept-wednesday-confessionals", e2WedConfIdx > e2WedOfficialIdx);
+  check("e02-wednesday-confessionals-booths-beat", e2WedBeats[e2WedConfIdx].type === "booths" && e2WedBeats[e2WedConfIdx].kicker === "Confessionals");
   if (e2WedDinnerIdx > -1) {
     check("e02-wednesday-dinner-after-confessionals", e2WedDinnerIdx > e2WedConfIdx);
   }
