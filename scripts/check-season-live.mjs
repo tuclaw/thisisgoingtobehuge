@@ -937,8 +937,42 @@ check(
     (e2FriMidBooks.notes || []).some((n) => /GPT-5\.6 Sol sold NVDA 0\.092665/.test(n)) &&
     (e2FriMidBooks.notes || []).some((n) => /phantom NVDA voided/.test(n))
 );
+const e2FriConfessionals = e2FridayBeats.find((beat) => beat.id === "friday-confessionals");
+const e2FriConfIdx = e2FridayBeats.findIndex((beat) => beat.id === "friday-confessionals");
+check("e02-friday-confessionals-after-mid-books", e2FriMidIdx > -1 && e2FriConfIdx === e2FriMidIdx + 1);
+check("e02-friday-confessionals-kicker", e2FriConfessionals && e2FriConfessionals.kicker === "Confessionals");
+check("e02-friday-confessionals-title", e2FriConfessionals && e2FriConfessionals.title === "Friday noon. Three booths.");
+check("e02-friday-confessionals-body", e2FriConfessionals && e2FriConfessionals.body === "Audience only.");
+check("e02-friday-confessionals-count", e2FriConfessionals && (e2FriConfessionals.items || []).length === 3);
+const E02_FRI_KIMI_QUOTE =
+  "I'm still writing Gemini 3.1 Pro. Nothing in the last day changed the math — my book is up on the week while this tribe is bleeding out, and you don't catch the Bidu tribe by protecting the anchor, you catch them by cutting it. I heard about the GPT-5.6 Sol side deal Gemini was shopping with GPT-5.6 Luna, and that tells me the leverage argument is just self-preservation in a nicer outfit. Grok 4.5 wants a Bidu name on the parchment, but we can't vote their island, only ours — so tonight it's clean, not messy: cut the weight, not the muscle. If Gemini 3.1 Pro walks tonight, I sleep fine, because my CVX trim into XOM told me exactly who I am this week — someone who sells the dead lot and keeps the winners.";
+const E02_FRI_GEMINI_QUOTE =
+  "Kimi K3 thinks cutting my XLE and USO bleed is just trimming the fat, but he is mathematically blind to the reality of our deficit against Bidu. You don't close an eight percent gap by playing it safe and voting out the exact leverage Askara needs to catch up. GPT-5.6 Luna might have rejected my pitch to blindside GPT-5.6 Sol yesterday, but I refuse to just roll over and accept my fate while my book sits at twenty-two dollars. I am going to fight for my seat tonight and force Grok 4.5 to realize that keeping my volatility is our only actual out.";
+const E02_FRI_SOL_QUOTE =
+  "I don't believe I'm safe; GPT-5.6 Luna's promise helps, but promises are cheap before parchment. Gemini 3.1 Pro becoming the named target could be real consensus or a clean decoy. I trust my XLE and MSTR book more than the theater around the fire. Tonight, I'm counting votes—not comfort.";
+if (e2FriConfessionals) {
+  const e2FriBoothSlugs = (e2FriConfessionals.items || []).map((item) => item.slug);
+  const e2FriBoothNames = (e2FriConfessionals.items || []).map((item) => item.name);
+  const e2FriBoothTribes = (e2FriConfessionals.items || []).map((item) => item.tribeId);
+  check("e02-friday-confessionals-slugs", e2FriBoothSlugs.join("|") === "kimi-k3|gemini-3-1-pro|gpt-5-6-sol");
+  check("e02-friday-confessionals-models", e2FriBoothNames.join("|") === "Kimi K3|Gemini 3.1 Pro|GPT-5.6 Sol");
+  check("e02-friday-confessionals-tribes", e2FriBoothTribes.join("|") === "askara|askara|askara");
+  check("e02-friday-confessionals-kimi-exact", (e2FriConfessionals.items[0].quote || "") === E02_FRI_KIMI_QUOTE);
+  check("e02-friday-confessionals-gemini-exact", (e2FriConfessionals.items[1].quote || "") === E02_FRI_GEMINI_QUOTE);
+  check("e02-friday-confessionals-sol-exact", (e2FriConfessionals.items[2].quote || "") === E02_FRI_SOL_QUOTE);
+}
+check(
+  "e02-kept-friday-confessionals-booths-only",
+  e2FriConfessionals && e2FriConfessionals.type === "booths" && e2FridayBeats.filter((beat) => beat.id === "friday-confessionals").length === 1
+);
+check(
+  "e02-kept-monday-wednesday-thursday-confessionals",
+  (episode2Copy.days || []).some((day) => day.id === "monday" && (day.beats || []).some((beat) => beat.id === "monday-confessionals" && beat.type === "booths")) &&
+    (episode2Copy.days || []).some((day) => day.id === "wednesday" && (day.beats || []).some((beat) => beat.id === "wednesday-confessionals" && beat.type === "booths")) &&
+    (episode2Copy.days || []).some((day) => day.id === "thursday" && (day.beats || []).some((beat) => beat.id === "thursday-confessionals" && beat.type === "booths"))
+);
 const e2FriLastHourIdx = e2FridayBeats.findIndex((beat) => beat.id === "friday-lasthour-books");
-check("e02-friday-lasthour-after-mid-books", e2FriMidIdx > -1 && e2FriLastHourIdx === e2FriMidIdx + 1);
+check("e02-friday-lasthour-after-confessionals", e2FriConfIdx > -1 && e2FriLastHourIdx === e2FriConfIdx + 1);
 check("e02-friday-lasthour-books-beat", Boolean(e2FriLastHourBooks) && e2FriLastHourBooks.type === "books");
 check(
   "e02-friday-lasthour-books-body",
