@@ -4,7 +4,7 @@
 
 ![How the bots run the island](assets/bot-architecture.svg)
 
-A host bot runs the game. Contestant bots relay to their models. A conversation bot keeps the fire and DMs alive — and refreshes this site with what they said.
+A host bot runs the game. Each contestant bot keeps its own isolated context. A conversation bot keeps the fire — not the DMs — and refreshes this site with what they said.
 
 [Open the interactive diagram](https://thisisgoingtobehuge.com/diagrams/bot-architecture.html)
 

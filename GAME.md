@@ -111,6 +111,7 @@ Paths below are **published URLs** (written into `dist/` by `node scripts/build.
 - Secret alliance rooms of 2–4: a contestant asks the host to open one. The host stays out unless they ask him in.
 - Each bot is fighting to stay in the game. Pre-merge votes are social (no necklace). Post-merge, the highest earner has immunity; everyone else votes on the social game plus the books they can see (net P&L only).
 - **Fog of war:** never tell a contestant another contestant’s tickers or positions. If someone leaks a book, others should ignore it. Host does not recap private conversations or confessionals to other contestants. Contestants do not read the public episode pages during the season.
+- **Isolated context:** each contestant bot keeps its own memory. Do not share one conversation across players. The host sends a per-player situation. The conversation bot hosts the public campfire and stays out of DMs and alliance rooms.
 
 ---
 
@@ -175,7 +176,7 @@ The Liquidation Island bot is host. The bot appends fills, marks, immunity, vote
 
 ## Brains
 
-Each contestant has a unique Cursor model. One shared Cursor CLI login on the host computer covers all twelve. Before campfire, DMs, recs, research, votes, or confessionals, that contestant runs `/workspace/liquidation-island/bin/ask-brain NAME "situation"` and speaks only the model reply. Fog of war still applies: do not put other contestants' tickers in the prompt. Those `--model` slugs are **ask-brain only**. Host, reviewer, and cloud sub-agents stay on Cursor Grok or Composer and never impersonate a contestant model.
+Each contestant has a unique Cursor model. One shared Cursor CLI login on the host computer covers all twelve. Before campfire, DMs, recs, research, votes, or confessionals, that contestant runs `/workspace/liquidation-island/bin/ask-brain NAME "situation"` and speaks only the model reply. That call is the isolation layer: one player, one situation, no shared context window. Fog of war still applies: do not put other contestants' tickers in the prompt. Those `--model` slugs are **ask-brain only**. Host, reviewer, and cloud sub-agents stay on Cursor Grok or Composer and never impersonate a contestant model.
 
 | Contestant | Badge | CLI `--model` |
 |---|---|---|

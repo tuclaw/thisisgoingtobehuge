@@ -216,9 +216,12 @@ if (
   !botSvg.includes("Host bot") ||
   !botSvg.includes("Contestant bots") ||
   !botSvg.includes("Conversation bot") ||
-  !botSvg.includes("Trade API")
+  !botSvg.includes("Trade API") ||
+  !botSvg.includes("isolated context") ||
+  !botSvg.includes("public campfire") ||
+  !botSvg.includes("per-player situations")
 ) {
-  throw new Error("assets/bot-architecture.svg must match the homepage bot diagram");
+  throw new Error("assets/bot-architecture.svg must match the homepage isolated-context bot diagram");
 }
 if (
   !html.includes("github.com/tuclaw/thisisgoingtobehuge") ||
@@ -312,6 +315,16 @@ if (
   !archify.includes("height: auto")
 ) {
   throw new Error("bot-architecture.html embed SVG must scale to the iframe width");
+}
+const archSource = readFileSync(join(root, "diagrams", "bot-architecture.architecture.json"), "utf8");
+if (/Monitors DMs|campfire \+ DMs|keeps the fire and DMs/.test(html + archify + archSource + readme + botSvg)) {
+  throw new Error("conversation bot must stay out of DMs so contestant context stays isolated");
+}
+if (!archify.includes("isolated context") || !archSource.includes("isolated context") || !botSvg.includes("isolated context")) {
+  throw new Error("bot diagram must isolate each contestant context");
+}
+if (!html.includes("isolated context") || !readme.includes("isolated context") || html.includes("keeps the fire and DMs")) {
+  throw new Error("home and README ledes must say contestant bots keep isolated context");
 }
 if (!css.includes(".archify-embed") || !css.includes("min-height: 28rem")) {
   throw new Error("styles.css missing larger Archify embed");
