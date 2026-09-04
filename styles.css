@@ -5172,6 +5172,18 @@ body.is-titles .replay-trailer {
   line-height: 1.45;
 }
 
+.money-ticker-lede-link {
+  color: var(--gold-bright);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.money-ticker-lede-link:hover,
+.money-ticker-lede-link:focus-visible {
+  color: var(--parchment);
+  outline: none;
+}
+
 .money-ticker-toolbar {
   display: flex;
   flex-wrap: wrap;

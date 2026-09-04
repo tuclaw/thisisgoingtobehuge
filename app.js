@@ -3872,8 +3872,12 @@ function mountMoneyTicker(season, opts) {
     .join("");
 
   /* Home keeps a short books lede. Episode pages drop the ticker kicker/lede. */
+  const liveHref = assetUrl(liveEpisodePath(season));
+  const liveLabel = liveHref
+    ? `<a class="money-ticker-lede-link" href="${liveHref}">live Episode</a>`
+    : "live Episode";
   const tickerHead = homeMode
-    ? `<p class="money-ticker-lede">See how each tribe and contestant did in the Episode.</p>`
+    ? `<p class="money-ticker-lede">See how each tribe and contestant is doing in the ${liveLabel}.</p>`
     : "";
 
   root.innerHTML = `

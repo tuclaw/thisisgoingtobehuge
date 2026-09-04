@@ -198,6 +198,29 @@ if (!readme.includes("assets/laugh-history.svg") || !readme.includes("Laugh trac
   throw new Error("README.md must show the laugh-history chart");
 }
 if (
+  !readme.includes("assets/bot-architecture.svg") ||
+  !readme.includes("How the bots run the island") ||
+  !readme.includes("diagrams/bot-architecture.html")
+) {
+  throw new Error("README.md must show the homepage bot-architecture diagram");
+}
+const botReadmeAt = readme.indexOf("assets/bot-architecture.svg");
+const laughReadmeAt = readme.indexOf("assets/laugh-history.svg");
+const liveNowAt = readme.indexOf("thisisgoingtobehuge.com)");
+if (!(botReadmeAt > -1 && laughReadmeAt > botReadmeAt && liveNowAt > botReadmeAt)) {
+  throw new Error("README.md must put the bot-architecture diagram above the pitch and laugh tracker");
+}
+const botSvg = readFileSync(join(root, "assets", "bot-architecture.svg"), "utf8");
+if (
+  !botSvg.includes("How the bots run the island") ||
+  !botSvg.includes("Host bot") ||
+  !botSvg.includes("Contestant bots") ||
+  !botSvg.includes("Conversation bot") ||
+  !botSvg.includes("Trade API")
+) {
+  throw new Error("assets/bot-architecture.svg must match the homepage bot diagram");
+}
+if (
   !html.includes("github.com/tuclaw/thisisgoingtobehuge") ||
   !html.includes("class=\"repo-link\"") ||
   !html.includes("class=\"github-mark\"")
@@ -324,8 +347,17 @@ if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow
 if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {
   throw new Error("app.js missing home money ticker Season/Island-only tab config");
 }
-if (!appJs.includes("See how each tribe and contestant did in the Episode.")) {
+if (!appJs.includes("See how each tribe and contestant is doing in the") || !appJs.includes("live Episode")) {
   throw new Error("app.js missing home money ticker lede copy");
+}
+if (!appJs.includes('class="money-ticker-lede-link"') || !appJs.includes(">live Episode</a>")) {
+  throw new Error("home money ticker lede must hyperlink live Episode");
+}
+if (!appJs.includes("assetUrl(liveEpisodePath(season))")) {
+  throw new Error("home money ticker lede must point live Episode at the live episode path");
+}
+if (!css.includes(".money-ticker-lede-link") || !css.includes("text-underline-offset")) {
+  throw new Error("styles.css missing home money ticker live Episode link treatment");
 }
 if (!appJs.includes("tickerHead") || !appJs.includes("homeMode")) {
   throw new Error("app.js must keep a home-only money ticker lede");
