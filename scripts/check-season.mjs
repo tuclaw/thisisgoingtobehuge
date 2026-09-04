@@ -143,7 +143,7 @@ if (boardNative) {
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", source.islandPotUsd === 239.387, String(source.islandPotUsd));
+  check("pot-marked-sleeves", source.islandPotUsd === 239.1412, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
@@ -226,9 +226,12 @@ for (const s of board.survivors) {
         Math.abs(s.bookUsd - 22.7638) < 0.0001 ||
         Math.abs(s.bookUsd - 22.6415) < 0.0001 ||
         Math.abs(s.bookUsd - 22.1508) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.4118) < 0.0001);
+        Math.abs(s.bookUsd - 22.4118) < 0.0001 ||
+        Math.abs(s.bookUsd - 22.3957) < 0.0001);
     const hostRecordedFriOpen =
-      (source.lastSession === "2026-09-04-open" || source.lastSession === "2026-09-04-mid") &&
+      (source.lastSession === "2026-09-04-open" ||
+        source.lastSession === "2026-09-04-mid" ||
+        source.lastSession === "2026-09-04-lasthour") &&
       s.status === "active" &&
       s.slug !== "gemini-3-1-pro";
     if (!hostRecordedProBook && !hostRecordedFriOpen) {
@@ -252,7 +255,7 @@ for (const s of board.survivors) {
   const sleeveBasis = carryBook != null ? carryBook : start;
   let sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + askaraEvenUp + 0.05 : start + 0.05;
   // Remake fixture exception: post-gift intraday marks can drift stock above carry+sleeve cap.
-  if ((giftInvestMark || source.lastSession === "2026-09-04-open" || source.lastSession === "2026-09-04-mid") && s.status !== "jury") {
+  if ((giftInvestMark || source.lastSession === "2026-09-04-open" || source.lastSession === "2026-09-04-mid" || source.lastSession === "2026-09-04-lasthour") && s.status !== "jury") {
     sleeveCap = Math.max(sleeveCap, s.bookUsd + 0.1);
   }
   check(`sleeve:${s.slug}`, sleeve <= sleeveCap, `${sleeve} vs cap ${sleeveCap}`);
