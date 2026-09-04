@@ -506,7 +506,15 @@ function renderEpisodePage(episode, season, base) {
       ${episode.weekBoard.lede ? `<div class="preseason-banner" id="season-banner">${escapeHtml(season.statusLabel || "")}</div>` : ""}
       <div class="tribe-totals" id="episode-tribe-totals"></div>
       ${episode.weekBoard.lede ? `<p class="holdings-kicker" id="holdings-kicker">${escapeHtml(episode.weekBoard.lede)}</p>` : ""}
+      <div class="books-board-tabs" id="books-board-tabs" role="tablist" aria-label="Books or buys and sells">
+        <button type="button" role="tab" data-books-tab="books" aria-selected="true" aria-controls="episode-holdings">Books</button>
+        <button type="button" role="tab" data-books-tab="tape" aria-selected="false" aria-controls="trade-tape">Buys and sells</button>
+      </div>
       <div class="holdings" id="episode-holdings"></div>
+      <div class="trade-tape" id="trade-tape" hidden>
+        <p class="tape-lede">Each mark is a real fill. An empty lane means they sat. Sell % is realized versus that name's buy cost.</p>
+        <div id="trade-tape-root"></div>
+      </div>
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 

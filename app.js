@@ -642,6 +642,343 @@ function renderEpisodeHoldings(season) {
   }
 }
 
+let tradeTapeRange = "week";
+let tradeTapeSeason = null;
+
+function tradeTapeFillKey(fill) {
+  return [
+    fill && fill.survivorId,
+    fill && fill.side,
+    String((fill && fill.ticker) || "").toUpperCase(),
+    fill && fill.at
+  ].join("|");
+}
+
+function publicFills(season) {
+  const raw = (season && Array.isArray(season.events) ? season.events : []).filter(
+    (event) => event && event.type === "fill"
+  );
+  const seen = new Set();
+  const out = [];
+  for (const fill of raw) {
+    const key = tradeTapeFillKey(fill);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(fill);
+  }
+  return out.sort((a, b) => {
+    const ta = Date.parse(a.at || "");
+    const tb = Date.parse(b.at || "");
+    if (ta !== tb) return (Number.isNaN(ta) ? 0 : ta) - (Number.isNaN(tb) ? 0 : tb);
+    return String(a.id || "").localeCompare(String(b.id || ""));
+  });
+}
+
+function tapeWeekEpisode(season) {
+  if (typeof document !== "undefined" && document.documentElement) {
+    if (document.documentElement.getAttribute("data-page") === "episode") {
+      return currentPageEpisode(season) || season.episode || null;
+    }
+  }
+  return getLiveEpisode(season) || season.episode || null;
+}
+
+function fillsForTapeRange(season, range) {
+  const fills = publicFills(season);
+  if (range !== "week") return fills;
+  const bounds = episodeWeekBounds(tapeWeekEpisode(season));
+  if (!bounds) return fills;
+  return fills.filter((fill) => {
+    const t = Date.parse(fill.at || "");
+    return !Number.isNaN(t) && t >= bounds.startMs && t <= bounds.endMs;
+  });
+}
+
+function tapeSummary(fills) {
+  let buys = 0;
+  let sells = 0;
+  let usd = 0;
+  let hasUsd = false;
+  let sellCost = 0;
+  let sellProceeds = 0;
+  let realizedN = 0;
+  (fills || []).forEach((fill) => {
+    if (fill && fill.side === "sell") sells += 1;
+    else buys += 1;
+    if (fill && typeof fill.sizeUsd === "number" && !Number.isNaN(fill.sizeUsd)) {
+      usd += fill.sizeUsd;
+      hasUsd = true;
+    }
+    if (
+      fill &&
+      fill.side === "sell" &&
+      typeof fill.sizeUsd === "number" &&
+      typeof fill.realizedUsd === "number" &&
+      !Number.isNaN(fill.sizeUsd) &&
+      !Number.isNaN(fill.realizedUsd)
+    ) {
+      const cost = fill.sizeUsd - fill.realizedUsd;
+      if (cost > 0) {
+        sellCost += cost;
+        sellProceeds += fill.sizeUsd;
+        realizedN += 1;
+      }
+    }
+  });
+  const realizedPct =
+    realizedN && sellCost > 0 ? ((sellProceeds - sellCost) / sellCost) * 100 : null;
+  return { buys, sells, fills: buys + sells, usd, hasUsd, realizedPct, realizedN };
+}
+
+function realizedLabel(fill) {
+  if (!fill || fill.side !== "sell") return "";
+  if (typeof fill.realizedPct !== "number" || Number.isNaN(fill.realizedPct)) return "";
+  return pct(fill.realizedPct);
+}
+
+function fillCountPhrase(sum) {
+  if (!sum || !sum.fills) return "Sat";
+  const bits = [];
+  if (sum.buys) bits.push(sum.buys === 1 ? "1 buy" : sum.buys + " buys");
+  if (sum.sells) bits.push(sum.sells === 1 ? "1 sell" : sum.sells + " sells");
+  return bits.join(" · ");
+}
+
+function fillsByWeekday(fills) {
+  const by = { Mon: [], Tue: [], Wed: [], Thu: [], Fri: [] };
+  (fills || []).forEach((fill) => {
+    const day = moneyTickerTradingDay(fill && fill.at);
+    const key = day && day.weekday;
+    if (key && by[key]) by[key].push(fill);
+  });
+  return by;
+}
+
+function tapeDotHtml(fill) {
+  const side = fill && fill.side === "sell" ? "sell" : "buy";
+  const ticker = String((fill && fill.ticker) || "").toUpperCase();
+  const when = formatMarkedAt(fill && fill.at);
+  const verb = side === "sell" ? "Sold" : "Bought";
+  const size =
+    fill && typeof fill.sizeUsd === "number" && !Number.isNaN(fill.sizeUsd)
+      ? " · " + money(fill.sizeUsd)
+      : "";
+  const pnl = realizedLabel(fill);
+  const title =
+    [verb, ticker].filter(Boolean).join(" ") +
+    size +
+    (pnl ? " · " + pnl : "") +
+    (when ? " · " + when : "");
+  return `<span class="tape-dot is-${side}${pnl ? " " + chgClass(fill.realizedPct) : ""}" title="${escapeHtml(title)}"><i>${escapeHtml(ticker || side)}</i></span>`;
+}
+
+function tapeDayCellHtml(fills) {
+  const list = fills || [];
+  if (!list.length) {
+    return `<span class="tape-day is-empty" aria-hidden="true"></span>`;
+  }
+  const shown = list.slice(0, 3);
+  const extra = list.length - shown.length;
+  const label = list
+    .map((fill) => {
+      const side = fill && fill.side === "sell" ? "sold" : "bought";
+      return side + " " + String((fill && fill.ticker) || "").toUpperCase();
+    })
+    .join(", ");
+  return `<span class="tape-day" aria-label="${escapeHtml(label)}">${shown
+    .map(tapeDotHtml)
+    .join("")}${extra > 0 ? `<em class="tape-more">+${extra}</em>` : ""}</span>`;
+}
+
+function tapeBarHtml(sum, maxFills) {
+  const max = Math.max(1, Number(maxFills) || 1);
+  const width = sum && sum.fills ? Math.min(100, (sum.fills / max) * 100) : 0;
+  const buyShare = sum && sum.fills ? (sum.buys / sum.fills) * 100 : 0;
+  return `<span class="tape-bar" style="--tape-w:${width.toFixed(2)}%;--tape-buy:${buyShare.toFixed(2)}%"><span class="tape-bar-track"><span class="tape-bar-buy"></span></span></span>`;
+}
+
+function compareTapeRows(a, b, season) {
+  const fadeA = holdBookFaded(a.survivor, season) ? 1 : 0;
+  const fadeB = holdBookFaded(b.survivor, season) ? 1 : 0;
+  if (fadeA !== fadeB) return fadeA - fadeB;
+  const n = b.fills.length - a.fills.length;
+  if (n !== 0) return n;
+  return modelOf(a.survivor).localeCompare(modelOf(b.survivor));
+}
+
+function tradeTapeRowHtml(row, season, range, maxFills) {
+  const s = row.survivor;
+  const faded = holdBookFaded(s, season);
+  const tribe = tribeById(season, s.tribeId);
+  const model = escapeHtml(modelOf(s));
+  const slug = slugOf(s);
+  const face = s.portrait
+    ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
+    : "";
+  const sum = tapeSummary(row.fills);
+  const count = fillCountPhrase(sum);
+  const sizeNote = sum.hasUsd && sum.fills ? money(sum.usd) : "";
+  const soldNote =
+    typeof sum.realizedPct === "number" && !Number.isNaN(sum.realizedPct)
+      ? `<b class="${chgClass(sum.realizedPct)}">${pct(sum.realizedPct)} sold</b>`
+      : "";
+  const lane =
+    range === "season"
+      ? tapeBarHtml(sum, maxFills)
+      : MONEY_TICKER_WEEKDAYS.map((day) => tapeDayCellHtml(row.byDay[day.key] || [])).join("");
+  const fadedClass = faded ? " is-faded" : "";
+  return `<a class="tape-row ${escapeHtml(s.tribeId || "")}${fadedClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
+    <span class="tape-face">${face}</span>
+    <span class="tape-id">
+      <strong>${model}</strong>
+      <em>${escapeHtml(tribeChromeName(tribe || s.tribeId) || "")}</em>
+    </span>
+    <span class="tape-count">${escapeHtml(count)}${sizeNote ? `<i>${escapeHtml(sizeNote)}</i>` : ""}${soldNote}</span>
+    <span class="tape-lane${range === "season" ? " is-season" : ""}">${lane}</span>
+  </a>`;
+}
+
+function renderTradeTape(season) {
+  const root = document.getElementById("trade-tape-root");
+  if (!root) return;
+  tradeTapeSeason = season;
+  const range = tradeTapeRange === "season" ? "season" : "week";
+  const fills = fillsForTapeRange(season, range);
+  const byId = new Map();
+  fills.forEach((fill) => {
+    if (!fill || !fill.survivorId) return;
+    if (!byId.has(fill.survivorId)) byId.set(fill.survivorId, []);
+    byId.get(fill.survivorId).push(fill);
+  });
+  const rows = (season.survivors || []).map((survivor) => {
+    const list = byId.get(survivor.id) || [];
+    return {
+      survivor,
+      fills: list,
+      byDay: fillsByWeekday(list)
+    };
+  });
+  rows.sort((a, b) => compareTapeRows(a, b, season));
+  const maxFills = rows.reduce((n, row) => Math.max(n, row.fills.length), 0);
+  const weekOn = range === "week";
+  const dayHead = weekOn
+    ? `<div class="tape-head" aria-hidden="true"><span></span><span></span><span></span><span class="tape-lane">${MONEY_TICKER_WEEKDAYS.map(
+        (day) => `<span>${escapeHtml(day.key)}</span>`
+      ).join("")}</span></div>`
+    : "";
+  root.innerHTML =
+    `<div class="trade-tape-range" role="tablist" aria-label="Tape range">` +
+    `<button type="button" role="tab" data-tape-range="week" aria-selected="${weekOn ? "true" : "false"}">Week</button>` +
+    `<button type="button" role="tab" data-tape-range="season" aria-selected="${weekOn ? "false" : "true"}">Season</button>` +
+    `</div>` +
+    `<div class="tape-board">` +
+    dayHead +
+    rows.map((row) => tradeTapeRowHtml(row, season, range, maxFills)).join("") +
+    `</div>`;
+  bindTradeTape(season);
+}
+
+function bindTradeTape(season) {
+  const root = document.getElementById("trade-tape-root");
+  if (!root || root.dataset.tapeBound === "1") return;
+  root.dataset.tapeBound = "1";
+  root.addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-tape-range]");
+    if (!btn || !root.contains(btn)) return;
+    const next = btn.getAttribute("data-tape-range");
+    if (next !== "week" && next !== "season") return;
+    event.preventDefault();
+    tradeTapeRange = next;
+    renderTradeTape(tradeTapeSeason);
+  });
+}
+
+let booksBoardTab = "books";
+let booksBoardSeason = null;
+
+function booksBoardTabFromHash() {
+  const hash = (window.location.hash || "").replace(/^#/, "");
+  if (hash === "trade-tape" || hash === "buys-sells") return "tape";
+  return booksBoardTab;
+}
+
+function bindBooksBoardTabs() {
+  const tabs = document.getElementById("books-board-tabs");
+  if (!tabs || tabs.dataset.booksTabBound === "1") return;
+  tabs.dataset.booksTabBound = "1";
+  tabs.addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-books-tab]");
+    if (!btn || !tabs.contains(btn)) return;
+    const next = btn.getAttribute("data-books-tab");
+    if (next !== "books" && next !== "tape") return;
+    event.preventDefault();
+    booksBoardTab = next;
+    renderBooksBoard(booksBoardSeason);
+  });
+}
+
+function renderBooksBoard(season) {
+  const holdings = document.getElementById("episode-holdings");
+  const tape = document.getElementById("trade-tape");
+  const tabs = document.getElementById("books-board-tabs");
+  if (!holdings && !tape) return;
+  booksBoardSeason = season;
+  booksBoardTab = booksBoardTabFromHash();
+  bindBooksBoardTabs();
+  if (tabs) {
+    tabs.querySelectorAll("[data-books-tab]").forEach((btn) => {
+      const on = btn.getAttribute("data-books-tab") === booksBoardTab;
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+  }
+  if (holdings) holdings.hidden = booksBoardTab !== "books";
+  if (tape) tape.hidden = booksBoardTab !== "tape";
+  if (booksBoardTab === "tape") renderTradeTape(season);
+  else renderEpisodeHoldings(season);
+}
+
+function castawayTapeHtml(season, survivor) {
+  if (!survivor) return "";
+  const all = publicFills(season).filter((fill) => fill.survivorId === survivor.id);
+  const week = fillsForTapeRange(season, "week").filter((fill) => fill.survivorId === survivor.id);
+  const allSum = tapeSummary(all);
+  const weekSum = tapeSummary(week);
+  const newest = all.slice().reverse();
+  let line;
+  if (!allSum.fills) {
+    line = "No fills on the tape yet.";
+  } else if (!weekSum.fills) {
+    line = `Sat this week · ${allSum.fills === 1 ? "1 fill" : allSum.fills + " fills"} on the season.`;
+  } else if (weekSum.fills === allSum.fills) {
+    line = fillCountPhrase(weekSum) + " this week.";
+  } else {
+    line = `${fillCountPhrase(weekSum)} this week · ${allSum.fills} on the season.`;
+  }
+  const list = newest.length
+    ? `<ol class="castaway-tape">${newest
+        .map((fill) => {
+          const side = fill.side === "sell" ? "sell" : "buy";
+          const verb = side === "sell" ? "Sold" : "Bought";
+          const ticker = String(fill.ticker || "").toUpperCase();
+          const size =
+            typeof fill.sizeUsd === "number" && !Number.isNaN(fill.sizeUsd) ? money(fill.sizeUsd) : "";
+          const pnl = realizedLabel(fill);
+          const when = formatMarkedAt(fill.at);
+          return `<li class="is-${side}"><strong>${escapeHtml(verb)} ${escapeHtml(ticker)}</strong>${
+            size || pnl
+              ? `<b>${escapeHtml(size)}${pnl ? ` <span class="${chgClass(fill.realizedPct)}">${escapeHtml(pnl)}</span>` : ""}</b>`
+              : ""
+          }<em>${escapeHtml(when)}</em></li>`;
+        })
+        .join("")}</ol>`
+    : "";
+  return `<div class="castaway-tape-block">
+      <p class="castaway-thread-kicker">Tape</p>
+      <p class="castaway-tape-sum">${escapeHtml(line)}</p>
+      ${list}
+    </div>`;
+}
+
 function openFoldForTarget(target) {
   if (!target) return;
   const fold = target.classList && target.classList.contains("day-fold")
@@ -658,6 +995,10 @@ function episodeFocusId() {
 
 function openFoldForHash() {
   const hash = (window.location.hash || "").replace(/^#/, "");
+  if (hash === "trade-tape" || hash === "buys-sells") {
+    booksBoardTab = "tape";
+    if (booksBoardSeason) renderBooksBoard(booksBoardSeason);
+  }
   if (hash) {
     const el = document.getElementById(hash);
     if (el) openFoldForTarget(el);
@@ -1447,6 +1788,7 @@ function paintCastawaySheet(season, parsed) {
         </button>
       </div>
       ${listHtml}
+      ${playing ? "" : castawayTapeHtml(season, survivor)}
     </div>`;
 }
 
@@ -3592,7 +3934,7 @@ function renderEpisode(season) {
   if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
   renderEpisodeLiveIndicator(season);
   mountMoneyTicker(season);
-  renderEpisodeHoldings(season);
+  renderBooksBoard(season);
   const body = document.getElementById("episode-marks-body");
   if (body) {
     body.innerHTML = (season.survivors || [])

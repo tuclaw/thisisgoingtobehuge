@@ -115,14 +115,18 @@ function fillsFromBoardNative(source) {
       if (!pos.orderId || !pos.filledAt) continue;
       const ticker = tickerOf(pos);
       if (!ticker || ticker === "CASH") continue;
-      fills.push({
+      const fill = {
         type: "fill",
         id: `fill-${pos.orderId}`,
         at: pos.filledAt,
         survivorId: survivor.id,
         side: String(pos.action || "BUY").toLowerCase() === "sell" ? "sell" : "buy",
         ticker
-      });
+      };
+      if (typeof pos.sizeUsd === "number" && !Number.isNaN(pos.sizeUsd)) {
+        fill.sizeUsd = pos.sizeUsd;
+      }
+      fills.push(fill);
     }
   }
   return fills.sort((a, b) => Date.parse(a.at || "") - Date.parse(b.at || ""));
@@ -208,8 +212,9 @@ function snapshotsFromEvents(cast, events, starting, quotes) {
 }
 
 function mergePublicEvents(source) {
-  const fromTape = (source.events || []).map(publicEvent);
-  const fromBoard = fillsFromBoardNative(source).map(publicEvent);
+  const realized = realizedFromFills(source.events || []);
+  const fromTape = (source.events || []).map((event) => publicEvent(event, realized));
+  const fromBoard = fillsFromBoardNative(source).map((event) => publicEvent(event, realized));
   const seen = new Set();
   const out = [];
   for (const event of [...fromTape, ...fromBoard]) {
@@ -552,10 +557,90 @@ function publicPosition(pos) {
   return copy;
 }
 
-function publicEvent(event) {
+function fillQty(fill) {
+  const qty = parseFloat(fill && fill.qty);
+  return Number.isFinite(qty) && qty > 0 ? qty : null;
+}
+
+function fillNotional(fill) {
+  if (fill && typeof fill.sizeUsd === "number" && !Number.isNaN(fill.sizeUsd)) return fill.sizeUsd;
+  const qty = fillQty(fill);
+  const avg = parseFloat(fill && fill.avg);
+  if (qty != null && Number.isFinite(avg)) return qty * avg;
+  return null;
+}
+
+function fillConsistency(fill) {
+  const qty = fillQty(fill);
+  const avg = parseFloat(fill && fill.avg);
+  const size = fillNotional(fill);
+  if (qty == null || !Number.isFinite(avg) || size == null) return Number.POSITIVE_INFINITY;
+  return Math.abs(qty * avg - size);
+}
+
+function uniqueHostFills(events) {
+  const fills = (events || []).filter((event) => event && event.type === "fill");
+  fills.sort(
+    (a, b) =>
+      Date.parse(a.at || "") - Date.parse(b.at || "") || String(a.id || "").localeCompare(String(b.id || ""))
+  );
+  const best = new Map();
+  for (const fill of fills) {
+    const key = [fill.survivorId, fill.side, String(fill.ticker || "").toUpperCase(), fill.at].join("|");
+    const prev = best.get(key);
+    if (!prev || fillConsistency(fill) < fillConsistency(prev)) best.set(key, fill);
+  }
+  return [...best.values()].sort(
+    (a, b) =>
+      Date.parse(a.at || "") - Date.parse(b.at || "") || String(a.id || "").localeCompare(String(b.id || ""))
+  );
+}
+
+/** FIFO realized P&L on sells. Uses host qty/avg; public board only gets the %. */
+export function realizedFromFills(events) {
+  const books = new Map();
+  const byId = new Map();
+  for (const fill of uniqueHostFills(events)) {
+    const sid = fill.survivorId;
+    if (!sid) continue;
+    if (!books.has(sid)) books.set(sid, new Map());
+    const lots = books.get(sid);
+    const ticker = String(fill.ticker || "").toUpperCase();
+    if (!ticker) continue;
+    if (!lots.has(ticker)) lots.set(ticker, []);
+    const queue = lots.get(ticker);
+    const qty = fillQty(fill);
+    const size = fillNotional(fill);
+    if (fill.side !== "sell") {
+      if (qty != null && size != null) queue.push({ qty, costUsd: size });
+      continue;
+    }
+    if (qty == null || size == null || !queue.length) continue;
+    let remain = qty;
+    let cost = 0;
+    while (remain > 1e-8 && queue.length) {
+      const lot = queue[0];
+      const take = Math.min(lot.qty, remain);
+      const takeCost = lot.costUsd * (take / lot.qty);
+      cost += takeCost;
+      lot.qty = lot.qty - take;
+      lot.costUsd = lot.costUsd - takeCost;
+      if (lot.qty <= 1e-8) queue.shift();
+      remain -= take;
+    }
+    if (cost <= 0) continue;
+    byId.set(fill.id, {
+      realizedUsd: round(size - cost, 4),
+      realizedPct: pctRound(((size - cost) / cost) * 100)
+    });
+  }
+  return byId;
+}
+
+function publicEvent(event, realized) {
   if (!event || typeof event !== "object") return event;
   if (event.type === "fill") {
-    return {
+    const out = {
       type: "fill",
       id: event.id,
       at: event.at,
@@ -563,6 +648,15 @@ function publicEvent(event) {
       side: event.side,
       ticker: event.ticker
     };
+    if (typeof event.sizeUsd === "number" && !Number.isNaN(event.sizeUsd)) {
+      out.sizeUsd = event.sizeUsd;
+    }
+    const pnl = realized && event.id ? realized.get(event.id) : null;
+    if (pnl && typeof pnl.realizedPct === "number") {
+      out.realizedPct = pnl.realizedPct;
+      out.realizedUsd = pnl.realizedUsd;
+    }
+    return out;
   }
   if (event.type === "mark") {
     const out = {
@@ -731,6 +825,6 @@ export function deriveSeason(source) {
     dayPctPriorOfficial: lastMark ? Boolean(lastMark.dayPctPriorOfficial) : false,
     quotes,
     snapshots,
-    events: events.map(publicEvent)
+    events: events.map((event) => publicEvent(event, realizedFromFills(events)))
   };
 }
