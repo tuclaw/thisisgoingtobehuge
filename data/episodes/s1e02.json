@@ -20,6 +20,7 @@
     { "day": "Now", "text": "Episode 2 extra $10: each living player received $10 more. All of it must be invested in US-listed stocks or ETFs. None of that new $10 can sit cash. Claude Fable 5 is jury and is not funded." },
     { "day": "Mon 31", "text": "Eleven real last-hour fills. Claude Sonnet 5, Gemini 3.7 Flash, GPT-5.6 Terra sat." },
     { "day": "Tue 1", "text": "Six real fills at the open. Grok 4.6 leads the week. Gemini 3.1 Pro is worst among the living." },
+    { "day": "Fri 4", "text": "Ten real fills at the open. Grok 4.6 leads the week. Gemini 3.1 Pro is worst among the living." },
     { "day": "Fri 4", "text": "Tribal Friday Sep 4, 2026 · 7:00 PM PT. Not yet." }
   ],
   "days": [
@@ -432,6 +433,31 @@
               "title": "The Askara tribe fire",
               "subtitle": "Thursday dinner"
             }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friday",
+      "foldDay": "Fri 4",
+      "foldTitle": "Friday open",
+      "foldEm": "Ten real fills.",
+      "snapshotId": "s1e02-fri-open",
+      "beats": [
+        {
+          "type": "books",
+          "id": "friday-open-books",
+          "kicker": "Friday · Sep 4 · Open",
+          "title": "Friday open books",
+          "body": "Fri Sep 4 open · last-trade. weekPct vs Episode 2 Monday open (gift + the Askara tribe even-up already in the open book); dayPct vs Thu Sep 3 official close. the Bidu tribe combined week −0.18%. the Askara tribe combined week −1.86%. Grok 4.6 leads the week. Gemini 3.1 Pro is worst among the living. No Fable.",
+          "boardId": "day-friday",
+          "notes": [
+            "Composer 2.5 sold XOM 0.082234 @ 159.970000 ($13.15); bought USO $13.15. Keeps 0.043021 XOM.",
+            "Grok 4.5 sold USO 0.061193 @ 138.075400 ($8.45); bought XOM $8.50. Keeps green USO 0.036739.",
+            "GPT-5.6 Sol bought NVDA $21.73. Keeps XLE.",
+            "Claude Opus 5 sold XLE 0.082785 @ 63.520100 ($5.26); sold LNG 0.012117 @ 287.337200 ($3.48); bought NVDA $3.40, SPY $3.20, MPC $2.00. Keeps VLO.",
+            "HOLD: Grok 4.6, Claude Sonnet 5, Gemini 3.7 Flash, GPT-5.6 Terra, Gemini 3.1 Pro, GPT-5.6 Luna, Kimi K3.",
+            "Gemini 3.1 Pro keeps NVDA on the published board (host decision pending)."
           ]
         }
       ]
