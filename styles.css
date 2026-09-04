@@ -2384,8 +2384,45 @@ a.brand:hover {
   }
 }
 
+.books-board-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 0.85rem;
+}
+
+.books-board-tabs button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  color: rgba(232, 147, 84, 0.72);
+  background: transparent;
+  border-radius: 999px;
+}
+
+.books-board-tabs button[aria-selected="true"] {
+  color: #120c08;
+  background: #e89354;
+}
+
+.tape-lede {
+  margin: 0 0 0.75rem;
+  color: var(--sand);
+  max-width: 42rem;
+}
+
+.holdings[hidden],
+.trade-tape[hidden] {
+  display: none;
+}
+
 .trade-tape {
-  margin-top: 0.85rem;
+  margin-top: 0.15rem;
 }
 
 .trade-tape-range {
@@ -2519,11 +2556,21 @@ a.brand:hover {
   text-align: right;
 }
 
-.tape-count i {
+.tape-count i,
+.tape-count b {
   display: block;
   font-style: normal;
+  font-weight: 400;
   color: var(--worn);
   font-size: 0.68rem;
+}
+
+.tape-count b.up {
+  color: #8ee8d8;
+}
+
+.tape-count b.down {
+  color: #ff9a6a;
 }
 
 .tape-lane {
@@ -7366,7 +7413,7 @@ body.castaway-sheet-open {
 
 .castaway-tape-block {
   text-align: left;
-  margin: 0 0 1.05rem;
+  margin: 0.9rem 0 0;
   padding: 0.75rem 0 0;
   border-top: 1px solid rgba(196, 165, 116, 0.16);
 }
@@ -7416,6 +7463,14 @@ body.castaway-sheet-open {
   font-weight: 400;
   color: var(--sand);
   text-align: right;
+}
+
+.castaway-tape b .up {
+  color: #8ee8d8;
+}
+
+.castaway-tape b .down {
+  color: #ff9a6a;
 }
 
 .castaway-tape em {

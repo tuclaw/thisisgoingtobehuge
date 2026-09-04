@@ -25,17 +25,23 @@ function fail(message) {
   "function fillCountPhrase",
   "function renderTradeTape",
   "function bindTradeTape",
+  "function renderBooksBoard",
+  "function realizedLabel",
   "function castawayTapeHtml",
   "function tradeTapeFillKey",
   'data-tape-range="week"',
   'data-tape-range="season"',
+  "data-books-tab",
   "castawayTapeHtml(season, survivor)"
 ].forEach((needle) => {
   if (!appJs.includes(needle)) fail("app.js missing trade tape piece: " + needle);
 });
 
-if (!appJs.includes("renderTradeTape(season)")) {
-  fail("renderEpisode must mount the trade tape");
+if (!appJs.includes("renderBooksBoard(season)")) {
+  fail("renderEpisode must mount books/tape tabs");
+}
+if (!/castaway-actions[\s\S]+castawayTapeHtml\(season, survivor\)/.test(appJs)) {
+  fail("castaway tape must sit below the DMs");
 }
 if (appJs.includes("leads the week") && /renderTradeTape[\s\S]{0,400}leads the week/.test(appJs)) {
   fail("trade tape must not dump leader/laggard recap into the board");
@@ -43,20 +49,24 @@ if (appJs.includes("leads the week") && /renderTradeTape[\s\S]{0,400}leads the w
 
 const booksIdx = builder.indexOf('id="latest-books"');
 const tapeIdx = builder.indexOf('id="trade-tape"');
+const booksEnd = builder.indexOf("</article>", booksIdx);
 const whispersIdx = builder.indexOf('id="camp-whispers"');
-if (!(booksIdx > -1 && tapeIdx > booksIdx)) {
-  fail("episode renderer must put #trade-tape after #latest-books");
+if (!(booksIdx > -1 && tapeIdx > booksIdx && booksEnd > tapeIdx)) {
+  fail("episode renderer must put #trade-tape inside #latest-books as a tab");
 }
-if (whispersIdx > -1 && !(tapeIdx < whispersIdx)) {
-  fail("episode renderer must put #trade-tape before #camp-whispers");
+if (builder.includes('<article class="beat beat-gold" id="trade-tape">')) {
+  fail("buys/sells must be a books tab, not its own beat");
+}
+if (!builder.includes('data-books-tab="books"') || !builder.includes('data-books-tab="tape"')) {
+  fail("latest books must tab Books and Buys and sells");
+}
+if (whispersIdx > -1 && !(booksEnd < whispersIdx)) {
+  fail("latest books must stay above #camp-whispers");
 }
 if (!builder.includes("Each mark is a real fill. An empty lane means they sat.")) {
   fail("trade tape must keep the short sit-vs-trade lede");
 }
-if (
-  builder.includes('id="trade-tape"') &&
-  /id="trade-tape"[\s\S]{0,500}(weekPct|markLabel|leads the week|dayPct)/.test(builder)
-) {
+if (/id="trade-tape"[\s\S]{0,500}(weekPct|markLabel|leads the week)/.test(builder)) {
   fail("trade tape static copy must not restore mark-status chrome");
 }
 
@@ -66,13 +76,17 @@ if (
   ".tape-dot.is-buy",
   ".tape-dot.is-sell",
   ".tape-bar",
-  ".castaway-tape"
+  ".castaway-tape",
+  ".books-board-tabs"
 ].forEach((needle) => {
   if (!stylesCss.includes(needle)) fail("styles.css missing " + needle);
 });
 
 if (!ledger.includes("out.sizeUsd = event.sizeUsd")) {
   fail("public fills must keep sizeUsd without qty/avg");
+}
+if (!ledger.includes("export function realizedFromFills") || !ledger.includes("out.realizedPct")) {
+  fail("public sells must publish realizedPct without qty/avg");
 }
 
 if (episode2Copy.heroNote) fail("Episode 2 heroNote must stay empty");
@@ -101,6 +115,17 @@ for (const fill of publicFills) {
   }
 }
 
+const fableSell = publicFills.find((fill) => fill.id === "fill-fable-gld-sell");
+if (!fableSell || typeof fableSell.realizedPct !== "number") {
+  fail("Fable GLD sell must publish realized % versus the Monday buy");
+}
+if (Math.abs(fableSell.realizedPct + 4.02) > 0.2) {
+  fail("Fable GLD realized % should be about -4% (got " + fableSell.realizedPct + ")");
+}
+if (fableSell.qty != null || fableSell.avg != null) {
+  fail("realized % must not leak qty/avg on the Fable GLD sell");
+}
+
 const byId = new Map();
 for (const fill of publicFills) {
   if (!byId.has(fill.survivorId)) byId.set(fill.survivorId, []);
@@ -125,13 +150,14 @@ if (dupes.length && !appJs.includes("tradeTapeFillKey")) {
 }
 
 if (e02Html) {
-  if (!e02Html.includes('id="trade-tape"') || !e02Html.includes("trade-tape-root")) {
-    fail("built e02.html missing the trade tape mount");
+  if (!e02Html.includes('id="trade-tape"') || !e02Html.includes("trade-tape-root") || !e02Html.includes("books-board-tabs")) {
+    fail("built e02.html missing the books/tape tabs");
   }
   const e2Books = e02Html.indexOf('id="latest-books"');
   const e2Tape = e02Html.indexOf('id="trade-tape"');
-  if (!(e2Books > -1 && e2Tape > e2Books)) {
-    fail("built e02.html must place #trade-tape after #latest-books");
+  const e2BooksEnd = e02Html.indexOf("</article>", e2Books);
+  if (!(e2Books > -1 && e2Tape > e2Books && e2BooksEnd > e2Tape)) {
+    fail("built e02.html must keep #trade-tape inside #latest-books");
   }
   if (e02Html.includes("hero-listen")) {
     fail("e02.html must not print the hero listen line");
