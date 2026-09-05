@@ -1186,8 +1186,8 @@ img.portrait.photo {
 }
 
 .tribal-spoiler-result .tribal-vote-list > .tribal-vote-entry + .tribal-vote-entry {
-  margin-top: 2.4rem;
-  padding-top: 2.2rem;
+  margin-top: 3.4rem;
+  padding-top: 2.9rem;
 }
 
 .tribal-spoiler-cover {
@@ -1407,8 +1407,8 @@ img.portrait.photo {
 }
 
 .tribal-vote-entry + .tribal-vote-entry {
-  margin-top: 2.4rem;
-  padding-top: 2.2rem;
+  margin-top: 3.4rem;
+  padding-top: 2.9rem;
   border-top: 1px solid rgba(196, 165, 116, 0.18);
 }
 
