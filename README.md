@@ -50,7 +50,7 @@ The public site is generated. Season state is a ledger, not a screenshot of the 
 - HTML shells: `templates/`
 - Client CSS/JS: root `styles.css`, `app.js`, camp/episode scripts
 - Derive + stamp `dist/`: `node scripts/build.mjs` (never hand-edit `dist/`)
-- Invariants: `npm run check` / `node scripts/check-season.mjs`
+- Invariants: `npm run check` / `npm run fixtures` after ledger remakes
 - Local preview: `npm run dev` (`node scripts/build.mjs && python3 scripts/dev-server.py`)
 
 Public paths like `index.html` and `seasons/1/e01.html` are build outputs. Edit templates + data, then rebuild.

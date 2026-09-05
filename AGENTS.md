@@ -5,9 +5,11 @@ Static site for Liquidation Island. Season state is a ledger; the public board i
 ## Commands
 
 ```bash
-npm run build    # node scripts/build.mjs → stamps dist/
-npm run check    # durable season invariants + live fixtures + episode/UI checks
-npm run dev      # build, then python3 scripts/dev-server.py @ :8000
+npm run build      # node scripts/build.mjs → stamps dist/
+npm run fixtures   # regen data/fixtures/live-board.json + tapes.json from the ledger and host tapes
+npm run check      # durable season invariants + live fixtures + episode/UI checks
+npm run check:fast # same as check, without the Chrome iMessage scroll test
+npm run dev        # build, then python3 scripts/dev-server.py @ :8000
 ```
 
 No npm dependencies. Node 20+ and Python 3 are enough.
@@ -18,9 +20,11 @@ No npm dependencies. Node 20+ and Python 3 are enough.
 |-----------|------|
 | `data/season1.json` | Host ledger: cast, fills, marks, tribalLog. **Events are the tape.** The public board (`dist/season1.json`) strips `orderId` and fill qty/avg; campfire only gets a sanitized trade tape. |
 | `data/episodes/*.json` | Episode beats / confessionals (audience copy) |
+| `data/tapes.json` | Campfire/lunch tape registry (file, beat, campfireFeed). New dinner = tape file + one row. |
+| `data/fixtures/` | Generated live-board + tape hashes. Regen with `npm run fixtures`; do not hand-edit. |
 | `templates/` | HTML shells (home, rules, season, survivor) |
 | Root `app.js`, `styles.css`, `camp-*.js`, `episode-campfire.js`, `tribal-spoiler-burn.js` | Client runtime + CSS (copied into `dist/`) |
-| `seasons/1/e01-*.js`, `conversations.json`, images | Episode tapes / media (copied into `dist/`) |
+| `seasons/1/e*-*.js`, `conversations.json`, images | Episode tapes / media (copied into `dist/` by glob) |
 | `GAME.md` | Rules bible — not the live board |
 | `cast/{slug}/` | Portraits; public names are pinned Cursor model slugs |
 
@@ -37,12 +41,17 @@ Public URLs like `index.html` / `seasons/1/e01.html` are **build outputs**. Chan
 ## Season / trade changes
 
 1. Append events to `data/season1.json` (do not rewrite history unless correcting a bad append).
-2. Run `npm run build` and `npm run check`.
+2. Run `npm run fixtures`, then `npm run build` and `npm run check`.
 3. Update episode copy in `data/episodes/` only when the audience beat actually changed. Remakes update the day fold (`days[].beats` books body). Do **not** restore Episode 2 `heroNote` or `weekBoard.lede`.
+
+A healthy remake is: append events → `npm run fixtures` → rebuild. Do not pin live qty or confessional quotes in `scripts/check-season-live.mjs`.
+
+A healthy campfire is: `seasons/1/e0N-<beat>.js` + episode beat + one row in `data/tapes.json` → `npm run fixtures`. Do not add a new `scripts/check-*-dinner.js`.
 
 Season checks are split:
 - `scripts/check-season.mjs` — durable shape/math/GAME.md invariants (keep green without rewriting for every mark)
-- `scripts/check-season-live.mjs` — golden fixtures for the current live board / Episode 1 cut (update this when the ledger or episode copy moves)
+- `scripts/check-season-live.mjs` — live cut vs `data/fixtures/live-board.json` plus episode/tribal structure (not per-qty goldens)
+- `scripts/check-tapes.mjs` — all host tapes from `data/tapes.json`
 
 ## UI / landing changes
 

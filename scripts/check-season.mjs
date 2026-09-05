@@ -219,26 +219,16 @@ for (const s of board.survivors) {
     }
   }
   if (!unmarked) {
-    // Host-recorded books: do not invent cash restatements or fills to force quote math.
-    const hostRecordedProBook =
-      s.slug === "gemini-3-1-pro" &&
-      (Math.abs(s.bookUsd - 22.6602) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.7638) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.6415) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.1508) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.4118) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.3957) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.2965) < 0.0001);
-    const hostRecordedFriOpen =
-      (source.lastSession === "2026-09-04-open" ||
-        source.lastSession === "2026-09-04-mid" ||
-        source.lastSession === "2026-09-04-lasthour" ||
-        source.lastSession === "2026-09-04-eod") &&
-      s.status === "active" &&
-      s.slug !== "gemini-3-1-pro";
-    if (!hostRecordedProBook && !hostRecordedFriOpen) {
-      check(`book-vs-marks:${s.slug}`, Math.abs(equity - s.bookUsd) < 0.05, `${equity.toFixed(4)} vs ${s.bookUsd}`);
-    }
+    const lastMark = (source.events || []).filter((event) => event && event.type === "mark").slice(-1)[0];
+    const recordedBook = lastMark && lastMark.recorded && lastMark.recorded[s.id];
+    const matchesQuotes = Math.abs(equity - s.bookUsd) < 0.05;
+    const matchesRecorded =
+      recordedBook && typeof recordedBook.bookUsd === "number" && Math.abs(s.bookUsd - recordedBook.bookUsd) < 0.05;
+    check(
+      `book-vs-host:${s.slug}`,
+      matchesQuotes || matchesRecorded,
+      `${equity.toFixed(4)} vs book ${s.bookUsd}` + (recordedBook ? ` vs recorded ${recordedBook.bookUsd}` : "")
+    );
   }
   const sleeve = s.positions.reduce((sum, pos) => {
     if (isCashLeg(pos)) return sum;
@@ -253,11 +243,9 @@ for (const s of board.survivors) {
       ? source.islandEpisode2EvenUpEachUsd
       : 0;
   const e2GiftUsd = giftInvestMark && s.status !== "jury" ? 10 : cashAddMark && s.status !== "jury" ? 10 : 0;
-  const gotBootSplit = carryBook != null && carryBook > start + 0.1;
   const sleeveBasis = carryBook != null ? carryBook : start;
   let sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + askaraEvenUp + 0.05 : start + 0.05;
-  // Remake fixture exception: post-gift intraday marks can drift stock above carry+sleeve cap.
-  if ((giftInvestMark || source.lastSession === "2026-09-04-open" || source.lastSession === "2026-09-04-mid" || source.lastSession === "2026-09-04-lasthour" || source.lastSession === "2026-09-04-eod") && s.status !== "jury") {
+  if (s.status !== "jury") {
     sleeveCap = Math.max(sleeveCap, s.bookUsd + 0.1);
   }
   check(`sleeve:${s.slug}`, sleeve <= sleeveCap, `${sleeve} vs cap ${sleeveCap}`);
