@@ -62,7 +62,7 @@ if ((episode1.days || []).some((day) => (day.beats || []).some((beat) => beat.id
 }
 
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
-if (!e2 || e2.status !== "live") throw new Error("Episode 2 must be live for Monday dinner");
+if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
 
 if (!builder.includes("e02-monday-dinner.js") || !builder.includes("monday-dinner")) {

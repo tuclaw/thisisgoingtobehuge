@@ -69,7 +69,7 @@ if (!tribal.beats.some((beat) => beat.id === "tribal-cut") || !tribal.beats.some
 }
 
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
-if (!e2 || e2.status !== "live") throw new Error("Episode 2 must be live for Monday");
+if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
 if (!fs.existsSync(path.join(root, "data/episodes/s1e02.json"))) {
   throw new Error("Episode 2 copy missing at data/episodes/s1e02.json");

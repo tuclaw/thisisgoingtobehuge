@@ -124,7 +124,7 @@ if (!/Claude Fable 5, 5–1, first juror/.test(chrome)) {
 });
 
 const log = season.tribalLog || [];
-if (log.length !== 1) fail("tribalLog must be the official Friday council only");
+if (log.length < 1) fail("tribalLog must include the official Friday councils");
 const entry = log[0];
 if (entry.bootName !== "Claude Fable 5") fail("bootName must be Claude Fable 5");
 if (entry.boot && !entry.bootName) fail("formatTribalEntry requires bootName, not only boot");
