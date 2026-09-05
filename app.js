@@ -4136,7 +4136,7 @@ function renderHomeTribalSpoiler(season) {
   const items = log.map((entry) => formatTribalEntry(entry)).join("");
   stage.innerHTML = wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`, {
     resultId: "home-tribal-spoiler-result",
-    title: "See who was voted off in episode one",
+    title: "See who has been voted off so far",
     copy: "Burn to reveal who goes home."
   });
   bindTribalSpoilers(stage);
