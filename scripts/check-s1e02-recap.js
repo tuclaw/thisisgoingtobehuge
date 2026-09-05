@@ -23,6 +23,9 @@ function fail(message) {
 if (!app.includes("function priorTribalLog") || !app.includes("function renderEpisodeRecapSpoiler")) {
   fail("app.js must keep priorTribalLog / renderEpisodeRecapSpoiler");
 }
+if (!app.includes("function tribalEpisodeNumber") || !app.includes("boot-episode")) {
+  fail("recap tribals must keep episode numbers next to each vote-off");
+}
 if (!app.includes("renderEpisodeRecapSpoiler(season)")) {
   fail("renderEpisode must mount the prior-episode recap spoiler");
 }

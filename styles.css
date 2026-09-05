@@ -1185,6 +1185,11 @@ img.portrait.photo {
   padding: 0;
 }
 
+.tribal-spoiler-result .tribal-vote-list > .tribal-vote-entry + .tribal-vote-entry {
+  margin-top: 3.4rem;
+  padding-top: 2.9rem;
+}
+
 .tribal-spoiler-cover {
   position: absolute;
   inset: 0;
@@ -1401,13 +1406,35 @@ img.portrait.photo {
   padding: 0;
 }
 
+.tribal-vote-entry + .tribal-vote-entry {
+  margin-top: 3.4rem;
+  padding-top: 2.9rem;
+  border-top: 1px solid rgba(196, 165, 116, 0.18);
+}
+
 .tribal-vote-list .boot-kicker {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
   font-family: var(--font-display);
   font-size: 0.68rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--gold-bright);
   margin: 0 0 0.55rem;
+}
+
+.tribal-vote-list .boot-episode {
+  letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.tribal-vote-list .boot-kicker-sep {
+  letter-spacing: 0;
+  color: var(--gold);
+  opacity: 0.7;
 }
 
 .tribal-vote-list .boot-name {
