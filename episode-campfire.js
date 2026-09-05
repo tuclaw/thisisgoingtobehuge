@@ -26,12 +26,12 @@
     "./conversations.json",
     "seasons/1/conversations.json"
   ];
-  /* Day-tape maps published by episode beat scripts (newest first preference). */
-  const LIVE_FEED_GLOBALS = [
-    "FRIDAY_LUNCH_CONVERSATIONS",
-    "THURSDAY_DINNER_CONVERSATIONS",
-    "THURSDAY_LUNCH_CONVERSATIONS"
-  ];
+  /* Day-tape maps published by episode beat scripts (newest first preference).
+   * Build injects window.EPISODE_TAPE_GLOBALS from data/tapes.json campfireFeed. */
+  function liveFeedGlobalNames() {
+    if (Array.isArray(global.EPISODE_TAPE_GLOBALS)) return global.EPISODE_TAPE_GLOBALS;
+    return ["FRIDAY_LUNCH_CONVERSATIONS", "THURSDAY_DINNER_CONVERSATIONS", "THURSDAY_LUNCH_CONVERSATIONS"];
+  }
   const DOW = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
 
   function prefersReducedMotion() {
@@ -180,7 +180,7 @@
 
   function collectLiveConversations() {
     const out = [];
-    LIVE_FEED_GLOBALS.forEach(function (key) {
+    liveFeedGlobalNames().forEach(function (key) {
       const map = global[key];
       if (!map || typeof map !== "object") return;
       Object.keys(map).forEach(function (id) {

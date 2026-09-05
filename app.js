@@ -1511,15 +1511,7 @@ function conversationHasCastaway(conversation, survivor) {
 }
 
 function collectLiveCastawayThreads() {
-  const keys = [
-    "WEDNESDAY_DINNER_CONVERSATIONS",
-    "THURSDAY_LUNCH_CONVERSATIONS",
-    "THURSDAY_DINNER_CONVERSATIONS",
-    "FRIDAY_LUNCH_CONVERSATIONS",
-    "SATURDAY_LUNCH_CONVERSATIONS",
-    "SATURDAY_DINNER_CONVERSATIONS",
-    "SUNDAY_LUNCH_CONVERSATIONS"
-  ];
+  const keys = Object.keys(window).filter((key) => /_CONVERSATIONS$/.test(key));
   const byId = {};
   const order = [];
   keys.forEach((key) => {

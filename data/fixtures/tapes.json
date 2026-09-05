@@ -1,0 +1,436 @@
+{
+  "e01-wednesday-dinner.js": {
+    "global": "WEDNESDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-wed-dinner-fire",
+      "bidu-wed-dinner-fire"
+    ],
+    "threads": {
+      "askara-wed-dinner-fire": {
+        "count": 4,
+        "from": [
+          "quill",
+          "sable",
+          "kite",
+          "kite"
+        ],
+        "hash": "e9c118cae773eebf7f0f9ce21327ca78abf878a14c827af09fca989a19a339d3"
+      },
+      "bidu-wed-dinner-fire": {
+        "count": 3,
+        "from": [
+          "vesper",
+          "nori",
+          "vesper"
+        ],
+        "hash": "b7e0f99224e298121ad5f809fe97c66fb49efbc5a2398881e49e93f01430df86"
+      }
+    }
+  },
+  "e01-thursday-lunch.js": {
+    "global": "THURSDAY_LUNCH_CONVERSATIONS",
+    "threadIds": [
+      "thu-lunch-gage-nori",
+      "thu-lunch-hex-pax",
+      "thu-lunch-quill-juno",
+      "thu-lunch-riot-reed",
+      "thu-lunch-sable-kite",
+      "thu-lunch-vesper-mara"
+    ],
+    "threads": {
+      "thu-lunch-gage-nori": {
+        "count": 4,
+        "from": [
+          "nori",
+          "gage",
+          "gage",
+          "nori"
+        ],
+        "hash": "4c18334473270c3cd7fa18dbc12e7aeadccc57fab4b00b5d3917bbed2b14c061"
+      },
+      "thu-lunch-hex-pax": {
+        "count": 3,
+        "from": [
+          "pax",
+          "hex",
+          "pax"
+        ],
+        "hash": "5b34bcfee56ce490f5e1cc4f84c0f0a26133c4f2620d438a1704d14d04d86c2c"
+      },
+      "thu-lunch-quill-juno": {
+        "count": 4,
+        "from": [
+          "juno",
+          "quill",
+          "juno",
+          "quill"
+        ],
+        "hash": "b0c18e6375327b75ab8114567ec3d526322b24349ac46ae2ba867d6d24eeeb6e"
+      },
+      "thu-lunch-riot-reed": {
+        "count": 4,
+        "from": [
+          "reed",
+          "riot",
+          "reed",
+          "riot"
+        ],
+        "hash": "ce2391860b864f35ff3770d6284f163a033509e4f471a874540b60fcebd62d5d"
+      },
+      "thu-lunch-sable-kite": {
+        "count": 4,
+        "from": [
+          "kite",
+          "sable",
+          "kite",
+          "sable"
+        ],
+        "hash": "6180b23397953d6c1fc5907aad25b2de652f9fbae170e432d78360f54a1ded0f"
+      },
+      "thu-lunch-vesper-mara": {
+        "count": 1,
+        "from": [
+          "vesper"
+        ],
+        "hash": "ccda6dbc34e3309a02fb6697084685d052715962d320ddaec851175189cdf82c"
+      }
+    }
+  },
+  "e01-thursday-dinner.js": {
+    "global": "THURSDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-thu-dinner-fire",
+      "bidu-thu-dinner-fire"
+    ],
+    "threads": {
+      "askara-thu-dinner-fire": {
+        "count": 5,
+        "from": [
+          "riot",
+          "juno",
+          "reed",
+          "riot",
+          "juno"
+        ],
+        "hash": "18cd3294d49f1887d533a3ba1b8aa87349193afe7515ed18fed62878bbb955e2"
+      },
+      "bidu-thu-dinner-fire": {
+        "count": 6,
+        "from": [
+          "pax",
+          "hex",
+          "gage",
+          "hex",
+          "gage",
+          "pax"
+        ],
+        "hash": "4ffe1c92746fdfa03a5590aa7cdfd58854b2aae99adb5792b109a2a384b97978"
+      }
+    }
+  },
+  "e01-friday-lunch.js": {
+    "global": "FRIDAY_LUNCH_CONVERSATIONS",
+    "threadIds": [
+      "fri-lunch-gage-mara",
+      "fri-lunch-hex-nori",
+      "fri-lunch-juno-kite",
+      "fri-lunch-riot-quill",
+      "fri-lunch-vesper-pax"
+    ],
+    "threads": {
+      "fri-lunch-gage-mara": {
+        "count": 4,
+        "from": [
+          "mara",
+          "gage",
+          "mara",
+          "gage"
+        ],
+        "hash": "985a4eb88cf74c75f3f13e0cd861b765d8312422dc8fc4c9cabbbc7fdf3c4741"
+      },
+      "fri-lunch-hex-nori": {
+        "count": 4,
+        "from": [
+          "hex",
+          "nori",
+          "hex",
+          "nori"
+        ],
+        "hash": "4169f86929632f505ac4a754982466d9745d1f97b78d0219078785359317b5c5"
+      },
+      "fri-lunch-juno-kite": {
+        "count": 4,
+        "from": [
+          "kite",
+          "juno",
+          "kite",
+          "juno"
+        ],
+        "hash": "9f6c114a89fdb31ee093a1932691d71c5ba771abf2f864b9aadf39f3b88d26ac"
+      },
+      "fri-lunch-riot-quill": {
+        "count": 4,
+        "from": [
+          "quill",
+          "riot",
+          "quill",
+          "riot"
+        ],
+        "hash": "0d21b2b6922f3c189ba17271794af94d3e961cdfcf880230084d6105335c893b"
+      },
+      "fri-lunch-vesper-pax": {
+        "count": 4,
+        "from": [
+          "pax",
+          "vesper",
+          "pax",
+          "vesper"
+        ],
+        "hash": "6e298298117f8c18f07eb65d0f0b894a693614cc74e5f8fc825e16acb9ecea64"
+      }
+    }
+  },
+  "e01-saturday-lunch.js": {
+    "global": "SATURDAY_LUNCH_CONVERSATIONS",
+    "threadIds": [
+      "sat-lunch-hex-gage",
+      "sat-lunch-juno-reed",
+      "sat-lunch-kite-riot"
+    ],
+    "threads": {
+      "sat-lunch-hex-gage": {
+        "count": 4,
+        "from": [
+          "hex",
+          "gage",
+          "hex",
+          "gage"
+        ],
+        "hash": "979d677a2557308c532cf3b91cdbca70dc5e43f0c11dc89995d38fa0aabefa8e"
+      },
+      "sat-lunch-juno-reed": {
+        "count": 4,
+        "from": [
+          "juno",
+          "reed",
+          "juno",
+          "reed"
+        ],
+        "hash": "eb64a872869e00d2984db69a90a70eaff8db5d6c36cf5249b4b14d4f61f5f9c1"
+      },
+      "sat-lunch-kite-riot": {
+        "count": 4,
+        "from": [
+          "kite",
+          "riot",
+          "kite",
+          "riot"
+        ],
+        "hash": "37cb57268216085d27805a925a5726c890dedafd179182256a84c1243d02f590"
+      }
+    }
+  },
+  "e01-saturday-dinner.js": {
+    "global": "SATURDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-sat-dinner-fire",
+      "bidu-sat-dinner-fire"
+    ],
+    "threads": {
+      "askara-sat-dinner-fire": {
+        "count": 7,
+        "from": [
+          "kite",
+          "riot",
+          "quill",
+          "riot",
+          "quill",
+          "kite",
+          "riot"
+        ],
+        "hash": "094782e488789f03b013c41cf5723afcd1ca81ddbb101c0d73b919edf3957100"
+      },
+      "bidu-sat-dinner-fire": {
+        "count": 4,
+        "from": [
+          "vesper",
+          "mara",
+          "nori",
+          "mara"
+        ],
+        "hash": "952baf3d02f1e7f725752090a3d25865879bada99a8343d374455bcd0e56d793"
+      }
+    }
+  },
+  "e01-sunday-lunch.js": {
+    "global": "SUNDAY_LUNCH_CONVERSATIONS",
+    "threadIds": [
+      "sun-lunch-gage-vesper",
+      "sun-lunch-kite-riot",
+      "sun-lunch-mara-hex"
+    ],
+    "threads": {
+      "sun-lunch-gage-vesper": {
+        "count": 4,
+        "from": [
+          "vesper",
+          "gage",
+          "vesper",
+          "gage"
+        ],
+        "hash": "5eaf3c15135d4b5755e774e0280a96786a8ffbf9b01ca17acd1872963673c5d6"
+      },
+      "sun-lunch-kite-riot": {
+        "count": 4,
+        "from": [
+          "kite",
+          "riot",
+          "kite",
+          "riot"
+        ],
+        "hash": "58786d8b1f4cb7c1d3d4e02369d079d11317c6293cc8195304241322d202b6cd"
+      },
+      "sun-lunch-mara-hex": {
+        "count": 4,
+        "from": [
+          "hex",
+          "mara",
+          "hex",
+          "mara"
+        ],
+        "hash": "67794df301bc0c15a6e789dc472e10c0bc759ea044dd51db30a3705812f6ebd2"
+      }
+    }
+  },
+  "e02-monday-dinner.js": {
+    "global": "MONDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-mon-dinner-fire",
+      "bidu-mon-dinner-fire"
+    ],
+    "threads": {
+      "askara-mon-dinner-fire": {
+        "count": 7,
+        "from": [
+          "juno",
+          "kite",
+          "riot",
+          "juno",
+          "riot",
+          "kite",
+          "riot"
+        ],
+        "hash": "9b21d7a6b6d77b2003a7126f9b98456bc172301adc3f26434178c502b63b4a2b"
+      },
+      "bidu-mon-dinner-fire": {
+        "count": 4,
+        "from": [
+          "vesper",
+          "mara",
+          "vesper",
+          "nori"
+        ],
+        "hash": "0fe1eaf3ab9d51f8118674b632d24ca7c1428b92d1075bd456bfc028e3fbe392"
+      }
+    }
+  },
+  "e02-tuesday-dinner.js": {
+    "global": "TUESDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-tue-dinner-fire",
+      "bidu-tue-dinner-fire"
+    ],
+    "threads": {
+      "askara-tue-dinner-fire": {
+        "count": 4,
+        "from": [
+          "reed",
+          "quill",
+          "riot",
+          "riot"
+        ],
+        "hash": "d020db560f3c8ddeaa368489b178c15d55bfcc16cd5d2fa815734b8e00c889b7"
+      },
+      "bidu-tue-dinner-fire": {
+        "count": 6,
+        "from": [
+          "hex",
+          "gage",
+          "gage",
+          "hex",
+          "gage",
+          "pax"
+        ],
+        "hash": "1ffbb44ac1d27d38f91e68190b1f2b8b1395b9c4dae658d9db8529341b5d8f68"
+      }
+    }
+  },
+  "e02-wednesday-dinner.js": {
+    "global": "WEDNESDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-wed-dinner-fire",
+      "bidu-wed-dinner-fire"
+    ],
+    "threads": {
+      "askara-wed-dinner-fire": {
+        "count": 7,
+        "from": [
+          "juno",
+          "kite",
+          "quill",
+          "kite",
+          "juno",
+          "quill",
+          "kite"
+        ],
+        "hash": "c5efe79a7ee9116839010731512ae7b482c5642f433a495be7e2c6ff441740a6"
+      },
+      "bidu-wed-dinner-fire": {
+        "count": 4,
+        "from": [
+          "vesper",
+          "mara",
+          "nori",
+          "vesper"
+        ],
+        "hash": "288d166616e41893f83440d63fa8bf8921821d0e36c79f33164fba8cca1a0750"
+      }
+    }
+  },
+  "e02-thursday-dinner.js": {
+    "global": "THURSDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-thu-dinner-fire",
+      "bidu-thu-dinner-fire"
+    ],
+    "threads": {
+      "askara-thu-dinner-fire": {
+        "count": 7,
+        "from": [
+          "riot",
+          "reed",
+          "kite",
+          "riot",
+          "reed",
+          "kite",
+          "riot"
+        ],
+        "hash": "85b87a4975be3824a20efae6175d98483da6a0fce3bb5126a1c6c3bfe19db5fa"
+      },
+      "bidu-thu-dinner-fire": {
+        "count": 8,
+        "from": [
+          "pax",
+          "hex",
+          "gage",
+          "hex",
+          "pax",
+          "gage",
+          "hex",
+          "pax"
+        ],
+        "hash": "02e06b2da4b045a890ac51b74853e0d23fb505f57e5394c9864ee37005d68f86"
+      }
+    }
+  }
+}

@@ -1,17 +1,7 @@
 /** Collect host-tape conversations from day scripts + conversations.json. */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import vm from "node:vm";
-
-const TAPE_FILES = [
-  "e01-wednesday-dinner.js",
-  "e01-thursday-lunch.js",
-  "e01-thursday-dinner.js",
-  "e01-friday-lunch.js",
-  "e01-saturday-lunch.js",
-  "e01-saturday-dinner.js",
-  "e01-sunday-lunch.js"
-];
+import { listTapeFiles, loadTapeWindow, conversationsFromWindow } from "./tapes.mjs";
 
 function conversationKind(conversation) {
   const count = (conversation && conversation.participants ? conversation.participants : []).length;
@@ -42,38 +32,23 @@ function normalizeConversation(raw, fallbackId) {
 function addConversation(byId, order, conversation, fallbackId) {
   const next = normalizeConversation(conversation, fallbackId);
   if (!next) return;
-  if (!byId[next.id]) order.push(next.id);
-  byId[next.id] = next;
+  let id = next.id;
+  if (byId[id] && fallbackId && fallbackId !== id) {
+    id = fallbackId;
+    next.id = id;
+  } else if (byId[id]) {
+    return;
+  }
+  if (!byId[id]) order.push(id);
+  byId[id] = next;
 }
 
-function collectFromMap(byId, order, map) {
+function collectFromMap(byId, order, map, fileStem) {
   if (!map || typeof map !== "object") return;
   Object.keys(map).forEach((key) => {
-    addConversation(byId, order, map[key], key);
+    const prefixed = fileStem ? `${fileStem}:${key}` : key;
+    addConversation(byId, order, map[key], byId[key] ? prefixed : key);
   });
-}
-
-function loadTapeWindow(src, filename) {
-  const windowObj = {};
-  const sandbox = {
-    window: windowObj,
-    document: {
-      readyState: "complete",
-      getElementById() {
-        return null;
-      },
-      addEventListener() {},
-      querySelector() {
-        return null;
-      }
-    },
-    console,
-    setTimeout,
-    clearTimeout
-  };
-  sandbox.globalThis = sandbox;
-  vm.runInNewContext(src, sandbox, { filename, timeout: 2000 });
-  return windowObj;
 }
 
 export function collectThreads(rootDir) {
@@ -90,20 +65,20 @@ export function collectThreads(rootDir) {
     /* optional feed */
   }
 
-  TAPE_FILES.forEach((file) => {
-    const path = join(rootDir, "seasons/1", file);
+  const seasonDir = join(rootDir, "seasons/1");
+  for (const file of listTapeFiles(seasonDir)) {
     let src = "";
     try {
-      src = readFileSync(path, "utf8");
+      src = readFileSync(join(seasonDir, file), "utf8");
     } catch {
-      return;
+      continue;
     }
     const win = loadTapeWindow(src, file);
-    Object.keys(win).forEach((key) => {
-      if (!/_CONVERSATIONS$/.test(key)) return;
-      collectFromMap(byId, order, win[key]);
+    const stem = file.replace(/\.js$/, "");
+    conversationsFromWindow(win).forEach((entry) => {
+      collectFromMap(byId, order, entry.map, stem);
     });
-  });
+  }
 
   return order.map((id) => byId[id]);
 }

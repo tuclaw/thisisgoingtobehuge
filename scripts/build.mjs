@@ -12,6 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LEGACY_SLUGS, deriveSeason, castFromSource } from "./lib/ledger.mjs";
 import { collectThreads } from "./lib/collect-threads.mjs";
+import { listTapeFiles, loadTapeManifest, tapeMetaFromFilename } from "./lib/tapes.mjs";
 import { writeBoard } from "./derive-board.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -349,6 +350,29 @@ function episodeHasBeatId(episode, id) {
   return (episode.days || []).some((day) => (day.beats || []).some((beat) => beat.id === id));
 }
 
+function episodeTapePrefix(episode) {
+  return String(episode.id || "").replace(/^s\d+/, "");
+}
+
+function tapeScriptsForEpisode(episode, seasonDir) {
+  const prefix = episodeTapePrefix(episode);
+  return listTapeFiles(seasonDir)
+    .filter((file) => {
+      const meta = tapeMetaFromFilename(file);
+      return meta && meta.episodePrefix === prefix && episodeHasBeatId(episode, meta.beatId);
+    })
+    .map((file) => `\n  <script src="${file}"></script>`)
+    .join("");
+}
+
+function tapeGlobalsForEpisode(episode, manifest) {
+  const prefix = episodeTapePrefix(episode);
+  return manifest
+    .filter((tape) => tape.episodePrefix === prefix && tape.campfireFeed && episodeHasBeatId(episode, tape.beatId))
+    .map((tape) => tape.global)
+    .filter(Boolean);
+}
+
 function episodeWantsCamp(episode) {
   return (
     episodeHasBeatType(episode, "camp") ||
@@ -365,27 +389,11 @@ function renderEpisodePage(episode, season, base) {
   const wantsCamp = episodeWantsCamp(episode);
   const wantsWhisperFeed = wantsCamp && episode.conversationFeed !== false;
   const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
-  const lunchScripts = [
-    episodeHasBeatType(episode, "lunch-chats") || episodeHasBeatId(episode, "thursday-lunch")
-      ? `\n  <script src="e01-thursday-lunch.js"></script>`
-      : "",
-    episodeHasBeatId(episode, "friday-lunch") ? `\n  <script src="e01-friday-lunch.js"></script>` : "",
-    episodeHasBeatId(episode, "saturday-lunch") ? `\n  <script src="e01-saturday-lunch.js"></script>` : "",
-    episodeHasBeatId(episode, "saturday-dinner") ? `\n  <script src="e01-saturday-dinner.js"></script>` : "",
-    episodeHasBeatId(episode, "sunday-lunch") ? `\n  <script src="e01-sunday-lunch.js"></script>` : "",
-    episodeHasBeatId(episode, "wednesday-dinner")
-      ? episode.id === "s1e02"
-        ? `\n  <script src="e02-wednesday-dinner.js"></script>`
-        : `\n  <script src="e01-wednesday-dinner.js"></script>`
-      : "",
-    episodeHasBeatId(episode, "thursday-dinner")
-      ? episode.id === "s1e02"
-        ? `\n  <script src="e02-thursday-dinner.js"></script>`
-        : `\n  <script src="e01-thursday-dinner.js"></script>`
-      : "",
-    episodeHasBeatId(episode, "monday-dinner") ? `\n  <script src="e02-monday-dinner.js"></script>` : "",
-    episodeHasBeatId(episode, "tuesday-dinner") ? `\n  <script src="e02-tuesday-dinner.js"></script>` : ""
-  ].join("");
+  const seasonDir = join(root, "seasons/1");
+  const manifest = loadTapeManifest(root);
+  const lunchScripts = tapeScriptsForEpisode(episode, seasonDir);
+  const tapeGlobals = tapeGlobalsForEpisode(episode, manifest);
+  const tapeGlobalTag = `\n  <script>window.EPISODE_TAPE_GLOBALS = ${JSON.stringify(tapeGlobals)};</script>`;
   const spine = (episode.spine || [])
     .map((item) => `<li><span>${escapeHtml(item.day)}</span> ${escapeHtml(item.text)}</li>`)
     .join("\n      ");
@@ -541,7 +549,7 @@ function renderEpisodePage(episode, season, base) {
   <script src="${base}tribal-spoiler-burn.js"></script>
   <script src="${base}lab-logos.js"></script>
   <script src="${base}camp-chat.js"></script>
-  <script src="${base}campfire-open.js"></script>${lunchScripts}
+  <script src="${base}campfire-open.js"></script>${tapeGlobalTag}${lunchScripts}
   <script src="${base}episode-campfire.js"></script>
   <script src="${base}app.js"></script>
 </body>
@@ -578,49 +586,9 @@ function copyStatic() {
   const diagrams = join(root, "diagrams");
   if (existsSync(diagrams)) cpSync(diagrams, join(dist, "diagrams"), { recursive: true });
   mkdirSync(join(dist, "seasons/1"), { recursive: true });
-  const thursdayLunch = join(root, "seasons/1/e01-thursday-lunch.js");
-  if (existsSync(thursdayLunch)) {
-    cpSync(thursdayLunch, join(dist, "seasons/1/e01-thursday-lunch.js"));
-  }
-  const wednesdayDinner = join(root, "seasons/1/e01-wednesday-dinner.js");
-  if (existsSync(wednesdayDinner)) {
-    cpSync(wednesdayDinner, join(dist, "seasons/1/e01-wednesday-dinner.js"));
-  }
-  const thursdayDinner = join(root, "seasons/1/e01-thursday-dinner.js");
-  if (existsSync(thursdayDinner)) {
-    cpSync(thursdayDinner, join(dist, "seasons/1/e01-thursday-dinner.js"));
-  }
-  const fridayLunch = join(root, "seasons/1/e01-friday-lunch.js");
-  if (existsSync(fridayLunch)) {
-    cpSync(fridayLunch, join(dist, "seasons/1/e01-friday-lunch.js"));
-  }
-  const saturdayLunch = join(root, "seasons/1/e01-saturday-lunch.js");
-  if (existsSync(saturdayLunch)) {
-    cpSync(saturdayLunch, join(dist, "seasons/1/e01-saturday-lunch.js"));
-  }
-  const saturdayDinner = join(root, "seasons/1/e01-saturday-dinner.js");
-  if (existsSync(saturdayDinner)) {
-    cpSync(saturdayDinner, join(dist, "seasons/1/e01-saturday-dinner.js"));
-  }
-  const sundayLunch = join(root, "seasons/1/e01-sunday-lunch.js");
-  if (existsSync(sundayLunch)) {
-    cpSync(sundayLunch, join(dist, "seasons/1/e01-sunday-lunch.js"));
-  }
-  const mondayDinner = join(root, "seasons/1/e02-monday-dinner.js");
-  if (existsSync(mondayDinner)) {
-    cpSync(mondayDinner, join(dist, "seasons/1/e02-monday-dinner.js"));
-  }
-  const tuesdayDinner = join(root, "seasons/1/e02-tuesday-dinner.js");
-  if (existsSync(tuesdayDinner)) {
-    cpSync(tuesdayDinner, join(dist, "seasons/1/e02-tuesday-dinner.js"));
-  }
-  const wednesdayDinnerE02 = join(root, "seasons/1/e02-wednesday-dinner.js");
-  if (existsSync(wednesdayDinnerE02)) {
-    cpSync(wednesdayDinnerE02, join(dist, "seasons/1/e02-wednesday-dinner.js"));
-  }
-  const thursdayDinnerE02 = join(root, "seasons/1/e02-thursday-dinner.js");
-  if (existsSync(thursdayDinnerE02)) {
-    cpSync(thursdayDinnerE02, join(dist, "seasons/1/e02-thursday-dinner.js"));
+  const seasonDir = join(root, "seasons/1");
+  for (const file of listTapeFiles(seasonDir)) {
+    cpSync(join(seasonDir, file), join(dist, "seasons/1", file));
   }
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {

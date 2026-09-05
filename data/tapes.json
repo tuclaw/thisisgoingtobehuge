@@ -1,0 +1,101 @@
+{
+  "tapes": [
+    {
+      "file": "e01-wednesday-dinner.js",
+      "dayId": "wednesday",
+      "beatId": "wednesday-dinner",
+      "global": "WEDNESDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["wednesday-books"],
+      "campfireFeed": false
+    },
+    {
+      "file": "e01-thursday-lunch.js",
+      "dayId": "thursday",
+      "beatId": "thursday-lunch",
+      "global": "THURSDAY_LUNCH_CONVERSATIONS",
+      "campfireFeed": true
+    },
+    {
+      "file": "e01-thursday-dinner.js",
+      "dayId": "thursday",
+      "beatId": "thursday-dinner",
+      "global": "THURSDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["thursday-lunch"],
+      "campfireFeed": true
+    },
+    {
+      "file": "e01-friday-lunch.js",
+      "dayId": "friday",
+      "beatId": "friday-lunch",
+      "global": "FRIDAY_LUNCH_CONVERSATIONS",
+      "afterBeatIds": ["friday-confessionals"],
+      "beforeBeatIds": ["friday-lasthour"],
+      "campfireFeed": true,
+      "whisperFeed": true,
+      "forbidThreadPattern": "reed|sable|kimi|fable"
+    },
+    {
+      "file": "e01-saturday-lunch.js",
+      "dayId": "saturday",
+      "beatId": "saturday-lunch",
+      "global": "SATURDAY_LUNCH_CONVERSATIONS",
+      "afterDayIds": ["tribal"],
+      "campfireFeed": false,
+      "forbidThreadPattern": "quill|sol"
+    },
+    {
+      "file": "e01-saturday-dinner.js",
+      "dayId": "saturday",
+      "beatId": "saturday-dinner",
+      "global": "SATURDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["saturday-lunch"],
+      "campfireFeed": false
+    },
+    {
+      "file": "e01-sunday-lunch.js",
+      "dayId": "sunday",
+      "beatId": "sunday-lunch",
+      "global": "SUNDAY_LUNCH_CONVERSATIONS",
+      "afterDayIds": ["saturday", "tribal"],
+      "foldOnlyBeatIds": ["sunday-lunch"],
+      "campfireFeed": false,
+      "forbidThreadPattern": "quill|sol|juno|reed|kimi|luna|fable|flash|terra"
+    },
+    {
+      "file": "e02-monday-dinner.js",
+      "dayId": "monday",
+      "beatId": "monday-dinner",
+      "global": "MONDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["monday-confessionals"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01"]
+    },
+    {
+      "file": "e02-tuesday-dinner.js",
+      "dayId": "tuesday",
+      "beatId": "tuesday-dinner",
+      "global": "TUESDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["tuesday-books"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01"]
+    },
+    {
+      "file": "e02-wednesday-dinner.js",
+      "dayId": "wednesday",
+      "beatId": "wednesday-dinner",
+      "global": "WEDNESDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["wednesday-official-books"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01"]
+    },
+    {
+      "file": "e02-thursday-dinner.js",
+      "dayId": "thursday",
+      "beatId": "thursday-dinner",
+      "global": "THURSDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["thursday-official-books"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01"]
+    }
+  ]
+}
