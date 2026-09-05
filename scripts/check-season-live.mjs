@@ -60,11 +60,11 @@ check(
   listedE2 && listedE2.diagramStartSnapshotId === "s1e02-cash-add"
 );
 check(
-  "e3-diagram-starts-at-fri-eod",
+  "e3-diagram-starts-at-carry",
   listedE3 &&
-    listedE3.diagramStartSnapshotId === "s1e02-fri-eod" &&
+    listedE3.diagramStartSnapshotId === "s1e03-carry" &&
     source.episode &&
-    source.episode.diagramStartSnapshotId === "s1e02-fri-eod"
+    source.episode.diagramStartSnapshotId === "s1e03-carry"
 );
 if (listedE1 && listedE1.weekStart && listedE1.weekEnd) {
   const start = Date.parse(listedE1.weekStart + "T00:00:00-07:00");
@@ -298,6 +298,18 @@ check("kept-fri-open-mark", (source.events || []).some((event) => event && event
 check("kept-fri-mid-mark", (source.events || []).some((event) => event && event.id === "s1e02-fri-mid"));
 check("kept-fri-lasthour-mark", (source.events || []).some((event) => event && event.id === "s1e02-fri-lasthour"));
 check("kept-fri-eod-mark", (source.events || []).some((event) => event && event.id === "s1e02-fri-eod"));
+const e3Carry = (source.events || []).find((event) => event && event.id === "s1e03-carry");
+check("e3-carry-mark", Boolean(e3Carry) && e3Carry.kind === "carry" && e3Carry.at === "2026-09-07T07:00:00Z");
+if (e3Carry && e3Carry.recorded) {
+  const livingCarry = Object.entries(e3Carry.recorded).filter(([id]) => {
+    const row = (source.survivors || []).find((s) => s.id === id);
+    return row && row.status === "active";
+  });
+  check(
+    "e3-carry-week-reset",
+    livingCarry.length === 10 && livingCarry.every(([, rec]) => rec && rec.weekPct === 0)
+  );
+}
 check("live-fable-last", fableLive && fableLive.bookUsd === 0 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
@@ -493,7 +505,8 @@ check(
 );
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
 check("homepage-given-copy", home.includes("$240.09 given. Ten still in. Two tribes. Tuesday and Friday tribal."));
-check("homepage-points-at-e03", home.includes("seasons/1/e03.html") && home.includes("Walk into Episode 3"));
+check("homepage-points-at-e02", home.includes("seasons/1/e02.html") && home.includes("Walk into Episode 2"));
+check("homepage-skips-e03-cta", !home.includes("seasons/1/e03.html") && !home.includes("Walk into Episode 3"));
 check("sleeve-pot-stays-240", source.islandPotUsd === 238.7947, String(source.islandPotUsd));
 check("merged-stays-false", source.merged === false);
 check(

@@ -73,6 +73,8 @@ function nickIdOf(s) {
 }
 
 function liveEpisodePath(season) {
+  const watch = watchEpisode(season);
+  if (watch && watch.path) return watch.path;
   const live = getLiveEpisode(season);
   if (live && live.path) return live.path;
   if (season && season.episode && season.episode.path) return season.episode.path;
@@ -1363,7 +1365,7 @@ function renderHomeEpisodes(season) {
   const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
   root.innerHTML = episodes
     .map((ep) => {
-      const locked = ep.status === "locked" || !ep.path;
+      const locked = episodePublicLocked(season, ep);
       const title = escapeHtml(ep.title || "Episode " + ep.number);
       const label = escapeHtml(ep.weekLabel || "");
       const tease = escapeHtml(ep.tease || "Torches unlit · After Friday tribal");
@@ -2141,8 +2143,8 @@ function renderEpisodeLiveIndicator(season) {
   if (document.documentElement.dataset.page !== "episode") return;
   const epNum = Number(document.documentElement.dataset.episode);
   if (!epNum) return;
-  const live = getLiveEpisode(season);
-  if (!live || live.number !== epNum) return;
+  const live = watchEpisode(season);
+  if (!live || live.status !== "live" || live.number !== epNum) return;
   const h1 = document.querySelector(".episode-hero h1");
   if (!h1 || h1.querySelector(".live-badge")) return;
   const dateSpan = h1.querySelector(":scope > span");
@@ -2328,7 +2330,14 @@ function snapshotsInTickerRange(snapshots, episode, range) {
   });
   /* Episode 2 week starts after the $10 cash add so opening numbers already carry the extra sleeve. */
   filtered = snapshotsFromEpisodeStart(filtered, ep);
-  return filtered.length ? filtered : all;
+  if (filtered.length) return filtered;
+  /* Empty week: keep this episode's opening snap. Never dump the whole season tape. */
+  const startId = episodeDiagramStartId(ep);
+  if (startId) {
+    const start = all.find((snap) => snap && snap.id === startId);
+    if (start) return [start];
+  }
+  return [];
 }
 
 function islandHostAddUsd(season) {
@@ -2889,6 +2898,7 @@ function listedTickerEpisodes(season) {
   return (season && Array.isArray(season.episodes) ? season.episodes : []).filter((ep) => {
     if (!ep || !ep.number || !ep.id) return false;
     if (ep.status === "locked") return false;
+    if (ep.status === "live" && !episodeWatchReady(season, ep)) return false;
     return true;
   });
 }
@@ -2925,7 +2935,14 @@ function groupSnapshotsByEpisode(season, snapshots) {
 function snapshotsForTickerRange(season, range) {
   /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
   const ep = tickerEpisodeForRange(season) || currentPageEpisode(season) || season.episode || {};
-  return snapshotsInTickerRange(season.snapshots, ep, range);
+  if (range === "week") return snapshotsInTickerRange(season.snapshots, ep, range);
+  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
+  const live = getLiveEpisode(season);
+  if (live && !episodeWatchReady(season, live)) {
+    const prefix = String(live.id || "");
+    return all.filter((snap) => !prefix || !String(snap.id || "").startsWith(prefix));
+  }
+  return all;
 }
 
 function candidateStroke(survivor, indexInTribe) {
@@ -4056,6 +4073,12 @@ function renderEpisodeRecapSpoiler(season) {
   const mount = document.getElementById("episode-recap");
   const stage = document.getElementById("episode-recap-stage");
   if (!mount || !stage) return;
+  /* Once this episode's own tribal is posted, the recap spoiler is redundant. */
+  if (tribalLogForPage(season).length) {
+    mount.hidden = true;
+    stage.innerHTML = "";
+    return;
+  }
   const prior = priorTribalLog(season);
   if (!prior.length) {
     mount.hidden = true;
@@ -4133,8 +4156,33 @@ function bindTribalSpoilers(root) {
 }
 
 function getLiveEpisode(season) {
-  const episodes = Array.isArray(season.episodes) ? season.episodes : [];
+  const episodes = Array.isArray(season && season.episodes) ? season.episodes : [];
   return episodes.find((ep) => ep.status === "live") || null;
+}
+
+function episodeWatchReady(season, episode) {
+  if (!episode || !episode.path) return false;
+  if (episodeIsClosed(episode)) return true;
+  const snaps = Array.isArray(season && season.snapshots) ? season.snapshots : [];
+  const week = snapshotsInTickerRange(snaps, episode, "week");
+  return week.some((snap) => snap && snap.kind && snap.kind !== "carry");
+}
+
+function watchEpisode(season) {
+  const listed = Array.isArray(season && season.episodes) ? season.episodes : [];
+  const live = getLiveEpisode(season);
+  if (live && episodeWatchReady(season, live)) return live;
+  const closed = listed
+    .filter((ep) => episodeIsClosed(ep) && ep.path)
+    .sort((a, b) => (a.number || 0) - (b.number || 0));
+  if (closed.length) return closed[closed.length - 1];
+  return live || (season && season.episode) || null;
+}
+
+function episodePublicLocked(season, ep) {
+  if (!ep || ep.status === "locked" || !ep.path) return true;
+  if (ep.status === "live" && !episodeWatchReady(season, ep)) return true;
+  return false;
 }
 
 function liveIndicatorHtml() {
@@ -4155,10 +4203,11 @@ function watchIconHtml() {
 function renderNavWatch(season) {
   const path = liveEpisodePath(season);
   if (!path) return;
-  const live = getLiveEpisode(season);
+  const live = watchEpisode(season);
   const href = assetBase() + path;
   const onLiveEpisode =
     live &&
+    live.status === "live" &&
     document.documentElement.dataset.page === "episode" &&
     Number(document.documentElement.dataset.episode) === live.number;
 
@@ -4167,7 +4216,7 @@ function renderNavWatch(season) {
     if (!link.querySelector(".nav-watch-icon")) {
       link.insertAdjacentHTML("afterbegin", watchIconHtml());
     }
-    if (live && !link.querySelector(".live-badge")) {
+    if (live && live.status === "live" && !link.querySelector(".live-badge")) {
       link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
     }
     if (onLiveEpisode) {
@@ -4193,7 +4242,7 @@ function renderSeasonHub(season) {
   const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
   list.innerHTML = episodes
     .map((ep) => {
-      const locked = ep.status === "locked" || !ep.path;
+      const locked = episodePublicLocked(season, ep);
       const title = escapeHtml(ep.title || "Episode " + ep.number);
       const label = escapeHtml(ep.weekLabel || "");
       if (locked) {
@@ -4201,11 +4250,11 @@ function renderSeasonHub(season) {
         <p class="ep-kicker">Torches unlit</p>
         <h3>${title}</h3>
         <p>${label}</p>
-        <p class="ep-locked-note">After Friday tribal</p>
+        <p class="ep-locked-note">${escapeHtml(ep.tease || "After Friday tribal")}</p>
       </div>`;
       }
       const href = episodeFileHref(ep);
-      const live = ep.status === "live";
+      const live = ep.status === "live" && episodeWatchReady(season, ep);
       const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
       const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">

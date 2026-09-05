@@ -527,12 +527,24 @@ if (!(groupStart > -1 && groupEnd > groupStart)) {
   throw new Error("app.js missing season episode-chapter grouping helpers");
 }
 const chapterHelpers = new Function(`
+  function episodeIsClosed(ep) {
+    return ep && (ep.status === "closed" || ep.status === "cut");
+  }
+  function episodeWatchReady(season, episode) {
+    if (!episode || !episode.path) return false;
+    if (episodeIsClosed(episode)) return true;
+    const snaps = Array.isArray(season && season.snapshots) ? season.snapshots : [];
+    return snaps.some((snap) => {
+      const id = String((snap && snap.id) || "");
+      return id.startsWith(String(episode.id || "")) && snap.kind && snap.kind !== "carry";
+    });
+  }
   ${appJs.slice(groupStart, groupEnd)}
   return { listedTickerEpisodes, groupSnapshotsByEpisode, snapshotMatchesEpisode };
 `)();
 const chapterEps = chapterHelpers.listedTickerEpisodes(seasonSource);
-if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02|s1e03") {
-  throw new Error("listedTickerEpisodes should keep closed + live episodes, got " + chapterEps.map((ep) => ep.id).join("|"));
+if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02") {
+  throw new Error("listedTickerEpisodes should keep closed episodes until Episode 3 has week tape, got " + chapterEps.map((ep) => ep.id).join("|"));
 }
 const grouped = chapterHelpers.groupSnapshotsByEpisode(seasonSource, [
   { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z" },
@@ -651,6 +663,36 @@ const e1Week = tickerHelpers.snapshotsInTickerRange(
 );
 if (e1Week.length !== 2 || e1Week.some((s) => s.id === "s1e02-cash-add")) {
   throw new Error("Episode 1 week must keep E1 marks and exclude the Episode 2 cash-add");
+}
+const e3Ep = {
+  id: "s1e03",
+  number: 3,
+  weekStart: "2026-09-07",
+  weekEnd: "2026-09-08",
+  diagramStartSnapshotId: "s1e03-carry"
+};
+const e3Week = tickerHelpers.snapshotsInTickerRange(
+  [
+    { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z", kind: "open" },
+    { id: "s1e02-fri-eod", at: "2026-09-04T19:59:59Z", kind: "close" },
+    { id: "s1e03-carry", at: "2026-09-07T07:00:00Z", kind: "carry" }
+  ],
+  e3Ep,
+  "week"
+);
+if (e3Week.length !== 1 || e3Week[0].id !== "s1e03-carry") {
+  throw new Error("Episode 3 week must open on s1e03-carry, got " + e3Week.map((s) => s.id).join(","));
+}
+const e3EmptyWeek = tickerHelpers.snapshotsInTickerRange(
+  [
+    { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z", kind: "open" },
+    { id: "s1e02-fri-eod", at: "2026-09-04T19:59:59Z", kind: "close" }
+  ],
+  { id: "s1e03", number: 3, weekStart: "2026-09-07", weekEnd: "2026-09-08", diagramStartSnapshotId: "s1e02-fri-eod" },
+  "week"
+);
+if (e3EmptyWeek.length !== 1 || e3EmptyWeek[0].id !== "s1e02-fri-eod") {
+  throw new Error("an empty Episode 3 week must keep the start snap, not the whole tape, got " + e3EmptyWeek.map((s) => s.id).join(","));
 }
 
 const tribePctStart = appJs.indexOf("function tribePctsFromFrame");
@@ -932,6 +974,58 @@ const overlaid = overlayFn(
 );
 if (!overlaid || overlaid.bookUsd !== 9.5985 || overlaid.positions[0].sizeUsd !== 9.5985) {
   throw new Error("Episode 1 holdings overlay must restore the last-hour book, not keep the live $0 jury row");
+}
+if (
+  !appJs.includes("function watchEpisode") ||
+  !appJs.includes("function episodeWatchReady") ||
+  !appJs.includes("function episodePublicLocked")
+) {
+  throw new Error("app.js must keep public Live on the last watchable episode");
+}
+if (!appJs.includes('kind !== "carry"') && !appJs.includes("kind !== 'carry'")) {
+  throw new Error("Episode 3 must stay off Live links until a non-carry week mark");
+}
+const rangeStart = appJs.indexOf("function snapshotsForTickerRange");
+const rangeEnd = appJs.indexOf("function candidateStroke");
+if (!(rangeStart > -1 && rangeEnd > rangeStart)) {
+  throw new Error("app.js missing snapshotsForTickerRange before candidateStroke");
+}
+const seasonRangeFn = new Function(`
+  function getLiveEpisode(season) {
+    return (season.episodes || []).find((ep) => ep.status === "live") || null;
+  }
+  function episodeIsClosed(ep) {
+    return ep && (ep.status === "closed" || ep.status === "cut");
+  }
+  function episodeWatchReady(season, episode) {
+    if (!episode || !episode.path) return false;
+    if (episodeIsClosed(episode)) return true;
+    return (season.snapshots || []).some((snap) => {
+      return String(snap.id || "").startsWith(String(episode.id || "")) && snap.kind && snap.kind !== "carry";
+    });
+  }
+  function tickerEpisodeForRange() { return null; }
+  function currentPageEpisode() { return null; }
+  function snapshotsInTickerRange(snapshots) { return snapshots; }
+  ${appJs.slice(rangeStart, rangeEnd)}
+  return snapshotsForTickerRange;
+`)();
+const seasonTape = seasonRangeFn(
+  {
+    episode: { id: "s1e03", status: "live" },
+    episodes: [
+      { id: "s1e02", status: "closed", path: "seasons/1/e02.html" },
+      { id: "s1e03", status: "live", path: "seasons/1/e03.html" }
+    ],
+    snapshots: [
+      { id: "s1e02-fri-eod", kind: "close" },
+      { id: "s1e03-carry", kind: "carry" }
+    ]
+  },
+  "season"
+);
+if (seasonTape.some((snap) => snap.id === "s1e03-carry") || !seasonTape.some((snap) => snap.id === "s1e02-fri-eod")) {
+  throw new Error("home season tape must keep Friday EOD and drop the Episode 3 carry until Monday has a real mark");
 }
 
 console.log("episode campfire checks passed (" + feed.conversations.length + " latest threads)");

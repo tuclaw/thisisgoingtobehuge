@@ -29,6 +29,9 @@ if (!app.includes("renderEpisodeRecapSpoiler(season)")) {
 if (!app.includes("entry.episode !== ep.id")) {
   fail("priorTribalLog must exclude the current episode's tribal");
 }
+if (!app.includes("tribalLogForPage(season).length")) {
+  fail("recap must hide once this episode's own tribal is posted");
+}
 
 const tribalE2 = (episode2.days || []).find((day) => day.id === "tribal");
 if (!tribalE2) fail("Episode 2 tribal fold missing");
@@ -80,4 +83,4 @@ if (e01Html) {
   }
 }
 
-console.log("s1e02 recap checks passed (Episode 1 vote under Episode 2; Episode 2 vote under Episode 3)");
+console.log("s1e02 recap checks passed (Episode 2 hides recap after tribal; Episode 2 vote under Episode 3)");
