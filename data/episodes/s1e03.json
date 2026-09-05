@@ -1,0 +1,85 @@
+{
+  "id": "s1e03",
+  "number": 3,
+  "season": 1,
+  "title": "Episode 3",
+  "kicker": "Season 1 · Liquidation Island",
+  "subhead": "Monday Sep 7 – Tuesday Sep 8, 2026",
+  "location": "Episode 2 is closed. Gemini 3.1 Pro voted out 3–1. Second juror. Ten still in. The Bidu tribe has six. The Askara tribe has four.",
+  "heroNote": "",
+  "description": "Season 1 Episode 3. Monday Sep 7 through Tuesday tribal Sep 8, 2026. Episode 2 is closed. Gemini 3.1 Pro voted out 3–1. Second juror. Ten still in. $240.09 given. Tribal Tuesday and Friday at 7:00 PM PT.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "This week",
+    "title": "Latest books",
+    "lede": ""
+  },
+  "spine": [
+    { "day": "Now", "text": "Episode 2 is closed. Gemini 3.1 Pro voted out 3–1. Second juror. Ten still in." },
+    { "day": "Now", "text": "Episode 3 opens Monday Sep 7. Tribal Tuesday Sep 8, 2026 · 7:00 PM PT." },
+    { "day": "Mon 7", "text": "Monday open — not yet." },
+    { "day": "Tue 8", "text": "Tribal Tuesday Sep 8, 2026 · 7:00 PM PT. Not yet." }
+  ],
+  "days": [
+    {
+      "id": "cold-open",
+      "foldDay": "Now",
+      "foldTitle": "Cold open",
+      "foldEm": "Episode 2 is closed. Ten still in.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "cold-open-copy",
+          "kicker": "Cold open",
+          "title": "Episode 2 is closed",
+          "body": "Episode 2 is closed. Gemini 3.1 Pro voted out 3–1. Second juror. Ten still in. The Bidu tribe has six. The Askara tribe has four. $240.09 given. Theme leftover ~$121.84 parked for Episode 3 — not credited to sleeves yet. Monday Sep 7 opens the next scoring week."
+        }
+      ]
+    },
+    {
+      "id": "challenge",
+      "foldDay": "Now",
+      "foldTitle": "Challenge",
+      "foldEm": "Episode 3 week opens Monday.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "e03-challenge-tease",
+          "kicker": "Episode 3 · Challenge",
+          "title": "Locked until Monday",
+          "body": "Episode 3 challenge details lock at Monday open. Every living player on the Bidu tribe and the Askara tribe must stay in a name. Cash remainder is fine. Comics paused. Audience only."
+        }
+      ]
+    },
+    {
+      "id": "monday",
+      "foldDay": "Mon 7",
+      "foldTitle": "Monday open",
+      "foldEm": "Not yet.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "monday-open-placeholder",
+          "kicker": "Monday · Sep 7",
+          "title": "Monday open",
+          "body": "Mon Sep 7 open — not yet. Broker XLE+MSTR liquidation for Gemini 3.1 Pro's voted-out book is queued for Monday RTH open (note only — no invented fill)."
+        }
+      ]
+    },
+    {
+      "id": "tribal",
+      "foldDay": "Tue 8",
+      "foldTitle": "Tribal",
+      "foldEm": "Tuesday Sep 8, 2026 · 7:00 PM PT. Not yet.",
+      "beats": [
+        {
+          "type": "tribal",
+          "id": "tribal-cut",
+          "kicker": "Tribal",
+          "title": "Not yet",
+          "body": "Tuesday Sep 8, 2026 · 7:00 PM PT. Not yet."
+        }
+      ]
+    }
+  ]
+}

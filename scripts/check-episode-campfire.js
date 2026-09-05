@@ -480,8 +480,8 @@ if (hostHelpers.moneyPutInTotal(seasonSource) !== 120) {
 if (hostHelpers.islandHostAddUsd(seasonSource) !== 120.09) {
   throw new Error("islandHostAddUsd should be Episode 2 host +$120.09, got " + hostHelpers.islandHostAddUsd(seasonSource));
 }
-if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E2") {
-  throw new Error("islandHostAddEpisodeLabel should be E2");
+if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E3") {
+  throw new Error("islandHostAddEpisodeLabel should be E3");
 }
 if (hostHelpers.islandHostAddUsd({ startingBookUsd: 10, islandGivenUsd: 120, cast: new Array(12).fill({}) }) != null) {
   throw new Error("islandHostAddUsd must stay hidden when given equals the opening $120");
@@ -531,7 +531,7 @@ const chapterHelpers = new Function(`
   return { listedTickerEpisodes, groupSnapshotsByEpisode, snapshotMatchesEpisode };
 `)();
 const chapterEps = chapterHelpers.listedTickerEpisodes(seasonSource);
-if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02") {
+if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02|s1e03") {
   throw new Error("listedTickerEpisodes should keep closed + live episodes, got " + chapterEps.map((ep) => ep.id).join("|"));
 }
 const grouped = chapterHelpers.groupSnapshotsByEpisode(seasonSource, [
