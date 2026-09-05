@@ -4015,14 +4015,30 @@ function formatTribalTally(entry) {
     .join("");
 }
 
+function tribalEpisodeNumber(entry) {
+  if (!entry) return null;
+  if (typeof entry.episode === "number" && Number.isFinite(entry.episode) && entry.episode > 0) {
+    return entry.episode;
+  }
+  const fromId = String(entry.episode || "").match(/e0*([1-9]\d*)$/i);
+  if (fromId) return Number(fromId[1]);
+  const fromTitle = String(entry.title || "").match(/Episode\s+([1-9]\d*)/i);
+  if (fromTitle) return Number(fromTitle[1]);
+  return null;
+}
+
 function formatTribalEntry(entry) {
   const boot = entry.bootName || entry.boot || entry.bootId || "—";
   const tallyRows = formatTribalTally(entry);
   const tallyHtml = tallyRows
     ? `<p class="vote-tally-kicker">Votes</p><ul class="vote-tally" aria-label="Votes">${tallyRows}</ul>`
     : "";
+  const epNum = tribalEpisodeNumber(entry);
+  const episodeHtml = epNum
+    ? `<span class="boot-episode">Episode ${epNum}</span><span class="boot-kicker-sep" aria-hidden="true">·</span>`
+    : "";
   return `<li class="tribal-vote-entry">
-    <p class="boot-kicker">The tribe has spoken</p>
+    <p class="boot-kicker">${episodeHtml}<span class="boot-spoken">The tribe has spoken</span></p>
     <p class="boot-name">${escapeHtml(String(boot))}</p>
     ${tallyHtml}
   </li>`;

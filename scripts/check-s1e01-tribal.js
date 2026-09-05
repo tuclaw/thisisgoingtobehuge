@@ -160,6 +160,12 @@ const expectedTexts = [
   if (vote.text !== expectedTexts[i]) fail("official vote text drifted at " + (i + 1));
 });
 if (entry.title !== "Season 1 Episode 1 · Friday Aug 28, 2026") fail("official title drifted");
+if (!app.includes("function tribalEpisodeNumber") || !app.includes("boot-episode")) {
+  fail("formatTribalEntry must label each tribal with its episode number");
+}
+if (!css.includes(".boot-episode") || !css.includes(".boot-kicker-sep")) {
+  fail("episode labels on tribals need styles");
+}
 if (!app.includes("entry.tally") || !app.includes("boot-name") || !app.includes("vote-tally")) {
   fail("formatTribalEntry must emphasize the boot and show the official tally only");
 }
