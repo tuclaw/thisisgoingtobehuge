@@ -2935,7 +2935,14 @@ function groupSnapshotsByEpisode(season, snapshots) {
 function snapshotsForTickerRange(season, range) {
   /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
   const ep = tickerEpisodeForRange(season) || currentPageEpisode(season) || season.episode || {};
-  return snapshotsInTickerRange(season.snapshots, ep, range);
+  if (range === "week") return snapshotsInTickerRange(season.snapshots, ep, range);
+  const all = Array.isArray(season.snapshots) ? season.snapshots.slice() : [];
+  const live = getLiveEpisode(season);
+  if (live && !episodeWatchReady(season, live)) {
+    const prefix = String(live.id || "");
+    return all.filter((snap) => !prefix || !String(snap.id || "").startsWith(prefix));
+  }
+  return all;
 }
 
 function candidateStroke(survivor, indexInTribe) {
