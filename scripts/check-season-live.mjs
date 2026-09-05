@@ -518,7 +518,7 @@ check(
   "live-episode-challenge",
   source.episode &&
     source.episode.challenge ===
-      "Every living player must buy or sell at least one US-listed stock or ETF every trading day (Mon and Tue)."
+      "Season rule: always hold at least one US-listed stock or ETF (never all-cash). Episode 3 also: buy or sell at least one US-listed stock or ETF every trading day (Mon and Tue)."
 );
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 7 – Tuesday Sep 8, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 8, 2026 · 7:00 PM PT");
@@ -1342,12 +1342,18 @@ check(
   "e03-challenge-lock",
   e3ChallengeBeat &&
     e3ChallengeBeat.title === "Daily trade" &&
-    e3ChallengeBody.includes("Every living player on the Bidu tribe and the Askara tribe must buy or sell at least one US-listed stock or ETF every trading day (Monday Sep 7 and Tuesday Sep 8).") &&
+    e3ChallengeBody.includes("Season rule for the rest of Season 1") &&
+    e3ChallengeBody.includes("must hold at least one US-listed stock or ETF at all times") &&
+    e3ChallengeBody.includes("Never all-cash.") &&
+    e3ChallengeBody.includes("Episode 3 also stacks a daily trade: buy or sell at least one US-listed stock or ETF every trading day (Monday Sep 7 and Tuesday Sep 8).") &&
     e3ChallengeBody.includes("A filled buy or a filled sell counts.") &&
     e3ChallengeBody.includes("Holding only / printing no-trade does not.") &&
-    e3ChallengeBody.includes("Cash remainder is still allowed.") &&
-    e3ChallengeBody.includes("Episode 2 always-hold-one-name rule is closed") &&
-    e3ChallengeBody.includes("that rule ended with Episode 2")
+    e3ChallengeBody.includes("Both rules stack.")
+);
+check(
+  "e03-challenge-no-always-hold-closed",
+  e3ChallengeBody &&
+    !/Episode 2 always-hold-one-name rule is closed|that rule ended with Episode 2|always-hold.*closed/i.test(e3ChallengeBody)
 );
 check(
   "e03-challenge-no-shame-list",
@@ -1359,17 +1365,34 @@ check(
   e3ChallengeBody && !/must stay in a name|Locked until Monday|lock at Monday open/i.test(e3ChallengeBody)
 );
 check(
+  "rules-season-always-hold",
+  rulesHtml.includes('id="season-always-hold"') &&
+    rulesHtml.includes("Always hold a name.") &&
+    rulesHtml.includes("For the rest of Season 1, every living player on the Bidu tribe and the Askara tribe must hold at least one US-listed stock or ETF at all times.") &&
+    rulesHtml.includes("Never all-cash.")
+);
+check(
+  "rules-e02-always-hold-season-continues",
+  rulesHtml.includes("The always-hold-one-name season rule did not.")
+);
+check(
   "rules-e03-challenge-lock",
   rulesHtml.includes('id="e03-challenge-lock"') &&
     rulesHtml.includes("Buy or sell every day.") &&
     rulesHtml.includes("Every living player must buy or sell at least one US-listed stock or ETF every trading day (Monday Sep 7 and Tuesday Sep 8).") &&
     rulesHtml.includes("A filled buy or a filled sell counts.") &&
     rulesHtml.includes("Holding only / printing no-trade does not.") &&
-    rulesHtml.includes("Cash remainder is fine.") &&
+    rulesHtml.includes("Cash remainder is fine if at least one name remains.") &&
     rulesHtml.includes("the Bidu tribe") &&
     rulesHtml.includes("the Askara tribe") &&
-    rulesHtml.includes("Episode 2 always-hold-one-name rule is closed") &&
+    rulesHtml.includes("both rules stack") &&
     rulesHtml.includes("Episode 3 only")
+);
+check(
+  "rules-e03-no-always-hold-closed",
+  !/Episode 2 always-hold-one-name rule is closed|that rule ended with Episode 2|always-hold.*closed/i.test(
+    rulesHtml.slice(rulesHtml.indexOf("e03-challenge-lock"))
+  )
 );
 check(
   "rules-e03-challenge-no-shame-list",

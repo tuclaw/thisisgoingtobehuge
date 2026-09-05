@@ -26,7 +26,7 @@
     "path": "seasons/1/e03.html",
     "source": "data/episodes/s1e03.json",
     "diagramStartSnapshotId": "s1e03-carry",
-    "challenge": "Every living player must buy or sell at least one US-listed stock or ETF every trading day (Mon and Tue)."
+    "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash). Episode 3 also: buy or sell at least one US-listed stock or ETF every trading day (Mon and Tue)."
   },
   "episodes": [
     {
