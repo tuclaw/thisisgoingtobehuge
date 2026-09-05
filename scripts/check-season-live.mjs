@@ -230,6 +230,12 @@ check(
   "live-episode-is-e03",
   source.episode && source.episode.id === "s1e03" && source.episode.status === "live" && source.episode.path === "seasons/1/e03.html"
 );
+check(
+  "live-episode-challenge",
+  source.episode &&
+    source.episode.challenge ===
+      "Every living player must buy or sell at least one US-listed stock or ETF every trading day (Mon and Tue)."
+);
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 7 – Tuesday Sep 8, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 8, 2026 · 7:00 PM PT");
 
@@ -324,11 +330,67 @@ const rulesHtml = readFileSync(join(root, "templates", "rules.html"), "utf8");
 check(
   "rules-e02-challenge-lock",
   rulesHtml.includes('id="e02-challenge-lock"') &&
+    rulesHtml.includes("Episode 2 · Challenge (closed)") &&
     rulesHtml.includes("Every living player must hold at least one US-listed stock or ETF for the whole episode (Monday Aug 31 – Friday Sep 4).") &&
     rulesHtml.includes("They may never go all-cash.") &&
-    rulesHtml.includes("Cash remainder is fine.")
+    rulesHtml.includes("Cash remainder is fine.") &&
+    rulesHtml.includes("the Bidu tribe") &&
+    rulesHtml.includes("the Askara tribe") &&
+    rulesHtml.includes("cash counts") &&
+    rulesHtml.includes("Monday fills are in") &&
+    rulesHtml.includes("It closed with Episode 2")
 );
 check("rules-cash-counts-stays", rulesHtml.includes("Stocks or cash. Cash counts."));
+check(
+  "rules-challenge-no-shame-list",
+  !/Gemini 3\.7 Flash|Claude Sonnet 5|sitting cash|shame/i.test(rulesHtml.slice(rulesHtml.indexOf("e02-challenge-lock")))
+);
+const e3Challenge = ((episode3Copy.days || []).find((day) => day.id === "challenge") || {}).beats || [];
+const e3ChallengeBeat = e3Challenge.find((beat) => beat.id === "e03-challenge-lock");
+const e3ChallengeBody = e3ChallengeBeat ? String(e3ChallengeBeat.body || "") : "";
+check(
+  "e03-challenge-lock",
+  e3ChallengeBeat &&
+    e3ChallengeBeat.title === "Daily trade" &&
+    e3ChallengeBody.includes("Every living player on the Bidu tribe and the Askara tribe must buy or sell at least one US-listed stock or ETF every trading day (Monday Sep 7 and Tuesday Sep 8).") &&
+    e3ChallengeBody.includes("A filled buy or a filled sell counts.") &&
+    e3ChallengeBody.includes("Holding only / printing no-trade does not.") &&
+    e3ChallengeBody.includes("Cash remainder is still allowed.") &&
+    e3ChallengeBody.includes("Episode 2 always-hold-one-name rule is closed") &&
+    e3ChallengeBody.includes("that rule ended with Episode 2")
+);
+check(
+  "e03-challenge-no-shame-list",
+  e3ChallengeBody &&
+    !/Gemini 3\.7 Flash|Claude Sonnet 5|GPT-5\.6 Terra|all cash except|sitting cash|shame list/i.test(e3ChallengeBody)
+);
+check(
+  "e03-challenge-no-stay-in-name",
+  e3ChallengeBody && !/must stay in a name|Locked until Monday|lock at Monday open/i.test(e3ChallengeBody)
+);
+check(
+  "rules-e03-challenge-lock",
+  rulesHtml.includes('id="e03-challenge-lock"') &&
+    rulesHtml.includes("Buy or sell every day.") &&
+    rulesHtml.includes("Every living player must buy or sell at least one US-listed stock or ETF every trading day (Monday Sep 7 and Tuesday Sep 8).") &&
+    rulesHtml.includes("A filled buy or a filled sell counts.") &&
+    rulesHtml.includes("Holding only / printing no-trade does not.") &&
+    rulesHtml.includes("Cash remainder is fine.") &&
+    rulesHtml.includes("the Bidu tribe") &&
+    rulesHtml.includes("the Askara tribe") &&
+    rulesHtml.includes("Episode 2 always-hold-one-name rule is closed") &&
+    rulesHtml.includes("Episode 3 only")
+);
+check(
+  "rules-e03-challenge-no-shame-list",
+  !/Gemini 3\.7 Flash|Claude Sonnet 5|sitting cash|shame/i.test(rulesHtml.slice(rulesHtml.indexOf("e03-challenge-lock")))
+);
+const e3ChromeBare = [episode3Copy.location, episode3Copy.heroNote, episode3Copy.description, e3ChallengeBody, JSON.stringify(episode3Copy.spine || [])]
+  .join(" ")
+  .replace(/the Bidu tribe/gi, "")
+  .replace(/the Askara tribe/gi, "");
+check("e03-no-bare-bidu", !/\bBidu\b/.test(e3ChromeBare));
+check("e03-no-bare-askara", !/\bAskara\b/.test(e3ChromeBare));
 check(
   "e02-tribal-posted",
   episode2Copy.days &&
