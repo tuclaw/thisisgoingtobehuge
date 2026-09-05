@@ -166,6 +166,9 @@ if (!app.includes("function tribalEpisodeNumber") || !app.includes("boot-episode
 if (!css.includes(".boot-episode") || !css.includes(".boot-kicker-sep")) {
   fail("episode labels on tribals need styles");
 }
+if (!css.includes(".tribal-spoiler-result .tribal-vote-list > .tribal-vote-entry + .tribal-vote-entry")) {
+  fail("stacked tribals need spoiler-specific padding so Episode 2 is not jammed into the divider");
+}
 if (!app.includes("entry.tally") || !app.includes("boot-name") || !app.includes("vote-tally")) {
   fail("formatTribalEntry must emphasize the boot and show the official tally only");
 }
