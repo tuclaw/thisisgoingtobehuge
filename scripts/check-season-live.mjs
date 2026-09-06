@@ -1210,7 +1210,22 @@ check(
 check("given-unchanged", source.islandGivenUsd === 240.09);
 check("live-pot-marked", source.islandPotUsd === 238.7947, String(source.islandPotUsd));
 check("e02-no-saturday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch")));
-check("e02-no-saturday-dinner", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-dinner")));
+const e2Saturday = (episode2Copy.days || []).find((day) => day.id === "saturday");
+const e2SaturdayBeats = (e2Saturday && e2Saturday.beats) || [];
+const e2SaturdayDinner = e2SaturdayBeats.find((beat) => beat.id === "saturday-dinner");
+check("e02-saturday-after-tribal", e2DayIds.indexOf("saturday") > e2DayIds.indexOf("tribal"));
+check("e02-saturday-dinner-beat", Boolean(e2SaturdayDinner) && e2SaturdayDinner.type === "dinner-fires");
+check("e02-saturday-dinner-audience-only", e2SaturdayDinner && e2SaturdayDinner.audienceCut === "Audience only");
+check(
+  "e02-saturday-dinner-body",
+  e2SaturdayDinner &&
+    e2SaturdayDinner.body === "Two 3-person fires. Exact dinner tape. Markets closed. Episode 3 opens Monday."
+);
+if (e2SaturdayDinner) {
+  const e2SatDinnerIds = (e2SaturdayDinner.threads || []).map((thread) => thread.id).join("|");
+  check("e02-saturday-dinner-ids", e2SatDinnerIds === "bidu-sat-dinner-fire|askara-sat-dinner-fire");
+  check("e02-saturday-dinner-two-fires", (e2SaturdayDinner.threads || []).length === 2);
+}
 check("e02-no-sunday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "sunday-lunch")));
 const e2Monday = (episode2Copy.days || []).find((day) => day.id === "monday");
 const e2MondayBeats = (e2Monday && e2Monday.beats) || [];
