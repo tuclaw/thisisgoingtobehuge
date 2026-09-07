@@ -2257,9 +2257,10 @@ function islandGivenStartUsd(season) {
 
 function moneyPutInTotal(season, episode, range) {
   const original = islandGivenStartUsd(season);
-  /* Episode 2 week is funded: dotted island bar is islandGivenUsd, not the $120 open. */
-  if (range === "week" && tickerIsEpisodeTwo(episode) && typeof season.islandGivenUsd === "number") {
-    return season.islandGivenUsd;
+  /* Episode 2 week is funded at the cash-add through that week — not the live topped-up given. */
+  if (range === "week" && tickerIsEpisodeTwo(episode)) {
+    const anchor = episode && episode.weekEnd ? `${episode.weekEnd}T23:59:59Z` : null;
+    return tickerPutInAt(season, anchor);
   }
   return original;
 }
@@ -2276,15 +2277,22 @@ function hostPotAdds(season) {
   return (season.events || []).filter((event) => event && event.type === "mark" && isHostPotAdd(event));
 }
 
-/* Funded pot at a mark. Host cash-adds step the baseline; a newer islandGivenUsd
-   follows after the latest add so the “up from” line moves when the pot is topped up. */
-function tickerPutInAt(season, iso) {
-  const start = islandGivenStartUsd(season);
+function isGivenStep(item) {
+  if (!item) return false;
+  if (item.kind === "cash-add" || item.kind === "host-add" || item.kind === "theme-leftover") return true;
+  return /cash-add|host-add|theme-leftover/i.test(String(item.id || ""));
+}
+
+function givenSteps(season) {
   const liveGiven =
     typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)
       ? season.islandGivenUsd
       : null;
-  const adds = hostPotAdds(season)
+  const steps = hostPotAdds(season).slice();
+  (season.events || []).forEach((event) => {
+    if (event && event.type === "cash-add" && event.kind === "theme-leftover") steps.push(event);
+  });
+  return steps
     .map((item) => {
       const at = Date.parse(item && item.at);
       const given =
@@ -2293,21 +2301,31 @@ function tickerPutInAt(season, iso) {
     })
     .filter((item) => !Number.isNaN(item.at) && item.given != null)
     .sort((a, b) => a.at - b.at);
+}
+
+/* Funded pot at a mark. Host cash-adds step the baseline; theme leftover credits step later. */
+function tickerPutInAt(season, iso) {
+  const start = islandGivenStartUsd(season);
+  const liveGiven =
+    typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)
+      ? season.islandGivenUsd
+      : null;
+  const steps = givenSteps(season);
   const t = iso ? Date.parse(iso) : NaN;
   let putIn = start;
   let lastStamped = start;
-  adds.forEach((add) => {
-    if (Number.isNaN(t) || t >= add.at) {
-      putIn = add.given;
-      lastStamped = add.given;
+  steps.forEach((step) => {
+    if (Number.isNaN(t) || t >= step.at) {
+      putIn = step.given;
+      lastStamped = step.given;
     }
   });
-  const lastAdd = adds.length ? adds[adds.length - 1] : null;
-  const afterLastAdd = !lastAdd || Number.isNaN(t) || t >= lastAdd.at;
-  if (afterLastAdd && liveGiven != null && liveGiven > lastStamped + 0.00005) {
+  const lastStep = steps.length ? steps[steps.length - 1] : null;
+  const afterLastStep = !lastStep || Number.isNaN(t) || t >= lastStep.at;
+  if (afterLastStep && liveGiven != null && liveGiven > lastStamped + 0.00005) {
     return liveGiven;
   }
-  if (!adds.length && liveGiven != null && liveGiven > start + 0.00005) {
+  if (!steps.length && liveGiven != null && liveGiven > start + 0.00005) {
     return liveGiven;
   }
   return putIn;
@@ -2365,10 +2383,18 @@ function snapshotsInTickerRange(snapshots, episode, range) {
 }
 
 function islandHostAddUsd(season) {
-  const given = islandGivenUsd(season);
-  const start = moneyPutInTotal(season);
-  if (given == null || Number.isNaN(given) || given <= start + 0.00005) return null;
-  return roundMoney(given - start);
+  const start = islandGivenStartUsd(season);
+  const adds = hostPotAdds(season)
+    .map((item) => ({
+      at: Date.parse(item && item.at),
+      given:
+        typeof item.givenUsd === "number" && !Number.isNaN(item.givenUsd) ? item.givenUsd : null
+    }))
+    .filter((item) => !Number.isNaN(item.at) && item.given != null)
+    .sort((a, b) => a.at - b.at);
+  const lastHost = adds.length ? adds[adds.length - 1] : null;
+  if (!lastHost || lastHost.given <= start + 0.00005) return null;
+  return roundMoney(lastHost.given - start);
 }
 
 function islandHostAddEpisodeLabel(seasonOrEpisode) {

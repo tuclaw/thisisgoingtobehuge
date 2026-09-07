@@ -136,14 +136,16 @@ if (!boardNative) {
 
 const start = board.startingBookUsd;
 if (boardNative) {
-  check("given-total", source.islandGivenUsd === 240.09, String(source.islandGivenUsd));
+  check("given-total", source.islandGivenUsd === 361.93, String(source.islandGivenUsd));
+  check("theme-leftover-credited", source.islandThemeLeftoverCredited === true);
+  check("theme-leftover-usd", source.islandThemeLeftoverUsd === 121.84, String(source.islandThemeLeftoverUsd));
   check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
   check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
   check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", source.islandPotUsd === 238.7947, String(source.islandPotUsd));
+  check("pot-marked-sleeves", source.islandPotUsd === 360.63, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
@@ -182,6 +184,13 @@ for (const s of board.survivors) {
   if (boardNative && (s.status === "jury" || sourceRow?.status === "voted-out" || sourceRow?.status === "disqualified")) {
     computedWeek = s.weekPct;
   } else if (sourceRow?.dqSplitUsd && s.weekPct === 0 && sourceRow.priorMarkUsd === s.bookUsd) {
+    computedWeek = 0;
+  } else if (
+    sourceRow?.themeCreditUsd &&
+    s.weekPct === 0 &&
+    sourceRow.mondayOpenUsd === s.bookUsd &&
+    sourceRow.priorMarkUsd === s.bookUsd
+  ) {
     computedWeek = 0;
   } else if (s.status === "jury" && preBoot != null) {
     computedWeek = pctRound(((preBoot - start) / start) * 100);

@@ -103,7 +103,7 @@ if (opus) {
   check("live-opus-no-oih", !tickers.includes("OIH"));
   check("live-opus-no-xle", !tickers.includes("XLE"));
   check("live-opus-no-lng", !tickers.includes("LNG"));
-  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 0.1786) < 0.01, String(cashTotal(now.positions)));
+  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 13.7164) < 0.01, String(cashTotal(now.positions)));
   check("live-opus-mpc-qty", (now.positions || []).some((pos) => tickerOf(pos) === "MPC" && pos.qty === "0.012262"));
   check("live-opus-fri-mpc-qty", (now.positions || []).some((pos) => tickerOf(pos) === "MPC" && pos.qty === "0.005248"));
   check("live-opus-nvda-qty", (now.positions || []).some((pos) => tickerOf(pos) === "NVDA" && pos.qty === "0.014496"));
@@ -122,7 +122,7 @@ if (kimi) {
   check("live-kimi-no-nvda", !tickers.includes("NVDA"));
   check("live-kimi-no-msft", !tickers.includes("MSFT"));
   check("live-kimi-no-cost", !tickers.includes("COST"));
-  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 21.4155) < 0.01, String(cashTotal(now.positions)));
+  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 34.9532) < 0.01, String(cashTotal(now.positions)));
   const cvxLots = (now.positions || []).filter((pos) => tickerOf(pos) === "CVX");
   check("live-kimi-cvx-qty", cvxLots.length === 2 && cvxLots.some((pos) => pos.qty === "0.048792") && cvxLots.some((pos) => pos.qty === "0.024190"));
   check("live-kimi-xom-mid", (now.positions || []).some((pos) => tickerOf(pos) === "XOM" && pos.qty === "0.018994"));
@@ -168,8 +168,8 @@ if (grok46) {
       usoLots.some((pos) => pos.qty === "0.075070") &&
       usoLots.some((pos) => pos.qty === "0.070478")
   );
-  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 0.1038) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok46-book", now && Math.abs(now.bookUsd - 20.7716) < 0.0001, now && String(now.bookUsd));
+  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 13.6415) < 0.0001, cash && String(cash.sizeUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 34.3093) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -271,7 +271,7 @@ const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
 const grok46Live = board.survivors.find((s) => s.name === "Grok 4.6");
 const geminiProLive = board.survivors.find((s) => s.name === "Gemini 3.1 Pro");
-check("live-grok46-lead", grok46Live && grok46Live.bookUsd === 20.7716 && grok46Live.weekPct === 5.15, grok46Live && `${grok46Live.bookUsd} / ${grok46Live.weekPct}`);
+check("live-grok46-lead", grok46Live && grok46Live.bookUsd === 34.3093 && grok46Live.weekPct === 0, grok46Live && `${grok46Live.bookUsd} / ${grok46Live.weekPct}`);
 check("live-pro-jury", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0 && geminiProLive.weekPct === -6.99, geminiProLive && `${geminiProLive.status} / ${geminiProLive.bookUsd} / ${geminiProLive.weekPct}`);
 check(
   "live-pro-cash",
@@ -487,7 +487,9 @@ if (log[1]) {
 check("books-fable-jury-zero", fableLive && fableLive.status === "jury" && fableLive.bookUsd === 0);
 check("books-pro-jury-zero", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0);
 check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 3);
-check("given-total-fixture", source.islandGivenUsd === 240.09, String(source.islandGivenUsd));
+check("given-total-fixture", source.islandGivenUsd === 361.93, String(source.islandGivenUsd));
+check("theme-leftover-credited", source.islandThemeLeftoverCredited === true);
+check("theme-leftover-usd", source.islandThemeLeftoverUsd === 121.84, String(source.islandThemeLeftoverUsd));
 check("given-start-fixture", source.islandGivenStartUsd === 120, String(source.islandGivenStartUsd));
 check("board-given-start-fixture", board.islandGivenStartUsd === 120, String(board.islandGivenStartUsd));
 check("e2-top-up-each-fixture", source.islandEpisode2TopUpEachUsd === 10 && board.islandEpisode2TopUpEachUsd === 10);
@@ -499,17 +501,17 @@ check(
   typeof source.islandGivenNote === "string" &&
     source.islandGivenNote.includes("$110.30 vs $110 target") &&
     source.islandGivenNote.includes("30 cents leftover, not a 12th book") &&
-    source.islandGivenNote.includes("Living virtual sleeves credited $10 cash each anyway")
+    source.islandGivenNote.includes("$121.84 theme leftover credited")
 );
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
-check("homepage-given-copy", home.includes("$240.09 given. Nine still in. Grok 4.5 DQ Mon Sep 7. Two tribes. Tuesday and Friday tribal."));
+check("homepage-given-copy", home.includes("$361.93 given. Nine still in. Grok 4.5 DQ Mon Sep 7. Two tribes. Tuesday and Friday tribal."));
 check("homepage-points-at-e03", home.includes("seasons/1/e03.html") && home.includes("Walk into Episode 3"));
 check("homepage-skips-e02-primary-cta", !home.includes("Walk into Episode 2"));
-check("sleeve-pot-stays-240", source.islandPotUsd === 238.7947, String(source.islandPotUsd));
+check("sleeve-pot-marked", source.islandPotUsd === 360.63, String(source.islandPotUsd));
 check("merged-stays-false", source.merged === false);
 check(
-  "status-label-e03-dq",
-  source.statusLabel === "Live · S1E03 · Grok 4.5 DQ Mon Sep 7 · nine living"
+  "status-label-e03-theme-credit",
+  source.statusLabel === "Live · S1E03 · theme leftover credited · nine living"
 );
 check("live-episode-is-e03", source.episode && source.episode.id === "s1e03" && source.episode.status === "live" && source.episode.path === "seasons/1/e03.html");
 check(
@@ -664,17 +666,17 @@ if (monOpen) {
 }
 
 const expectedBooks = {
-  "Grok 4.6": { bookUsd: 20.7716, weekPct: 5.15, dayPct: -0.06 },
-  "Claude Sonnet 5": { bookUsd: 20.0841, weekPct: 0.42, dayPct: -0.85 },
-  "Composer 2.5": { bookUsd: 20.4268, weekPct: -0.14, dayPct: 0.5 },
-  "Claude Opus 5": { bookUsd: 20.2811, weekPct: 1.9, dayPct: -0.74 },
-  "Gemini 3.7 Flash": { bookUsd: 20.0097, weekPct: 0.05, dayPct: -0.83 },
-  "GPT-5.6 Terra": { bookUsd: 19.6565, weekPct: -0.08, dayPct: -0.85 },
+  "Grok 4.6": { bookUsd: 34.3093, weekPct: 0, dayPct: 0 },
+  "Claude Sonnet 5": { bookUsd: 33.6219, weekPct: 0, dayPct: 0 },
+  "Composer 2.5": { bookUsd: 33.9646, weekPct: 0, dayPct: 0 },
+  "Claude Opus 5": { bookUsd: 33.8189, weekPct: 0, dayPct: 0 },
+  "Gemini 3.7 Flash": { bookUsd: 33.5475, weekPct: 0, dayPct: 0 },
+  "GPT-5.6 Terra": { bookUsd: 33.1943, weekPct: 0, dayPct: 0 },
   "Grok 4.5": { bookUsd: 0, weekPct: 24.45, dayPct: 0, status: "disqualified" },
-  "GPT-5.6 Sol": { bookUsd: 38.6886, weekPct: 0, dayPct: 0 },
+  "GPT-5.6 Sol": { bookUsd: 52.2264, weekPct: 0, dayPct: 0 },
   "Gemini 3.1 Pro": { bookUsd: 0, weekPct: -6.99, dayPct: 0 },
-  "GPT-5.6 Luna": { bookUsd: 39.2131, weekPct: 0, dayPct: 0 },
-  "Kimi K3": { bookUsd: 39.6632, weekPct: 0, dayPct: 0 },
+  "GPT-5.6 Luna": { bookUsd: 52.7509, weekPct: 0, dayPct: 0 },
+  "Kimi K3": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: 0 }
 };
 for (const [name, exp] of Object.entries(expectedBooks)) {
@@ -1213,8 +1215,8 @@ check(
     source.quotes?.USO?.source === "RTH last-trade" &&
     source.quotes?.XLE?.session === "2026-09-04-eod"
 );
-check("given-unchanged", source.islandGivenUsd === 240.09);
-check("live-pot-marked", source.islandPotUsd === 238.7947, String(source.islandPotUsd));
+check("given-unchanged", source.islandGivenUsd === 361.93);
+check("live-pot-marked", source.islandPotUsd === 360.63, String(source.islandPotUsd));
 check("e02-no-saturday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch")));
 const e2Saturday = (episode2Copy.days || []).find((day) => day.id === "saturday");
 const e2SaturdayBeats = (e2Saturday && e2Saturday.beats) || [];
@@ -1442,6 +1444,15 @@ check(
   "e03-cold-open-nine-living",
   JSON.stringify(episode3Copy).includes("Nine still in") &&
     /the Askara tribe has three/i.test(JSON.stringify(episode3Copy))
+);
+check(
+  "e03-theme-credit-copy",
+  JSON.stringify(episode3Copy).includes("$361.93 given") &&
+    JSON.stringify(episode3Copy).includes("Theme leftover $121.84 credited")
+);
+check(
+  "e03-no-parked-theme",
+  !JSON.stringify(episode3Copy).includes("parked — not credited")
 );
 check(
   "e03-no-invented-exit-interview",
