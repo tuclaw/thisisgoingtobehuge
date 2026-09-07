@@ -179,8 +179,10 @@ for (const s of board.survivors) {
         ? sourceRow.priorMarkUsd
         : null;
   let computedWeek;
-  if (boardNative && (s.status === "jury" || sourceRow?.status === "voted-out")) {
+  if (boardNative && (s.status === "jury" || sourceRow?.status === "voted-out" || sourceRow?.status === "disqualified")) {
     computedWeek = s.weekPct;
+  } else if (sourceRow?.dqSplitUsd && s.weekPct === 0 && sourceRow.priorMarkUsd === s.bookUsd) {
+    computedWeek = 0;
   } else if (s.status === "jury" && preBoot != null) {
     computedWeek = pctRound(((preBoot - start) / start) * 100);
   } else if (s.status === "jury" && boardNative && sourceRow && typeof sourceRow.priorMarkUsd === "number") {
@@ -310,6 +312,13 @@ if (!boardNative) {
 const log = source.tribalLog || [];
 check("tribal-log-is-array", Array.isArray(log));
 for (const [i, council] of log.entries()) {
+  if (council && council.type === "disqualification") {
+    check(`dq-boot-known:${i}`, names.has(council.bootName), council.bootName);
+    check(`dq-summary:${i}`, typeof council.summary === "string" && council.summary.includes(council.bootName));
+    check(`dq-not-tribal:${i}`, council.notTribal === true);
+    check(`dq-no-exit:${i}`, council.exitInterview === false);
+    continue;
+  }
   requireKeys(council, ["bootName", "votes", "tally"], `tribalLog[${i}]`);
   check(`tribal-boot-known:${i}`, names.has(council.bootName), council.bootName);
   const votes = Array.isArray(council.votes) ? council.votes : [];
@@ -332,7 +341,9 @@ const seasonHub = readFileSync(join(root, "templates", "season.html"), "utf8");
 const appJs = readFileSync(join(root, "app.js"), "utf8");
 const listStart = seasonHub.indexOf('id="episode-list"');
 const listBlock = listStart >= 0 ? seasonHub.slice(listStart, listStart + 1200) : seasonHub;
-for (const name of (source.tribalLog || []).map((entry) => entry && entry.bootName).filter(Boolean)) {
+for (const entry of source.tribalLog || []) {
+  const name = entry && entry.bootName;
+  if (!name || entry.type === "disqualification") continue;
   check(`episode-list-tease-no-boot:${name}`, !listingCopy.includes(name), name);
   check(`season-hub-list-no-boot:${name}`, !listBlock.includes(name), name);
 }

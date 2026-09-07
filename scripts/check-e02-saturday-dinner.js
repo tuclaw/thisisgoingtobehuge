@@ -70,8 +70,8 @@ if (e1Dinner.body === dinnerBeat.body) {
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
 if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
-if (season.statusLabel !== "Closed · S1E02 · tribal Fri Sep 4 · Gemini 3.1 Pro voted out") {
-  throw new Error("public Live must stay on Episode 2 — do not flip statusLabel to Live E3");
+if (season.statusLabel !== "Live · S1E03 · Grok 4.5 DQ Mon Sep 7 · nine living") {
+  throw new Error("public Live must reflect Episode 3 Grok 4.5 DQ");
 }
 
 if (!builder.includes("e02-saturday-dinner.js") || !builder.includes("saturday-dinner")) {

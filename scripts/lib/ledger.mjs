@@ -105,6 +105,10 @@ function publicSurvivorFromBoard(member) {
   if (member.lastSession) out.lastSession = member.lastSession;
   if (member.lastSource) out.lastSource = member.lastSource;
   if (member.eodMarkUsd != null) out.eodMarkUsd = member.eodMarkUsd;
+  if (member.jury) out.jury = true;
+  if (member.disqualified) out.disqualified = true;
+  if (member.exitInterview === false) out.exitInterview = false;
+  if (member.exitInterviewNote) out.exitInterviewNote = member.exitInterviewNote;
   return out;
 }
 

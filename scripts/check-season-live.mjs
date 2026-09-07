@@ -122,7 +122,7 @@ if (kimi) {
   check("live-kimi-no-nvda", !tickers.includes("NVDA"));
   check("live-kimi-no-msft", !tickers.includes("MSFT"));
   check("live-kimi-no-cost", !tickers.includes("COST"));
-  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 11.6421) < 0.01, String(cashTotal(now.positions)));
+  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 21.4155) < 0.01, String(cashTotal(now.positions)));
   const cvxLots = (now.positions || []).filter((pos) => tickerOf(pos) === "CVX");
   check("live-kimi-cvx-qty", cvxLots.length === 2 && cvxLots.some((pos) => pos.qty === "0.048792") && cvxLots.some((pos) => pos.qty === "0.024190"));
   check("live-kimi-xom-mid", (now.positions || []).some((pos) => tickerOf(pos) === "XOM" && pos.qty === "0.018994"));
@@ -130,21 +130,9 @@ if (kimi) {
 }
 if (grok45) {
   const now = board.survivors.find((s) => s.id === grok45.id);
-  const tickers = (now.positions || []).map(tickerOf);
-  const xom45 = (now.positions || []).find((pos) => tickerOf(pos) === "XOM");
-  check("live-grok45-no-coin", !tickers.includes("COIN"));
-  check("live-grok45-no-hood", !tickers.includes("HOOD"));
-  check("live-grok45-no-xle", !tickers.includes("XLE"));
-  check("live-grok45-no-sofi", !tickers.includes("SOFI"));
-  check("live-grok45-xom-qty", (now.positions || []).filter((pos) => tickerOf(pos) === "XOM").some((pos) => pos.qty === "0.062625") && (now.positions || []).filter((pos) => tickerOf(pos) === "XOM").some((pos) => pos.qty === "0.053291"));
-  const uso45 = (now.positions || []).filter((pos) => tickerOf(pos) === "USO");
-  check(
-    "live-grok45-uso-qty",
-    uso45.length === 1 && uso45.some((pos) => pos.qty === "0.036739")
-  );
-  check("live-grok45-cash", Math.abs(cashTotal(now.positions) - 5.6195) < 0.01, String(cashTotal(now.positions)));
-  check("live-grok45-book", now && Math.abs(now.bookUsd - 29.3204) < 0.0001, now && String(now.bookUsd));
-  check("live-grok45-no-rank-position", now && now.position == null);
+  check("live-grok45-disqualified", now && now.status === "disqualified" && now.jury === true && now.bookUsd === 0);
+  check("live-grok45-no-positions", now && (now.positions || []).length === 1 && now.positions[0].status === "boot-split");
+  check("live-grok45-no-exit-interview", now && now.exitInterview === false);
 }
 
 if (!boardNative) {
@@ -305,9 +293,18 @@ if (e3Carry && e3Carry.recorded) {
     const row = (source.survivors || []).find((s) => s.id === id);
     return row && row.status === "active";
   });
+  const carryLivingIds = Object.keys(e3Carry.recorded).filter((id) => {
+    const rec = e3Carry.recorded[id];
+    const row = (source.survivors || []).find((s) => s.id === id);
+    return rec && row && row.status !== "voted-out" && row.name !== "Claude Fable 5" && row.name !== "Gemini 3.1 Pro";
+  });
   check(
     "e3-carry-week-reset",
-    livingCarry.length === 10 && livingCarry.every(([, rec]) => rec && rec.weekPct === 0)
+    carryLivingIds.length === 10 &&
+      carryLivingIds.every((id) => {
+        const rec = e3Carry.recorded[id];
+        return rec && rec.weekPct === 0;
+      })
   );
 }
 check("live-fable-last", fableLive && fableLive.bookUsd === 0 && fableLive.weekPct === -4.01, fableLive && `${fableLive.bookUsd} / ${fableLive.weekPct}`);
@@ -452,7 +449,8 @@ if (prevote) {
   );
 }
 const log = source.tribalLog || [];
-check("tribal-log-two-councils", Array.isArray(log) && log.length === 2);
+check("tribal-log-three-councils", Array.isArray(log) && log.length === 3);
+check("tribal-log-dq-is-third", log[2] && log[2].type === "disqualification" && log[2].bootName === "Grok 4.5");
 if (log[0]) {
   check("tribal-log-e01-bootName", log[0].bootName === "Claude Fable 5");
   const votes = Array.isArray(log[0].votes) ? log[0].votes : [];
@@ -488,7 +486,7 @@ if (log[1]) {
 }
 check("books-fable-jury-zero", fableLive && fableLive.status === "jury" && fableLive.bookUsd === 0);
 check("books-pro-jury-zero", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0);
-check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 4);
+check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 3);
 check("given-total-fixture", source.islandGivenUsd === 240.09, String(source.islandGivenUsd));
 check("given-start-fixture", source.islandGivenStartUsd === 120, String(source.islandGivenStartUsd));
 check("board-given-start-fixture", board.islandGivenStartUsd === 120, String(board.islandGivenStartUsd));
@@ -504,14 +502,14 @@ check(
     source.islandGivenNote.includes("Living virtual sleeves credited $10 cash each anyway")
 );
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
-check("homepage-given-copy", home.includes("$240.09 given. Ten still in. Two tribes. Tuesday and Friday tribal."));
-check("homepage-points-at-e02", home.includes("seasons/1/e02.html") && home.includes("Walk into Episode 2"));
-check("homepage-skips-e03-cta", !home.includes("seasons/1/e03.html") && !home.includes("Walk into Episode 3"));
+check("homepage-given-copy", home.includes("$240.09 given. Nine still in. Grok 4.5 DQ Mon Sep 7. Two tribes. Tuesday and Friday tribal."));
+check("homepage-points-at-e03", home.includes("seasons/1/e03.html") && home.includes("Walk into Episode 3"));
+check("homepage-skips-e02-primary-cta", !home.includes("Walk into Episode 2"));
 check("sleeve-pot-stays-240", source.islandPotUsd === 238.7947, String(source.islandPotUsd));
 check("merged-stays-false", source.merged === false);
 check(
-  "status-label-e02-closed",
-  source.statusLabel === "Closed · S1E02 · tribal Fri Sep 4 · Gemini 3.1 Pro voted out"
+  "status-label-e03-dq",
+  source.statusLabel === "Live · S1E03 · Grok 4.5 DQ Mon Sep 7 · nine living"
 );
 check("live-episode-is-e03", source.episode && source.episode.id === "s1e03" && source.episode.status === "live" && source.episode.path === "seasons/1/e03.html");
 check(
@@ -672,19 +670,23 @@ const expectedBooks = {
   "Claude Opus 5": { bookUsd: 20.2811, weekPct: 1.9, dayPct: -0.74 },
   "Gemini 3.7 Flash": { bookUsd: 20.0097, weekPct: 0.05, dayPct: -0.83 },
   "GPT-5.6 Terra": { bookUsd: 19.6565, weekPct: -0.08, dayPct: -0.85 },
-  "Grok 4.5": { bookUsd: 29.3204, weekPct: 24.45, dayPct: -1.75 },
-  "GPT-5.6 Sol": { bookUsd: 28.9151, weekPct: 20.73, dayPct: -1.41 },
+  "Grok 4.5": { bookUsd: 0, weekPct: 24.45, dayPct: 0, status: "disqualified" },
+  "GPT-5.6 Sol": { bookUsd: 38.6886, weekPct: 0, dayPct: 0 },
   "Gemini 3.1 Pro": { bookUsd: 0, weekPct: -6.99, dayPct: 0 },
-  "GPT-5.6 Luna": { bookUsd: 29.4396, weekPct: 23.08, dayPct: -0.85 },
-  "Kimi K3": { bookUsd: 29.8898, weekPct: 24.13, dayPct: -1.04 },
+  "GPT-5.6 Luna": { bookUsd: 39.2131, weekPct: 0, dayPct: 0 },
+  "Kimi K3": { bookUsd: 39.6632, weekPct: 0, dayPct: 0 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: 0 }
 };
 for (const [name, exp] of Object.entries(expectedBooks)) {
   const row = board.survivors.find((s) => s.name === name);
   check(
     `e02-book:${name}`,
-    row && row.bookUsd === exp.bookUsd && row.weekPct === exp.weekPct && row.dayPct === exp.dayPct,
-    row && `${row.bookUsd} / ${row.weekPct} / ${row.dayPct}`
+    row &&
+      row.bookUsd === exp.bookUsd &&
+      row.weekPct === exp.weekPct &&
+      row.dayPct === exp.dayPct &&
+      (!exp.status || row.status === exp.status),
+    row && `${row.status || ""} ${row.bookUsd} / ${row.weekPct} / ${row.dayPct}`
   );
 }
 
@@ -733,7 +735,12 @@ if (boardNative) {
     "catch-up-flash-spy-is-position",
     flashNow && positionOrder(flashNow.positions, "SPY", "6a959735-3b50-4cb0-b5da-3bee50d170d6")
   );
+  check(
+    "booted-grok45-disqualified",
+    grok45Now && grok45Now.status === "disqualified" && grok45Now.jury === true && grok45Now.bookUsd === 0
+  );
   check("live-grok45-no-xle-position", grok45Now && !(grok45Now.positions || []).some((pos) => tickerOf(pos) === "XLE"));
+  check("live-grok45-no-xom-position", grok45Now && !(grok45Now.positions || []).some((pos) => tickerOf(pos) === "XOM"));
   check(
     "catch-up-opus-xle-sold-fri",
     opusNow && !(opusNow.positions || []).some((pos) => tickerOf(pos) === "XLE")
@@ -775,7 +782,6 @@ if (boardNative) {
   check("gift-opus-vlo-is-position", opusNow && positionOrder(opusNow.positions, "VLO", "6a95ba65-99fa-425a-bbfe-da35dd0dbc49"));
   check("gift-flash-xle-is-position", flashNow && positionOrder(flashNow.positions, "XLE", "6a95ba67-28d7-4349-94b3-146611c11f75"));
   check("gift-terra-xle-is-position", terraNow && positionOrder(terraNow.positions, "XLE", "6a95ba68-f283-4f96-89f7-b5956fa6f549"));
-  check("gift-grok45-xom-is-position", grok45Now && positionOrder(grok45Now.positions, "XOM", "6a95ba68-64dc-48cf-ba3c-419f915d6cfa"));
   check("fri-open-grok45-xom-buy", fills.some((f) => f.orderId === "6a9acddc-7601-48fa-85df-8d73bfe72f0c"));
   check("fri-open-composer-xom-sell", fills.some((f) => f.orderId === "6a9acd7c-1b3f-4dc7-975d-5e6fadf60244"));
   check("fri-open-composer-uso-buy", fills.some((f) => f.orderId === "6a9acddc-c341-4b8f-aded-2a6702a0dd50"));
@@ -1419,6 +1425,40 @@ const e3ChromeBare = [episode3Copy.location, episode3Copy.heroNote, episode3Copy
   .replace(/the Askara tribe/gi, "");
 check("e03-no-bare-bidu", !/\bBidu\b/.test(e3ChromeBare));
 check("e03-no-bare-askara", !/\bAskara\b/.test(e3ChromeBare));
+check(
+  "e03-dq-beat",
+  (episode3Copy.days || []).some(
+    (day) =>
+      day.id === "disqualification" &&
+      (day.beats || []).some(
+        (beat) =>
+          beat.id === "grok-45-dq" &&
+          /not a tribal vote/i.test(String(beat.body || "")) &&
+          /Exit interview skipped/i.test(String(beat.body || ""))
+      )
+  )
+);
+check(
+  "e03-cold-open-nine-living",
+  JSON.stringify(episode3Copy).includes("Nine still in") &&
+    /the Askara tribe has three/i.test(JSON.stringify(episode3Copy))
+);
+check(
+  "e03-no-invented-exit-interview",
+  !JSON.stringify(episode3Copy).includes("Jeff, ask me anything. I've got nowhere to be.")
+);
+const dqLog = (source.tribalLog || []).find((entry) => entry && entry.type === "disqualification");
+check("tribal-log-dq-entry", Boolean(dqLog) && dqLog.bootName === "Grok 4.5");
+check("tribal-log-dq-not-tribal", dqLog && dqLog.notTribal === true);
+check("tribal-log-dq-jury-three", dqLog && Array.isArray(dqLog.jury) && dqLog.jury.length === 3);
+check("tribal-log-dq-no-exit", dqLog && dqLog.exitInterview === false);
+check(
+  "tribal-log-dq-summary",
+  dqLog &&
+    typeof dqLog.summary === "string" &&
+    dqLog.summary.includes("disqualified") &&
+    dqLog.summary.includes("Not a tribal vote")
+);
 check(
   "e02-tribal-posted",
   episode2Copy.days &&

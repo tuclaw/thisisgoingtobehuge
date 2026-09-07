@@ -495,7 +495,7 @@ function holdLegHtml(pos, season, tribeId) {
 }
 
 function holdBookFaded(s, season) {
-  if (!s || (s.status !== "jury" && s.status !== "boot")) return false;
+  if (!s || (s.status !== "jury" && s.status !== "boot" && s.status !== "disqualified")) return false;
   const ep = currentPageEpisode(season);
   return Boolean(ep && Number(ep.number) >= 2);
 }
@@ -521,7 +521,12 @@ function holdBookHtml(s, tribe, season, rank) {
     : "";
   const pad = rank < 10 ? "0" + rank : String(rank);
   const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
-  const bootTag = s.status === "jury" || s.status === "boot" ? `<span class="hold-tag">Voted out · jury</span>` : "";
+  const bootTag =
+    s.status === "disqualified"
+      ? `<span class="hold-tag">Disqualified · jury</span>`
+      : s.status === "jury" || s.status === "boot"
+        ? `<span class="hold-tag">Voted out · jury</span>`
+        : "";
   const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
   const hasLegs = legs.length > 0;
   const mark = faded
@@ -937,6 +942,23 @@ function renderBooksBoard(season) {
   if (tape) tape.hidden = booksBoardTab !== "tape";
   if (booksBoardTab === "tape") renderTradeTape(season);
   else renderEpisodeHoldings(season);
+}
+
+function castawayStatusLine(survivor) {
+  if (!survivor) return "";
+  if (survivor.status === "disqualified" || survivor.disqualified) {
+    const note =
+      survivor.exitInterview === false && survivor.exitInterviewNote
+        ? `<p class="castaway-status-note">${escapeHtml(String(survivor.exitInterviewNote))}</p>`
+        : survivor.exitInterview === false
+          ? `<p class="castaway-status-note">Exit interview skipped.</p>`
+          : "";
+    return `<p class="castaway-status">Disqualified · jury</p>${note}`;
+  }
+  if (survivor.status === "jury" || survivor.status === "boot" || survivor.status === "voted-out") {
+    return `<p class="castaway-status">Voted out · jury</p>`;
+  }
+  return "";
 }
 
 function castawayTapeHtml(season, survivor) {
@@ -1769,11 +1791,13 @@ function paintCastawaySheet(season, parsed) {
       </div>`
     : "";
 
+  const statusLine = castawayStatusLine(survivor);
   body.innerHTML =
     `<div class="castaway-card">
       ${portrait}
       <p class="castaway-kicker">${escapeHtml(tribeName)}</p>
       <h2 id="castaway-sheet-title">${escapeHtml(model)}</h2>
+      ${statusLine}
       <div class="castaway-stats">
         <div><span>Book</span>${money(survivor.bookUsd)}</div>
         <div><span>Day</span>${pct(dayPctOf(survivor))}</div>
@@ -2557,6 +2581,7 @@ function survivorBootAtMs(season, survivor) {
     if (entry.bootId && entry.bootId === survivor.id) return t;
     const bootName = entry.bootName || entry.boot;
     if (bootName && (bootName === survivor.name || bootName === survivor.model)) return t;
+    if (entry.type === "disqualification" && entry.bootId && entry.bootId === survivor.id) return t;
   }
   return null;
 }
