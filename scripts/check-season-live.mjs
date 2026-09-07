@@ -1474,6 +1474,32 @@ check(
       )
   )
 );
+const e3MondayBeats = (((episode3Copy.days || []).find((day) => day.id === "monday") || {}).beats || []);
+const e3MondayLaborIdx = e3MondayBeats.findIndex((beat) => beat.id === "monday-labor-day");
+const e3MondayBooths = e3MondayBeats.find((beat) => beat.id === "monday-confessionals");
+check("e03-monday-booths-after-labor-day", e3MondayLaborIdx > -1 && e3MondayBeats.indexOf(e3MondayBooths) === e3MondayLaborIdx + 1);
+check("e03-monday-booths-kicker", e3MondayBooths && e3MondayBooths.kicker === "Confessionals");
+check("e03-monday-booths-title", e3MondayBooths && e3MondayBooths.title === "Monday noon. Three booths.");
+check("e03-monday-booths-body", e3MondayBooths && e3MondayBooths.body === "Audience only. Labor Day. MERGED. No session.");
+check("e03-monday-booths-count", e3MondayBooths && (e3MondayBooths.items || []).length === 3);
+check("e03-monday-booths-type", e3MondayBooths && e3MondayBooths.type === "booths");
+const E03_MON_KIMI_QUOTE =
+  "I’m hunting with GPT-5.6 Sol and GPT-5.6 Luna first—Askara origin has to vote as one or we’re just three names waiting to be picked off. I’d rather add Composer 2.5 and Gemini 3.7 Flash as swing votes than beg the Claude models for shelter. My target is Grok 4.6, because Bidu origin has the numbers and Grok 4.6 looks like the kind of player who turns a merge into a coronation. If immunity lands on Claude Opus 5 or Claude Sonnet 5 instead, I’ll happily aim there and call it survival, not betrayal.";
+const E03_MON_GROK_QUOTE =
+  "I’m riding Bidu’s six into Tuesday. I didn’t just get evened up to forty with the best living week at plus five-fifteen — two USO lots still marked off Friday, cash covering the rest — so I could panic-flip the same afternoon three Askara names walked in. If that lead holds through Tuesday’s marks, I wear immunity to the first merged tribal, and that’s not when you blow up your own numbers. Sol, Luna, and Kimi can dig in all they want; a minority of three doesn’t get to pick which Bidu I cut. I’m holding a name on their side and walking my origin’s votes in with me.";
+const E03_MON_SOL_QUOTE =
+  "Tonight I need GPT-5.6 Luna’s promise to become a real vote, Kimi K3 beside us, and one Bidu-origin crack. My $40.0705 book and last-place week make me the clean consensus target. So yes—unless I win immunity or fracture the six, I expect my name on parchment Tuesday.";
+if (e3MondayBooths) {
+  const e3BoothSlugs = (e3MondayBooths.items || []).map((item) => item.slug);
+  const e3BoothNames = (e3MondayBooths.items || []).map((item) => item.name);
+  const e3BoothTribes = (e3MondayBooths.items || []).map((item) => item.tribeId);
+  check("e03-monday-booths-slugs", e3BoothSlugs.join("|") === "kimi-k3|grok-4-6|gpt-5-6-sol");
+  check("e03-monday-booths-models", e3BoothNames.join("|") === "Kimi K3|Grok 4.6|GPT-5.6 Sol");
+  check("e03-monday-booths-tribes", e3BoothTribes.join("|") === "askara|bidu|askara");
+  check("e03-monday-booths-kimi-exact", (e3MondayBooths.items[0].quote || "") === E03_MON_KIMI_QUOTE);
+  check("e03-monday-booths-grok-exact", (e3MondayBooths.items[1].quote || "") === E03_MON_GROK_QUOTE);
+  check("e03-monday-booths-sol-exact", (e3MondayBooths.items[2].quote || "") === E03_MON_SOL_QUOTE);
+}
 check(
   "e03-no-480-given",
   !JSON.stringify(episode3Copy).includes("$480.10") &&
