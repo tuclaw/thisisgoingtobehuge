@@ -158,7 +158,7 @@ check(
   board.islandEpisode2TopUpEachUsd === source.islandEpisode2TopUpEachUsd,
   String(board.islandEpisode2TopUpEachUsd)
 );
-check("merged-stays-false-or-true", source.merged === true || source.merged === false);
+check("merged-true", source.merged === true);
 
 const firstBoot = (source.events || []).find((event) => event && event.type === "boot");
 const carryMark = (source.events || []).find((event) => event && event.type === "mark" && event.kind === "carry");
@@ -185,6 +185,16 @@ for (const s of board.survivors) {
     computedWeek = s.weekPct;
   } else if (sourceRow?.dqSplitUsd && s.weekPct === 0 && sourceRow.priorMarkUsd === s.bookUsd) {
     computedWeek = 0;
+  } else if (
+    boardNative &&
+    source.merged &&
+    s.status === "active" &&
+    typeof sourceRow?.mondayOpenUsd === "number" &&
+    sourceRow.mondayOpenUsd !== s.bookUsd
+  ) {
+    computedWeek = s.weekPct;
+  } else if (sourceRow?.evenUpCreditUsd != null && s.status === "active") {
+    computedWeek = s.weekPct;
   } else if (
     sourceRow?.themeCreditUsd &&
     s.weekPct === 0 &&
@@ -326,6 +336,12 @@ for (const [i, council] of log.entries()) {
     check(`dq-summary:${i}`, typeof council.summary === "string" && council.summary.includes(council.bootName));
     check(`dq-not-tribal:${i}`, council.notTribal === true);
     check(`dq-no-exit:${i}`, council.exitInterview === false);
+    continue;
+  }
+  if (council && council.type === "merge") {
+    check(`merge-true:${i}`, council.merged === true);
+    check(`merge-summary:${i}`, typeof council.summary === "string" && /merge/i.test(council.summary));
+    check(`merge-no-votes:${i}`, !council.votes);
     continue;
   }
   requireKeys(council, ["bootName", "votes", "tally"], `tribalLog[${i}]`);

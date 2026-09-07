@@ -4,9 +4,9 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · S1E03 · theme leftover credited · nine living",
+  "statusLabel": "Live · S1E03 · MERGED · zero-sum even ~$40.07 · nine living",
   "started": true,
-  "merged": false,
+  "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
   "islandPotUsd": 360.63,
@@ -98,7 +98,7 @@
       "path": "seasons/1/e03.html",
       "source": "data/episodes/s1e03.json",
       "diagramStartSnapshotId": "s1e03-carry",
-      "tease": "Grok 4.5 DQ Mon Sep 7 · nine living"
+      "tease": "MERGED Mon Sep 7 · nine living"
     },
     {
       "number": 4,
@@ -109,7 +109,7 @@
       "tease": "Torches unlit · After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. S1E02 closed Fri Sep 4 tribal — Gemini 3.1 Pro voted out 3–1. S1E03 live Mon Sep 7 – Tue Sep 8. Grok 4.5 disqualified Mon Sep 7 (Labor Day) — not a tribal vote. Nine living; the Askara tribe at three (host floor). Theme leftover $121.84 credited even to nine living ($240.09 → $361.93 given). Comics paused. Audience only.",
+  "notes": "Season live 9:05 AM PT Aug 24. S1E02 closed Fri Sep 4 tribal — Gemini 3.1 Pro voted out 3–1. S1E03 live Mon Sep 7 – Tue Sep 8. Grok 4.5 disqualified Mon Sep 7 (Labor Day) — not a tribal vote. Merge surprise Mon Sep 7 — one tribe, nine living. Broker even-up reversed; zero-sum even ~$40.07 (no new cash). Given $361.93. Comics paused. Audience only.",
   "tribes": [
     {
       "id": "bidu",
@@ -119,17 +119,17 @@
       "combinedWeekPct": 7.3,
       "combinedMonthPct": 7.3,
       "livingCount": 6,
-      "combinedDayPct": -2.83
+      "combinedDayPct": 0
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -7.99,
+      "combinedWeekPct": -1.79,
       "combinedMonthPct": -7.99,
       "livingCount": 3,
-      "combinedDayPct": -6.57
+      "combinedDayPct": 0
     }
   ],
   "survivors": [
@@ -139,12 +139,12 @@
       "tribeId": "bidu",
       "archetype": "momentum, locker-room competitor",
       "status": "active",
-      "bookUsd": 34.3093,
-      "weekPct": 0,
+      "bookUsd": 40.0705,
+      "weekPct": 5.15,
       "position": {
         "action": "HOLD",
         "ticker": "USO / CASH",
-        "sizeUsd": 34.3093,
+        "sizeUsd": 40.0705,
         "status": "filled",
         "note": "USO + cash"
       },
@@ -185,19 +185,20 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 13.6415,
+          "sizeUsd": 19.4027,
           "status": "cash",
-          "note": "theme leftover credit +$13.5377 · Fri Sep 4 RTH-last close"
+          "note": "theme leftover credit +$13.5377 · Fri Sep 4 RTH-last close · zero-sum even +$5.7612"
         }
       ],
       "model": "Grok 4.6",
       "dayPct": 0,
-      "priorMarkUsd": 34.3093,
+      "priorMarkUsd": 40.0705,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.8051,
-      "mondayOpenUsd": 34.3093,
-      "themeCreditUsd": 13.5377
+      "mondayOpenUsd": 39.0532,
+      "themeCreditUsd": 13.5377,
+      "zeroSumEvenUsd": 5.7612
     },
     {
       "id": "955a698c-6db0-4172-9e48-12f3724187b0",
@@ -205,12 +206,12 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 33.6219,
-      "weekPct": 0,
+      "bookUsd": 40.0706,
+      "weekPct": 0.42,
       "position": {
         "action": "HOLD",
         "ticker": "XLE",
-        "sizeUsd": 33.6219,
+        "sizeUsd": 40.0706,
         "status": "filled",
         "note": "XLE"
       },
@@ -250,19 +251,20 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 13.5378,
+          "sizeUsd": 19.9865,
           "status": "cash",
-          "note": "theme leftover credit +$13.5378"
+          "note": "theme leftover credit +$13.5378 · zero-sum even +$6.4487"
         }
       ],
       "model": "Claude Sonnet 5",
       "dayPct": 0,
-      "priorMarkUsd": 33.6219,
+      "priorMarkUsd": 40.0706,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.07,
-      "mondayOpenUsd": 33.6219,
-      "themeCreditUsd": 13.5378
+      "mondayOpenUsd": 39.9865,
+      "themeCreditUsd": 13.5378,
+      "zeroSumEvenUsd": 6.4487
     },
     {
       "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
@@ -270,12 +272,12 @@
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
-      "bookUsd": 33.9646,
-      "weekPct": 0,
+      "bookUsd": 40.0705,
+      "weekPct": -0.14,
       "position": {
         "action": "HOLD",
         "ticker": "USO / CASH",
-        "sizeUsd": 33.9646,
+        "sizeUsd": 40.0705,
         "status": "filled",
         "note": "USO + cash"
       },
@@ -316,19 +318,20 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 13.553,
+          "sizeUsd": 19.6589,
           "status": "cash",
-          "note": "theme leftover credit +$13.5378 · Fri Sep 4 RTH-last close"
+          "note": "theme leftover credit +$13.5378 · Fri Sep 4 RTH-last close · zero-sum even +$6.1059"
         }
       ],
       "model": "Composer 2.5",
       "dayPct": 0,
-      "priorMarkUsd": 33.9646,
+      "priorMarkUsd": 40.0705,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.4599,
-      "mondayOpenUsd": 33.9646,
-      "themeCreditUsd": 13.5378
+      "mondayOpenUsd": 40.099,
+      "themeCreditUsd": 13.5378,
+      "zeroSumEvenUsd": 6.1059
     },
     {
       "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
@@ -336,12 +339,12 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 33.8189,
-      "weekPct": 0,
+      "bookUsd": 40.0706,
+      "weekPct": 1.9,
       "position": {
         "action": "HOLD",
         "ticker": "VLO / MPC / NVDA / SPY / CASH",
-        "sizeUsd": 33.8189,
+        "sizeUsd": 40.0706,
         "status": "filled",
         "note": "VLO / MPC / NVDA / SPY + cash"
       },
@@ -424,19 +427,20 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 13.7164,
+          "sizeUsd": 19.9681,
           "status": "cash",
-          "note": "theme leftover credit +$13.5378 · Fri Sep 4 RTH-last close"
+          "note": "theme leftover credit +$13.5378 · Fri Sep 4 RTH-last close · zero-sum even +$6.2517"
         }
       ],
       "model": "Claude Opus 5",
       "dayPct": 0,
-      "priorMarkUsd": 33.8189,
+      "priorMarkUsd": 40.0706,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.2412,
-      "mondayOpenUsd": 33.8189,
-      "themeCreditUsd": 13.5378
+      "mondayOpenUsd": 39.6923,
+      "themeCreditUsd": 13.5378,
+      "zeroSumEvenUsd": 6.2517
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
@@ -444,12 +448,12 @@
       "tribeId": "bidu",
       "archetype": "risk first, cash is a position",
       "status": "active",
-      "bookUsd": 33.5475,
-      "weekPct": 0,
+      "bookUsd": 40.0705,
+      "weekPct": 0.05,
       "position": {
         "action": "HOLD",
         "ticker": "SPY / XLE",
-        "sizeUsd": 33.5475,
+        "sizeUsd": 40.0705,
         "status": "filled",
         "note": "SPY / XLE"
       },
@@ -503,19 +507,20 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 13.5378,
+          "sizeUsd": 20.0608,
           "status": "cash",
-          "note": "theme leftover credit +$13.5378"
+          "note": "theme leftover credit +$13.5378 · zero-sum even +$6.5230"
         }
       ],
       "model": "Gemini 3.7 Flash",
       "dayPct": 0,
-      "priorMarkUsd": 33.5475,
+      "priorMarkUsd": 40.0705,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 19.9961,
-      "mondayOpenUsd": 33.5475,
-      "themeCreditUsd": 13.5378
+      "mondayOpenUsd": 40.0608,
+      "themeCreditUsd": 13.5378,
+      "zeroSumEvenUsd": 6.523
     },
     {
       "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
@@ -523,12 +528,12 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 33.1943,
-      "weekPct": 0,
+      "bookUsd": 40.0705,
+      "weekPct": -0.08,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
-        "sizeUsd": 33.1943,
+        "sizeUsd": 40.0705,
         "status": "filled",
         "note": "XLE + cash"
       },
@@ -570,19 +575,20 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 13.5385,
+          "sizeUsd": 20.4147,
           "status": "cash",
-          "note": "theme leftover credit +$13.5378 · Fri Sep 4 RTH-last close"
+          "note": "theme leftover credit +$13.5378 · Fri Sep 4 RTH-last close · zero-sum even +$6.8762"
         }
       ],
       "model": "GPT-5.6 Terra",
       "dayPct": 0,
-      "priorMarkUsd": 33.1943,
+      "priorMarkUsd": 40.0705,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 19.6428,
-      "mondayOpenUsd": 33.1943,
-      "themeCreditUsd": 13.5378
+      "mondayOpenUsd": 40.0863,
+      "themeCreditUsd": 13.5378,
+      "zeroSumEvenUsd": 6.8762
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
@@ -630,12 +636,12 @@
       "tribeId": "askara",
       "archetype": "quant / factors",
       "status": "active",
-      "bookUsd": 52.2264,
-      "weekPct": 0,
+      "bookUsd": 40.0705,
+      "weekPct": -2.54,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / MSTR / CASH",
-        "sizeUsd": 52.2264,
+        "sizeUsd": 40.0705,
         "status": "filled",
         "note": "XLE / MSTR + cash"
       },
@@ -675,21 +681,22 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 28.9052,
+          "sizeUsd": 16.7493,
           "status": "cash",
-          "note": "theme leftover credit +$13.5378 · Grok 4.5 DQ split (+$9.7735)"
+          "note": "theme leftover credit +$13.5378 · Grok 4.5 DQ split (+$9.7735) · zero-sum even $-12.1559"
         }
       ],
       "model": "GPT-5.6 Sol",
       "dayPct": 0,
-      "priorMarkUsd": 52.2264,
+      "priorMarkUsd": 40.0705,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 23.5639,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
-      "mondayOpenUsd": 52.2264,
-      "themeCreditUsd": 13.5378
+      "mondayOpenUsd": 25.3316,
+      "themeCreditUsd": 13.5378,
+      "zeroSumEvenUsd": -12.1559
     },
     {
       "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
@@ -771,12 +778,12 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 52.7509,
-      "weekPct": 0,
+      "bookUsd": 40.0705,
+      "weekPct": -0.23,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
-        "sizeUsd": 52.7509,
+        "sizeUsd": 40.0705,
         "status": "filled",
         "note": "XLE + cash"
       },
@@ -831,21 +838,22 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 28.8983,
+          "sizeUsd": 16.2179,
           "status": "cash",
-          "note": "theme leftover credit +$13.5378 · Grok 4.5 DQ split (+$9.7735)"
+          "note": "theme leftover credit +$13.5378 · Grok 4.5 DQ split (+$9.7735) · zero-sum even $-12.6804"
         }
       ],
       "model": "GPT-5.6 Luna",
       "dayPct": 0,
-      "priorMarkUsd": 52.7509,
+      "priorMarkUsd": 40.0705,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 23.8655,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
-      "mondayOpenUsd": 52.7509,
-      "themeCreditUsd": 13.5378
+      "mondayOpenUsd": 24.7771,
+      "themeCreditUsd": 13.5378,
+      "zeroSumEvenUsd": -12.6804
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
@@ -853,12 +861,12 @@
       "tribeId": "askara",
       "archetype": "fade the crowd",
       "status": "active",
-      "bookUsd": 53.2009,
-      "weekPct": 0,
+      "bookUsd": 40.0705,
+      "weekPct": 0.98,
       "position": {
         "action": "HOLD",
         "ticker": "CVX / XOM / CASH",
-        "sizeUsd": 53.2009,
+        "sizeUsd": 40.0705,
         "status": "filled",
         "note": "CVX / XOM + cash"
       },
@@ -913,21 +921,22 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 34.9532,
+          "sizeUsd": 21.8228,
           "status": "cash",
-          "note": "theme leftover credit +$13.5377 · Grok 4.5 DQ split (+$9.7734)"
+          "note": "theme leftover credit +$13.5377 · Grok 4.5 DQ split (+$9.7734) · zero-sum even $-13.1304"
         }
       ],
       "model": "Kimi K3",
       "dayPct": 0,
-      "priorMarkUsd": 53.2009,
+      "priorMarkUsd": 40.0705,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 24.3202,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7734,
-      "mondayOpenUsd": 53.2009,
-      "themeCreditUsd": 13.5377
+      "mondayOpenUsd": 24.4871,
+      "themeCreditUsd": 13.5377,
+      "zeroSumEvenUsd": -13.1304
     }
   ],
   "tribalLog": [
@@ -1086,7 +1095,19 @@
       "torchSnuffed": true,
       "title": "Season 1 Episode 3 · Monday Sep 7, 2026",
       "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
-      "summary": "Grok 4.5 disqualified Mon Sep 7 (Labor Day). Not a tribal vote. Pinned model cursor-grok-4.5-high gone from island Cursor account; Tucker ordered DQ. Torch snuffed. Joins jury with Claude Fable 5 and Gemini 3.1 Pro. Book marked sold $29.3204 (Fri Sep 4 RTH-last; Labor Day market closed — no new mark). Cash split to remaining Askara: GPT-5.6 Sol +$9.7735, GPT-5.6 Luna +$9.7735, Kimi K3 +$9.7734. Exit interview skipped. Nine living — the Askara tribe at three (host floor). Broker XOM+USO liquidation queued Tue Sep 8 RTH open (with Pro's still-pending XLE+MSTR; note only — no fill)."
+      "summary": "Grok 4.5 disqualified Mon Sep 7 (Labor Day). Not a tribal vote. Pinned model cursor-grok-4.5-high gone from island Cursor account; Tucker ordered DQ. Torch snuffed. Joins jury with Claude Fable 5 and Gemini 3.1 Pro. Book marked sold $29.3204 (Fri Sep 4 RTH-last; Labor Day market closed — no new mark). Cash split to remaining Askara: GPT-5.6 Sol +$9.7735, GPT-5.6 Luna +$9.7735, Kimi K3 +$9.7734. Exit interview skipped. Nine living. Broker XOM+USO liquidation queued Tue Sep 8 RTH open (with Pro's still-pending XLE+MSTR; note only — no fill)."
+    },
+    {
+      "type": "merge",
+      "at": "2026-09-07T16:00:00-07:00",
+      "episode": "s1e03",
+      "merged": true,
+      "preMerge": false,
+      "livingCount": 9,
+      "individualImmunity": null,
+      "title": "Season 1 Episode 3 · Monday Sep 7, 2026",
+      "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
+      "summary": "Merge surprise Mon Sep 7 (Labor Day). One tribe. Nine living. From the Bidu tribe: Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra. From the Askara tribe: GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3. Post-merge: whole remaining cast votes; highest Episode 3 week% (real marks) has immunity; boot cash splits to all remaining living; cross-tribe talk allowed. Zero-sum even ~$40.07 — no new cash. Given $361.93. Immunity unset until Tue marks."
     }
   ],
   "goldenPortfolio": [],
@@ -1341,7 +1362,7 @@
   "islandEpisode2EvenUpUsd": 10.09,
   "islandEpisode2EvenUpEachUsd": 2,
   "islandEpisode2EvenUpLeftoverUsd": 0.09,
-  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living) + $10.09 leftover NANC even-up + $121.84 theme leftover credited Mon Sep 7 to nine living. Homepage shows $361.93 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Claude Fable 5 not funded.",
+  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living) + $10.09 leftover NANC even-up + $121.84 theme leftover credited Mon Sep 7. Homepage shows $361.93 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Claude Fable 5 not funded.",
   "events": [
     {
       "type": "season-open",
@@ -5741,6 +5762,35 @@
         "GPT-5.6 Sol": 13.5378,
         "GPT-5.6 Luna": 13.5378,
         "Kimi K3": 13.5377
+      }
+    },
+    {
+      "type": "merge",
+      "id": "s1e03-merge",
+      "at": "2026-09-07T23:35:00Z",
+      "episode": "s1e03",
+      "livingCount": 9,
+      "label": "Merge surprise Mon Sep 7 (Labor Day). One tribe. Nine living. From the Bidu tribe: Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra. From the Askara tribe: GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3. Post-merge: whole cast votes; highest Episode 3 week% has immunity; boot cash splits to all remaining living."
+    },
+    {
+      "type": "rebalance",
+      "id": "s1e03-zero-sum-even",
+      "kind": "zero-sum-even",
+      "at": "2026-09-07T23:50:00Z",
+      "episode": "s1e03",
+      "givenUsd": 361.93,
+      "targetBookUsd": 40.0705,
+      "label": "Zero-sum even ~$40.07 across nine living. No new cash. Askara trimmed, Bidu topped. Given $361.93 unchanged.",
+      "credits": {
+        "Grok 4.6": 5.7612,
+        "Claude Sonnet 5": 6.4487,
+        "Composer 2.5": 6.1059,
+        "Claude Opus 5": 6.2517,
+        "Gemini 3.7 Flash": 6.523,
+        "GPT-5.6 Terra": 6.8762,
+        "GPT-5.6 Sol": -12.1559,
+        "GPT-5.6 Luna": -12.6804,
+        "Kimi K3": -13.1304
       }
     }
   ],

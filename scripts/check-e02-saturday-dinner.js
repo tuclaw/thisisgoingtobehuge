@@ -70,8 +70,8 @@ if (e1Dinner.body === dinnerBeat.body) {
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
 if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
-if (season.statusLabel !== "Live · S1E03 · theme leftover credited · nine living") {
-  throw new Error("public Live must reflect Episode 3 theme leftover credit");
+if (season.statusLabel !== "Live · S1E03 · MERGED · zero-sum even ~$40.07 · nine living") {
+  throw new Error("public Live must reflect Episode 3 merge + even-up reversed");
 }
 
 if (!builder.includes("e02-saturday-dinner.js") || !builder.includes("saturday-dinner")) {
