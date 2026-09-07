@@ -38,9 +38,10 @@ season.islandEpisode3EvenUpTargetUsd = TARGET_BOOK;
 season.immunity = null;
 
 for (const t of season.tribes || []) {
-  t.combinedWeekPct = 0;
-  t.combinedMonthPct = t.combinedMonthPct;
   t.combinedDayPct = 0;
+  const living = (season.survivors || []).filter((s) => s.status === "active" && s.tribeId === t.id);
+  t.combinedWeekPct = Math.round(living.reduce((sum, s) => sum + (s.weekPct || 0), 0) * 100) / 100;
+  t.livingCount = living.length;
 }
 
 for (const row of season.survivors || []) {
@@ -49,9 +50,8 @@ for (const row of season.survivors || []) {
   if (credit == null) throw new Error("missing even-up credit for " + row.name);
   row.bookUsd = TARGET_BOOK;
   row.priorMarkUsd = TARGET_BOOK;
-  row.mondayOpenUsd = TARGET_BOOK;
-  row.weekPct = 0;
-  row.dayPct = 0;
+  row.mondayOpenUsd = (row.mondayOpenUsd ?? row.bookUsd) + credit;
+  // weekPct unchanged — host preserves prior episode week % through even-up bump
   row.evenUpCreditUsd = credit;
   if (row.position) row.position.sizeUsd = TARGET_BOOK;
   const cash = (row.positions || []).find((p) => p.ticker === "CASH" && p.status === "cash");

@@ -116,7 +116,7 @@
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": 0,
+      "combinedWeekPct": 7.3,
       "combinedMonthPct": 7.3,
       "livingCount": 6,
       "combinedDayPct": 0
@@ -126,7 +126,7 @@
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": 0,
+      "combinedWeekPct": -1.79,
       "combinedMonthPct": -7.99,
       "livingCount": 3,
       "combinedDayPct": 0
@@ -140,7 +140,7 @@
       "archetype": "momentum, locker-room competitor",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": 5.15,
       "position": {
         "action": "HOLD",
         "ticker": "USO / CASH",
@@ -196,7 +196,7 @@
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.8051,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 52.1836,
       "themeCreditUsd": 13.5377,
       "evenUpCreditUsd": 18.8916
     },
@@ -207,7 +207,7 @@
       "archetype": "stubborn value",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": 0.42,
       "position": {
         "action": "HOLD",
         "ticker": "XLE",
@@ -262,7 +262,7 @@
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.07,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 53.1168,
       "themeCreditUsd": 13.5378,
       "evenUpCreditUsd": 19.579
     },
@@ -273,7 +273,7 @@
       "archetype": "options / convexity",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": -0.14,
       "position": {
         "action": "HOLD",
         "ticker": "USO / CASH",
@@ -329,7 +329,7 @@
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.4599,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 53.2294,
       "themeCreditUsd": 13.5378,
       "evenUpCreditUsd": 19.2363
     },
@@ -340,7 +340,7 @@
       "archetype": "short seller, ice",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": 1.9,
       "position": {
         "action": "HOLD",
         "ticker": "VLO / MPC / NVDA / SPY / CASH",
@@ -438,7 +438,7 @@
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 20.2412,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 52.8226,
       "themeCreditUsd": 13.5378,
       "evenUpCreditUsd": 19.382
     },
@@ -449,7 +449,7 @@
       "archetype": "risk first, cash is a position",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": 0.05,
       "position": {
         "action": "HOLD",
         "ticker": "SPY / XLE",
@@ -518,7 +518,7 @@
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 19.9961,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 53.1912,
       "themeCreditUsd": 13.5378,
       "evenUpCreditUsd": 19.6534
     },
@@ -529,7 +529,7 @@
       "archetype": "quality compounders",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": -0.08,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
@@ -586,7 +586,7 @@
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-04-eod",
       "eodMarkUsd": 19.6428,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 53.2167,
       "themeCreditUsd": 13.5378,
       "evenUpCreditUsd": 20.0066
     },
@@ -637,7 +637,7 @@
       "archetype": "quant / factors",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": -2.54,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / MSTR / CASH",
@@ -694,7 +694,7 @@
       "eodMarkUsd": 23.5639,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 38.462,
       "themeCreditUsd": 13.5378,
       "evenUpCreditUsd": 0.9745
     },
@@ -779,7 +779,7 @@
       "archetype": "catalysts / news",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": -0.23,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
@@ -851,7 +851,7 @@
       "eodMarkUsd": 23.8655,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 37.9075,
       "themeCreditUsd": 13.5378,
       "evenUpCreditUsd": 0.45
     },
@@ -862,7 +862,7 @@
       "archetype": "fade the crowd",
       "status": "active",
       "bookUsd": 53.2009,
-      "weekPct": 0,
+      "weekPct": 0.98,
       "position": {
         "action": "HOLD",
         "ticker": "CVX / XOM / CASH",
@@ -934,7 +934,7 @@
       "eodMarkUsd": 24.3202,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7734,
-      "mondayOpenUsd": 53.2009,
+      "mondayOpenUsd": 37.6175,
       "themeCreditUsd": 13.5377,
       "evenUpCreditUsd": 0
     }

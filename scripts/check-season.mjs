@@ -185,8 +185,10 @@ for (const s of board.survivors) {
     computedWeek = s.weekPct;
   } else if (sourceRow?.dqSplitUsd && s.weekPct === 0 && sourceRow.priorMarkUsd === s.bookUsd) {
     computedWeek = 0;
+  } else if (sourceRow?.evenUpCreditUsd != null && s.status === "active") {
+    computedWeek = s.weekPct;
   } else if (
-    (sourceRow?.themeCreditUsd || sourceRow?.evenUpCreditUsd) &&
+    sourceRow?.themeCreditUsd &&
     s.weekPct === 0 &&
     sourceRow.mondayOpenUsd === s.bookUsd &&
     sourceRow.priorMarkUsd === s.bookUsd
