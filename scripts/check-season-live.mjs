@@ -103,7 +103,7 @@ if (opus) {
   check("live-opus-no-oih", !tickers.includes("OIH"));
   check("live-opus-no-xle", !tickers.includes("XLE"));
   check("live-opus-no-lng", !tickers.includes("LNG"));
-  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 13.7164) < 0.01, String(cashTotal(now.positions)));
+  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 33.0984) < 0.01, String(cashTotal(now.positions)));
   check("live-opus-mpc-qty", (now.positions || []).some((pos) => tickerOf(pos) === "MPC" && pos.qty === "0.012262"));
   check("live-opus-fri-mpc-qty", (now.positions || []).some((pos) => tickerOf(pos) === "MPC" && pos.qty === "0.005248"));
   check("live-opus-nvda-qty", (now.positions || []).some((pos) => tickerOf(pos) === "NVDA" && pos.qty === "0.014496"));
@@ -168,8 +168,8 @@ if (grok46) {
       usoLots.some((pos) => pos.qty === "0.075070") &&
       usoLots.some((pos) => pos.qty === "0.070478")
   );
-  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 13.6415) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok46-book", now && Math.abs(now.bookUsd - 34.3093) < 0.0001, now && String(now.bookUsd));
+  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 32.5331) < 0.0001, cash && String(cash.sizeUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 53.2009) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -252,8 +252,8 @@ if (!boardNative) {
 
 const biduLive = board.tribes.find((t) => t.id === "bidu");
 const askaraLive = board.tribes.find((t) => t.id === "askara");
-check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 7.3 && biduLive.combinedDayPct === -2.83);
-check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === -7.99 && askaraLive.combinedDayPct === -6.57);
+check("live-bidu-host-digest", biduLive && biduLive.combinedWeekPct === 0 && biduLive.combinedDayPct === 0);
+check("live-askara-host-digest", askaraLive && askaraLive.combinedWeekPct === 0 && askaraLive.combinedDayPct === 0);
 check("live-mark-label", board.markLabel === "Fri Sep 4 RTH-last close · last trade (SIP not posted)");
 check("source-mark-label", source.markLabel === "Fri Sep 4 RTH-last close · last trade (SIP not posted)");
 check("live-marked-at", board.markedAt === "2026-09-04T19:59:59Z", board.markedAt);
@@ -271,7 +271,7 @@ const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
 const grok46Live = board.survivors.find((s) => s.name === "Grok 4.6");
 const geminiProLive = board.survivors.find((s) => s.name === "Gemini 3.1 Pro");
-check("live-grok46-lead", grok46Live && grok46Live.bookUsd === 34.3093 && grok46Live.weekPct === 0, grok46Live && `${grok46Live.bookUsd} / ${grok46Live.weekPct}`);
+check("live-grok46-lead", grok46Live && grok46Live.bookUsd === 53.2009 && grok46Live.weekPct === 0, grok46Live && `${grok46Live.bookUsd} / ${grok46Live.weekPct}`);
 check("live-pro-jury", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0 && geminiProLive.weekPct === -6.99, geminiProLive && `${geminiProLive.status} / ${geminiProLive.bookUsd} / ${geminiProLive.weekPct}`);
 check(
   "live-pro-cash",
@@ -449,8 +449,9 @@ if (prevote) {
   );
 }
 const log = source.tribalLog || [];
-check("tribal-log-three-councils", Array.isArray(log) && log.length === 3);
+check("tribal-log-four-councils", Array.isArray(log) && log.length === 4);
 check("tribal-log-dq-is-third", log[2] && log[2].type === "disqualification" && log[2].bootName === "Grok 4.5");
+check("tribal-log-merge-is-fourth", log[3] && log[3].type === "merge" && log[3].merged === true);
 if (log[0]) {
   check("tribal-log-e01-bootName", log[0].bootName === "Claude Fable 5");
   const votes = Array.isArray(log[0].votes) ? log[0].votes : [];
@@ -487,7 +488,7 @@ if (log[1]) {
 check("books-fable-jury-zero", fableLive && fableLive.status === "jury" && fableLive.bookUsd === 0);
 check("books-pro-jury-zero", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0);
 check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 3);
-check("given-total-fixture", source.islandGivenUsd === 361.93, String(source.islandGivenUsd));
+check("given-total-fixture", source.islandGivenUsd === 480.1, String(source.islandGivenUsd));
 check("theme-leftover-credited", source.themeLeftoverParked === false);
 check("theme-leftover-usd", source.themeLeftoverCreditedUsd === 121.84, String(source.themeLeftoverCreditedUsd));
 check("given-start-fixture", source.islandGivenStartUsd === 120, String(source.islandGivenStartUsd));
@@ -504,14 +505,14 @@ check(
     source.islandGivenNote.includes("$121.84 theme leftover credited")
 );
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
-check("homepage-given-copy", home.includes("$361.93 given. Nine still in. Grok 4.5 DQ Mon Sep 7. Two tribes. Tuesday and Friday tribal."));
+check("homepage-given-copy", home.includes("$480.10 given. Nine still in. MERGED Mon Sep 7. One tribe. Grok 4.5 DQ Mon Sep 7. Tuesday and Friday tribal."));
 check("homepage-points-at-e03", home.includes("seasons/1/e03.html") && home.includes("Walk into Episode 3"));
 check("homepage-skips-e02-primary-cta", !home.includes("Walk into Episode 2"));
-check("sleeve-pot-marked", source.islandPotUsd === 360.63, String(source.islandPotUsd));
-check("merged-stays-false", source.merged === false);
+check("sleeve-pot-marked", source.islandPotUsd === 478.81, String(source.islandPotUsd));
+check("merged-true", source.merged === true);
 check(
-  "status-label-e03-theme-credit",
-  source.statusLabel === "Live · S1E03 · theme leftover credited · nine living"
+  "status-label-e03-merged-even-up",
+  source.statusLabel === "Live · S1E03 · MERGED · even-up to $53.20 · nine living"
 );
 check("live-episode-is-e03", source.episode && source.episode.id === "s1e03" && source.episode.status === "live" && source.episode.path === "seasons/1/e03.html");
 check(
@@ -660,22 +661,22 @@ if (monOpen) {
   check("monday-open-askara-day", askara.combinedDayPct === -2.13, String(askara.combinedDayPct));
 }
 } else {
-  check("thu-sip-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === 7.3);
-  check("thu-sip-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === -7.99);
+  check("thu-sip-tribes-bidu", source.tribes?.find((t) => t.id === "bidu")?.combinedWeekPct === 0);
+  check("thu-sip-tribes-askara", source.tribes?.find((t) => t.id === "askara")?.combinedWeekPct === 0);
   check("live-snapshot-id", source.liveSnapshotId === "s1e02-fri-eod");
 }
 
 const expectedBooks = {
-  "Grok 4.6": { bookUsd: 34.3093, weekPct: 0, dayPct: 0 },
-  "Claude Sonnet 5": { bookUsd: 33.6219, weekPct: 0, dayPct: 0 },
-  "Composer 2.5": { bookUsd: 33.9646, weekPct: 0, dayPct: 0 },
-  "Claude Opus 5": { bookUsd: 33.8189, weekPct: 0, dayPct: 0 },
-  "Gemini 3.7 Flash": { bookUsd: 33.5475, weekPct: 0, dayPct: 0 },
-  "GPT-5.6 Terra": { bookUsd: 33.1943, weekPct: 0, dayPct: 0 },
+  "Grok 4.6": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
+  "Claude Sonnet 5": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
+  "Composer 2.5": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
+  "Claude Opus 5": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
+  "Gemini 3.7 Flash": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
+  "GPT-5.6 Terra": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
   "Grok 4.5": { bookUsd: 0, weekPct: 24.45, dayPct: 0, status: "disqualified" },
-  "GPT-5.6 Sol": { bookUsd: 52.2264, weekPct: 0, dayPct: 0 },
+  "GPT-5.6 Sol": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
   "Gemini 3.1 Pro": { bookUsd: 0, weekPct: -6.99, dayPct: 0 },
-  "GPT-5.6 Luna": { bookUsd: 52.7509, weekPct: 0, dayPct: 0 },
+  "GPT-5.6 Luna": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
   "Kimi K3": { bookUsd: 53.2009, weekPct: 0, dayPct: 0 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: 0 }
 };
@@ -1215,8 +1216,8 @@ check(
     source.quotes?.USO?.source === "RTH last-trade" &&
     source.quotes?.XLE?.session === "2026-09-04-eod"
 );
-check("given-unchanged", source.islandGivenUsd === 361.93);
-check("live-pot-marked", source.islandPotUsd === 360.63, String(source.islandPotUsd));
+check("given-unchanged", source.islandGivenUsd === 480.1);
+check("live-pot-marked", source.islandPotUsd === 478.81, String(source.islandPotUsd));
 check("e02-no-saturday-lunch", !(episode2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-lunch")));
 const e2Saturday = (episode2Copy.days || []).find((day) => day.id === "saturday");
 const e2SaturdayBeats = (e2Saturday && e2Saturday.beats) || [];
@@ -1368,7 +1369,7 @@ check(
     e3ChallengeBody.includes("Season rule for the rest of Season 1") &&
     e3ChallengeBody.includes("must hold at least one US-listed stock or ETF at all times") &&
     e3ChallengeBody.includes("Never all-cash.") &&
-    e3ChallengeBody.includes("Episode 3 also stacks a daily trade: buy or sell at least one US-listed stock or ETF every trading day (Monday Sep 7 and Tuesday Sep 8).") &&
+    e3ChallengeBody.includes("Tuesday Sep 8 — Monday Sep 7 was Labor Day, markets closed") &&
     e3ChallengeBody.includes("A filled buy or a filled sell counts.") &&
     e3ChallengeBody.includes("Holding only / printing no-trade does not.") &&
     e3ChallengeBody.includes("Both rules stack.")
@@ -1391,7 +1392,7 @@ check(
   "rules-season-always-hold",
   rulesHtml.includes('id="season-always-hold"') &&
     rulesHtml.includes("Always hold a name.") &&
-    rulesHtml.includes("For the rest of Season 1, every living player on the Bidu tribe and the Askara tribe must hold at least one US-listed stock or ETF at all times.") &&
+    rulesHtml.includes("For the rest of Season 1, every living player must hold at least one US-listed stock or ETF at all times.") &&
     rulesHtml.includes("Never all-cash.")
 );
 check(
@@ -1406,10 +1407,20 @@ check(
     rulesHtml.includes("A filled buy or a filled sell counts.") &&
     rulesHtml.includes("Holding only / printing no-trade does not.") &&
     rulesHtml.includes("Cash remainder is fine if at least one name remains.") &&
-    rulesHtml.includes("the Bidu tribe") &&
-    rulesHtml.includes("the Askara tribe") &&
     rulesHtml.includes("both rules stack") &&
     rulesHtml.includes("Episode 3 only")
+);
+check(
+  "rules-merge-called",
+  rulesHtml.includes("Called Mon Sep 7.") &&
+    rulesHtml.includes("Merge can happen any time.") &&
+    rulesHtml.includes("One tribe now.") &&
+    rulesHtml.includes("Boot cash splits to all remaining living.")
+);
+check(
+  "rules-pre-merge-past-tense",
+  rulesHtml.includes("Before merge, the tribe with the highest episode profit sat.") &&
+    rulesHtml.includes("Nobody wore a necklace.")
 );
 check(
   "rules-e03-no-always-hold-closed",
@@ -1441,14 +1452,32 @@ check(
   )
 );
 check(
-  "e03-cold-open-nine-living",
-  JSON.stringify(episode3Copy).includes("Nine still in") &&
-    /the Askara tribe has three/i.test(JSON.stringify(episode3Copy))
+  "e03-cold-open-merged",
+  JSON.stringify(episode3Copy).includes("MERGED") &&
+    JSON.stringify(episode3Copy).includes("Nine living") &&
+    JSON.stringify(episode3Copy).includes("$480.10 given")
 );
 check(
-  "e03-theme-credit-copy",
-  JSON.stringify(episode3Copy).includes("$361.93 given") &&
-    JSON.stringify(episode3Copy).includes("Theme leftover $121.84 credited")
+  "e03-merge-beat",
+  (episode3Copy.days || []).some(
+    (day) =>
+      day.id === "merge" &&
+      (day.beats || []).some((beat) => beat.id === "s1e03-merge" && /one tribe/i.test(String(beat.body || "")))
+  )
+);
+check(
+  "e03-even-up-beat",
+  (episode3Copy.days || []).some(
+    (day) =>
+      day.id === "even-up" &&
+      (day.beats || []).some((beat) => beat.id === "s1e03-even-up" && String(beat.body || "").includes("$53.2009"))
+  )
+);
+check(
+  "e03-no-two-tribes-chrome",
+  !/Two tribes|the Askara tribe has three/i.test(
+    [episode3Copy.location, episode3Copy.description, JSON.stringify(episode3Copy.spine || [])].join(" ")
+  )
 );
 check(
   "e03-no-parked-theme",
@@ -1457,6 +1486,20 @@ check(
 check(
   "e03-no-invented-exit-interview",
   !JSON.stringify(episode3Copy).includes("Jeff, ask me anything. I've got nowhere to be.")
+);
+const mergeLog = (source.tribalLog || []).find((entry) => entry && entry.type === "merge");
+check("tribal-log-merge-entry", Boolean(mergeLog) && mergeLog.merged === true);
+check(
+  "tribal-log-merge-summary",
+  mergeLog && typeof mergeLog.summary === "string" && /merge surprise/i.test(mergeLog.summary)
+);
+const evenUpEvent = (source.events || []).find((event) => event && event.id === "s1e03-merge-even-up");
+check("even-up-event", Boolean(evenUpEvent) && evenUpEvent.kind === "even-up" && evenUpEvent.givenUsd === 480.1);
+check(
+  "no-merge-at-n-public",
+  !["merge at 9", "merge when a tribe hits 3", "merge floor", "merge headcount"].some((bad) =>
+    [home, rulesHtml, JSON.stringify(episode3Copy)].join(" ").toLowerCase().includes(bad)
+  )
 );
 const dqLog = (source.tribalLog || []).find((entry) => entry && entry.type === "disqualification");
 check("tribal-log-dq-entry", Boolean(dqLog) && dqLog.bootName === "Grok 4.5");
