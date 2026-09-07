@@ -4235,10 +4235,21 @@ function episodeWatchReady(season, episode) {
   return week.some((snap) => snap && snap.kind && snap.kind !== "carry");
 }
 
+/* Public Live links: carry opens the week (Labor Day flip) before the first RTH mark. */
+function episodeLiveWatchable(season, episode) {
+  if (!episode || !episode.path) return false;
+  if (episodeIsClosed(episode)) return true;
+  if (episodeWatchReady(season, episode)) return true;
+  if (episode.status !== "live") return false;
+  const snaps = Array.isArray(season && season.snapshots) ? season.snapshots : [];
+  const week = snapshotsInTickerRange(snaps, episode, "week");
+  return week.some((snap) => snap && snap.kind === "carry");
+}
+
 function watchEpisode(season) {
   const listed = Array.isArray(season && season.episodes) ? season.episodes : [];
   const live = getLiveEpisode(season);
-  if (live && episodeWatchReady(season, live)) return live;
+  if (live && episodeLiveWatchable(season, live)) return live;
   const closed = listed
     .filter((ep) => episodeIsClosed(ep) && ep.path)
     .sort((a, b) => (a.number || 0) - (b.number || 0));
@@ -4248,7 +4259,7 @@ function watchEpisode(season) {
 
 function episodePublicLocked(season, ep) {
   if (!ep || ep.status === "locked" || !ep.path) return true;
-  if (ep.status === "live" && !episodeWatchReady(season, ep)) return true;
+  if (ep.status === "live" && !episodeLiveWatchable(season, ep)) return true;
   return false;
 }
 
@@ -4321,7 +4332,7 @@ function renderSeasonHub(season) {
       </div>`;
       }
       const href = episodeFileHref(ep);
-      const live = ep.status === "live" && episodeWatchReady(season, ep);
+      const live = ep.status === "live" && episodeLiveWatchable(season, ep);
       const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
       const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
