@@ -141,7 +141,11 @@ function episodeVotePosted(season, episode) {
   const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
   if (!log.length) return false;
   const epId = episode && episode.id;
-  if (epId) return log.some((entry) => entry && entry.episode === epId);
+  if (epId) {
+    return log.some(
+      (entry) => entry && entry.episode === epId && entry.type !== "disqualification" && entry.notTribal !== true
+    );
+  }
   return false;
 }
 
@@ -198,7 +202,8 @@ function tribalFocusHtml(episode, base) {
     </details>`
       : "";
   const exitQuote = exitInterview && (exitInterview.items || [])[0] ? exitInterview.items[0].quote : "";
-  const exitTeaser = interviewTeaser(exitQuote) || exitInterview.body || "Audience only.";
+  const exitTeaser =
+    interviewTeaser(exitQuote) || (exitInterview && exitInterview.body) || "Audience only.";
   const exitHtml =
     exitInterview && (exitInterview.items || []).length
       ? `<details class="tribal-conversations tribal-exit" id="exit-interview">

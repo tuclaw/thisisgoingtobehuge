@@ -32,8 +32,11 @@ function fail(message) {
   if (!appJs.includes(needle)) fail("app.js missing castaway overlay piece: " + needle);
 });
 
-if (appJs.includes("castaway-archetype") || appJs.includes("castaway-bio") || appJs.includes("castaway-status")) {
-  fail("castaway sheet must not print status/archetype/bio copy");
+if (appJs.includes("castaway-archetype") || appJs.includes("castaway-bio")) {
+  fail("castaway sheet must not print archetype/bio copy");
+}
+if (!appJs.includes("function castawayStatusLine") || !appJs.includes("Disqualified · jury")) {
+  fail("castaway sheet must show disqualified jury status without archetype/bio");
 }
 if (!/castaway-actions[\s\S]+castawayTapeHtml\(season, survivor\)/.test(appJs)) {
   fail("castaway tape must sit below the DMs");

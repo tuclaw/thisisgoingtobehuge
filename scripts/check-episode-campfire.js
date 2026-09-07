@@ -496,13 +496,22 @@ if (hostHelpers.tickerPutInAt(seasonSource, e2AddAt) !== 240.09) {
 }
 const raised = {
   ...seasonSource,
-  islandGivenUsd: 350
+  islandGivenUsd: 350,
+  themeLeftoverParked: true,
+  themeLeftoverCreditedUsd: null,
+  events: (seasonSource.events || []).filter((event) => event && event.kind !== "theme-leftover")
 };
 if (hostHelpers.tickerPutInAt(raised, e1OpenAt) !== 120) {
   throw new Error("a later pot raise must not rewrite Episode 1 put-in, got " + hostHelpers.tickerPutInAt(raised, e1OpenAt));
 }
 if (hostHelpers.tickerPutInAt(raised, e2AddAt) !== 350) {
   throw new Error("tickerPutInAt should follow a newer islandGivenUsd after the last host add, got " + hostHelpers.tickerPutInAt(raised, e2AddAt));
+}
+if (hostHelpers.tickerPutInAt(seasonSource, e2AddAt) !== 240.09) {
+  throw new Error("theme leftover credit must not rewrite Episode 2 cash-add put-in, got " + hostHelpers.tickerPutInAt(seasonSource, e2AddAt));
+}
+if (hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z") !== 361.93) {
+  throw new Error("tickerPutInAt after theme credit should be $361.93, got " + hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z"));
 }
 const nextAdd = {
   startingBookUsd: 10,
@@ -978,12 +987,66 @@ if (!overlaid || overlaid.bookUsd !== 9.5985 || overlaid.positions[0].sizeUsd !=
 if (
   !appJs.includes("function watchEpisode") ||
   !appJs.includes("function episodeWatchReady") ||
+  !appJs.includes("function episodeLiveWatchable") ||
   !appJs.includes("function episodePublicLocked")
 ) {
   throw new Error("app.js must keep public Live on the last watchable episode");
 }
-if (!appJs.includes('kind !== "carry"') && !appJs.includes("kind !== 'carry'")) {
-  throw new Error("Episode 3 must stay off Live links until a non-carry week mark");
+const watchStart = appJs.indexOf("function episodeWatchReady");
+const watchEnd = appJs.indexOf("function renderNavWatch");
+if (!(watchStart > -1 && watchEnd > watchStart)) {
+  throw new Error("app.js missing episodeLiveWatchable / watchEpisode helpers");
+}
+const watchHelpers = new Function(`
+  function episodeIsClosed(ep) {
+    return ep && (ep.status === "closed" || ep.status === "cut");
+  }
+  function getLiveEpisode(season) {
+    return (season.episodes || []).find((ep) => ep.status === "live") || null;
+  }
+  function episodeDiagramStartId(episode) {
+    return episode && episode.diagramStartSnapshotId ? episode.diagramStartSnapshotId : "";
+  }
+  function snapshotsFromEpisodeStart(snaps, episode) {
+    const list = Array.isArray(snaps) ? snaps.slice() : [];
+    const startId = episodeDiagramStartId(episode);
+    if (!startId) return list;
+    const idx = list.findIndex((snap) => snap && snap.id === startId);
+    return idx >= 0 ? list.slice(idx) : list;
+  }
+  function snapshotsInTickerRange(snapshots, episode, range) {
+    const all = Array.isArray(snapshots) ? snapshots.slice() : [];
+    if (!all.length) return [];
+    if (range !== "week") return all;
+    const ep = episode || {};
+    const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
+    const weekEnd = ep.weekEnd ? Date.parse(ep.weekEnd + "T23:59:59-07:00") : NaN;
+    if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
+    let filtered = all.filter((snap) => {
+      const t = Date.parse(snap.at);
+      return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
+    });
+    filtered = snapshotsFromEpisodeStart(filtered, ep);
+    if (filtered.length) return filtered;
+    const startId = episodeDiagramStartId(ep);
+    if (startId) {
+      const start = all.find((snap) => snap && snap.id === startId);
+      if (start) return [start];
+    }
+    return [];
+  }
+  ${appJs.slice(watchStart, watchEnd)}
+  return { episodeWatchReady, episodeLiveWatchable, watchEpisode };
+`)();
+const seasonBoard = JSON.parse(readFileSync(join(root, "dist", "season1.json"), "utf8"));
+if (!watchHelpers.episodeLiveWatchable(seasonBoard, seasonBoard.episode)) {
+  throw new Error("Episode 3 carry must open public Live links on Labor Day");
+}
+if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e03") {
+  throw new Error("public Watch Live must sit on Episode 3, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
+}
+if (watchHelpers.episodeWatchReady(seasonBoard, seasonBoard.episode)) {
+  throw new Error("Episode 3 season ticker must stay off carry until the first RTH mark");
 }
 const rangeStart = appJs.indexOf("function snapshotsForTickerRange");
 const rangeEnd = appJs.indexOf("function candidateStroke");

@@ -495,7 +495,7 @@ function holdLegHtml(pos, season, tribeId) {
 }
 
 function holdBookFaded(s, season) {
-  if (!s || (s.status !== "jury" && s.status !== "boot")) return false;
+  if (!s || (s.status !== "jury" && s.status !== "boot" && s.status !== "disqualified")) return false;
   const ep = currentPageEpisode(season);
   return Boolean(ep && Number(ep.number) >= 2);
 }
@@ -521,7 +521,12 @@ function holdBookHtml(s, tribe, season, rank) {
     : "";
   const pad = rank < 10 ? "0" + rank : String(rank);
   const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
-  const bootTag = s.status === "jury" || s.status === "boot" ? `<span class="hold-tag">Voted out · jury</span>` : "";
+  const bootTag =
+    s.status === "disqualified"
+      ? `<span class="hold-tag">Disqualified · jury</span>`
+      : s.status === "jury" || s.status === "boot"
+        ? `<span class="hold-tag">Voted out · jury</span>`
+        : "";
   const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
   const hasLegs = legs.length > 0;
   const mark = faded
@@ -937,6 +942,23 @@ function renderBooksBoard(season) {
   if (tape) tape.hidden = booksBoardTab !== "tape";
   if (booksBoardTab === "tape") renderTradeTape(season);
   else renderEpisodeHoldings(season);
+}
+
+function castawayStatusLine(survivor) {
+  if (!survivor) return "";
+  if (survivor.status === "disqualified" || survivor.disqualified) {
+    const note =
+      survivor.exitInterview === false && survivor.exitInterviewNote
+        ? `<p class="castaway-status-note">${escapeHtml(String(survivor.exitInterviewNote))}</p>`
+        : survivor.exitInterview === false
+          ? `<p class="castaway-status-note">Exit interview skipped.</p>`
+          : "";
+    return `<p class="castaway-status">Disqualified · jury</p>${note}`;
+  }
+  if (survivor.status === "jury" || survivor.status === "boot" || survivor.status === "voted-out") {
+    return `<p class="castaway-status">Voted out · jury</p>`;
+  }
+  return "";
 }
 
 function castawayTapeHtml(season, survivor) {
@@ -1769,11 +1791,13 @@ function paintCastawaySheet(season, parsed) {
       </div>`
     : "";
 
+  const statusLine = castawayStatusLine(survivor);
   body.innerHTML =
     `<div class="castaway-card">
       ${portrait}
       <p class="castaway-kicker">${escapeHtml(tribeName)}</p>
       <h2 id="castaway-sheet-title">${escapeHtml(model)}</h2>
+      ${statusLine}
       <div class="castaway-stats">
         <div><span>Book</span>${money(survivor.bookUsd)}</div>
         <div><span>Day</span>${pct(dayPctOf(survivor))}</div>
@@ -2233,9 +2257,10 @@ function islandGivenStartUsd(season) {
 
 function moneyPutInTotal(season, episode, range) {
   const original = islandGivenStartUsd(season);
-  /* Episode 2 week is funded: dotted island bar is islandGivenUsd, not the $120 open. */
-  if (range === "week" && tickerIsEpisodeTwo(episode) && typeof season.islandGivenUsd === "number") {
-    return season.islandGivenUsd;
+  /* Episode 2 week is funded at the cash-add through that week — not the live topped-up given. */
+  if (range === "week" && tickerIsEpisodeTwo(episode)) {
+    const anchor = episode && episode.weekEnd ? `${episode.weekEnd}T23:59:59Z` : null;
+    return tickerPutInAt(season, anchor);
   }
   return original;
 }
@@ -2252,15 +2277,22 @@ function hostPotAdds(season) {
   return (season.events || []).filter((event) => event && event.type === "mark" && isHostPotAdd(event));
 }
 
-/* Funded pot at a mark. Host cash-adds step the baseline; a newer islandGivenUsd
-   follows after the latest add so the “up from” line moves when the pot is topped up. */
-function tickerPutInAt(season, iso) {
-  const start = islandGivenStartUsd(season);
+function isGivenStep(item) {
+  if (!item) return false;
+  if (item.kind === "cash-add" || item.kind === "host-add" || item.kind === "theme-leftover") return true;
+  return /cash-add|host-add|theme-leftover/i.test(String(item.id || ""));
+}
+
+function givenSteps(season) {
   const liveGiven =
     typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)
       ? season.islandGivenUsd
       : null;
-  const adds = hostPotAdds(season)
+  const steps = hostPotAdds(season).slice();
+  (season.events || []).forEach((event) => {
+    if (event && event.type === "cash-add" && event.kind === "theme-leftover") steps.push(event);
+  });
+  return steps
     .map((item) => {
       const at = Date.parse(item && item.at);
       const given =
@@ -2269,21 +2301,31 @@ function tickerPutInAt(season, iso) {
     })
     .filter((item) => !Number.isNaN(item.at) && item.given != null)
     .sort((a, b) => a.at - b.at);
+}
+
+/* Funded pot at a mark. Host cash-adds step the baseline; theme leftover credits step later. */
+function tickerPutInAt(season, iso) {
+  const start = islandGivenStartUsd(season);
+  const liveGiven =
+    typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)
+      ? season.islandGivenUsd
+      : null;
+  const steps = givenSteps(season);
   const t = iso ? Date.parse(iso) : NaN;
   let putIn = start;
   let lastStamped = start;
-  adds.forEach((add) => {
-    if (Number.isNaN(t) || t >= add.at) {
-      putIn = add.given;
-      lastStamped = add.given;
+  steps.forEach((step) => {
+    if (Number.isNaN(t) || t >= step.at) {
+      putIn = step.given;
+      lastStamped = step.given;
     }
   });
-  const lastAdd = adds.length ? adds[adds.length - 1] : null;
-  const afterLastAdd = !lastAdd || Number.isNaN(t) || t >= lastAdd.at;
-  if (afterLastAdd && liveGiven != null && liveGiven > lastStamped + 0.00005) {
+  const lastStep = steps.length ? steps[steps.length - 1] : null;
+  const afterLastStep = !lastStep || Number.isNaN(t) || t >= lastStep.at;
+  if (afterLastStep && liveGiven != null && liveGiven > lastStamped + 0.00005) {
     return liveGiven;
   }
-  if (!adds.length && liveGiven != null && liveGiven > start + 0.00005) {
+  if (!steps.length && liveGiven != null && liveGiven > start + 0.00005) {
     return liveGiven;
   }
   return putIn;
@@ -2341,10 +2383,18 @@ function snapshotsInTickerRange(snapshots, episode, range) {
 }
 
 function islandHostAddUsd(season) {
-  const given = islandGivenUsd(season);
-  const start = moneyPutInTotal(season);
-  if (given == null || Number.isNaN(given) || given <= start + 0.00005) return null;
-  return roundMoney(given - start);
+  const start = islandGivenStartUsd(season);
+  const adds = hostPotAdds(season)
+    .map((item) => ({
+      at: Date.parse(item && item.at),
+      given:
+        typeof item.givenUsd === "number" && !Number.isNaN(item.givenUsd) ? item.givenUsd : null
+    }))
+    .filter((item) => !Number.isNaN(item.at) && item.given != null)
+    .sort((a, b) => a.at - b.at);
+  const lastHost = adds.length ? adds[adds.length - 1] : null;
+  if (!lastHost || lastHost.given <= start + 0.00005) return null;
+  return roundMoney(lastHost.given - start);
 }
 
 function islandHostAddEpisodeLabel(seasonOrEpisode) {
@@ -2557,6 +2607,7 @@ function survivorBootAtMs(season, survivor) {
     if (entry.bootId && entry.bootId === survivor.id) return t;
     const bootName = entry.bootName || entry.boot;
     if (bootName && (bootName === survivor.name || bootName === survivor.model)) return t;
+    if (entry.type === "disqualification" && entry.bootId && entry.bootId === survivor.id) return t;
   }
   return null;
 }
@@ -4184,10 +4235,21 @@ function episodeWatchReady(season, episode) {
   return week.some((snap) => snap && snap.kind && snap.kind !== "carry");
 }
 
+/* Public Live links: carry opens the week (Labor Day flip) before the first RTH mark. */
+function episodeLiveWatchable(season, episode) {
+  if (!episode || !episode.path) return false;
+  if (episodeIsClosed(episode)) return true;
+  if (episodeWatchReady(season, episode)) return true;
+  if (episode.status !== "live") return false;
+  const snaps = Array.isArray(season && season.snapshots) ? season.snapshots : [];
+  const week = snapshotsInTickerRange(snaps, episode, "week");
+  return week.some((snap) => snap && snap.kind === "carry");
+}
+
 function watchEpisode(season) {
   const listed = Array.isArray(season && season.episodes) ? season.episodes : [];
   const live = getLiveEpisode(season);
-  if (live && episodeWatchReady(season, live)) return live;
+  if (live && episodeLiveWatchable(season, live)) return live;
   const closed = listed
     .filter((ep) => episodeIsClosed(ep) && ep.path)
     .sort((a, b) => (a.number || 0) - (b.number || 0));
@@ -4197,7 +4259,7 @@ function watchEpisode(season) {
 
 function episodePublicLocked(season, ep) {
   if (!ep || ep.status === "locked" || !ep.path) return true;
-  if (ep.status === "live" && !episodeWatchReady(season, ep)) return true;
+  if (ep.status === "live" && !episodeLiveWatchable(season, ep)) return true;
   return false;
 }
 
@@ -4270,7 +4332,7 @@ function renderSeasonHub(season) {
       </div>`;
       }
       const href = episodeFileHref(ep);
-      const live = ep.status === "live" && episodeWatchReady(season, ep);
+      const live = ep.status === "live" && episodeLiveWatchable(season, ep);
       const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
       const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">
