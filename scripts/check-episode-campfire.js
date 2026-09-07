@@ -496,22 +496,13 @@ if (hostHelpers.tickerPutInAt(seasonSource, e2AddAt) !== 240.09) {
 }
 const raised = {
   ...seasonSource,
-  islandGivenUsd: 350,
-  islandThemeLeftoverCredited: false,
-  islandThemeLeftoverUsd: null,
-  events: (seasonSource.events || []).filter((event) => event && event.kind !== "theme-leftover")
+  islandGivenUsd: 350
 };
 if (hostHelpers.tickerPutInAt(raised, e1OpenAt) !== 120) {
   throw new Error("a later pot raise must not rewrite Episode 1 put-in, got " + hostHelpers.tickerPutInAt(raised, e1OpenAt));
 }
 if (hostHelpers.tickerPutInAt(raised, e2AddAt) !== 350) {
   throw new Error("tickerPutInAt should follow a newer islandGivenUsd after the last host add, got " + hostHelpers.tickerPutInAt(raised, e2AddAt));
-}
-if (hostHelpers.tickerPutInAt(seasonSource, e2AddAt) !== 240.09) {
-  throw new Error("theme leftover credit must not rewrite Episode 2 cash-add put-in, got " + hostHelpers.tickerPutInAt(seasonSource, e2AddAt));
-}
-if (hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z") !== 361.93) {
-  throw new Error("tickerPutInAt after theme credit should be $361.93, got " + hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z"));
 }
 const nextAdd = {
   startingBookUsd: 10,

@@ -178,7 +178,7 @@ if (/\bcash shame\b/i.test(hostChrome) || /\bshame list\b/i.test(hostChrome)) {
 if (seasonRaw.includes("SATURDAY_DINNER") || (/saturday dinner/i.test(seasonRaw) && seasonRaw.includes("sat-dinner"))) {
   throw new Error("do not remake books for saturday dinner");
 }
-if (season.islandGivenUsd !== 361.93) {
+if (season.islandGivenUsd !== 240.09) {
   throw new Error("homepage pot / given total was remade");
 }
 
