@@ -78,7 +78,7 @@ if ((e1Sunday.beats || []).some((beat) => beat.id === "sunday-dinner")) {
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
 if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
-if (season.statusLabel !== "Live · S1E03 · MERGED · nine living · even-up REVERSED") {
+if (season.statusLabel !== "Live · S1E03 · MERGED · zero-sum even ~$40.07 · nine living") {
   throw new Error("public Live must reflect Episode 3 merge + even-up reversed");
 }
 

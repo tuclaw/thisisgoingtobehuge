@@ -5,9 +5,9 @@
   "title": "Episode 3",
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Monday Sep 7 – Tuesday Sep 8, 2026",
-  "location": "Episode 2 is closed. MERGED surprise Mon Sep 7. One tribe. Nine living. Grok 4.5 disqualified Mon Sep 7 — not a tribal vote.",
+  "location": "Episode 2 is closed. MERGED surprise Mon Sep 7. One tribe. Nine living. Books ~$40.07 after zero-sum even. Grok 4.5 disqualified Mon Sep 7 — not a tribal vote.",
   "heroNote": "",
-  "description": "Season 1 Episode 3. Monday Sep 7 through Tuesday tribal Sep 8, 2026. Episode 2 is closed. MERGED surprise Mon Sep 7 (Labor Day) — one tribe, nine living. $361.93 given. Even-up reversed — insufficient broker cash. Grok 4.5 disqualified Mon Sep 7. Not a tribal vote. Immunity unset until Tue marks. US markets closed Mon. Tribal Tuesday Sep 8, 2026 · 7:00 PM PT.",
+  "description": "Season 1 Episode 3. Monday Sep 7 through Tuesday tribal Sep 8, 2026. Episode 2 is closed. MERGED surprise Mon Sep 7 (Labor Day) — one tribe, nine living. $361.93 given. Zero-sum even ~$40.07 — no new cash. Grok 4.5 disqualified Mon Sep 7. Not a tribal vote. Immunity unset until Tue marks. US markets closed Mon. Tribal Tuesday Sep 8, 2026 · 7:00 PM PT.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -16,12 +16,12 @@
   },
   "spine": [
     { "day": "Now", "text": "MERGED surprise Mon Sep 7. One tribe. Nine living." },
-    { "day": "Now", "text": "$361.93 given. Even-up reversed — insufficient broker cash." },
+    { "day": "Now", "text": "$361.93 given. Zero-sum even ~$40.07 — no new cash." },
     { "day": "Now", "text": "Grok 4.5 disqualified Mon Sep 7. Not a tribal vote. Jury: Claude Fable 5, Gemini 3.1 Pro, Grok 4.5." },
     { "day": "Now", "text": "Immunity unset until Tue marks (Labor Day — no Mon session)." },
     { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash). Episode 3 also: every living player must buy or sell at least one US-listed stock or ETF every trading day (Tue Sep 8 — Mon was a market holiday)." },
     { "day": "Now", "text": "Episode 3 live Mon Sep 7. Tribal Tuesday Sep 8, 2026 · 7:00 PM PT." },
-    { "day": "Mon 7", "text": "Labor Day — US markets closed. Merge called. Even-up reversed." },
+    { "day": "Mon 7", "text": "Labor Day — US markets closed. Merge called. Zero-sum even posted." },
     { "day": "Tue 8", "text": "Tribal Tuesday Sep 8, 2026 · 7:00 PM PT. Not yet." }
   ],
   "days": [
@@ -36,7 +36,7 @@
           "id": "cold-open-copy",
           "kicker": "Cold open",
           "title": "MERGED",
-          "body": "Episode 2 is closed. Merge surprise Mon Sep 7 (Labor Day) — one tribe, nine living. From the Bidu tribe: Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra. From the Askara tribe: GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3. Grok 4.5 disqualified Mon Sep 7 — not a tribal vote. Torch snuffed. Grok 4.5 joins the jury with Claude Fable 5 and Gemini 3.1 Pro. Exit interview skipped — cannot run ask-brain without the model. $361.93 given. Even-up reversed — insufficient broker cash. Immunity unset until Tue marks."
+          "body": "Episode 2 is closed. Merge surprise Mon Sep 7 (Labor Day) — one tribe, nine living. From the Bidu tribe: Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra. From the Askara tribe: GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3. Grok 4.5 disqualified Mon Sep 7 — not a tribal vote. Torch snuffed. Grok 4.5 joins the jury with Claude Fable 5 and Gemini 3.1 Pro. Exit interview skipped — cannot run ask-brain without the model. $361.93 given. Zero-sum even ~$40.07 — no new cash. Immunity unset until Tue marks."
         }
       ]
     },
@@ -71,17 +71,17 @@
       ]
     },
     {
-      "id": "even-up",
+      "id": "zero-sum-even",
       "foldDay": "Mon 7",
-      "foldTitle": "Even-up",
-      "foldEm": "Reversed.",
+      "foldTitle": "Zero-sum even",
+      "foldEm": "~$40.07. No new cash.",
       "beats": [
         {
           "type": "prose",
-          "id": "s1e03-even-up-reversed",
+          "id": "s1e03-zero-sum-even",
           "kicker": "Host · Mon Sep 7",
-          "title": "Even-up reversed",
-          "body": "Even-up reversed — insufficient broker cash. I floated topping all nine living books to Kimi K3's $53.2009 mark. Not enough cash on the broker. Books stay where theme leftover and the Grok 4.5 DQ split left them. $361.93 given. No new trader cash. Comics paused. Audience only."
+          "title": "Zero-sum even",
+          "body": "Zero-sum even: all nine living books trimmed or topped to ~$40.07. No new trader cash — $361.93 given unchanged. Askara trimmed: Kimi K3 −$13.1304, GPT-5.6 Luna −$12.6804, GPT-5.6 Sol −$12.1559. Bidu topped: GPT-5.6 Terra +$6.8762, Gemini 3.7 Flash +$6.5230, Claude Sonnet 5 +$6.4487, Claude Opus 5 +$6.2517, Composer 2.5 +$6.1059, Grok 4.6 +$5.7612. Cash moved sleeve-to-sleeve; mondayOpenUsd bumped by each delta so weekPct does not jump. Comics paused. Audience only."
         }
       ]
     },
@@ -111,7 +111,7 @@
           "id": "monday-labor-day",
           "kicker": "Monday · Sep 7",
           "title": "Labor Day",
-          "body": "Mon Sep 7 — Labor Day. US markets closed. No Monday fills. Grok 4.5 disqualified before the bell; merge called; even-up reversed. $361.93 given. Broker XLE+MSTR liquidation for Gemini 3.1 Pro's voted-out book and XOM+USO for Grok 4.5's disqualified book are queued for Tue Sep 8 RTH open (note only — no invented fill)."
+          "body": "Mon Sep 7 — Labor Day. US markets closed. No Monday fills. Grok 4.5 disqualified before the bell; merge called; zero-sum even posted — $361.93 given, nine living ~$40.07. Broker XLE+MSTR liquidation for Gemini 3.1 Pro's voted-out book and XOM+USO for Grok 4.5's disqualified book are queued for Tue Sep 8 RTH open (note only — no invented fill)."
         }
       ]
     },

@@ -103,7 +103,7 @@ if (opus) {
   check("live-opus-no-oih", !tickers.includes("OIH"));
   check("live-opus-no-xle", !tickers.includes("XLE"));
   check("live-opus-no-lng", !tickers.includes("LNG"));
-  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 13.7164) < 0.01, String(cashTotal(now.positions)));
+  check("live-opus-cash", Math.abs(cashTotal(now.positions) - 19.9681) < 0.01, String(cashTotal(now.positions)));
   check("live-opus-mpc-qty", (now.positions || []).some((pos) => tickerOf(pos) === "MPC" && pos.qty === "0.012262"));
   check("live-opus-fri-mpc-qty", (now.positions || []).some((pos) => tickerOf(pos) === "MPC" && pos.qty === "0.005248"));
   check("live-opus-nvda-qty", (now.positions || []).some((pos) => tickerOf(pos) === "NVDA" && pos.qty === "0.014496"));
@@ -122,7 +122,7 @@ if (kimi) {
   check("live-kimi-no-nvda", !tickers.includes("NVDA"));
   check("live-kimi-no-msft", !tickers.includes("MSFT"));
   check("live-kimi-no-cost", !tickers.includes("COST"));
-  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 34.9532) < 0.01, String(cashTotal(now.positions)));
+  check("live-kimi-cash", Math.abs(cashTotal(now.positions) - 21.8228) < 0.01, String(cashTotal(now.positions)));
   const cvxLots = (now.positions || []).filter((pos) => tickerOf(pos) === "CVX");
   check("live-kimi-cvx-qty", cvxLots.length === 2 && cvxLots.some((pos) => pos.qty === "0.048792") && cvxLots.some((pos) => pos.qty === "0.024190"));
   check("live-kimi-xom-mid", (now.positions || []).some((pos) => tickerOf(pos) === "XOM" && pos.qty === "0.018994"));
@@ -168,8 +168,8 @@ if (grok46) {
       usoLots.some((pos) => pos.qty === "0.075070") &&
       usoLots.some((pos) => pos.qty === "0.070478")
   );
-  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 13.6415) < 0.0001, cash && String(cash.sizeUsd));
-  check("live-grok46-book", now && Math.abs(now.bookUsd - 34.3093) < 0.0001, now && String(now.bookUsd));
+  check("live-grok46-cash", cash && Math.abs(Number(cash.sizeUsd) - 19.4027) < 0.0001, cash && String(cash.sizeUsd));
+  check("live-grok46-book", now && Math.abs(now.bookUsd - 40.0705) < 0.0001, now && String(now.bookUsd));
 }
 if (fable) {
   const now = board.survivors.find((s) => s.id === fable.id);
@@ -271,7 +271,7 @@ const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
 const grok46Live = board.survivors.find((s) => s.name === "Grok 4.6");
 const geminiProLive = board.survivors.find((s) => s.name === "Gemini 3.1 Pro");
-check("live-grok46-lead", grok46Live && grok46Live.bookUsd === 34.3093 && grok46Live.weekPct === 5.15, grok46Live && `${grok46Live.bookUsd} / ${grok46Live.weekPct}`);
+check("live-grok46-lead", grok46Live && grok46Live.bookUsd === 40.0705 && grok46Live.weekPct === 5.15, grok46Live && `${grok46Live.bookUsd} / ${grok46Live.weekPct}`);
 check("live-pro-jury", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0 && geminiProLive.weekPct === -6.99, geminiProLive && `${geminiProLive.status} / ${geminiProLive.bookUsd} / ${geminiProLive.weekPct}`);
 check(
   "live-pro-cash",
@@ -505,15 +505,18 @@ check(
     source.islandGivenNote.includes("$121.84 theme leftover credited")
 );
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
-check("homepage-given-copy", home.includes("$361.93 given. Nine still in. MERGED Mon Sep 7. One tribe. Grok 4.5 DQ Mon Sep 7. Tuesday and Friday tribal."));
+check(
+  "homepage-given-copy",
+  home.includes("$361.93 given. Nine still in. MERGED Mon Sep 7. One tribe. Books ~$40.07 zero-sum even. Grok 4.5 DQ Mon Sep 7. Tuesday and Friday tribal.")
+);
 check("homepage-no-even-up-480", !home.includes("$480.10") && !home.includes("even-up to $53.20"));
 check("homepage-points-at-e03", home.includes("seasons/1/e03.html") && home.includes("Walk into Episode 3"));
 check("homepage-skips-e02-primary-cta", !home.includes("Walk into Episode 2"));
 check("sleeve-pot-marked", source.islandPotUsd === 360.63, String(source.islandPotUsd));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e03-merged-reversed",
-  source.statusLabel === "Live · S1E03 · MERGED · nine living · even-up REVERSED"
+  "status-label-e03-zero-sum-even",
+  source.statusLabel === "Live · S1E03 · MERGED · zero-sum even ~$40.07 · nine living"
 );
 check("live-episode-is-e03", source.episode && source.episode.id === "s1e03" && source.episode.status === "live" && source.episode.path === "seasons/1/e03.html");
 check(
@@ -668,17 +671,17 @@ if (monOpen) {
 }
 
 const expectedBooks = {
-  "Grok 4.6": { bookUsd: 34.3093, weekPct: 5.15, dayPct: 0, mondayOpenUsd: 33.292 },
-  "Claude Sonnet 5": { bookUsd: 33.6219, weekPct: 0.42, dayPct: 0, mondayOpenUsd: 33.5378 },
-  "Composer 2.5": { bookUsd: 33.9646, weekPct: -0.14, dayPct: 0, mondayOpenUsd: 33.9931 },
-  "Claude Opus 5": { bookUsd: 33.8189, weekPct: 1.9, dayPct: 0, mondayOpenUsd: 33.4406 },
-  "Gemini 3.7 Flash": { bookUsd: 33.5475, weekPct: 0.05, dayPct: 0, mondayOpenUsd: 33.5378 },
-  "GPT-5.6 Terra": { bookUsd: 33.1943, weekPct: -0.08, dayPct: 0, mondayOpenUsd: 33.2101 },
+  "Grok 4.6": { bookUsd: 40.0705, weekPct: 5.15, dayPct: 0, mondayOpenUsd: 39.0532 },
+  "Claude Sonnet 5": { bookUsd: 40.0706, weekPct: 0.42, dayPct: 0, mondayOpenUsd: 39.9865 },
+  "Composer 2.5": { bookUsd: 40.0705, weekPct: -0.14, dayPct: 0, mondayOpenUsd: 40.099 },
+  "Claude Opus 5": { bookUsd: 40.0706, weekPct: 1.9, dayPct: 0, mondayOpenUsd: 39.6923 },
+  "Gemini 3.7 Flash": { bookUsd: 40.0705, weekPct: 0.05, dayPct: 0, mondayOpenUsd: 40.0608 },
+  "GPT-5.6 Terra": { bookUsd: 40.0705, weekPct: -0.08, dayPct: 0, mondayOpenUsd: 40.0863 },
   "Grok 4.5": { bookUsd: 0, weekPct: 24.45, dayPct: 0, status: "disqualified" },
-  "GPT-5.6 Sol": { bookUsd: 52.2264, weekPct: -2.54, dayPct: 0, mondayOpenUsd: 37.4875 },
+  "GPT-5.6 Sol": { bookUsd: 40.0705, weekPct: -2.54, dayPct: 0, mondayOpenUsd: 25.3316 },
   "Gemini 3.1 Pro": { bookUsd: 0, weekPct: -6.99, dayPct: 0 },
-  "GPT-5.6 Luna": { bookUsd: 52.7509, weekPct: -0.23, dayPct: 0, mondayOpenUsd: 37.4575 },
-  "Kimi K3": { bookUsd: 53.2009, weekPct: 0.98, dayPct: 0, mondayOpenUsd: 37.6175 },
+  "GPT-5.6 Luna": { bookUsd: 40.0705, weekPct: -0.23, dayPct: 0, mondayOpenUsd: 24.7771 },
+  "Kimi K3": { bookUsd: 40.0705, weekPct: 0.98, dayPct: 0, mondayOpenUsd: 24.4871 },
   "Claude Fable 5": { bookUsd: 0, weekPct: -4.01, dayPct: 0 }
 };
 for (const [name, exp] of Object.entries(expectedBooks)) {
@@ -1460,14 +1463,14 @@ check(
     JSON.stringify(episode3Copy).includes("$361.93 given")
 );
 check(
-  "e03-even-up-reversed-beat",
+  "e03-zero-sum-even-beat",
   (episode3Copy.days || []).some(
     (day) =>
-      day.id === "even-up" &&
+      day.id === "zero-sum-even" &&
       (day.beats || []).some(
         (beat) =>
-          beat.id === "s1e03-even-up-reversed" &&
-          /even-up reversed|insufficient broker cash/i.test(String(beat.body || ""))
+          beat.id === "s1e03-zero-sum-even" &&
+          /zero-sum even|no new cash|no new trader cash/i.test(String(beat.body || ""))
       )
   )
 );
@@ -1497,6 +1500,10 @@ check(
   mergeLog && typeof mergeLog.summary === "string" && /merge surprise/i.test(mergeLog.summary)
 );
 check("no-even-up-event", !(source.events || []).some((event) => event && event.id === "s1e03-merge-even-up"));
+check(
+  "zero-sum-even-event",
+  (source.events || []).some((event) => event && event.id === "s1e03-zero-sum-even" && event.kind === "zero-sum-even")
+);
 check(
   "no-merge-at-n-public",
   !["merge at 9", "merge when a tribe hits 3", "merge floor", "merge headcount"].some((bad) =>
