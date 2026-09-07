@@ -154,7 +154,7 @@ chromeFields.forEach((field) => {
 if (seasonRaw.includes("WEDNESDAY_DINNER") || (/wednesday dinner/i.test(seasonRaw) && seasonRaw.includes("wed-dinner"))) {
   throw new Error("do not remake books for wednesday dinner");
 }
-if (season.islandGivenUsd !== 480.1) {
+if (season.islandGivenUsd !== 361.93) {
   throw new Error("homepage pot / given total was remade");
 }
 

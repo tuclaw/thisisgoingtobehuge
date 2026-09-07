@@ -510,8 +510,8 @@ if (hostHelpers.tickerPutInAt(raised, e2AddAt) !== 350) {
 if (hostHelpers.tickerPutInAt(seasonSource, e2AddAt) !== 240.09) {
   throw new Error("theme leftover credit must not rewrite Episode 2 cash-add put-in, got " + hostHelpers.tickerPutInAt(seasonSource, e2AddAt));
 }
-if (hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z") !== 480.1) {
-  throw new Error("tickerPutInAt after even-up should be $480.10, got " + hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z"));
+if (hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z") !== 361.93) {
+  throw new Error("tickerPutInAt after theme credit should be $361.93, got " + hostHelpers.tickerPutInAt(seasonSource, "2026-09-08T16:00:00Z"));
 }
 const nextAdd = {
   startingBookUsd: 10,

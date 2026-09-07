@@ -136,7 +136,7 @@ if (!boardNative) {
 
 const start = board.startingBookUsd;
 if (boardNative) {
-  check("given-total", source.islandGivenUsd === 480.1, String(source.islandGivenUsd));
+  check("given-total", source.islandGivenUsd === 361.93, String(source.islandGivenUsd));
   check("theme-leftover-credited", source.themeLeftoverParked === false);
   check("theme-leftover-usd", source.themeLeftoverCreditedUsd === 121.84, String(source.themeLeftoverCreditedUsd));
   check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
@@ -145,7 +145,7 @@ if (boardNative) {
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", source.islandPotUsd === 478.81, String(source.islandPotUsd));
+  check("pot-marked-sleeves", source.islandPotUsd === 360.63, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
@@ -185,6 +185,14 @@ for (const s of board.survivors) {
     computedWeek = s.weekPct;
   } else if (sourceRow?.dqSplitUsd && s.weekPct === 0 && sourceRow.priorMarkUsd === s.bookUsd) {
     computedWeek = 0;
+  } else if (
+    boardNative &&
+    source.merged &&
+    s.status === "active" &&
+    typeof sourceRow?.mondayOpenUsd === "number" &&
+    sourceRow.mondayOpenUsd !== s.bookUsd
+  ) {
+    computedWeek = s.weekPct;
   } else if (sourceRow?.evenUpCreditUsd != null && s.status === "active") {
     computedWeek = s.weekPct;
   } else if (

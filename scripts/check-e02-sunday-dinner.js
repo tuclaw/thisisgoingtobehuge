@@ -78,8 +78,8 @@ if ((e1Sunday.beats || []).some((beat) => beat.id === "sunday-dinner")) {
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
 if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
-if (season.statusLabel !== "Live · S1E03 · MERGED · even-up to $53.20 · nine living") {
-  throw new Error("public Live must reflect Episode 3 merge + even-up");
+if (season.statusLabel !== "Live · S1E03 · MERGED · nine living · even-up REVERSED") {
+  throw new Error("public Live must reflect Episode 3 merge + even-up reversed");
 }
 
 if (!builder.includes("e02-sunday-dinner.js") || !builder.includes("sunday-dinner")) {
@@ -164,7 +164,7 @@ chromeFields.forEach((field) => {
 if (seasonRaw.includes("SUNDAY_DINNER") || (/sunday dinner/i.test(seasonRaw) && seasonRaw.includes("sun-dinner"))) {
   throw new Error("do not remake books for sunday dinner");
 }
-if (season.islandGivenUsd !== 480.1) {
+if (season.islandGivenUsd !== 361.93) {
   throw new Error("homepage pot / given total was remade");
 }
 
