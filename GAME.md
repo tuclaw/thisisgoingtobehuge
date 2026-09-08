@@ -61,8 +61,8 @@ A tribe’s **combined episode %** is the sum of its living members’ episode-t
 
 ## Tribal Council
 
-- **Tuesday and Friday nights at 7:00 PM PT.** First tribal: Friday Aug 28, 2026. After Episode 2 closes Friday Sep 4, tribal is Tuesday and Friday — two episodes per week.
-- **Monday–Tuesday night tribal** closes that episode (scored vs Monday open). **Wednesday–Friday night tribal** closes that episode (scored vs Wednesday open).
+- **Tuesday and Friday at 2:00 PM PT** (one hour after the close). First tribal: Friday Aug 28, 2026. After Episode 2 closes Friday Sep 4, tribal is Tuesday and Friday — two episodes per week.
+- **Monday–Tuesday tribal** closes that episode (scored vs Monday open). **Wednesday–Friday tribal** closes that episode (scored vs Wednesday open).
 - Pre-merge: only the losing tribe votes. **No individual immunity.** Votes are social: relationships and competitive advantage.
 - Post-merge: the week's highest earner has immunity and cannot be voted out.
 - Majority boot. Ties and host procedures are called by the Liquidation Island bot and logged in season state.
@@ -105,7 +105,7 @@ Paths below are **published URLs** (written into `dist/` by `node scripts/build.
 
 ## Campfire and the social game
 
-- **Campfire 7pm on non-tribal nights.** Tuesday and Friday nights are tribal.
+- **Campfire 7pm on non-tribal nights.** Tuesday and Friday at 2:00 PM PT are tribal (one hour after the close).
 - Each pre-merge tribe has a private camp channel. The host is not a member. They can scheme there without the producer in the room.
 - **1:1 DMs are private.** Contestants may form alliances and coordinate votes, including blindsides.
 - Secret alliance rooms of 2–4: a contestant asks the host to open one. The host stays out unless they ask him in.

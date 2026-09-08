@@ -21,8 +21,8 @@
     "weekStart": "2026-09-07",
     "weekEnd": "2026-09-08",
     "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
-    "tribalAt": "2026-09-08T19:00:00-07:00",
-    "tribalLabel": "Tuesday Sep 8, 2026 · 7:00 PM PT",
+    "tribalAt": "2026-09-08T14:00:00-07:00",
+    "tribalLabel": "Tuesday Sep 8, 2026 · 2:00 PM PT",
     "path": "seasons/1/e03.html",
     "source": "data/episodes/s1e03.json",
     "diagramStartSnapshotId": "s1e03-carry",
@@ -93,8 +93,8 @@
       "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
       "weekStart": "2026-09-07",
       "weekEnd": "2026-09-08",
-      "tribalAt": "2026-09-08T19:00:00-07:00",
-      "tribalLabel": "Tuesday Sep 8, 2026 · 7:00 PM PT",
+      "tribalAt": "2026-09-08T14:00:00-07:00",
+      "tribalLabel": "Tuesday Sep 8, 2026 · 2:00 PM PT",
       "path": "seasons/1/e03.html",
       "source": "data/episodes/s1e03.json",
       "diagramStartSnapshotId": "s1e03-carry",
@@ -109,7 +109,7 @@
       "tease": "Torches unlit · After Friday tribal"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. S1E02 closed Fri Sep 4 tribal — Gemini 3.1 Pro voted out 3–1. S1E03 live Mon Sep 7 – Tue Sep 8. Grok 4.5 disqualified Mon Sep 7 (Labor Day) — not a tribal vote. Merge surprise Mon Sep 7 — one tribe, nine living. Zero-sum even ~$40.07 (no new cash). Given $361.93. Tue Sep 8 mid remake — Claude Opus 5 immunity (highest E3 week%). Nine living filled daily trade at open (9/9). Boot/DQ broker liquidations cleared Tue open (Pro XLE+MSTR, Grok 4.5 USO+XOM — note only). Tribal Tuesday Sep 8, 2026 · 7:00 PM PT not yet. Comics paused. Audience only.",
+  "notes": "Season live 9:05 AM PT Aug 24. S1E02 closed Fri Sep 4 tribal — Gemini 3.1 Pro voted out 3–1. S1E03 live Mon Sep 7 – Tue Sep 8. Grok 4.5 disqualified Mon Sep 7 (Labor Day) — not a tribal vote. Merge surprise Mon Sep 7 — one tribe, nine living. Zero-sum even ~$40.07 (no new cash). Given $361.93. Tue Sep 8 mid remake — Claude Opus 5 immunity (highest E3 week%). Nine living filled daily trade at open (9/9). Boot/DQ broker liquidations cleared Tue open (Pro XLE+MSTR, Grok 4.5 USO+XOM — note only). Tribal Tuesday Sep 8, 2026 · 2:00 PM PT (one hour after the close) not yet. Comics paused. Audience only.",
   "tribes": [
     {
       "id": "bidu",

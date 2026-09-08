@@ -251,7 +251,7 @@ check(
       "Season rule: always hold at least one US-listed stock or ETF (never all-cash). Episode 3 also: buy or sell at least one US-listed stock or ETF every trading day (Mon and Tue)."
 );
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 7 – Tuesday Sep 8, 2026");
-check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 8, 2026 · 7:00 PM PT");
+check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 8, 2026 · 2:00 PM PT");
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
 check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
