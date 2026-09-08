@@ -1721,6 +1721,18 @@ check(
   "app-closed-premerge-keeps-tribe-boards",
   /ep\.status === "closed" && Number\(ep\.number\) < 3/.test(appJs)
 );
+check(
+  "app-merged-hides-tribes-diagram",
+  appJs.includes("function moneyTickerEpisodeDiagrams") &&
+    appJs.includes("function moneyTickerDefaultDiagram") &&
+    /id !== "tribes"/.test(appJs) &&
+    appJs.includes('moneyTicker.diagram = "contestants"')
+);
+check(
+  "app-premerge-keeps-tribes-diagram-default",
+  appJs.includes('moneyTicker.diagram = "tribes"') &&
+    /allowed\.includes\("tribes"\)\) return "tribes"/.test(appJs)
+);
 const e03BuiltPath = join(root, "dist", "seasons", "1", "e03.html");
 if (existsSync(e03BuiltPath)) {
   const e03Built = readFileSync(e03BuiltPath, "utf8");
