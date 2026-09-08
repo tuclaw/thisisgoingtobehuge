@@ -106,6 +106,49 @@ function combinedDayPctOf(tribe) {
   return 0;
 }
 
+function showLiveTribeCombinedTotals(season) {
+  if (!season || !season.merged) return true;
+  const ep = currentPageEpisode(season);
+  if (ep && ep.status === "closed" && Number(ep.number) < 3) return true;
+  return false;
+}
+
+function mergedLivingCount(season) {
+  return (season.survivors || []).filter((s) => s && (s.status === "active" || s.status === "immune")).length;
+}
+
+function tribalCouncilEmptyCopy(season) {
+  if (season && season.merged) {
+    return "Whole cast walks in. Highest week% wears immunity — nobody has it yet. The vote is social.";
+  }
+  return "Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.";
+}
+
+function renderLiveTribeTotalsMount(season, mount, opts) {
+  if (!mount) return;
+  if (!showLiveTribeCombinedTotals(season)) {
+    const living = mergedLivingCount(season);
+    mount.innerHTML = `<div class="total-card merged">
+        <h3>MERGED</h3>
+        <p>${living} living · one tribe</p>
+      </div>`;
+    return;
+  }
+  const tribes = (opts && opts.tribes) || season.tribes || [];
+  mount.innerHTML = tribes
+    .map((t) => {
+      const snapshotNote = opts && opts.snapshot ? " · snapshot" : "";
+      const dayNote =
+        opts && opts.dayPct ? ` · ${pct(combinedDayPctOf(t))} day` : "";
+      return `<div class="total-card ${t.id}">
+        <h3>${escapeHtml(tribeChromeName(t))}</h3>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week %${snapshotNote}${dayNote}</p>
+      </div>`;
+    })
+    .join("");
+}
+
 function tribeById(season, id) {
   return (season.tribes || []).find((t) => t.id === id);
 }
@@ -1311,17 +1354,7 @@ function renderMoneyJourney(season) {
   if (banner && season.statusLabel) {
     banner.textContent = season.statusLabel;
   }
-  if (totals) {
-    totals.innerHTML = (season.tribes || [])
-      .map((t) => {
-        return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(tribeChromeName(t))}</h3>
-        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
-        <p>${t.livingCount} standing · combined week %</p>
-      </div>`;
-      })
-      .join("");
-  }
+  renderLiveTribeTotalsMount(season, totals);
   if (!race) return;
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const ranked = [...(season.survivors || [])].sort((a, b) => {
@@ -1972,18 +2005,7 @@ function renderStandings(season) {
   const label = season.statusLabel || "Pre-season · torches unlit";
   if (banner) banner.textContent = label;
 
-  const totals = document.getElementById("tribe-totals");
-  if (totals) {
-    totals.innerHTML = (season.tribes || [])
-      .map((t) => {
-        return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(tribeChromeName(t))}</h3>
-        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
-        <p>${t.livingCount} standing · combined week %</p>
-      </div>`;
-      })
-      .join("");
-  }
+  renderLiveTribeTotalsMount(season, document.getElementById("tribe-totals"));
 
   const body = document.getElementById("books-body");
   if (!body) return;
@@ -3986,18 +4008,10 @@ function mountMoneyTicker(season, opts) {
 
 function renderEpisode(season) {
   renderEpisodeDays(season);
-  const totals = document.getElementById("episode-tribe-totals");
-  if (totals) {
-    totals.innerHTML = episodeHoldingsTribes(season)
-      .map((t) => {
-        return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(tribeChromeName(t))}</h3>
-        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
-        <p>${t.livingCount} standing · combined week % · ${pct(combinedDayPctOf(t))} day</p>
-      </div>`;
-      })
-      .join("");
-  }
+  renderLiveTribeTotalsMount(season, document.getElementById("episode-tribe-totals"), {
+    tribes: episodeHoldingsTribes(season),
+    dayPct: true
+  });
   const banner = document.getElementById("season-banner");
   if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
   renderEpisodeLiveIndicator(season);
@@ -4033,7 +4047,7 @@ function renderEpisode(season) {
       <div class="torches">${councilTorchRowHtml(season, null)}</div>
       <div class="council-empty">
         <h3>Not yet</h3>
-        <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
+        <p>${escapeHtml(tribalCouncilEmptyCopy(season))}</p>
       </div>`;
     } else {
       if (tribalHeading) tribalHeading.textContent = "The vote";
