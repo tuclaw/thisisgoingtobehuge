@@ -3,7 +3,7 @@
  * Golden fixtures for the current live board / Episode 2 cut.
  * Update this file when the ledger or episode copy moves; keep check-season.mjs durable.
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deriveSeason, tickerOf, isBoardNative, castFromSource } from "./lib/ledger.mjs";
@@ -1572,6 +1572,40 @@ check("e02-no-bare-bidu", !/\bBidu\b/.test(e2ChromeBare));
 check("e02-no-bare-askara", !/\bAskara\b/.test(e2ChromeBare));
 for (const bad of ["robinhood", "agentic", "last-four", "merge floor", "merge date", "merge headcount"]) {
   check(`e02-no-${bad.replace(/\s+/g, "-")}`, !JSON.stringify(episode2Copy).toLowerCase().includes(bad));
+}
+
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+check("app-show-live-tribe-combined-helper", appJs.includes("function showLiveTribeCombinedTotals"));
+check("app-render-live-tribe-totals-helper", appJs.includes("function renderLiveTribeTotalsMount"));
+check(
+  "app-merged-hides-live-tribe-cards",
+  /!showLiveTribeCombinedTotals\(season\)/.test(appJs) &&
+    appJs.includes('total-card merged') &&
+    appJs.includes("living · one tribe")
+);
+check(
+  "app-episode-tribe-totals-uses-helper",
+  /renderLiveTribeTotalsMount\(season, document\.getElementById\("episode-tribe-totals"\)/.test(appJs)
+);
+check(
+  "app-merged-tribal-empty-copy",
+  appJs.includes("function tribalCouncilEmptyCopy") &&
+    appJs.includes("Highest week% wears immunity") &&
+    !/tribalCouncilEmptyCopy\(season\)[\s\S]{0,120}Losing tribe walks in/.test(appJs)
+);
+check(
+  "app-closed-premerge-keeps-tribe-boards",
+  /ep\.status === "closed" && Number\(ep\.number\) < 3/.test(appJs)
+);
+const e03BuiltPath = join(root, "dist", "seasons", "1", "e03.html");
+if (existsSync(e03BuiltPath)) {
+  const e03Built = readFileSync(e03BuiltPath, "utf8");
+  check("e03-built-keeps-tribe-totals-mount", e03Built.includes('id="episode-tribe-totals"'));
+}
+const e01BuiltPath = join(root, "dist", "seasons", "1", "e01.html");
+if (existsSync(e01BuiltPath)) {
+  const e01Built = readFileSync(e01BuiltPath, "utf8");
+  check("e01-built-keeps-tribe-totals-mount", e01Built.includes('id="episode-tribe-totals"'));
 }
 
 if (failures.length) {
