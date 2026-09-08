@@ -76,8 +76,8 @@ if (saturdayLunch && JSON.stringify(saturdayLunch).includes(EXACT_PRINT[0])) {
 }
 
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
-if (!e2 || e2.status !== "live" || e2.path !== "seasons/1/e02.html") {
-  fail("Episode 2 is live; keep the exit interview on Episode 1 only");
+if (!e2 || e2.status !== "closed" || e2.path !== "seasons/1/e02.html") {
+  fail("Episode 2 is closed; keep the Fable exit interview on Episode 1 only");
 }
 if (fs.existsSync(e02Source)) {
   const e02 = fs.readFileSync(e02Source, "utf8");

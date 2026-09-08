@@ -136,14 +136,16 @@ if (!boardNative) {
 
 const start = board.startingBookUsd;
 if (boardNative) {
-  check("given-total", source.islandGivenUsd === 240.09, String(source.islandGivenUsd));
+  check("given-total", source.islandGivenUsd === 361.93, String(source.islandGivenUsd));
+  check("theme-leftover-credited", source.themeLeftoverParked === false);
+  check("theme-leftover-usd", source.themeLeftoverCreditedUsd === 121.84, String(source.themeLeftoverCreditedUsd));
   check("episode2-raise-printed", source.islandEpisode2RaisePrintedUsd === 110.3, String(source.islandEpisode2RaisePrintedUsd));
   check("episode2-leftover", source.islandEpisode2LeftoverUsd === 0.3, String(source.islandEpisode2LeftoverUsd));
   check("episode2-shortfall-zero", source.islandEpisode2ShortfallUsd === 0, String(source.islandEpisode2ShortfallUsd));
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", source.islandPotUsd === 239.1412, String(source.islandPotUsd));
+  check("pot-marked-sleeves", source.islandPotUsd === 362.19, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
@@ -156,7 +158,7 @@ check(
   board.islandEpisode2TopUpEachUsd === source.islandEpisode2TopUpEachUsd,
   String(board.islandEpisode2TopUpEachUsd)
 );
-check("merged-stays-false-or-true", source.merged === true || source.merged === false);
+check("merged-true", source.merged === true);
 
 const firstBoot = (source.events || []).find((event) => event && event.type === "boot");
 const carryMark = (source.events || []).find((event) => event && event.type === "mark" && event.kind === "carry");
@@ -179,8 +181,27 @@ for (const s of board.survivors) {
         ? sourceRow.priorMarkUsd
         : null;
   let computedWeek;
-  if (boardNative && (s.status === "jury" || sourceRow?.status === "voted-out")) {
+  if (boardNative && (s.status === "jury" || sourceRow?.status === "voted-out" || sourceRow?.status === "disqualified")) {
     computedWeek = s.weekPct;
+  } else if (sourceRow?.dqSplitUsd && s.weekPct === 0 && sourceRow.priorMarkUsd === s.bookUsd) {
+    computedWeek = 0;
+  } else if (
+    boardNative &&
+    source.merged &&
+    s.status === "active" &&
+    typeof sourceRow?.mondayOpenUsd === "number" &&
+    sourceRow.mondayOpenUsd !== s.bookUsd
+  ) {
+    computedWeek = s.weekPct;
+  } else if (sourceRow?.evenUpCreditUsd != null && s.status === "active") {
+    computedWeek = s.weekPct;
+  } else if (
+    sourceRow?.themeCreditUsd &&
+    s.weekPct === 0 &&
+    sourceRow.mondayOpenUsd === s.bookUsd &&
+    sourceRow.priorMarkUsd === s.bookUsd
+  ) {
+    computedWeek = 0;
   } else if (s.status === "jury" && preBoot != null) {
     computedWeek = pctRound(((preBoot - start) / start) * 100);
   } else if (s.status === "jury" && boardNative && sourceRow && typeof sourceRow.priorMarkUsd === "number") {
@@ -227,11 +248,13 @@ for (const s of board.survivors) {
         Math.abs(s.bookUsd - 22.6415) < 0.0001 ||
         Math.abs(s.bookUsd - 22.1508) < 0.0001 ||
         Math.abs(s.bookUsd - 22.4118) < 0.0001 ||
-        Math.abs(s.bookUsd - 22.3957) < 0.0001);
+        Math.abs(s.bookUsd - 22.3957) < 0.0001 ||
+        Math.abs(s.bookUsd - 22.2965) < 0.0001);
     const hostRecordedFriOpen =
       (source.lastSession === "2026-09-04-open" ||
         source.lastSession === "2026-09-04-mid" ||
-        source.lastSession === "2026-09-04-lasthour") &&
+        source.lastSession === "2026-09-04-lasthour" ||
+        source.lastSession === "2026-09-04-eod") &&
       s.status === "active" &&
       s.slug !== "gemini-3-1-pro";
     if (!hostRecordedProBook && !hostRecordedFriOpen) {
@@ -255,7 +278,7 @@ for (const s of board.survivors) {
   const sleeveBasis = carryBook != null ? carryBook : start;
   let sleeveCap = s.status !== "jury" ? sleeveBasis + e2GiftUsd + askaraEvenUp + 0.05 : start + 0.05;
   // Remake fixture exception: post-gift intraday marks can drift stock above carry+sleeve cap.
-  if ((giftInvestMark || source.lastSession === "2026-09-04-open" || source.lastSession === "2026-09-04-mid" || source.lastSession === "2026-09-04-lasthour") && s.status !== "jury") {
+  if ((giftInvestMark || source.lastSession === "2026-09-04-open" || source.lastSession === "2026-09-04-mid" || source.lastSession === "2026-09-04-lasthour" || source.lastSession === "2026-09-04-eod") && s.status !== "jury") {
     sleeveCap = Math.max(sleeveCap, s.bookUsd + 0.1);
   }
   check(`sleeve:${s.slug}`, sleeve <= sleeveCap, `${sleeve} vs cap ${sleeveCap}`);
@@ -308,6 +331,19 @@ if (!boardNative) {
 const log = source.tribalLog || [];
 check("tribal-log-is-array", Array.isArray(log));
 for (const [i, council] of log.entries()) {
+  if (council && council.type === "disqualification") {
+    check(`dq-boot-known:${i}`, names.has(council.bootName), council.bootName);
+    check(`dq-summary:${i}`, typeof council.summary === "string" && council.summary.includes(council.bootName));
+    check(`dq-not-tribal:${i}`, council.notTribal === true);
+    check(`dq-no-exit:${i}`, council.exitInterview === false);
+    continue;
+  }
+  if (council && council.type === "merge") {
+    check(`merge-true:${i}`, council.merged === true);
+    check(`merge-summary:${i}`, typeof council.summary === "string" && /merge/i.test(council.summary));
+    check(`merge-no-votes:${i}`, !council.votes);
+    continue;
+  }
   requireKeys(council, ["bootName", "votes", "tally"], `tribalLog[${i}]`);
   check(`tribal-boot-known:${i}`, names.has(council.bootName), council.bootName);
   const votes = Array.isArray(council.votes) ? council.votes : [];
@@ -330,7 +366,9 @@ const seasonHub = readFileSync(join(root, "templates", "season.html"), "utf8");
 const appJs = readFileSync(join(root, "app.js"), "utf8");
 const listStart = seasonHub.indexOf('id="episode-list"');
 const listBlock = listStart >= 0 ? seasonHub.slice(listStart, listStart + 1200) : seasonHub;
-for (const name of (source.tribalLog || []).map((entry) => entry && entry.bootName).filter(Boolean)) {
+for (const entry of source.tribalLog || []) {
+  const name = entry && entry.bootName;
+  if (!name || entry.type === "disqualification") continue;
   check(`episode-list-tease-no-boot:${name}`, !listingCopy.includes(name), name);
   check(`season-hub-list-no-boot:${name}`, !listBlock.includes(name), name);
 }

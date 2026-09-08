@@ -69,7 +69,7 @@ if (!tribal.beats.some((beat) => beat.id === "tribal-cut") || !tribal.beats.some
 }
 
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
-if (!e2 || e2.status !== "live") throw new Error("Episode 2 must be live for Monday");
+if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
 if (!fs.existsSync(path.join(root, "data/episodes/s1e02.json"))) {
   throw new Error("Episode 2 copy missing at data/episodes/s1e02.json");
@@ -80,8 +80,15 @@ if (!builder.includes("e01-saturday-dinner.js") || !builder.includes("saturday-d
 }
 
 const e2Copy = JSON.parse(fs.readFileSync(path.join(root, "data/episodes/s1e02.json"), "utf8"));
-if ((e2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-dinner"))) {
-  throw new Error("do not copy Saturday dinner onto Episode 2");
+const e2HasSatDinner = (e2Copy.days || []).some((day) => (day.beats || []).some((beat) => beat.id === "saturday-dinner"));
+if (e2HasSatDinner) {
+  const e2Sat = (e2Copy.days || []).find((day) => day.id === "saturday");
+  const e2SatDinner = e2Sat && (e2Sat.beats || []).find((beat) => beat.id === "saturday-dinner");
+  if (!e2SatDinner || e2SatDinner.body === dinnerBeat.body) {
+    throw new Error("Episode 2 saturday dinner must stay separate from Episode 1 tape");
+  }
+} else {
+  throw new Error("Episode 2 saturday dinner missing — expected e02-saturday-dinner fold");
 }
 
 if (episodeCampfire.includes("SATURDAY_DINNER_CONVERSATIONS")) {
@@ -112,8 +119,11 @@ if (html) {
   const e2HtmlPath = path.join(root, "dist/seasons/1/e02.html");
   if (fs.existsSync(e2HtmlPath)) {
     const e2html = fs.readFileSync(e2HtmlPath, "utf8");
-    if (e2html.includes('id="saturday-dinner"') || e2html.includes("e01-saturday-dinner.js")) {
-      throw new Error("built e02.html must not mount Saturday dinner");
+    if (e2html.includes("e01-saturday-dinner.js")) {
+      throw new Error("built e02.html must not mount Episode 1 Saturday dinner");
+    }
+    if (!e2html.includes('id="saturday-dinner"') || !e2html.includes("e02-saturday-dinner.js")) {
+      throw new Error("built e02.html must mount Episode 2 Saturday dinner");
     }
   }
   ["bidu-sat-dinner-fire", "askara-sat-dinner-fire"].forEach((id) => {
@@ -168,7 +178,7 @@ if (/\bcash shame\b/i.test(hostChrome) || /\bshame list\b/i.test(hostChrome)) {
 if (seasonRaw.includes("SATURDAY_DINNER") || (/saturday dinner/i.test(seasonRaw) && seasonRaw.includes("sat-dinner"))) {
   throw new Error("do not remake books for saturday dinner");
 }
-if (season.islandGivenUsd !== 240.09) {
+if (season.islandGivenUsd !== 361.93) {
   throw new Error("homepage pot / given total was remade");
 }
 

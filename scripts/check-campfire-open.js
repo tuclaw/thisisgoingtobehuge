@@ -396,8 +396,17 @@ const beachIdx = html.indexOf('id="beach"');
 if (!(castIdx > -1 && homeVoteIdx > castIdx && homeTribalIdx > homeVoteIdx && beachIdx > homeTribalIdx)) {
   throw new Error("home Episode 1 spoiler must sit below #cast and above #beach");
 }
-if (!html.includes("See who was voted off in episode one")) {
-  throw new Error("templates/island.html missing Episode 1 spoiler heading");
+if (!html.includes("See who has been voted off so far")) {
+  throw new Error("templates/island.html missing home spoiler heading");
+}
+if (!html.includes("Burn the card for the tribals so far")) {
+  throw new Error("templates/island.html home spoiler lede must cover every tribal so far");
+}
+if (/episode one|first Friday vote/i.test(html.slice(homeVoteIdx, beachIdx))) {
+  throw new Error("home spoiler chrome must not frame the card as Episode 1 only");
+}
+if (!appJs.includes('title: "See who has been voted off so far"')) {
+  throw new Error("app.js home spoiler card title must match the band heading");
 }
 if (!html.includes('id="home-vote-episode"') || !html.includes('href="seasons/1/e01.html">Episode 1 Page')) {
   throw new Error("templates/island.html Episode 1 Page button must link to seasons/1/e01.html");

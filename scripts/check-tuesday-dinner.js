@@ -58,7 +58,7 @@ if ((episode1.days || []).some((day) => (day.beats || []).some((beat) => beat.id
 }
 
 const e2 = (season.episodes || []).find((ep) => ep.id === "s1e02");
-if (!e2 || e2.status !== "live") throw new Error("Episode 2 must be live for Tuesday dinner");
+if (!e2 || e2.status !== "closed") throw new Error("Episode 2 must be closed");
 if (e2.path !== "seasons/1/e02.html") throw new Error("Episode 2 must publish seasons/1/e02.html");
 
 if (!builder.includes("e02-tuesday-dinner.js") || !builder.includes("tuesday-dinner")) {
@@ -143,7 +143,7 @@ chromeFields.forEach((field) => {
 if (seasonRaw.includes("TUESDAY_DINNER") || (/tuesday dinner/i.test(seasonRaw) && seasonRaw.includes("tue-dinner"))) {
   throw new Error("do not remake books for tuesday dinner");
 }
-if (season.islandGivenUsd !== 240.09) {
+if (season.islandGivenUsd !== 361.93) {
   throw new Error("homepage pot / given total was remade");
 }
 

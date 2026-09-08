@@ -124,7 +124,7 @@ if (!/Claude Fable 5, 5–1, first juror/.test(chrome)) {
 });
 
 const log = season.tribalLog || [];
-if (log.length !== 1) fail("tribalLog must be the official Friday council only");
+if (log.length < 1) fail("tribalLog must include the official Friday councils");
 const entry = log[0];
 if (entry.bootName !== "Claude Fable 5") fail("bootName must be Claude Fable 5");
 if (entry.boot && !entry.bootName) fail("formatTribalEntry requires bootName, not only boot");
@@ -160,6 +160,15 @@ const expectedTexts = [
   if (vote.text !== expectedTexts[i]) fail("official vote text drifted at " + (i + 1));
 });
 if (entry.title !== "Season 1 Episode 1 · Friday Aug 28, 2026") fail("official title drifted");
+if (!app.includes("function tribalEpisodeNumber") || !app.includes("boot-episode")) {
+  fail("formatTribalEntry must label each tribal with its episode number");
+}
+if (!css.includes(".boot-episode") || !css.includes(".boot-kicker-sep")) {
+  fail("episode labels on tribals need styles");
+}
+if (!css.includes(".tribal-spoiler-result .tribal-vote-list > .tribal-vote-entry + .tribal-vote-entry")) {
+  fail("stacked tribals need spoiler-specific padding so Episode 2 is not jammed into the divider");
+}
 if (!app.includes("entry.tally") || !app.includes("boot-name") || !app.includes("vote-tally")) {
   fail("formatTribalEntry must emphasize the boot and show the official tally only");
 }
