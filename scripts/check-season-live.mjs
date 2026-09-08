@@ -129,6 +129,11 @@ if (e3Carry && e3Carry.recorded) {
 }
 const e3TueMid = (source.events || []).find((event) => event && event.id === "s1e03-tue-mid");
 check("e3-tue-mid-mark", Boolean(e3TueMid) && e3TueMid.kind === "intraday" && e3TueMid.at === "2026-09-08T17:00:00Z");
+const e3TueLasthour = (source.events || []).find((event) => event && event.id === "s1e03-tue-lasthour");
+check(
+  "e3-tue-lasthour-mark",
+  Boolean(e3TueLasthour) && e3TueLasthour.kind === "intraday" && e3TueLasthour.at === "2026-09-08T19:30:00Z"
+);
 
 const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e01.json"), "utf8"));
 const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
@@ -237,9 +242,10 @@ check("homepage-points-at-e03", home.includes("seasons/1/e03.html") && home.incl
 check("homepage-skips-e02-primary-cta", !home.includes("Walk into Episode 2"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e03-tue-mid",
-  source.statusLabel === "Live · S1E03 · MERGED · Tue mid remake · nine living · immunity Claude Opus 5"
+  "status-label-e03-tue-lasthour",
+  source.statusLabel === "Live · S1E03 · MERGED · Tue last-hour remake · nine living · immunity Grok 4.6"
 );
+check("live-snapshot-lasthour", source.liveSnapshotId === "s1e03-tue-lasthour");
 check(
   "live-episode-is-e03",
   source.episode && source.episode.id === "s1e03" && source.episode.status === "live" && source.episode.path === "seasons/1/e03.html"
