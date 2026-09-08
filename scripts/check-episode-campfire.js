@@ -684,13 +684,14 @@ const e3Week = tickerHelpers.snapshotsInTickerRange(
   [
     { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z", kind: "open" },
     { id: "s1e02-fri-eod", at: "2026-09-04T19:59:59Z", kind: "close" },
-    { id: "s1e03-carry", at: "2026-09-07T07:00:00Z", kind: "carry" }
+    { id: "s1e03-carry", at: "2026-09-07T07:00:00Z", kind: "carry" },
+    { id: "s1e03-tue-open", at: "2026-09-08T20:00:00Z", kind: "open" }
   ],
   e3Ep,
   "week"
 );
-if (e3Week.length !== 1 || e3Week[0].id !== "s1e03-carry") {
-  throw new Error("Episode 3 week must open on s1e03-carry, got " + e3Week.map((s) => s.id).join(","));
+if (e3Week.length !== 2 || e3Week[0].id !== "s1e03-carry" || e3Week[1].id !== "s1e03-tue-open") {
+  throw new Error("Episode 3 week must run carry then Tue open, got " + e3Week.map((s) => s.id).join(","));
 }
 const e3EmptyWeek = tickerHelpers.snapshotsInTickerRange(
   [
@@ -1045,8 +1046,8 @@ if (!watchHelpers.episodeLiveWatchable(seasonBoard, seasonBoard.episode)) {
 if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e03") {
   throw new Error("public Watch Live must sit on Episode 3, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
 }
-if (watchHelpers.episodeWatchReady(seasonBoard, seasonBoard.episode)) {
-  throw new Error("Episode 3 season ticker must stay off carry until the first RTH mark");
+if (!watchHelpers.episodeWatchReady(seasonBoard, seasonBoard.episode)) {
+  throw new Error("Episode 3 season ticker must be ready after Tue Sep 8 open mark");
 }
 const rangeStart = appJs.indexOf("function snapshotsForTickerRange");
 const rangeEnd = appJs.indexOf("function candidateStroke");
@@ -1082,13 +1083,17 @@ const seasonTape = seasonRangeFn(
     ],
     snapshots: [
       { id: "s1e02-fri-eod", kind: "close" },
-      { id: "s1e03-carry", kind: "carry" }
+      { id: "s1e03-tue-open", kind: "open" }
     ]
   },
   "season"
 );
-if (seasonTape.some((snap) => snap.id === "s1e03-carry") || !seasonTape.some((snap) => snap.id === "s1e02-fri-eod")) {
-  throw new Error("home season tape must keep Friday EOD and drop the Episode 3 carry until Monday has a real mark");
+if (
+  seasonTape.some((snap) => snap.id === "s1e03-carry") ||
+  !seasonTape.some((snap) => snap.id === "s1e02-fri-eod") ||
+  !seasonTape.some((snap) => snap.id === "s1e03-tue-open")
+) {
+  throw new Error("home season tape must keep Friday EOD and show Episode 3 Tue open; carry drops after first RTH mark");
 }
 
 console.log("episode campfire checks passed (" + feed.conversations.length + " latest threads)");
