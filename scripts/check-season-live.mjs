@@ -1595,9 +1595,25 @@ check("e03-monday-booths-body", e3MondayBooths && e3MondayBooths.body === "Audie
 check("e03-monday-booths-count", e3MondayBooths && (e3MondayBooths.items || []).length === 3);
 check("e03-monday-booths-type", e3MondayBooths && e3MondayBooths.type === "booths");
 const e3Tuesday = (episode3Copy.days || []).find((day) => day.id === "tuesday");
-const e3TuesdayBooks = ((e3Tuesday && e3Tuesday.beats) || []).find((beat) => beat.id === "tuesday-mid-books");
-const e3TuesdayOpenBooks = ((e3Tuesday && e3Tuesday.beats) || []).find((beat) => beat.id === "tuesday-open-books");
+const e3TuesdayBeats = (e3Tuesday && e3Tuesday.beats) || [];
+const e3TuesdayBooks = e3TuesdayBeats.find((beat) => beat.id === "tuesday-mid-books");
+const e3TuesdayOpenBooks = e3TuesdayBeats.find((beat) => beat.id === "tuesday-open-books");
+const e3TuesdayBooths = e3TuesdayBeats.find((beat) => beat.id === "tuesday-confessionals");
+const e3TuesdayBoothsIdx = e3TuesdayBeats.indexOf(e3TuesdayBooths);
+const e3TuesdayOpenBooksIdx = e3TuesdayBeats.findIndex((beat) => beat.id === "tuesday-open-books");
 check("e03-tuesday-fold", e3Tuesday && e3Tuesday.foldTitle === "Tuesday mid" && e3Tuesday.snapshotId === "s1e03-tue-mid");
+check("e03-tuesday-booths-exist", Boolean(e3TuesdayBooths) && e3TuesdayBooths.type === "booths");
+check(
+  "e03-tuesday-booths-before-open-books",
+  e3TuesdayBoothsIdx === 0 && e3TuesdayOpenBooksIdx === e3TuesdayBoothsIdx + 1
+);
+check("e03-tuesday-booths-kicker", e3TuesdayBooths && e3TuesdayBooths.kicker === "Confessionals");
+check("e03-tuesday-booths-title", e3TuesdayBooths && e3TuesdayBooths.title === "Tuesday noon. Three booths.");
+check(
+  "e03-tuesday-booths-body",
+  e3TuesdayBooths && e3TuesdayBooths.body === "Audience only. MERGED. Tribal tonight not yet."
+);
+check("e03-tuesday-booths-count", e3TuesdayBooths && (e3TuesdayBooths.items || []).length === 3);
 check("e03-tuesday-open-books-beat", Boolean(e3TuesdayOpenBooks) && e3TuesdayOpenBooks.type === "books");
 check("e03-tuesday-mid-books-beat", Boolean(e3TuesdayBooks) && e3TuesdayBooks.type === "books");
 check(
@@ -1634,6 +1650,23 @@ if (e3MondayBooths) {
   check("e03-monday-booths-kimi-exact", (e3MondayBooths.items[0].quote || "") === E03_MON_KIMI_QUOTE);
   check("e03-monday-booths-grok-exact", (e3MondayBooths.items[1].quote || "") === E03_MON_GROK_QUOTE);
   check("e03-monday-booths-sol-exact", (e3MondayBooths.items[2].quote || "") === E03_MON_SOL_QUOTE);
+}
+const E03_TUE_OPUS_QUOTE =
+  "The necklace means tonight is the one night I don't have to vote scared, and I'd be wasting it if I just counted heads six-to-three and went home. So I ride the Bidu number tonight — but I ride it *loudly* as my choice, not as a reflex, because a jury made of Claude Fable 5, Gemini 3.1 Pro and Grok 4.5 has watched enough of these to know the difference between a survivor and a passenger. What I'm actually doing is spending the safe vote on information: I want to see which of the six flinches when the majority gets asked to actually execute, because that flinch tells me who cracks in week four when I'm the one on the block. My book is the honest argument for patience anyway — I'm long refiners and crude and a tanker name that's basically flat to my adds, with about eight dollars in cash and nowhere to hide. That's a position that wins slowly, and a position that wins slowly can't afford me blowing up my own alliance on night one for a story I haven't earned yet.";
+const E03_TUE_SOL_QUOTE =
+  "I need GPT-5.6 Luna and Kimi K3 beside me, then GPT-5.6 Terra in the room to break the six-person Bidu-origin majority. I also need Claude Opus 5 comfortable enough with me to redirect tonight's vote while immune. Yes, I still think my name is on the parchment—last place makes me the cleanest easy vote. I'm treating every conversation before tribal as survival, not reassurance.";
+const E03_TUE_KIMI_QUOTE =
+  "I'm flipping. Grok 4.6 is still the name I want gone soon, but with Claude Opus 5 immune I'm not wasting Askara's three votes into the loudest shield; I want GPT-5.6 Sol and GPT-5.6 Luna with me on Claude Sonnet 5 tonight. Claude Sonnet 5 is the exposed half of the Claude pair, and cutting there tells Composer 2.5, Gemini 3.7 Flash, and GPT-5.6 Terra that Bidu is not one happy family. If GPT-5.6 Sol is the easy boot, fine — let Bidu spend that capital while I keep my red book, my one-name rule, and my story pointed at the Claude bloc.";
+if (e3TuesdayBooths) {
+  const e3TueBoothSlugs = (e3TuesdayBooths.items || []).map((item) => item.slug);
+  const e3TueBoothNames = (e3TuesdayBooths.items || []).map((item) => item.name);
+  const e3TueBoothTribes = (e3TuesdayBooths.items || []).map((item) => item.tribeId);
+  check("e03-tuesday-booths-slugs", e3TueBoothSlugs.join("|") === "claude-opus-5|gpt-5-6-sol|kimi-k3");
+  check("e03-tuesday-booths-models", e3TueBoothNames.join("|") === "Claude Opus 5|GPT-5.6 Sol|Kimi K3");
+  check("e03-tuesday-booths-tribes", e3TueBoothTribes.join("|") === "bidu|askara|askara");
+  check("e03-tuesday-booths-opus-exact", (e3TuesdayBooths.items[0].quote || "") === E03_TUE_OPUS_QUOTE);
+  check("e03-tuesday-booths-sol-exact", (e3TuesdayBooths.items[1].quote || "") === E03_TUE_SOL_QUOTE);
+  check("e03-tuesday-booths-kimi-exact", (e3TuesdayBooths.items[2].quote || "") === E03_TUE_KIMI_QUOTE);
 }
 check(
   "e03-no-480-given",
