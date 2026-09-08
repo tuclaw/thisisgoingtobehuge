@@ -378,6 +378,7 @@ function positionsFromLots(book, lots, cash, startingBookUsd) {
 }
 
 export function applyFill(book, fill, startingBookUsd) {
+  if (!book || book.booted) return book;
   const qty = parseFloat(fill.qty);
   const avg = parseFloat(fill.avg);
   const sizeUsd =
@@ -459,6 +460,7 @@ export function applyBoot(books, event, startingBookUsd) {
       ...bootBook,
       cash: 0,
       lots: [],
+      booted: true,
       cashNote: event.label || bootBook.cashNote,
       positions: positionsFromLots({ ...bootBook, cashNote: event.label || bootBook.cashNote }, [], 0, startingBookUsd)
     });
@@ -487,7 +489,7 @@ export function booksFromFills(cast, events, startingBookUsd, throughAt) {
     if (!event || !eventAtOrBefore(event, throughAt)) continue;
     if (event.type === "fill") {
       const book = books.get(event.survivorId);
-      if (!book) continue;
+      if (!book || book.booted) continue;
       books.set(event.survivorId, applyFill(book, event, startingBookUsd));
     } else if (event.type === "boot") {
       applyBoot(books, event, startingBookUsd);

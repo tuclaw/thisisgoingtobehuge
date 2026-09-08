@@ -295,7 +295,7 @@ if (appJs.includes("function moneyTickerLiveNowX") || appJs.includes("data-ticke
 if (appJs.includes("live.textContent = tickerAxisPct") || appJs.includes("from even")) {
   throw new Error("app.js money ticker footer must show cash, not week % from even");
 }
-if (!appJs.includes("live.textContent = potMoney") || !appJs.includes("cash: snapshotTotal(snap)")) {
+if (!appJs.includes("live.textContent = potMoney") || !appJs.includes("cash: snapshotTotal(snap, season)")) {
   throw new Error("app.js money ticker footer must show pot cash from each snapshot");
 }
 if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
@@ -505,6 +505,9 @@ if (!(e1WeekTape[4].axisT < e1WeekTape[5].axisT && e1WeekTape[5].axisT < e1WeekT
 if (e1WeekTape[6].axisT > 5.0001 || e1WeekTape[0].axisT < 0) {
   throw new Error("Week session axis must stay inside Monday–Friday, got last " + e1WeekTape[6].axisT);
 }
+if (!appJs.includes("Tape order wins when a later mark is stamped earlier")) {
+  throw new Error("app.js must keep same-day ticker marks monotonic when timestamps go backwards");
+}
 
 const fable = { id: "6ff86687-5f96-40cb-84f4-a7282bce28af", name: "Claude Fable 5", status: "jury" };
 const bootSeason = {
@@ -525,6 +528,47 @@ if (axisHelpers.survivorLivingAt(bootSeason, fable, "2026-08-29T02:00:01Z")) {
 }
 if (axisHelpers.survivorLivingAt(bootSeason, fable, "2026-08-31T12:00:00-07:00")) {
   throw new Error("Claude Fable 5 must stay off the Episode 2 diagram after the vote");
+}
+
+const snapTotalStart = appJs.indexOf("function snapshotTotal");
+const snapTotalEnd = appJs.indexOf("function pacificDayLabel");
+const livingStart = appJs.indexOf("function survivorBootAtMs");
+const livingEnd = appJs.indexOf("function tickerAxisPct");
+if (!(snapTotalStart > -1 && snapTotalEnd > snapTotalStart && livingStart > -1 && livingEnd > livingStart)) {
+  throw new Error("app.js missing snapshotTotal / survivorLivingAt");
+}
+const snapTotalHelpers = new Function(`
+  function roundMoney(n) { return Math.round(n * 10000) / 10000; }
+  ${appJs.slice(livingStart, livingEnd)}
+  ${appJs.slice(snapTotalStart, snapTotalEnd)}
+  return { snapshotTotal };
+`)();
+const potSeason = {
+  survivors: [
+    { id: "alive", status: "active" },
+    { id: "dq", status: "disqualified" },
+    { id: "jury", status: "jury" }
+  ],
+  tribalLog: [
+    { at: "2026-09-07T23:00:00Z", bootId: "dq" },
+    { at: "2026-08-28T19:00:00-07:00", bootId: "jury" }
+  ]
+};
+const ghostSnap = {
+  at: "2026-09-08T13:45:00Z",
+  books: {
+    alive: { bookUsd: 359.42 },
+    dq: { bookUsd: 15.49 },
+    jury: { bookUsd: 22.02 }
+  }
+};
+if (snapTotalHelpers.snapshotTotal(ghostSnap, potSeason) !== 359.42) {
+  throw new Error(
+    "ticker pot must count living books only, got " + snapTotalHelpers.snapshotTotal(ghostSnap, potSeason)
+  );
+}
+if (snapTotalHelpers.snapshotTotal(ghostSnap) !== 396.93) {
+  throw new Error("snapshotTotal without a season still sums every book, got " + snapTotalHelpers.snapshotTotal(ghostSnap));
 }
 
 const givenStart = appJs.indexOf("function islandGivenUsd");
@@ -751,7 +795,7 @@ const e3Week = tickerHelpers.snapshotsInTickerRange(
     { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z", kind: "open" },
     { id: "s1e02-fri-eod", at: "2026-09-04T19:59:59Z", kind: "close" },
     { id: "s1e03-carry", at: "2026-09-07T07:00:00Z", kind: "carry" },
-    { id: "s1e03-tue-open", at: "2026-09-08T20:00:00Z", kind: "open" },
+    { id: "s1e03-tue-open", at: "2026-09-08T13:45:00Z", kind: "open" },
     { id: "s1e03-tue-mid", at: "2026-09-08T17:00:00Z", kind: "intraday" }
   ],
   e3Ep,
@@ -759,6 +803,43 @@ const e3Week = tickerHelpers.snapshotsInTickerRange(
 );
 if (e3Week.length !== 3 || e3Week[0].id !== "s1e03-carry" || e3Week[1].id !== "s1e03-tue-open" || e3Week[2].id !== "s1e03-tue-mid") {
   throw new Error("Episode 3 week must run carry then Tue open then Tue mid, got " + e3Week.map((s) => s.id).join(","));
+}
+const e3Open = (seasonSource.events || []).find((event) => event && event.id === "s1e03-tue-open");
+const e3Mid = (seasonSource.events || []).find((event) => event && event.id === "s1e03-tue-mid");
+if (!e3Open || Date.parse(e3Open.at) >= Date.parse(e3Mid && e3Mid.at)) {
+  throw new Error("s1e03-tue-open must be stamped before s1e03-tue-mid so Tuesday does not plot backwards");
+}
+if (e3Open.at !== "2026-09-08T13:45:00Z" || e3Open.throughAt !== "2026-09-08T13:45:00Z") {
+  throw new Error("s1e03-tue-open must sit after the last open fill, got " + e3Open.at);
+}
+const e3AxisTape = (seasonSource.events || [])
+  .filter((event) => event && event.type === "mark" && String(event.id || "").startsWith("s1e03"))
+  .map((event) => ({ id: event.id, at: event.at }));
+axisHelpers.moneyTickerAssignAxis(e3AxisTape, "week");
+for (let i = 1; i < e3AxisTape.length; i += 1) {
+  if (e3AxisTape[i].axisT < e3AxisTape[i - 1].axisT) {
+    throw new Error(
+      "Episode 3 week axis went backwards at " +
+        e3AxisTape[i].id +
+        " (" +
+        e3AxisTape[i - 1].axisT +
+        " → " +
+        e3AxisTape[i].axisT +
+        ")"
+    );
+  }
+}
+const backwardsTue = [
+  { at: "2026-09-07T07:00:00Z" },
+  { at: "2026-09-08T20:00:00Z" },
+  { at: "2026-09-08T17:00:00Z" }
+];
+axisHelpers.moneyTickerAssignAxis(backwardsTue, "week");
+if (!(backwardsTue[0].axisT <= backwardsTue[1].axisT && backwardsTue[1].axisT <= backwardsTue[2].axisT)) {
+  throw new Error(
+    "a later mark stamped earlier in the session must stay monotonic, got " +
+      backwardsTue.map((frame) => frame.axisT).join(",")
+  );
 }
 const e3EmptyWeek = tickerHelpers.snapshotsInTickerRange(
   [

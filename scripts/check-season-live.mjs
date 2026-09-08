@@ -307,6 +307,48 @@ check("kept-fri-lasthour-mark", (source.events || []).some((event) => event && e
 check("kept-fri-eod-mark", (source.events || []).some((event) => event && event.id === "s1e02-fri-eod"));
 const e3TueMid = (source.events || []).find((event) => event && event.id === "s1e03-tue-mid");
 check("e3-tue-mid-mark", Boolean(e3TueMid) && e3TueMid.kind === "intraday" && e3TueMid.at === "2026-09-08T17:00:00Z");
+const e3TueOpen = (source.events || []).find((event) => event && event.id === "s1e03-tue-open");
+check(
+  "e3-tue-open-mark",
+  Boolean(e3TueOpen) && e3TueOpen.kind === "open" && e3TueOpen.at === "2026-09-08T13:45:00Z" && e3TueOpen.throughAt === "2026-09-08T13:45:00Z",
+  e3TueOpen && e3TueOpen.at
+);
+check(
+  "e3-tue-open-before-mid",
+  Boolean(e3TueOpen && e3TueMid && Date.parse(e3TueOpen.at) < Date.parse(e3TueMid.at))
+);
+const e3OpenSnap = board.snapshots.find((s) => s.id === "s1e03-tue-open");
+const e3MidSnap = board.snapshots.find((s) => s.id === "s1e03-tue-mid");
+const grok45Live = board.survivors.find((s) => s.name === "Grok 4.5");
+const livingIds = new Set(
+  board.survivors.filter((s) => s.status === "active" || s.status === "immune").map((s) => s.id)
+);
+const midLivingPot = e3MidSnap
+  ? Object.entries(e3MidSnap.books || {}).reduce((acc, [id, book]) => {
+      return livingIds.has(id) && typeof book.bookUsd === "number" ? acc + book.bookUsd : acc;
+    }, 0)
+  : 0;
+check("e3-mid-living-pot", Math.abs(midLivingPot - 359.42) < 0.02, String(midLivingPot));
+check(
+  "e3-open-jury-zero",
+  Boolean(
+    e3OpenSnap &&
+      grok45Live &&
+      geminiProLive &&
+      e3OpenSnap.books[grok45Live.id]?.bookUsd === 0 &&
+      e3OpenSnap.books[geminiProLive.id]?.bookUsd === 0
+  )
+);
+check(
+  "e3-mid-jury-zero",
+  Boolean(
+    e3MidSnap &&
+      grok45Live &&
+      geminiProLive &&
+      e3MidSnap.books[grok45Live.id]?.bookUsd === 0 &&
+      e3MidSnap.books[geminiProLive.id]?.bookUsd === 0
+  )
+);
 const e3Carry = (source.events || []).find((event) => event && event.id === "s1e03-carry");
 check("e3-carry-mark", Boolean(e3Carry) && e3Carry.kind === "carry" && e3Carry.at === "2026-09-07T07:00:00Z");
 if (e3Carry && e3Carry.recorded) {
@@ -1296,7 +1338,7 @@ check(
   "tue-open-fill-count",
   fills.filter((f) => {
     const at = Date.parse(f.at || "");
-    return at >= Date.parse("2026-09-08T13:38:00Z") && at <= Date.parse("2026-09-08T20:00:00Z");
+    return at >= Date.parse("2026-09-08T13:38:00Z") && at <= Date.parse("2026-09-08T13:45:00Z");
   }).length >= 15
 );
 check(

@@ -2451,11 +2451,17 @@ function roundMoney(n) {
   return Math.round(n * 10000) / 10000;
 }
 
-function snapshotTotal(snap) {
+function snapshotTotal(snap, season) {
   if (!snap || !snap.books) return 0;
+  const cast = (season && (season.survivors || season.cast)) || [];
   return roundMoney(
-    Object.values(snap.books).reduce((acc, book) => {
-      return typeof book.bookUsd === "number" && !Number.isNaN(book.bookUsd) ? acc + book.bookUsd : acc;
+    Object.entries(snap.books).reduce((acc, [id, book]) => {
+      if (typeof book.bookUsd !== "number" || Number.isNaN(book.bookUsd)) return acc;
+      if (cast.length) {
+        const survivor = cast.find((s) => s && s.id === id);
+        if (!survivor || !survivorLivingAt(season, survivor, snap.at)) return acc;
+      }
+      return acc + book.bookUsd;
     }, 0)
   );
 }
@@ -2685,18 +2691,23 @@ function moneyTickerAssignAxis(frames, range) {
   */
   if (mode === "week") {
     moneyTicker.axisMax = 5;
+    let prev = -Infinity;
     list.forEach((frame) => {
       const day = moneyTickerTradingDay(frame && frame.at);
       const slot = day && typeof day.slotHint === "number" ? day.slotHint : 0;
       const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
       frame.daySlot = slot;
       frame.axisT = slot + u;
+      /* Tape order wins when a later mark is stamped earlier in the session. */
+      if (frame.axisT < prev) frame.axisT = Math.min(slot + 0.98, prev + 0.012);
+      prev = frame.axisT;
     });
     return;
   }
 
   const dayIndex = new Map();
   let nextSlot = 0;
+  let prev = -Infinity;
   list.forEach((frame) => {
     const day = moneyTickerTradingDay(frame && frame.at);
     const key = day ? day.key : `frame-${nextSlot}`;
@@ -2708,6 +2719,8 @@ function moneyTickerAssignAxis(frames, range) {
     const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
     frame.daySlot = slot;
     frame.axisT = slot + u;
+    if (frame.axisT < prev) frame.axisT = Math.min(slot + 0.98, prev + 0.012);
+    prev = frame.axisT;
   });
   moneyTicker.axisMax = Math.max(1, nextSlot);
 }
@@ -3086,7 +3099,7 @@ function framesFromSnapshots(season, snaps, range) {
         at: snap.at,
         label: snap.label || pacificDayLabel(snap.at),
         books,
-        cash: snapshotTotal(snap),
+        cash: snapshotTotal(snap, season),
         putIn: tickerPutInAt(season, snap.at)
       };
       frame.tribes = tribePctsFromFrame(frame, season, snap);
