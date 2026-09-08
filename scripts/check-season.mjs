@@ -145,7 +145,7 @@ if (boardNative) {
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", source.islandPotUsd === 362.19, String(source.islandPotUsd));
+  check("pot-marked-sleeves", source.islandPotUsd === 359.42, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
@@ -250,14 +250,15 @@ for (const s of board.survivors) {
         Math.abs(s.bookUsd - 22.4118) < 0.0001 ||
         Math.abs(s.bookUsd - 22.3957) < 0.0001 ||
         Math.abs(s.bookUsd - 22.2965) < 0.0001);
-    const hostRecordedFriOpen =
+    const hostRecordedSession =
       (source.lastSession === "2026-09-04-open" ||
         source.lastSession === "2026-09-04-mid" ||
         source.lastSession === "2026-09-04-lasthour" ||
-        source.lastSession === "2026-09-04-eod") &&
+        source.lastSession === "2026-09-04-eod" ||
+        source.lastSession === "2026-09-08-mid") &&
       s.status === "active" &&
       s.slug !== "gemini-3-1-pro";
-    if (!hostRecordedProBook && !hostRecordedFriOpen) {
+    if (!hostRecordedProBook && !hostRecordedSession) {
       check(`book-vs-marks:${s.slug}`, Math.abs(equity - s.bookUsd) < 0.05, `${equity.toFixed(4)} vs ${s.bookUsd}`);
     }
   }

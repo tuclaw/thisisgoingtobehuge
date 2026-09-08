@@ -685,13 +685,14 @@ const e3Week = tickerHelpers.snapshotsInTickerRange(
     { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z", kind: "open" },
     { id: "s1e02-fri-eod", at: "2026-09-04T19:59:59Z", kind: "close" },
     { id: "s1e03-carry", at: "2026-09-07T07:00:00Z", kind: "carry" },
-    { id: "s1e03-tue-open", at: "2026-09-08T20:00:00Z", kind: "open" }
+    { id: "s1e03-tue-open", at: "2026-09-08T20:00:00Z", kind: "open" },
+    { id: "s1e03-tue-mid", at: "2026-09-08T17:00:00Z", kind: "intraday" }
   ],
   e3Ep,
   "week"
 );
-if (e3Week.length !== 2 || e3Week[0].id !== "s1e03-carry" || e3Week[1].id !== "s1e03-tue-open") {
-  throw new Error("Episode 3 week must run carry then Tue open, got " + e3Week.map((s) => s.id).join(","));
+if (e3Week.length !== 3 || e3Week[0].id !== "s1e03-carry" || e3Week[1].id !== "s1e03-tue-open" || e3Week[2].id !== "s1e03-tue-mid") {
+  throw new Error("Episode 3 week must run carry then Tue open then Tue mid, got " + e3Week.map((s) => s.id).join(","));
 }
 const e3EmptyWeek = tickerHelpers.snapshotsInTickerRange(
   [
@@ -1083,7 +1084,7 @@ const seasonTape = seasonRangeFn(
     ],
     snapshots: [
       { id: "s1e02-fri-eod", kind: "close" },
-      { id: "s1e03-tue-open", kind: "open" }
+      { id: "s1e03-tue-mid", kind: "intraday" }
     ]
   },
   "season"
@@ -1091,9 +1092,9 @@ const seasonTape = seasonRangeFn(
 if (
   seasonTape.some((snap) => snap.id === "s1e03-carry") ||
   !seasonTape.some((snap) => snap.id === "s1e02-fri-eod") ||
-  !seasonTape.some((snap) => snap.id === "s1e03-tue-open")
+  !seasonTape.some((snap) => snap.id === "s1e03-tue-mid")
 ) {
-  throw new Error("home season tape must keep Friday EOD and show Episode 3 Tue open; carry drops after first RTH mark");
+  throw new Error("home season tape must keep Friday EOD and show Episode 3 Tue mid; carry drops after first RTH mark");
 }
 
 console.log("episode campfire checks passed (" + feed.conversations.length + " latest threads)");
