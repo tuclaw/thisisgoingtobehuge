@@ -193,8 +193,15 @@ if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
 if (!appJs.includes("armMoneyTickerAutoplay") || !appJs.includes("startMoneyTickerPlayback")) {
   throw new Error("app.js money ticker must autoplay from the start on first scroll into view");
 }
-if (!appJs.includes('moneyTicker.diagram = "tribes"') || !appJs.includes("setMoneyTickerSpeed(0.5)")) {
-  throw new Error("app.js money ticker scroll autoplay must start on Tribes at 0.5x");
+if (
+  !appJs.includes("function moneyTickerDefaultDiagram") ||
+  !appJs.includes("function moneyTickerEpisodeDiagrams") ||
+  !appJs.includes('id !== "tribes"') ||
+  !appJs.includes('moneyTicker.diagram = "tribes"') ||
+  !appJs.includes('moneyTicker.diagram = "contestants"') ||
+  !appJs.includes("setMoneyTickerSpeed(0.5)")
+) {
+  throw new Error("app.js money ticker must drop Tribes after merge and autoplay Contestants at 0.5x");
 }
 if (!appJs.includes("tickMoneyTickerPlayback") || !appJs.includes("setMoneyTickerProgress")) {
   throw new Error("app.js money ticker must reveal continuously left-to-right while playing");

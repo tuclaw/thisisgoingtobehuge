@@ -2258,6 +2258,25 @@ function moneyTickerAllowedDiagrams() {
     : MONEY_TICKER_DIAGRAMS;
 }
 
+function moneyTickerEpisodeDiagrams(season) {
+  const diagrams = MONEY_TICKER_DIAGRAMS.slice();
+  if (!showLiveTribeCombinedTotals(season)) {
+    return diagrams.filter((id) => id !== "tribes");
+  }
+  return diagrams;
+}
+
+function moneyTickerDefaultDiagram() {
+  const allowed = moneyTickerAllowedDiagrams();
+  if (moneyTickerIsHome()) {
+    return allowed.includes("island") ? "island" : allowed[0] || "island";
+  }
+  /* Pre-merge (and closed E1/E2) still open on Tribes. After the merge, Contestants. */
+  if (allowed.includes("tribes")) return "tribes";
+  if (allowed.includes("contestants")) return "contestants";
+  return allowed[0] || "island";
+}
+
 function moneyTickerAllowedRanges() {
   return moneyTicker.ranges && moneyTicker.ranges.length
     ? moneyTicker.ranges
@@ -3199,21 +3218,15 @@ function tickMoneyTickerPlayback(now) {
 }
 
 function applyMoneyTickerAutoDiagram() {
-  const allowed = moneyTickerAllowedDiagrams();
-  /* Episode autoplay opens on Tribes; home stays on Island (only diagram offered). */
-  const autoDiagram = moneyTickerIsHome()
-    ? allowed.includes("island")
-      ? "island"
-      : allowed[0]
-    : allowed.includes("tribes")
-      ? "tribes"
-      : allowed[0];
+  const autoDiagram = moneyTickerDefaultDiagram();
+  if (!autoDiagram) return;
   if (autoDiagram === "tribes") {
     moneyTicker.diagram = "tribes";
-  } else if (autoDiagram && autoDiagram !== moneyTicker.diagram) {
+  } else if (autoDiagram === "contestants") {
+    moneyTicker.diagram = "contestants";
+  } else if (autoDiagram !== moneyTicker.diagram) {
     moneyTicker.diagram = autoDiagram;
   }
-  if (!autoDiagram) return;
   const rootEl = moneyTicker.root;
   if (!rootEl) return;
   rootEl.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
@@ -3889,16 +3902,18 @@ function mountMoneyTicker(season, opts) {
     document.documentElement.getAttribute("data-page") === "island";
   moneyTicker.mode = homeMode ? "home" : "episode";
   moneyTicker.ranges = homeMode ? MONEY_TICKER_HOME_RANGES.slice() : MONEY_TICKER_RANGES.slice();
-  moneyTicker.diagrams = homeMode ? MONEY_TICKER_HOME_DIAGRAMS.slice() : MONEY_TICKER_DIAGRAMS.slice();
+  moneyTicker.diagrams = homeMode ? MONEY_TICKER_HOME_DIAGRAMS.slice() : moneyTickerEpisodeDiagrams(season);
   if (homeMode && !(opts && opts.keepEnd)) {
     moneyTicker.range = "season";
     moneyTicker.diagram = "island";
+  } else if (!homeMode && !(opts && opts.keepEnd)) {
+    moneyTicker.diagram = moneyTickerDefaultDiagram();
   }
   if (!moneyTickerAllowedRanges().includes(moneyTicker.range)) {
     moneyTicker.range = moneyTickerAllowedRanges()[0] || "season";
   }
   if (!moneyTickerAllowedDiagrams().includes(moneyTicker.diagram)) {
-    moneyTicker.diagram = moneyTickerAllowedDiagrams()[0] || "island";
+    moneyTicker.diagram = moneyTickerDefaultDiagram();
   }
   moneyTicker.reducedMotion =
     typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
