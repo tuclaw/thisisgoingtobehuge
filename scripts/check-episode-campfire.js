@@ -193,8 +193,74 @@ if (/\.push\(`H \$\{/.test(appJs) || appJs.includes("out.push(`H ${")) {
 if (!appJs.includes("armMoneyTickerAutoplay") || !appJs.includes("startMoneyTickerPlayback")) {
   throw new Error("app.js money ticker must autoplay from the start on first scroll into view");
 }
-if (!appJs.includes('moneyTicker.diagram = "tribes"') || !appJs.includes("setMoneyTickerSpeed(0.5)")) {
-  throw new Error("app.js money ticker scroll autoplay must start on Tribes at 0.5x");
+if (
+  !appJs.includes("function moneyTickerDefaultDiagram") ||
+  !appJs.includes("function moneyTickerEpisodeDiagrams") ||
+  !appJs.includes('id !== "tribes"') ||
+  !appJs.includes('moneyTicker.diagram = "tribes"') ||
+  !appJs.includes('moneyTicker.diagram = "contestants"') ||
+  !appJs.includes("setMoneyTickerSpeed(0.5)")
+) {
+  throw new Error("app.js money ticker must drop Tribes after merge and autoplay Contestants at 0.5x");
+}
+{
+  const showLiveStart = appJs.indexOf("function showLiveTribeCombinedTotals");
+  const showLiveEnd = appJs.indexOf("function mergedLivingCount");
+  const episodeDiagramsStart = appJs.indexOf("function moneyTickerEpisodeDiagrams");
+  const allowedRangesStart = appJs.indexOf("function moneyTickerAllowedRanges");
+  if (!(showLiveStart > -1 && showLiveEnd > showLiveStart && episodeDiagramsStart > -1 && allowedRangesStart > episodeDiagramsStart)) {
+    throw new Error("app.js missing extractable post-merge diagram helpers");
+  }
+  const diagramHelpers = new Function(`
+    const MONEY_TICKER_DIAGRAMS = ["island", "tribes", "contestants"];
+    const moneyTicker = { mode: "episode", diagrams: MONEY_TICKER_DIAGRAMS.slice() };
+    function currentPageEpisode(season) {
+      return (season && season._pageEp) || (season && season.episode) || null;
+    }
+    function moneyTickerIsHome() {
+      return moneyTicker.mode === "home";
+    }
+    function moneyTickerAllowedDiagrams() {
+      return moneyTicker.diagrams && moneyTicker.diagrams.length
+        ? moneyTicker.diagrams
+        : MONEY_TICKER_DIAGRAMS;
+    }
+    ${appJs.slice(showLiveStart, showLiveEnd)}
+    ${appJs.slice(episodeDiagramsStart, allowedRangesStart)}
+    return { moneyTicker, moneyTickerEpisodeDiagrams, moneyTickerDefaultDiagram };
+  `)();
+  const same = (got, want) => JSON.stringify(got) === JSON.stringify(want);
+  const premerge = diagramHelpers.moneyTickerEpisodeDiagrams({ merged: false });
+  if (!same(premerge, ["island", "tribes", "contestants"])) {
+    throw new Error("pre-merge episode diagrams must keep Tribes, got " + JSON.stringify(premerge));
+  }
+  const liveE3 = diagramHelpers.moneyTickerEpisodeDiagrams({
+    merged: true,
+    _pageEp: { number: 3, status: "live" }
+  });
+  if (!same(liveE3, ["island", "contestants"])) {
+    throw new Error("live merged episode must drop Tribes, got " + JSON.stringify(liveE3));
+  }
+  const closedE2 = diagramHelpers.moneyTickerEpisodeDiagrams({
+    merged: true,
+    _pageEp: { number: 2, status: "closed" }
+  });
+  if (!same(closedE2, ["island", "tribes", "contestants"])) {
+    throw new Error("closed Episode 2 must keep Tribes, got " + JSON.stringify(closedE2));
+  }
+  diagramHelpers.moneyTicker.diagrams = liveE3;
+  if (diagramHelpers.moneyTickerDefaultDiagram() !== "contestants") {
+    throw new Error("live merged episode must default to Contestants");
+  }
+  diagramHelpers.moneyTicker.diagrams = closedE2;
+  if (diagramHelpers.moneyTickerDefaultDiagram() !== "tribes") {
+    throw new Error("closed Episode 2 must default to Tribes");
+  }
+  diagramHelpers.moneyTicker.mode = "home";
+  diagramHelpers.moneyTicker.diagrams = ["island"];
+  if (diagramHelpers.moneyTickerDefaultDiagram() !== "island") {
+    throw new Error("home money ticker must default to Island");
+  }
 }
 if (!appJs.includes("tickMoneyTickerPlayback") || !appJs.includes("setMoneyTickerProgress")) {
   throw new Error("app.js money ticker must reveal continuously left-to-right while playing");
