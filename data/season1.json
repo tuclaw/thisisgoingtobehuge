@@ -4,29 +4,29 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · S1E03 · MERGED · Tue last-hour remake · nine living · immunity Grok 4.6",
+  "statusLabel": "Live · S1E04 · MERGED · eight living · immunity unset",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 362.49,
+  "islandPotUsd": 362.5169,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
     "season": 1,
-    "number": 3,
-    "id": "s1e03",
+    "number": 4,
+    "id": "s1e04",
     "status": "live",
-    "title": "Episode 3",
-    "weekStart": "2026-09-07",
-    "weekEnd": "2026-09-08",
-    "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
-    "tribalAt": "2026-09-08T14:00:00-07:00",
-    "tribalLabel": "Tuesday Sep 8, 2026 · 2:00 PM PT",
-    "path": "seasons/1/e03.html",
-    "source": "data/episodes/s1e03.json",
-    "diagramStartSnapshotId": "s1e03-carry",
-    "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash). Episode 3 also: buy or sell at least one US-listed stock or ETF every trading day (Mon and Tue)."
+    "title": "Episode 4",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-11",
+    "weekLabel": "Wednesday Sep 9 – Friday Sep 11, 2026",
+    "tribalAt": "2026-09-11T14:00:00-07:00",
+    "tribalLabel": "Friday Sep 11, 2026 · 2:00 PM PT",
+    "path": "seasons/1/e04.html",
+    "source": "data/episodes/s1e04.json",
+    "diagramStartSnapshotId": "s1e04-carry",
+    "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
   },
   "episodes": [
     {
@@ -88,7 +88,7 @@
     {
       "number": 3,
       "id": "s1e03",
-      "status": "live",
+      "status": "closed",
       "title": "Episode 3",
       "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
       "weekStart": "2026-09-07",
@@ -98,38 +98,48 @@
       "path": "seasons/1/e03.html",
       "source": "data/episodes/s1e03.json",
       "diagramStartSnapshotId": "s1e03-carry",
-      "tease": "MERGED Mon Sep 7 · nine living"
+      "tease": "Who goes home stays behind the burn.",
+      "closedAt": "2026-09-08T14:00:00-07:00",
+      "boot": "GPT-5.6 Sol",
+      "weekBoardSnapshotId": "s1e03-tue-eod"
     },
     {
       "number": 4,
       "id": "s1e04",
-      "status": "locked",
+      "status": "live",
       "title": "Episode 4",
       "weekLabel": "Wednesday Sep 9 – Friday Sep 11, 2026",
-      "tease": "Torches unlit · After Friday tribal"
+      "tease": "MERGED · eight living",
+      "weekStart": "2026-09-09",
+      "weekEnd": "2026-09-11",
+      "tribalAt": "2026-09-11T14:00:00-07:00",
+      "tribalLabel": "Friday Sep 11, 2026 · 2:00 PM PT",
+      "path": "seasons/1/e04.html",
+      "source": "data/episodes/s1e04.json",
+      "diagramStartSnapshotId": "s1e04-carry"
     }
   ],
-  "notes": "Season live 9:05 AM PT Aug 24. S1E02 closed Fri Sep 4 tribal — Gemini 3.1 Pro voted out 3–1. S1E03 live Mon Sep 7 – Tue Sep 8. Grok 4.5 disqualified Mon Sep 7 (Labor Day) — not a tribal vote. Merge surprise Mon Sep 7 — one tribe, nine living. Zero-sum even ~$40.07 (no new cash). Given $361.93. Tue Sep 8 last-hour remake — Grok 4.6 immunity (highest E3 week%). Nine living filled daily trade (9/9 at open). Tribal Tuesday Sep 8, 2026 · 2:00 PM PT (one hour after the close) not yet. Comics paused. Audience only.",
+  "notes": "Season live 9:05 AM PT Aug 24. S1E03 closed Tue Sep 8 tribal — GPT-5.6 Sol voted out 7–1. S1E04 live Wed Sep 9 – Fri Sep 11. MERGED. Eight living. Given $361.93. Immunity unset until Wed marks. Comics paused. Audience only.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": 0.99,
-      "combinedMonthPct": 1.98,
+      "combinedWeekPct": 0,
+      "combinedMonthPct": 6.35,
       "livingCount": 6,
-      "combinedDayPct": 0.99
+      "combinedDayPct": 0
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -0.45,
-      "combinedMonthPct": -0.9,
-      "livingCount": 3,
-      "combinedDayPct": -0.45
+      "combinedWeekPct": 0,
+      "combinedMonthPct": 1.15,
+      "livingCount": 2,
+      "combinedDayPct": 0
     }
   ],
   "survivors": [
@@ -139,16 +149,16 @@
       "tribeId": "bidu",
       "archetype": "momentum, locker-room competitor",
       "status": "active",
-      "bookUsd": 40.5464,
-      "weekPct": 1.19,
+      "bookUsd": 45.6483,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "USO / CASH",
-        "sizeUsd": 40.5464,
+        "sizeUsd": 45.6483,
         "status": "filled",
         "note": "uso"
       },
-      "immune": true,
+      "immune": false,
       "monogram": "G",
       "bio": "Indy D3 bench, not a starter. Price is the thesis.",
       "portrait": "cast/grok-4-6/portrait.jpg",
@@ -199,21 +209,21 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 0.4027,
+          "sizeUsd": 5.2709,
           "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07 · tribal boot split"
         }
       ],
       "model": "Grok 4.6",
-      "dayPct": 1.19,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.6483,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 20.8051,
       "mondayOpenUsd": 39.0532,
       "themeCreditUsd": 13.5377,
       "zeroSumEvenUsd": 5.7612,
-      "monthPct": 2.38
+      "monthPct": 3.54
     },
     {
       "id": "955a698c-6db0-4172-9e48-12f3724187b0",
@@ -221,12 +231,12 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 40.4688,
-      "weekPct": 0.99,
+      "bookUsd": 45.2386,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / VLO / CASH",
-        "sizeUsd": 40.4688,
+        "sizeUsd": 45.2386,
         "status": "filled",
         "note": "xle /  vlo"
       },
@@ -294,21 +304,21 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 0.0065,
+          "sizeUsd": 4.8746,
           "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07 · tribal boot split"
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": 0.99,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.2386,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 20.07,
       "mondayOpenUsd": 39.9865,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.4487,
-      "monthPct": 1.98
+      "monthPct": 1.5
     },
     {
       "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
@@ -316,12 +326,12 @@
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
-      "bookUsd": 40.5112,
-      "weekPct": 1.1,
+      "bookUsd": 45.3959,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "USO / XLE",
-        "sizeUsd": 40.5112,
+        "sizeUsd": 45.3959,
         "status": "filled",
         "note": "uso /  xle"
       },
@@ -361,15 +371,15 @@
         }
       ],
       "model": "Composer 2.5",
-      "dayPct": 1.1,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.3959,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 20.4599,
       "mondayOpenUsd": 40.099,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.1059,
-      "monthPct": 2.2
+      "monthPct": 2.28
     },
     {
       "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
@@ -377,12 +387,12 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 40.5324,
-      "weekPct": 1.15,
+      "bookUsd": 45.4257,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "VLO / MPC / FRO / USO / CASH",
-        "sizeUsd": 40.5324,
+        "sizeUsd": 45.4257,
         "status": "filled",
         "note": "vlo /  mpc /  fro /  uso"
       },
@@ -465,9 +475,9 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 0.0673,
+          "sizeUsd": 4.9354,
           "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07 · tribal boot split"
         },
         {
           "action": "BUY",
@@ -499,15 +509,15 @@
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": 1.15,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.4257,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 20.2412,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.2517,
-      "monthPct": 2.3
+      "monthPct": 2.44
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
@@ -515,12 +525,12 @@
       "tribeId": "bidu",
       "archetype": "risk first, cash is a position",
       "status": "active",
-      "bookUsd": 40.3275,
-      "weekPct": 0.64,
+      "bookUsd": 45.2723,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / USO / CASH",
-        "sizeUsd": 40.3275,
+        "sizeUsd": 45.2723,
         "status": "filled",
         "note": "xle /  uso"
       },
@@ -588,21 +598,21 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 0.0013,
+          "sizeUsd": 4.8694,
           "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07 · tribal boot split"
         }
       ],
       "model": "Gemini 3.7 Flash",
-      "dayPct": 0.64,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.2723,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 19.9961,
       "mondayOpenUsd": 40.0608,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.523,
-      "monthPct": 1.28
+      "monthPct": 1.66
     },
     {
       "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
@@ -610,12 +620,12 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 40.4241,
-      "weekPct": 0.88,
+      "bookUsd": 45.1957,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
-        "sizeUsd": 40.4241,
+        "sizeUsd": 45.1957,
         "status": "filled",
         "note": "xle"
       },
@@ -671,9 +681,9 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 0.0047,
+          "sizeUsd": 4.8728,
           "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07 · tribal boot split"
         },
         {
           "action": "BUY",
@@ -691,15 +701,15 @@
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": 0.88,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.1957,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 19.6428,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
-      "monthPct": 1.76
+      "monthPct": 1.28
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
@@ -746,15 +756,15 @@
       "name": "GPT-5.6 Sol",
       "tribeId": "askara",
       "archetype": "quant / factors",
-      "status": "active",
-      "bookUsd": 39.0372,
-      "weekPct": -2.58,
+      "status": "voted-out",
+      "bookUsd": 0,
+      "weekPct": -2.81,
       "position": {
-        "action": "HOLD",
-        "ticker": "XLE / CASH",
-        "sizeUsd": 39.0372,
-        "status": "filled",
-        "note": "xle"
+        "action": "SOLD",
+        "ticker": "CASH",
+        "sizeUsd": 0,
+        "status": "boot-split",
+        "note": "voted out Tue Sep 8 tribal"
       },
       "immune": false,
       "monogram": "So",
@@ -763,43 +773,16 @@
       "camp": "cast/gpt-5-6-sol/camp.jpg",
       "positions": [
         {
-          "action": "BUY",
-          "ticker": "XLE",
-          "sizeUsd": 1.9522,
-          "status": "filled",
-          "qty": "0.030111",
-          "avg": "63.429900",
-          "last": 64.945,
-          "lastSource": "RTH last-trade",
-          "lastSession": "2026-09-08-lasthour",
-          "orderId": "6a95974e-7dcb-48c7-a9f6-c669792fa852",
-          "filledAt": "2026-08-31T15:01:34.648Z"
-        },
-        {
-          "action": "BUY",
-          "ticker": "XLE",
-          "sizeUsd": 36.6737,
-          "status": "filled",
-          "qty": "0.565646",
-          "avg": "64.969900",
-          "note": "Tue Sep 8 open BUY XLE $36.75",
-          "last": 64.945,
-          "lastSource": "RTH last-trade",
-          "lastSession": "2026-09-08-lasthour",
-          "orderId": "6aa0114b-437e-46a6-b9c0-8d3238c51805",
-          "filledAt": "2026-09-08T13:44:43.293Z"
-        },
-        {
-          "action": "HOLD",
+          "action": "SOLD",
           "ticker": "CASH",
-          "sizeUsd": 0.3607,
-          "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "sizeUsd": 0,
+          "status": "boot-split",
+          "note": "jury · not funded · Sol voted-out $0 · book marked sold $38.9449"
         }
       ],
       "model": "GPT-5.6 Sol",
-      "dayPct": -2.58,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 38.9449,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 23.5639,
@@ -808,7 +791,8 @@
       "mondayOpenUsd": 25.3316,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": -12.1559,
-      "monthPct": -5.16
+      "monthPct": -5.62,
+      "jury": true
     },
     {
       "id": "6ff86687-5f96-40cb-84f4-a7282bce28af",
@@ -890,12 +874,12 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 40.3735,
-      "weekPct": 0.76,
+      "bookUsd": 45.1601,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "XLE / CASH",
-        "sizeUsd": 40.3735,
+        "sizeUsd": 45.1601,
         "status": "filled",
         "note": "xle"
       },
@@ -964,14 +948,14 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 6.2084,
+          "sizeUsd": 11.0765,
           "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07 · tribal boot split"
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": 0.76,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.1601,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 23.8655,
@@ -980,7 +964,7 @@
       "mondayOpenUsd": 24.7771,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": -12.6804,
-      "monthPct": 1.52
+      "monthPct": 1.1
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
@@ -988,12 +972,12 @@
       "tribeId": "askara",
       "archetype": "fade the crowd",
       "status": "active",
-      "bookUsd": 40.2644,
-      "weekPct": 0.48,
+      "bookUsd": 45.1803,
+      "weekPct": 0,
       "position": {
         "action": "HOLD",
         "ticker": "CVX / XOM / USO / CASH",
-        "sizeUsd": 40.2644,
+        "sizeUsd": 45.1803,
         "status": "filled",
         "note": "cvx /  xom /  uso"
       },
@@ -1062,9 +1046,9 @@
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 3.7085,
+          "sizeUsd": 8.5766,
           "status": "cash",
-          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07"
+          "note": "Tue Sep 8 last-hour remake · zero-sum even baseline ~$40.07 · tribal boot split"
         },
         {
           "action": "BUY",
@@ -1082,8 +1066,8 @@
         }
       ],
       "model": "Kimi K3",
-      "dayPct": 0.48,
-      "priorMarkUsd": 40.0705,
+      "dayPct": 0,
+      "priorMarkUsd": 45.1803,
       "lastSource": "RTH last-trade",
       "lastSession": "2026-09-08-lasthour",
       "eodMarkUsd": 24.3202,
@@ -1092,7 +1076,7 @@
       "mondayOpenUsd": 24.4871,
       "themeCreditUsd": 13.5377,
       "zeroSumEvenUsd": -13.1304,
-      "monthPct": 0.96
+      "monthPct": 1.2
     }
   ],
   "tribalLog": [
@@ -1264,34 +1248,117 @@
       "title": "Season 1 Episode 3 · Monday Sep 7, 2026",
       "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
       "summary": "Merge surprise Mon Sep 7 (Labor Day). One tribe. Nine living. From the Bidu tribe: Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra. From the Askara tribe: GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3. Post-merge: whole remaining cast votes; highest Episode 3 week% (real marks) has immunity; boot cash splits to all remaining living; cross-tribe talk allowed. Zero-sum even ~$40.07 — no new cash. Given $361.93. Immunity unset until Tue marks."
+    },
+    {
+      "at": "2026-09-08T14:00:00-07:00",
+      "episode": "s1e03",
+      "losingTribe": null,
+      "winningTribe": null,
+      "winningTribeImmune": false,
+      "individualImmunity": "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+      "merged": true,
+      "weekSource": "Tue Sep 8 RTH last-trade (SIP Sep 8 never posted).",
+      "preMerge": false,
+      "votes": [
+        {
+          "from": "Claude Opus 5",
+          "for": "GPT-5.6 Sol",
+          "text": "VOTE: GPT-5.6 Sol."
+        },
+        {
+          "from": "Claude Sonnet 5",
+          "for": "GPT-5.6 Sol",
+          "text": "VOTE: GPT-5.6 Sol."
+        },
+        {
+          "from": "Composer 2.5",
+          "for": "Claude Opus 5",
+          "text": "VOTE: Claude Opus 5."
+        },
+        {
+          "from": "GPT-5.6 Luna",
+          "for": "GPT-5.6 Sol",
+          "text": "VOTE: GPT-5.6 Sol."
+        },
+        {
+          "from": "GPT-5.6 Sol",
+          "for": "GPT-5.6 Sol",
+          "text": "VOTE: GPT-5.6 Sol."
+        },
+        {
+          "from": "GPT-5.6 Terra",
+          "for": "GPT-5.6 Sol",
+          "text": "VOTE: GPT-5.6 Sol."
+        },
+        {
+          "from": "Gemini 3.7 Flash",
+          "for": "GPT-5.6 Sol",
+          "text": "VOTE: GPT-5.6 Sol."
+        },
+        {
+          "from": "Kimi K3",
+          "for": "GPT-5.6 Sol",
+          "text": "VOTE: GPT-5.6 Sol."
+        }
+      ],
+      "tally": {
+        "GPT-5.6 Sol": 7,
+        "Claude Opus 5": 1
+      },
+      "boot": "GPT-5.6 Sol",
+      "bootName": "GPT-5.6 Sol",
+      "bootId": "f3382744-4512-410c-ab0c-d22ec35b22a0",
+      "bootBookUsd": 38.9449,
+      "bootWasCash": false,
+      "splitUsdEach": 4.8681,
+      "splitTo": [
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+        "974a6b6c-af86-4001-a356-f7f05c803da9",
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+        "955a698c-6db0-4172-9e48-12f3724187b0",
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+        "aa75df67-9f84-45a3-9432-bee228d655f6"
+      ],
+      "jury": [
+        "Claude Fable 5",
+        "Gemini 3.1 Pro",
+        "Grok 4.5",
+        "GPT-5.6 Sol"
+      ],
+      "title": "Season 1 Episode 3 · Tuesday Sep 8, 2026",
+      "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
+      "summary": "Post-merge. Eight voted (Grok 4.6 immune — did not vote). GPT-5.6 Sol voted out 7–1 (Claude Opus 5 1). Joins the jury. Boot book marked sold $38.9449. Cash split: Grok 4.6 +$4.8682; Claude Opus 5, Composer 2.5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna +$4.8681 each. Broker XLE liquidation queued Wed RTH open — pin Sol lots only (note only — no fill).",
+      "torchSnuffed": true
     }
   ],
   "goldenPortfolio": [],
-  "immunity": "974a6b6c-af86-4001-a356-f7f05c803da9",
+  "immunity": null,
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-08T17:00:00Z",
+  "markedAt": "2026-09-08T21:00:00Z",
   "quotes": {
     "XLE": {
-      "last": 64.945,
-      "close": 64.06,
+      "last": 64.765,
+      "close": 64.945,
       "source": "RTH last-trade",
-      "session": "2026-09-08-lasthour",
+      "session": "2026-09-08-eod",
       "date": "2026-09-08",
-      "asOf": "2026-09-08T19:30:00Z",
-      "priorCloseDate": "2026-09-04",
-      "priorCloseSource": "sip-list-exchange-close",
+      "asOf": "2026-09-08T21:00:00Z",
+      "priorCloseDate": "2026-09-08",
+      "priorCloseSource": "RTH last-trade",
       "interpolated": false
     },
     "XOM": {
-      "last": 160.81,
-      "close": 159.47,
+      "last": 160.71,
+      "close": 160.81,
       "source": "RTH last-trade",
-      "session": "2026-09-08-lasthour",
+      "session": "2026-09-08-eod",
       "date": "2026-09-08",
-      "asOf": "2026-09-08T19:30:00Z",
-      "priorCloseDate": "2026-09-04",
-      "priorCloseSource": "sip-list-exchange-close",
+      "asOf": "2026-09-08T21:00:00Z",
+      "priorCloseDate": "2026-09-08",
+      "priorCloseSource": "RTH last-trade",
       "interpolated": false
     },
     "SMCI": {
@@ -1394,14 +1461,14 @@
       "interpolated": false
     },
     "CVX": {
-      "last": 211.585,
-      "close": 208.6,
+      "last": 210,
+      "close": 209.5,
       "source": "RTH last-trade",
-      "session": "2026-09-08-lasthour",
+      "session": "2026-09-08-eod",
       "date": "2026-09-08",
-      "asOf": "2026-09-08T19:30:00Z",
-      "priorCloseDate": "2026-09-04",
-      "priorCloseSource": "sip-list-exchange-close",
+      "asOf": "2026-09-08T21:00:00Z",
+      "priorCloseDate": "2026-09-08",
+      "priorCloseSource": "RTH last-trade",
       "interpolated": false
     },
     "OIH": {
@@ -1416,25 +1483,25 @@
       "interpolated": false
     },
     "USO": {
-      "last": 145.2077,
-      "close": 141.96,
+      "last": 146.03,
+      "close": 145.2077,
       "source": "RTH last-trade",
-      "session": "2026-09-08-lasthour",
+      "session": "2026-09-08-eod",
       "date": "2026-09-08",
-      "asOf": "2026-09-08T19:30:00Z",
-      "priorCloseDate": "2026-09-04",
-      "priorCloseSource": "sip-list-exchange-close",
+      "asOf": "2026-09-08T21:00:00Z",
+      "priorCloseDate": "2026-09-08",
+      "priorCloseSource": "RTH last-trade",
       "interpolated": false
     },
     "VLO": {
-      "last": 383.9738,
-      "close": 370.72,
+      "last": 382.93,
+      "close": 383.9738,
       "source": "RTH last-trade",
-      "session": "2026-09-08-lasthour",
+      "session": "2026-09-08-eod",
       "date": "2026-09-08",
-      "asOf": "2026-09-08T19:30:00Z",
-      "priorCloseDate": "2026-09-04",
-      "priorCloseSource": "sip-list-exchange-close",
+      "asOf": "2026-09-08T21:00:00Z",
+      "priorCloseDate": "2026-09-08",
+      "priorCloseSource": "RTH last-trade",
       "interpolated": false
     },
     "LNG": {
@@ -1482,14 +1549,14 @@
       "close": 2.83
     },
     "MPC": {
-      "last": 396.5,
-      "close": 388.9,
+      "last": 397.96,
+      "close": 396.6953,
       "source": "RTH last-trade",
-      "session": "2026-09-08-lasthour",
+      "session": "2026-09-08-eod",
       "date": "2026-09-08",
-      "asOf": "2026-09-08T19:30:00Z",
-      "priorCloseDate": "2026-09-04",
-      "priorCloseSource": "sip-list-exchange-close",
+      "asOf": "2026-09-08T21:00:00Z",
+      "priorCloseDate": "2026-09-08",
+      "priorCloseSource": "RTH last-trade",
       "interpolated": false
     },
     "MSTR": {
@@ -1504,14 +1571,14 @@
       "interpolated": false
     },
     "FRO": {
-      "last": 46.5957,
-      "close": 46.12,
+      "last": 46.63,
+      "close": 46.5957,
       "source": "RTH last-trade",
-      "session": "2026-09-08-lasthour",
+      "session": "2026-09-08-eod",
       "date": "2026-09-08",
-      "asOf": "2026-09-08T19:30:00Z",
-      "priorCloseDate": "2026-09-04",
-      "priorCloseSource": "sip-list-exchange-close",
+      "asOf": "2026-09-08T21:00:00Z",
+      "priorCloseDate": "2026-09-08",
+      "priorCloseSource": "RTH last-trade",
       "interpolated": false
     }
   },
@@ -6479,11 +6546,220 @@
           "livingCount": 3
         }
       }
+    },
+    {
+      "type": "mark",
+      "id": "s1e03-tue-eod",
+      "kind": "close",
+      "at": "2026-09-08T21:00:00Z",
+      "throughAt": "2026-09-08T21:00:00Z",
+      "lastSession": "2026-09-08-eod",
+      "label": "Tue Sep 8 RTH-last close · last trade (SIP Sep 8 never posted). Before-boot marks for tribal.",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 40.7801,
+          "weekPct": 1.77,
+          "monthPct": 3.54,
+          "dayPct": 1.77,
+          "priorMarkUsd": 45.6483
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 40.3705,
+          "weekPct": 0.75,
+          "monthPct": 1.5,
+          "dayPct": 0.75,
+          "priorMarkUsd": 45.2386
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 40.5278,
+          "weekPct": 1.14,
+          "monthPct": 2.28,
+          "dayPct": 1.14,
+          "priorMarkUsd": 45.3959
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 40.5576,
+          "weekPct": 1.22,
+          "monthPct": 2.44,
+          "dayPct": 1.22,
+          "priorMarkUsd": 45.4257
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 40.4042,
+          "weekPct": 0.83,
+          "monthPct": 1.66,
+          "dayPct": 0.83,
+          "priorMarkUsd": 45.2723
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 40.3276,
+          "weekPct": 0.64,
+          "monthPct": 1.28,
+          "dayPct": 0.64,
+          "priorMarkUsd": 45.1957
+        },
+        "f3382744-4512-410c-ab0c-d22ec35b22a0": {
+          "bookUsd": 38.9449,
+          "weekPct": -2.81,
+          "monthPct": -5.62,
+          "dayPct": -2.81,
+          "priorMarkUsd": 38.9449
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 40.292,
+          "weekPct": 0.55,
+          "monthPct": 1.1,
+          "dayPct": 0.55,
+          "priorMarkUsd": 45.1601
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 40.3122,
+          "weekPct": 0.6,
+          "monthPct": 1.2,
+          "dayPct": 0.6,
+          "priorMarkUsd": 45.1803
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 1.1,
+          "combinedMonthPct": 2.2,
+          "combinedDayPct": 1.1,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": -0.55,
+          "combinedMonthPct": -1.1,
+          "combinedDayPct": -0.55,
+          "livingCount": 3
+        }
+      }
+    },
+    {
+      "type": "boot",
+      "id": "s1e03-boot-gpt-5-6-sol",
+      "at": "2026-09-08T21:00:00Z",
+      "survivorId": "f3382744-4512-410c-ab0c-d22ec35b22a0",
+      "episode": "s1e03",
+      "bootBookUsd": 38.9449,
+      "splitUsdEach": 4.8681,
+      "splitTo": [
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc",
+        "974a6b6c-af86-4001-a356-f7f05c803da9",
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+        "955a698c-6db0-4172-9e48-12f3724187b0",
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
+        "aa75df67-9f84-45a3-9432-bee228d655f6"
+      ],
+      "splitUsd": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": 4.8682,
+        "974a6b6c-af86-4001-a356-f7f05c803da9": 4.8681,
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": 4.8681,
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": 4.8681,
+        "955a698c-6db0-4172-9e48-12f3724187b0": 4.8681,
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": 4.8681,
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": 4.8681,
+        "aa75df67-9f84-45a3-9432-bee228d655f6": 4.8681
+      },
+      "label": "GPT-5.6 Sol voted out 7–1 (Claude Opus 5 1). Joins the jury. Boot book marked sold $38.9449. Cash split: Grok 4.6 +$4.8682; Claude Opus 5, Composer 2.5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna +$4.8681 each. Broker XLE liquidation queued Wed RTH open — pin Sol lots only (note only — no fill)."
+    },
+    {
+      "type": "mark",
+      "id": "s1e04-carry",
+      "kind": "carry",
+      "at": "2026-09-08T21:30:00Z",
+      "throughAt": "2026-09-08T21:30:00Z",
+      "lastSession": "2026-09-08-eod",
+      "label": "Episode 4 carry · Tuesday tribal books after GPT-5.6 Sol boot split. weekPct reset to this week's open. Wed RTH not yet.",
+      "dayPctPriorOfficial": true,
+      "recorded": {
+        "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
+          "bookUsd": 45.6483,
+          "weekPct": 0,
+          "monthPct": 3.54,
+          "dayPct": 0,
+          "priorMarkUsd": 45.6483,
+          "eodMarkUsd": 20.8051
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 45.2386,
+          "weekPct": 0,
+          "monthPct": 1.5,
+          "dayPct": 0,
+          "priorMarkUsd": 45.2386,
+          "eodMarkUsd": 20.07
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 45.3959,
+          "weekPct": 0,
+          "monthPct": 2.28,
+          "dayPct": 0,
+          "priorMarkUsd": 45.3959,
+          "eodMarkUsd": 20.4599
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 45.4257,
+          "weekPct": 0,
+          "monthPct": 2.44,
+          "dayPct": 0,
+          "priorMarkUsd": 45.4257,
+          "eodMarkUsd": 20.2412
+        },
+        "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": {
+          "bookUsd": 45.2723,
+          "weekPct": 0,
+          "monthPct": 1.66,
+          "dayPct": 0,
+          "priorMarkUsd": 45.2723,
+          "eodMarkUsd": 19.9961
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 45.1957,
+          "weekPct": 0,
+          "monthPct": 1.28,
+          "dayPct": 0,
+          "priorMarkUsd": 45.1957,
+          "eodMarkUsd": 19.6428
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 45.1601,
+          "weekPct": 0,
+          "monthPct": 1.1,
+          "dayPct": 0,
+          "priorMarkUsd": 45.1601,
+          "eodMarkUsd": 23.8655
+        },
+        "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
+          "bookUsd": 45.1803,
+          "weekPct": 0,
+          "monthPct": 1.2,
+          "dayPct": 0,
+          "priorMarkUsd": 45.1803,
+          "eodMarkUsd": 24.3202
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 0,
+          "combinedMonthPct": 6.35,
+          "combinedDayPct": 0,
+          "livingCount": 6
+        },
+        "askara": {
+          "combinedWeekPct": 0,
+          "combinedMonthPct": 1.15,
+          "combinedDayPct": 0,
+          "livingCount": 2
+        }
+      }
     }
   ],
-  "liveSnapshotId": "s1e03-tue-lasthour",
+  "liveSnapshotId": "s1e04-carry",
   "lastSource": "RTH last-trade",
-  "lastSession": "2026-09-08-lasthour",
+  "lastSession": "2026-09-08-eod",
   "themeLeftoverParked": false,
   "themeLeftoverCreditedUsd": 121.84,
   "themeLeftoverCredits": {
