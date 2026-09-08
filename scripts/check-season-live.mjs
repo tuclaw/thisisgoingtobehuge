@@ -515,8 +515,8 @@ check("homepage-skips-e02-primary-cta", !home.includes("Walk into Episode 2"));
 check("sleeve-pot-marked", source.islandPotUsd === 360.63, String(source.islandPotUsd));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e03-zero-sum-even",
-  source.statusLabel === "Live · S1E03 · MERGED · zero-sum even ~$40.07 · nine living"
+  "status-label-e03-labor-day",
+  source.statusLabel === "Live · S1E03 · MERGED · Labor Day · no Mon session · nine living"
 );
 check("live-episode-is-e03", source.episode && source.episode.id === "s1e03" && source.episode.status === "live" && source.episode.path === "seasons/1/e03.html");
 check(
@@ -1476,8 +1476,19 @@ check(
 );
 const e3MondayBeats = (((episode3Copy.days || []).find((day) => day.id === "monday") || {}).beats || []);
 const e3MondayLaborIdx = e3MondayBeats.findIndex((beat) => beat.id === "monday-labor-day");
+const e3MondayLaborClose = e3MondayBeats.find((beat) => beat.id === "monday-labor-day-close");
 const e3MondayBooths = e3MondayBeats.find((beat) => beat.id === "monday-confessionals");
-check("e03-monday-booths-after-labor-day", e3MondayLaborIdx > -1 && e3MondayBeats.indexOf(e3MondayBooths) === e3MondayLaborIdx + 1);
+check(
+  "e03-monday-labor-day-close",
+  e3MondayLaborClose &&
+    e3MondayLaborClose.body === "Labor Day close · no Mon session · next remake Tue Sep 8 after cash close."
+);
+check(
+  "e03-monday-booths-after-labor-day-close",
+  e3MondayLaborIdx > -1 &&
+    e3MondayBeats.indexOf(e3MondayLaborClose) === e3MondayLaborIdx + 1 &&
+    e3MondayBeats.indexOf(e3MondayBooths) === e3MondayLaborIdx + 2
+);
 check("e03-monday-booths-kicker", e3MondayBooths && e3MondayBooths.kicker === "Confessionals");
 check("e03-monday-booths-title", e3MondayBooths && e3MondayBooths.title === "Monday noon. Three booths.");
 check("e03-monday-booths-body", e3MondayBooths && e3MondayBooths.body === "Audience only. Labor Day. MERGED. No session.");
