@@ -1,0 +1,37 @@
+name: Apply post-merge diagram patch
+
+on:
+  push:
+    branches:
+      - cursor/e3-merge-contestants-view-2de2
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-post-merge-diagram
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: github.repository == 'tuclaw/thisisgoingtobehuge'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Apply patch, drop bootstrap files, and push
+        run: |
+          set -euo pipefail
+          if grep -q 'function moneyTickerEpisodeDiagrams' app.js; then
+            echo "post-merge diagram helpers already present"
+            exit 0
+          fi
+          git apply --check scripts/patches/post-merge-diagram.patch
+          git apply scripts/patches/post-merge-diagram.patch
+          git rm -f scripts/patches/post-merge-diagram.patch .github/workflows/apply-post-merge-diagram.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js scripts/check-episode-campfire.js scripts/check-season-live.mjs
+          git commit -m "Default the live diagram to contestants after the merge"
+          git push
