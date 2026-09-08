@@ -106,6 +106,49 @@ function combinedDayPctOf(tribe) {
   return 0;
 }
 
+function showLiveTribeCombinedTotals(season) {
+  if (!season || !season.merged) return true;
+  const ep = currentPageEpisode(season);
+  if (ep && ep.status === "closed" && Number(ep.number) < 3) return true;
+  return false;
+}
+
+function mergedLivingCount(season) {
+  return (season.survivors || []).filter((s) => s && (s.status === "active" || s.status === "immune")).length;
+}
+
+function tribalCouncilEmptyCopy(season) {
+  if (season && season.merged) {
+    return "Whole cast walks in. Highest week% wears immunity — nobody has it yet. The vote is social.";
+  }
+  return "Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.";
+}
+
+function renderLiveTribeTotalsMount(season, mount, opts) {
+  if (!mount) return;
+  if (!showLiveTribeCombinedTotals(season)) {
+    const living = mergedLivingCount(season);
+    mount.innerHTML = `<div class="total-card merged">
+        <h3>MERGED</h3>
+        <p>${living} living · one tribe</p>
+      </div>`;
+    return;
+  }
+  const tribes = (opts && opts.tribes) || season.tribes || [];
+  mount.innerHTML = tribes
+    .map((t) => {
+      const snapshotNote = opts && opts.snapshot ? " · snapshot" : "";
+      const dayNote =
+        opts && opts.dayPct ? ` · ${pct(combinedDayPctOf(t))} day` : "";
+      return `<div class="total-card ${t.id}">
+        <h3>${escapeHtml(tribeChromeName(t))}</h3>
+        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
+        <p>${t.livingCount} standing · combined week %${snapshotNote}${dayNote}</p>
+      </div>`;
+    })
+    .join("");
+}
+
 function tribeById(season, id) {
   return (season.tribes || []).find((t) => t.id === id);
 }
@@ -495,7 +538,7 @@ function holdLegHtml(pos, season, tribeId) {
 }
 
 function holdBookFaded(s, season) {
-  if (!s || (s.status !== "jury" && s.status !== "boot")) return false;
+  if (!s || (s.status !== "jury" && s.status !== "boot" && s.status !== "disqualified")) return false;
   const ep = currentPageEpisode(season);
   return Boolean(ep && Number(ep.number) >= 2);
 }
@@ -521,7 +564,12 @@ function holdBookHtml(s, tribe, season, rank) {
     : "";
   const pad = rank < 10 ? "0" + rank : String(rank);
   const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
-  const bootTag = s.status === "jury" || s.status === "boot" ? `<span class="hold-tag">Voted out · jury</span>` : "";
+  const bootTag =
+    s.status === "disqualified"
+      ? `<span class="hold-tag">Disqualified · jury</span>`
+      : s.status === "jury" || s.status === "boot"
+        ? `<span class="hold-tag">Voted out · jury</span>`
+        : "";
   const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
   const hasLegs = legs.length > 0;
   const mark = faded
@@ -939,6 +987,23 @@ function renderBooksBoard(season) {
   else renderEpisodeHoldings(season);
 }
 
+function castawayStatusLine(survivor) {
+  if (!survivor) return "";
+  if (survivor.status === "disqualified" || survivor.disqualified) {
+    const note =
+      survivor.exitInterview === false && survivor.exitInterviewNote
+        ? `<p class="castaway-status-note">${escapeHtml(String(survivor.exitInterviewNote))}</p>`
+        : survivor.exitInterview === false
+          ? `<p class="castaway-status-note">Exit interview skipped.</p>`
+          : "";
+    return `<p class="castaway-status">Disqualified · jury</p>${note}`;
+  }
+  if (survivor.status === "jury" || survivor.status === "boot" || survivor.status === "voted-out") {
+    return `<p class="castaway-status">Voted out · jury</p>`;
+  }
+  return "";
+}
+
 function castawayTapeHtml(season, survivor) {
   if (!survivor) return "";
   const all = publicFills(season).filter((fill) => fill.survivorId === survivor.id);
@@ -1289,17 +1354,7 @@ function renderMoneyJourney(season) {
   if (banner && season.statusLabel) {
     banner.textContent = season.statusLabel;
   }
-  if (totals) {
-    totals.innerHTML = (season.tribes || [])
-      .map((t) => {
-        return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(tribeChromeName(t))}</h3>
-        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
-        <p>${t.livingCount} standing · combined week %</p>
-      </div>`;
-      })
-      .join("");
-  }
+  renderLiveTribeTotalsMount(season, totals);
   if (!race) return;
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 10;
   const ranked = [...(season.survivors || [])].sort((a, b) => {
@@ -1761,11 +1816,13 @@ function paintCastawaySheet(season, parsed) {
       </div>`
     : "";
 
+  const statusLine = castawayStatusLine(survivor);
   body.innerHTML =
     `<div class="castaway-card">
       ${portrait}
       <p class="castaway-kicker">${escapeHtml(tribeName)}</p>
       <h2 id="castaway-sheet-title">${escapeHtml(model)}</h2>
+      ${statusLine}
       <div class="castaway-stats">
         <div><span>Book</span>${money(survivor.bookUsd)}</div>
         <div><span>Day</span>${pct(dayPctOf(survivor))}</div>
@@ -1940,18 +1997,7 @@ function renderStandings(season) {
   const label = season.statusLabel || "Pre-season · torches unlit";
   if (banner) banner.textContent = label;
 
-  const totals = document.getElementById("tribe-totals");
-  if (totals) {
-    totals.innerHTML = (season.tribes || [])
-      .map((t) => {
-        return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(tribeChromeName(t))}</h3>
-        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
-        <p>${t.livingCount} standing · combined week %</p>
-      </div>`;
-      })
-      .join("");
-  }
+  renderLiveTribeTotalsMount(season, document.getElementById("tribe-totals"));
 
   const body = document.getElementById("books-body");
   if (!body) return;
@@ -2204,6 +2250,25 @@ function moneyTickerAllowedDiagrams() {
     : MONEY_TICKER_DIAGRAMS;
 }
 
+function moneyTickerEpisodeDiagrams(season) {
+  const diagrams = MONEY_TICKER_DIAGRAMS.slice();
+  if (!showLiveTribeCombinedTotals(season)) {
+    return diagrams.filter((id) => id !== "tribes");
+  }
+  return diagrams;
+}
+
+function moneyTickerDefaultDiagram() {
+  const allowed = moneyTickerAllowedDiagrams();
+  if (moneyTickerIsHome()) {
+    return allowed.includes("island") ? "island" : allowed[0] || "island";
+  }
+  /* Pre-merge (and closed E1/E2) still open on Tribes. After the merge, Contestants. */
+  if (allowed.includes("tribes")) return "tribes";
+  if (allowed.includes("contestants")) return "contestants";
+  return allowed[0] || "island";
+}
+
 function moneyTickerAllowedRanges() {
   return moneyTicker.ranges && moneyTicker.ranges.length
     ? moneyTicker.ranges
@@ -2225,9 +2290,10 @@ function islandGivenStartUsd(season) {
 
 function moneyPutInTotal(season, episode, range) {
   const original = islandGivenStartUsd(season);
-  /* Episode 2 week is funded: dotted island bar is islandGivenUsd, not the $120 open. */
-  if (range === "week" && tickerIsEpisodeTwo(episode) && typeof season.islandGivenUsd === "number") {
-    return season.islandGivenUsd;
+  /* Episode 2 week is funded at the cash-add through that week — not the live topped-up given. */
+  if (range === "week" && tickerIsEpisodeTwo(episode)) {
+    const anchor = episode && episode.weekEnd ? `${episode.weekEnd}T23:59:59Z` : null;
+    return tickerPutInAt(season, anchor);
   }
   return original;
 }
@@ -2244,15 +2310,22 @@ function hostPotAdds(season) {
   return (season.events || []).filter((event) => event && event.type === "mark" && isHostPotAdd(event));
 }
 
-/* Funded pot at a mark. Host cash-adds step the baseline; a newer islandGivenUsd
-   follows after the latest add so the “up from” line moves when the pot is topped up. */
-function tickerPutInAt(season, iso) {
-  const start = islandGivenStartUsd(season);
+function isGivenStep(item) {
+  if (!item) return false;
+  if (item.kind === "cash-add" || item.kind === "host-add" || item.kind === "theme-leftover") return true;
+  return /cash-add|host-add|theme-leftover/i.test(String(item.id || ""));
+}
+
+function givenSteps(season) {
   const liveGiven =
     typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)
       ? season.islandGivenUsd
       : null;
-  const adds = hostPotAdds(season)
+  const steps = hostPotAdds(season).slice();
+  (season.events || []).forEach((event) => {
+    if (event && event.type === "cash-add" && event.kind === "theme-leftover") steps.push(event);
+  });
+  return steps
     .map((item) => {
       const at = Date.parse(item && item.at);
       const given =
@@ -2261,21 +2334,31 @@ function tickerPutInAt(season, iso) {
     })
     .filter((item) => !Number.isNaN(item.at) && item.given != null)
     .sort((a, b) => a.at - b.at);
+}
+
+/* Funded pot at a mark. Host cash-adds step the baseline; theme leftover credits step later. */
+function tickerPutInAt(season, iso) {
+  const start = islandGivenStartUsd(season);
+  const liveGiven =
+    typeof season.islandGivenUsd === "number" && !Number.isNaN(season.islandGivenUsd)
+      ? season.islandGivenUsd
+      : null;
+  const steps = givenSteps(season);
   const t = iso ? Date.parse(iso) : NaN;
   let putIn = start;
   let lastStamped = start;
-  adds.forEach((add) => {
-    if (Number.isNaN(t) || t >= add.at) {
-      putIn = add.given;
-      lastStamped = add.given;
+  steps.forEach((step) => {
+    if (Number.isNaN(t) || t >= step.at) {
+      putIn = step.given;
+      lastStamped = step.given;
     }
   });
-  const lastAdd = adds.length ? adds[adds.length - 1] : null;
-  const afterLastAdd = !lastAdd || Number.isNaN(t) || t >= lastAdd.at;
-  if (afterLastAdd && liveGiven != null && liveGiven > lastStamped + 0.00005) {
+  const lastStep = steps.length ? steps[steps.length - 1] : null;
+  const afterLastStep = !lastStep || Number.isNaN(t) || t >= lastStep.at;
+  if (afterLastStep && liveGiven != null && liveGiven > lastStamped + 0.00005) {
     return liveGiven;
   }
-  if (!adds.length && liveGiven != null && liveGiven > start + 0.00005) {
+  if (!steps.length && liveGiven != null && liveGiven > start + 0.00005) {
     return liveGiven;
   }
   return putIn;
@@ -2333,10 +2416,18 @@ function snapshotsInTickerRange(snapshots, episode, range) {
 }
 
 function islandHostAddUsd(season) {
-  const given = islandGivenUsd(season);
-  const start = moneyPutInTotal(season);
-  if (given == null || Number.isNaN(given) || given <= start + 0.00005) return null;
-  return roundMoney(given - start);
+  const start = islandGivenStartUsd(season);
+  const adds = hostPotAdds(season)
+    .map((item) => ({
+      at: Date.parse(item && item.at),
+      given:
+        typeof item.givenUsd === "number" && !Number.isNaN(item.givenUsd) ? item.givenUsd : null
+    }))
+    .filter((item) => !Number.isNaN(item.at) && item.given != null)
+    .sort((a, b) => a.at - b.at);
+  const lastHost = adds.length ? adds[adds.length - 1] : null;
+  if (!lastHost || lastHost.given <= start + 0.00005) return null;
+  return roundMoney(lastHost.given - start);
 }
 
 function islandHostAddEpisodeLabel(seasonOrEpisode) {
@@ -2549,6 +2640,7 @@ function survivorBootAtMs(season, survivor) {
     if (entry.bootId && entry.bootId === survivor.id) return t;
     const bootName = entry.bootName || entry.boot;
     if (bootName && (bootName === survivor.name || bootName === survivor.model)) return t;
+    if (entry.type === "disqualification" && entry.bootId && entry.bootId === survivor.id) return t;
   }
   return null;
 }
@@ -3118,21 +3210,15 @@ function tickMoneyTickerPlayback(now) {
 }
 
 function applyMoneyTickerAutoDiagram() {
-  const allowed = moneyTickerAllowedDiagrams();
-  /* Episode autoplay opens on Tribes; home stays on Island (only diagram offered). */
-  const autoDiagram = moneyTickerIsHome()
-    ? allowed.includes("island")
-      ? "island"
-      : allowed[0]
-    : allowed.includes("tribes")
-      ? "tribes"
-      : allowed[0];
+  const autoDiagram = moneyTickerDefaultDiagram();
+  if (!autoDiagram) return;
   if (autoDiagram === "tribes") {
     moneyTicker.diagram = "tribes";
-  } else if (autoDiagram && autoDiagram !== moneyTicker.diagram) {
+  } else if (autoDiagram === "contestants") {
+    moneyTicker.diagram = "contestants";
+  } else if (autoDiagram !== moneyTicker.diagram) {
     moneyTicker.diagram = autoDiagram;
   }
-  if (!autoDiagram) return;
   const rootEl = moneyTicker.root;
   if (!rootEl) return;
   rootEl.querySelectorAll("[data-ticker-diagram]").forEach((btn) => {
@@ -3808,16 +3894,18 @@ function mountMoneyTicker(season, opts) {
     document.documentElement.getAttribute("data-page") === "island";
   moneyTicker.mode = homeMode ? "home" : "episode";
   moneyTicker.ranges = homeMode ? MONEY_TICKER_HOME_RANGES.slice() : MONEY_TICKER_RANGES.slice();
-  moneyTicker.diagrams = homeMode ? MONEY_TICKER_HOME_DIAGRAMS.slice() : MONEY_TICKER_DIAGRAMS.slice();
+  moneyTicker.diagrams = homeMode ? MONEY_TICKER_HOME_DIAGRAMS.slice() : moneyTickerEpisodeDiagrams(season);
   if (homeMode && !(opts && opts.keepEnd)) {
     moneyTicker.range = "season";
     moneyTicker.diagram = "island";
+  } else if (!homeMode && !(opts && opts.keepEnd)) {
+    moneyTicker.diagram = moneyTickerDefaultDiagram();
   }
   if (!moneyTickerAllowedRanges().includes(moneyTicker.range)) {
     moneyTicker.range = moneyTickerAllowedRanges()[0] || "season";
   }
   if (!moneyTickerAllowedDiagrams().includes(moneyTicker.diagram)) {
-    moneyTicker.diagram = moneyTickerAllowedDiagrams()[0] || "island";
+    moneyTicker.diagram = moneyTickerDefaultDiagram();
   }
   moneyTicker.reducedMotion =
     typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -3927,18 +4015,10 @@ function mountMoneyTicker(season, opts) {
 
 function renderEpisode(season) {
   renderEpisodeDays(season);
-  const totals = document.getElementById("episode-tribe-totals");
-  if (totals) {
-    totals.innerHTML = episodeHoldingsTribes(season)
-      .map((t) => {
-        return `<div class="total-card ${t.id}">
-        <h3>${escapeHtml(tribeChromeName(t))}</h3>
-        <p class="pct">${pct(combinedWeekPctOf(t))}</p>
-        <p>${t.livingCount} standing · combined week % · ${pct(combinedDayPctOf(t))} day</p>
-      </div>`;
-      })
-      .join("");
-  }
+  renderLiveTribeTotalsMount(season, document.getElementById("episode-tribe-totals"), {
+    tribes: episodeHoldingsTribes(season),
+    dayPct: true
+  });
   const banner = document.getElementById("season-banner");
   if (banner) banner.textContent = season.statusLabel || "Live · S1E01 · Friday tribal Aug 28";
   renderEpisodeLiveIndicator(season);
@@ -3974,7 +4054,7 @@ function renderEpisode(season) {
       <div class="torches">${councilTorchRowHtml(season, null)}</div>
       <div class="council-empty">
         <h3>Not yet</h3>
-        <p>Friday night. Losing tribe walks in. Nobody wears a necklace. The vote is social.</p>
+        <p>${escapeHtml(tribalCouncilEmptyCopy(season))}</p>
       </div>`;
     } else {
       if (tribalHeading) tribalHeading.textContent = "The vote";
@@ -4128,7 +4208,7 @@ function renderHomeTribalSpoiler(season) {
   const items = log.map((entry) => formatTribalEntry(entry)).join("");
   stage.innerHTML = wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`, {
     resultId: "home-tribal-spoiler-result",
-    title: "See who was voted off in episode one",
+    title: "See who has been voted off so far",
     copy: "Burn to reveal who goes home."
   });
   bindTribalSpoilers(stage);
@@ -4176,10 +4256,21 @@ function episodeWatchReady(season, episode) {
   return week.some((snap) => snap && snap.kind && snap.kind !== "carry");
 }
 
+/* Public Live links: carry opens the week (Labor Day flip) before the first RTH mark. */
+function episodeLiveWatchable(season, episode) {
+  if (!episode || !episode.path) return false;
+  if (episodeIsClosed(episode)) return true;
+  if (episodeWatchReady(season, episode)) return true;
+  if (episode.status !== "live") return false;
+  const snaps = Array.isArray(season && season.snapshots) ? season.snapshots : [];
+  const week = snapshotsInTickerRange(snaps, episode, "week");
+  return week.some((snap) => snap && snap.kind === "carry");
+}
+
 function watchEpisode(season) {
   const listed = Array.isArray(season && season.episodes) ? season.episodes : [];
   const live = getLiveEpisode(season);
-  if (live && episodeWatchReady(season, live)) return live;
+  if (live && episodeLiveWatchable(season, live)) return live;
   const closed = listed
     .filter((ep) => episodeIsClosed(ep) && ep.path)
     .sort((a, b) => (a.number || 0) - (b.number || 0));
@@ -4189,7 +4280,7 @@ function watchEpisode(season) {
 
 function episodePublicLocked(season, ep) {
   if (!ep || ep.status === "locked" || !ep.path) return true;
-  if (ep.status === "live" && !episodeWatchReady(season, ep)) return true;
+  if (ep.status === "live" && !episodeLiveWatchable(season, ep)) return true;
   return false;
 }
 
@@ -4262,7 +4353,7 @@ function renderSeasonHub(season) {
       </div>`;
       }
       const href = episodeFileHref(ep);
-      const live = ep.status === "live" && episodeWatchReady(season, ep);
+      const live = ep.status === "live" && episodeLiveWatchable(season, ep);
       const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
       const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
       return `<a class="episode-card${liveClass}" href="${escapeHtml(href)}">

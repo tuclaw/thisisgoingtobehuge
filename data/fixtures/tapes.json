@@ -432,5 +432,97 @@
         "hash": "02e06b2da4b045a890ac51b74853e0d23fb505f57e5394c9864ee37005d68f86"
       }
     }
+  },
+  "e02-saturday-dinner.js": {
+    "global": "SATURDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-sat-dinner-fire",
+      "bidu-sat-dinner-fire"
+    ],
+    "threads": {
+      "askara-sat-dinner-fire": {
+        "count": 7,
+        "from": [
+          "juno",
+          "quill",
+          "reed",
+          "reed",
+          "reed",
+          "quill",
+          "juno"
+        ],
+        "hash": "643f8966fa612ad3c72403dabb696a8cc862fff89d2156be9fbe7ef7842f5018"
+      },
+      "bidu-sat-dinner-fire": {
+        "count": 4,
+        "from": [
+          "vesper",
+          "mara",
+          "vesper",
+          "nori"
+        ],
+        "hash": "4e9e0aff82271e29494342f4ed889defd2811d6661645ed792fb1eae16d8a688"
+      }
+    }
+  },
+  "e02-sunday-dinner.js": {
+    "global": "SUNDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "askara-sun-dinner-fire",
+      "bidu-sun-dinner-fire"
+    ],
+    "threads": {
+      "askara-sun-dinner-fire": {
+        "count": 3,
+        "from": [
+          "quill",
+          "reed",
+          "reed"
+        ],
+        "hash": "f77016f868dd2e9949d5787cf072d853c0e7a20e236a7925192949ccb94c1b92"
+      },
+      "bidu-sun-dinner-fire": {
+        "count": 8,
+        "from": [
+          "hex",
+          "pax",
+          "gage",
+          "hex",
+          "pax",
+          "gage",
+          "hex",
+          "pax"
+        ],
+        "hash": "3369011987565c047a3f145ef4d2a4ca7dac6aad98b10bcebd086bb5d47695bb"
+      }
+    }
+  },
+  "e03-monday-dinner.js": {
+    "global": "MONDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "merged-mon-dinner-fire"
+    ],
+    "threads": {
+      "merged-mon-dinner-fire": {
+        "count": 14,
+        "from": [
+          "mara",
+          "juno",
+          "vesper",
+          "quill",
+          "nori",
+          "mara",
+          "quill",
+          "vesper",
+          "nori",
+          "juno",
+          "quill",
+          "mara",
+          "nori",
+          "quill"
+        ],
+        "hash": "1c6ed535a0b19cc53983051d1b76451079d9466921fbd5f97ee8f2bf51c66a99"
+      }
+    }
   }
 }

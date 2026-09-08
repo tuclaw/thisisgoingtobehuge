@@ -105,12 +105,23 @@ for (const tape of manifest) {
     Object.keys(loaded.byId).join("|")
   );
 
-  const expectedSize = tape.kind === "dinner-fires" ? 3 : tape.kind === "lunch-chats" ? 2 : null;
+  let allowedSizes = null;
+  if (tape.participantCount != null) {
+    allowedSizes = Array.isArray(tape.participantCount) ? tape.participantCount : [tape.participantCount];
+  } else if (tape.kind === "dinner-fires") {
+    allowedSizes = [3];
+  } else if (tape.kind === "lunch-chats") {
+    allowedSizes = [2];
+  }
   for (const id of threadIds) {
     const convo = loaded.byId[id];
     if (!convo) continue;
-    if (expectedSize) {
-      check(`${label}:${id}:size`, (convo.participants || []).length === expectedSize, String((convo.participants || []).length));
+    if (allowedSizes) {
+      check(
+        `${label}:${id}:size`,
+        allowedSizes.includes((convo.participants || []).length),
+        String((convo.participants || []).length)
+      );
     }
     for (const person of convo.participants || []) {
       check(`${label}:${id}:model-name:${person.id}`, MODEL_NAMES.includes(person.name), person.name);

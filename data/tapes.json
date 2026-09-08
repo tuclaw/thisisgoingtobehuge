@@ -96,6 +96,37 @@
       "afterBeatIds": ["thursday-official-books"],
       "campfireFeed": false,
       "isolateFromEpisodes": ["s1e01"]
+    },
+    {
+      "file": "e02-saturday-dinner.js",
+      "dayId": "saturday",
+      "beatId": "saturday-dinner",
+      "global": "SATURDAY_DINNER_CONVERSATIONS",
+      "afterDayIds": ["tribal"],
+      "foldOnlyBeatIds": ["saturday-dinner"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01"]
+    },
+    {
+      "file": "e02-sunday-dinner.js",
+      "dayId": "sunday",
+      "beatId": "sunday-dinner",
+      "global": "SUNDAY_DINNER_CONVERSATIONS",
+      "afterDayIds": ["saturday", "tribal"],
+      "foldOnlyBeatIds": ["sunday-dinner"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01"],
+      "participantCount": [2, 3]
+    },
+    {
+      "file": "e03-monday-dinner.js",
+      "dayId": "monday",
+      "beatId": "monday-dinner",
+      "global": "MONDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["monday-confessionals"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01", "s1e02"],
+      "participantCount": 5
     }
   ]
 }
