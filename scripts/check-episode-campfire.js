@@ -295,7 +295,7 @@ if (appJs.includes("function moneyTickerLiveNowX") || appJs.includes("data-ticke
 if (appJs.includes("live.textContent = tickerAxisPct") || appJs.includes("from even")) {
   throw new Error("app.js money ticker footer must show cash, not week % from even");
 }
-if (!appJs.includes("live.textContent = potMoney") || !appJs.includes("cash: snapshotTotal(snap)")) {
+if (!appJs.includes("live.textContent = potMoney") || !appJs.includes("cash: snapshotTotal(snap, season)")) {
   throw new Error("app.js money ticker footer must show pot cash from each snapshot");
 }
 if (appJs.includes("frame.axisT = weekdaySlotT") || appJs.includes("function weekdaySlotT")) {
@@ -312,6 +312,7 @@ if (!(axisStart > -1 && axisEnd > axisStart)) {
 }
 const axisHelpers = new Function(`
   const moneyTicker = { axisMax: 5, range: "week", frames: [] };
+  function tickerPlotAt(snap) { return (snap && (snap.throughAt || snap.at)) || ""; }
   ${appJs.slice(axisStart, axisEnd)}
   return {
     formatPacificDateRange,
@@ -666,6 +667,20 @@ if (
 ) {
   throw new Error("app.js must start Episode 2 week at the cash-add with the funded given / $20 put-in");
 }
+if (
+  !appJs.includes("function tickerPlotAt") ||
+  !appJs.includes("function sortSnapshotsForTicker") ||
+  !appJs.includes("snap.throughAt || snap.at")
+) {
+  throw new Error("app.js must plot ticker marks on throughAt and sort the tape in clock order");
+}
+if (
+  !appJs.includes("function survivorInIslandPotAt") ||
+  !appJs.includes("function tribalEntryIsBoot") ||
+  !appJs.includes("Disqualified")
+) {
+  throw new Error("app.js must count living island cash and keep merge rows out of the spoiler");
+}
 
 const tickerStart = appJs.indexOf("function tickerIsEpisodeTwo");
 const tickerEnd = appJs.indexOf("function islandHostAddUsd");
@@ -780,6 +795,97 @@ const e3EmptyWeek = tickerHelpers.snapshotsInTickerRange(
 if (e3EmptyWeek.length !== 1 || e3EmptyWeek[0].id !== "s1e02-fri-eod") {
   throw new Error("an empty Episode 3 week must keep the start snap, not the whole tape, got " + e3EmptyWeek.map((s) => s.id).join(","));
 }
+const e3WithNextWeek = tickerHelpers.snapshotsInTickerRange(
+  [
+    { id: "s1e03-carry", at: "2026-09-07T07:00:00Z", kind: "carry" },
+    { id: "s1e03-tue-eod", at: "2026-09-08T21:00:00Z", kind: "close" },
+    { id: "s1e04-carry", at: "2026-09-08T21:30:00Z", kind: "carry" },
+    { id: "s1e04-tue-sip", at: "2026-09-09T02:15:00Z", throughAt: "2026-09-08T23:59:59Z", kind: "close" }
+  ],
+  e3Ep,
+  "week"
+);
+if (e3WithNextWeek.some((snap) => String(snap.id).startsWith("s1e04"))) {
+  throw new Error("Episode 3 week must not keep Episode 4 carry/SIP, got " + e3WithNextWeek.map((s) => s.id).join(","));
+}
+const e4Ep = {
+  id: "s1e04",
+  number: 4,
+  weekStart: "2026-09-09",
+  weekEnd: "2026-09-11",
+  diagramStartSnapshotId: "s1e04-carry"
+};
+const e4Week = tickerHelpers.snapshotsInTickerRange(
+  [
+    { id: "s1e03-tue-eod", at: "2026-09-08T21:00:00Z", kind: "close" },
+    { id: "s1e04-carry", at: "2026-09-08T21:30:00Z", kind: "carry" },
+    { id: "s1e04-tue-sip", at: "2026-09-09T02:15:00Z", throughAt: "2026-09-08T23:59:59Z", kind: "close" }
+  ],
+  e4Ep,
+  "week"
+);
+if (
+  e4Week.length !== 2 ||
+  e4Week[0].id !== "s1e04-carry" ||
+  e4Week[1].id !== "s1e04-tue-sip"
+) {
+  throw new Error("Episode 4 week must be this episode's carry then SIP, got " + e4Week.map((s) => s.id).join(","));
+}
+
+const plotStart = appJs.indexOf("function tickerPlotAt");
+const plotEnd = appJs.indexOf("function snapshotsInTickerRange");
+if (!(plotStart > -1 && plotEnd > plotStart)) {
+  throw new Error("app.js missing tickerPlotAt before snapshotsInTickerRange");
+}
+const plotHelpers = new Function(`
+  ${appJs.slice(plotStart, plotEnd)}
+  return { tickerPlotAt, sortSnapshotsForTicker };
+`)();
+if (plotHelpers.tickerPlotAt({ at: "2026-09-09T02:15:00Z", throughAt: "2026-09-08T23:59:59Z" }) !== "2026-09-08T23:59:59Z") {
+  throw new Error("tickerPlotAt must prefer throughAt so late SIP sits on Tuesday");
+}
+const sortedTue = plotHelpers.sortSnapshotsForTicker([
+  { id: "s1e03-tue-open", at: "2026-09-08T20:00:00Z" },
+  { id: "s1e03-tue-mid", at: "2026-09-08T17:00:00Z" },
+  { id: "s1e03-tue-lasthour", at: "2026-09-08T19:30:00Z" }
+]).map((snap) => snap.id);
+if (sortedTue.join("|") !== "s1e03-tue-mid|s1e03-tue-lasthour|s1e03-tue-open") {
+  throw new Error("Tuesday marks must sort in clock order, got " + sortedTue.join("|"));
+}
+
+const potStart = appJs.indexOf("function survivorInIslandPotAt");
+const potEnd = appJs.indexOf("function pacificDayLabel");
+if (!(potStart > -1 && potEnd > potStart)) {
+  throw new Error("app.js missing survivorInIslandPotAt / snapshotTotal");
+}
+const potHelpers = new Function(`
+  function tickerPlotAt(snap) { return (snap && (snap.throughAt || snap.at)) || ""; }
+  function roundMoney(n) { return Math.round(n * 10000) / 10000; }
+  function survivorBootAtMs(season, survivor) {
+    const log = (season && season.tribalLog) || [];
+    const hit = log.find((entry) => entry && entry.bootId === survivor.id);
+    return hit ? Date.parse(hit.at) : null;
+  }
+  ${appJs.slice(potStart, potEnd)}
+  return { snapshotTotal };
+`)();
+const potSeason = {
+  survivors: [
+    { id: "live", status: "active" },
+    { id: "boot", status: "jury" }
+  ],
+  tribalLog: [{ bootId: "boot", at: "2026-09-08T21:00:00Z" }]
+};
+const potSnap = {
+  at: "2026-09-08T21:30:00Z",
+  books: { live: { bookUsd: 362.52 }, boot: { bookUsd: 37.51 } }
+};
+if (potHelpers.snapshotTotal(potSnap, potSeason) !== 362.52) {
+  throw new Error("snapshotTotal must drop voted-out books after tribal, got " + potHelpers.snapshotTotal(potSnap, potSeason));
+}
+if (potHelpers.snapshotTotal({ at: "2026-09-08T21:00:00Z", books: potSnap.books }, potSeason) !== 400.03) {
+  throw new Error("snapshotTotal must keep the boot book through the tribal mark");
+}
 
 const tribePctStart = appJs.indexOf("function tribePctsFromFrame");
 const tribePctEnd = appJs.indexOf("function framesFromSnapshots");
@@ -854,6 +960,13 @@ if (!episodeJs.includes("dataset.slot") || !episodeJs.includes('btn.dataset.slot
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 if (stylesCss.includes(".money-ticker-live.is-pair") || stylesCss.includes(".money-ticker-live.is-tribes")) {
   throw new Error("styles.css must not keep side-by-side ticker foot sizes");
+}
+if (
+  !stylesCss.includes(".tribal-spoiler.is-revealed") ||
+  !stylesCss.includes(".episode-recap .tribal-spoiler.is-revealed") ||
+  !stylesCss.includes(".home-vote-band .tribal-spoiler.is-revealed")
+) {
+  throw new Error("revealed spoilers must drop the mobile 5/3 card so stacked boots stay in flow");
 }
 if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
   throw new Error("styles.css missing the 0% reference line");
