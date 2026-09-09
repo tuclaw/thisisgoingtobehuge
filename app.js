@@ -2098,6 +2098,15 @@ function currentPageEpisode(season) {
   return season.episode || null;
 }
 
+function tribalEntryIsBoot(entry) {
+  if (!entry || entry.type === "merge") return false;
+  return Boolean(entry.bootName || entry.boot || entry.bootId);
+}
+
+function tribalBootEntries(log) {
+  return (Array.isArray(log) ? log : []).filter(tribalEntryIsBoot);
+}
+
 function tribalLogForPage(season) {
   const all = Array.isArray(season.tribalLog) ? season.tribalLog : [];
   const ep = currentPageEpisode(season);
@@ -2109,7 +2118,7 @@ function priorTribalLog(season) {
   const all = Array.isArray(season.tribalLog) ? season.tribalLog : [];
   const ep = currentPageEpisode(season);
   if (!ep || !ep.id) return [];
-  return all.filter((entry) => entry && entry.episode && entry.episode !== ep.id);
+  return tribalBootEntries(all.filter((entry) => entry && entry.episode && entry.episode !== ep.id));
 }
 
 function renderEpisodeDays(season) {
@@ -2387,22 +2396,46 @@ function snapshotsFromEpisodeStart(snaps, episode) {
   return idx >= 0 ? list.slice(idx) : list;
 }
 
+function tickerPlotAt(snap) {
+  if (!snap) return "";
+  return snap.throughAt || snap.at || "";
+}
+
+function sortSnapshotsForTicker(snaps) {
+  return (snaps || []).slice().sort((a, b) => {
+    const ta = Date.parse(tickerPlotAt(a));
+    const tb = Date.parse(tickerPlotAt(b));
+    const na = Number.isNaN(ta) ? 0 : ta;
+    const nb = Number.isNaN(tb) ? 0 : tb;
+    if (na !== nb) return na - nb;
+    return String((a && a.id) || "").localeCompare(String((b && b.id) || ""));
+  });
+}
+
 function snapshotsInTickerRange(snapshots, episode, range) {
   const all = Array.isArray(snapshots) ? snapshots.slice() : [];
   if (!all.length) return [];
   if (range !== "week") return all;
   const ep = episode || {};
-  const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
-  const weekEnd = ep.weekEnd
-    ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
-    : ep.tribalAt
-      ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
-      : NaN;
-  if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
-  let filtered = all.filter((snap) => {
-    const t = Date.parse(snap.at);
-    return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
-  });
+  const prefix = String(ep.id || "");
+  /* This episode's own snaps — not the next week's carry that still falls
+     inside the calendar window (E4 carry used to crash the E3 Tuesday line). */
+  let filtered = prefix
+    ? all.filter((snap) => String((snap && snap.id) || "").startsWith(prefix))
+    : [];
+  if (!filtered.length) {
+    const weekStart = ep.weekStart ? Date.parse(ep.weekStart + "T00:00:00-07:00") : NaN;
+    const weekEnd = ep.weekEnd
+      ? Date.parse(ep.weekEnd + "T23:59:59-07:00")
+      : ep.tribalAt
+        ? Date.parse(ep.tribalAt) + 36 * 60 * 60 * 1000
+        : NaN;
+    if (Number.isNaN(weekStart) || Number.isNaN(weekEnd)) return all;
+    filtered = all.filter((snap) => {
+      const t = Date.parse(tickerPlotAt(snap));
+      return !Number.isNaN(t) && t >= weekStart && t <= weekEnd;
+    });
+  }
   /* Episode 2 week starts after the $10 cash add so opening numbers already carry the extra sleeve. */
   filtered = snapshotsFromEpisodeStart(filtered, ep);
   if (filtered.length) return filtered;
@@ -2443,11 +2476,29 @@ function roundMoney(n) {
   return Math.round(n * 10000) / 10000;
 }
 
-function snapshotTotal(snap) {
+function survivorInIslandPotAt(season, survivor, iso) {
+  if (!survivor) return false;
+  const bootAt = survivorBootAtMs(season, survivor);
+  if (bootAt == null) {
+    return !survivor.status || survivor.status === "active" || survivor.status === "immune";
+  }
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return true;
+  /* Keep the boot book on the pot through the tribal mark; drop it after. */
+  return t <= bootAt;
+}
+
+function snapshotTotal(snap, season) {
   if (!snap || !snap.books) return 0;
+  const at = tickerPlotAt(snap);
   return roundMoney(
-    Object.values(snap.books).reduce((acc, book) => {
-      return typeof book.bookUsd === "number" && !Number.isNaN(book.bookUsd) ? acc + book.bookUsd : acc;
+    Object.entries(snap.books).reduce((acc, [id, book]) => {
+      if (!book || typeof book.bookUsd !== "number" || Number.isNaN(book.bookUsd)) return acc;
+      if (season) {
+        const survivor = (season.survivors || []).find((row) => row && row.id === id);
+        if (!survivor || !survivorInIslandPotAt(season, survivor, at)) return acc;
+      }
+      return acc + book.bookUsd;
     }, 0)
   );
 }
@@ -2678,9 +2729,10 @@ function moneyTickerAssignAxis(frames, range) {
   if (mode === "week") {
     moneyTicker.axisMax = 5;
     list.forEach((frame) => {
-      const day = moneyTickerTradingDay(frame && frame.at);
+      const when = tickerPlotAt(frame);
+      const day = moneyTickerTradingDay(when);
       const slot = day && typeof day.slotHint === "number" ? day.slotHint : 0;
-      const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
+      const u = Math.min(0.98, Math.max(0.02, pacificSessionU(when)));
       frame.daySlot = slot;
       frame.axisT = slot + u;
     });
@@ -2690,14 +2742,15 @@ function moneyTickerAssignAxis(frames, range) {
   const dayIndex = new Map();
   let nextSlot = 0;
   list.forEach((frame) => {
-    const day = moneyTickerTradingDay(frame && frame.at);
+    const when = tickerPlotAt(frame);
+    const day = moneyTickerTradingDay(when);
     const key = day ? day.key : `frame-${nextSlot}`;
     if (!dayIndex.has(key)) {
       dayIndex.set(key, nextSlot);
       nextSlot += 1;
     }
     const slot = dayIndex.get(key);
-    const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frame && frame.at)));
+    const u = Math.min(0.98, Math.max(0.02, pacificSessionU(when)));
     frame.daySlot = slot;
     frame.axisT = slot + u;
   });
@@ -3066,20 +3119,21 @@ function framesFromSnapshots(season, snaps, range) {
     s.__tickerTone = candidateStroke(s, tribeIndex[key]);
     tribeIndex[key] += 1;
   });
-  const frames = (snaps || [])
-    .filter((snap) => snap && snap.books)
+  const frames = sortSnapshotsForTicker((snaps || []).filter((snap) => snap && snap.books))
     .map((snap) => {
       const books = {};
       cast.forEach((s) => {
         books[s.id] = bookWeekPctFromSnap(snap.books && snap.books[s.id]);
       });
+      const plotAt = tickerPlotAt(snap);
       const frame = {
         id: snap.id,
-        at: snap.at,
-        label: snap.label || pacificDayLabel(snap.at),
+        at: plotAt || snap.at,
+        throughAt: snap.throughAt,
+        label: snap.label || pacificDayLabel(plotAt || snap.at),
         books,
-        cash: snapshotTotal(snap),
-        putIn: tickerPutInAt(season, snap.at)
+        cash: snapshotTotal(snap, season),
+        putIn: tickerPutInAt(season, plotAt || snap.at)
       };
       frame.tribes = tribePctsFromFrame(frame, season, snap);
       frame.total = roundMoney(
@@ -4059,8 +4113,10 @@ function renderEpisode(season) {
     } else {
       if (tribalHeading) tribalHeading.textContent = "The vote";
       document.body.classList.add("episode-vote-posted");
-      const latest = log[log.length - 1];
-      const items = log.map((entry) => formatTribalEntry(entry)).join("");
+      const boots = tribalBootEntries(log);
+      const shown = boots.length ? boots : log;
+      const latest = shown[shown.length - 1];
+      const items = shown.map((entry) => formatTribalEntry(entry)).join("");
       tribal.innerHTML = `
     <div class="torches">${councilTorchRowHtml(season, latest)}</div>
     ${wrapTribalSpoiler(`<ul class="log-list tribal-vote-list">${items}</ul>`)}`;
@@ -4126,8 +4182,10 @@ function formatTribalEntry(entry) {
   const episodeHtml = epNum
     ? `<span class="boot-episode">Episode ${epNum}</span><span class="boot-kicker-sep" aria-hidden="true">·</span>`
     : "";
+  const spoken =
+    entry.notTribal || entry.type === "disqualification" ? "Disqualified" : "The tribe has spoken";
   return `<li class="tribal-vote-entry">
-    <p class="boot-kicker">${episodeHtml}<span class="boot-spoken">The tribe has spoken</span></p>
+    <p class="boot-kicker">${episodeHtml}<span class="boot-spoken">${spoken}</span></p>
     <p class="boot-name">${escapeHtml(String(boot))}</p>
     ${tallyHtml}
   </li>`;
@@ -4198,7 +4256,7 @@ function renderHomeTribalSpoiler(season) {
   const stage = document.getElementById("home-tribal");
   const band = document.getElementById("home-vote");
   if (!stage) return;
-  const log = Array.isArray(season.tribalLog) ? season.tribalLog : [];
+  const log = tribalBootEntries(season.tribalLog);
   if (log.length === 0) {
     if (band) band.hidden = true;
     stage.innerHTML = "";

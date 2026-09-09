@@ -1186,8 +1186,8 @@ img.portrait.photo {
 }
 
 .tribal-spoiler-result .tribal-vote-list > .tribal-vote-entry + .tribal-vote-entry {
-  margin-top: 3.4rem;
-  padding-top: 2.9rem;
+  margin-top: 1.35rem;
+  padding-top: 1.2rem;
 }
 
 .tribal-spoiler-cover {
@@ -1349,12 +1349,16 @@ img.portrait.photo {
 
 .tribal-spoiler.is-revealed {
   aspect-ratio: auto;
+  height: auto;
   min-height: 0;
   width: min(28rem, 100%);
   overflow: visible;
 }
 
 .tribal-spoiler.is-revealed .tribal-spoiler-result {
+  height: auto;
+  min-height: 0;
+  align-items: stretch;
   animation: spoiler-result-in 0.55s ease both;
 }
 
@@ -1407,8 +1411,8 @@ img.portrait.photo {
 }
 
 .tribal-vote-entry + .tribal-vote-entry {
-  margin-top: 3.4rem;
-  padding-top: 2.9rem;
+  margin-top: 1.35rem;
+  padding-top: 1.2rem;
   border-top: 1px solid rgba(196, 165, 116, 0.18);
 }
 
@@ -1551,10 +1555,20 @@ img.portrait.photo {
 
   .tribal-spoiler,
   .tribal-focus .tribal-spoiler,
-  .episode-recap .tribal-spoiler {
+  .episode-recap .tribal-spoiler,
+  .home-vote-band .tribal-spoiler {
     width: 100%;
     aspect-ratio: 5 / 3;
     margin-top: 0.2rem;
+  }
+
+  .tribal-spoiler.is-revealed,
+  .tribal-focus .tribal-spoiler.is-revealed,
+  .episode-recap .tribal-spoiler.is-revealed,
+  .home-vote-band .tribal-spoiler.is-revealed {
+    aspect-ratio: auto;
+    height: auto;
+    overflow: visible;
   }
 
   .tribal-spoiler-cover-fallback {

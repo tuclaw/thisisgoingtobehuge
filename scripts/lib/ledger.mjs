@@ -209,6 +209,7 @@ function snapshotsFromEvents(cast, events, starting, quotes) {
       tribes,
       books: booksOut
     };
+    if (event.throughAt) snap.throughAt = event.throughAt;
     if (typeof event.givenUsd === "number" && !Number.isNaN(event.givenUsd)) {
       snap.givenUsd = event.givenUsd;
     }
