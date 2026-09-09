@@ -279,14 +279,16 @@ check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.incl
 check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-wed-open",
-  source.statusLabel === "Live · S1E04 · MERGED · eight living · Wed open remake · Sol XLE liq cleared"
+  "status-label-e04-wed-mid",
+  source.statusLabel === "Live · S1E04 · MERGED · eight living · Wed mid remake · immunity GPT-5.6 Luna"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
 const e4WedOpen = (source.events || []).find((event) => event && event.id === "s1e04-wed-open");
 check("e4-wed-open-mark", Boolean(e4WedOpen) && e4WedOpen.kind === "open" && e4WedOpen.at === "2026-09-09T13:49:00Z");
-check("live-snapshot-wed-open", source.liveSnapshotId === "s1e04-wed-open");
+const e4WedMid = (source.events || []).find((event) => event && event.id === "s1e04-wed-mid");
+check("e4-wed-mid-mark", Boolean(e4WedMid) && e4WedMid.kind === "intraday" && e4WedMid.at === "2026-09-09T17:28:00Z");
+check("live-snapshot-wed-mid", source.liveSnapshotId === "s1e04-wed-mid");
 check(
   "live-episode-is-e04",
   source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"
@@ -298,7 +300,19 @@ check(
 );
 check("live-episode-week", source.episode && source.episode.weekLabel === "Wednesday Sep 9 – Friday Sep 11, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 11, 2026 · 2:00 PM PT");
-check("immunity-unset", source.immunity == null);
+check(
+  "immunity-luna",
+  source.immunity &&
+    source.immunity.name === "GPT-5.6 Luna" &&
+    source.immunity.weekPct === 1.87 &&
+    source.immunity.snapshotId === "s1e04-wed-mid"
+);
+const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
+check("luna-immune-flag", lunaLive && lunaLive.immune === true);
+check(
+  "only-luna-immune",
+  board.survivors.filter((s) => s.immune).length === 1 && board.survivors.filter((s) => s.immune)[0].name === "GPT-5.6 Luna"
+);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
 check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
