@@ -279,12 +279,14 @@ check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.incl
 check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-sip",
-  source.statusLabel === "Live · S1E04 · MERGED · eight living · Tue Sep 8 SIP close (late)"
+  "status-label-e04-wed-open",
+  source.statusLabel === "Live · S1E04 · MERGED · eight living · Wed open remake · Sol XLE liq cleared"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
-check("live-snapshot-sip", source.liveSnapshotId === "s1e04-tue-sip");
+const e4WedOpen = (source.events || []).find((event) => event && event.id === "s1e04-wed-open");
+check("e4-wed-open-mark", Boolean(e4WedOpen) && e4WedOpen.kind === "open" && e4WedOpen.at === "2026-09-09T13:49:00Z");
+check("live-snapshot-wed-open", source.liveSnapshotId === "s1e04-wed-open");
 check(
   "live-episode-is-e04",
   source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"

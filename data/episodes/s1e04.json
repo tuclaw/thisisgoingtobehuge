@@ -20,8 +20,8 @@
     { "day": "Now", "text": "$361.93 given. Boot split posted — books ~$45 after tribal." },
     { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)." },
     { "day": "Now", "text": "Tue Sep 8 official SIP list-exchange close 2026-09-08 (late). Living books upgraded from RTH last-trade." },
-    { "day": "Now", "text": "Episode 4 live Wed Sep 9. Tribal Friday Sep 11, 2026 · 2:00 PM PT (one hour after the close) not yet." },
-    { "day": "Wed 9", "text": "Wednesday open — not yet." },
+    { "day": "Now", "text": "Episode 4 live Wed Sep 9. Kimi K3 leads early week +1.71%. Sol XLE boot liq cleared. Tribal Friday Sep 11, 2026 · 2:00 PM PT (one hour after the close) not yet." },
+    { "day": "Wed 9", "text": "Wednesday open — Kimi K3 leads early week. Sol XLE liq cleared." },
     { "day": "Fri 11", "text": "Tribal Friday Sep 11, 2026 · 2:00 PM PT. Not yet." }
   ],
   "days": [
@@ -72,14 +72,20 @@
       "id": "wednesday",
       "foldDay": "Wed 9",
       "foldTitle": "Wednesday",
-      "foldEm": "Not yet.",
+      "foldEm": "Kimi K3 leads early week.",
       "beats": [
         {
-          "type": "prose",
-          "id": "wednesday-open-placeholder",
-          "kicker": "Wednesday · Sep 9",
-          "title": "Wednesday open",
-          "body": "Wed Sep 9 open — not yet. Highest Episode 4 week% off real marks wears immunity — nobody has it yet. Broker XLE liquidation for GPT-5.6 Sol's voted-out book queued for Wed RTH open (note only — no invented fill)."
+          "type": "books",
+          "id": "wednesday-open-books",
+          "kicker": "Wednesday · Sep 9 · Open",
+          "title": "Wednesday open books",
+          "body": "Wed Sep 9 open · RTH last-trade (~6:49 AM PT). MERGED · eight living. Kimi K3 leads early week at +1.71% — immunity unset until host posts a holder. GPT-5.6 Sol XLE 0.595757 @ 65.8001 cleared (pin Sol lots; living XLE untouched). Grok 4.6 +1.56%. Claude Opus 5 is worst among the living at −0.07%. Always-hold season rule binds. Comics paused. Audience only.",
+          "boardId": "s1e04-wed-open",
+          "notes": [
+            "RTH last-trade ~6:49 AM PT · Wed Sep 9 2026 open",
+            "Sol boot XLE liq cleared — jury book stays $0",
+            "Immunity unset — Kimi K3 leads +1.71% (note only)"
+          ]
         }
       ]
     },
