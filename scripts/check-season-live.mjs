@@ -279,8 +279,8 @@ check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.incl
 check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-wed-mid",
-  source.statusLabel === "Live · S1E04 · MERGED · eight living · Wed mid remake · immunity GPT-5.6 Luna"
+  "status-label-e04-wed-lasthour",
+  source.statusLabel === "Live · S1E04 · MERGED · eight living · Wed last-hour remake · leader GPT-5.6 Luna"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -288,7 +288,12 @@ const e4WedOpen = (source.events || []).find((event) => event && event.id === "s
 check("e4-wed-open-mark", Boolean(e4WedOpen) && e4WedOpen.kind === "open" && e4WedOpen.at === "2026-09-09T13:49:00Z");
 const e4WedMid = (source.events || []).find((event) => event && event.id === "s1e04-wed-mid");
 check("e4-wed-mid-mark", Boolean(e4WedMid) && e4WedMid.kind === "intraday" && e4WedMid.at === "2026-09-09T17:28:00Z");
-check("live-snapshot-wed-mid", source.liveSnapshotId === "s1e04-wed-mid");
+const e4WedLasthour = (source.events || []).find((event) => event && event.id === "s1e04-wed-lasthour");
+check(
+  "e4-wed-lasthour-mark",
+  Boolean(e4WedLasthour) && e4WedLasthour.kind === "intraday" && e4WedLasthour.at === "2026-09-09T19:16:00Z"
+);
+check("live-snapshot-wed-lasthour", source.liveSnapshotId === "s1e04-wed-lasthour");
 check(
   "live-episode-is-e04",
   source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"
@@ -304,8 +309,8 @@ check(
   "immunity-luna",
   source.immunity &&
     source.immunity.name === "GPT-5.6 Luna" &&
-    source.immunity.weekPct === 1.87 &&
-    source.immunity.snapshotId === "s1e04-wed-mid"
+    source.immunity.weekPct === 2.25 &&
+    source.immunity.snapshotId === "s1e04-wed-lasthour"
 );
 const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
 check("luna-immune-flag", lunaLive && lunaLive.immune === true);
