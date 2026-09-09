@@ -401,6 +401,19 @@ const e3TuesdayBooths = (((episode3Copy.days || []).find((day) => day.id === "tu
   (beat) => beat.id === "tuesday-confessionals"
 );
 assertBooths(e3TuesdayBooths, ["claude-opus-5", "gpt-5-6-sol", "kimi-k3"], "e03-tuesday-booths");
+const e4WednesdayBooths = (((episode4Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).find(
+  (beat) => beat.id === "wednesday-confessionals"
+);
+assertBooths(e4WednesdayBooths, ["gpt-5-6-luna", "kimi-k3", "claude-sonnet-5"], "e04-wednesday-booths");
+check(
+  "e04-wednesday-books-order",
+  beatOrder(episode4Copy.days || [], "wednesday", [
+    "wednesday-open-books",
+    "wednesday-mid-books",
+    "wednesday-confessionals",
+    "wednesday-lasthour-books"
+  ])
+);
 
 check(
   "e01-no-monday-noon-booths",
