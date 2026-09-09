@@ -279,10 +279,12 @@ check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.incl
 check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-carry",
-  source.statusLabel === "Live · S1E04 · MERGED · eight living · immunity unset"
+  "status-label-e04-sip",
+  source.statusLabel === "Live · S1E04 · MERGED · eight living · Tue Sep 8 SIP close (late)"
 );
-check("live-snapshot-carry", source.liveSnapshotId === "s1e04-carry");
+const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
+check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
+check("live-snapshot-sip", source.liveSnapshotId === "s1e04-tue-sip");
 check(
   "live-episode-is-e04",
   source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"
