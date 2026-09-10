@@ -279,8 +279,8 @@ check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.incl
 check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-thu-open",
-  source.statusLabel === "Live · S1E04 · MERGED · eight living · Thu open remake · immunity Kimi K3"
+  "status-label-e04-thu-mid",
+  source.statusLabel === "Live · S1E04 · MERGED · eight living · Thu mid remake · leader Grok 4.6"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -303,7 +303,12 @@ check(
   "e4-thu-open-mark",
   Boolean(e4ThuOpen) && e4ThuOpen.kind === "open" && e4ThuOpen.at === "2026-09-10T14:07:00Z"
 );
-check("live-snapshot-thu-open", source.liveSnapshotId === "s1e04-thu-open");
+const e4ThuMid = (source.events || []).find((event) => event && event.id === "s1e04-thu-mid");
+check(
+  "e4-thu-mid-mark",
+  Boolean(e4ThuMid) && e4ThuMid.kind === "intraday" && e4ThuMid.at === "2026-09-10T17:10:00Z"
+);
+check("live-snapshot-thu-mid", source.liveSnapshotId === "s1e04-thu-mid");
 check(
   "live-episode-is-e04",
   source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"
@@ -316,19 +321,19 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Wednesday Sep 9 – Friday Sep 11, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 11, 2026 · 2:00 PM PT");
 check(
-  "immunity-kimi",
+  "immunity-grok",
   source.immunity &&
-    source.immunity.name === "Kimi K3" &&
-    source.immunity.weekPct === 3.97 &&
-    source.immunity.snapshotId === "s1e04-thu-open"
+    source.immunity.name === "Grok 4.6" &&
+    source.immunity.weekPct === 5.96 &&
+    source.immunity.snapshotId === "s1e04-thu-mid"
 );
+const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
-const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
-check("kimi-immune-flag", kimiLive && kimiLive.immune === true);
-check("luna-not-immune", lunaLive && lunaLive.immune === false);
+check("grok-immune-flag", grokLive && grokLive.immune === true);
+check("kimi-not-immune", kimiLive && kimiLive.immune === false);
 check(
-  "only-kimi-immune",
-  board.survivors.filter((s) => s.immune).length === 1 && board.survivors.filter((s) => s.immune)[0].name === "Kimi K3"
+  "only-grok-immune",
+  board.survivors.filter((s) => s.immune).length === 1 && board.survivors.filter((s) => s.immune)[0].name === "Grok 4.6"
 );
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
@@ -437,6 +442,21 @@ check(
     e4ThursdayOpen.boardId === "s1e04-thu-open" &&
     String(e4ThursdayOpen.body || "").includes("Kimi K3") &&
     String(e4ThursdayOpen.body || "").includes("immunity")
+);
+const e4ThursdayMid = (((episode4Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-mid-books"
+);
+check(
+  "e04-thursday-mid-books",
+  Boolean(e4ThursdayMid) &&
+    e4ThursdayMid.type === "books" &&
+    e4ThursdayMid.boardId === "s1e04-thu-mid" &&
+    String(e4ThursdayMid.body || "").includes("Grok 4.6") &&
+    String(e4ThursdayMid.body || "").includes("immunity")
+);
+check(
+  "e04-thursday-books-order",
+  beatOrder(episode4Copy.days || [], "thursday", ["thursday-open-books", "thursday-mid-books"])
 );
 check(
   "e04-thursday-after-wednesday",
