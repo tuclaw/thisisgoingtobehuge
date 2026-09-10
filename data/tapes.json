@@ -127,6 +127,16 @@
       "campfireFeed": false,
       "isolateFromEpisodes": ["s1e01", "s1e02"],
       "participantCount": 5
+    },
+    {
+      "file": "e04-wednesday-dinner.js",
+      "dayId": "wednesday",
+      "beatId": "wednesday-dinner",
+      "global": "WEDNESDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["wednesday-official-books"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03"],
+      "participantCount": 5
     }
   ]
 }

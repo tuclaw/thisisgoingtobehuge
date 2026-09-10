@@ -162,6 +162,27 @@
             "Tribal immunity updated to SIP close — GPT-5.6 Luna +2.54%",
             "No fills since last-hour"
           ]
+        },
+        {
+          "type": "dinner-fires",
+          "id": "wednesday-dinner",
+          "audienceCut": "Audience only",
+          "kicker": "Campfire",
+          "title": "Wednesday dinner · merged fire",
+          "body": "One merged fire. Exact dinner tape. Episode 4 day one.",
+          "threads": [
+            {
+              "id": "merged-wed-dinner-fire",
+              "tribeId": "merged",
+              "heading": "Merged fire",
+              "desc": "Grok 4.6, Composer 2.5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna.",
+              "triggerLabel": "Merged fire",
+              "panelId": "panel-merged-wed-dinner",
+              "ariaLabel": "Merged fire — Grok 4.6, Composer 2.5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna",
+              "title": "Merged fire",
+              "subtitle": "Wednesday dinner · Episode 4 day one"
+            }
+          ]
         }
       ]
     },
