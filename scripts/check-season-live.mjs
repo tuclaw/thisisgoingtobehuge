@@ -470,9 +470,18 @@ check(
     String(e4ThursdayLasthour.body || "").includes("Grok 4.6") &&
     String(e4ThursdayLasthour.body || "").includes("6.82%")
 );
+const e4ThursdayBooths = (((episode4Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-confessionals"
+);
+assertBooths(e4ThursdayBooths, ["grok-4-6", "gpt-5-6-luna", "claude-sonnet-5"], "e04-thursday-booths");
 check(
   "e04-thursday-books-order",
-  beatOrder(episode4Copy.days || [], "thursday", ["thursday-open-books", "thursday-mid-books", "thursday-lasthour-books"])
+  beatOrder(episode4Copy.days || [], "thursday", [
+    "thursday-open-books",
+    "thursday-mid-books",
+    "thursday-confessionals",
+    "thursday-lasthour-books"
+  ])
 );
 check(
   "e04-thursday-after-wednesday",
