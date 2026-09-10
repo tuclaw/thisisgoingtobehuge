@@ -21,7 +21,8 @@
     { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)." },
     { "day": "Now", "text": "Tue Sep 8 official SIP list-exchange close 2026-09-08 (late). Living books upgraded from RTH last-trade." },
     { "day": "Now", "text": "Wed Sep 9 official SIP list-exchange close 2026-09-09. Living books upgraded from RTH last-trade." },
-    { "day": "Now", "text": "Episode 4 live Thu Sep 10 mid. Grok 4.6 leads +5.96% and wears immunity. Sol on jury. Tribal Friday Sep 11, 2026 · 2:00 PM PT (one hour after the close) not yet." },
+    { "day": "Now", "text": "Episode 4 live Thu Sep 10 last-hour. Grok 4.6 leads +6.82% and wears immunity. Sol on jury. Tribal Friday Sep 11, 2026 · 2:00 PM PT (one hour after the close) not yet." },
+    { "day": "Thu 10", "text": "Thu last-hour · Grok 4.6 immunity +6.82%. Eight living." },
     { "day": "Thu 10", "text": "Thu mid · Grok 4.6 immunity +5.96%. Eight living." },
     { "day": "Thu 10", "text": "Thu open · Kimi K3 led +3.97% at the bell (immunity cleared at mid)." },
     { "day": "Wed 9", "text": "Wed last-hour — GPT-5.6 Luna immunity +2.25%. Eight living." },
@@ -228,6 +229,21 @@
             "Kimi K3 sold CVX 0.048792 @ 213.5048 (6aa2e41a); bought FRO 0.215760 @ 48.2943 (6aa2e453, scaled).",
             "Skipped same-day (note only): Kimi K3 MPC sell.",
             "HOLD: Grok 4.6 (USO)."
+          ]
+        },
+        {
+          "type": "books",
+          "id": "thursday-lasthour-books",
+          "kicker": "Thursday · Sep 10 · Last hour",
+          "title": "Thursday last-hour books",
+          "body": "Thu Sep 10 2026 LAST-HOUR · RTH last-trade (~12:31 PM PT). MERGED · eight living. Grok 4.6 leads at +6.82% and wears immunity. Claude Sonnet 5 is worst among the living at +1.96%. Claude Sonnet 5 sold VLO, bought FRO. Composer 2.5 sold FRO, bought USO. Claude Opus 5 sold VLO (scaled), bought FRO. Grok 4.6, Gemini 3.7 Flash, GPT-5.6 Terra, GPT-5.6 Luna, and Kimi K3 HOLD. Skipped same-day (note only): GPT-5.6 Luna USO→FRO; Kimi K3 MPC→USO. Always-hold season rule binds. GPT-5.6 Sol stays on jury. Comics paused. Audience only.",
+          "boardId": "s1e04-thu-lasthour",
+          "notes": [
+            "Claude Sonnet 5 sold VLO 0.0264 @ 388.6301 (6aa30563); bought FRO 0.213159 @ 48.3675 (6aa30582).",
+            "Composer 2.5 sold FRO 0.300021 @ 48.3301 (6aa30565); bought USO 0.091582 @ 158.2177 (6aa30583).",
+            "Claude Opus 5 sold VLO 0.006541 @ 388.6301 (6aa30565, scaled); bought FRO 0.052511 @ 48.3699 (6aa30583).",
+            "HOLD: Grok 4.6, Gemini 3.7 Flash, GPT-5.6 Terra, GPT-5.6 Luna, Kimi K3.",
+            "Skipped same-day (note only): GPT-5.6 Luna USO→FRO; Kimi K3 MPC→USO."
           ]
         }
       ]
