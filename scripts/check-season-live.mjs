@@ -279,8 +279,8 @@ check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.incl
 check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-wed-lasthour",
-  source.statusLabel === "Live · S1E04 · MERGED · eight living · Wed last-hour remake · leader GPT-5.6 Luna"
+  "status-label-e04-wed-sip",
+  source.statusLabel === "Live · S1E04 · MERGED · eight living · Wed official SIP close · leader GPT-5.6 Luna"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -293,7 +293,12 @@ check(
   "e4-wed-lasthour-mark",
   Boolean(e4WedLasthour) && e4WedLasthour.kind === "intraday" && e4WedLasthour.at === "2026-09-09T19:16:00Z"
 );
-check("live-snapshot-wed-lasthour", source.liveSnapshotId === "s1e04-wed-lasthour");
+const e4WedSip = (source.events || []).find((event) => event && event.id === "s1e04-wed-sip");
+check(
+  "e4-wed-sip-mark",
+  Boolean(e4WedSip) && e4WedSip.kind === "close" && e4WedSip.at === "2026-09-10T02:15:00Z"
+);
+check("live-snapshot-wed-sip", source.liveSnapshotId === "s1e04-wed-sip");
 check(
   "live-episode-is-e04",
   source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"
@@ -309,8 +314,8 @@ check(
   "immunity-luna",
   source.immunity &&
     source.immunity.name === "GPT-5.6 Luna" &&
-    source.immunity.weekPct === 2.25 &&
-    source.immunity.snapshotId === "s1e04-wed-lasthour"
+    source.immunity.weekPct === 2.54 &&
+    source.immunity.snapshotId === "s1e04-wed-sip"
 );
 const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
 check("luna-immune-flag", lunaLive && lunaLive.immune === true);
@@ -411,7 +416,8 @@ check(
     "wednesday-open-books",
     "wednesday-mid-books",
     "wednesday-confessionals",
-    "wednesday-lasthour-books"
+    "wednesday-lasthour-books",
+    "wednesday-official-books"
   ])
 );
 
