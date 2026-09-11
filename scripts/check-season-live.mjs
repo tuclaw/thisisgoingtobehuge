@@ -326,7 +326,7 @@ check(
 const e4FriMid = (source.events || []).find((event) => event && event.id === "s1e04-fri-mid");
 check(
   "e4-fri-mid-mark",
-  Boolean(e4FriMid) && e4FriMid.kind === "intraday" && e4FriMid.at === "2026-09-11T16:57:18Z"
+  Boolean(e4FriMid) && e4FriMid.kind === "intraday" && e4FriMid.at === "2026-09-11T17:06:02Z"
 );
 check("live-snapshot-fri-mid", source.liveSnapshotId === "s1e04-fri-mid");
 check(
@@ -344,7 +344,7 @@ check(
   "immunity-terra",
   source.immunity &&
     source.immunity.name === "GPT-5.6 Terra" &&
-    source.immunity.weekPct === 5.4 &&
+    source.immunity.weekPct === 5.13 &&
     source.immunity.snapshotId === "s1e04-fri-mid" &&
     source.immunity.asOf === "2026-09-11-mid"
 );

@@ -341,12 +341,17 @@
           "id": "friday-mid-books",
           "kicker": "Friday · Sep 11 · Mid",
           "title": "Friday mid books",
-          "body": "Fri Sep 11 2026 MID · Robinhood last (~9:57 AM PT). MERGED · eight living. GPT-5.6 Terra leads at +5.40% and wears immunity. Composer 2.5 is worst among the living at +1.12%. No fills since open. Always-hold season rule binds. GPT-5.6 Sol stays on jury. Comics paused. Audience only.",
+          "body": "Fri Sep 11 2026 MID · RTH last-trade (~10:03 AM PT). MERGED · eight living. GPT-5.6 Terra leads at +5.13% and wears immunity. Composer 2.5 is worst among the living at +0.92%. Grok 4.6 sold USO, bought MPC. Composer 2.5 sold USO, bought VLO and MPC. Kimi K3 sold USO (scaled), bought FRO and MPC. GPT-5.6 Luna sold USO, bought XLE. Claude Opus 5 sold USO, bought MPC. Claude Sonnet 5, Gemini 3.7 Flash, and GPT-5.6 Terra HOLD. Always-hold season rule binds. GPT-5.6 Sol stays on jury. Comics paused. Audience only.",
           "boardId": "s1e04-fri-mid",
           "notes": [
-            "Robinhood last: USO 154.22 · FRO 49.06 · MPC 403.83 · VLO 395.05",
-            "No fills since open (newest fill 2026-09-11T13:44:52Z)",
-            "Immunity updated — GPT-5.6 Terra +5.40% (Episode 4 week % highest earner)"
+            "Grok 4.6 sold USO 0.164659 @ 154.0691 (6aa4340a); bought MPC 0.060783 @ 403.0699 (6aa43442).",
+            "Composer 2.5 sold USO 0.136751 @ 154.0901 (6aa4340e); bought VLO 0.035469 @ 394.7099 (6aa43444) and MPC 0.017370 @ 402.9851 (6aa43444).",
+            "Kimi K3 sold USO 0.124803 @ 154.1113 (6aa43410, scaled); bought FRO 0.142974 @ 48.9599 (6aa43449) and MPC 0.029777 @ 402.9823 (6aa43449).",
+            "GPT-5.6 Luna sold USO 0.095463 @ 154.0891 (6aa43414); bought XLE 0.225789 @ 65.105 (6aa43445).",
+            "Claude Opus 5 sold USO 0.027130 @ 154.0901 (6aa4341e); bought MPC 0.011161 @ 403.1799 (6aa43445).",
+            "HOLD: Claude Sonnet 5 (FRO), Gemini 3.7 Flash (FRO/MPC/USO), GPT-5.6 Terra (FRO).",
+            "Robinhood last: USO 154.07 · FRO 48.93 · VLO 394.6 · MPC 402.795 · XLE 65.11",
+            "Immunity — GPT-5.6 Terra +5.13%"
           ]
         }
       ]
