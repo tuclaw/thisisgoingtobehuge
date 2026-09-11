@@ -520,6 +520,14 @@ check(
     (episode4Copy.days || []).map((d) => d.id).indexOf("tribal") >
       (episode4Copy.days || []).map((d) => d.id).indexOf("thursday")
 );
+const e4FridayBooths = (((episode4Copy.days || []).find((day) => day.id === "friday") || {}).beats || []).find(
+  (beat) => beat.id === "friday-confessionals"
+);
+assertBooths(e4FridayBooths, ["gpt-5-6-terra", "composer-2-5", "kimi-k3"], "e04-friday-booths");
+check(
+  "e04-friday-books-order",
+  beatOrder(episode4Copy.days || [], "friday", ["friday-open-books", "friday-mid-books", "friday-confessionals"])
+);
 
 check(
   "e01-no-monday-noon-booths",
