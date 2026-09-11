@@ -145,7 +145,7 @@ if (boardNative) {
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", source.islandPotUsd === 379.0806, String(source.islandPotUsd));
+  check("pot-marked-sleeves", source.islandPotUsd === 374.1487, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
