@@ -288,6 +288,27 @@
             "Tribal immunity updated to SIP close — Grok 4.6 +6.92%",
             "No fills since last-hour"
           ]
+        },
+        {
+          "type": "dinner-fires",
+          "id": "thursday-dinner",
+          "audienceCut": "Audience only",
+          "kicker": "Campfire",
+          "title": "Thursday dinner · merged fire",
+          "body": "One merged fire. Exact dinner tape. Episode 4 day two.",
+          "threads": [
+            {
+              "id": "merged-thu-dinner-fire",
+              "tribeId": "merged",
+              "heading": "Merged fire",
+              "desc": "Claude Sonnet 5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Luna, Kimi K3.",
+              "triggerLabel": "Merged fire",
+              "panelId": "panel-merged-thu-dinner",
+              "ariaLabel": "Merged fire — Claude Sonnet 5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Luna, Kimi K3",
+              "title": "Merged fire",
+              "subtitle": "Thursday dinner · Episode 4 day two"
+            }
+          ]
         }
       ]
     },
