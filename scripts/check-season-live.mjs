@@ -279,8 +279,8 @@ check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.incl
 check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-thu-lasthour",
-  source.statusLabel === "Live · S1E04 · MERGED · eight living · Thu last-hour remake · leader Grok 4.6"
+  "status-label-e04-thu-sip",
+  source.statusLabel === "Live · S1E04 · MERGED · eight living · Thu official SIP close · leader Grok 4.6"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -313,7 +313,12 @@ check(
   "e4-thu-lasthour-mark",
   Boolean(e4ThuLasthour) && e4ThuLasthour.kind === "intraday" && e4ThuLasthour.at === "2026-09-10T19:31:00Z"
 );
-check("live-snapshot-thu-lasthour", source.liveSnapshotId === "s1e04-thu-lasthour");
+const e4ThuSip = (source.events || []).find((event) => event && event.id === "s1e04-thu-sip");
+check(
+  "e4-thu-sip-mark",
+  Boolean(e4ThuSip) && e4ThuSip.kind === "close" && e4ThuSip.at === "2026-09-11T02:15:00Z"
+);
+check("live-snapshot-thu-sip", source.liveSnapshotId === "s1e04-thu-sip");
 check(
   "live-episode-is-e04",
   source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"
@@ -329,8 +334,8 @@ check(
   "immunity-grok",
   source.immunity &&
     source.immunity.name === "Grok 4.6" &&
-    source.immunity.weekPct === 6.82 &&
-    source.immunity.snapshotId === "s1e04-thu-lasthour"
+    source.immunity.weekPct === 6.92 &&
+    source.immunity.snapshotId === "s1e04-thu-sip"
 );
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
@@ -474,13 +479,25 @@ const e4ThursdayBooths = (((episode4Copy.days || []).find((day) => day.id === "t
   (beat) => beat.id === "thursday-confessionals"
 );
 assertBooths(e4ThursdayBooths, ["grok-4-6", "gpt-5-6-luna", "claude-sonnet-5"], "e04-thursday-booths");
+const e4ThursdayOfficial = (((episode4Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-official-books"
+);
+check(
+  "e04-thursday-official-books",
+  Boolean(e4ThursdayOfficial) &&
+    e4ThursdayOfficial.type === "books" &&
+    e4ThursdayOfficial.boardId === "s1e04-thu-sip" &&
+    String(e4ThursdayOfficial.body || "").includes("Grok 4.6") &&
+    String(e4ThursdayOfficial.body || "").includes("6.92%")
+);
 check(
   "e04-thursday-books-order",
   beatOrder(episode4Copy.days || [], "thursday", [
     "thursday-open-books",
     "thursday-mid-books",
     "thursday-confessionals",
-    "thursday-lasthour-books"
+    "thursday-lasthour-books",
+    "thursday-official-books"
   ])
 );
 check(
