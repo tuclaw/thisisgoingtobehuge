@@ -8,7 +8,7 @@
     "fixtures": "node scripts/gen-fixtures.mjs",
     "check:season": "node scripts/check-season.mjs && node scripts/check-season-live.mjs && node scripts/check-cloud-agent-models.mjs",
     "check:tapes": "node scripts/check-tapes.mjs",
-    "check:ui": "node scripts/check-campfire-open.js && node scripts/check-episode-campfire.js && node scripts/check-s1e01-tribal.js && node scripts/check-s1e01-exit-interview.js && node scripts/check-s1e02-tribal.js && node scripts/check-s1e03-tribal.js && node scripts/check-s1e02-recap.js && node scripts/check-castaway-sheet.js && node scripts/check-trade-tape.js",
+    "check:ui": "node scripts/check-campfire-open.js && node scripts/check-episode-campfire.js && node scripts/check-s1e01-tribal.js && node scripts/check-s1e01-exit-interview.js && node scripts/check-s1e02-tribal.js && node scripts/check-s1e03-tribal.js && node scripts/check-s1e04-tribal.js && node scripts/check-s1e02-recap.js && node scripts/check-castaway-sheet.js && node scripts/check-trade-tape.js",
     "check:chrome": "node scripts/check-imessage-scroll-pause.mjs",
     "check:fast": "npm run check:season && npm run check:tapes && npm run check:ui",
     "check": "npm run check:fast && npm run check:chrome",

@@ -61,6 +61,7 @@ const listedE1 = (board.episodes || []).find((ep) => ep && ep.id === "s1e01");
 const listedE2 = (board.episodes || []).find((ep) => ep && ep.id === "s1e02");
 const listedE3 = (board.episodes || []).find((ep) => ep && ep.id === "s1e03");
 const listedE4 = (board.episodes || []).find((ep) => ep && ep.id === "s1e04");
+const listedE5 = (board.episodes || []).find((ep) => ep && ep.id === "s1e05");
 check("e1-week-bounds", listedE1 && listedE1.weekStart === "2026-08-24" && listedE1.weekEnd === "2026-08-28");
 check("e2-week-bounds", listedE2 && listedE2.weekStart === "2026-08-31" && listedE2.weekEnd === "2026-09-04");
 check("e2-diagram-starts-at-cash-add", listedE2 && listedE2.diagramStartSnapshotId === "s1e02-cash-add");
@@ -71,10 +72,14 @@ check(
 );
 check(
   "e4-diagram-starts-at-carry",
-  listedE4 &&
-    listedE4.diagramStartSnapshotId === "s1e04-carry" &&
+  listedE4 && listedE4.diagramStartSnapshotId === "s1e04-carry"
+);
+check(
+  "e5-diagram-starts-at-carry",
+  listedE5 &&
+    listedE5.diagramStartSnapshotId === "s1e05-carry" &&
     source.episode &&
-    source.episode.diagramStartSnapshotId === "s1e04-carry"
+    source.episode.diagramStartSnapshotId === "s1e05-carry"
 );
 check(
   "ticker-live-open",
@@ -139,14 +144,19 @@ check("e3-tue-eod-mark", Boolean(e3TueEod) && e3TueEod.kind === "close" && e3Tue
 const e4Carry = (source.events || []).find((event) => event && event.id === "s1e04-carry");
 check("e4-carry-mark", Boolean(e4Carry) && e4Carry.kind === "carry" && e4Carry.at === "2026-09-08T21:30:00Z");
 if (e4Carry && e4Carry.recorded) {
-  const carryLivingIds = Object.keys(e4Carry.recorded).filter((id) => {
-    const rec = e4Carry.recorded[id];
-    const row = (source.survivors || []).find((s) => s.id === id);
-    return rec && row && row.status === "active";
-  });
+  const e4CarryIds = Object.keys(e4Carry.recorded);
   check(
     "e4-carry-week-reset",
-    carryLivingIds.length === 8 && carryLivingIds.every((id) => e4Carry.recorded[id] && e4Carry.recorded[id].weekPct === 0)
+    e4CarryIds.length === 8 && e4CarryIds.every((id) => e4Carry.recorded[id] && e4Carry.recorded[id].weekPct === 0)
+  );
+}
+const e5Carry = (source.events || []).find((event) => event && event.id === "s1e05-carry");
+check("e5-carry-mark", Boolean(e5Carry) && e5Carry.kind === "carry" && e5Carry.at === "2026-09-11T21:30:00Z");
+if (e5Carry && e5Carry.recorded) {
+  const e5CarryIds = Object.keys(e5Carry.recorded);
+  check(
+    "e5-carry-week-reset",
+    e5CarryIds.length === 7 && e5CarryIds.every((id) => e5Carry.recorded[id] && e5Carry.recorded[id].weekPct === 0)
   );
 }
 
@@ -154,6 +164,7 @@ const episodeCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e0
 const episode2Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e02.json"), "utf8"));
 const episode3Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e03.json"), "utf8"));
 const episode4Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e04.json"), "utf8"));
+const episode5Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e05.json"), "utf8"));
 
 const wednesday = (episodeCopy.days || []).find((day) => day.id === "wednesday");
 const wednesdayBeats = (wednesday && wednesday.beats) || [];
@@ -206,7 +217,7 @@ if (prevote) {
 }
 
 const log = source.tribalLog || [];
-check("tribal-log-five-councils", Array.isArray(log) && log.length === 5);
+check("tribal-log-six-councils", Array.isArray(log) && log.length === 6);
 check("tribal-log-dq-is-third", log[2] && log[2].type === "disqualification" && log[2].bootName === "Grok 4.5");
 check("tribal-log-merge-is-fourth", log[3] && log[3].type === "merge" && log[3].merged === true);
 check("tribal-log-e03-bootName", log[4] && log[4].bootName === "GPT-5.6 Sol" && log[4].episode === "s1e03");
@@ -226,6 +237,29 @@ if (log[4]) {
     typeof log[4].summary === "string" &&
       log[4].summary.includes("GPT-5.6 Sol voted out 7–1") &&
       log[4].summary.includes("Grok 4.6 immune")
+  );
+}
+check("tribal-log-e04-bootName", log[5] && log[5].bootName === "Kimi K3" && log[5].episode === "s1e04");
+if (log[5]) {
+  const e04Votes = Array.isArray(log[5].votes) ? log[5].votes : [];
+  check(
+    "tribal-log-e04-round1-votes",
+    e04Votes.map((v) => `${v.from}>${v.for}`).join("|") ===
+      "Kimi K3>Claude Sonnet 5|Claude Sonnet 5>Composer 2.5|Gemini 3.7 Flash>Kimi K3|Grok 4.6>Kimi K3|GPT-5.6 Luna>Composer 2.5|Claude Opus 5>Composer 2.5|Composer 2.5>Kimi K3"
+  );
+  check(
+    "tribal-log-e04-round1-tally",
+    log[5].tally && log[5].tally["Composer 2.5"] === 3 && log[5].tally["Kimi K3"] === 3 && log[5].tally["Claude Sonnet 5"] === 1
+  );
+  check(
+    "tribal-log-e04-revote-tally",
+    log[5].revoteTally && log[5].revoteTally["Kimi K3"] === 3 && log[5].revoteTally["Composer 2.5"] === 2
+  );
+  check(
+    "tribal-log-e04-official-summary",
+    typeof log[5].summary === "string" &&
+      log[5].summary.includes("Kimi K3 voted out") &&
+      log[5].summary.includes("GPT-5.6 Terra immune")
   );
 }
 if (log[0]) {
@@ -267,21 +301,20 @@ check("books-fable-jury-zero", fableLive && fableLive.status === "jury" && fable
 check("books-pro-jury-zero", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0);
 check("books-grok45-disqualified", grok45Live && grok45Live.status === "disqualified" && grok45Live.bookUsd === 0);
 check("books-sol-jury-zero", solLive && (solLive.status === "jury" || solLive.status === "voted-out") && solLive.bookUsd === 0);
-check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 2);
+check("books-living-counts", biduLive && biduLive.livingCount === 6 && askaraLive && askaraLive.livingCount === 1);
 
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
 check(
   "homepage-given-copy",
-  home.includes("$361.93 given. Eight still in. MERGED. GPT-5.6 Sol voted out Tue Sep 8. Episode 4 live Wed Sep 9 – Fri Sep 11. Tuesday and Friday tribal.")
+  home.includes("$361.93 given. Seven still in. MERGED. Kimi K3 voted out Fri Sep 11 revote. Episode 5 live Mon Sep 14 – Tue Sep 16. Tuesday and Friday tribal.")
 );
 check("homepage-no-even-up-480", !home.includes("$480.10") && !home.includes("even-up to $53.20"));
-check("homepage-points-at-e04", home.includes("seasons/1/e04.html") && home.includes("Walk into Episode 4"));
-check("homepage-skips-e03-primary-cta", !home.includes("Walk into Episode 3"));
+check("homepage-points-at-e05", home.includes("seasons/1/e05.html") && home.includes("Walk into Episode 5"));
+check("homepage-skips-e04-primary-cta", !home.includes("Walk into Episode 4"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e04-fri-lasthour",
-  source.statusLabel ===
-    "Live · S1E04 · MERGED · eight living · Fri last-hour remake · leader GPT-5.6 Terra"
+  "status-label-e05-carry",
+  source.statusLabel === "Live · S1E05 · MERGED · seven living · immunity unset"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -334,36 +367,35 @@ check(
   "e4-fri-lasthour-mark",
   Boolean(e4FriLasthour) && e4FriLasthour.kind === "intraday" && e4FriLasthour.at === "2026-09-11T19:35:15Z"
 );
-check("live-snapshot-fri-lasthour", source.liveSnapshotId === "s1e04-fri-lasthour");
+const e4FriEod = (source.events || []).find((event) => event && event.id === "s1e04-fri-eod");
 check(
-  "live-episode-is-e04",
-  source.episode && source.episode.id === "s1e04" && source.episode.status === "live" && source.episode.path === "seasons/1/e04.html"
+  "e4-fri-eod-mark",
+  Boolean(e4FriEod) && e4FriEod.kind === "close" && e4FriEod.at === "2026-09-11T19:59:00Z" && e4FriEod.sipMissing === true
+);
+check("live-snapshot-e05-carry", source.liveSnapshotId === "s1e05-carry");
+check(
+  "live-episode-is-e05",
+  source.episode && source.episode.id === "s1e05" && source.episode.status === "live" && source.episode.path === "seasons/1/e05.html"
 );
 check(
   "live-episode-challenge",
   source.episode &&
     source.episode.challenge === "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
 );
-check("live-episode-week", source.episode && source.episode.weekLabel === "Wednesday Sep 9 – Friday Sep 11, 2026");
-check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 11, 2026 · 2:00 PM PT");
+check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 14 – Tuesday Sep 16, 2026");
+check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 16, 2026 · 2:00 PM PT");
+check("immunity-unset", source.immunity == null);
 check(
-  "immunity-terra",
-  source.immunity &&
-    source.immunity.name === "GPT-5.6 Terra" &&
-    source.immunity.weekPct === 4.76 &&
-    source.immunity.snapshotId === "s1e04-fri-lasthour" &&
-    source.immunity.asOf === "2026-09-11-lasthour"
+  "sip-missing-banner",
+  typeof source.sipMissingBanner === "string" && source.sipMissingBanner.includes("SIP Sep 11 never posted")
 );
+check("island-pot", source.islandPotUsd === 372.3834);
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
-check("terra-immune-flag", terraLive && terraLive.immune === true);
+check("terra-not-immune", terraLive && terraLive.immune === false);
 check("grok-not-immune", grokLive && grokLive.immune === false);
-check("kimi-not-immune", kimiLive && kimiLive.immune === false);
-check(
-  "only-terra-immune",
-  board.survivors.filter((s) => s.immune).length === 1 && board.survivors.filter((s) => s.immune)[0].name === "GPT-5.6 Terra"
-);
+check("no-living-immune", board.survivors.filter((s) => s.status === "active" && s.immune).length === 0);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
 check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
@@ -374,11 +406,14 @@ const e1 = (source.episodes || []).find((ep) => ep.id === "s1e01");
 const e2 = (source.episodes || []).find((ep) => ep.id === "s1e02");
 const e3 = (source.episodes || []).find((ep) => ep.id === "s1e03");
 const e4 = (source.episodes || []).find((ep) => ep.id === "s1e04");
+const e5 = (source.episodes || []).find((ep) => ep.id === "s1e05");
 check("episode-1-closed", e1 && e1.status === "closed" && e1.path === "seasons/1/e01.html" && e1.boot === "Claude Fable 5");
 check("episode-2-closed", e2 && e2.status === "closed" && e2.path === "seasons/1/e02.html" && e2.boot === "Gemini 3.1 Pro");
 check("episode-3-closed", e3 && e3.status === "closed" && e3.path === "seasons/1/e03.html" && e3.boot === "GPT-5.6 Sol");
-check("episode-4-live", e4 && e4.status === "live" && e4.path === "seasons/1/e04.html");
+check("episode-4-closed", e4 && e4.status === "closed" && e4.path === "seasons/1/e04.html" && e4.boot === "Kimi K3");
 check("episode-4-week-bounds", e4 && e4.weekStart === "2026-09-09" && e4.weekEnd === "2026-09-11");
+check("episode-5-live", e5 && e5.status === "live" && e5.path === "seasons/1/e05.html");
+check("episode-5-week-bounds", e5 && e5.weekStart === "2026-09-14" && e5.weekEnd === "2026-09-16");
 check(
   "episode-1-list-tease-no-boot",
   e1 && (!e1.tease || (typeof e1.tease === "string" && !/fable|5–1|5-1|juror|voted out/i.test(e1.tease)))
@@ -388,6 +423,8 @@ check("e02-heroNote-empty", episode2Copy.heroNote === "");
 check("e02-weekBoard-lede-empty", episode2Copy.weekBoard && episode2Copy.weekBoard.lede === "");
 check("e03-heroNote-empty", episode3Copy.heroNote === "");
 check("e04-heroNote-empty", episode4Copy.heroNote === "");
+check("e05-heroNote-empty", episode5Copy.heroNote === "");
+check("e05-weekBoard-lede-empty", episode5Copy.weekBoard && episode5Copy.weekBoard.lede === "");
 check(
   "e02-kept-dinners",
   ["monday-dinner", "tuesday-dinner", "wednesday-dinner", "thursday-dinner", "saturday-dinner", "sunday-dinner"].every((id) =>
@@ -707,8 +744,21 @@ const e3Exit = e3TribalBeats.find((beat) => beat.id === "exit-interview");
 check("e03-tribal-prevote-count", e3Prevote && (e3Prevote.items || []).length === 8);
 check("e03-tribal-exit-sol", e3Exit && (e3Exit.items || []).some((item) => item.slug === "gpt-5-6-sol"));
 check(
-  "e04-cold-open-eight-living",
-  JSON.stringify(episode4Copy).includes("Eight") && JSON.stringify(episode4Copy).includes("$361.93 given")
+  "e04-tribal-posted",
+  episode4Copy.days &&
+    episode4Copy.days.some(
+      (day) => day.id === "tribal" && /Kimi K3 voted out.*revote 3–2/i.test(String(day.foldEm || "") + JSON.stringify(day.beats || []))
+    )
+);
+const e4TribalDay = (episode4Copy.days || []).find((day) => day.id === "tribal");
+const e4TribalBeats = (e4TribalDay && e4TribalDay.beats) || [];
+const e4Prevote = e4TribalBeats.find((beat) => beat.id === "tribal-prevote");
+const e4Exit = e4TribalBeats.find((beat) => beat.id === "exit-interview");
+check("e04-tribal-prevote-count", e4Prevote && (e4Prevote.items || []).length === 7);
+check("e04-tribal-exit-kimi", e4Exit && (e4Exit.items || []).some((item) => item.slug === "kimi-k3"));
+check(
+  "e05-cold-open-seven-living",
+  JSON.stringify(episode5Copy).includes("Seven") && JSON.stringify(episode5Copy).includes("$361.93 given")
 );
 
 const e2Cold = (((episode2Copy.days || []).find((day) => day.id === "cold-open") || {}).beats || []).find(
@@ -733,6 +783,11 @@ const sol = (source.survivors || []).find((s) => s.name === "GPT-5.6 Sol");
 check(
   "booted-sol-jury",
   sol && (sol.status === "voted-out" || solLive.status === "jury") && sol.jury && sol.bookUsd === 0
+);
+const kimi = (source.survivors || []).find((s) => s.name === "Kimi K3");
+check(
+  "booted-kimi-jury",
+  kimi && (kimi.status === "voted-out" || kimiLive.status === "jury") && kimi.jury && kimi.bookUsd === 0
 );
 const grok45 = (source.survivors || []).find((s) => s.name === "Grok 4.5");
 check(
@@ -778,6 +833,13 @@ const e04BuiltPath = join(root, "dist", "seasons", "1", "e04.html");
 if (existsSync(e04BuiltPath)) {
   const e04Built = readFileSync(e04BuiltPath, "utf8");
   check("e04-built-keeps-tribe-totals-mount", e04Built.includes('id="episode-tribe-totals"'));
+  check("e04-built-tribal-posted", e04Built.includes('data-vote-posted="1"') && e04Built.includes('id="tribal-prevote"'));
+}
+const e05BuiltPath = join(root, "dist", "seasons", "1", "e05.html");
+if (existsSync(e05BuiltPath)) {
+  const e05Built = readFileSync(e05BuiltPath, "utf8");
+  check("e05-built-keeps-tribe-totals-mount", e05Built.includes('id="episode-tribe-totals"'));
+  check("e05-heroNote-empty-built", /id="hero-note"/.test(e05Built) ? e05Built.includes('id="hero-note"') && !/<p class="hero-note">/.test(e05Built) : true);
 }
 const e03BuiltPath = join(root, "dist", "seasons", "1", "e03.html");
 if (existsSync(e03BuiltPath)) {

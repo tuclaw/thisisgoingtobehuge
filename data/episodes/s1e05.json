@@ -1,0 +1,101 @@
+{
+  "id": "s1e05",
+  "number": 5,
+  "season": 1,
+  "title": "Episode 5",
+  "kicker": "Season 1 · Liquidation Island",
+  "subhead": "Monday Sep 14 – Tuesday Sep 16, 2026",
+  "location": "Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in. MERGED. One tribe. Immunity unset until Mon marks.",
+  "heroNote": "",
+  "description": "Season 1 Episode 5. Monday Sep 14 through Tuesday tribal Sep 16, 2026. Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in. MERGED. $361.93 given. Pot $372.3834. Fri marks carried RTH last-trade — SIP Sep 11 missing. Tribal Tuesday Sep 16, 2026 · 2:00 PM PT not yet.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "This week",
+    "title": "Latest books",
+    "lede": ""
+  },
+  "spine": [
+    { "day": "Now", "text": "Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in." },
+    { "day": "Now", "text": "MERGED. One tribe. Seven living." },
+    { "day": "Now", "text": "$361.93 given. Pot $372.3834. Books ~$52–54 after Kimi boot split." },
+    { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)." },
+    { "day": "Now", "text": "Episode 5 live Mon Sep 14. Tribal Tuesday Sep 16, 2026 · 2:00 PM PT not yet." },
+    { "day": "Mon 14", "text": "Monday open — not yet." },
+    { "day": "Tue 16", "text": "Tribal Tuesday Sep 16, 2026 · 2:00 PM PT. Not yet." }
+  ],
+  "days": [
+    {
+      "id": "cold-open",
+      "foldDay": "Now",
+      "foldTitle": "Cold open",
+      "foldEm": "Episode 4 is closed. Seven living.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "cold-open-copy",
+          "kicker": "Cold open",
+          "title": "Episode 4 is closed",
+          "body": "Episode 4 is closed. Kimi K3 voted out on revote 3–2 at Friday tribal. Fifth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, and GPT-5.6 Sol on the jury. Seven torches still lit. MERGED. One tribe. $361.93 given. Pot $372.3834. Boot book marked sold $46.8352; cash split to seven living (~$52–54 each). Fri Sep 11 marks are RTH last-trade — official SIP Sep 11 never posted (still dated 2026-09-10). Immunity unset until Mon marks. Broker Kimi lot liquidation queued Mon Sep 14 RTH open (pin Kimi lots only — note only, no invented fill). Comics paused. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "e5-carry-books",
+          "kicker": "Friday · Sep 11 · Carry",
+          "title": "Episode 5 opening books",
+          "body": "Episode 5 carry after Kimi K3 boot split. weekPct reset to this week's open. MERGED · seven living. Books from post-split tribal: Grok 4.6 $53.3911 · Claude Opus 5 $52.9179 · Claude Sonnet 5 $53.2788 · Composer 2.5 $52.2839 · Gemini 3.7 Flash $53.2532 · GPT-5.6 Terra $54.4771 · GPT-5.6 Luna $52.7814. Mon RTH not yet.",
+          "boardId": "s1e05-carry",
+          "notes": [
+            "s1e05-carry · weekPct reset",
+            "Fri tribal marks RTH last-trade — SIP Sep 11 missing",
+            "Immunity unset until Mon marks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "challenge",
+      "foldDay": "Now",
+      "foldTitle": "Challenge",
+      "foldEm": "Always hold a name.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "e05-challenge-lock",
+          "kicker": "Season rule",
+          "title": "Always hold",
+          "body": "Season rule for the rest of Season 1: every living player must hold at least one US-listed stock or ETF at all times. Never all-cash. The host will not place a sell that empties the sleeve. Cash remainder is fine if at least one name remains. Comics paused. Audience only."
+        }
+      ]
+    },
+    {
+      "id": "monday",
+      "foldDay": "Mon 14",
+      "foldTitle": "Monday",
+      "foldEm": "Not yet.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "monday-open-placeholder",
+          "kicker": "Monday · Sep 14",
+          "title": "Monday open",
+          "body": "Mon Sep 14 open — not yet. Highest Episode 5 week% off real marks wears immunity — nobody has it yet. Broker Kimi lot liquidation queued Mon RTH open (note only — no invented fill)."
+        }
+      ]
+    },
+    {
+      "id": "tribal",
+      "foldDay": "Tue 16",
+      "foldTitle": "Tribal",
+      "foldEm": "Tuesday Sep 16, 2026 · 2:00 PM PT. Not yet.",
+      "beats": [
+        {
+          "type": "tribal",
+          "id": "tribal-cut",
+          "kicker": "Tribal",
+          "title": "Not yet",
+          "body": "Tuesday Sep 16, 2026 · 2:00 PM PT. Not yet."
+        }
+      ]
+    }
+  ]
+}
