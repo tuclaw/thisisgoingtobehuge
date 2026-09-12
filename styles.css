@@ -152,6 +152,11 @@ img {
   color: var(--sand);
 }
 
+/* iOS Safari echoes the last glyph when letter-spacing is set on some webfonts. */
+.nav-links a::after {
+  content: "\200b";
+}
+
 .nav-links a:hover {
   color: var(--gold-bright);
 }
@@ -5293,6 +5298,14 @@ body.is-titles .replay-trailer {
   color: #120c08;
   background: linear-gradient(90deg, #f0c14b, #e89354);
   border-color: transparent;
+}
+
+.money-ticker-range button::after,
+.money-ticker-diagrams button::after,
+.money-ticker-sky-toggle::after,
+.money-ticker-play::after,
+.money-ticker-legend li::after {
+  content: "\200b";
 }
 
 .money-ticker-chart {
