@@ -115,6 +115,7 @@ if (!appJs.includes("mountMoneyTicker") || !appJs.includes("money-ticker-putin")
 if (
   !appJs.includes("function tickerAxisPct") ||
   !appJs.includes("function tickerPctScale") ||
+  !appJs.includes("function despikeTickerPcts") ||
   !appJs.includes("function tickerEvenGuide") ||
   !appJs.includes("function bookWeekPctFromSnap")
 ) {
@@ -432,18 +433,46 @@ if (!e1Foot.chg.includes("down from") || !e1Foot.chg.includes("$120.00")) {
   throw new Error("ticker chg should say down from the opening pot, got " + e1Foot.chg);
 }
 
-const scaleStart = appJs.indexOf("function tickerPctScale");
+const scaleStart = appJs.indexOf("function despikeTickerPcts");
 const scaleEnd = appJs.indexOf("function moneyTickerDiagramSeries");
-if (!(scaleStart > -1 && scaleEnd > scaleStart)) {
-  throw new Error("app.js missing tickerPctScale");
+if (!(scaleStart > -1 && scaleEnd > scaleStart) || !appJs.includes("function tickerPctScale")) {
+  throw new Error("app.js missing despikeTickerPcts / tickerPctScale");
+}
+if (!appJs.includes("despikeTickerPcts(")) {
+  throw new Error("app.js money ticker must despike remake week-% spikes before scaling");
+}
+if (!appJs.includes('x="628" y="14" text-anchor="end"')) {
+  throw new Error("app.js contestants panel label must sit on the right so it does not cover the y-axis");
 }
 const scaleHelpers = new Function(`
   ${appJs.slice(scaleStart, scaleEnd)}
-  return { tickerPctScale, tickerEvenGuide };
+  return { despikeTickerPcts, tickerPctScale, tickerEvenGuide };
 `)();
 const scale = scaleHelpers.tickerPctScale([-5.18, 1.27], 1.2);
 if (!(scale.min < -5.18 && scale.max > 1.27 && scale.min < 0 && scale.max > 0)) {
   throw new Error("tickerPctScale must keep 0% on the y-axis and pad the tape, got " + JSON.stringify(scale));
+}
+const opusFriOpen = [0, 1.19, -0.07, 1.44, 1.37, 1.29, 1.5, 2.9, 3.19, 3.07, 138.7323, 2.6, 1.76];
+const opusHeld = scaleHelpers.despikeTickerPcts(opusFriOpen);
+if (opusHeld[10] !== 3.07) {
+  throw new Error("despikeTickerPcts must hold Thursday week % through a Friday-open remake spike, got " + opusHeld[10]);
+}
+if (opusHeld[9] !== 3.07 || opusHeld[11] !== 2.6 || opusHeld[12] !== 1.76) {
+  throw new Error("despikeTickerPcts must keep the real Thursday / Friday mid / last-hour prints");
+}
+const grokFriOpen = [0, 1.77, 1.56, 1.37, 2.07, 2.08, 3.88, 5.96, 6.82, 6.92, 22.6313, 3.66, 2.66];
+const grokHeld = scaleHelpers.despikeTickerPcts(grokFriOpen);
+if (grokHeld[10] !== 6.92) {
+  throw new Error("despikeTickerPcts must also hold a +22% Friday-open print, got " + grokHeld[10]);
+}
+const risingWeek = [0, 0.65, 1.35, 0.91, 1.18, 1.42, 3.78, 5.8, 6.31, 6.4, 5.4, 5.13, 4.76];
+const risingHeld = scaleHelpers.despikeTickerPcts(risingWeek);
+if (risingHeld.join(",") !== risingWeek.join(",")) {
+  throw new Error("despikeTickerPcts must keep a real week rise, got " + risingHeld.join(","));
+}
+const blownScale = scaleHelpers.tickerPctScale(opusFriOpen, 1.2);
+if (!(blownScale.max < 20 && blownScale.min > -8)) {
+  throw new Error("tickerPctScale must ignore a lone remake spike, got " + JSON.stringify(blownScale));
 }
 if (
   scaleHelpers.tickerEvenGuide().value !== 0 ||
@@ -970,6 +999,14 @@ if (
 }
 if (!stylesCss.includes(".money-ticker-putin") || !stylesCss.includes(".money-ticker-guide-label")) {
   throw new Error("styles.css missing the 0% reference line");
+}
+if (
+  !stylesCss.includes(".money-ticker-range button::after") ||
+  !stylesCss.includes(".money-ticker-diagrams button::after") ||
+  !stylesCss.includes(".nav-links a::after") ||
+  !stylesCss.includes('content: "\\200b"')
+) {
+  throw new Error("styles.css must pad ticker/nav labels so iOS does not echo the last letter");
 }
 if (stylesCss.includes('campfire-ping[style*="68%"]') || stylesCss.includes('campfire-ping[style*="66%"]')) {
   throw new Error("styles.css must not park lower pings to top:18% via inline style matching (overlaps portraits/meta on mobile)");
