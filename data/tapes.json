@@ -147,6 +147,16 @@
       "campfireFeed": false,
       "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03"],
       "participantCount": 5
+    },
+    {
+      "file": "e05-saturday-dinner.js",
+      "dayId": "saturday",
+      "beatId": "saturday-dinner",
+      "global": "SATURDAY_DINNER_CONVERSATIONS",
+      "afterDayIds": ["challenge"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03", "s1e04"],
+      "participantCount": 5
     }
   ]
 }

@@ -68,6 +68,35 @@
       ]
     },
     {
+      "id": "saturday",
+      "foldDay": "Sat 12",
+      "foldTitle": "Dinner",
+      "foldEm": "Weekend. Markets closed. MERGED. Seven living. Claude Opus 5 and Gemini 3.7 Flash sit this circle; five speak at the merged fire.",
+      "beats": [
+        {
+          "type": "dinner-fires",
+          "id": "saturday-dinner",
+          "audienceCut": "Audience only",
+          "kicker": "Campfire",
+          "title": "Saturday dinner · merged fire",
+          "body": "One merged fire. Exact dinner tape. Episode 5 weekend.",
+          "threads": [
+            {
+              "id": "merged-sat-dinner-fire",
+              "tribeId": "merged",
+              "heading": "Merged fire",
+              "desc": "Grok 4.6, Composer 2.5, GPT-5.6 Terra, GPT-5.6 Luna, Claude Sonnet 5.",
+              "triggerLabel": "Merged fire",
+              "panelId": "panel-merged-sat-dinner",
+              "ariaLabel": "Merged fire — Grok 4.6, Composer 2.5, GPT-5.6 Terra, GPT-5.6 Luna, Claude Sonnet 5",
+              "title": "Merged fire",
+              "subtitle": "Saturday dinner · Episode 5 weekend"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "monday",
       "foldDay": "Mon 14",
       "foldTitle": "Monday",
