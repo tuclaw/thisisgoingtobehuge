@@ -773,6 +773,14 @@ check(
   "e05-cold-open-seven-living",
   JSON.stringify(episode5Copy).includes("Seven") && JSON.stringify(episode5Copy).includes("$361.93 given")
 );
+const e5MondayBooths = (((episode5Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).find(
+  (beat) => beat.id === "monday-confessionals"
+);
+assertBooths(e5MondayBooths, ["gpt-5-6-luna", "grok-4-6", "claude-opus-5"], "e05-monday-booths");
+check(
+  "e05-monday-books-order",
+  beatOrder(episode5Copy.days || [], "monday", ["monday-mid-books", "monday-confessionals"])
+);
 
 const e2Cold = (((episode2Copy.days || []).find((day) => day.id === "cold-open") || {}).beats || []).find(
   (beat) => beat.id === "cold-open-copy"
