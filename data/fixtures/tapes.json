@@ -604,5 +604,31 @@
         "hash": "5cfddf7d5723e1f3e12686d95936c7ed5dea2bcb19563f7b6d68e1d2a0bd38ef"
       }
     }
+  },
+  "e05-sunday-dinner.js": {
+    "global": "SUNDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "merged-sun-dinner-fire"
+    ],
+    "threads": {
+      "merged-sun-dinner-fire": {
+        "count": 12,
+        "from": [
+          "juno",
+          "mara",
+          "nori",
+          "vesper",
+          "gage",
+          "juno",
+          "mara",
+          "gage",
+          "vesper",
+          "nori",
+          "juno",
+          "gage"
+        ],
+        "hash": "3e2a10a358a519504395c9317f65fcee2ba5cb65d785472e25abc6826c480f80"
+      }
+    }
   }
 }
