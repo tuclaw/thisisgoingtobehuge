@@ -313,8 +313,8 @@ check("homepage-points-at-e05", home.includes("seasons/1/e05.html") && home.incl
 check("homepage-skips-e04-primary-cta", !home.includes("Walk into Episode 4"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e05-carry",
-  source.statusLabel === "Live · S1E05 · MERGED · seven living · immunity unset"
+  "status-label-e05-mon-mid",
+  source.statusLabel === "Live · S1E05 · MERGED · seven living · Mon mid · leader Claude Sonnet 5"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -372,7 +372,9 @@ check(
   "e4-fri-eod-mark",
   Boolean(e4FriEod) && e4FriEod.kind === "close" && e4FriEod.at === "2026-09-11T19:59:00Z" && e4FriEod.sipMissing === true
 );
-check("live-snapshot-e05-carry", source.liveSnapshotId === "s1e05-carry");
+const e5MonMid = (source.events || []).find((event) => event && event.id === "s1e05-mon-mid");
+check("e5-mon-mid-mark", Boolean(e5MonMid) && e5MonMid.kind === "intraday" && e5MonMid.at === "2026-09-14T17:04:16Z");
+check("live-snapshot-e05-mon-mid", source.liveSnapshotId === "s1e05-mon-mid");
 check(
   "live-episode-is-e05",
   source.episode && source.episode.id === "s1e05" && source.episode.status === "live" && source.episode.path === "seasons/1/e05.html"
@@ -384,18 +386,29 @@ check(
 );
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 14 – Tuesday Sep 16, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 16, 2026 · 2:00 PM PT");
-check("immunity-unset", source.immunity == null);
+check(
+  "immunity-sonnet-mid",
+  source.immunity &&
+    source.immunity.survivorId === "955a698c-6db0-4172-9e48-12f3724187b0" &&
+    source.immunity.weekPct === 1.1 &&
+    source.immunity.snapshotId === "s1e05-mon-mid"
+);
 check(
   "sip-missing-banner",
   typeof source.sipMissingBanner === "string" && source.sipMissingBanner.includes("SIP Sep 11 never posted")
 );
-check("island-pot", source.islandPotUsd === 372.3834);
+check("island-pot", source.islandPotUsd === 370.7402);
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
+const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 check("terra-not-immune", terraLive && terraLive.immune === false);
 check("grok-not-immune", grokLive && grokLive.immune === false);
-check("no-living-immune", board.survivors.filter((s) => s.status === "active" && s.immune).length === 0);
+check("sonnet-immune-mid", sonnetLive && sonnetLive.immune === true);
+check(
+  "one-living-immune",
+  board.survivors.filter((s) => s.status === "active" && s.immune).length === 1
+);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
 check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
