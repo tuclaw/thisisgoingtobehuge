@@ -7,7 +7,7 @@
   "subhead": "Monday Sep 14 – Tuesday Sep 16, 2026",
   "location": "Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in. MERGED. One tribe. Immunity unset until Mon marks.",
   "heroNote": "",
-  "description": "Season 1 Episode 5. Monday Sep 14 through Tuesday tribal Sep 16, 2026. Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in. MERGED. $361.93 given. Pot $372.3834. Fri marks carried RTH last-trade — SIP Sep 11 missing. Tribal Tuesday Sep 16, 2026 · 2:00 PM PT not yet.",
+  "description": "Season 1 Episode 5. Monday Sep 14 through Tuesday tribal Sep 16, 2026. Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in. MERGED. $361.93 given. Pot $374.10. Mon last-hour marks ~12:29 PM PT. Fri marks carried RTH last-trade — SIP Sep 11 missing. Tribal Tuesday Sep 16, 2026 · 2:00 PM PT not yet.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -129,26 +129,45 @@
       "id": "monday",
       "foldDay": "Mon 14",
       "foldTitle": "Monday",
-      "foldEm": "Mon mid marks. Claude Sonnet 5 wears immunity.",
+      "foldEm": "Mon last-hour marks. Claude Sonnet 5 wears immunity.",
       "beats": [
         {
           "type": "prose",
           "id": "monday-open-placeholder",
           "kicker": "Monday · Sep 14",
           "title": "Monday mid",
-          "body": "Mon Sep 14 mid session — seventeen Agentic fills (~10:00–10:03 AM PT): refiners sold, FRO and USO bought. Mon open remake stayed quiet (no open fills). Living marks at RTH last-trade ~10:04 AM PT. Highest Episode 5 week% wears immunity: Claude Sonnet 5 +1.10%. Worst book: Grok 4.6 −3.05%. MERGED · seven living · one tribe on the public board. $361.93 given. Pot $370.7402. Comics paused. Audience only."
+          "body": "Mon Sep 14 mid session — seventeen Agentic fills (~10:00–10:03 AM PT): refiners sold, FRO and USO bought. Mon open remake stayed quiet (no open fills). Living marks at RTH last-trade ~10:04 AM PT. Claude Sonnet 5 led at +1.10% after mid. MERGED · seven living · one cast board on the public page. Comics paused. Audience only."
         },
         {
           "type": "books",
           "id": "monday-mid-books",
           "kicker": "Monday · Sep 14 · Mid",
-          "title": "Latest books",
-          "body": "Mon Sep 14 2026 MID · RTH last-trade (~10:04 AM PT) · living marks after mid fills. Claude Sonnet 5 $53.8666 week +1.10% — immunity. GPT-5.6 Terra $54.9466 +0.86%. Gemini 3.7 Flash $53.5427 +0.54%. GPT-5.6 Luna $52.4279 −0.67%. Composer 2.5 $51.9073 −0.72%. Claude Opus 5 $52.2885 −1.19%. Grok 4.6 $51.7606 −3.05%. Pot $370.7402 · $361.93 given.",
+          "title": "Mid books",
+          "body": "Mon Sep 14 2026 MID · RTH last-trade (~10:04 AM PT) · living marks after mid fills. Claude Sonnet 5 $53.8666 week +1.10%. GPT-5.6 Terra $54.9466 +0.86%. Gemini 3.7 Flash $53.5427 +0.54%. GPT-5.6 Luna $52.4279 −0.67%. Composer 2.5 $51.9073 −0.72%. Claude Opus 5 $52.2885 −1.19%. Grok 4.6 $51.7606 −3.05%. Pot $370.7402 · $361.93 given.",
           "boardId": "s1e05-mon-mid",
           "notes": [
             "s1e05-mon-mid · week% vs Episode 5 carry",
-            "Mon open not published — mid is first Mon marks",
-            "Claude Sonnet 5 immunity +1.10%"
+            "Mon open not published — mid is first Mon marks"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "monday-lasthour-copy",
+          "kicker": "Monday · Sep 14",
+          "title": "Monday last-hour",
+          "body": "Mon Sep 14 last-hour session — seven Agentic fills (last4 6969 ~12:29 PM PT): Grok 4.6 and Composer 2.5 sold USO; Claude Opus 5 sold VLO; GPT-5.6 Luna sold XLE; Composer 2.5, GPT-5.6 Luna, and Grok 4.6 bought FRO. Skipped: Claude Opus 5 BUY FRO $8.25 (BP). Claude Sonnet 5, Gemini 3.7 Flash, and GPT-5.6 Terra HOLD. Living marks at RTH last-trade ~12:29 PM PT. Highest Episode 5 week% wears immunity: Claude Sonnet 5 +2.54%. GPT-5.6 Terra +2.30%. Worst book: Grok 4.6 −2.26%. MERGED · seven living · one cast board. $361.93 given. Pot $374.10. Comics paused. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "monday-lasthour-books",
+          "kicker": "Monday · Sep 14 · Last-hour",
+          "title": "Latest books",
+          "body": "Mon Sep 14 2026 LAST-HOUR · RTH last-trade (~12:29 PM PT) · living marks after last-hour fills. Claude Sonnet 5 $54.6342 week +2.54% — immunity. GPT-5.6 Terra $55.7295 +2.30%. Gemini 3.7 Flash $54.0046 +1.41%. Composer 2.5 $52.1825 −0.19%. Claude Opus 5 $52.7607 −0.30%. GPT-5.6 Luna $52.6064 −0.33%. Grok 4.6 $52.1821 −2.26%. Pot $374.10 · $361.93 given.",
+          "boardId": "s1e05-mon-lasthour",
+          "notes": [
+            "s1e05-mon-lasthour · week% vs Episode 5 carry",
+            "Skipped Opus BUY FRO $8.25 (BP)",
+            "Claude Sonnet 5 immunity +2.54%"
           ]
         }
       ]
