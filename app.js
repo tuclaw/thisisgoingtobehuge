@@ -3586,14 +3586,100 @@ function tickerPathForSeries(values, min, max, top, height, seriesKey, frames) {
     .join(" ");
 }
 
+/**
+ * Hold the prior in-cluster print when one remake mark spikes and the
+ * neighbors still agree. Episode 4 Friday open recorded +16–139% week
+ * between a ~7% Thursday and a ~5% Friday mid — that one print flattened
+ * the contestants diagram.
+ */
+function despikeTickerPcts(values) {
+  const list = Array.isArray(values) ? values.slice() : [];
+  const nums = list.filter((v) => typeof v === "number" && !Number.isNaN(v));
+  if (nums.length < 3) return list;
+  const out = list.slice();
+  const numAt = (arr, i) => {
+    if (i < 0 || i >= arr.length) return null;
+    const v = arr[i];
+    return typeof v === "number" && !Number.isNaN(v) ? v : null;
+  };
+  /* Isolated one-mark remake spikes, even when they sit inside a wide cluster
+     (E4 Friday open Grok +22.6% between Thursday +6.9% and Friday mid +3.7%). */
+  for (let i = 0; i < out.length; i += 1) {
+    const v = numAt(out, i);
+    const prev = numAt(out, i - 1);
+    const next = numAt(out, i + 1);
+    if (v == null || prev == null || next == null) continue;
+    if (Math.abs(v - prev) > 8 && Math.abs(v - next) > 8 && Math.abs(next - prev) <= 8) {
+      out[i] = prev;
+    }
+  }
+  const remaining = out.filter((v) => typeof v === "number" && !Number.isNaN(v));
+  const sorted = remaining.slice().sort((a, b) => a - b);
+  const median = sorted[Math.floor(sorted.length / 2)];
+  const inCluster = (v) => typeof v === "number" && !Number.isNaN(v) && Math.abs(v - median) <= 15;
+  let i = 0;
+  while (i < out.length) {
+    const v = out[i];
+    if (typeof v !== "number" || Number.isNaN(v) || inCluster(v)) {
+      i += 1;
+      continue;
+    }
+    let end = i + 1;
+    while (end < out.length && typeof out[end] === "number" && !Number.isNaN(out[end]) && !inCluster(out[end])) {
+      end += 1;
+    }
+    let prev = null;
+    for (let j = i - 1; j >= 0; j -= 1) {
+      if (inCluster(out[j])) {
+        prev = out[j];
+        break;
+      }
+    }
+    let next = null;
+    for (let j = end; j < out.length; j += 1) {
+      if (inCluster(out[j])) {
+        next = out[j];
+        break;
+      }
+    }
+    const neighborsAgree = prev != null && next != null && Math.abs(next - prev) <= 8;
+    const runLen = end - i;
+    const oneSided =
+      runLen <= 2 &&
+      remaining.length >= 6 &&
+      ((prev != null && next == null) || (prev == null && next != null));
+    const jump = Math.abs(v - (prev != null ? prev : next));
+    if (neighborsAgree || (oneSided && jump > 25)) {
+      const fill = prev != null ? prev : next;
+      for (let k = i; k < end; k += 1) out[k] = fill;
+    }
+    i = end;
+  }
+  return out;
+}
+
 function tickerPctScale(values, padFloor) {
-  let min = 0;
-  let max = 0;
+  const nums = [];
   (values || []).forEach((v) => {
     if (typeof v !== "number" || Number.isNaN(v)) return;
+    nums.push(v);
+  });
+  let min = 0;
+  let max = 0;
+  nums.forEach((v) => {
     if (v < min) min = v;
     if (v > max) max = v;
   });
+  if (nums.length >= 5) {
+    const sorted = nums.slice().sort((a, b) => a - b);
+    const p10 = sorted[Math.floor((sorted.length - 1) * 0.1)];
+    const p90 = sorted[Math.floor((sorted.length - 1) * 0.9)];
+    const core = Math.max(1, p90 - p10);
+    if (max - min > core * 5) {
+      min = Math.min(0, p10);
+      max = Math.max(0, p90);
+    }
+  }
   const pad = Math.max(padFloor || 1.2, (max - min) * 0.18);
   return { min: min - pad, max: max + pad };
 }
@@ -3615,10 +3701,19 @@ function moneyTickerDiagramSeries(season, frames) {
 
   if (diagram === "tribes") {
     const tribes = season.tribes || [];
+    const series = tribes.map((tribe) => ({
+      id: tribe.id,
+      label: tribeChromeName(tribe),
+      color: tribe.color || (tribe.id === "askara" ? "#C45A12" : "#0E6B6B"),
+      values: despikeTickerPcts(
+        frames.map((f) => (f.tribes && typeof f.tribes[tribe.id] === "number" ? f.tribes[tribe.id] : 0))
+      ),
+      seed: tribe.id === "askara" ? 42 : 17,
+      width: 2.2
+    }));
     const values = [];
-    frames.forEach((frame) => {
-      tribes.forEach((tribe) => {
-        const v = frame.tribes && frame.tribes[tribe.id];
+    series.forEach((item) => {
+      item.values.forEach((v) => {
         if (typeof v === "number") values.push(v);
       });
     });
@@ -3631,14 +3726,7 @@ function moneyTickerDiagramSeries(season, frames) {
       guides: [even],
       min: scale.min,
       max: scale.max,
-      series: tribes.map((tribe) => ({
-        id: tribe.id,
-        label: tribeChromeName(tribe),
-        color: tribe.color || (tribe.id === "askara" ? "#C45A12" : "#0E6B6B"),
-        values: frames.map((f) => (f.tribes && typeof f.tribes[tribe.id] === "number" ? f.tribes[tribe.id] : 0)),
-        seed: tribe.id === "askara" ? 42 : 17,
-        width: 2.2
-      })),
+      series,
       legend: tribes.map((tribe) => ({
         label: tribeChromeName(tribe),
         color: tribe.color || (tribe.id === "askara" ? "#C45A12" : "#0E6B6B")
@@ -3659,14 +3747,15 @@ function moneyTickerDiagramSeries(season, frames) {
         return typeof v === "number" ? v : 0;
       });
       if (!line.some((v) => v != null)) return;
-      line.forEach((v) => {
+      const despiked = despikeTickerPcts(line);
+      despiked.forEach((v) => {
         if (typeof v === "number") values.push(v);
       });
       series.push({
         id: s.id,
         label: modelOf(s),
         color: s.__tickerTone || "#d4a017",
-        values: line,
+        values: despiked,
         seed: idx + 11,
         width: 1.45
       });
@@ -3691,7 +3780,7 @@ function moneyTickerDiagramSeries(season, frames) {
   }
 
   /* island */
-  const values = frames.map((f) => f.total);
+  const values = despikeTickerPcts(frames.map((f) => f.total));
   const scale = tickerPctScale(values, 1.6);
   const potDown = last && last.total < -0.00005;
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
@@ -3742,7 +3831,7 @@ function moneyTickerYAxisLabels(spec, chartTop, chartHeight) {
   kept.sort((a, b) => a.y - b.y);
   return kept
     .map((tick) => {
-      return `<text class="money-ticker-axis" x="2" y="${(tick.y + 4).toFixed(2)}">${escapeHtml(tick.label)}</text>
+      return `<text class="money-ticker-axis" x="2" y="${(tick.y + 4).toFixed(2)}">${escapeHtml(tick.label)}\u200b</text>
       <line class="money-ticker-grid" x1="36" y1="${tick.y.toFixed(2)}" x2="628" y2="${tick.y.toFixed(2)}" />`;
     })
     .join("");
@@ -3834,7 +3923,7 @@ function renderMoneyTickerSvg(season, frames) {
         <rect data-ticker-clip x="0" y="0" width="${Math.max(playX + 4, 40).toFixed(2)}" height="222" />
       </clipPath>
     </defs>
-    <text class="money-ticker-panel-label" x="36" y="14">${escapeHtml(spec.title)}</text>
+    <text class="money-ticker-panel-label" x="628" y="14" text-anchor="end">${escapeHtml(spec.title)}\u200b</text>
     ${yLabels}
     ${guideLines}
     <g clip-path="url(#money-ticker-clip)">
