@@ -784,7 +784,14 @@ const e5MondayBooths = (((episode5Copy.days || []).find((day) => day.id === "mon
 assertBooths(e5MondayBooths, ["gpt-5-6-luna", "grok-4-6", "claude-opus-5"], "e05-monday-booths");
 check(
   "e05-monday-books-order",
-  beatOrder(episode5Copy.days || [], "monday", ["monday-mid-books", "monday-confessionals"])
+  (() => {
+    const beats = (((episode5Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).map((b) => b.id);
+    const ids = ["monday-mid-books", "monday-confessionals", "monday-lasthour-books"];
+    for (let i = 1; i < ids.length; i += 1) {
+      if (beats.indexOf(ids[i - 1]) >= beats.indexOf(ids[i])) return false;
+    }
+    return beats.indexOf(ids[0]) > -1;
+  })()
 );
 
 const e2Cold = (((episode2Copy.days || []).find((day) => day.id === "cold-open") || {}).beats || []).find(
