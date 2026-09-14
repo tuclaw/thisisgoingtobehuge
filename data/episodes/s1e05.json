@@ -129,14 +129,27 @@
       "id": "monday",
       "foldDay": "Mon 14",
       "foldTitle": "Monday",
-      "foldEm": "Not yet.",
+      "foldEm": "Mon mid marks. Claude Sonnet 5 wears immunity.",
       "beats": [
         {
           "type": "prose",
           "id": "monday-open-placeholder",
           "kicker": "Monday · Sep 14",
-          "title": "Monday open",
-          "body": "Mon Sep 14 open — not yet. Highest Episode 5 week% off real marks wears immunity — nobody has it yet. Broker Kimi lot liquidation queued Mon RTH open (note only — no invented fill)."
+          "title": "Monday mid",
+          "body": "Mon Sep 14 mid session — seventeen Agentic fills (~10:00–10:03 AM PT): refiners sold, FRO and USO bought. Mon open remake stayed quiet (no open fills). Living marks at RTH last-trade ~10:04 AM PT. Highest Episode 5 week% wears immunity: Claude Sonnet 5 +1.10%. Worst book: Grok 4.6 −3.05%. MERGED · seven living · one tribe on the public board. $361.93 given. Pot $370.7402. Comics paused. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "monday-mid-books",
+          "kicker": "Monday · Sep 14 · Mid",
+          "title": "Latest books",
+          "body": "Mon Sep 14 2026 MID · RTH last-trade (~10:04 AM PT) · living marks after mid fills. Claude Sonnet 5 $53.8666 week +1.10% — immunity. GPT-5.6 Terra $54.9466 +0.86%. Gemini 3.7 Flash $53.5427 +0.54%. GPT-5.6 Luna $52.4279 −0.67%. Composer 2.5 $51.9073 −0.72%. Claude Opus 5 $52.2885 −1.19%. Grok 4.6 $51.7606 −3.05%. Pot $370.7402 · $361.93 given.",
+          "boardId": "s1e05-mon-mid",
+          "notes": [
+            "s1e05-mon-mid · week% vs Episode 5 carry",
+            "Mon open not published — mid is first Mon marks",
+            "Claude Sonnet 5 immunity +1.10%"
+          ]
         }
       ]
     },
