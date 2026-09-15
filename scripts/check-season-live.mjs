@@ -313,8 +313,8 @@ check("homepage-points-at-e05", home.includes("seasons/1/e05.html") && home.incl
 check("homepage-skips-e04-primary-cta", !home.includes("Walk into Episode 4"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e05-tue-mid",
-  source.statusLabel === "Live · S1E05 · MERGED · seven living · Tue mid remake"
+  "status-label-e05-tue-lasthour",
+  source.statusLabel === "Live · S1E05 · MERGED · seven living · Tue last-hour remake"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -392,7 +392,14 @@ check(
   "e5-tue-mid-mark",
   Boolean(e5TueMid) && e5TueMid.kind === "intraday" && e5TueMid.at === "2026-09-15T17:20:56Z"
 );
-check("live-snapshot-e05-tue-mid", source.liveSnapshotId === "s1e05-tue-mid");
+const e5TueLasthour = (source.events || []).find((event) => event && event.id === "s1e05-tue-lasthour");
+check(
+  "e5-tue-lasthour-mark",
+  Boolean(e5TueLasthour) &&
+    e5TueLasthour.kind === "intraday" &&
+    e5TueLasthour.at === "2026-09-15T19:29:50Z"
+);
+check("live-snapshot-e05-tue-lasthour", source.liveSnapshotId === "s1e05-tue-lasthour");
 check(
   "live-episode-is-e05",
   source.episode && source.episode.id === "s1e05" && source.episode.status === "live" && source.episode.path === "seasons/1/e05.html"
@@ -405,22 +412,22 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 14 – Tuesday Sep 16, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 16, 2026 · 2:00 PM PT");
 check(
-  "immunity-sonnet-tue-mid",
+  "immunity-sonnet-tue-lasthour",
   source.immunity &&
     source.immunity.survivorId === "955a698c-6db0-4172-9e48-12f3724187b0" &&
-    source.immunity.weekPct === 4.82 &&
-    source.immunity.snapshotId === "s1e05-tue-mid" &&
-    source.immunity.asOf === "2026-09-15-mid"
+    source.immunity.weekPct === 4.8 &&
+    source.immunity.snapshotId === "s1e05-tue-lasthour" &&
+    source.immunity.asOf === "2026-09-15-lasthour"
 );
 check("sip-missing-banner-cleared", source.sipMissingBanner == null);
-check("island-pot", source.islandPotUsd === 382.0823);
+check("island-pot", source.islandPotUsd === 381.5754);
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 check("terra-not-immune", terraLive && terraLive.immune === false);
 check("grok-not-immune", grokLive && grokLive.immune === false);
-check("sonnet-immune-tue-mid", sonnetLive && sonnetLive.immune === true && sonnetLive.weekPct === 4.82);
+check("sonnet-immune-tue-lasthour", sonnetLive && sonnetLive.immune === true && sonnetLive.weekPct === 4.8);
 check(
   "one-living-immune",
   board.survivors.filter((s) => s.status === "active" && s.immune).length === 1
@@ -819,6 +826,17 @@ const e5TuesdayBooths = (((episode5Copy.days || []).find((day) => day.id === "tu
   (beat) => beat.id === "tuesday-confessionals"
 );
 assertBooths(e5TuesdayBooths, ["claude-sonnet-5", "gpt-5-6-terra", "gemini-3-7-flash"], "e05-tuesday-booths");
+const e5TuesdayLasthour = (((episode5Copy.days || []).find((day) => day.id === "tuesday") || {}).beats || []).find(
+  (beat) => beat.id === "tuesday-lasthour-books"
+);
+check(
+  "e05-tuesday-lasthour-books",
+  Boolean(e5TuesdayLasthour) &&
+    e5TuesdayLasthour.type === "books" &&
+    e5TuesdayLasthour.boardId === "s1e05-tue-lasthour" &&
+    String(e5TuesdayLasthour.body || "").includes("4.80%") &&
+    String(e5TuesdayLasthour.body || "").includes("the Askara tribe")
+);
 const e5DayIds = (episode5Copy.days || []).map((day) => day.id);
 check("e05-tuesday-before-tribal", e5DayIds.indexOf("tuesday") > -1 && e5DayIds.indexOf("tuesday") < e5DayIds.indexOf("tribal"));
 check(
