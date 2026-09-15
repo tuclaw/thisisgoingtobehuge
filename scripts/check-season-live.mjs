@@ -313,8 +313,8 @@ check("homepage-points-at-e05", home.includes("seasons/1/e05.html") && home.incl
 check("homepage-skips-e04-primary-cta", !home.includes("Walk into Episode 4"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e05-mon-lasthour",
-  source.statusLabel === "Live · S1E05 · MERGED · seven living · Mon last-hour · leader Claude Sonnet 5"
+  "status-label-e05-mon-eod",
+  source.statusLabel === "Live · S1E05 · MERGED · seven living · Mon official SIP close · leader Claude Sonnet 5"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -379,7 +379,15 @@ check(
   "e5-mon-lasthour-mark",
   Boolean(e5MonLasthour) && e5MonLasthour.kind === "intraday" && e5MonLasthour.at === "2026-09-14T19:29:00Z"
 );
-check("live-snapshot-e05-mon-lasthour", source.liveSnapshotId === "s1e05-mon-lasthour");
+const e5MonEod = (source.events || []).find((event) => event && event.id === "s1e05-mon-eod");
+check(
+  "e5-mon-eod-mark",
+  Boolean(e5MonEod) &&
+    e5MonEod.kind === "close" &&
+    e5MonEod.at === "2026-09-15T02:15:00Z" &&
+    e5MonEod.lastSession === "2026-09-14-eod"
+);
+check("live-snapshot-e05-mon-eod", source.liveSnapshotId === "s1e05-mon-eod");
 check(
   "live-episode-is-e05",
   source.episode && source.episode.id === "s1e05" && source.episode.status === "live" && source.episode.path === "seasons/1/e05.html"
@@ -392,24 +400,22 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 14 – Tuesday Sep 16, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 16, 2026 · 2:00 PM PT");
 check(
-  "immunity-sonnet-lasthour",
+  "immunity-sonnet-mon-eod",
   source.immunity &&
     source.immunity.survivorId === "955a698c-6db0-4172-9e48-12f3724187b0" &&
-    source.immunity.weekPct === 2.54 &&
-    source.immunity.snapshotId === "s1e05-mon-lasthour"
+    source.immunity.weekPct === 2.5 &&
+    source.immunity.snapshotId === "s1e05-mon-eod" &&
+    source.immunity.asOf === "2026-09-14-eod"
 );
-check(
-  "sip-missing-banner",
-  typeof source.sipMissingBanner === "string" && source.sipMissingBanner.includes("SIP Sep 11 never posted")
-);
-check("island-pot", source.islandPotUsd === 374.1);
+check("sip-missing-banner-cleared", source.sipMissingBanner == null);
+check("island-pot", source.islandPotUsd === 374.1628);
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 check("terra-not-immune", terraLive && terraLive.immune === false);
 check("grok-not-immune", grokLive && grokLive.immune === false);
-check("sonnet-immune-lasthour", sonnetLive && sonnetLive.immune === true);
+check("sonnet-immune-mon-eod", sonnetLive && sonnetLive.immune === true && sonnetLive.weekPct === 2.5);
 check(
   "one-living-immune",
   board.survivors.filter((s) => s.status === "active" && s.immune).length === 1
@@ -782,15 +788,35 @@ const e5MondayBooths = (((episode5Copy.days || []).find((day) => day.id === "mon
   (beat) => beat.id === "monday-confessionals"
 );
 assertBooths(e5MondayBooths, ["gpt-5-6-luna", "grok-4-6", "claude-opus-5"], "e05-monday-booths");
+const e5MondayOfficial = (((episode5Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).find(
+  (beat) => beat.id === "monday-official-books"
+);
+check(
+  "e05-monday-official-books",
+  Boolean(e5MondayOfficial) &&
+    e5MondayOfficial.type === "books" &&
+    e5MondayOfficial.boardId === "s1e05-mon-eod" &&
+    String(e5MondayOfficial.body || "").includes("Claude Sonnet 5") &&
+    String(e5MondayOfficial.body || "").includes("2.50%")
+);
 check(
   "e05-monday-books-order",
   (() => {
     const beats = (((episode5Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).map((b) => b.id);
-    const ids = ["monday-mid-books", "monday-confessionals", "monday-lasthour-books"];
+    const ids = [
+      "monday-mid-books",
+      "monday-confessionals",
+      "monday-lasthour-books",
+      "monday-official-books",
+      "monday-dinner"
+    ];
     for (let i = 1; i < ids.length; i += 1) {
       if (beats.indexOf(ids[i - 1]) >= beats.indexOf(ids[i])) return false;
     }
-    return beats.indexOf(ids[0]) > -1;
+    return (
+      beats.indexOf(ids[0]) > -1 &&
+      beats.indexOf("monday-official-books") === beats.indexOf("monday-dinner") - 1
+    );
   })()
 );
 
