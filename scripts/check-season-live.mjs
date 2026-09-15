@@ -313,8 +313,8 @@ check("homepage-points-at-e05", home.includes("seasons/1/e05.html") && home.incl
 check("homepage-skips-e04-primary-cta", !home.includes("Walk into Episode 4"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e05-mon-eod",
-  source.statusLabel === "Live · S1E05 · MERGED · seven living · Mon official SIP close · leader Claude Sonnet 5"
+  "status-label-e05-tue-mid",
+  source.statusLabel === "Live · S1E05 · MERGED · seven living · Tue mid remake"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -387,7 +387,12 @@ check(
     e5MonEod.at === "2026-09-15T02:15:00Z" &&
     e5MonEod.lastSession === "2026-09-14-eod"
 );
-check("live-snapshot-e05-mon-eod", source.liveSnapshotId === "s1e05-mon-eod");
+const e5TueMid = (source.events || []).find((event) => event && event.id === "s1e05-tue-mid");
+check(
+  "e5-tue-mid-mark",
+  Boolean(e5TueMid) && e5TueMid.kind === "intraday" && e5TueMid.at === "2026-09-15T17:20:56Z"
+);
+check("live-snapshot-e05-tue-mid", source.liveSnapshotId === "s1e05-tue-mid");
 check(
   "live-episode-is-e05",
   source.episode && source.episode.id === "s1e05" && source.episode.status === "live" && source.episode.path === "seasons/1/e05.html"
@@ -400,22 +405,22 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 14 – Tuesday Sep 16, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 16, 2026 · 2:00 PM PT");
 check(
-  "immunity-sonnet-mon-eod",
+  "immunity-sonnet-tue-mid",
   source.immunity &&
     source.immunity.survivorId === "955a698c-6db0-4172-9e48-12f3724187b0" &&
-    source.immunity.weekPct === 2.5 &&
-    source.immunity.snapshotId === "s1e05-mon-eod" &&
-    source.immunity.asOf === "2026-09-14-eod"
+    source.immunity.weekPct === 4.82 &&
+    source.immunity.snapshotId === "s1e05-tue-mid" &&
+    source.immunity.asOf === "2026-09-15-mid"
 );
 check("sip-missing-banner-cleared", source.sipMissingBanner == null);
-check("island-pot", source.islandPotUsd === 374.1628);
+check("island-pot", source.islandPotUsd === 382.0823);
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 check("terra-not-immune", terraLive && terraLive.immune === false);
 check("grok-not-immune", grokLive && grokLive.immune === false);
-check("sonnet-immune-mon-eod", sonnetLive && sonnetLive.immune === true && sonnetLive.weekPct === 2.5);
+check("sonnet-immune-tue-mid", sonnetLive && sonnetLive.immune === true && sonnetLive.weekPct === 4.82);
 check(
   "one-living-immune",
   board.survivors.filter((s) => s.status === "active" && s.immune).length === 1
@@ -799,6 +804,19 @@ check(
     String(e5MondayOfficial.body || "").includes("Claude Sonnet 5") &&
     String(e5MondayOfficial.body || "").includes("2.50%")
 );
+const e5TuesdayMid = (((episode5Copy.days || []).find((day) => day.id === "tuesday") || {}).beats || []).find(
+  (beat) => beat.id === "tuesday-mid-books"
+);
+check(
+  "e05-tuesday-mid-books",
+  Boolean(e5TuesdayMid) &&
+    e5TuesdayMid.type === "books" &&
+    e5TuesdayMid.boardId === "s1e05-tue-mid" &&
+    String(e5TuesdayMid.body || "").includes("4.82%") &&
+    String(e5TuesdayMid.body || "").includes("the Bidu tribe")
+);
+const e5DayIds = (episode5Copy.days || []).map((day) => day.id);
+check("e05-tuesday-before-tribal", e5DayIds.indexOf("tuesday") > -1 && e5DayIds.indexOf("tuesday") < e5DayIds.indexOf("tribal"));
 check(
   "e05-monday-books-order",
   (() => {
