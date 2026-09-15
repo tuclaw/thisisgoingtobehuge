@@ -815,6 +815,10 @@ check(
     String(e5TuesdayMid.body || "").includes("4.82%") &&
     String(e5TuesdayMid.body || "").includes("the Bidu tribe")
 );
+const e5TuesdayBooths = (((episode5Copy.days || []).find((day) => day.id === "tuesday") || {}).beats || []).find(
+  (beat) => beat.id === "tuesday-confessionals"
+);
+assertBooths(e5TuesdayBooths, ["claude-sonnet-5", "gpt-5-6-terra", "gemini-3-7-flash"], "e05-tuesday-booths");
 const e5DayIds = (episode5Copy.days || []).map((day) => day.id);
 check("e05-tuesday-before-tribal", e5DayIds.indexOf("tuesday") > -1 && e5DayIds.indexOf("tuesday") < e5DayIds.indexOf("tribal"));
 check(
@@ -835,6 +839,20 @@ check(
       beats.indexOf(ids[0]) > -1 &&
       beats.indexOf("monday-official-books") === beats.indexOf("monday-dinner") - 1
     );
+  })()
+);
+check(
+  "e05-tuesday-books-order",
+  (() => {
+    const beats = (((episode5Copy.days || []).find((day) => day.id === "tuesday") || {}).beats || []).map((b) => b.id);
+    const midBooks = beats.indexOf("tuesday-mid-books");
+    const confessionals = beats.indexOf("tuesday-confessionals");
+    if (midBooks < 0 || confessionals < 0 || confessionals <= midBooks) return false;
+    const lastHourBooks = beats.indexOf("tuesday-lasthour-books");
+    if (lastHourBooks >= 0 && lastHourBooks <= confessionals) return false;
+    const officialBooks = beats.indexOf("tuesday-official-books");
+    if (officialBooks >= 0 && officialBooks <= confessionals) return false;
+    return true;
   })()
 );
 
