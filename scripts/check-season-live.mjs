@@ -890,6 +890,22 @@ check(
     String(e6WedOpenBooks.body || "").includes("the Bidu tribe") &&
     String(e6WedOpenBooks.body || "").includes("the Askara tribe")
 );
+const e6WednesdayBooths = (((episode6Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).find(
+  (beat) => beat.id === "wednesday-confessionals"
+);
+assertBooths(e6WednesdayBooths, ["gpt-5-6-luna", "gpt-5-6-terra", "claude-opus-5"], "e06-wednesday-booths");
+check(
+  "e06-wednesday-books-order",
+  (() => {
+    const beats = (((episode6Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).map((b) => b.id);
+    const open = beats.indexOf("wednesday-open-books");
+    const confessionals = beats.indexOf("wednesday-confessionals");
+    if (open < 0 || confessionals < 0 || confessionals !== open + 1) return false;
+    const lastHour = beats.indexOf("wednesday-lasthour-books");
+    if (lastHour >= 0 && lastHour <= confessionals) return false;
+    return true;
+  })()
+);
 const e5DayIds = (episode5Copy.days || []).map((day) => day.id);
 check("e05-tuesday-before-tribal", e5DayIds.indexOf("tuesday") > -1 && e5DayIds.indexOf("tuesday") < e5DayIds.indexOf("tribal"));
 check(
