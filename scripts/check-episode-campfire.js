@@ -576,8 +576,8 @@ if (hostHelpers.moneyPutInTotal(seasonSource) !== 120) {
 if (hostHelpers.islandHostAddUsd(seasonSource) !== 120.09) {
   throw new Error("islandHostAddUsd should be Episode 2 host +$120.09, got " + hostHelpers.islandHostAddUsd(seasonSource));
 }
-if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E5") {
-  throw new Error("islandHostAddEpisodeLabel should be E5");
+if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E6") {
+  throw new Error("islandHostAddEpisodeLabel should be E6");
 }
 if (hostHelpers.islandHostAddUsd({ startingBookUsd: 10, islandGivenUsd: 120, cast: new Array(12).fill({}) }) != null) {
   throw new Error("islandHostAddUsd must stay hidden when given equals the opening $120");
@@ -648,8 +648,8 @@ const chapterHelpers = new Function(`
   return { listedTickerEpisodes, groupSnapshotsByEpisode, snapshotMatchesEpisode };
 `)();
 const chapterEps = chapterHelpers.listedTickerEpisodes(seasonSource);
-if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02|s1e03|s1e04") {
-  throw new Error("listedTickerEpisodes should keep closed episodes until Episode 5 has week tape, got " + chapterEps.map((ep) => ep.id).join("|"));
+if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02|s1e03|s1e04|s1e05") {
+  throw new Error("listedTickerEpisodes should keep closed episodes until Episode 6 has week tape, got " + chapterEps.map((ep) => ep.id).join("|"));
 }
 const grouped = chapterHelpers.groupSnapshotsByEpisode(seasonSource, [
   { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z" },
@@ -1267,13 +1267,13 @@ const watchHelpers = new Function(`
 `)();
 const seasonBoard = JSON.parse(readFileSync(join(root, "dist", "season1.json"), "utf8"));
 if (!watchHelpers.episodeLiveWatchable(seasonBoard, seasonBoard.episode)) {
-  throw new Error("Episode 5 carry must open public Live links after Friday tribal");
+  throw new Error("Episode 6 carry must open public Live links after Tuesday tribal");
 }
-if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e05") {
-  throw new Error("public Watch Live must sit on Episode 5, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
+if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e06") {
+  throw new Error("public Watch Live must sit on Episode 6, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
 }
-if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e05-carry")) {
-  throw new Error("Episode 5 carry snapshot must exist after Friday tribal");
+if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e06-carry-sip")) {
+  throw new Error("Episode 6 carry-sip snapshot must exist after tribal + SIP catch-up");
 }
 const rangeStart = appJs.indexOf("function snapshotsForTickerRange");
 const rangeEnd = appJs.indexOf("function candidateStroke");

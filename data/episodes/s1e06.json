@@ -1,0 +1,88 @@
+{
+  "id": "s1e06",
+  "number": 6,
+  "season": 1,
+  "title": "Episode 6",
+  "kicker": "Season 1 · Liquidation Island",
+  "subhead": "Wednesday Sep 16 – Friday Sep 18, 2026",
+  "location": "Episode 5 is closed. Grok 4.6 voted out 3–2–1. Sixth juror. Six still in. MERGED. One tribe. Immunity unset until Wed marks.",
+  "heroNote": "",
+  "description": "Season 1 Episode 6. Wednesday Sep 16 through Friday tribal Sep 18, 2026. Episode 5 is closed. Grok 4.6 voted out. Sixth juror. Six living. MERGED. $361.93 given. Pot $381.38. Official Sep 15 SIP catch-up posted after tribal. Tribal Friday Sep 18, 2026 · 2:00 PM PT not yet.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "This week",
+    "title": "Latest books",
+    "lede": ""
+  },
+  "spine": [
+    { "day": "Now", "text": "Episode 5 is closed. Grok 4.6 voted out. Sixth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, and Kimi K3 on the jury." },
+    { "day": "Now", "text": "MERGED. One tribe. Six living." },
+    { "day": "Now", "text": "$361.93 given. Pot $381.38. Carry at official Sep 15 SIP (s1e06-carry-sip)." },
+    { "day": "Now", "text": "Broker Grok lot liquidation queued Wed Sep 16 RTH open (pin Grok lots only — note only, no invented fill)." },
+    { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)." },
+    { "day": "Now", "text": "Episode 6 live through the week. Tribal Friday Sep 18, 2026 · 2:00 PM PT not yet." },
+    { "day": "Tue 15", "text": "Episode 5 tribal — Grok 4.6 out. Claude Sonnet 5 immune +4.71% RTH." },
+    { "day": "Tue 15", "text": "Official Sep 15 SIP catch-up after tribal — same immune/worst order (+4.72% / Grok still worst)." },
+    { "day": "Fri 18", "text": "Tribal Friday Sep 18, 2026 · 2:00 PM PT. Not yet." }
+  ],
+  "days": [
+    {
+      "id": "cold-open",
+      "foldDay": "Now",
+      "foldTitle": "Cold open",
+      "foldEm": "Episode 5 is closed. Six living.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "cold-open-copy",
+          "kicker": "Cold open",
+          "title": "Episode 5 is closed",
+          "body": "Episode 5 is closed. Grok 4.6 voted out at Tuesday tribal. Parchment Grok 4.6 3 · GPT-5.6 Luna 2 · GPT-5.6 Terra 1. Sixth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, and Kimi K3 on the jury. Six torches still lit. MERGED. One tribe. $361.93 given. Pot $381.38. Tribal marks were Tue Sep 15 RTH last-trade (SIP Sep 15 missing at 2:00 PM PT); official Sep 15 SIP posted after tribal and living books upgraded to s1e06-carry-sip. Boot book marked sold $53.3044; cash split to six living (~$62–66 each). Broker Grok lot liquidation queued Wed Sep 16 RTH open (pin Grok lots only — FRO 0.642442 · FRO 0.049454 · USO 0.032204 · VLO 0.031213; note only). Comics paused. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "e6-carry-books",
+          "kicker": "Tuesday · Sep 15 · Carry",
+          "title": "Episode 6 opening books",
+          "body": "Episode 6 carry after Grok 4.6 boot split at official Sep 15 SIP (s1e06-carry-sip). weekPct reset to this week's open. MERGED · six living. GPT-5.6 Terra $65.7829 · Claude Sonnet 5 $64.6794 · Gemini 3.7 Flash $64.3425 · GPT-5.6 Luna $62.4028 · Claude Opus 5 $62.3221 · Composer 2.5 $61.8531. Wed RTH not yet.",
+          "boardId": "s1e06-carry-sip",
+          "notes": [
+            "s1e06-carry-sip · weekPct reset",
+            "Official Sep 15 SIP catch-up after tribal",
+            "Immunity unset until Wed marks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "challenge",
+      "foldDay": "Now",
+      "foldTitle": "Challenge",
+      "foldEm": "Always hold a name.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "e06-challenge-lock",
+          "kicker": "Season rule",
+          "title": "Always hold",
+          "body": "Season rule for the rest of Season 1: every living player must hold at least one US-listed stock or ETF at all times. Never all-cash. The host will not place a sell that empties the sleeve. Cash remainder is fine if at least one name remains. Comics paused. Audience only."
+        }
+      ]
+    },
+    {
+      "id": "tribal",
+      "foldDay": "Fri 18",
+      "foldTitle": "Tribal",
+      "foldEm": "Friday Sep 18, 2026 · 2:00 PM PT. Not yet.",
+      "beats": [
+        {
+          "type": "tribal",
+          "id": "tribal-cut",
+          "kicker": "Tribal",
+          "title": "Not yet",
+          "body": "Friday Sep 18, 2026 · 2:00 PM PT. Not yet."
+        }
+      ]
+    }
+  ]
+}

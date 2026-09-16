@@ -64,7 +64,7 @@ if (
 if (!entry.tally || entry.tally["Composer 2.5"] !== 3 || entry.tally["Kimi K3"] !== 3 || entry.tally["Claude Sonnet 5"] !== 1) {
   fail("do not rebuild or invent round-1 tally — use Composer 3 · Kimi 3 · Sonnet 1");
 }
-const revotePairings = (entry.revoteVotes || []).map((v) => `${v.from}>${v.for}`);
+const revotePairings = (entry.revote || entry.revoteVotes || []).map((v) => `${v.from}>${v.for}`);
 if (
   revotePairings.join("|") !==
   "Claude Sonnet 5>Kimi K3|Gemini 3.7 Flash>Kimi K3|Grok 4.6>Kimi K3|GPT-5.6 Luna>Composer 2.5|Claude Opus 5>Composer 2.5"

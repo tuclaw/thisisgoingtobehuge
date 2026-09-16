@@ -281,7 +281,7 @@ function deriveBoardNative(source) {
     episodes: source.episodes || [],
     tribes,
     survivors,
-    tribalLog: source.tribalLog || [],
+    tribalLog: publicTribalLog(source.tribalLog),
     goldenPortfolio: source.goldenPortfolio || [],
     immunity: source.immunity ?? null,
     winnerId: source.winnerId ?? null,
@@ -567,6 +567,22 @@ function publicPosition(pos) {
   return copy;
 }
 
+function publicTribalLog(log) {
+  return (log || []).map((entry) => {
+    if (!entry || !entry.brokerLiqPending) return entry;
+    const pending = { ...entry.brokerLiqPending };
+    if (Array.isArray(pending.lots)) {
+      pending.lots = pending.lots.map((lot) => {
+        if (!lot || typeof lot !== "object") return lot;
+        const copy = { ...lot };
+        delete copy.orderId;
+        return copy;
+      });
+    }
+    return { ...entry, brokerLiqPending: pending };
+  });
+}
+
 function fillQty(fill) {
   const qty = parseFloat(fill && fill.qty);
   return Number.isFinite(qty) && qty > 0 ? qty : null;
@@ -828,7 +844,7 @@ export function deriveSeason(source) {
     episodes: source.episodes || [],
     tribes,
     survivors,
-    tribalLog: source.tribalLog || [],
+    tribalLog: publicTribalLog(source.tribalLog),
     goldenPortfolio: source.goldenPortfolio || [],
     immunity: source.immunity ?? null,
     winnerId: source.winnerId ?? null,
