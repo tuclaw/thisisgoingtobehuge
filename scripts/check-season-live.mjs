@@ -338,8 +338,8 @@ check("homepage-points-at-e06", home.includes("seasons/1/e06.html") && home.incl
 check("homepage-skips-e05-primary-cta", !home.includes("Walk into Episode 5"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e06-carry",
-  source.statusLabel === "Live · S1E06 · MERGED · six living · carry after Grok boot"
+  "status-label-e06-wed-open",
+  source.statusLabel === "Live · S1E06 · MERGED · six living · Wed open"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -405,8 +405,13 @@ if (e6Carry && e6Carry.recorded) {
     e6CarryIds.length === 6 && e6CarryIds.every((id) => e6Carry.recorded[id] && e6Carry.recorded[id].weekPct === 0)
   );
 }
-check("live-snapshot-e06-carry-sip", source.liveSnapshotId === "s1e06-carry-sip");
-check("last-session-eod", source.lastSession === "2026-09-15-eod");
+const e6WedOpen = (source.events || []).find((event) => event && event.id === "s1e06-wed-open");
+check(
+  "e6-wed-open-mark",
+  Boolean(e6WedOpen) && e6WedOpen.kind === "open" && e6WedOpen.at === "2026-09-16T14:05:37Z"
+);
+check("live-snapshot-e06-wed-open", source.liveSnapshotId === "s1e06-wed-open");
+check("last-session-open", source.lastSession === "2026-09-16-open");
 check(
   "live-episode-is-e06",
   source.episode && source.episode.id === "s1e06" && source.episode.status === "live" && source.episode.path === "seasons/1/e06.html"
@@ -418,20 +423,23 @@ check(
 );
 check("live-episode-week", source.episode && source.episode.weekLabel === "Wednesday Sep 16 – Friday Sep 18, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 18, 2026 · 2:00 PM PT");
-check("immunity-unset-e06-open", source.immunity == null);
+check(
+  "immunity-terra-e06-wed-open",
+  source.immunity && source.immunity.name === "GPT-5.6 Terra" && source.immunity.weekPct === 2.43
+);
 check("sip-missing-banner-cleared", source.sipMissingBanner == null);
-check("island-pot", source.islandPotUsd === 381.3828);
+check("island-pot", source.islandPotUsd === 387.8499);
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
-check("terra-not-immune", terraLive && terraLive.immune === false);
+check("terra-immune-e06-wed", terraLive && terraLive.immune === true && terraLive.weekPct === 2.43);
 check(
   "grok-jury-zero",
   grokLive && (grokLive.status === "voted-out" || grokLive.status === "jury") && grokLive.bookUsd === 0
 );
-check("sonnet-not-immune-e06-open", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === 0);
-check("no-living-immune", board.survivors.filter((s) => s.status === "active" && s.immune).length === 0);
+check("sonnet-not-immune-e06-wed", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === 1.97);
+check("one-living-immune", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
 check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
@@ -870,6 +878,17 @@ const e6CarryBooks = (((episode6Copy.days || []).find((day) => day.id === "cold-
 check(
   "e06-carry-books-board",
   Boolean(e6CarryBooks) && e6CarryBooks.boardId === "s1e06-carry-sip" && String(e6CarryBooks.body || "").includes("65.7829")
+);
+const e6WedOpenBooks = (((episode6Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).find(
+  (beat) => beat.id === "wednesday-open-books"
+);
+check(
+  "e06-wed-open-books",
+  Boolean(e6WedOpenBooks) &&
+    e6WedOpenBooks.boardId === "s1e06-wed-open" &&
+    String(e6WedOpenBooks.body || "").includes("GPT-5.6 Terra") &&
+    String(e6WedOpenBooks.body || "").includes("the Bidu tribe") &&
+    String(e6WedOpenBooks.body || "").includes("the Askara tribe")
 );
 const e5DayIds = (episode5Copy.days || []).map((day) => day.id);
 check("e05-tuesday-before-tribal", e5DayIds.indexOf("tuesday") > -1 && e5DayIds.indexOf("tuesday") < e5DayIds.indexOf("tribal"));
