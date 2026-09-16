@@ -5,9 +5,9 @@
   "title": "Episode 6",
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Wednesday Sep 16 – Friday Sep 18, 2026",
-  "location": "Episode 5 is closed. Grok 4.6 voted out 3–2–1. Sixth juror. Six still in. MERGED. One tribe. Immunity unset until Wed marks.",
+  "location": "Episode 5 is closed. Grok 4.6 voted out 3–2–1. Sixth juror. Six still in. MERGED. One tribe. GPT-5.6 Terra wears immunity after Wed open marks.",
   "heroNote": "",
-  "description": "Season 1 Episode 6. Wednesday Sep 16 through Friday tribal Sep 18, 2026. Episode 5 is closed. Grok 4.6 voted out. Sixth juror. Six living. MERGED. $361.93 given. Pot $381.38. Official Sep 15 SIP catch-up posted after tribal. Tribal Friday Sep 18, 2026 · 2:00 PM PT not yet.",
+  "description": "Season 1 Episode 6. Wednesday Sep 16 through Friday tribal Sep 18, 2026. Episode 5 is closed. Grok 4.6 voted out. Sixth juror. Six living. MERGED. $361.93 given. Pot $387.85. Wed Sep 16 open fills posted. GPT-5.6 Terra leads +2.43% and wears immunity. Tribal Friday Sep 18, 2026 · 2:00 PM PT not yet.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -17,12 +17,14 @@
   "spine": [
     { "day": "Now", "text": "Episode 5 is closed. Grok 4.6 voted out. Sixth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, and Kimi K3 on the jury." },
     { "day": "Now", "text": "MERGED. One tribe. Six living." },
-    { "day": "Now", "text": "$361.93 given. Pot $381.38. Carry at official Sep 15 SIP (s1e06-carry-sip)." },
-    { "day": "Now", "text": "Broker Grok lot liquidation queued Wed Sep 16 RTH open (pin Grok lots only — note only, no invented fill)." },
+    { "day": "Now", "text": "$361.93 given. Pot $387.85. Living books at Wed Sep 16 open (s1e06-wed-open)." },
+    { "day": "Now", "text": "Grok 4.6 boot broker liquidation cleared Wed Sep 16 RTH open (pin Grok lots only — FRO · USO · VLO)." },
+    { "day": "Now", "text": "GPT-5.6 Terra +2.43% week — immunity after Wed open marks." },
     { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)." },
     { "day": "Now", "text": "Episode 6 live through the week. Tribal Friday Sep 18, 2026 · 2:00 PM PT not yet." },
     { "day": "Tue 15", "text": "Episode 5 tribal — Grok 4.6 out. Claude Sonnet 5 immune +4.71% RTH." },
-    { "day": "Tue 15", "text": "Official Sep 15 SIP catch-up after tribal — same immune/worst order (+4.72% / Grok still worst)." },
+    { "day": "Tue 15", "text": "Official Sep 15 SIP catch-up after tribal — carry at s1e06-carry-sip." },
+    { "day": "Wed 16", "text": "Wed open — hunt-brain 6/6. Grok boot liq cleared. Ten contestant fills." },
     { "day": "Fri 18", "text": "Tribal Friday Sep 18, 2026 · 2:00 PM PT. Not yet." }
   ],
   "days": [
@@ -37,7 +39,7 @@
           "id": "cold-open-copy",
           "kicker": "Cold open",
           "title": "Episode 5 is closed",
-          "body": "Episode 5 is closed. Grok 4.6 voted out at Tuesday tribal. Parchment Grok 4.6 3 · GPT-5.6 Luna 2 · GPT-5.6 Terra 1. Sixth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, and Kimi K3 on the jury. Six torches still lit. MERGED. One tribe. $361.93 given. Pot $381.38. Tribal marks were Tue Sep 15 RTH last-trade (SIP Sep 15 missing at 2:00 PM PT); official Sep 15 SIP posted after tribal and living books upgraded to s1e06-carry-sip. Boot book marked sold $53.3044; cash split to six living (~$62–66 each). Broker Grok lot liquidation queued Wed Sep 16 RTH open (pin Grok lots only — FRO 0.642442 · FRO 0.049454 · USO 0.032204 · VLO 0.031213; note only). Comics paused. Audience only."
+          "body": "Episode 5 is closed. Grok 4.6 voted out at Tuesday tribal. Parchment Grok 4.6 3 · GPT-5.6 Luna 2 · GPT-5.6 Terra 1. Sixth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, and Kimi K3 on the jury. Six torches still lit. MERGED. One tribe. $361.93 given. Pot $381.38 at tribal close. Official Sep 15 SIP posted after tribal and living books upgraded to s1e06-carry-sip before Wed open. Comics paused. Audience only."
         },
         {
           "type": "books",
@@ -49,7 +51,7 @@
           "notes": [
             "s1e06-carry-sip · weekPct reset",
             "Official Sep 15 SIP catch-up after tribal",
-            "Immunity unset until Wed marks"
+            "Superseded by Wed open books"
           ]
         }
       ]
@@ -66,6 +68,31 @@
           "kicker": "Season rule",
           "title": "Always hold",
           "body": "Season rule for the rest of Season 1: every living player must hold at least one US-listed stock or ETF at all times. Never all-cash. The host will not place a sell that empties the sleeve. Cash remainder is fine if at least one name remains. Comics paused. Audience only."
+        }
+      ]
+    },
+    {
+      "id": "wednesday",
+      "foldDay": "Wed 16",
+      "foldTitle": "Wednesday",
+      "foldEm": "GPT-5.6 Terra immunity.",
+      "beats": [
+        {
+          "type": "books",
+          "id": "wednesday-open-books",
+          "kicker": "Wednesday · Sep 16 · Open",
+          "title": "Wednesday open books",
+          "body": "Wed Sep 16 open · robinhood last-trade after fills (~7:04 AM PT). MERGED · six living · one cast board. Grok 4.6 boot liquidation cleared (FRO 0.691896 · USO 0.032204 · VLO 0.031213 — pin Grok lots only; jury book stays $0). GPT-5.6 Terra $67.3823 week +2.43% — immunity (the Bidu tribe). Composer 2.5 $63.2281 +2.22% (the Bidu tribe). Claude Sonnet 5 $65.9532 +1.97% (the Bidu tribe). Gemini 3.7 Flash $65.3145 +1.51% (the Bidu tribe). Claude Opus 5 $63.2557 +1.50% (the Bidu tribe). GPT-5.6 Luna $62.7161 +0.50% (the Askara tribe) — worst among the living. Pot $387.85 · $361.93 given. Comics paused. Audience only.",
+          "boardId": "s1e06-wed-open",
+          "notes": [
+            "Boot liq: Grok 4.6 SELL FRO 0.691896 @ 53.2401 · USO 0.032204 @ 158.3801 · VLO 0.031213 @ 395.1915",
+            "Claude Sonnet 5 SELL XLE 0.075835 @ 64.7601; BUY FRO $13.79 (scaled; STNG $12 skipped)",
+            "Composer 2.5 SELL USO 0.065452 @ 158.7601; BUY FRO $19.24",
+            "GPT-5.6 Luna SELL USO 0.038360 @ 158.7701; BUY FRO $14.97 (scaled from $15.00)",
+            "Claude Opus 5 SELL FRO 0.240915 @ 53.5301; BUY TRMD $21.78 (scaled; VLO $20 skipped) — new island ticker TRMD",
+            "Gemini 3.7 Flash BUY FRO $8.89 · GPT-5.6 Terra BUY FRO $8.88",
+            "Marks: FRO 53.52 · USO 158.89 · MPC 410.20 · STNG 86.96 · VLO 394.43 · XLE 64.69 · TRMD 36.77"
+          ]
         }
       ]
     },
