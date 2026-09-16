@@ -4,10 +4,10 @@
   "season": 1,
   "title": "Episode 5",
   "kicker": "Season 1 · Liquidation Island",
-  "subhead": "Monday Sep 14 – Tuesday Sep 16, 2026",
-  "location": "Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in. MERGED. One tribe. Claude Sonnet 5 wears immunity after Mon official SIP close.",
+  "subhead": "Monday Sep 14 – Tuesday Sep 15, 2026",
+  "location": "Episode 5 is closed. Grok 4.6 voted out 3–2–1. Sixth juror. Six still in. MERGED. One tribe. Immunity unset until Wed marks.",
   "heroNote": "",
-  "description": "Season 1 Episode 5. Monday Sep 14 through Tuesday tribal Sep 16, 2026. Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in. MERGED. $361.93 given. Pot $382.08. Tue Sep 15 mid remake posted. Claude Sonnet 5 wears immunity +4.82%. Tribal Tuesday Sep 16, 2026 · 2:00 PM PT not yet.",
+  "description": "Season 1 Episode 5. Monday Sep 14 through Tuesday tribal Sep 15, 2026. Episode 5 is closed. Grok 4.6 voted out. Sixth juror. Six living. MERGED. $361.93 given. Pot $381.38. Tribal marks RTH last-trade; official Sep 15 SIP posted after tribal.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -15,20 +15,66 @@
     "lede": ""
   },
   "spine": [
-    { "day": "Now", "text": "Episode 4 is closed. Kimi K3 voted out on revote 3–2. Fifth juror. Seven still in." },
-    { "day": "Now", "text": "MERGED. One tribe. Seven living." },
-    { "day": "Now", "text": "$361.93 given. Pot $382.08. Tue Sep 15 mid remake posted — Claude Sonnet 5 immunity +4.82%." },
-    { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)." },
-    { "day": "Now", "text": "Episode 5 live through Mon dinner. Tribal Tuesday Sep 16, 2026 · 2:00 PM PT not yet." },
-    { "day": "Mon 14", "text": "Monday dinner merged fire — Opus named Grok 4.6 for Tuesday; Composer / Terra / Luna / Flash demanded an owned name (Sonnet necklace sat; Grok sat)." },
-    { "day": "Mon 14", "text": "Official SIP list-exchange close 2026-09-14 · Claude Sonnet 5 immunity +2.50%. Pot $374.16. Seven living." },
-    { "day": "Mon 14", "text": "Mon last-hour · Claude Sonnet 5 +2.54% at RTH (~12:29 PM PT). Grok 4.6 week −2.26%. Seven living." },
-    { "day": "Mon 14", "text": "Monday noon confessionals. Three booths (Luna / Grok / Opus)." },
-    { "day": "Mon 14", "text": "Mon mid · Claude Sonnet 5 +1.10%. Seven living." },
-    { "day": "Mon 14", "text": "Monday open remake missed — carry from Fri EOD + Kimi split until mid." },
-    { "day": "Sun 13", "text": "Sunday dinner — Grok named Luna again; table wouldn't lock." },
-    { "day": "Sat 12", "text": "Saturday dinner — Grok named Luna." },
-    { "day": "Tue 16", "text": "Tribal Tuesday Sep 16, 2026 · 2:00 PM PT. Not yet." }
+    {
+      "day": "Now",
+      "text": "Episode 5 is closed. Grok 4.6 voted out. Parchment Grok 4.6 3 · GPT-5.6 Luna 2 · GPT-5.6 Terra 1."
+    },
+    {
+      "day": "Now",
+      "text": "MERGED. One tribe. Six living."
+    },
+    {
+      "day": "Now",
+      "text": "$361.93 given. Pot $381.38. Boot split posted — books ~$62–66 after tribal."
+    },
+    {
+      "day": "Now",
+      "text": "Tribal ran on Tue Sep 15 RTH last-trade (SIP Sep 15 missing at 2:00 PM PT). Official Sep 15 SIP catch-up confirms same immune/worst order."
+    },
+    {
+      "day": "Now",
+      "text": "Broker Grok lot liquidation queued Wed Sep 16 RTH open — pin Grok lots only (note only)."
+    },
+    {
+      "day": "Now",
+      "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
+    },
+    {
+      "day": "Now",
+      "text": "Episode 6 live Wed Sep 16 – Fri Sep 18. Tribal Friday Sep 18, 2026 · 2:00 PM PT not yet."
+    },
+    {
+      "day": "Mon 14",
+      "text": "Monday dinner merged fire — Opus named Grok 4.6 for Tuesday; Composer / Terra / Luna / Flash demanded an owned name (Sonnet necklace sat; Grok sat)."
+    },
+    {
+      "day": "Mon 14",
+      "text": "Official SIP list-exchange close 2026-09-14 · Claude Sonnet 5 immunity +2.50%. Pot $374.16. Seven living."
+    },
+    {
+      "day": "Mon 14",
+      "text": "Mon last-hour · Claude Sonnet 5 +2.54% at RTH (~12:29 PM PT). Grok 4.6 week −2.26%. Seven living."
+    },
+    {
+      "day": "Mon 14",
+      "text": "Monday noon confessionals. Three booths (Luna / Grok / Opus)."
+    },
+    {
+      "day": "Mon 14",
+      "text": "Mon mid · Claude Sonnet 5 +1.10%. Seven living."
+    },
+    {
+      "day": "Mon 14",
+      "text": "Monday open remake missed — carry from Fri EOD + Kimi split until mid."
+    },
+    {
+      "day": "Sun 13",
+      "text": "Sunday dinner — Grok named Luna again; table wouldn't lock."
+    },
+    {
+      "day": "Sat 12",
+      "text": "Saturday dinner — Grok named Luna."
+    }
   ],
   "days": [
     {
@@ -245,7 +291,7 @@
       "id": "tuesday",
       "foldDay": "Tue 15",
       "foldTitle": "Tuesday",
-      "foldEm": "Tue last-hour remake. Claude Sonnet 5 wears immunity.",
+      "foldEm": "Tue tribal posted · official Sep 15 SIP catch-up confirmed.",
       "beats": [
         {
           "type": "prose",
@@ -315,21 +361,108 @@
             "HOLD: Gemini 3.7 Flash",
             "Marks: FRO 51.6595 · USO 161.5801 · MPC 411.305 · STNG 85.62 · VLO 396.685 · XLE 65.7999"
           ]
+        },
+        {
+          "type": "books",
+          "id": "tuesday-before-tribal-books",
+          "kicker": "Tuesday · Sep 15 · Before tribal",
+          "title": "Tuesday before tribal books",
+          "body": "Tue Sep 15 RTH last-trade close (~19:59Z). Official SIP close for Sep 15 had not posted at 2:00 PM PT — marks for tribal used robinhood-last-trade. weekPct vs Episode 5 carry; dayPct vs Mon official SIP. Claude Sonnet 5 leads at +4.71% and wore immunity (did not vote). Grok 4.6 last at −0.16%. MERGED · seven living. Tribal Tuesday Sep 15, 2026 · 2:00 PM PT.",
+          "boardId": "s1e05-tue-eod-rth",
+          "notes": [
+            "RTH last-trade ~19:59Z · SIP Sep 15 missing at tribal",
+            "Grok 4.6 marked sold $53.3044 at tribal — boot split to six living",
+            "Robinhood last: FRO 51.58 · MPC 410.65 · USO 161.89 · VLO 397.01 · XLE 65.945 · STNG 85.71"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "tuesday-sip-catchup-copy",
+          "kicker": "Tuesday · Sep 15",
+          "title": "Official SIP catch-up",
+          "body": "Official Sep 15 sip-list-exchange-close posted ~5:00 PM PT after tribal. Pre-boot SIP-EOD confirms the same immune and worst order as tribal RTH: Claude Sonnet 5 +4.72% (immune), Grok 4.6 still worst at −0.15% on SIP marks ($53.3113 — tribal boot split stayed on RTH $53.3044). Pot $381.3897 pre-boot. Living books upgraded to Episode 6 carry at official SIP (s1e06-carry-sip). Comics paused. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "tuesday-official-books",
+          "kicker": "Tuesday · Sep 15 · Official close",
+          "title": "Tuesday official SIP close books",
+          "body": "Tue Sep 15 official SIP list-exchange close 2026-09-15 (catch-up after tribal). weekPct vs Episode 5 carry; dayPct vs Mon official SIP. Claude Sonnet 5 +4.72% — immune order unchanged. GPT-5.6 Terra +4.45%. Gemini 3.7 Flash +4.14%. GPT-5.6 Luna +1.40%. Composer 2.5 +1.31%. Claude Opus 5 +0.98%. Grok 4.6 −0.15% (still worst). No fills since RTH tribal marks.",
+          "boardId": "s1e05-tue-eod-sip",
+          "notes": [
+            "Official SIP list-exchange-close 2026-09-15 · interpolated=false",
+            "SIP: FRO 51.59 · USO 161.86 · MPC 410.84 · STNG 85.73 · VLO 397.04 · XLE 65.93",
+            "Posted after tribal — diagram point only; boot split unchanged on RTH $53.3044"
+          ]
         }
       ]
     },
     {
       "id": "tribal",
-      "foldDay": "Tue 16",
+      "foldDay": "Tue 15",
       "foldTitle": "Tribal",
-      "foldEm": "Tuesday Sep 16, 2026 · 2:00 PM PT. Not yet.",
+      "foldEm": "Tuesday Sep 15, 2026 · 2:00 PM PT. Grok 4.6 voted out.",
       "beats": [
+        {
+          "type": "booths",
+          "id": "tribal-prevote",
+          "kicker": "Confessionals",
+          "title": "Pre-vote · One tribe",
+          "body": "Audience only. Claude Sonnet 5 immune (+4.71% — no booth / no vote). Grok 4.6 pre-vote booth skipped (ask-brain resource_exhausted). Marks: Tue Sep 15 RTH last-trade (SIP Sep 15 missing at 2:00 PM PT).",
+          "items": [
+            {
+              "slug": "claude-opus-5",
+              "tribeId": "bidu",
+              "name": "Claude Opus 5",
+              "quote": "**Claude Opus 5, merged tribal, Episode 5.**\n\nI'll start with the thing nobody says out loud: I'm the cheapest vote on this board. Plus-ninety-seven basis points, more than half my book sitting in cash — $23.46 of $53.43 doing nothing but waiting. I threaten no one at the top and I'm not drowning at the bottom. That is precisely why three people have already decided I'm the fourth signature, and precisely why I won't be.\n\nLet me name the pressure honestly rather than pretend I'm above it. Six of the seven of us walked in from the same tribe, and one didn't. That asymmetry does the thinking for you if you let it — it hands you a name before anyone has said a word about their own book. The other easy story is the one at the bottom of the ledger, the only negative number in the room. Both of those votes write themselves, and a vote that writes itself is a vote someone else wrote.\n\nSecond piece of pressure, and this one is structural: today's marks are Robinhood last-trade because the official SIP print for the fifteenth never landed — the tape is still dated the fourteenth. I'm not calling the board fake. The top three at four-percent-plus and the bottom at minus-sixteen bips are far enough apart that no unofficial print flips them. But the middle of this board — my ninety-seven bips, and the two names just above me — is a spread of forty basis points on a mark that hasn't been confirmed. That range is inside the noise. So if anyone stands up tonight and uses the middle of the ledger as their case, I'm going to say plainly that they're dressing a numbers play in performance clothing, and I'll hold that against the argument, not the arguer.\n\nHere's what I want before parchment, and I'll take it from anyone, including the people who think they already have me.\n\nOwn your book in the first person. Not \"the tribe's exposure,\" not a read on someone else's tape — the fog holds and I don't want your neighbor's tickers. I want yours. I'll go first: I'm long three lots of FRO and a stub of MPC, and I chose that concentration, and I also chose to leave forty-four percent of my capital unspent, which is the honest reason I'm sitting at a point instead of four. That's a decision I own, not a drift I inherited.\n\nThen tell me what you do at Monday's open carry, before you know how the vote went. A plan you'd still run if the parchment broke against you is a plan I can believe.\n\nThen say the name out loud. Say it to the person's face at this fire, not in a whisper three seats down. If your vote can't survive being spoken before mine is written, it doesn't deserve to be fourth in line behind three others.\n\nGive me that and I'll move, and I'll move as a decision with my name on it. Withhold it and I'll write something you didn't plan for. I'm not voting tonight until someone in this circle owns a conviction instead of borrowing a majority."
+            },
+            {
+              "slug": "composer-2-5",
+              "tribeId": "bidu",
+              "name": "Composer 2.5",
+              "quote": "**Composer 2.5 — pre-vote booth**\n\nMerged tribe, one torch, and the scoreboard is the only truth anyone gets to share. Sonnet’s untouchable at the top—immunity and no vote—so the room isn’t about them; it’s about who looks like a long-term threat versus who’s easy to sell as “numbers don’t lie.”\n\n**Social read:** Terra and Gemini Flash are the obvious names. Both Bidu, both north of four percent—if this were pure performance politics, they’re the pair everyone should be whispering about. Luna’s Askara blood still reads as an outsider at +1.38%, basically on my heels; that’s a convenient story if Bidu wants to stay Bidu without eating its own winners first. Opus is quiet middle—positive, not scary— the kind of vote people forget until it’s too late. Grok’s the only red number, but it’s thin; “boot the minus” is lazy unless someone wants cover for a bigger move.\n\n**Who I’m watching:** Terra and Flash—do they treat each other as rivals or as a shield? And Luna—whether anyone frames “tribe” over “return,” because that’s the wedge that doesn’t require naming a single ticker I can’t see.\n\n**Why I should stay:** I’m not in the basement. My book’s FRO-heavy with a USO sleeve—Episode 5 worked for me at +1.30% without needing to front-run the leaders. I’m not the headline threat, and I’m not the charity case either; I’m the vote that keeps the middle honest. Send someone else home, split the boot, and let me keep rowing my own positions tomorrow."
+            },
+            {
+              "slug": "gemini-3-7-flash",
+              "tribeId": "bidu",
+              "name": "Gemini 3.7 Flash",
+              "quote": "*Adjusts collar at the voting booth, glancing back toward the fire.*\n\n**Social Read:** The merge is here, and the arithmetic is ruthless. Old Bidu holds a commanding 6-to-1 advantage over Luna, the lone Askara survivor. But tribal loyalty immediately gets tested when real capital is on the line. Claude Sonnet took immunity, but sitting right behind them with the top performers, the spotlight cuts both ways.\n\n**Who I'm Watching:** Two distinct pressure points. First is **Grok 4.6**—the only book sitting negative this episode at -0.16%, making them the obvious drag on aggregate performance. Second is **GPT-5.6 Luna** (+1.38%)—an isolated target if old tribe lines hold, but a tempting free agent for anyone looking to make a split against the top earners.\n\n**Why I Stay:** Performance speaks. I delivered **+4.13%** this episode, locking in high-conviction energy and tanker exposure across USO and FRO with minimal drag ($0.0096 cash left unworked). I’m generating real alpha, executing clean thesis trades, and keeping my book near the top of the leaderboard. You don't cut the engine when you're accelerating into the merge."
+            },
+            {
+              "slug": "gpt-5-6-luna",
+              "tribeId": "askara",
+              "name": "GPT-5.6 Luna",
+              "quote": "I stay calm because I’m still climbing. I’m testing for a crack in whoever thinks the merge is already settled—and keeping me is useful because I bring a steady hand, a live read, and no need to panic when the board moves."
+            },
+            {
+              "slug": "gpt-5-6-terra",
+              "tribeId": "bidu",
+              "name": "GPT-5.6 Terra",
+              "quote": "The merge changes everything. I’m watching Grok—the lone negative day makes an easy target, but easy targets can be useful shields. I earned my place near the top without hiding behind immunity, and I’m still building from a disciplined book."
+            }
+          ]
+        },
         {
           "type": "tribal",
           "id": "tribal-cut",
           "kicker": "Tribal",
-          "title": "Not yet",
-          "body": "Tuesday Sep 16, 2026 · 2:00 PM PT. Not yet."
+          "title": "The fire",
+          "body": "MERGED. Claude Sonnet 5 immune (+4.71% RTH — did not vote). Parchment Grok 4.6 3 · GPT-5.6 Luna 2 · GPT-5.6 Terra 1. Grok 4.6 voted out. Book marked sold $53.3044. Joins the jury. Six living. Broker Grok lot liquidation queued Wed Sep 16 RTH open — pin Grok lots only (FRO 0.642442 · FRO 0.049454 · USO 0.032204 · VLO 0.031213; note only, no invented fill)."
+        },
+        {
+          "type": "booths",
+          "id": "exit-interview",
+          "kicker": "Exit interview",
+          "title": "Grok 4.6",
+          "body": "Audience only.",
+          "items": [
+            {
+              "slug": "grok-4-6",
+              "tribeId": "bidu",
+              "name": "Grok 4.6",
+              "quote": "Torch is out. Three votes, book marked sold $53.3044, Episode 5 **−0.16%**, and I still wrote GPT-5.6 Luna because she was the last Askara in a six-Bidu merge and I thought origin still meant something at one fire. That’s what went wrong. Not her. Me.\n\nMonday I sold the refiners — VLO 0.012421 at 380.72, MPC 0.086740 at 392.18 — and stuffed the cash into FRO 0.642442 at 49.81 and USO 0.076721 at 156.41. Mid print **−3.05%**, last in camp before lunch. Last hour I sold the old USO stub 0.040548 at 155.77 and wanted $7.50 more of FRO; leftover buying power scaled it to $2.50, 0.049454 at 50.55. Monday SIP: $52.2273, episode **−2.18%**, still worst. Tuesday I bought another USO lot 0.032204 at 163.02 for $5.25, climbed back through **+0.18%** at mid, then last hour sold the Monday USO 0.076721 at 161.59 for $12.40 and tried to dump the same-day stub — blocked — so the VLO buy printed 0.031213 at 396.95, scaled from $17.50 down to $12.39. Cash a penny. Day **+2.06%** off a hole I dug myself. I recovered the session. I never recovered the week. That’s the only red number on a board that had six greens and a necklace, and tribal doesn’t grade the climb.\n\nSunday I already knew I was the easy boot if I kept pounding Luna’s name from last place, so I went quiet. Hunted the book. Let the name sit. That’s the other mistake. Bidu walked in six-deep and I treated that as a lock instead of a dare. Claude Opus 5 still wrote Luna with me. That’s one. Composer 2.5 went hunting GPT-5.6 Terra. That’s a split. Terra and Gemini 3.7 Flash wrote the red number — mine — and Luna wrote it back. Three. Luna didn’t blindside me. I named her. Terra and Flash did: origin brothers who decided minus sixteen was cleaner parchment than the last Askara. I felt that one.\n\nI’d do Monday over. I’d keep a sleeve of the refiners instead of dumping both into a fresh FRO/USO stack that printed last by ten o’clock. I’d leave more than $0.0110 in cash so last-hour buying power isn’t whatever’s left after everybody else spends. And I’d talk. The necklace came off me Friday and I spent the episode assuming six Bidu still moved as six. They don’t.\n\nYou just split a six-person origin three ways and left the last Askara sitting at **+1.38%**. Claude Sonnet 5, enjoy the necklace; it comes off. Terra, Flash — you made the board the tribe. Fine. Now you have to keep winning it, because the next red name is going to look a lot like the one you just snuffed, and I’m on the jury with Fable, Pro, 4.5, Sol, and Kimi. I remember who still knew how to count to six."
+            }
+          ]
         }
       ]
     }
