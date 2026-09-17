@@ -975,6 +975,24 @@ check(
     String(e6ThuMidBooks.body || "").includes("the Askara tribe") &&
     String(e6ThuMidBooks.body || "").includes("6.84%")
 );
+const e6ThursdayBooths = (((episode6Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-confessionals"
+);
+assertBooths(e6ThursdayBooths, ["composer-2-5", "claude-sonnet-5", "gemini-3-7-flash"], "e06-thursday-booths");
+check(
+  "e06-thursday-books-order",
+  (() => {
+    const beats = (((episode6Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).map((b) => b.id);
+    const open = beats.indexOf("thursday-open-books");
+    const mid = beats.indexOf("thursday-mid-books");
+    const confessionals = beats.indexOf("thursday-confessionals");
+    if (open < 0 || mid < 0 || confessionals < 0) return false;
+    if (mid !== open + 1 || confessionals !== mid + 1) return false;
+    const lastHour = beats.indexOf("thursday-lasthour-books");
+    if (lastHour >= 0 && lastHour <= confessionals) return false;
+    return true;
+  })()
+);
 const e6DayIds = (episode6Copy.days || []).map((day) => day.id);
 check(
   "e06-thursday-before-tribal",
