@@ -338,8 +338,8 @@ check("homepage-points-at-e06", home.includes("seasons/1/e06.html") && home.incl
 check("homepage-skips-e05-primary-cta", !home.includes("Walk into Episode 5"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e06-thu-open",
-  source.statusLabel === "Live · S1E06 · MERGED · six living · Thu open"
+  "status-label-e06-thu-mid",
+  source.statusLabel === "Episode 6 · Thu MID remake · six living · MERGED"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -434,8 +434,13 @@ check(
   "e6-thu-open-mark",
   Boolean(e6ThuOpen) && e6ThuOpen.kind === "open" && e6ThuOpen.at === "2026-09-17T14:07:04Z"
 );
-check("live-snapshot-e06-thu-open", source.liveSnapshotId === "s1e06-thu-open");
-check("last-session-thu-open", source.lastSession === "2026-09-17-open");
+const e6ThuMid = (source.events || []).find((event) => event && event.id === "s1e06-thu-mid");
+check(
+  "e6-thu-mid-mark",
+  Boolean(e6ThuMid) && e6ThuMid.kind === "mid" && e6ThuMid.at === "2026-09-17T17:21:00Z"
+);
+check("live-snapshot-e06-thu-mid", source.liveSnapshotId === "s1e06-thu-mid");
+check("last-session-thu-mid", source.lastSession === "2026-09-17-mid");
 check(
   "live-episode-is-e06",
   source.episode && source.episode.id === "s1e06" && source.episode.status === "live" && source.episode.path === "seasons/1/e06.html"
@@ -448,23 +453,23 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Wednesday Sep 16 – Friday Sep 18, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 18, 2026 · 2:00 PM PT");
 check(
-  "immunity-composer-e06-thu-open",
-  source.immunity && source.immunity.name === "Composer 2.5" && source.immunity.weekPct === 3.95
+  "immunity-terra-e06-thu-mid",
+  source.immunity && source.immunity.name === "GPT-5.6 Terra" && source.immunity.weekPct === 6.84
 );
 check("sip-missing-banner-cleared", source.sipMissingBanner == null);
-check("island-pot", source.islandPotUsd === 392.3698);
+check("island-pot", source.islandPotUsd === 396.118);
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
 const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
-check("composer-immune-e06-thu-open", composerLive && composerLive.immune === true && composerLive.weekPct === 3.95);
-check("terra-not-immune-e06-thu-open", terraLive && terraLive.immune === false && terraLive.weekPct === 3.9);
+check("composer-not-immune-e06-thu-mid", composerLive && composerLive.immune === false && composerLive.weekPct === 4.43);
+check("terra-immune-e06-thu-mid", terraLive && terraLive.immune === true && terraLive.weekPct === 6.84);
 check(
   "grok-jury-zero",
   grokLive && (grokLive.status === "voted-out" || grokLive.status === "jury") && grokLive.bookUsd === 0
 );
-check("sonnet-not-immune-e06-thu-open", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === 3.31);
+check("sonnet-not-immune-e06-thu-mid", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === 3.8);
 check("one-living-immune", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
@@ -957,6 +962,18 @@ check(
     String(e6ThuOpenBooks.body || "").includes("the Bidu tribe") &&
     String(e6ThuOpenBooks.body || "").includes("the Askara tribe") &&
     String(e6ThuOpenBooks.body || "").includes("3.95%")
+);
+const e6ThuMidBooks = (((episode6Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-mid-books"
+);
+check(
+  "e06-thu-mid-books",
+  Boolean(e6ThuMidBooks) &&
+    e6ThuMidBooks.boardId === "s1e06-thu-mid" &&
+    String(e6ThuMidBooks.body || "").includes("GPT-5.6 Terra") &&
+    String(e6ThuMidBooks.body || "").includes("the Bidu tribe") &&
+    String(e6ThuMidBooks.body || "").includes("the Askara tribe") &&
+    String(e6ThuMidBooks.body || "").includes("6.84%")
 );
 const e6DayIds = (episode6Copy.days || []).map((day) => day.id);
 check(
