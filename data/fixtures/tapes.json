@@ -656,5 +656,30 @@
         "hash": "d1c6b39ee2ee1361f19d5e58c8e41e3ff94e8605c0c6884ff0fce7852f47e820"
       }
     }
+  },
+  "e06-wednesday-dinner.js": {
+    "global": "WEDNESDAY_DINNER_CONVERSATIONS",
+    "threadIds": [
+      "merged-wed-dinner-fire"
+    ],
+    "threads": {
+      "merged-wed-dinner-fire": {
+        "count": 11,
+        "from": [
+          "juno",
+          "hex",
+          "mara",
+          "juno",
+          "hex",
+          "pax",
+          "mara",
+          "juno",
+          "hex",
+          "pax",
+          "mara"
+        ],
+        "hash": "283ffdc0636dabdcc79c387ab3919afb1ec649b54edf7ceacb72dc9be37db422"
+      }
+    }
   }
 }
