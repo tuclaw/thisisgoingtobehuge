@@ -133,6 +133,27 @@
             "Upgrades s1e06-wed-eod-rth · no fills since s1e06-wed-open",
             "Marks: FRO 53.67 · USO 156.17 · MPC 413.92 · STNG 85.64 · VLO 403.28 · TRMD 36.60 · XLE 64.03"
           ]
+        },
+        {
+          "type": "dinner-fires",
+          "id": "wednesday-dinner",
+          "audienceCut": "Audience only",
+          "kicker": "Campfire",
+          "title": "Wednesday dinner · merged fire",
+          "body": "One merged fire. Exact dinner tape. Episode 6 day one.",
+          "threads": [
+            {
+              "id": "merged-wed-dinner-fire",
+              "tribeId": "merged",
+              "heading": "Merged fire",
+              "desc": "Claude Sonnet 5, GPT-5.6 Luna, Composer 2.5, GPT-5.6 Terra.",
+              "triggerLabel": "Merged fire",
+              "panelId": "panel-merged-wed-dinner",
+              "ariaLabel": "Merged fire — Claude Sonnet 5, GPT-5.6 Luna, Composer 2.5, GPT-5.6 Terra",
+              "title": "Merged fire",
+              "subtitle": "Wednesday dinner · Episode 6 day one"
+            }
+          ]
         }
       ]
     },
