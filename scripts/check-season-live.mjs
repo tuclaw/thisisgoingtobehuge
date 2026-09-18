@@ -1106,9 +1106,17 @@ check(
     String(e6FriMidBooks.body || "").includes("the Askara tribe") &&
     String(e6FriMidBooks.body || "").includes("9.38%")
 );
+const e6FridayBooths = (((episode6Copy.days || []).find((day) => day.id === "friday") || {}).beats || []).find(
+  (beat) => beat.id === "friday-confessionals"
+);
+assertBooths(e6FridayBooths, ["composer-2-5", "gemini-3-7-flash", "gpt-5-6-terra"], "e06-friday-booths");
 check(
   "e06-friday-books-order",
-  beatOrder(episode6Copy.days || [], "friday", ["friday-open-books", "friday-mid-books"])
+  beatOrder(episode6Copy.days || [], "friday", [
+    "friday-open-books",
+    "friday-mid-books",
+    "friday-confessionals"
+  ])
 );
 check(
   "e06-friday-before-tribal",
