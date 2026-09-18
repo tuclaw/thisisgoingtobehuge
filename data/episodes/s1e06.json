@@ -251,6 +251,19 @@
             "No fills since s1e06-thu-lasthour",
             "Marks: FRO 54.015 · STNG 87.83 · VLO 412.51 · MPC 422.00 · TRMD 36.62 · USO 155.34 · XLE 64.465 · GNRC 207.21"
           ]
+        },
+        {
+          "type": "books",
+          "id": "thursday-eod-sip-books",
+          "kicker": "Thursday · Sep 17 · SIP-EOD",
+          "title": "Thursday official SIP close books",
+          "body": "Thu Sep 17 official SIP list-exchange close · date 2026-09-17 · interpolated=false. Catch-up after RTH-EOD (s1e06-thu-eod-rth). No fills since last-hour. MERGED · six living · one cast board. Composer 2.5 $71.7545 week +16.01% (the Bidu tribe) — early immunity. GPT-5.6 Terra $69.0775 +5.01% (the Bidu tribe). Claude Sonnet 5 $66.5244 +2.85% (the Bidu tribe). GPT-5.6 Luna $63.6901 +2.06% (the Askara tribe). Claude Opus 5 $63.3414 +1.64% (the Bidu tribe). Gemini 3.7 Flash $65.0992 +1.18% (the Bidu tribe) — worst among the living. weekPct vs Episode 6 SIP carry; dayPct vs Wed official SIP EOD. Pot $399.4871 · $361.93 given. Tribal Friday Sep 18, 2026 · 2:00 PM PT not yet. Comics paused. Audience only.",
+          "boardId": "s1e06-thu-eod-sip",
+          "notes": [
+            "Official SIP sip-list-exchange-close 2026-09-17 · interpolated=false",
+            "Upgrades s1e06-thu-eod-rth · no fills since s1e06-thu-lasthour",
+            "Marks: FRO 54.03 · STNG 87.85 · VLO 412.53 · MPC 421.96 · TRMD 36.63 · USO 155.31 · XLE 64.48 · GNRC 207.23"
+          ]
         }
       ]
     },
