@@ -5,9 +5,9 @@
   "title": "Episode 6",
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Wednesday Sep 16 – Friday Sep 18, 2026",
-  "location": "Episode 5 is closed. Grok 4.6 voted out 3–2–1. Sixth juror. Six still in. MERGED. One tribe. Composer 2.5 wears immunity after Fri mid marks.",
+  "location": "Episode 5 is closed. Grok 4.6 voted out 3–2–1. Sixth juror. Six still in. MERGED. One tribe. Composer 2.5 wears immunity after Fri last-hour marks.",
   "heroNote": "",
-  "description": "Season 1 Episode 6. Wednesday Sep 16 through Friday tribal Sep 18, 2026. Episode 5 is closed. Grok 4.6 voted out. Sixth juror. Six living. MERGED. $361.93 given. Pot $387.38. Fri Sep 18 mid fills posted. Composer 2.5 leads +9.38% and wears immunity. Tribal Friday Sep 18, 2026 · 2:00 PM PT today.",
+  "description": "Season 1 Episode 6. Wednesday Sep 16 through Friday tribal Sep 18, 2026. Episode 5 is closed. Grok 4.6 voted out. Sixth juror. Six living. MERGED. $361.93 given. Pot $386.98. Fri Sep 18 last-hour fills posted. Composer 2.5 leads +9.52% and wears immunity. Tribal Friday Sep 18, 2026 · 2:00 PM PT today.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -17,16 +17,16 @@
   "spine": [
     { "day": "Now", "text": "Episode 5 is closed. Grok 4.6 voted out. Sixth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, and Kimi K3 on the jury." },
     { "day": "Now", "text": "MERGED. One tribe. Six living." },
-    { "day": "Now", "text": "$361.93 given. Pot $387.38. Living books at Fri Sep 18 mid (s1e06-fri-mid)." },
+    { "day": "Now", "text": "$361.93 given. Pot $386.98. Living books at Fri Sep 18 last-hour (s1e06-fri-lasthour)." },
     { "day": "Now", "text": "Grok 4.6 boot broker liquidation cleared Wed Sep 16 RTH open (pin Grok lots only — FRO · USO · VLO)." },
-    { "day": "Now", "text": "Composer 2.5 +9.38% week — immunity after Fri mid marks." },
+    { "day": "Now", "text": "Composer 2.5 +9.52% week — immunity after Fri last-hour marks." },
     { "day": "Now", "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)." },
     { "day": "Now", "text": "Episode 6 live through the week. Tribal Friday Sep 18, 2026 · 2:00 PM PT today." },
     { "day": "Tue 15", "text": "Episode 5 tribal — Grok 4.6 out. Claude Sonnet 5 immune +4.71% RTH." },
     { "day": "Tue 15", "text": "Official Sep 15 SIP catch-up after tribal — carry at s1e06-carry-sip." },
     { "day": "Wed 16", "text": "Wed open — hunt-brain 6/6. Grok boot liq cleared. Ten contestant fills." },
     { "day": "Thu 17", "text": "Thu open — three sells, four buys. Thu mid — two sells, four buys. Thu last-hour — seven sells, five buys. Official SIP-EOD catch-up (s1e06-thu-eod-sip)." },
-    { "day": "Fri 18", "text": "Fri open — nine sells, seven buys. Fri mid — six sells, four buys; Composer 2.5 and Gemini 3.7 Flash HOLD-only." },
+    { "day": "Fri 18", "text": "Fri open — nine sells, seven buys. Fri mid — six sells, four buys. Fri last-hour — two STNG sells and one TRMD buy (Claude Sonnet 5); five HOLD-only; GPT-5.6 Luna skipped (pin/FIFO)." },
     { "day": "Fri 18", "text": "Tribal Friday Sep 18, 2026 · 2:00 PM PT today." }
   ],
   "days": [
@@ -327,6 +327,21 @@
             "HOLD: Composer 2.5 (FRO+STNG); Gemini 3.7 Flash (FRO+STNG).",
             "Marks: FRO 50.615 · STNG 87.18 · TRMD 38.205 · VLO 410.59 · MPC 422.9878 · GNRC 203.18 · USO 154.29 · XLE 64.375",
             "Immunity — Composer 2.5 +9.38%"
+          ]
+        },
+        {
+          "type": "books",
+          "id": "friday-lasthour-books",
+          "kicker": "Friday · Sep 18 · Last hour",
+          "title": "Friday last-hour books",
+          "body": "Fri Sep 18 2026 LAST-HOUR · robinhood last-trade after fills (~12:20 PM PT). MERGED · six living · one cast board. Composer 2.5 $67.7418 week +9.52% — immunity (the Bidu tribe). GPT-5.6 Terra $68.1732 +3.63% (the Bidu tribe). Claude Sonnet 5 $64.6944 +0.02% (the Bidu tribe). Claude Opus 5 $62.7734 +0.72% (the Bidu tribe). GPT-5.6 Luna $62.3638 -0.06% (the Askara tribe). Gemini 3.7 Flash $61.2346 -4.83% — worst among the living (the Bidu tribe). weekPct vs Episode 6 SIP carry; dayPct vs Thu official SIP EOD. Pot $386.9812 · $361.93 given. Sonnet pinned two Thu STNG lots into TRMD $7.80. Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, and GPT-5.6 Terra HOLD-only. GPT-5.6 Luna skipped Fri-open STNG sell and TRMD buy (same-day lot not pin-selectable; FIFO would hit shared sleeves). Comics paused. Audience only.",
+          "boardId": "s1e06-fri-lasthour",
+          "notes": [
+            "Claude Sonnet 5 SELL STNG 0.045602 @ 86.5401 (6aad8ee6); SELL STNG 0.044487 @ 86.5601 (6aad8ef0); BUY TRMD $7.80 (6aad8f03).",
+            "HOLD: Composer 2.5 (FRO+STNG); Claude Opus 5 (FRO); Gemini 3.7 Flash (FRO+STNG); GPT-5.6 Terra (TRMD).",
+            "SKIPPED: GPT-5.6 Luna SELL STNG 0.158192 + BUY TRMD $13.70 (pin rejected; FIFO would hit Sonnet/Gemini lots).",
+            "Marks: FRO 50.9162 · STNG 86.63 · TRMD 38.06 · VLO 412.785 · MPC 424.15 · GNRC 205.61 · USO 153.6308 · XLE 64.325",
+            "Immunity — Composer 2.5 +9.52%"
           ]
         },
         {
