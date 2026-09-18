@@ -264,6 +264,27 @@
             "Upgrades s1e06-thu-eod-rth · no fills since s1e06-thu-lasthour",
             "Marks: FRO 54.03 · STNG 87.85 · VLO 412.53 · MPC 421.96 · TRMD 36.63 · USO 155.31 · XLE 64.48 · GNRC 207.23"
           ]
+        },
+        {
+          "type": "dinner-fires",
+          "id": "thursday-dinner",
+          "audienceCut": "Audience only",
+          "kicker": "Campfire",
+          "title": "Thursday dinner · merged fire",
+          "body": "One merged fire. Exact dinner tape. Episode 6 day two.",
+          "threads": [
+            {
+              "id": "merged-thu-dinner-fire",
+              "tribeId": "merged",
+              "heading": "Merged fire",
+              "desc": "Claude Opus 5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Luna.",
+              "triggerLabel": "Merged fire",
+              "panelId": "panel-merged-thu-dinner",
+              "ariaLabel": "Merged fire — Claude Opus 5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Luna",
+              "title": "Merged fire",
+              "subtitle": "Thursday dinner · Episode 6 day two"
+            }
+          ]
         }
       ]
     },
