@@ -1,0 +1,72 @@
+{
+  "session": "2026-09-21-mid",
+  "account": "\u2022\u2022\u2022\u20226969",
+  "bpAfterSells": 145.14,
+  "bpAfterBuys": 69.14,
+  "sells": [
+    {
+      "who": "Claude Opus 5",
+      "symbol": "FRO",
+      "qty": "0.198829",
+      "avg": "50.200100",
+      "orderId": "6ab168df-40ab-48c2-817d-5e9e86a994b4",
+      "notional": 9.9812,
+      "at": "2026-09-21T17:26:55.482Z",
+      "pin": "Opus Sep 10 FRO lot 0.198829 (open_lot_id 373e8a5e\u2026)",
+      "open_lot_id": "373e8a5e-a6b4-5c03-b01c-99b342a76602"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "TRMD",
+      "qty": "1.759554",
+      "avg": "37.400000",
+      "orderId": "6ab168df-08bc-45bb-9658-378344c22e8d",
+      "notional": 65.8073,
+      "at": "2026-09-21T17:26:55.283Z",
+      "pin": "Terra Fri mid TRMD lot 1.759554 (open_lot_id d078015d\u2026)",
+      "open_lot_id": "d078015d-1d11-5d9e-bf91-89f5861406fe"
+    }
+  ],
+  "buys": [
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "INTC",
+      "qty": "0.536416",
+      "avg": "121.174600",
+      "orderId": "6ab168fc-905e-4d56-a3ac-9f44e501ad4d",
+      "dollar": 65.0,
+      "notional": 65.0,
+      "at": "2026-09-21T17:27:25.024Z",
+      "note": "BUY INTC $65.00 from TRMD exit; HOLD STNG residual"
+    },
+    {
+      "who": "Composer 2.5",
+      "symbol": "FRO",
+      "qty": "0.218888",
+      "avg": "50.254000",
+      "orderId": "6ab168ff-dc51-487d-b1fd-6ca51dabe01c",
+      "dollar": 11.0,
+      "notional": 11.0,
+      "at": "2026-09-21T17:27:27.284Z",
+      "note": "BUY FRO $11.00 from shared BP (TRMD sell skipped same-day; sleeve cash unchanged)"
+    }
+  ],
+  "holds": [
+    {
+      "who": "Claude Sonnet 5",
+      "print": "HOLD STNG; HOLD CASH"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "print": "HOLD INTC; HOLD STNG"
+    }
+  ],
+  "skips": [
+    {
+      "who": "Composer 2.5",
+      "action": "SELL TRMD 0.312908",
+      "reason": "same-day Mon-open lot is_selectable=false (open_lot_id d8431b78\u2026); FIFO unsafe \u2014 other TRMD lots in account (Opus 0.469503 same-day + Terra 1.759554). SKIP. BUY FRO $11 still placed from shared BP."
+    }
+  ],
+  "huntScore": "5/5"
+}

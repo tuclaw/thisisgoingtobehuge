@@ -4,12 +4,12 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Episode 7 · Mon open · five living · MERGED · Composer 2.5 immunity",
+  "statusLabel": "Episode 7 · Mon mid · five living · MERGED · Composer 2.5 immunity",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 392.0679,
+  "islandPotUsd": 396.054,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -174,27 +174,27 @@
       "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
     }
   ],
-  "notes": "Season live. S1E07 live Mon Sep 21 – Tue Sep 22. MERGED. Five living. Mon open remake after fills. Given $361.93. Pot $392.07. Composer 2.5 leads +1.75% and wears immunity. Gemini 3.7 Flash boot liq cleared. Comics paused. Audience only. Tribal Tue Sep 22 2:00 PM PT.",
+  "notes": "Season live. S1E07 live Mon Sep 21 – Tue Sep 22. MERGED. Five living. Mon mid remake after fills. Given $361.93. Pot $396.05. Composer 2.5 leads +11.91% and wears immunity. Comics paused. Audience only. Tribal Tue Sep 22 2:00 PM PT.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": 1.015,
-      "combinedMonthPct": 2.03,
+      "combinedWeekPct": 2.285,
+      "combinedMonthPct": 4.57,
       "livingCount": 4,
-      "combinedDayPct": 1.015
+      "combinedDayPct": 2.285
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -0.31,
-      "combinedMonthPct": -0.62,
+      "combinedWeekPct": -0.61,
+      "combinedMonthPct": -1.22,
       "livingCount": 1,
-      "combinedDayPct": -0.31
+      "combinedDayPct": -0.61
     }
   ],
   "survivors": [
@@ -248,12 +248,12 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 78.0828,
-      "weekPct": 1.08,
+      "bookUsd": 76.7282,
+      "weekPct": -0.67,
       "position": {
         "action": "HOLD",
         "ticker": "STNG / CASH",
-        "sizeUsd": 78.0828,
+        "sizeUsd": 76.7282,
         "status": "filled",
         "note": "stng"
       },
@@ -284,9 +284,9 @@
           "sizeUsd": 10.9217,
           "status": "filled",
           "note": "Thu last-hour BUY STNG $11.00 from FRO trim",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open",
+          "lastSession": "2026-09-21-mid",
           "orderId": "6aac3fc7-5d72-4bae-ac23-63b9310fb4c6",
           "filledAt": "2026-09-17T19:30:16.043Z"
         },
@@ -300,9 +300,9 @@
           "note": "Fri Sep 18 open BUY STNG $10.62",
           "orderId": "6aad45dc-a730-46a8-9cb0-a0323e82439b",
           "filledAt": "2026-09-18T14:08:42.118Z",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         },
         {
           "action": "BUY",
@@ -314,9 +314,9 @@
           "note": "Fri Sep 18 mid BUY STNG $10.80",
           "orderId": "6aad713c-ec92-4cd2-8c8b-41210a6f2cc7",
           "filledAt": "2026-09-18T17:13:33.084Z",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         },
         {
           "action": "HOLD",
@@ -335,21 +335,21 @@
           "note": "Mon Sep 21 open BUY STNG $7.80 from TRMD rotation",
           "orderId": "6ab13df7-41fa-4c15-8996-d5483ad83062",
           "filledAt": "2026-09-21T14:23:51.341Z",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": 1.08,
+      "dayPct": -0.67,
       "priorMarkUsd": 77.2463,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-open",
+      "lastSession": "2026-09-21-mid",
       "eodMarkUsd": 77.2463,
       "mondayOpenUsd": 39.9865,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.4487,
-      "monthPct": 2.16,
+      "monthPct": -1.34,
       "cashUsd": 37.3689,
       "tickersSummary": "STNG+CASH"
     },
@@ -359,12 +359,12 @@
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
-      "bookUsd": 81.9965,
-      "weekPct": 1.75,
+      "bookUsd": 90.1854,
+      "weekPct": 11.91,
       "position": {
         "action": "HOLD",
         "ticker": "FRO / STNG / TRMD / CASH",
-        "sizeUsd": 81.9965,
+        "sizeUsd": 90.1854,
         "status": "filled",
         "note": "fro / stng / trmd"
       },
@@ -382,9 +382,9 @@
           "sizeUsd": 2.3062,
           "status": "filled",
           "note": "SCALED $20.50→$6.00 BP race after parallel buys",
-          "last": 52.26,
+          "last": 50.26,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open",
+          "lastSession": "2026-09-21-mid",
           "orderId": "6aa828d6-e0a8-478c-9531-25ce8a5461dd"
         },
         {
@@ -395,9 +395,9 @@
           "sizeUsd": 22.4635,
           "status": "filled",
           "note": "Mon last-hour BUY FRO $21.00",
-          "last": 52.26,
+          "last": 50.26,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open",
+          "lastSession": "2026-09-21-mid",
           "orderId": "6aa84a9b-5ea5-4770-bff6-3527309f2f02",
           "filledAt": "2026-09-14T19:27:23.959Z"
         },
@@ -422,9 +422,9 @@
           "sizeUsd": 19.4161,
           "status": "filled",
           "note": "Wed open BUY FRO $19.24",
-          "last": 52.26,
+          "last": 50.26,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open",
+          "lastSession": "2026-09-21-mid",
           "orderId": "6aaaa1e4-fa61-4518-ae20-0b5f5a6cdfd5",
           "filledAt": null
         },
@@ -436,9 +436,9 @@
           "sizeUsd": 7.9242,
           "status": "filled",
           "note": "Thu last-hour BUY STNG $7.98 (residual/shared BP; first fill today)",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open",
+          "lastSession": "2026-09-21-mid",
           "orderId": "6aac3fc7-bc6f-478e-b629-4fb06c1abfac",
           "filledAt": "2026-09-17T19:30:15.335Z"
         },
@@ -452,9 +452,9 @@
           "note": "Fri Sep 18 open BUY STNG $18.25",
           "orderId": "6aad45d8-6025-48e8-bccf-d91c84d55924",
           "filledAt": "2026-09-18T14:08:43.502Z",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         },
         {
           "action": "HOLD",
@@ -473,21 +473,35 @@
           "note": "Mon Sep 21 open BUY TRMD $12.00 add (HOLD FRO+STNG)",
           "orderId": "6ab13df8-e856-4fc4-a3f0-407cdef9d2d4",
           "filledAt": "2026-09-21T14:23:53.161Z",
-          "last": 38.34,
+          "last": 37.42,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
+        },
+        {
+          "action": "BUY",
+          "ticker": "FRO",
+          "qty": "0.218888",
+          "avg": "50.254000",
+          "sizeUsd": 11,
+          "status": "filled",
+          "note": "Mon Sep 21 mid BUY FRO $11.00 (shared BP; TRMD sell skipped same-day; sleeve cash unchanged)",
+          "orderId": "6ab168ff-dc51-487d-b1fd-6ca51dabe01c",
+          "filledAt": "2026-09-21T17:27:27.284Z",
+          "last": 50.26,
+          "lastSource": "robinhood-last-trade",
+          "lastSession": "2026-09-21-mid"
         }
       ],
       "model": "Composer 2.5",
-      "dayPct": 1.75,
+      "dayPct": 11.91,
       "priorMarkUsd": 80.5861,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-open",
+      "lastSession": "2026-09-21-mid",
       "eodMarkUsd": 80.5861,
       "mondayOpenUsd": 40.099,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.1059,
-      "monthPct": 3.5,
+      "monthPct": 23.82,
       "cashUsd": 0.569,
       "tickersSummary": "FRO+STNG+TRMD+CASH"
     },
@@ -497,12 +511,12 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 76.1674,
-      "weekPct": 0.95,
+      "bookUsd": 75.177,
+      "weekPct": -0.36,
       "position": {
         "action": "HOLD",
         "ticker": "FRO / TRMD / CASH",
-        "sizeUsd": 76.1674,
+        "sizeUsd": 75.177,
         "status": "filled",
         "note": "fro / trmd"
       },
@@ -517,7 +531,7 @@
           "ticker": "CASH",
           "qty": null,
           "avg": null,
-          "sizeUsd": 43.8856,
+          "sizeUsd": 53.8668,
           "status": "cash",
           "note": "Thu last-hour: TRMD sold +$21.7374; VLO buy -$21.70; prior sleeve cash still mostly non-BP",
           "last": null,
@@ -528,30 +542,16 @@
         {
           "action": "BUY",
           "ticker": "FRO",
-          "qty": "0.0145",
-          "avg": "51.449900",
-          "sizeUsd": 0.746,
-          "status": "filled",
-          "note": "Fri Sep 18 open BUY FRO $13.00",
-          "orderId": "6aad45da-7139-47e7-95bf-72cec24f1f35",
-          "filledAt": "2026-09-18T14:08:45.774Z",
-          "last": 52.26,
-          "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
-        },
-        {
-          "action": "BUY",
-          "ticker": "FRO",
-          "qty": "0.258770",
+          "qty": "0.0745",
           "avg": "50.624000",
-          "sizeUsd": 13.1,
+          "sizeUsd": 3.7715,
           "status": "filled",
           "note": "Fri Sep 18 mid BUY FRO $13.10",
           "orderId": "6aad713d-8363-493a-bf98-f73813c72083",
           "filledAt": "2026-09-18T17:13:34.095Z",
-          "last": 52.26,
+          "last": 50.26,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         },
         {
           "action": "HOLD",
@@ -570,22 +570,22 @@
           "note": "Mon Sep 21 open BUY TRMD $18.00 from FRO trim",
           "orderId": "6ab13df9-5411-49e2-89e2-7500094fe3d3",
           "filledAt": "2026-09-21T14:23:54.102Z",
-          "last": 38.34,
+          "last": 37.42,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": 0.95,
+      "dayPct": -0.36,
       "priorMarkUsd": 75.4472,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-open",
+      "lastSession": "2026-09-21-mid",
       "eodMarkUsd": 75.4472,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.2517,
-      "monthPct": 1.9,
-      "cashUsd": 43.8856,
+      "monthPct": -0.72,
+      "cashUsd": 53.8668,
       "tickersSummary": "FRO+TRMD+CASH"
     },
     {
@@ -642,14 +642,14 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 81.0269,
-      "weekPct": 0.28,
+      "bookUsd": 79.3998,
+      "weekPct": -1.74,
       "position": {
         "action": "HOLD",
-        "ticker": "STNG / TRMD / CASH",
-        "sizeUsd": 81.0269,
+        "ticker": "STNG / INTC / CASH",
+        "sizeUsd": 79.3998,
         "status": "filled",
-        "note": "stng / trmd"
+        "note": "stng / intc"
       },
       "immune": false,
       "monogram": "T",
@@ -663,7 +663,7 @@
           "ticker": "CASH",
           "qty": null,
           "avg": null,
-          "sizeUsd": 12.4339,
+          "sizeUsd": 13.2412,
           "status": "cash",
           "note": "Thu last-hour: four FRO sold +$44.8464; STNG buy -$44.80",
           "last": null,
@@ -681,44 +681,44 @@
           "note": "Fri Sep 18 open BUY STNG $1.12",
           "orderId": "6aad45dd-1c07-4fea-98fb-43fec64cbd44",
           "filledAt": "2026-09-18T14:08:44.891Z",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
-        },
-        {
-          "action": "BUY",
-          "ticker": "TRMD",
-          "qty": "1.759554",
-          "avg": "38.219900",
-          "sizeUsd": 67.25,
-          "status": "filled",
-          "note": "Fri Sep 18 mid BUY TRMD $67.25",
-          "orderId": "6aad713f-6c5b-4d4d-b544-8e1cb8790321",
-          "filledAt": "2026-09-18T17:13:35.556Z",
-          "last": 38.34,
-          "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         },
         {
           "action": "HOLD",
           "ticker": "CASH",
-          "sizeUsd": 12.3256,
+          "sizeUsd": 0,
           "status": "boot-split",
           "note": "Gemini 3.7 Flash boot split Fri Sep 18 tribal +$12.3256"
+        },
+        {
+          "action": "BUY",
+          "ticker": "INTC",
+          "qty": "0.536416",
+          "avg": "121.174600",
+          "sizeUsd": 65,
+          "status": "filled",
+          "note": "Mon Sep 21 mid BUY INTC $65.00 from TRMD exit; HOLD STNG residual",
+          "orderId": "6ab168fc-905e-4d56-a3ac-9f44e501ad4d",
+          "filledAt": "2026-09-21T17:27:25.024Z",
+          "last": 121.295,
+          "lastSource": "robinhood-last-trade",
+          "lastSession": "2026-09-21-mid"
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": 0.28,
+      "dayPct": -1.74,
       "priorMarkUsd": 80.8045,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-open",
+      "lastSession": "2026-09-21-mid",
       "eodMarkUsd": 80.8045,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
-      "monthPct": 0.56,
-      "cashUsd": 12.4339,
-      "tickersSummary": "STNG+TRMD+CASH"
+      "monthPct": -3.48,
+      "cashUsd": 13.2412,
+      "tickersSummary": "STNG+INTC+CASH"
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
@@ -883,14 +883,14 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 74.7943,
-      "weekPct": -0.31,
+      "bookUsd": 74.5636,
+      "weekPct": -0.61,
       "position": {
         "action": "HOLD",
-        "ticker": "INTC / STNG / CASH",
-        "sizeUsd": 74.7943,
+        "ticker": "STNG / INTC / CASH",
+        "sizeUsd": 74.5636,
         "status": "filled",
-        "note": "intc / stng"
+        "note": "stng / intc"
       },
       "immune": false,
       "monogram": "L",
@@ -921,9 +921,9 @@
           "note": "Fri Sep 18 open BUY STNG $14.00",
           "orderId": "6aad45d9-ffb8-4656-af15-72ed67ac4bb6",
           "filledAt": "2026-09-18T14:08:47.538Z",
-          "last": 89.425,
+          "last": 86.45,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         },
         {
           "action": "HOLD",
@@ -942,25 +942,25 @@
           "note": "Mon Sep 21 open BUY INTC $40 from MPC+GNRC+TRMD exit; HOLD STNG",
           "orderId": "6ab13df9-21d8-4cb8-a7b7-654f425fd213",
           "filledAt": "2026-09-21T14:23:54.248Z",
-          "last": 120.57,
+          "last": 121.295,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-open"
+          "lastSession": "2026-09-21-mid"
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": -0.31,
+      "dayPct": -0.61,
       "priorMarkUsd": 75.0242,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-open",
+      "lastSession": "2026-09-21-mid",
       "eodMarkUsd": 75.0242,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
       "mondayOpenUsd": 24.7771,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": -12.6804,
-      "monthPct": -0.62,
+      "monthPct": -1.22,
       "cashUsd": 20.7429,
-      "tickersSummary": "INTC+STNG+CASH"
+      "tickersSummary": "STNG+INTC+CASH"
     },
     {
       "id": "ea7f46b1-2068-4d81-b153-22faadfbc1cb",
@@ -1686,24 +1686,24 @@
   "immunity": {
     "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
     "name": "Composer 2.5",
-    "weekPct": 1.75,
-    "at": "2026-09-21T14:24:20Z",
-    "snapshotId": "s1e07-mon-open",
-    "asOf": "2026-09-21-open",
+    "weekPct": 11.91,
+    "at": "2026-09-21T17:29:24Z",
+    "snapshotId": "s1e07-mon-mid",
+    "asOf": "2026-09-21-mid",
     "note": "highest Episode 7 week %"
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-21T14:24:20Z",
+  "markedAt": "2026-09-21T17:29:24Z",
   "quotes": {
     "FRO": {
-      "last": 52.26,
-      "sip": 54.03,
-      "close": 52.26,
+      "last": 50.26,
+      "sip": 51.42,
+      "close": 50.26,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1714,13 +1714,13 @@
       "priorClose": 51.42
     },
     "STNG": {
-      "last": 89.425,
-      "sip": 87.85,
-      "close": 89.425,
+      "last": 86.45,
+      "sip": 87.16,
+      "close": 86.45,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1731,13 +1731,13 @@
       "priorClose": 87.16
     },
     "VLO": {
-      "last": 405.2601,
-      "sip": 412.53,
-      "close": 405.2601,
+      "last": 404.26,
+      "sip": 413.28,
+      "close": 404.26,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1748,13 +1748,13 @@
       "priorClose": 413.28
     },
     "MPC": {
-      "last": 416.12,
-      "sip": 421.96,
-      "close": 416.12,
+      "last": 414.65,
+      "sip": 424.89,
+      "close": 414.65,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1765,13 +1765,13 @@
       "priorClose": 424.89
     },
     "TRMD": {
-      "last": 38.34,
-      "sip": 36.63,
-      "close": 38.34,
+      "last": 37.42,
+      "sip": 38.23,
+      "close": 37.42,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1782,13 +1782,13 @@
       "priorClose": 38.23
     },
     "USO": {
-      "last": 148.01,
-      "sip": 155.31,
-      "close": 148.01,
+      "last": 147.3992,
+      "sip": 153.82,
+      "close": 147.3992,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1799,13 +1799,13 @@
       "priorClose": 153.82
     },
     "XLE": {
-      "last": 62.9,
-      "sip": 64.48,
-      "close": 62.9,
+      "last": 62.65,
+      "sip": 64.31,
+      "close": 62.65,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1816,13 +1816,13 @@
       "priorClose": 64.31
     },
     "GNRC": {
-      "last": 205.125,
-      "sip": 207.23,
-      "close": 205.125,
+      "last": 204.9,
+      "sip": 207.44,
+      "close": 204.9,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1833,19 +1833,20 @@
       "priorClose": 207.44
     },
     "INTC": {
-      "last": 120.57,
-      "close": 120.57,
+      "last": 121.295,
+      "close": 121.295,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-open",
+      "session": "2026-09-21-mid",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T14:24:20Z",
+      "asOf": "2026-09-21T17:29:24Z",
       "priorClose": 108.6,
       "priorCloseDate": "2026-09-18",
       "priorCloseSource": "robinhood-last-trade (Fri tribal RTH)",
-      "interpolated": false
+      "interpolated": false,
+      "sip": 108.6
     }
   },
-  "markLabel": "Mon Sep 21 OPEN · robinhood last-trade after fills (~7:24 AM PT). Snapshot s1e07-mon-open. Leader Composer 2.5 +1.75%. Worst GPT-5.6 Luna -0.31%.",
+  "markLabel": "Mon Sep 21 MID · robinhood last-trade after fills (~10:27 AM PT). Snapshot s1e07-mon-mid. Leader Composer 2.5 +11.91%. Worst GPT-5.6 Terra -1.74%.",
   "dayPctBasis": "vs Fri Sep 18 tribal carry at Episode 7 open (s1e07-carry)",
   "weekPctBasis": "vs Episode 7 carry (priorMarkUsd)",
   "islandGivenUsd": 361.93,
@@ -10539,11 +10540,141 @@
       "potUsd": 392.0679,
       "fillsSinceOpen": [],
       "fillsSinceLastHour": []
+    },
+    {
+      "type": "fill",
+      "id": "fill-6ab168df-opus-fro-sell",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "sell",
+      "ticker": "FRO",
+      "qty": "0.198829",
+      "avg": "50.200100",
+      "sizeUsd": 9.9812,
+      "orderId": "6ab168df-40ab-48c2-817d-5e9e86a994b4",
+      "at": "2026-09-21T17:26:55.482Z",
+      "note": "Mon Sep 21 mid SELL FRO (Opus Sep 10 FRO lot 0.198829)"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6ab168df-terra-trmd-sell",
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "side": "sell",
+      "ticker": "TRMD",
+      "qty": "1.759554",
+      "avg": "37.400000",
+      "sizeUsd": 65.8073,
+      "orderId": "6ab168df-08bc-45bb-9658-378344c22e8d",
+      "at": "2026-09-21T17:26:55.283Z",
+      "note": "Mon Sep 21 mid SELL TRMD (Terra Fri mid TRMD lot 1.759554)"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6ab168fc-terra-intc-buy",
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "side": "buy",
+      "ticker": "INTC",
+      "qty": "0.536416",
+      "avg": "121.174600",
+      "sizeUsd": 65,
+      "orderId": "6ab168fc-905e-4d56-a3ac-9f44e501ad4d",
+      "at": "2026-09-21T17:27:25.024Z",
+      "note": "Mon Sep 21 mid BUY INTC $65.00 from TRMD exit; HOLD STNG residual"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6ab168ff-composer-fro-buy",
+      "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+      "side": "buy",
+      "ticker": "FRO",
+      "qty": "0.218888",
+      "avg": "50.254000",
+      "sizeUsd": 11,
+      "orderId": "6ab168ff-dc51-487d-b1fd-6ca51dabe01c",
+      "at": "2026-09-21T17:27:27.284Z",
+      "note": "Mon Sep 21 mid BUY FRO $11.00 from shared BP (TRMD sell skipped same-day; sleeve cash unchanged)"
+    },
+    {
+      "type": "mark",
+      "id": "s1e07-mon-mid",
+      "kind": "mid",
+      "at": "2026-09-21T17:29:24Z",
+      "throughAt": "2026-09-21T17:29:24Z",
+      "lastSession": "2026-09-21-mid",
+      "label": "Mon Sep 21 2026 MID · robinhood last-trade after fills (~10:27 AM PT). Snapshot s1e07-mon-mid. MERGED · five living.",
+      "dayPctPriorOfficial": true,
+      "quoteSource": "robinhood-last-trade",
+      "recorded": {
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 76.7282,
+          "weekPct": -0.67,
+          "monthPct": -1.34,
+          "dayPct": -0.67,
+          "priorMarkUsd": 77.2463,
+          "eodMarkUsd": 77.2463
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 90.1854,
+          "weekPct": 11.91,
+          "monthPct": 23.82,
+          "dayPct": 11.91,
+          "priorMarkUsd": 80.5861,
+          "eodMarkUsd": 80.5861
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 75.177,
+          "weekPct": -0.36,
+          "monthPct": -0.72,
+          "dayPct": -0.36,
+          "priorMarkUsd": 75.4472,
+          "eodMarkUsd": 75.4472
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 79.3998,
+          "weekPct": -1.74,
+          "monthPct": -3.48,
+          "dayPct": -1.74,
+          "priorMarkUsd": 80.8045,
+          "eodMarkUsd": 80.8045
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 74.5636,
+          "weekPct": -0.61,
+          "monthPct": -1.22,
+          "dayPct": -0.61,
+          "priorMarkUsd": 75.0242,
+          "eodMarkUsd": 75.0242
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 2.285,
+          "combinedMonthPct": 4.57,
+          "combinedDayPct": 2.285,
+          "livingCount": 4
+        },
+        "askara": {
+          "combinedWeekPct": -0.61,
+          "combinedMonthPct": -1.22,
+          "combinedDayPct": -0.61,
+          "livingCount": 1
+        }
+      },
+      "immunity": {
+        "name": "Composer 2.5",
+        "weekPct": 11.91,
+        "basis": "Episode 7 week % (highest earner)",
+        "asOf": "2026-09-21-mid",
+        "survivorId": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+        "at": "2026-09-21T17:29:24Z"
+      },
+      "potUsd": 396.054,
+      "fillsSinceOpen": [],
+      "fillsSinceLastHour": []
     }
   ],
-  "liveSnapshotId": "s1e07-mon-open",
+  "liveSnapshotId": "s1e07-mon-mid",
   "lastSource": "robinhood-last-trade",
-  "lastSession": "2026-09-21-open",
+  "lastSession": "2026-09-21-mid",
   "themeLeftoverParked": false,
   "themeLeftoverCreditedUsd": 121.84,
   "themeLeftoverCredits": {
