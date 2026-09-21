@@ -1,0 +1,48 @@
+{
+  "session": "2026-09-21-lasthour-strip",
+  "parentSession": "2026-09-21-lasthour",
+  "account": "••••6969",
+  "note": "BOOKS-ONLY corrective strip. Broker still holds orphans until Tue open sell. No broker orders.",
+  "strips": [
+    {
+      "action": "STRIP",
+      "who": "Composer 2.5",
+      "symbol": "FRO",
+      "qty": "0.218888",
+      "avg": "50.254000",
+      "orderId": "6ab168ff-dc51-487d-b1fd-6ca51dabe01c",
+      "open_lot_id": "b4cf0ac2-7aa2-5f9d-9ae9-898ff735e32d",
+      "sizeUsd": 11,
+      "liveMvAtStrip": 10.8941,
+      "mark": 49.77,
+      "brokerStatus": "orphan — still on Agentic; sell Tue open",
+      "sleeveCashImpact": 0,
+      "reason": "Mon mid shared-BP BUY; sleeve cash never debited; orphan pending broker sell Tue open"
+    },
+    {
+      "action": "STRIP",
+      "who": "GPT-5.6 Terra",
+      "symbol": "STNG",
+      "qty": "0.469991",
+      "avg": "86.810000",
+      "orderId": "6ab186bf-bf0e-47f9-b385-3a9e3e08fdf4",
+      "open_lot_id": "fc3a9b9c-841e-5194-a33a-b697456322f2",
+      "sizeUsd": 40.8,
+      "liveMvAtStrip": 40.8281,
+      "mark": 86.87,
+      "brokerStatus": "orphan — still on Agentic; sell Tue open",
+      "sleeveCashImpact": 0,
+      "reason": "Mon last-hour shared-BP BUY; sleeve cash never debited; orphan pending broker sell Tue open"
+    }
+  ],
+  "sells": [],
+  "buys": [],
+  "skips": [
+    {
+      "who": "Composer 2.5 / GPT-5.6 Terra orphans",
+      "action": "SELL orphan FRO 0.218888 + STNG 0.469991",
+      "reason": "Same-day lots is_selectable=false tonight; books strip now; broker sell Tue open."
+    }
+  ],
+  "huntScore": "5/5"
+}

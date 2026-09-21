@@ -1,0 +1,117 @@
+{
+  "snapshotId": "s1e07-mon-lasthour-strip",
+  "corrects": "s1e07-mon-lasthour",
+  "markedAt": "2026-09-21T20:40:00Z",
+  "quotes": {
+    "FRO": 49.77,
+    "STNG": 86.87,
+    "TRMD": 37.19,
+    "INTC": 121.655,
+    "VLO": 393.16,
+    "MPC": 401.7,
+    "GNRC": 205.545,
+    "USO": 147.915,
+    "XLE": 62.4901
+  },
+  "sipPrior": {
+    "FRO": 51.42,
+    "STNG": 87.16,
+    "TRMD": 38.23,
+    "INTC": 108.6,
+    "VLO": 413.28,
+    "MPC": 424.89,
+    "GNRC": 207.44,
+    "USO": 153.82,
+    "XLE": 64.31
+  },
+  "givenUsd": 361.93,
+  "potUsd": 385.0897,
+  "immunity": "GPT-5.6 Luna",
+  "immunityWeekPct": -0.4,
+  "standings": [
+    {
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "tribe": "the Askara tribe",
+      "book": 74.7213,
+      "week": -0.4,
+      "day": -0.4,
+      "cash": 21.9128,
+      "legs": "INTC+CASH",
+      "prior": 75.0242,
+      "eod": 75.0242
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 76.9162,
+      "week": -0.43,
+      "day": -0.43,
+      "cash": 29.8389,
+      "legs": "STNG+INTC+CASH",
+      "prior": 77.2463,
+      "eod": 77.2463
+    },
+    {
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 75.0199,
+      "week": -0.57,
+      "day": -0.57,
+      "cash": 32.4602,
+      "legs": "TRMD+INTC+CASH",
+      "prior": 75.4472,
+      "eod": 75.4472
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 79.5982,
+      "week": -1.49,
+      "day": -1.49,
+      "cash": 13.2412,
+      "legs": "STNG+INTC+CASH",
+      "prior": 80.8045,
+      "eod": 80.8045
+    },
+    {
+      "name": "Composer 2.5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 78.8341,
+      "week": -2.17,
+      "day": -2.17,
+      "cash": 0.569,
+      "legs": "FRO+STNG+TRMD+CASH",
+      "prior": 80.5861,
+      "eod": 80.5861
+    }
+  ],
+  "strips": [
+    {
+      "who": "Composer 2.5",
+      "ticker": "FRO",
+      "qty": "0.218888",
+      "orderId": "6ab168ff-dc51-487d-b1fd-6ca51dabe01c",
+      "open_lot_id": "b4cf0ac2-7aa2-5f9d-9ae9-898ff735e32d",
+      "avg": "50.254000",
+      "sizeUsd": 11,
+      "reason": "Mon mid shared-BP BUY; sleeve cash never debited; orphan pending broker sell Tue open"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "ticker": "STNG",
+      "qty": "0.469991",
+      "orderId": "6ab186bf-bf0e-47f9-b385-3a9e3e08fdf4",
+      "open_lot_id": "fc3a9b9c-841e-5194-a33a-b697456322f2",
+      "avg": "86.810000",
+      "sizeUsd": 40.8,
+      "reason": "Mon last-hour shared-BP BUY; sleeve cash never debited; orphan pending broker sell Tue open"
+    }
+  ],
+  "huntScore": "5/5",
+  "note": "Corrective books remake: strip two shared-BP lots. Marks from s1e07-mon-lasthour. No broker trades."
+}
