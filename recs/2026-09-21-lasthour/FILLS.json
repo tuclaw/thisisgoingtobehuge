@@ -1,0 +1,100 @@
+{
+  "session": "2026-09-21-lasthour",
+  "account": "\u2022\u2022\u2022\u20226969",
+  "bpAfterSells": 86.56,
+  "bpAfterBuys": 0.57,
+  "sells": [
+    {
+      "who": "Claude Opus 5",
+      "symbol": "FRO",
+      "qty": "0.074441",
+      "avg": "49.750100",
+      "orderId": "6ab18692-4dea-4872-8bef-3b99f3fb4b7c",
+      "notional": 3.7034,
+      "at": "2026-09-21T19:33:39.169Z",
+      "pin": "Opus FRO lots 0.052511 (6ef27cdf\u2026) + 0.021930 (80b9e727\u2026)",
+      "open_lot_ids": [
+        "6ef27cdf-d351-50a9-813c-e04325c64628",
+        "80b9e727-34e7-5b4b-b375-246b49227ba0"
+      ]
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "STNG",
+      "qty": "0.158192",
+      "avg": "86.729700",
+      "orderId": "6ab18692-e32c-4cfc-a93f-8220f92da424",
+      "notional": 13.7199,
+      "at": "2026-09-21T19:33:38.978Z",
+      "pin": "Luna Fri open STNG lot 0.158192 (b30fbd60\u2026)",
+      "open_lot_id": "b30fbd60-361e-5de0-99d3-fa96df2b15cb"
+    }
+  ],
+  "buys": [
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "INTC",
+      "qty": "0.103114",
+      "avg": "121.709900",
+      "orderId": "6ab186bd-6699-48d1-a98d-39bfc7acd84a",
+      "dollar": 12.55,
+      "notional": 12.55,
+      "at": "2026-09-21T19:34:21.389Z",
+      "note": "SCALED $20\u2192$12.55 BP race; from STNG exit + sleeve"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "INTC",
+      "qty": "0.206312",
+      "avg": "121.708400",
+      "orderId": "6ab186be-6e43-4f66-984a-80555abb7a90",
+      "dollar": 25.11,
+      "notional": 25.11,
+      "at": "2026-09-21T19:34:22.269Z",
+      "note": "SCALED $40\u2192$25.11 BP; from FRO exit + sleeve cash"
+    },
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "INTC",
+      "qty": "0.061869",
+      "avg": "121.708400",
+      "orderId": "6ab186bf-c86b-4bdd-98e7-19aab30ff328",
+      "dollar": 7.53,
+      "notional": 7.53,
+      "at": "2026-09-21T19:34:23.84Z",
+      "note": "SCALED $12\u2192$7.53 BP; from sleeve cash; HOLD all STNG"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "STNG",
+      "qty": "0.469991",
+      "avg": "86.810000",
+      "orderId": "6ab186bf-bf0e-47f9-b385-3a9e3e08fdf4",
+      "dollar": 40.8,
+      "notional": 40.8,
+      "at": "2026-09-21T19:34:23.273Z",
+      "note": "SCALED $65\u2192$40.80 shared BP; sleeve cash unchanged $13.2412; HOLD INTC"
+    }
+  ],
+  "holds": [
+    {
+      "who": "Composer 2.5",
+      "print": "HOLD FRO; HOLD STNG; HOLD TRMD"
+    }
+  ],
+  "skips": [
+    {
+      "who": "all buys",
+      "action": "BUY scale $137\u2192$85.99",
+      "reason": "Shared BP after sells only $86.56; proportional scale Luna INTC $20\u2192$12.55, Opus INTC $40\u2192$25.11, Sonnet INTC $12\u2192$7.53, Terra STNG $65\u2192$40.80. No same-day lot sells attempted (Composer HOLDed; TRMD/INTC still unselectable)."
+    }
+  ],
+  "huntScore": "5/5",
+  "prints": {
+    "Claude Sonnet 5": "HOLD STNG; BUY INTC $12.00",
+    "Composer 2.5": "HOLD FRO; HOLD STNG; HOLD TRMD",
+    "Claude Opus 5": "HOLD TRMD; SELL FRO 0.052511; SELL FRO 0.021930; BUY INTC $40",
+    "GPT-5.6 Terra": "BUY STNG $65.00",
+    "GPT-5.6 Luna": "SELL STNG 0.158192; BUY INTC $20"
+  }
+}

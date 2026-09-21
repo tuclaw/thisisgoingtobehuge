@@ -363,8 +363,8 @@ check("homepage-points-at-e07", home.includes("seasons/1/e07.html") && home.incl
 check("homepage-skips-e06-primary-cta", !home.includes("Walk into Episode 6"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e07-mon-mid",
-  source.statusLabel === "Episode 7 · Mon mid · five living · MERGED · Composer 2.5 immunity"
+  "status-label-e07-mon-lasthour",
+  source.statusLabel === "Episode 7 · Mon last-hour · five living · MERGED · GPT-5.6 Terra immunity"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -527,8 +527,15 @@ check(
   "e7-mon-mid-mark",
   Boolean(e7MonMid) && e7MonMid.kind === "mid" && e7MonMid.at === "2026-09-21T17:29:24Z"
 );
-check("live-snapshot-e07-mon-mid", source.liveSnapshotId === "s1e07-mon-mid");
-check("last-session-e07-mon-mid", source.lastSession === "2026-09-21-mid");
+const e7MonLasthour = (source.events || []).find((event) => event && event.id === "s1e07-mon-lasthour");
+check(
+  "e7-mon-lasthour-mark",
+  Boolean(e7MonLasthour) &&
+    e7MonLasthour.kind === "intraday" &&
+    e7MonLasthour.at === "2026-09-21T19:36:28Z"
+);
+check("live-snapshot-e07-mon-lasthour", source.liveSnapshotId === "s1e07-mon-lasthour");
+check("last-session-e07-mon-lasthour", source.lastSession === "2026-09-21-lasthour");
 check(
   "live-episode-is-e07",
   source.episode && source.episode.id === "s1e07" && source.episode.status === "live" && source.episode.path === "seasons/1/e07.html"
@@ -544,7 +551,7 @@ check(
   "sip-missing-banner-e06-eod",
   typeof source.sipMissingBanner === "string" && source.sipMissingBanner.includes("SIP Sep 18 still missing")
 );
-check("island-pot", source.islandPotUsd === 396.054);
+check("island-pot", source.islandPotUsd === 436.8119);
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
@@ -552,20 +559,24 @@ const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
 const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
 const flashLive = board.survivors.find((s) => s.name === "Gemini 3.7 Flash");
 check(
-  "immunity-composer-e07-mon-mid",
+  "immunity-terra-e07-mon-lasthour",
   source.immunity &&
-    source.immunity.name === "Composer 2.5" &&
-    source.immunity.survivorId === composerLive?.id &&
-    source.immunity.weekPct === 11.91 &&
-    source.immunity.snapshotId === "s1e07-mon-mid"
+    source.immunity.name === "GPT-5.6 Terra" &&
+    source.immunity.survivorId === terraLive?.id &&
+    source.immunity.weekPct === 49.03 &&
+    source.immunity.snapshotId === "s1e07-mon-lasthour"
 );
-check("composer-mon-mid-immune", composerLive && composerLive.immune === true && composerLive.weekPct === 11.91);
-check("terra-mon-mid-week", terraLive && terraLive.immune === false && terraLive.weekPct === -1.74);
+check("terra-mon-lasthour-immune", terraLive && terraLive.immune === true && terraLive.weekPct === 49.03);
+check("composer-mon-lasthour-week", composerLive && composerLive.immune === false && composerLive.weekPct === 11.34);
 check(
   "grok-jury-zero",
   grokLive && (grokLive.status === "voted-out" || grokLive.status === "jury") && grokLive.bookUsd === 0
 );
-check("sonnet-mon-mid-week", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === -0.67);
+check("sonnet-mon-lasthour-week", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === -0.43);
+const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
+const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
+check("opus-mon-lasthour-week", opusLive && opusLive.immune === false && opusLive.weekPct === -0.57);
+check("luna-mon-lasthour-week", lunaLive && lunaLive.immune === false && lunaLive.weekPct === -0.4);
 check(
   "flash-jury-zero",
   flashLive && (flashLive.status === "voted-out" || flashLive.status === "jury") && flashLive.jury && flashLive.bookUsd === 0
@@ -1259,12 +1270,24 @@ const e7MonBooths = (((episode7Copy.days || []).find((day) => day.id === "monday
   (beat) => beat.id === "monday-confessionals"
 );
 assertBooths(e7MonBooths, ["composer-2-5", "gpt-5-6-terra", "gpt-5-6-luna"], "e07-monday-booths");
+const e7MonLasthourBooks = (((episode7Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).find(
+  (beat) => beat.id === "monday-lasthour-books"
+);
+check(
+  "e07-mon-lasthour-books",
+  Boolean(e7MonLasthourBooks) &&
+    e7MonLasthourBooks.boardId === "s1e07-mon-lasthour" &&
+    String(e7MonLasthourBooks.body || "").includes("49.03%") &&
+    String(e7MonLasthourBooks.body || "").includes("the Bidu tribe") &&
+    String(e7MonLasthourBooks.body || "").includes("the Askara tribe")
+);
 check(
   "e07-monday-books-order",
   beatOrder(episode7Copy.days || [], "monday", [
     "monday-open-books",
     "monday-mid-books",
-    "monday-confessionals"
+    "monday-confessionals",
+    "monday-lasthour-books"
   ])
 );
 check(
