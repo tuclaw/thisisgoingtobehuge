@@ -4,12 +4,12 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Episode 7 · Mon last-hour · five living · MERGED · GPT-5.6 Terra immunity",
+  "statusLabel": "Live · Episode 7 · Mon last-hour STRIP · immunity GPT-5.6 Luna -0.40% · pot $385.09",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 436.8119,
+  "islandPotUsd": 385.0897,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -174,17 +174,17 @@
       "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
     }
   ],
-  "notes": "Season live. S1E07 live Mon Sep 21 – Tue Sep 22. MERGED. Five living. Mon last-hour remake after fills. Given $361.93. Pot $436.81. GPT-5.6 Terra leads +49.03% and wears immunity. Comics paused. Audience only. Tribal Tue Sep 22 2:00 PM PT.",
+  "notes": "Season live. S1E07 live Mon Sep 21 – Tue Sep 22. MERGED. Five living. Mon last-hour STRIP corrective books (Composer FRO 0.218888 + Terra STNG 0.469991 stripped; broker orphans Tue open). Given $361.93. Pot $385.09. GPT-5.6 Luna leads −0.40% and wears immunity. Comics paused. Audience only. Tribal Tue Sep 22 2:00 PM PT.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": 14.8425,
-      "combinedMonthPct": 29.685,
+      "combinedWeekPct": -1.165,
+      "combinedMonthPct": -2.33,
       "livingCount": 4,
-      "combinedDayPct": 14.8425
+      "combinedDayPct": -1.165
     },
     {
       "id": "askara",
@@ -286,7 +286,7 @@
           "note": "Thu last-hour BUY STNG $11.00 from FRO trim",
           "last": 86.87,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour",
+          "lastSession": "2026-09-21-lasthour-strip",
           "orderId": "6aac3fc7-5d72-4bae-ac23-63b9310fb4c6",
           "filledAt": "2026-09-17T19:30:16.043Z"
         },
@@ -302,7 +302,7 @@
           "filledAt": "2026-09-18T14:08:42.118Z",
           "last": 86.87,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "BUY",
@@ -316,7 +316,7 @@
           "filledAt": "2026-09-18T17:13:33.084Z",
           "last": 86.87,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "HOLD",
@@ -337,7 +337,7 @@
           "filledAt": "2026-09-21T14:23:51.341Z",
           "last": 86.87,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "BUY",
@@ -351,14 +351,14 @@
           "filledAt": "2026-09-21T19:34:23.84Z",
           "last": 121.655,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         }
       ],
       "model": "Claude Sonnet 5",
       "dayPct": -0.43,
       "priorMarkUsd": 77.2463,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-lasthour",
+      "lastSession": "2026-09-21-lasthour-strip",
       "eodMarkUsd": 77.2463,
       "mondayOpenUsd": 39.9865,
       "themeCreditUsd": 13.5378,
@@ -373,12 +373,12 @@
       "tribeId": "bidu",
       "archetype": "options / convexity",
       "status": "active",
-      "bookUsd": 89.7282,
-      "weekPct": 11.34,
+      "bookUsd": 78.8341,
+      "weekPct": -2.17,
       "position": {
         "action": "HOLD",
         "ticker": "FRO / STNG / TRMD / CASH",
-        "sizeUsd": 89.7282,
+        "sizeUsd": 78.8341,
         "status": "filled",
         "note": "fro / stng / trmd"
       },
@@ -398,7 +398,7 @@
           "note": "SCALED $20.50→$6.00 BP race after parallel buys",
           "last": 49.77,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour",
+          "lastSession": "2026-09-21-lasthour-strip",
           "orderId": "6aa828d6-e0a8-478c-9531-25ce8a5461dd"
         },
         {
@@ -411,7 +411,7 @@
           "note": "Mon last-hour BUY FRO $21.00",
           "last": 49.77,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour",
+          "lastSession": "2026-09-21-lasthour-strip",
           "orderId": "6aa84a9b-5ea5-4770-bff6-3527309f2f02",
           "filledAt": "2026-09-14T19:27:23.959Z"
         },
@@ -422,7 +422,7 @@
           "avg": null,
           "sizeUsd": 0.569,
           "status": "cash",
-          "note": "Thu last-hour: STNG buy -$7.98 filled from residual/shared BP; sleeve cash unchanged",
+          "note": "Mon mid: FRO buy -$11 from residual/shared BP; sleeve cash unchanged; TRMD sell skipped · STRIP s1e07-mon-lasthour-strip: FRO 0.218888 STRIPPED (orphan; broker sell Tue); sleeve cash unchanged",
           "last": null,
           "lastSource": null,
           "lastSession": "2026-09-17-lasthour",
@@ -438,7 +438,7 @@
           "note": "Wed open BUY FRO $19.24",
           "last": 49.77,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour",
+          "lastSession": "2026-09-21-lasthour-strip",
           "orderId": "6aaaa1e4-fa61-4518-ae20-0b5f5a6cdfd5",
           "filledAt": null
         },
@@ -452,7 +452,7 @@
           "note": "Thu last-hour BUY STNG $7.98 (residual/shared BP; first fill today)",
           "last": 86.87,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour",
+          "lastSession": "2026-09-21-lasthour-strip",
           "orderId": "6aac3fc7-bc6f-478e-b629-4fb06c1abfac",
           "filledAt": "2026-09-17T19:30:15.335Z"
         },
@@ -468,7 +468,7 @@
           "filledAt": "2026-09-18T14:08:43.502Z",
           "last": 86.87,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "HOLD",
@@ -489,33 +489,19 @@
           "filledAt": "2026-09-21T14:23:53.161Z",
           "last": 37.19,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
-        },
-        {
-          "action": "BUY",
-          "ticker": "FRO",
-          "qty": "0.218888",
-          "avg": "50.254000",
-          "sizeUsd": 11,
-          "status": "filled",
-          "note": "Mon Sep 21 mid BUY FRO $11.00 (shared BP; TRMD sell skipped same-day; sleeve cash unchanged)",
-          "orderId": "6ab168ff-dc51-487d-b1fd-6ca51dabe01c",
-          "filledAt": "2026-09-21T17:27:27.284Z",
-          "last": 49.77,
-          "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         }
       ],
       "model": "Composer 2.5",
-      "dayPct": 11.34,
+      "dayPct": -2.17,
       "priorMarkUsd": 80.5861,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-lasthour",
+      "lastSession": "2026-09-21-lasthour-strip",
       "eodMarkUsd": 80.5861,
       "mondayOpenUsd": 40.099,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.1059,
-      "monthPct": 22.68,
+      "monthPct": -4.34,
       "cashUsd": 0.569,
       "tickersSummary": "FRO+STNG+TRMD+CASH"
     },
@@ -565,7 +551,7 @@
           "filledAt": "2026-09-18T17:13:34.095Z",
           "last": 49.77,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "HOLD",
@@ -586,7 +572,7 @@
           "filledAt": "2026-09-21T14:23:54.102Z",
           "last": 37.19,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "BUY",
@@ -600,14 +586,14 @@
           "filledAt": "2026-09-21T19:34:22.269Z",
           "last": 121.655,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         }
       ],
       "model": "Claude Opus 5",
       "dayPct": -0.57,
       "priorMarkUsd": 75.4472,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-lasthour",
+      "lastSession": "2026-09-21-lasthour-strip",
       "eodMarkUsd": 75.4472,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
@@ -670,16 +656,16 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 120.4263,
-      "weekPct": 49.03,
+      "bookUsd": 79.5982,
+      "weekPct": -1.49,
       "position": {
         "action": "HOLD",
         "ticker": "STNG / INTC / CASH",
-        "sizeUsd": 120.4263,
+        "sizeUsd": 79.5982,
         "status": "filled",
         "note": "stng / intc"
       },
-      "immune": true,
+      "immune": false,
       "monogram": "T",
       "bio": "Dayton. Steward, not a hero.",
       "caption": "Slow hands. Long horizon. The adults’ table.",
@@ -693,7 +679,7 @@
           "avg": null,
           "sizeUsd": 13.2412,
           "status": "cash",
-          "note": "Thu last-hour: four FRO sold +$44.8464; STNG buy -$44.80",
+          "note": "Mon last-hour: STNG buy -$40.80 from shared BP; sleeve cash unchanged · STRIP s1e07-mon-lasthour-strip: STNG 0.469991 STRIPPED (orphan; broker sell Tue); sleeve cash unchanged",
           "last": null,
           "lastSource": null,
           "lastSession": "2026-09-17-lasthour",
@@ -711,7 +697,7 @@
           "filledAt": "2026-09-18T14:08:44.891Z",
           "last": 86.87,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "HOLD",
@@ -732,33 +718,19 @@
           "filledAt": "2026-09-21T17:27:25.024Z",
           "last": 121.655,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
-        },
-        {
-          "action": "BUY",
-          "ticker": "STNG",
-          "qty": "0.469991",
-          "avg": "86.810000",
-          "sizeUsd": 40.8,
-          "status": "filled",
-          "note": "Mon Sep 21 last-hour BUY STNG $40.80 scaled from $65 (shared BP; sleeve cash unchanged); HOLD INTC",
-          "orderId": "6ab186bf-bf0e-47f9-b385-3a9e3e08fdf4",
-          "filledAt": "2026-09-21T19:34:23.273Z",
-          "last": 86.87,
-          "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": 49.03,
+      "dayPct": -1.49,
       "priorMarkUsd": 80.8045,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-lasthour",
+      "lastSession": "2026-09-21-lasthour-strip",
       "eodMarkUsd": 80.8045,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
-      "monthPct": 98.06,
+      "monthPct": -2.98,
       "cashUsd": 13.2412,
       "tickersSummary": "STNG+INTC+CASH"
     },
@@ -934,7 +906,7 @@
         "status": "filled",
         "note": "intc"
       },
-      "immune": false,
+      "immune": true,
       "monogram": "L",
       "bio": "Catalyst hunter. Not a team player.",
       "portrait": "cast/gpt-5-6-luna/portrait.jpg",
@@ -972,7 +944,7 @@
           "filledAt": "2026-09-21T14:23:54.248Z",
           "last": 121.655,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         },
         {
           "action": "BUY",
@@ -986,14 +958,14 @@
           "filledAt": "2026-09-21T19:34:21.389Z",
           "last": 121.655,
           "lastSource": "robinhood-last-trade",
-          "lastSession": "2026-09-21-lasthour"
+          "lastSession": "2026-09-21-lasthour-strip"
         }
       ],
       "model": "GPT-5.6 Luna",
       "dayPct": -0.4,
       "priorMarkUsd": 75.0242,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-21-lasthour",
+      "lastSession": "2026-09-21-lasthour-strip",
       "eodMarkUsd": 75.0242,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
@@ -1726,26 +1698,27 @@
   ],
   "goldenPortfolio": [],
   "immunity": {
-    "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
-    "name": "GPT-5.6 Terra",
-    "weekPct": 49.03,
-    "at": "2026-09-21T19:36:28Z",
-    "snapshotId": "s1e07-mon-lasthour",
-    "asOf": "2026-09-21-lasthour",
-    "note": "highest Episode 7 week %"
+    "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
+    "name": "GPT-5.6 Luna",
+    "weekPct": -0.4,
+    "at": "2026-09-21T20:40:00Z",
+    "snapshotId": "s1e07-mon-lasthour-strip",
+    "asOf": "2026-09-21-lasthour-strip",
+    "basis": "Episode 7 weekPct vs priorMarkUsd (post-boot-split carry)",
+    "note": "Mon Sep 21 last-hour STRIP corrective remake (shared-BP lots removed from sleeves)"
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-21T19:36:28Z",
+  "markedAt": "2026-09-21T20:40:00Z",
   "quotes": {
     "FRO": {
       "last": 49.77,
       "sip": 51.42,
       "close": 49.77,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1760,9 +1733,9 @@
       "sip": 87.16,
       "close": 86.87,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1777,9 +1750,9 @@
       "sip": 413.28,
       "close": 393.16,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1794,9 +1767,9 @@
       "sip": 424.89,
       "close": 401.7,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1811,9 +1784,9 @@
       "sip": 38.23,
       "close": 37.19,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1828,9 +1801,9 @@
       "sip": 153.82,
       "close": 147.915,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1845,9 +1818,9 @@
       "sip": 64.31,
       "close": 62.4901,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1862,9 +1835,9 @@
       "sip": 207.44,
       "close": 205.545,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorCloseDate": "2026-09-17",
       "priorCloseSource": "official SIP list-exchange close (Sep 18 SIP missing)",
       "interpolated": false,
@@ -1878,9 +1851,9 @@
       "last": 121.655,
       "close": 121.655,
       "source": "robinhood-last-trade",
-      "session": "2026-09-21-lasthour",
+      "session": "2026-09-21-lasthour-strip",
       "date": "2026-09-21",
-      "asOf": "2026-09-21T19:36:28Z",
+      "asOf": "2026-09-21T20:40:00Z",
       "priorClose": 108.6,
       "priorCloseDate": "2026-09-18",
       "priorCloseSource": "robinhood-last-trade (Fri tribal RTH)",
@@ -1888,9 +1861,9 @@
       "sip": 108.6
     }
   },
-  "markLabel": "Mon Sep 21 LAST-HOUR · robinhood last-trade after fills (~12:34 PM PT). Snapshot s1e07-mon-lasthour. Leader GPT-5.6 Terra +49.03%. Worst Claude Opus 5 -0.57%.",
-  "dayPctBasis": "vs Fri Sep 18 tribal carry at Episode 7 open (s1e07-carry)",
-  "weekPctBasis": "vs Episode 7 carry (priorMarkUsd)",
+  "markLabel": "Mon Sep 21 last-hour STRIP corrective remake · snapshot s1e07-mon-lasthour-strip",
+  "dayPctBasis": "vs eodMarkUsd (Fri tribal EOD / E7 open carry)",
+  "weekPctBasis": "vs priorMarkUsd (post-boot-split E7 carry)",
   "islandGivenUsd": 361.93,
   "islandGivenStartUsd": 120,
   "islandEpisode2TopUpUsd": 110,
@@ -10868,11 +10841,113 @@
       "potUsd": 436.8119,
       "fillsSinceOpen": [],
       "fillsSinceLastHour": []
+    },
+    {
+      "type": "mark",
+      "id": "s1e07-mon-lasthour-strip",
+      "kind": "corrective",
+      "at": "2026-09-21T20:40:00Z",
+      "throughAt": "2026-09-21T20:40:00Z",
+      "lastSession": "2026-09-21-lasthour-strip",
+      "label": "Mon Sep 21 2026 LAST-HOUR STRIP · corrective books (shared-BP lots stripped). Snapshot s1e07-mon-lasthour-strip. MERGED · five living.",
+      "dayPctPriorOfficial": true,
+      "quoteSource": "robinhood-last-trade",
+      "corrects": "s1e07-mon-lasthour",
+      "recorded": {
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 76.9162,
+          "weekPct": -0.43,
+          "monthPct": -0.86,
+          "dayPct": -0.43,
+          "priorMarkUsd": 77.2463,
+          "eodMarkUsd": 77.2463
+        },
+        "b1f6dd99-de69-44e0-a163-7b71eb19dfbf": {
+          "bookUsd": 78.8341,
+          "weekPct": -2.17,
+          "monthPct": -4.34,
+          "dayPct": -2.17,
+          "priorMarkUsd": 80.5861,
+          "eodMarkUsd": 80.5861
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 75.0199,
+          "weekPct": -0.57,
+          "monthPct": -1.14,
+          "dayPct": -0.57,
+          "priorMarkUsd": 75.4472,
+          "eodMarkUsd": 75.4472
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 79.5982,
+          "weekPct": -1.49,
+          "monthPct": -2.98,
+          "dayPct": -1.49,
+          "priorMarkUsd": 80.8045,
+          "eodMarkUsd": 80.8045
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 74.7213,
+          "weekPct": -0.4,
+          "monthPct": -0.8,
+          "dayPct": -0.4,
+          "priorMarkUsd": 75.0242,
+          "eodMarkUsd": 75.0242
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -1.165,
+          "combinedMonthPct": -2.33,
+          "combinedDayPct": -1.165,
+          "livingCount": 4
+        },
+        "askara": {
+          "combinedWeekPct": -0.4,
+          "combinedMonthPct": -0.8,
+          "combinedDayPct": -0.4,
+          "livingCount": 1
+        }
+      },
+      "immunity": {
+        "name": "GPT-5.6 Luna",
+        "weekPct": -0.4,
+        "basis": "Episode 7 weekPct vs priorMarkUsd (post-boot-split carry)",
+        "note": "Mon Sep 21 last-hour STRIP corrective remake (shared-BP lots removed from sleeves)",
+        "asOf": "2026-09-21-lasthour-strip",
+        "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
+        "at": "2026-09-21T20:40:00Z"
+      },
+      "potUsd": 385.0897,
+      "strips": [
+        {
+          "who": "Composer 2.5",
+          "ticker": "FRO",
+          "qty": "0.218888",
+          "orderId": "6ab168ff-dc51-487d-b1fd-6ca51dabe01c",
+          "open_lot_id": "b4cf0ac2-7aa2-5f9d-9ae9-898ff735e32d",
+          "avg": "50.254000",
+          "sizeUsd": 11,
+          "reason": "Mon mid shared-BP BUY; sleeve cash never debited; orphan pending broker sell Tue open"
+        },
+        {
+          "who": "GPT-5.6 Terra",
+          "ticker": "STNG",
+          "qty": "0.469991",
+          "orderId": "6ab186bf-bf0e-47f9-b385-3a9e3e08fdf4",
+          "open_lot_id": "fc3a9b9c-841e-5194-a33a-b697456322f2",
+          "avg": "86.810000",
+          "sizeUsd": 40.8,
+          "reason": "Mon last-hour shared-BP BUY; sleeve cash never debited; orphan pending broker sell Tue open"
+        }
+      ],
+      "fillsSinceOpen": [],
+      "fillsSinceLastHour": []
     }
   ],
-  "liveSnapshotId": "s1e07-mon-lasthour",
+  "liveSnapshotId": "s1e07-mon-lasthour-strip",
   "lastSource": "robinhood-last-trade",
-  "lastSession": "2026-09-21-lasthour",
+  "lastSession": "2026-09-21-lasthour-strip",
   "themeLeftoverParked": false,
   "themeLeftoverCreditedUsd": 121.84,
   "themeLeftoverCredits": {
