@@ -207,6 +207,16 @@
       "campfireFeed": false,
       "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03", "s1e04", "s1e05", "s1e06"],
       "participantCount": 4
+    },
+    {
+      "file": "e07-sunday-dinner.js",
+      "dayId": "sunday",
+      "beatId": "sunday-dinner",
+      "global": "SUNDAY_DINNER_CONVERSATIONS",
+      "afterDayIds": ["saturday"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03", "s1e04", "s1e05", "s1e06"],
+      "participantCount": 4
     }
   ]
 }
