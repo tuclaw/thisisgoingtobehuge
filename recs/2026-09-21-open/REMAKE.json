@@ -1,0 +1,94 @@
+{
+  "snapshotId": "s1e07-mon-open",
+  "markedAt": "2026-09-21T14:24:20Z",
+  "quotes": {
+    "FRO": 52.26,
+    "STNG": 89.425,
+    "TRMD": 38.34,
+    "VLO": 405.2601,
+    "MPC": 416.12,
+    "GNRC": 205.125,
+    "USO": 148.01,
+    "XLE": 62.9,
+    "INTC": 120.57
+  },
+  "sipPrior": {
+    "FRO": 51.42,
+    "STNG": 87.16,
+    "TRMD": 38.23,
+    "VLO": 413.28,
+    "MPC": 424.89,
+    "GNRC": 207.44,
+    "USO": 153.82,
+    "XLE": 64.31,
+    "INTC": 108.6
+  },
+  "givenUsd": 361.93,
+  "potUsd": 392.0679,
+  "immunity": "Composer 2.5",
+  "immunityWeekPct": 1.75,
+  "standings": [
+    {
+      "name": "Composer 2.5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 81.9965,
+      "week": 1.75,
+      "day": 1.75,
+      "cash": 0.569,
+      "legs": "FRO+STNG+TRMD+CASH",
+      "prior": 80.5861,
+      "eod": 80.5861
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 78.0828,
+      "week": 1.08,
+      "day": 1.08,
+      "cash": 37.3689,
+      "legs": "STNG+CASH",
+      "prior": 77.2463,
+      "eod": 77.2463
+    },
+    {
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 76.1674,
+      "week": 0.95,
+      "day": 0.95,
+      "cash": 43.8856,
+      "legs": "FRO+TRMD+CASH",
+      "prior": 75.4472,
+      "eod": 75.4472
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 81.0269,
+      "week": 0.28,
+      "day": 0.28,
+      "cash": 12.4339,
+      "legs": "STNG+TRMD+CASH",
+      "prior": 80.8045,
+      "eod": 80.8045
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "tribe": "the Askara tribe",
+      "book": 74.7943,
+      "week": -0.31,
+      "day": -0.31,
+      "cash": 20.7429,
+      "legs": "INTC+STNG+CASH",
+      "prior": 75.0242,
+      "eod": 75.0242
+    }
+  ],
+  "bootLiquidationNotional": 62.7751,
+  "huntScore": "5/5"
+}
