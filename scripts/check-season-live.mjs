@@ -1255,9 +1255,17 @@ check(
     String(e7MonMidBooks.body || "").includes("the Bidu tribe") &&
     String(e7MonMidBooks.body || "").includes("the Askara tribe")
 );
+const e7MonBooths = (((episode7Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).find(
+  (beat) => beat.id === "monday-confessionals"
+);
+assertBooths(e7MonBooths, ["composer-2-5", "gpt-5-6-terra", "gpt-5-6-luna"], "e07-monday-booths");
 check(
   "e07-monday-books-order",
-  beatOrder(episode7Copy.days || [], "monday", ["monday-open-books", "monday-mid-books"])
+  beatOrder(episode7Copy.days || [], "monday", [
+    "monday-open-books",
+    "monday-mid-books",
+    "monday-confessionals"
+  ])
 );
 check(
   "e06-friday-before-tribal",
