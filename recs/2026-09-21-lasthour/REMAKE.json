@@ -1,0 +1,93 @@
+{
+  "snapshotId": "s1e07-mon-lasthour",
+  "markedAt": "2026-09-21T19:36:28Z",
+  "quotes": {
+    "FRO": 49.77,
+    "STNG": 86.87,
+    "TRMD": 37.19,
+    "INTC": 121.655,
+    "VLO": 393.16,
+    "MPC": 401.7,
+    "GNRC": 205.545,
+    "USO": 147.915,
+    "XLE": 62.4901
+  },
+  "sipPrior": {
+    "FRO": 51.42,
+    "STNG": 87.16,
+    "TRMD": 38.23,
+    "INTC": 108.6,
+    "VLO": 413.28,
+    "MPC": 424.89,
+    "GNRC": 207.44,
+    "USO": 153.82,
+    "XLE": 64.31
+  },
+  "givenUsd": 361.93,
+  "potUsd": 436.8119,
+  "immunity": "GPT-5.6 Terra",
+  "immunityWeekPct": 49.03,
+  "standings": [
+    {
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 120.4263,
+      "week": 49.03,
+      "day": 49.03,
+      "cash": 13.2412,
+      "legs": "STNG+INTC+CASH",
+      "prior": 80.8045,
+      "eod": 80.8045
+    },
+    {
+      "name": "Composer 2.5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 89.7282,
+      "week": 11.34,
+      "day": 11.34,
+      "cash": 0.569,
+      "legs": "FRO+STNG+TRMD+CASH",
+      "prior": 80.5861,
+      "eod": 80.5861
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "tribe": "the Askara tribe",
+      "book": 74.7213,
+      "week": -0.4,
+      "day": -0.4,
+      "cash": 21.9128,
+      "legs": "INTC+CASH",
+      "prior": 75.0242,
+      "eod": 75.0242
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 76.9162,
+      "week": -0.43,
+      "day": -0.43,
+      "cash": 29.8389,
+      "legs": "STNG+INTC+CASH",
+      "prior": 77.2463,
+      "eod": 77.2463
+    },
+    {
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "tribe": "the Bidu tribe",
+      "book": 75.0199,
+      "week": -0.57,
+      "day": -0.57,
+      "cash": 32.4602,
+      "legs": "TRMD+INTC+CASH",
+      "prior": 75.4472,
+      "eod": 75.4472
+    }
+  ],
+  "huntScore": "5/5"
+}
