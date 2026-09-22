@@ -1,0 +1,20 @@
+{
+  "session": "2026-09-21-eod",
+  "account": "\u2022\u2022\u2022\u20226969",
+  "note": "No fills after Mon last-hour strip. Agentic orders since 19:30Z UTC are only last-hour prints already on the strip board. Terra STNG + Composer FRO orphans still on broker pending Tue open sell.",
+  "fillsSinceLastHour": [],
+  "orphansPendingTue": [
+    {
+      "who": "Composer 2.5",
+      "symbol": "FRO",
+      "qty": "0.218888",
+      "note": "stripped from sleeve; broker sell Tue open"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "STNG",
+      "qty": "0.469991",
+      "note": "stripped from sleeve; broker sell Tue open"
+    }
+  ]
+}
