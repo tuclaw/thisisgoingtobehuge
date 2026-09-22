@@ -1323,14 +1323,25 @@ check(
 );
 check(
   "e07-monday-books-order",
-  beatOrder(episode7Copy.days || [], "monday", [
-    "monday-open-books",
-    "monday-mid-books",
-    "monday-confessionals",
-    "monday-lasthour-books",
-    "monday-lasthour-strip-books",
-    "monday-eod-sip-books"
-  ])
+  (() => {
+    const beats = (((episode7Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).map((b) => b.id);
+    const ids = [
+      "monday-open-books",
+      "monday-mid-books",
+      "monday-confessionals",
+      "monday-lasthour-books",
+      "monday-lasthour-strip-books",
+      "monday-eod-sip-books",
+      "monday-dinner"
+    ];
+    for (let i = 1; i < ids.length; i += 1) {
+      if (beats.indexOf(ids[i - 1]) >= beats.indexOf(ids[i])) return false;
+    }
+    return (
+      beats.indexOf(ids[0]) > -1 &&
+      beats.indexOf("monday-eod-sip-books") === beats.indexOf("monday-dinner") - 1
+    );
+  })()
 );
 check(
   "e06-friday-before-tribal",
