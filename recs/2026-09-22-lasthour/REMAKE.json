@@ -1,0 +1,98 @@
+{
+  "snapshotId": "s1e07-tue-lasthour",
+  "asOf": "2026-09-22T19:24:06Z",
+  "asOfLabel": "Tue Sep 22 ~12:22 PM PT",
+  "quotes": {
+    "INTC": 122.955,
+    "STNG": 82.72,
+    "ALAB": 362.2,
+    "GNRC": 205.85,
+    "SOXL": 150.245,
+    "FRO": 48.23,
+    "TRMD": 34.86,
+    "VLO": 380.88,
+    "MPC": 393.44,
+    "USO": 145.195,
+    "XLE": 62.04,
+    "NVDA": 229.56,
+    "AMD": 620.855,
+    "SPY": 774.19,
+    "QQQ": 746.82
+  },
+  "quoteSource": "robinhood-last",
+  "immunity": {
+    "name": "GPT-5.6 Terra",
+    "weekPct": -0.69,
+    "basis": "Episode 7 weekPct vs priorMarkUsd (post-boot-split carry)",
+    "note": "Tue Sep 22 last-hour remake",
+    "asOf": "2026-09-22-lasthour",
+    "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+    "at": "2026-09-22T19:24:06Z"
+  },
+  "islandPotUsd": 380.4484,
+  "islandGivenUsd": 361.93,
+  "standings": [
+    {
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "book": 80.2431,
+      "week": -0.69,
+      "day": 0.74,
+      "cash": 13.2412,
+      "legs": "INTC+STNG+CASH",
+      "prior": 80.8045,
+      "eod": 79.6569,
+      "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "book": 74.2721,
+      "week": -1.0,
+      "day": -0.67,
+      "cash": 22.1686,
+      "legs": "ALAB+INTC+CASH",
+      "prior": 75.0242,
+      "eod": 74.7755,
+      "id": "aa75df67-9f84-45a3-9432-bee228d655f6"
+    },
+    {
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "book": 73.9696,
+      "week": -1.96,
+      "day": -1.39,
+      "cash": 32.598,
+      "legs": "GNRC+INTC+CASH",
+      "prior": 75.4472,
+      "eod": 75.0129,
+      "id": "974a6b6c-af86-4001-a356-f7f05c803da9"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "book": 75.4239,
+      "week": -2.36,
+      "day": -1.57,
+      "cash": 0.4935,
+      "legs": "INTC+SOXL+STNG+CASH",
+      "prior": 77.2463,
+      "eod": 76.6234,
+      "id": "955a698c-6db0-4172-9e48-12f3724187b0"
+    },
+    {
+      "name": "Composer 2.5",
+      "tribeId": "bidu",
+      "book": 76.5397,
+      "week": -5.02,
+      "day": -2.68,
+      "cash": 2.9383,
+      "legs": "INTC+CASH",
+      "prior": 80.5861,
+      "eod": 78.6494,
+      "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf"
+    }
+  ],
+  "weekPctBasis": "vs Episode 7 priorMarkUsd (post-boot-split carry)",
+  "dayPctBasis": "vs Mon SIP-EOD eodMarkUsd"
+}
