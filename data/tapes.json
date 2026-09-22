@@ -217,6 +217,16 @@
       "campfireFeed": false,
       "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03", "s1e04", "s1e05", "s1e06"],
       "participantCount": 4
+    },
+    {
+      "file": "e07-monday-dinner.js",
+      "dayId": "monday",
+      "beatId": "monday-dinner",
+      "global": "MONDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["monday-eod-sip-books"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03", "s1e04", "s1e05", "s1e06"],
+      "participantCount": 5
     }
   ]
 }
