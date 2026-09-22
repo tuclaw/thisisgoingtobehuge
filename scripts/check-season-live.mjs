@@ -1384,13 +1384,19 @@ check(
     String(e7TuesdayMidBooks.body || "").includes("the Bidu tribe") &&
     String(e7TuesdayMidBooks.body || "").includes("the Askara tribe")
 );
+const e7TuesdayBooths = (((episode7Copy.days || []).find((day) => day.id === "tuesday") || {}).beats || []).find(
+  (beat) => beat.id === "tuesday-confessionals"
+);
+assertBooths(e7TuesdayBooths, ["composer-2-5", "gpt-5-6-terra", "gpt-5-6-luna"], "e07-tuesday-booths");
 check(
   "e07-tuesday-books-order",
   (() => {
     const beats = (((episode7Copy.days || []).find((day) => day.id === "tuesday") || {}).beats || []).map((b) => b.id);
-    const openBooks = beats.indexOf("tuesday-open-books");
-    const midBooks = beats.indexOf("tuesday-mid-books");
-    return openBooks >= 0 && midBooks > openBooks;
+    const ids = ["tuesday-open-books", "tuesday-mid-books", "tuesday-confessionals"];
+    for (let i = 1; i < ids.length; i += 1) {
+      if (beats.indexOf(ids[i - 1]) >= beats.indexOf(ids[i])) return false;
+    }
+    return beats.indexOf(ids[0]) > -1;
   })()
 );
 check(
