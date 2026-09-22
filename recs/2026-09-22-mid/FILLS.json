@@ -1,0 +1,136 @@
+{
+  "session": "2026-09-22-mid",
+  "account": "\u2022\u2022\u2022\u20226969",
+  "bpBefore": 51.88,
+  "bpAfterSells": 165.89,
+  "bpAfterBuys": 53.89,
+  "sells": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "STNG",
+      "qty": "0.124322",
+      "avg": "83.130000",
+      "orderId": "6ab2b8cf-cf95-4500-9956-d41ac979688a",
+      "notional": 10.3444,
+      "at": "2026-09-22T17:20:16.022Z",
+      "open_lot_id": "4d709eb2-20d8-583b-9222-171ea6947ca6",
+      "state": "filled"
+    },
+    {
+      "who": "Composer 2.5",
+      "symbol": "FRO",
+      "qty": "0.285132",
+      "avg": "48.198000",
+      "orderId": "6ab2b8d1-b909-4d56-8a95-25492cb2acbb",
+      "notional": 13.7427,
+      "at": "2026-09-22T17:20:17.451Z",
+      "open_lot_id": "11f779d2-8951-5794-9eef-7758fa38a40b",
+      "state": "filled"
+    },
+    {
+      "who": "Composer 2.5",
+      "symbol": "STNG",
+      "qty": "0.090201",
+      "avg": "82.980100",
+      "orderId": "6ab2b8d2-276b-497a-a8da-a84a5221532a",
+      "notional": 7.4849,
+      "at": "2026-09-22T17:20:19.145Z",
+      "open_lot_id": "1bb59923-6f91-5356-9e72-167721c49f91",
+      "state": "filled"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "INTC",
+      "qty": "0.206312",
+      "avg": "121.601600",
+      "orderId": "6ab2b8d5-b1f8-4f8a-b3d7-f12f13b0a585",
+      "notional": 25.0878,
+      "at": "2026-09-22T17:20:22.149Z",
+      "open_lot_id": "653c1032-db35-5d66-a458-233d04432e79",
+      "state": "filled"
+    },
+    {
+      "who": "Composer 2.5",
+      "symbol": "STNG",
+      "qty": "0.206214",
+      "avg": "82.980100",
+      "orderId": "6ab2b8e1-92d1-4817-b9b5-60160786fd29",
+      "notional": 17.1118,
+      "at": "2026-09-22T17:20:33.523Z",
+      "open_lot_id": "25e269cd-af04-5a24-b9bc-c6fad0bc1334",
+      "state": "filled"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "INTC",
+      "qty": "0.330970",
+      "avg": "121.630100",
+      "orderId": "6ab2b8e2-37be-4105-9d0c-14ea01db03f7",
+      "notional": 40.2558,
+      "at": "2026-09-22T17:20:34.347Z",
+      "open_lot_id": "8a42a6b7-0f2f-5e5e-b6b3-4d283c883e13",
+      "state": "filled"
+    }
+  ],
+  "buys": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "INTC",
+      "qty": "0.082185",
+      "avg": "121.676700",
+      "orderId": "6ab2b8fc-dd3a-48b8-a69d-bd20dffe1d2e",
+      "notional": 10.0,
+      "at": "2026-09-22T17:21:01.146Z",
+      "state": "filled",
+      "dollar": "10.00"
+    },
+    {
+      "who": "Composer 2.5",
+      "symbol": "INTC",
+      "qty": "0.304126",
+      "avg": "121.659900",
+      "orderId": "6ab2b8fd-80ac-481b-9706-155d1039dd9d",
+      "notional": 37.0,
+      "at": "2026-09-22T17:21:01.939Z",
+      "state": "filled",
+      "dollar": "37.00"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "ALAB",
+      "qty": "0.108849",
+      "avg": "367.479900",
+      "orderId": "6ab2b8fe-c744-4359-b1d4-97b77e0d7bdb",
+      "notional": 40.0,
+      "at": "2026-09-22T17:21:03.122Z",
+      "state": "filled",
+      "dollar": "40.00"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "GNRC",
+      "qty": "0.120371",
+      "avg": "207.689900",
+      "orderId": "6ab2b8ff-3aa4-4083-9659-96fe040ac92e",
+      "notional": 25.0,
+      "at": "2026-09-22T17:21:03.662Z",
+      "state": "filled",
+      "dollar": "25.00"
+    }
+  ],
+  "holds": [
+    {
+      "who": "GPT-5.6 Terra",
+      "print": "HOLD INTC; HOLD STNG"
+    }
+  ],
+  "skips": [
+    {
+      "note": "Luna INTC tax-lot place first attempt API error 400 tax lots temporarily unavailable; retry same ref_id succeeded pinned."
+    },
+    {
+      "note": "Composer STNG 0.206214 first place API 500; retry same ref_id succeeded."
+    }
+  ],
+  "scaling": "none \u2014 BP after sells $165.89 covered all printed dollar buys ($112); leftover BP \u2248 $53.89"
+}
