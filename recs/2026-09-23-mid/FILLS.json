@@ -1,0 +1,167 @@
+{
+  "session": "2026-09-23-mid",
+  "account": "\u2022\u2022\u2022\u20226969",
+  "bpBefore": 96.37,
+  "bpAfterSells": 223.73,
+  "bpAfterBuys": 77.73,
+  "sells": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "INTC",
+      "qty": "0.061869",
+      "avg": "120.100100",
+      "orderId": "6ab40b63-d351-4d29-92f7-359be161fd65",
+      "notional": 7.4305,
+      "at": "2026-09-23T17:24:51.973Z",
+      "open_lot_id": "4d00929f-75f6-525f-80d4-1a1ec2859df6",
+      "state": "filled",
+      "note": "Mon LH lot"
+    },
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "INTC",
+      "qty": "0.057245",
+      "avg": "120.093600",
+      "orderId": "6ab40b65-92ae-40ff-bd9d-c9f95cc3d3ec",
+      "notional": 6.8748,
+      "at": "2026-09-23T17:24:53.407Z",
+      "open_lot_id": "9025b5b0-71a7-5995-850f-2bb145644c78",
+      "state": "filled",
+      "note": "Tue open lot"
+    },
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "INTC",
+      "qty": "0.082185",
+      "avg": "120.090100",
+      "orderId": "6ab40b66-b433-490c-a932-c945818fccb7",
+      "notional": 9.8696,
+      "at": "2026-09-23T17:24:55.034Z",
+      "open_lot_id": "d30f253d-870a-5001-b334-238bab6e2866",
+      "state": "filled",
+      "note": "Tue mid lot"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "INTC",
+      "qty": "0.536416",
+      "avg": "120.091700",
+      "orderId": "6ab40b68-f686-4b34-88e9-813c9f59b9de",
+      "notional": 64.4191,
+      "at": "2026-09-23T17:24:56.921Z",
+      "open_lot_id": "87d27875-4544-50fe-bc1e-5e216f348dc9",
+      "state": "filled",
+      "note": "Mon mid lot"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "ALAB",
+      "qty": "0.108849",
+      "avg": "356.150200",
+      "orderId": "6ab40b68-434e-4627-94f3-6b8a24880ff6",
+      "notional": 38.7666,
+      "at": "2026-09-23T17:24:57.008Z",
+      "open_lot_id": "689dde09-881d-5b0d-9f9c-6cfd38c50737",
+      "state": "filled",
+      "note": "Tue mid lot"
+    }
+  ],
+  "buys": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "STNG",
+      "qty": "0.291580",
+      "avg": "82.309900",
+      "orderId": "6ab40b81-190c-4738-a8db-e09cddc703e6",
+      "notional": 24.0,
+      "at": "2026-09-23T17:25:22.168Z",
+      "state": "filled",
+      "dollar": "24.00"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "VLO",
+      "qty": "0.048824",
+      "avg": "368.669900",
+      "orderId": "6ab40b82-03fc-44e9-8e9e-0ecce9c7941f",
+      "notional": 18.0,
+      "at": "2026-09-23T17:25:22.69Z",
+      "state": "filled",
+      "dollar": "18.00"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "MU",
+      "qty": "0.059823",
+      "avg": "1069.815400",
+      "orderId": "6ab40b83-e442-4810-956d-157267f6f974",
+      "notional": 64.0,
+      "at": "2026-09-23T17:25:23.336Z",
+      "state": "filled",
+      "dollar": "64.00"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "AR",
+      "qty": "1.115495",
+      "avg": "35.858500",
+      "orderId": "6ab40b83-38f0-4256-8e12-8f13e510344a",
+      "notional": 40.0,
+      "at": "2026-09-23T17:25:24.139Z",
+      "state": "filled",
+      "dollar": "40.00"
+    }
+  ],
+  "holds": [
+    {
+      "who": "Claude Opus 5",
+      "print": "HOLD GNRC (add VLO $18)"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "print": "HOLD STNG (after INTC\u2192MU)"
+    }
+  ],
+  "skips": [],
+  "scaling": null,
+  "emptySleeveChecks": [
+    {
+      "who": "Claude Sonnet 5",
+      "after": "SELL all INTC",
+      "keeps": "STNG\u00d74",
+      "ok": true
+    },
+    {
+      "who": "Claude Opus 5",
+      "after": "BUY VLO (no sell)",
+      "keeps": "GNRC",
+      "ok": true
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "after": "SELL INTC",
+      "keeps": "STNG",
+      "ok": true
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "after": "SELL ALAB Tue-mid",
+      "keeps": "ALAB Wed-open 0.035340",
+      "ok": true
+    }
+  ],
+  "quotesRemake": {
+    "INTC": 120.18,
+    "STNG": 82.15,
+    "GNRC": 203.97,
+    "ALAB": 357.25,
+    "SOXL": 142.71,
+    "VLO": 368.25,
+    "MPC": 383.34,
+    "FRO": 47.465,
+    "MU": 1069.58,
+    "AR": 35.86
+  },
+  "quoteSource": "robinhood-last",
+  "asOf": "2026-09-23T17:25:42Z"
+}
