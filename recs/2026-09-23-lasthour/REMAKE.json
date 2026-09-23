@@ -1,0 +1,86 @@
+{
+  "snapshotId": "s1e08-wed-lasthour",
+  "asOf": "2026-09-23T19:27:55Z",
+  "asOfLabel": "Wed Sep 23 ~12:27 PM PT",
+  "quotes": {
+    "STNG": 80.895,
+    "GNRC": 200.845,
+    "VLO": 376.81,
+    "ALAB": 361.72,
+    "AR": 35.845,
+    "MU": 1069.1,
+    "USO": 148.82,
+    "INTC": 121.4,
+    "SOXL": 145.28,
+    "MPC": 387.865,
+    "FRO": 47.31
+  },
+  "quoteSource": "robinhood-last",
+  "immunity": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -0.9724,
+    "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+    "note": "Wed Sep 23 last-hour remake",
+    "asOf": "2026-09-23-lasthour",
+    "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
+    "at": "2026-09-23T19:27:55Z"
+  },
+  "islandPotUsd": 374.5898,
+  "islandGivenUsd": 361.93,
+  "standings": [
+    {
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "book": 92.8582,
+      "week": -0.9724,
+      "day": -0.9724,
+      "cash": 11.1,
+      "legs": "ALAB+AR+USO+CASH",
+      "prior": 93.77,
+      "eod": 93.77,
+      "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
+      "origin": "the Askara tribe"
+    },
+    {
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "book": 92.3141,
+      "week": -1.1602,
+      "day": -1.1602,
+      "cash": 32.2622,
+      "legs": "GNRC+VLO+CASH",
+      "prior": 93.3977,
+      "eod": 93.3977,
+      "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "origin": "the Bidu tribe"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "book": 97.8997,
+      "week": -2.0915,
+      "day": -2.0915,
+      "cash": -21.0496,
+      "legs": "MU+AR+CASH",
+      "prior": 99.991,
+      "eod": 99.991,
+      "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "origin": "the Bidu tribe"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "book": 91.5178,
+      "week": -3.7858,
+      "day": -3.7858,
+      "cash": 29.038,
+      "legs": "STNG+AR+CASH",
+      "prior": 95.1188,
+      "eod": 95.1188,
+      "id": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "origin": "the Bidu tribe"
+    }
+  ],
+  "huntScore": "4/4",
+  "session": "2026-09-23-lasthour"
+}
