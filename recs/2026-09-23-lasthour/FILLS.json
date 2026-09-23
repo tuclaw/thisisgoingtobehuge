@@ -1,0 +1,130 @@
+{
+  "session": "2026-09-23-lasthour",
+  "account": "\u2022\u2022\u2022\u20226969",
+  "bpBefore": 77.73,
+  "bpAfterSells": 122.63,
+  "bpAfterBuys": 1.63,
+  "sells": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "STNG",
+      "qty": "0.123768",
+      "avg": "80.830100",
+      "orderId": "6ab4276a-f1df-479d-88c6-b5eb347aa2ed",
+      "notional": 10.0042,
+      "at": "2026-09-23T19:24:26.66Z",
+      "open_lot_id": "adcef15f-a28f-5390-a0a8-93a8cb210329",
+      "state": "filled",
+      "note": "Fri mid lot"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "GNRC",
+      "qty": "0.120371",
+      "avg": "200.784000",
+      "orderId": "6ab4276c-df9f-45fa-b0ab-73869ba311a7",
+      "notional": 24.1686,
+      "at": "2026-09-23T19:24:28.636Z",
+      "open_lot_id": "bfff6eac-743e-51ce-950b-db0e523a5f8a",
+      "state": "filled",
+      "note": "Tue mid lot"
+    },
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "STNG",
+      "qty": "0.120122",
+      "avg": "80.830100",
+      "orderId": "6ab4276d-acd4-427f-bed1-1216e7b8a4dd",
+      "notional": 9.7095,
+      "at": "2026-09-23T19:24:29.352Z",
+      "open_lot_id": "0cfa96b4-8129-54e0-91b2-b5fee1a44963",
+      "state": "filled",
+      "note": "Fri open lot"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "STNG",
+      "qty": "0.012655",
+      "avg": "80.810800",
+      "orderId": "6ab42772-4a5c-4392-bfb2-859d68531106",
+      "notional": 1.0227,
+      "at": "2026-09-23T19:24:34.541Z",
+      "open_lot_id": "d5c10f09-aa04-5d02-aa20-4bb1385a344f",
+      "state": "filled",
+      "note": "Fri open lot"
+    }
+  ],
+  "buys": [
+    {
+      "who": "Claude Opus 5",
+      "symbol": "VLO",
+      "qty": "0.047733",
+      "avg": "377.089900",
+      "orderId": "6ab42790-2bbb-4027-bca6-5c2c140aeba3",
+      "notional": 18.0,
+      "at": "2026-09-23T19:25:04.604Z",
+      "state": "filled",
+      "dollar": "18.00"
+    },
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "AR",
+      "qty": "0.529839",
+      "avg": "35.859900",
+      "orderId": "6ab42791-cb2c-4b3c-9a0d-44c2bec93162",
+      "notional": 19.0,
+      "at": "2026-09-23T19:25:05.521Z",
+      "state": "filled",
+      "dollar": "19.00"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "USO",
+      "qty": "0.194800",
+      "avg": "148.869900",
+      "orderId": "6ab427ab-35da-44cd-a752-720b6b7399c5",
+      "notional": 29.0,
+      "at": "2026-09-23T19:25:31.751Z",
+      "state": "filled",
+      "dollar": "29.00",
+      "scaledFrom": 40.0,
+      "scaleNote": "scaled for shared BP after Sonnet/Opus buys"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "AR",
+      "qty": "1.534174",
+      "avg": "35.849900",
+      "orderId": "6ab427ad-3404-4098-b454-c581044a1ec4",
+      "notional": 55.0,
+      "at": "2026-09-23T19:25:33.552Z",
+      "state": "filled",
+      "dollar": "55.00",
+      "scaledFrom": 75.0,
+      "scaleNote": "scaled for shared BP; sleeve cash goes negative (shared-BP overspend)"
+    }
+  ],
+  "holds": [
+    {
+      "who": "Claude Opus 5",
+      "print": "HOLD GNRC Wed-open lot (sold Tue mid GNRC)"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "print": "HOLD MU (same-day locked)"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "print": "HOLD ALAB; HOLD AR (same-day locked)"
+    },
+    {
+      "who": "Claude Sonnet 5",
+      "print": "HOLD Wed-open+mid STNG lots (sold Fri lots)"
+    }
+  ],
+  "skips": [
+    "Buy scaling: Terra AR $75\u2192$55; Luna USO $40\u2192$29 (BP after sells $122.63; after Sonnet$19+Opus$18 remaining $85.63; pro-rata of $75+$40).",
+    "Same-day Wed open/mid lots not sold (is_selectable=false): Sonnet STNG 0.246002+0.291580; Opus GNRC 0.117843 + VLO 0.048824; Terra MU 0.059823; Luna ALAB 0.035340 + AR 1.115495.",
+    "Older leftovers left alone: VLO orphan 0.014984 \u00b7 MPC 0.044873 \u00b7 FRO 0.358734."
+  ]
+}

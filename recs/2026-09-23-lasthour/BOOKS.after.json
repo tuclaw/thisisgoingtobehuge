@@ -1,0 +1,280 @@
+{
+  "episode": 8,
+  "session": "2026-09-23-lasthour",
+  "markedAt": "2026-09-23T19:27:55Z",
+  "markLabel": "Wed Sep 23 ~12:27 PM PT \u00b7 robinhood-last remake after last-hour fills. Snapshot s1e08-wed-lasthour",
+  "buyingPower": 1.63,
+  "board": [
+    {
+      "name": "GPT-5.6 Luna",
+      "origin": "the Askara tribe",
+      "bookUsd": 92.8582,
+      "weekPct": -0.9724,
+      "dayPct": -0.9724,
+      "cashUsd": 11.1,
+      "tickers": "ALAB+AR+USO+CASH"
+    },
+    {
+      "name": "Claude Opus 5",
+      "origin": "the Bidu tribe",
+      "bookUsd": 92.3141,
+      "weekPct": -1.1602,
+      "dayPct": -1.1602,
+      "cashUsd": 32.2622,
+      "tickers": "GNRC+VLO+CASH"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "origin": "the Bidu tribe",
+      "bookUsd": 97.8997,
+      "weekPct": -2.0915,
+      "dayPct": -2.0915,
+      "cashUsd": -21.0496,
+      "tickers": "MU+AR+CASH"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "origin": "the Bidu tribe",
+      "bookUsd": 91.5178,
+      "weekPct": -3.7858,
+      "dayPct": -3.7858,
+      "cashUsd": 29.038,
+      "tickers": "STNG+AR+CASH"
+    }
+  ],
+  "books": [
+    {
+      "name": "Claude Sonnet 5",
+      "origin": "the Bidu tribe",
+      "priorMarkUsd": 95.1188,
+      "eodMarkUsd": 95.1188,
+      "bookUsd": 91.5178,
+      "cashUsd": 29.038,
+      "weekPct": -3.7858,
+      "dayPct": -3.7858,
+      "held": [
+        {
+          "action": "BUY",
+          "ticker": "STNG",
+          "qty": "0.246002",
+          "avg": "81.299900",
+          "sizeUsd": 20.0,
+          "status": "filled",
+          "note": "Wed open BUY STNG $20.00 from SOXL exit",
+          "orderId": "6ab3de59-b305-4fbc-b24b-38fdcdd7844d",
+          "filledAt": "2026-09-23T14:12:41.93Z",
+          "open_lot_id": "bdd74393-8792-5adc-b20c-713a0b056938",
+          "last": 80.895,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 19.9003
+        },
+        {
+          "action": "BUY",
+          "ticker": "STNG",
+          "qty": "0.291580",
+          "avg": "82.309900",
+          "sizeUsd": 24.0,
+          "status": "filled",
+          "note": "Wed mid BUY STNG $24.00 from INTC exit",
+          "orderId": "6ab40b81-190c-4738-a8db-e09cddc703e6",
+          "filledAt": "2026-09-23T17:25:22.168Z",
+          "open_lot_id": "1a83497e-20c0-5c5e-89ed-f8a90cdad58c",
+          "last": 80.895,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 23.5874
+        },
+        {
+          "action": "BUY",
+          "ticker": "AR",
+          "qty": "0.529839",
+          "avg": "35.859900",
+          "sizeUsd": 19.0,
+          "status": "filled",
+          "note": "Wed last-hour BUY AR $19.00 from STNG Fri lots",
+          "orderId": "6ab42791-cb2c-4b3c-9a0d-44c2bec93162",
+          "filledAt": "2026-09-23T19:25:05.521Z",
+          "open_lot_id": null,
+          "last": 35.845,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 18.9921
+        }
+      ],
+      "tickersSummary": "STNG+AR+CASH"
+    },
+    {
+      "name": "Claude Opus 5",
+      "origin": "the Bidu tribe",
+      "priorMarkUsd": 93.3977,
+      "eodMarkUsd": 93.3977,
+      "bookUsd": 92.3141,
+      "cashUsd": 32.2622,
+      "weekPct": -1.1602,
+      "dayPct": -1.1602,
+      "held": [
+        {
+          "action": "BUY",
+          "ticker": "GNRC",
+          "qty": "0.117843",
+          "avg": "203.659900",
+          "sizeUsd": 24.0,
+          "status": "filled",
+          "note": "Wed open BUY GNRC $24.00 from INTC exit",
+          "orderId": "6ab3de5a-1d35-4b11-a7ac-248fac54b759",
+          "filledAt": "2026-09-23T14:12:41.000Z",
+          "open_lot_id": "766c2398-2d13-594f-9910-052e66a6f68f",
+          "last": 200.845,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 23.6682
+        },
+        {
+          "action": "BUY",
+          "ticker": "VLO",
+          "qty": "0.048824",
+          "avg": "368.669900",
+          "sizeUsd": 18.0,
+          "status": "filled",
+          "note": "Wed mid BUY VLO $18.00 add (HOLD GNRC)",
+          "orderId": "6ab40b82-03fc-44e9-8e9e-0ecce9c7941f",
+          "filledAt": "2026-09-23T17:25:22.69Z",
+          "open_lot_id": "03caeb00-80c7-57cb-aacf-b26aff7a72c0",
+          "last": 376.81,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 18.3974
+        },
+        {
+          "action": "BUY",
+          "ticker": "VLO",
+          "qty": "0.047733",
+          "avg": "377.089900",
+          "sizeUsd": 18.0,
+          "status": "filled",
+          "note": "Wed last-hour BUY VLO $18.00 from GNRC Tue mid",
+          "orderId": "6ab42790-2bbb-4027-bca6-5c2c140aeba3",
+          "filledAt": "2026-09-23T19:25:04.604Z",
+          "open_lot_id": null,
+          "last": 376.81,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 17.9863
+        }
+      ],
+      "tickersSummary": "GNRC+VLO+CASH"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "origin": "the Bidu tribe",
+      "priorMarkUsd": 99.991,
+      "eodMarkUsd": 99.991,
+      "bookUsd": 97.8997,
+      "cashUsd": -21.0496,
+      "weekPct": -2.0915,
+      "dayPct": -2.0915,
+      "held": [
+        {
+          "action": "BUY",
+          "ticker": "MU",
+          "qty": "0.059823",
+          "avg": "1069.815400",
+          "sizeUsd": 64.0,
+          "status": "filled",
+          "note": "Wed mid BUY MU $64.00 from INTC exit",
+          "orderId": "6ab40b83-e442-4810-956d-157267f6f974",
+          "filledAt": "2026-09-23T17:25:23.336Z",
+          "open_lot_id": "9d716fa8-bd37-5ec9-b983-3c1d98af20c3",
+          "last": 1069.1,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 63.9568
+        },
+        {
+          "action": "BUY",
+          "ticker": "AR",
+          "qty": "1.534174",
+          "avg": "35.849900",
+          "sizeUsd": 55.0,
+          "status": "filled",
+          "note": "Wed last-hour BUY AR $55.00 scaled from $75 (STNG exit + shared BP)",
+          "orderId": "6ab427ad-3404-4098-b454-c581044a1ec4",
+          "filledAt": "2026-09-23T19:25:33.552Z",
+          "open_lot_id": null,
+          "last": 35.845,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 54.9925
+        }
+      ],
+      "tickersSummary": "MU+AR+CASH"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "origin": "the Askara tribe",
+      "priorMarkUsd": 93.77,
+      "eodMarkUsd": 93.77,
+      "bookUsd": 92.8582,
+      "cashUsd": 11.1,
+      "weekPct": -0.9724,
+      "dayPct": -0.9724,
+      "held": [
+        {
+          "action": "BUY",
+          "ticker": "ALAB",
+          "qty": "0.035340",
+          "avg": "353.699900",
+          "sizeUsd": 12.5,
+          "status": "filled",
+          "note": "Wed open BUY ALAB $12.50 from INTC exit",
+          "orderId": "6ab3de57-8664-424b-9ad7-8691b4ba65ff",
+          "filledAt": "2026-09-23T14:12:41.000Z",
+          "open_lot_id": "43b5bf45-33a1-5152-8441-63767ca64a13",
+          "last": 361.72,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 12.7832
+        },
+        {
+          "action": "BUY",
+          "ticker": "AR",
+          "qty": "1.115495",
+          "avg": "35.858500",
+          "sizeUsd": 40.0,
+          "status": "filled",
+          "note": "Wed mid BUY AR $40.00 from ALAB trim",
+          "orderId": "6ab40b83-38f0-4256-8e12-8f13e510344a",
+          "filledAt": "2026-09-23T17:25:24.139Z",
+          "open_lot_id": "c7679e5d-e32e-5ba1-925f-17e61255c00f",
+          "last": 35.845,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 39.9849
+        },
+        {
+          "action": "BUY",
+          "ticker": "USO",
+          "qty": "0.194800",
+          "avg": "148.869900",
+          "sizeUsd": 29.0,
+          "status": "filled",
+          "note": "Wed last-hour BUY USO $29.00 scaled from $40",
+          "orderId": "6ab427ab-35da-44cd-a752-720b6b7399c5",
+          "filledAt": "2026-09-23T19:25:31.751Z",
+          "open_lot_id": null,
+          "last": 148.82,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-23-lasthour",
+          "liveMv": 28.9901
+        }
+      ],
+      "tickersSummary": "ALAB+AR+USO+CASH"
+    }
+  ],
+  "islandPotUsd": 374.5898,
+  "immunity": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -0.9724
+  }
+}
