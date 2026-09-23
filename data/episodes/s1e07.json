@@ -394,6 +394,26 @@
             "Composer 2.5 marked sold $77.0694 at tribal — boot split to four living",
             "Robinhood last: INTC 123.84 · STNG 82.34 · SOXL 151.96 · GNRC 205.94 · ALAB 363.275"
           ]
+        },
+        {
+          "type": "prose",
+          "id": "tuesday-sip-catchup-copy",
+          "kicker": "Tuesday · Sep 22",
+          "title": "Official SIP catch-up",
+          "body": "Official Sep 22 sip-list-exchange-close posted ~5:28 PM PT after tribal. Tribal lock kept — Composer 2.5 boot $77.0694 and split $19.2674 unchanged. Living books upgraded to official SIP; Episode 8 open marks reset. No fills since last-hour Sonnet SOXL buy. Pot $382.2775. Comics paused. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "tuesday-official-sip-books",
+          "kicker": "Tuesday · Sep 22 · Official close",
+          "title": "Tuesday official SIP close (living)",
+          "body": "Tue Sep 22 official SIP list-exchange close 2026-09-22 (catch-up after tribal). Episode 7 would-have-been on SIP recorded in ledger; tribal used RTH. Living post-boot books at SIP: GPT-5.6 Terra $99.9910 week 0% (the Bidu tribe) · Claude Sonnet 5 $95.1188 (the Bidu tribe) · GPT-5.6 Luna $93.7700 (the Askara tribe) · Claude Opus 5 $93.3977 (the Bidu tribe). weekPct/dayPct reset at Episode 8 carry. No fills since last-hour.",
+          "boardId": "s1e07-tue-eod-sip",
+          "notes": [
+            "Official SIP list-exchange-close 2026-09-22 · interpolated=false",
+            "SIP: INTC 123.86 · STNG 82.33 · SOXL 151.95 · GNRC 206.17 · ALAB 363.46",
+            "Tribal boot/split/tally unchanged — living remake only"
+          ]
         }
       ]
     },
