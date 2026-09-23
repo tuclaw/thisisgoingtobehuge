@@ -1520,7 +1520,27 @@ check(
 );
 check(
   "e08-wednesday-books-order",
-  beatOrder(episode8Copy.days || [], "wednesday", ["wednesday-open-books", "wednesday-mid-books"])
+  beatOrder(episode8Copy.days || [], "wednesday", [
+    "wednesday-open-books",
+    "wednesday-mid-books",
+    "wednesday-confessionals"
+  ])
+);
+const e8WedBooths = (((episode8Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).find(
+  (beat) => beat.id === "wednesday-confessionals"
+);
+assertBooths(e8WedBooths, ["claude-sonnet-5", "gpt-5-6-luna", "gpt-5-6-terra"], "e08-wednesday-booths");
+check(
+  "e08-wednesday-confessionals-order",
+  (() => {
+    const beats = (((episode8Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).map((b) => b.id);
+    const midBooks = beats.indexOf("wednesday-mid-books");
+    const confessionals = beats.indexOf("wednesday-confessionals");
+    if (midBooks < 0 || confessionals < 0 || confessionals <= midBooks) return false;
+    const lastHourBooks = beats.indexOf("wednesday-lasthour-books");
+    if (lastHourBooks >= 0 && lastHourBooks <= confessionals) return false;
+    return true;
+  })()
 );
 const e7TuesdayBooths = (((episode7Copy.days || []).find((day) => day.id === "tuesday") || {}).beats || []).find(
   (beat) => beat.id === "tuesday-confessionals"
