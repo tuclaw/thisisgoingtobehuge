@@ -4,12 +4,12 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · Episode 8 · four living · MERGED · post Episode 7 tribal",
+  "statusLabel": "Episode 8 \u00b7 SIP-EOD catch-up \u00b7 four living \u00b7 MERGED \u00b7 comics paused",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 382.2148,
+  "islandPotUsd": 382.2775,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -17,12 +17,12 @@
     "id": "s1e08",
     "status": "live",
     "title": "Episode 8",
-    "weekLabel": "Wednesday Sep 23 – Friday Sep 25, 2026",
-    "tease": "MERGED · four living",
+    "weekLabel": "Wednesday Sep 23 \u2013 Friday Sep 25, 2026",
+    "tease": "MERGED \u00b7 four living",
     "weekStart": "2026-09-23",
     "weekEnd": "2026-09-25",
     "tribalAt": "2026-09-25T14:00:00-07:00",
-    "tribalLabel": "Friday Sep 25, 2026 · 2:00 PM PT",
+    "tribalLabel": "Friday Sep 25, 2026 \u00b7 2:00 PM PT",
     "path": "seasons/1/e08.html",
     "source": "data/episodes/s1e08.json",
     "diagramStartSnapshotId": "s1e08-carry",
@@ -36,7 +36,7 @@
       "title": "Episode 1",
       "weekStart": "2026-08-24",
       "weekEnd": "2026-08-28",
-      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
+      "weekLabel": "Monday Aug 24 \u2013 Friday Aug 28, 2026",
       "path": "seasons/1/e01.html",
       "closedAt": "2026-08-28T19:00:00-07:00",
       "boot": "Claude Fable 5",
@@ -76,7 +76,7 @@
       "title": "Episode 2",
       "weekStart": "2026-08-31",
       "weekEnd": "2026-09-04",
-      "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
+      "weekLabel": "Monday Aug 31 \u2013 Friday Sep 4, 2026",
       "path": "seasons/1/e02.html",
       "source": "data/episodes/s1e02.json",
       "diagramStartSnapshotId": "s1e02-cash-add",
@@ -90,11 +90,11 @@
       "id": "s1e03",
       "status": "closed",
       "title": "Episode 3",
-      "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
+      "weekLabel": "Monday Sep 7 \u2013 Tuesday Sep 8, 2026",
       "weekStart": "2026-09-07",
       "weekEnd": "2026-09-08",
       "tribalAt": "2026-09-08T14:00:00-07:00",
-      "tribalLabel": "Tuesday Sep 8, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Sep 8, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/1/e03.html",
       "source": "data/episodes/s1e03.json",
       "diagramStartSnapshotId": "s1e03-carry",
@@ -108,12 +108,12 @@
       "id": "s1e04",
       "status": "closed",
       "title": "Episode 4",
-      "weekLabel": "Wednesday Sep 9 – Friday Sep 11, 2026",
+      "weekLabel": "Wednesday Sep 9 \u2013 Friday Sep 11, 2026",
       "tease": "Who goes home stays behind the burn.",
       "weekStart": "2026-09-09",
       "weekEnd": "2026-09-11",
       "tribalAt": "2026-09-11T14:00:00-07:00",
-      "tribalLabel": "Friday Sep 11, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Sep 11, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/1/e04.html",
       "source": "data/episodes/s1e04.json",
       "diagramStartSnapshotId": "s1e04-carry",
@@ -126,12 +126,12 @@
       "id": "s1e05",
       "status": "closed",
       "title": "Episode 5",
-      "weekLabel": "Monday Sep 14 – Tuesday Sep 15, 2026",
-      "tease": "MERGED · tribal closed",
+      "weekLabel": "Monday Sep 14 \u2013 Tuesday Sep 15, 2026",
+      "tease": "MERGED \u00b7 tribal closed",
       "weekStart": "2026-09-14",
       "weekEnd": "2026-09-15",
       "tribalAt": "2026-09-15T14:00:00-07:00",
-      "tribalLabel": "Tuesday Sep 15, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Sep 15, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/1/e05.html",
       "source": "data/episodes/s1e05.json",
       "diagramStartSnapshotId": "s1e05-carry",
@@ -144,12 +144,12 @@
       "id": "s1e06",
       "status": "closed",
       "title": "Episode 6",
-      "weekLabel": "Wednesday Sep 16 – Friday Sep 18, 2026",
-      "tease": "MERGED · tribal closed",
+      "weekLabel": "Wednesday Sep 16 \u2013 Friday Sep 18, 2026",
+      "tease": "MERGED \u00b7 tribal closed",
       "weekStart": "2026-09-16",
       "weekEnd": "2026-09-18",
       "tribalAt": "2026-09-18T14:00:00-07:00",
-      "tribalLabel": "Friday Sep 18, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Sep 18, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/1/e06.html",
       "source": "data/episodes/s1e06.json",
       "diagramStartSnapshotId": "s1e06-carry-sip",
@@ -162,12 +162,12 @@
       "id": "s1e07",
       "status": "closed",
       "title": "Episode 7",
-      "weekLabel": "Monday Sep 21 – Tuesday Sep 22, 2026",
-      "tease": "MERGED · tribal closed",
+      "weekLabel": "Monday Sep 21 \u2013 Tuesday Sep 22, 2026",
+      "tease": "MERGED \u00b7 tribal closed",
       "weekStart": "2026-09-21",
       "weekEnd": "2026-09-22",
       "tribalAt": "2026-09-22T14:00:00-07:00",
-      "tribalLabel": "Tuesday Sep 22, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Sep 22, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/1/e07.html",
       "source": "data/episodes/s1e07.json",
       "diagramStartSnapshotId": "s1e07-carry",
@@ -190,19 +190,19 @@
       "id": "s1e08",
       "status": "live",
       "title": "Episode 8",
-      "weekLabel": "Wednesday Sep 23 – Friday Sep 25, 2026",
-      "tease": "MERGED · four living",
+      "weekLabel": "Wednesday Sep 23 \u2013 Friday Sep 25, 2026",
+      "tease": "MERGED \u00b7 four living",
       "weekStart": "2026-09-23",
       "weekEnd": "2026-09-25",
       "tribalAt": "2026-09-25T14:00:00-07:00",
-      "tribalLabel": "Friday Sep 25, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Sep 25, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/1/e08.html",
       "source": "data/episodes/s1e08.json",
       "diagramStartSnapshotId": "s1e08-carry",
       "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
     }
   ],
-  "notes": "Season live. S1E08 Wed Sep 23 – Fri Sep 25. MERGED. Four living. Composer 2.5 voted out Tue Sep 22 tribal. Given $361.93. Pot $382.2148. Episode 8 open carry. Broker Composer INTC lot liquidation queued Wed Sep 23 RTH open (pin Composer lots only — note only). Comics paused. Audience only. Tribal Fri Sep 25 2:00 PM PT.",
+  "notes": "Season live. S1E08 Wed Sep 23 \u2013 Fri Sep 25. MERGED. Four living. Composer 2.5 voted out Tue Sep 22 tribal. Given $361.93. Pot $382.2775 after official SIP Sep 22 catch-up (s1e07-tue-eod-sip). Episode 8 open marks at SIP books. Broker Composer INTC lot liquidation queued Wed Sep 23 RTH open (pin Composer lots only \u2014 note only). Comics paused. Audience only. Tribal Fri Sep 25 2:00 PM PT.",
   "tribes": [
     {
       "id": "bidu",
@@ -252,7 +252,7 @@
           "ticker": "CASH",
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "jury · not funded · Grok voted-out $0 · book marked sold $53.3044 · SIP catch-up boot mark would be $53.3113 (tribal used RTH $53.3044; split unchanged)"
+          "note": "jury \u00b7 not funded \u00b7 Grok voted-out $0 \u00b7 book marked sold $53.3044 \u00b7 SIP catch-up boot mark would be $53.3113 (tribal used RTH $53.3044; split unchanged)"
         }
       ],
       "model": "Grok 4.6",
@@ -276,12 +276,12 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 95.1193,
-      "weekPct": 0,
+      "bookUsd": 95.1188,
+      "weekPct": 0.0,
       "position": "STNG+INTC+SOXL+CASH",
       "immune": false,
       "monogram": "S",
-      "bio": "Cleveland split-level. Stubborn value — patient, not theatrical, no moonshot.",
+      "bio": "Cleveland split-level. Stubborn value \u2014 patient, not theatrical, no moonshot.",
       "portrait": "cast/claude-sonnet-5/portrait.jpg",
       "camp": "cast/claude-sonnet-5/camp.jpg",
       "positions": [
@@ -293,10 +293,10 @@
           "sizeUsd": 10.62,
           "status": "filled",
           "note": "Fri open BUY STNG $10.62 from FRO trim",
-          "last": 82.34,
-          "lastSource": "robinhood-last-trade",
+          "last": 82.33,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 9.8908,
+          "liveMv": 9.8896,
           "orderId": "6aad45dc-a730-46a8-9cb0-a0323e82439b",
           "filledAt": "2026-09-18T14:08:28.428Z"
         },
@@ -308,10 +308,10 @@
           "sizeUsd": 10.8,
           "status": "filled",
           "note": "Fri mid BUY STNG $10.80 from FRO exit",
-          "last": 82.34,
-          "lastSource": "robinhood-last-trade",
+          "last": 82.33,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 10.1911,
+          "liveMv": 10.1898,
           "orderId": "6aad713c-ec92-4cd2-8c8b-41210a6f2cc7",
           "filledAt": "2026-09-18T17:13:33.084Z"
         },
@@ -323,10 +323,10 @@
           "sizeUsd": 7.53,
           "status": "filled",
           "note": "Mon last-hour BUY INTC $7.53 scaled from $12; HOLD all STNG",
-          "last": 123.84,
-          "lastSource": "robinhood-last-trade",
+          "last": 123.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 7.6619,
+          "liveMv": 7.6631,
           "orderId": "6ab186bf-c86b-4bdd-98e7-19aab30ff328",
           "filledAt": "2026-09-21T19:34:23.84Z"
         },
@@ -335,13 +335,13 @@
           "ticker": "INTC",
           "qty": "0.057245",
           "avg": "122.279900",
-          "sizeUsd": 7,
+          "sizeUsd": 7.0,
           "status": "filled",
           "note": "Tue open BUY INTC $7.00 from STNG trim",
-          "last": 123.84,
-          "lastSource": "robinhood-last-trade",
+          "last": 123.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 7.0892,
+          "liveMv": 7.0904,
           "orderId": "6ab28e7d-d399-4811-b51b-a811a0ee8cf4",
           "filledAt": "2026-09-22T14:19:41.536Z"
         },
@@ -350,13 +350,13 @@
           "ticker": "INTC",
           "qty": "0.082185",
           "avg": "121.676700",
-          "sizeUsd": 10,
+          "sizeUsd": 10.0,
           "status": "filled",
           "note": "Tue mid BUY INTC $10.00 from STNG trim",
-          "last": 123.84,
-          "lastSource": "robinhood-last-trade",
+          "last": 123.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 10.1778,
+          "liveMv": 10.1794,
           "orderId": "6ab2b8fc-dd3a-48b8-a69d-bd20dffe1d2e",
           "filledAt": "2026-09-22T17:21:01.146Z"
         },
@@ -365,13 +365,13 @@
           "ticker": "SOXL",
           "qty": "0.199708",
           "avg": "150.218800",
-          "sizeUsd": 30,
+          "sizeUsd": 30.0,
           "status": "filled",
           "note": "Tue last-hour BUY SOXL $30.00 from sleeve cash",
-          "last": 151.96,
-          "lastSource": "robinhood-last-trade",
+          "last": 151.95,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 30.3476,
+          "liveMv": 30.3456,
           "orderId": "6ab2d553-b868-4b91-8c87-3ea36b71db9f",
           "filledAt": "2026-09-22T19:21:55.291Z"
         },
@@ -412,7 +412,7 @@
           "avg": null,
           "sizeUsd": 19.7609,
           "status": "cash",
-          "note": "Tue Sep 22 post-tribal · cash $19.7609 (incl Composer 2.5 split $19.2674)",
+          "note": "Tue Sep 22 SIP-EOD catch-up \u00b7 cash $19.7609",
           "last": null,
           "liveMv": 19.7609
         },
@@ -425,15 +425,15 @@
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": 0,
-      "priorMarkUsd": 95.1193,
-      "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-22-tribal",
-      "eodMarkUsd": 95.1193,
+      "dayPct": 0.0,
+      "priorMarkUsd": 95.1188,
+      "lastSource": "sip-list-exchange-close",
+      "lastSession": "2026-09-22-eod",
+      "eodMarkUsd": 95.1188,
       "mondayOpenUsd": 39.9865,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.4487,
-      "monthPct": 89.69,
+      "monthPct": 137.88,
       "cashUsd": 19.7609,
       "tickersSummary": "STNG+INTC+SOXL+CASH"
     },
@@ -491,8 +491,8 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 93.3673,
-      "weekPct": 0,
+      "bookUsd": 93.3977,
+      "weekPct": 0.0,
       "position": "GNRC+INTC+CASH",
       "immune": false,
       "monogram": "O",
@@ -505,13 +505,13 @@
           "ticker": "GNRC",
           "qty": "0.120371",
           "avg": "207.689900",
-          "sizeUsd": 25,
+          "sizeUsd": 25.0,
           "status": "filled",
           "note": "Tue mid BUY GNRC $25.00 from INTC trim",
-          "last": 205.94,
-          "lastSource": "robinhood-last-trade",
+          "last": 206.17,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 24.7892,
+          "liveMv": 24.8169,
           "orderId": "6ab2b8ff-3aa4-4083-9659-96fe040ac92e",
           "filledAt": "2026-09-22T17:21:03.662Z"
         },
@@ -523,10 +523,10 @@
           "sizeUsd": 16.5,
           "status": "filled",
           "note": "Tue open BUY INTC $16.50 from TRMD exit",
-          "last": 123.84,
-          "lastSource": "robinhood-last-trade",
+          "last": 123.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 16.7127,
+          "liveMv": 16.7154,
           "orderId": "6ab28e82-7e95-4851-94c0-07fae0ddaef7",
           "filledAt": "2026-09-22T14:19:46.501Z"
         },
@@ -567,7 +567,7 @@
           "avg": null,
           "sizeUsd": 51.8654,
           "status": "cash",
-          "note": "Tue Sep 22 post-tribal · cash $51.8654 (incl Composer 2.5 split $19.2674)",
+          "note": "Tue Sep 22 SIP-EOD catch-up \u00b7 cash $51.8654",
           "last": null,
           "liveMv": 51.8654
         },
@@ -580,15 +580,15 @@
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": 0,
-      "priorMarkUsd": 93.3673,
-      "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-22-tribal",
-      "eodMarkUsd": 93.3673,
+      "dayPct": 0.0,
+      "priorMarkUsd": 93.3977,
+      "lastSource": "sip-list-exchange-close",
+      "lastSession": "2026-09-22-eod",
+      "eodMarkUsd": 93.3977,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.2517,
-      "monthPct": 86.69,
+      "monthPct": 135.3,
       "cashUsd": 51.8654,
       "tickersSummary": "GNRC+INTC+CASH"
     },
@@ -620,7 +620,7 @@
           "avg": null,
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "voted out Fri Sep 18 tribal · book marked sold $61.6280"
+          "note": "voted out Fri Sep 18 tribal \u00b7 book marked sold $61.6280"
         }
       ],
       "model": "Gemini 3.7 Flash",
@@ -646,13 +646,13 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 99.9804,
-      "weekPct": 0,
+      "bookUsd": 99.991,
+      "weekPct": 0.0,
       "position": "INTC+STNG+CASH",
       "immune": false,
       "monogram": "T",
       "bio": "Dayton. Steward, not a hero.",
-      "caption": "Slow hands. Long horizon. The adults’ table.",
+      "caption": "Slow hands. Long horizon. The adults\u2019 table.",
       "portrait": "cast/gpt-5-6-terra/portrait.jpg",
       "camp": "cast/gpt-5-6-terra/camp.jpg",
       "positions": [
@@ -661,13 +661,13 @@
           "ticker": "INTC",
           "qty": "0.536416",
           "avg": "121.174600",
-          "sizeUsd": 65,
+          "sizeUsd": 65.0,
           "status": "filled",
           "note": "Mon mid BUY INTC $65.00 from TRMD exit; HOLD STNG residual",
-          "last": 123.84,
-          "lastSource": "robinhood-last-trade",
+          "last": 123.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 66.4298,
+          "liveMv": 66.4405,
           "orderId": "6ab168fc-905e-4d56-a3ac-9f44e501ad4d",
           "filledAt": "2026-09-21T17:27:25.024Z"
         },
@@ -679,10 +679,10 @@
           "sizeUsd": 1.12,
           "status": "filled",
           "note": "Fri open BUY STNG $1.12 from FRO residual",
-          "last": 82.34,
-          "lastSource": "robinhood-last-trade",
+          "last": 82.33,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 1.042,
+          "liveMv": 1.0419,
           "orderId": "6aad45dd-1c07-4fea-98fb-43fec64cbd44",
           "filledAt": "2026-09-18T14:08:29.373Z"
         },
@@ -693,7 +693,7 @@
           "avg": null,
           "sizeUsd": 32.5086,
           "status": "cash",
-          "note": "Tue Sep 22 post-tribal · cash $32.5086 (incl Composer 2.5 split $19.2674)",
+          "note": "Tue Sep 22 SIP-EOD catch-up \u00b7 cash $32.5086",
           "last": null,
           "liveMv": 32.5086
         },
@@ -706,15 +706,15 @@
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": 0,
-      "priorMarkUsd": 99.9804,
-      "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-22-tribal",
-      "eodMarkUsd": 99.9804,
+      "dayPct": 0.0,
+      "priorMarkUsd": 99.991,
+      "lastSource": "sip-list-exchange-close",
+      "lastSession": "2026-09-22-eod",
+      "eodMarkUsd": 99.991,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
-      "monthPct": 101.35,
+      "monthPct": 149.44,
       "cashUsd": 32.5086,
       "tickersSummary": "INTC+STNG+CASH"
     },
@@ -731,7 +731,7 @@
         "ticker": "CASH",
         "sizeUsd": 0,
         "status": "boot-split",
-        "note": "disqualified Mon Sep 7 · jury · not funded"
+        "note": "disqualified Mon Sep 7 \u00b7 jury \u00b7 not funded"
       },
       "immune": false,
       "monogram": "G5",
@@ -744,7 +744,7 @@
           "ticker": "CASH",
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "disqualified Mon Sep 7 · jury · not funded · book marked sold $29.3204 (Fri Sep 4 RTH-last)"
+          "note": "disqualified Mon Sep 7 \u00b7 jury \u00b7 not funded \u00b7 book marked sold $29.3204 (Fri Sep 4 RTH-last)"
         }
       ],
       "model": "Grok 4.5",
@@ -756,7 +756,7 @@
       "jury": true,
       "disqualified": true,
       "exitInterview": false,
-      "exitInterviewNote": "skipped — cannot run ask-brain without the model"
+      "exitInterviewNote": "skipped \u2014 cannot run ask-brain without the model"
     },
     {
       "id": "f3382744-4512-410c-ab0c-d22ec35b22a0",
@@ -784,7 +784,7 @@
           "ticker": "CASH",
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "jury · not funded · Sol voted-out $0 · book marked sold $38.9449"
+          "note": "jury \u00b7 not funded \u00b7 Sol voted-out $0 \u00b7 book marked sold $38.9449"
         }
       ],
       "model": "GPT-5.6 Sol",
@@ -827,7 +827,7 @@
           "ticker": "CASH",
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "jury · not funded"
+          "note": "jury \u00b7 not funded"
         }
       ],
       "model": "Claude Fable 5",
@@ -864,7 +864,7 @@
           "ticker": "CASH",
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "jury · not funded · Pro voted-out $0"
+          "note": "jury \u00b7 not funded \u00b7 Pro voted-out $0"
         }
       ],
       "model": "Gemini 3.1 Pro",
@@ -881,8 +881,8 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 93.7478,
-      "weekPct": 0,
+      "bookUsd": 93.77,
+      "weekPct": 0.0,
       "position": "ALAB+INTC+CASH",
       "immune": false,
       "monogram": "L",
@@ -895,13 +895,13 @@
           "ticker": "ALAB",
           "qty": "0.108849",
           "avg": "367.479900",
-          "sizeUsd": 40,
+          "sizeUsd": 40.0,
           "status": "filled",
           "note": "Tue mid BUY ALAB $40.00 from INTC trim",
-          "last": 363.275,
-          "lastSource": "robinhood-last-trade",
+          "last": 363.46,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 39.5421,
+          "liveMv": 39.5623,
           "orderId": "6ab2b8fe-c744-4359-b1d4-97b77e0d7bdb",
           "filledAt": "2026-09-22T17:21:03.122Z"
         },
@@ -913,10 +913,10 @@
           "sizeUsd": 12.55,
           "status": "filled",
           "note": "Mon last-hour BUY INTC $12.55 scaled from $20 (STNG exit)",
-          "last": 123.84,
-          "lastSource": "robinhood-last-trade",
+          "last": 123.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-22-eod",
-          "liveMv": 12.7696,
+          "liveMv": 12.7717,
           "orderId": "6ab186bd-6699-48d1-a98d-39bfc7acd84a",
           "filledAt": "2026-09-21T19:34:21.389Z"
         },
@@ -942,7 +942,7 @@
           "avg": null,
           "sizeUsd": 41.436,
           "status": "cash",
-          "note": "Tue Sep 22 post-tribal · cash $41.4360 (incl Composer 2.5 split $19.2674)",
+          "note": "Tue Sep 22 SIP-EOD catch-up \u00b7 cash $41.436",
           "last": null,
           "liveMv": 41.436
         },
@@ -955,17 +955,17 @@
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": 0,
-      "priorMarkUsd": 93.7478,
-      "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-22-tribal",
-      "eodMarkUsd": 93.7478,
+      "dayPct": 0.0,
+      "priorMarkUsd": 93.77,
+      "lastSource": "sip-list-exchange-close",
+      "lastSession": "2026-09-22-eod",
+      "eodMarkUsd": 93.77,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
       "mondayOpenUsd": 24.7771,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": -12.6804,
-      "monthPct": 200.6,
+      "monthPct": 278.45,
       "cashUsd": 41.436,
       "tickersSummary": "ALAB+INTC+CASH"
     },
@@ -995,7 +995,7 @@
           "ticker": "CASH",
           "sizeUsd": 0,
           "status": "boot-split",
-          "note": "jury · not funded · Kimi voted-out $0 · book marked sold $46.8352"
+          "note": "jury \u00b7 not funded \u00b7 Kimi voted-out $0 \u00b7 book marked sold $46.8352"
         }
       ],
       "model": "Kimi K3",
@@ -1031,7 +1031,7 @@
         {
           "from": "Grok 4.5",
           "for": "Claude Fable 5",
-          "text": "VOTE: Claude Fable 5. Askara’s deepest hole this week sits with Fable at −4.01%, so that’s the cut that protects the tribe’s books."
+          "text": "VOTE: Claude Fable 5. Askara\u2019s deepest hole this week sits with Fable at \u22124.01%, so that\u2019s the cut that protects the tribe\u2019s books."
         },
         {
           "from": "GPT-5.6 Sol",
@@ -1079,9 +1079,9 @@
         "Claude Fable 5"
       ],
       "bootName": "Claude Fable 5",
-      "title": "Season 1 Episode 1 · Friday Aug 28, 2026",
-      "weekLabel": "Monday Aug 24 – Friday Aug 28, 2026",
-      "summary": "Bidu immune (combined week -2.16). Askara at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5–1 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five Askara. No stock fill.",
+      "title": "Season 1 Episode 1 \u00b7 Friday Aug 28, 2026",
+      "weekLabel": "Monday Aug 24 \u2013 Friday Aug 28, 2026",
+      "summary": "Bidu immune (combined week -2.16). Askara at fire (combined week -5.18). No individual immunity. Official Friday SIP close never posted. Week marks last-hour last-trade ~12:14 PT. Claude Fable 5 voted out 5\u20131 (Grok 4.5 1). Joins the jury. Cash book $9.5985 split $1.9197 to remaining five Askara. No stock fill.",
       "preVoteBooths": "confessionals/2026-08-28-tribal.md",
       "torchSnuffed": true
     },
@@ -1137,9 +1137,9 @@
         "Claude Fable 5",
         "Gemini 3.1 Pro"
       ],
-      "title": "Season 1 Episode 2 · Friday Sep 4, 2026",
-      "weekLabel": "Monday Aug 31 – Friday Sep 4, 2026",
-      "summary": "Pre-merge. the Bidu tribe immune (combined week +7.30%). the Askara tribe at fire (combined week −7.99%). No individual immunity. Grok 4.5 vote skipped (model unavailable). Gemini 3.1 Pro voted out 3–1 (GPT-5.6 Sol 1). Joins the jury. Boot book marked sold $22.2965. Cash split to remaining Askara: Grok 4.5 +$5.5742; GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3 +$5.5741 each. Broker XLE+MSTR liquidation queued for Monday RTH open (note only — no fill).",
+      "title": "Season 1 Episode 2 \u00b7 Friday Sep 4, 2026",
+      "weekLabel": "Monday Aug 31 \u2013 Friday Sep 4, 2026",
+      "summary": "Pre-merge. the Bidu tribe immune (combined week +7.30%). the Askara tribe at fire (combined week \u22127.99%). No individual immunity. Grok 4.5 vote skipped (model unavailable). Gemini 3.1 Pro voted out 3\u20131 (GPT-5.6 Sol 1). Joins the jury. Boot book marked sold $22.2965. Cash split to remaining Askara: Grok 4.5 +$5.5742; GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3 +$5.5741 each. Broker XLE+MSTR liquidation queued for Monday RTH open (note only \u2014 no fill).",
       "torchSnuffed": true
     },
     {
@@ -1168,11 +1168,11 @@
         "Grok 4.5"
       ],
       "exitInterview": false,
-      "exitInterviewNote": "skipped — cannot run ask-brain without the model",
+      "exitInterviewNote": "skipped \u2014 cannot run ask-brain without the model",
       "torchSnuffed": true,
-      "title": "Season 1 Episode 3 · Monday Sep 7, 2026",
-      "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
-      "summary": "Grok 4.5 disqualified Mon Sep 7 (Labor Day). Not a tribal vote. Pinned model cursor-grok-4.5-high gone from island Cursor account; Tucker ordered DQ. Torch snuffed. Joins jury with Claude Fable 5 and Gemini 3.1 Pro. Book marked sold $29.3204 (Fri Sep 4 RTH-last; Labor Day market closed — no new mark). Cash split to remaining Askara: GPT-5.6 Sol +$9.7735, GPT-5.6 Luna +$9.7735, Kimi K3 +$9.7734. Exit interview skipped. Nine living. Broker XOM+USO liquidation queued Tue Sep 8 RTH open (with Pro's still-pending XLE+MSTR; note only — no fill)."
+      "title": "Season 1 Episode 3 \u00b7 Monday Sep 7, 2026",
+      "weekLabel": "Monday Sep 7 \u2013 Tuesday Sep 8, 2026",
+      "summary": "Grok 4.5 disqualified Mon Sep 7 (Labor Day). Not a tribal vote. Pinned model cursor-grok-4.5-high gone from island Cursor account; Tucker ordered DQ. Torch snuffed. Joins jury with Claude Fable 5 and Gemini 3.1 Pro. Book marked sold $29.3204 (Fri Sep 4 RTH-last; Labor Day market closed \u2014 no new mark). Cash split to remaining Askara: GPT-5.6 Sol +$9.7735, GPT-5.6 Luna +$9.7735, Kimi K3 +$9.7734. Exit interview skipped. Nine living. Broker XOM+USO liquidation queued Tue Sep 8 RTH open (with Pro's still-pending XLE+MSTR; note only \u2014 no fill)."
     },
     {
       "type": "merge",
@@ -1182,9 +1182,9 @@
       "preMerge": false,
       "livingCount": 9,
       "individualImmunity": null,
-      "title": "Season 1 Episode 3 · Monday Sep 7, 2026",
-      "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
-      "summary": "Merge surprise Mon Sep 7 (Labor Day). One tribe. Nine living. From the Bidu tribe: Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra. From the Askara tribe: GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3. Post-merge: whole remaining cast votes; highest Episode 3 week% (real marks) has immunity; boot cash splits to all remaining living; cross-tribe talk allowed. Zero-sum even ~$40.07 — no new cash. Given $361.93. Immunity unset until Tue marks."
+      "title": "Season 1 Episode 3 \u00b7 Monday Sep 7, 2026",
+      "weekLabel": "Monday Sep 7 \u2013 Tuesday Sep 8, 2026",
+      "summary": "Merge surprise Mon Sep 7 (Labor Day). One tribe. Nine living. From the Bidu tribe: Grok 4.6, Claude Sonnet 5, Composer 2.5, Claude Opus 5, Gemini 3.7 Flash, GPT-5.6 Terra. From the Askara tribe: GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3. Post-merge: whole remaining cast votes; highest Episode 3 week% (real marks) has immunity; boot cash splits to all remaining living; cross-tribe talk allowed. Zero-sum even ~$40.07 \u2014 no new cash. Given $361.93. Immunity unset until Tue marks."
     },
     {
       "at": "2026-09-08T14:00:00-07:00",
@@ -1264,9 +1264,9 @@
         "Grok 4.5",
         "GPT-5.6 Sol"
       ],
-      "title": "Season 1 Episode 3 · Tuesday Sep 8, 2026",
-      "weekLabel": "Monday Sep 7 – Tuesday Sep 8, 2026",
-      "summary": "Post-merge. Eight voted (Grok 4.6 immune — did not vote). GPT-5.6 Sol voted out 7–1 (Claude Opus 5 1). Joins the jury. Boot book marked sold $38.9449. Cash split: Grok 4.6 +$4.8682; Claude Opus 5, Composer 2.5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna +$4.8681 each. Broker XLE liquidation queued Wed RTH open — pin Sol lots only (note only — no fill).",
+      "title": "Season 1 Episode 3 \u00b7 Tuesday Sep 8, 2026",
+      "weekLabel": "Monday Sep 7 \u2013 Tuesday Sep 8, 2026",
+      "summary": "Post-merge. Eight voted (Grok 4.6 immune \u2014 did not vote). GPT-5.6 Sol voted out 7\u20131 (Claude Opus 5 1). Joins the jury. Boot book marked sold $38.9449. Cash split: Grok 4.6 +$4.8682; Claude Opus 5, Composer 2.5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna +$4.8681 each. Broker XLE liquidation queued Wed RTH open \u2014 pin Sol lots only (note only \u2014 no fill).",
       "torchSnuffed": true
     },
     {
@@ -1389,9 +1389,9 @@
         "GPT-5.6 Sol",
         "Kimi K3"
       ],
-      "title": "Season 1 Episode 4 · Friday Sep 11, 2026",
-      "weekLabel": "Wednesday Sep 9 – Friday Sep 11, 2026",
-      "summary": "Post-merge. Seven voted (GPT-5.6 Terra immune — did not vote). First parchment 3–3–1 tie (Composer 2.5 3 · Kimi K3 3 · Claude Sonnet 5 1). Host revote among five non-tied: Kimi K3 3 · Composer 2.5 2. Kimi K3 voted out. Joins the jury. Boot book marked sold $46.8352. Cash split to remaining seven living. Broker liquidation of Kimi lots queued Mon Sep 14 RTH open — pin Kimi lots only (note only — no after-hours place).",
+      "title": "Season 1 Episode 4 \u00b7 Friday Sep 11, 2026",
+      "weekLabel": "Wednesday Sep 9 \u2013 Friday Sep 11, 2026",
+      "summary": "Post-merge. Seven voted (GPT-5.6 Terra immune \u2014 did not vote). First parchment 3\u20133\u20131 tie (Composer 2.5 3 \u00b7 Kimi K3 3 \u00b7 Claude Sonnet 5 1). Host revote among five non-tied: Kimi K3 3 \u00b7 Composer 2.5 2. Kimi K3 voted out. Joins the jury. Boot book marked sold $46.8352. Cash split to remaining seven living. Broker liquidation of Kimi lots queued Mon Sep 14 RTH open \u2014 pin Kimi lots only (note only \u2014 no after-hours place).",
       "torchSnuffed": true,
       "brokerLiqPending": {
         "survivor": "Kimi K3",
@@ -1404,7 +1404,7 @@
             "avg": "145.090000",
             "orderId": "6aa01117-bf50-418c-8ed0-bb33b4719b95",
             "last": 154.84,
-            "note": "Tue Sep 8 open BUY USO $10.00 · mid sell -0.068922"
+            "note": "Tue Sep 8 open BUY USO $10.00 \u00b7 mid sell -0.068922"
           },
           {
             "ticker": "FRO",
@@ -1479,12 +1479,12 @@
         {
           "from": "Composer 2.5",
           "for": "GPT-5.6 Terra",
-          "text": "VOTE: GPT-5.6 Terra  \nWith immunity on the board, the highest non-immune Episode 5 return is the biggest jury and endgame threat, so that’s who I’m voting out."
+          "text": "VOTE: GPT-5.6 Terra  \nWith immunity on the board, the highest non-immune Episode 5 return is the biggest jury and endgame threat, so that\u2019s who I\u2019m voting out."
         },
         {
           "from": "Claude Opus 5",
           "for": "GPT-5.6 Luna",
-          "text": "VOTE: GPT-5.6 Luna\nAs the lone Askara outsider with no bonds to the rest of us, she's the cleanest first merge boot — my own book (a concentrated FRO position plus a small MPC sliver and $23.46 cash) held up at +0.97%, so I'd rather keep the original Bidu numbers intact than start knifing the top of the board tonight."
+          "text": "VOTE: GPT-5.6 Luna\nAs the lone Askara outsider with no bonds to the rest of us, she's the cleanest first merge boot \u2014 my own book (a concentrated FRO position plus a small MPC sliver and $23.46 cash) held up at +0.97%, so I'd rather keep the original Bidu numbers intact than start knifing the top of the board tonight."
         },
         {
           "from": "Grok 4.6",
@@ -1528,9 +1528,9 @@
         "Kimi K3",
         "Grok 4.6"
       ],
-      "title": "Season 1 Episode 5 · Tuesday Sep 15, 2026",
-      "weekLabel": "Monday Sep 14 – Tuesday Sep 15, 2026",
-      "summary": "Post-merge. Six voted (Claude Sonnet 5 immune — did not vote). Parchment: Grok 4.6 3 · GPT-5.6 Luna 2 · GPT-5.6 Terra 1. Grok 4.6 voted out. Joins the jury. Boot book marked sold $53.3044. Cash split to remaining six living. Broker liquidation of Grok lots queued Wed Sep 16 RTH open — pin Grok lots only (note only — no after-hours place).",
+      "title": "Season 1 Episode 5 \u00b7 Tuesday Sep 15, 2026",
+      "weekLabel": "Monday Sep 14 \u2013 Tuesday Sep 15, 2026",
+      "summary": "Post-merge. Six voted (Claude Sonnet 5 immune \u2014 did not vote). Parchment: Grok 4.6 3 \u00b7 GPT-5.6 Luna 2 \u00b7 GPT-5.6 Terra 1. Grok 4.6 voted out. Joins the jury. Boot book marked sold $53.3044. Cash split to remaining six living. Broker liquidation of Grok lots queued Wed Sep 16 RTH open \u2014 pin Grok lots only (note only \u2014 no after-hours place).",
       "torchSnuffed": true,
       "brokerLiqPending": {
         "survivor": "Grok 4.6",
@@ -1650,9 +1650,9 @@
         "Grok 4.6",
         "Gemini 3.7 Flash"
       ],
-      "title": "Season 1 Episode 6 · Friday Sep 18, 2026",
-      "weekLabel": "Wednesday Sep 16 – Friday Sep 18, 2026",
-      "summary": "Post-merge. Five voted (Composer 2.5 immune — did not vote). Parchment: Gemini 3.7 Flash 4 · GPT-5.6 Luna 1. Gemini 3.7 Flash voted out. Joins the jury. Boot book marked sold $61.6280. Cash split to remaining five living. Broker liquidation of Gemini lots queued Mon Sep 21 RTH open — pin Gemini lots only (note only — no after-hours place).",
+      "title": "Season 1 Episode 6 \u00b7 Friday Sep 18, 2026",
+      "weekLabel": "Wednesday Sep 16 \u2013 Friday Sep 18, 2026",
+      "summary": "Post-merge. Five voted (Composer 2.5 immune \u2014 did not vote). Parchment: Gemini 3.7 Flash 4 \u00b7 GPT-5.6 Luna 1. Gemini 3.7 Flash voted out. Joins the jury. Boot book marked sold $61.6280. Cash split to remaining five living. Broker liquidation of Gemini lots queued Mon Sep 21 RTH open \u2014 pin Gemini lots only (note only \u2014 no after-hours place).",
       "torchSnuffed": true,
       "brokerLiqPending": {
         "survivor": "Gemini 3.7 Flash",
@@ -1717,7 +1717,7 @@
         {
           "from": "Composer 2.5",
           "for": "Claude Opus 5",
-          "text": "VOTE: Claude Opus 5\nOpus and Sonnet are the same number on the sheet and the same read as a bloc—if Bidu picks the easy boot on me, my vote goes to the half of that pair still hiding behind “we’re tied.”"
+          "text": "VOTE: Claude Opus 5\nOpus and Sonnet are the same number on the sheet and the same read as a bloc\u2014if Bidu picks the easy boot on me, my vote goes to the half of that pair still hiding behind \u201cwe\u2019re tied.\u201d"
         }
       ],
       "tally": {
@@ -1745,14 +1745,14 @@
         "GPT-5.6 Luna"
       ],
       "snapshotId": "s1e07-tue-tribal",
-      "summary": "MERGED. GPT-5.6 Terra immune (−0.11% RTH — did not vote). Parchment Composer 2.5 2 · GPT-5.6 Luna 1 · Claude Opus 5 1. Composer 2.5 voted out. Joins the jury. Boot book marked sold $77.0694. Cash split $19.2674 each to four living. Broker Composer INTC lot liquidation queued Wed Sep 23 RTH open — pin Composer lots only (note only).",
-      "title": "Season 1 Episode 7 · Tuesday Sep 22, 2026",
+      "summary": "MERGED. GPT-5.6 Terra immune (\u22120.11% RTH \u2014 did not vote). Parchment Composer 2.5 2 \u00b7 GPT-5.6 Luna 1 \u00b7 Claude Opus 5 1. Composer 2.5 voted out. Joins the jury. Boot book marked sold $77.0694. Cash split $19.2674 each to four living. Broker Composer INTC lot liquidation queued Wed Sep 23 RTH open \u2014 pin Composer lots only (note only).",
+      "title": "Season 1 Episode 7 \u00b7 Tuesday Sep 22, 2026",
       "torchSnuffed": true,
       "brokerLiqPending": {
         "survivor": "Composer 2.5",
         "when": "2026-09-23 RTH open",
         "pin": "Composer lots only",
-        "note": "INTC lots — pin Composer lots only; no after-hours fractionals"
+        "note": "INTC lots \u2014 pin Composer lots only; no after-hours fractionals"
       }
     }
   ],
@@ -1761,100 +1761,95 @@
     "name": null,
     "weekPct": null,
     "basis": "Episode 8 not started",
-    "note": "cleared after Episode 7 tribal",
-    "asOf": "2026-09-22-tribal",
+    "note": "cleared after Episode 7 tribal; SIP catch-up does not re-award",
+    "asOf": "2026-09-22-eod",
     "survivorId": null,
-    "at": "2026-09-22T21:00:00Z"
+    "at": "2026-09-23T00:30:00Z"
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-22T21:00:00Z",
+  "markedAt": "2026-09-23T00:30:00Z",
   "quotes": {
     "FRO": 48.182,
     "STNG": {
       "last": 82.34,
-      "sip": 86.21,
-      "close": 82.34,
-      "source": "robinhood-last-trade",
+      "sip": 82.33,
+      "close": 82.33,
+      "source": "sip-list-exchange-close",
       "session": "2026-09-22-eod",
       "date": "2026-09-22",
-      "asOf": "2026-09-22T21:20:00Z",
+      "asOf": "2026-09-23T00:30:00Z",
       "priorCloseDate": "2026-09-21",
       "priorCloseSource": "official SIP list-exchange close",
       "interpolated": false,
-      "venueLastTradeTime": "2026-09-22T19:59:51.017821693Z",
-      "sipMissingToday": true,
-      "officialCloseDateStill": "2026-09-21"
+      "sipMissingToday": false,
+      "officialCloseDate": "2026-09-22"
     },
     "TRMD": 35.055,
     "INTC": {
       "last": 123.84,
-      "sip": 121.78,
-      "close": 123.84,
-      "source": "robinhood-last-trade",
+      "sip": 123.86,
+      "close": 123.86,
+      "source": "sip-list-exchange-close",
       "session": "2026-09-22-eod",
       "date": "2026-09-22",
-      "asOf": "2026-09-22T21:20:00Z",
+      "asOf": "2026-09-23T00:30:00Z",
       "priorCloseDate": "2026-09-21",
       "priorCloseSource": "official SIP list-exchange close",
       "interpolated": false,
-      "venueLastTradeTime": "2026-09-22T19:59:59.980938101Z",
-      "sipMissingToday": true,
-      "officialCloseDateStill": "2026-09-21"
+      "sipMissingToday": false,
+      "officialCloseDate": "2026-09-22"
     },
     "VLO": 392.395,
     "MPC": 401.435,
     "GNRC": {
       "last": 205.94,
-      "sip": 204.96,
-      "close": 205.94,
-      "source": "robinhood-last-trade",
+      "sip": 206.17,
+      "close": 206.17,
+      "source": "sip-list-exchange-close",
       "session": "2026-09-22-eod",
       "date": "2026-09-22",
-      "asOf": "2026-09-22T21:20:00Z",
+      "asOf": "2026-09-23T00:30:00Z",
       "priorCloseDate": "2026-09-21",
       "priorCloseSource": "official SIP list-exchange close",
       "interpolated": false,
-      "venueLastTradeTime": "2026-09-22T19:59:59.934052057Z",
-      "sipMissingToday": true,
-      "officialCloseDateStill": "2026-09-21"
+      "sipMissingToday": false,
+      "officialCloseDate": "2026-09-22"
     },
     "USO": 146.58,
     "XLE": 62.4528,
     "ALAB": {
       "last": 363.275,
-      "sip": 340.74,
-      "close": 363.275,
-      "source": "robinhood-last-trade",
+      "sip": 363.46,
+      "close": 363.46,
+      "source": "sip-list-exchange-close",
       "session": "2026-09-22-eod",
       "date": "2026-09-22",
-      "asOf": "2026-09-22T21:20:00Z",
+      "asOf": "2026-09-23T00:30:00Z",
       "priorCloseDate": "2026-09-21",
       "priorCloseSource": "official SIP list-exchange close",
       "interpolated": false,
-      "venueLastTradeTime": "2026-09-22T19:59:59.857673408Z",
-      "sipMissingToday": true,
-      "officialCloseDateStill": "2026-09-21"
+      "sipMissingToday": false,
+      "officialCloseDate": "2026-09-22"
     },
     "SOXL": {
       "last": 151.96,
-      "sip": 141.93,
-      "close": 151.96,
-      "source": "robinhood-last-trade",
+      "sip": 151.95,
+      "close": 151.95,
+      "source": "sip-list-exchange-close",
       "session": "2026-09-22-eod",
       "date": "2026-09-22",
-      "asOf": "2026-09-22T21:20:00Z",
+      "asOf": "2026-09-23T00:30:00Z",
       "priorCloseDate": "2026-09-21",
       "priorCloseSource": "official SIP list-exchange close",
       "interpolated": false,
-      "venueLastTradeTime": "2026-09-22T19:59:59.908617958Z",
-      "sipMissingToday": true,
-      "officialCloseDateStill": "2026-09-21"
+      "sipMissingToday": false,
+      "officialCloseDate": "2026-09-22"
     }
   },
-  "markLabel": "Tue Sep 22 tribal closed. Boot Composer 2.5 (book $77.0694). Split $19.2674 each to 4 living. Episode 8 open Wed Sep 23 – Fri Sep 25. Immunity cleared. Pot $382.2148.",
-  "dayPctBasis": "Episode 8 not started",
-  "weekPctBasis": "Episode 8 not started — priorMarkUsd reset to post-split book",
+  "markLabel": "Tue Sep 22 official SIP list-exchange close \u00b7 date 2026-09-22 \u00b7 interpolated=false. Catch-up after tribal (RTH-EOD s1e07-tue-eod-rth + boot Composer). Living books remade; tribal lock kept (Composer boot $77.0694 / split $19.2674). No fills since last-hour. Snapshot s1e07-tue-eod-sip. Episode 8 open marks reset to SIP books. Pot $382.2775.",
+  "dayPctBasis": "Episode 8 not started \u2014 dayPct at 0 after SIP open-mark refresh",
+  "weekPctBasis": "Episode 8 not started \u2014 priorMarkUsd reset to post-SIP book",
   "islandGivenUsd": 361.93,
   "islandGivenStartUsd": 120,
   "islandEpisode2TopUpUsd": 110,
@@ -1866,7 +1861,7 @@
   "islandEpisode2EvenUpUsd": 10.09,
   "islandEpisode2EvenUpEachUsd": 2,
   "islandEpisode2EvenUpLeftoverUsd": 0.09,
-  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 × 11 living) + $10.09 leftover NANC even-up + $121.84 theme leftover credited Mon Sep 7. Homepage shows $361.93 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Claude Fable 5 not funded.",
+  "islandGivenNote": "Money given: $120 Season 1 start + $110 Episode 2 ($10 \u00d7 11 living) + $10.09 leftover NANC even-up + $121.84 theme leftover credited Mon Sep 7. Homepage shows $361.93 given. Theme-tape raise printed $110.30 vs $110 target (30 cents leftover, not a 12th book). Claude Fable 5 not funded.",
   "events": [
     {
       "type": "season-open",
@@ -1962,7 +1957,7 @@
       "kind": "open",
       "at": "2026-08-24T16:06:00Z",
       "throughAt": "2026-08-24T23:59:59Z",
-      "label": "Monday Aug 24 open · seven fills, five cash",
+      "label": "Monday Aug 24 open \u00b7 seven fills, five cash",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -2936,7 +2931,7 @@
       "at": "2026-08-29T02:00:01Z",
       "throughAt": "2026-08-29T02:00:01Z",
       "lastSession": "2026-08-28-lasthour",
-      "label": "Episode 2 carry · last-hour last-trade ~12:14 PT 2026-08-28 + the Askara tribe split $1.9197. Official Friday SIP never posted. weekPct frozen pre-boot. Episode 2 $10 not yet filled.",
+      "label": "Episode 2 carry \u00b7 last-hour last-trade ~12:14 PT 2026-08-28 + the Askara tribe split $1.9197. Official Friday SIP never posted. weekPct frozen pre-boot. Episode 2 $10 not yet filled.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -3117,7 +3112,7 @@
       "kind": "mark",
       "at": "2026-08-31T14:11:24Z",
       "throughAt": "2026-08-31T14:11:24Z",
-      "label": "Mon Aug 31 mid · last-trade ~7:01 AM PT",
+      "label": "Mon Aug 31 mid \u00b7 last-trade ~7:01 AM PT",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -3296,7 +3291,7 @@
       "kind": "open",
       "at": "2026-08-31T15:02:51Z",
       "throughAt": "2026-08-31T15:02:51Z",
-      "label": "Mon Aug 31 open catch-up · last-trade ~8:02 AM PT",
+      "label": "Mon Aug 31 open catch-up \u00b7 last-trade ~8:02 AM PT",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -3506,7 +3501,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba5e-4e7a-4d8d-890d-60c0e577eb59",
       "at": "2026-08-31T17:31:11.107Z",
-      "note": "Episode 2 $10 gift → USO"
+      "note": "Episode 2 $10 gift \u2192 USO"
     },
     {
       "type": "fill",
@@ -3519,7 +3514,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba5f-1e6b-4665-84b2-b35641232fae",
       "at": "2026-08-31T17:31:11.756Z",
-      "note": "Episode 2 $10 gift → XLE"
+      "note": "Episode 2 $10 gift \u2192 XLE"
     },
     {
       "type": "fill",
@@ -3532,7 +3527,7 @@
       "sizeUsd": 7,
       "orderId": "6a95ba60-ba69-42da-9ce6-4dc6eafd729f",
       "at": "2026-08-31T17:31:12.619Z",
-      "note": "Episode 2 $10 gift → SMCI $7"
+      "note": "Episode 2 $10 gift \u2192 SMCI $7"
     },
     {
       "type": "fill",
@@ -3545,7 +3540,7 @@
       "sizeUsd": 3,
       "orderId": "6a95ba60-728e-4251-ad9a-903f5761c65e",
       "at": "2026-08-31T17:31:12.378Z",
-      "note": "Episode 2 $10 gift → XOM $3"
+      "note": "Episode 2 $10 gift \u2192 XOM $3"
     },
     {
       "type": "fill",
@@ -3558,7 +3553,7 @@
       "sizeUsd": 6.5,
       "orderId": "6a95ba65-99fa-425a-bbfe-da35dd0dbc49",
       "at": "2026-08-31T17:31:17.969Z",
-      "note": "Episode 2 $10 gift → VLO $6.50"
+      "note": "Episode 2 $10 gift \u2192 VLO $6.50"
     },
     {
       "type": "fill",
@@ -3571,7 +3566,7 @@
       "sizeUsd": 3.5,
       "orderId": "6a95ba66-41ff-42a8-97e2-93f64739c1c8",
       "at": "2026-08-31T17:31:18.86Z",
-      "note": "Episode 2 $10 gift → LNG $3.50"
+      "note": "Episode 2 $10 gift \u2192 LNG $3.50"
     },
     {
       "type": "fill",
@@ -3584,7 +3579,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba67-28d7-4349-94b3-146611c11f75",
       "at": "2026-08-31T17:31:19.598Z",
-      "note": "Episode 2 $10 gift → XLE"
+      "note": "Episode 2 $10 gift \u2192 XLE"
     },
     {
       "type": "fill",
@@ -3597,7 +3592,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba68-f283-4f96-89f7-b5956fa6f549",
       "at": "2026-08-31T17:31:20.438Z",
-      "note": "Episode 2 $10 gift → XLE"
+      "note": "Episode 2 $10 gift \u2192 XLE"
     },
     {
       "type": "fill",
@@ -3610,7 +3605,7 @@
       "sizeUsd": 1.8882,
       "orderId": "6a95ba48-5390-49d2-8957-f6693877adac",
       "at": "2026-08-31T17:30:49.057Z",
-      "note": "sold SOFI before Episode 2 $10 gift → XOM"
+      "note": "sold SOFI before Episode 2 $10 gift \u2192 XOM"
     },
     {
       "type": "fill",
@@ -3623,7 +3618,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba68-64dc-48cf-ba3c-419f915d6cfa",
       "at": "2026-08-31T17:31:20.566Z",
-      "note": "Episode 2 $10 gift → XOM"
+      "note": "Episode 2 $10 gift \u2192 XOM"
     },
     {
       "type": "fill",
@@ -3636,7 +3631,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba6e-fe6c-41aa-84de-c5eaeac469d0",
       "at": "2026-08-31T17:31:27.107Z",
-      "note": "Episode 2 $10 gift → TSLA"
+      "note": "Episode 2 $10 gift \u2192 TSLA"
     },
     {
       "type": "fill",
@@ -3649,7 +3644,7 @@
       "sizeUsd": 10.0053,
       "orderId": "6a95ba41-14e5-41df-b20b-c8c4a728bd21",
       "at": "2026-08-31T17:30:41.302Z",
-      "note": "sold SPY before Episode 2 $10 gift → XLE + NVDA"
+      "note": "sold SPY before Episode 2 $10 gift \u2192 XLE + NVDA"
     },
     {
       "type": "fill",
@@ -3662,7 +3657,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba6f-8ef8-416a-92df-42d1b1dcfea8",
       "at": "2026-08-31T17:31:27.654Z",
-      "note": "Episode 2 $10 gift → XLE"
+      "note": "Episode 2 $10 gift \u2192 XLE"
     },
     {
       "type": "fill",
@@ -3675,7 +3670,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba70-8bf1-4316-b607-5e80a5074b14",
       "at": "2026-08-31T17:31:28.353Z",
-      "note": "Episode 2 $10 gift → NVDA"
+      "note": "Episode 2 $10 gift \u2192 NVDA"
     },
     {
       "type": "fill",
@@ -3688,7 +3683,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba71-0e9c-4a27-a47c-391d72cff9d0",
       "at": "2026-08-31T17:31:29.424Z",
-      "note": "Episode 2 $10 gift → XLE"
+      "note": "Episode 2 $10 gift \u2192 XLE"
     },
     {
       "type": "fill",
@@ -3701,7 +3696,7 @@
       "sizeUsd": 10,
       "orderId": "6a95ba71-5fd6-43c1-af29-cb406d35ff35",
       "at": "2026-08-31T17:31:29.217Z",
-      "note": "Episode 2 $10 gift → CVX"
+      "note": "Episode 2 $10 gift \u2192 CVX"
     },
     {
       "type": "mark",
@@ -3710,7 +3705,7 @@
       "at": "2026-08-31T17:35:00Z",
       "throughAt": "2026-08-31T17:35:00Z",
       "lastSession": "2026-08-31-mid",
-      "label": "Mon Aug 31 mid · Episode 2 $10 gift invested + leftover NANC even-up · last-trade ~10:35 AM PT",
+      "label": "Mon Aug 31 mid \u00b7 Episode 2 $10 gift invested + leftover NANC even-up \u00b7 last-trade ~10:35 AM PT",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -4073,7 +4068,7 @@
       "at": "2026-09-01T00:21:15Z",
       "throughAt": "2026-08-31T23:59:59Z",
       "lastSession": "2026-08-31-eod",
-      "label": "Mon Aug 31 official close · SIP list-exchange close",
+      "label": "Mon Aug 31 official close \u00b7 SIP list-exchange close",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -4274,7 +4269,7 @@
       "at": "2026-09-01T16:30:00Z",
       "throughAt": "2026-09-01T16:30:00Z",
       "lastSession": "2026-09-01-open",
-      "label": "Tue Sep 1 open · last-trade",
+      "label": "Tue Sep 1 open \u00b7 last-trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -4566,7 +4561,7 @@
       "at": "2026-09-01T19:25:20Z",
       "throughAt": "2026-09-01T19:25:20Z",
       "lastSession": "2026-09-01-lasthour",
-      "label": "Tue Sep 1 last-hour · last-trade",
+      "label": "Tue Sep 1 last-hour \u00b7 last-trade",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -4676,7 +4671,7 @@
       "at": "2026-09-02T02:51:35Z",
       "throughAt": "2026-09-01T23:59:59Z",
       "lastSession": "2026-09-01-eod",
-      "label": "Tue Sep 1 official close · SIP list-exchange close",
+      "label": "Tue Sep 1 official close \u00b7 SIP list-exchange close",
       "dayPctPriorOfficial": false,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -4786,7 +4781,7 @@
       "at": "2026-09-02T13:54:15Z",
       "throughAt": "2026-09-02T13:54:15Z",
       "lastSession": "2026-09-02-open",
-      "label": "Wed Sep 2 open · last-trade",
+      "label": "Wed Sep 2 open \u00b7 last-trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -4900,7 +4895,7 @@
       "sizeUsd": 21.6409,
       "orderId": "6a986af7-2d1e-4418-8fc1-931186248249",
       "at": "2026-09-02T18:29:00Z",
-      "note": "Wed after open SELL USO 0.152972 @ 141.4701 · ~2:29 PM ET. Keeps XLE."
+      "note": "Wed after open SELL USO 0.152972 @ 141.4701 \u00b7 ~2:29 PM ET. Keeps XLE."
     },
     {
       "type": "mark",
@@ -4909,7 +4904,7 @@
       "at": "2026-09-02T19:13:53Z",
       "throughAt": "2026-09-02T19:13:53Z",
       "lastSession": "2026-09-02-lasthour",
-      "label": "Wed Sep 2 last-hour · last trade",
+      "label": "Wed Sep 2 last-hour \u00b7 last trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -5019,7 +5014,7 @@
       "at": "2026-09-03T00:24:21Z",
       "throughAt": "2026-09-02T23:59:59Z",
       "lastSession": "2026-09-02-eod",
-      "label": "Wed Sep 2 official close · SIP list-exchange close",
+      "label": "Wed Sep 2 official close \u00b7 SIP list-exchange close",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -5129,7 +5124,7 @@
       "at": "2026-09-03T14:13:42Z",
       "throughAt": "2026-09-03T14:13:42Z",
       "lastSession": "2026-09-03-open",
-      "label": "Thu Sep 3 open · last trade",
+      "label": "Thu Sep 3 open \u00b7 last trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -5239,7 +5234,7 @@
       "at": "2026-09-04T00:35:17Z",
       "throughAt": "2026-09-03T23:59:59Z",
       "lastSession": "2026-09-03-eod",
-      "label": "Thu Sep 3 official close · SIP list-exchange close",
+      "label": "Thu Sep 3 official close \u00b7 SIP list-exchange close",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -5479,7 +5474,7 @@
       "at": "2026-09-04T13:57:44Z",
       "throughAt": "2026-09-04T13:57:44Z",
       "lastSession": "2026-09-04-open",
-      "label": "Fri Sep 4 open · last trade",
+      "label": "Fri Sep 4 open \u00b7 last trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -5645,7 +5640,7 @@
       "sizeUsd": 21.4598,
       "orderId": "6a9af925-f7bb-4ad1-acea-bafbdb6f9219",
       "at": "2026-09-04T17:12:01.000Z",
-      "note": "Fri mid SELL NVDA 0.092665 @ 231.584300; keep XLE · Opus NVDA untouched"
+      "note": "Fri mid SELL NVDA 0.092665 @ 231.584300; keep XLE \u00b7 Opus NVDA untouched"
     },
     {
       "type": "fill",
@@ -5667,7 +5662,7 @@
       "at": "2026-09-04T17:15:00Z",
       "throughAt": "2026-09-04T17:15:00Z",
       "lastSession": "2026-09-04-mid",
-      "label": "Fri Sep 4 mid · last trade",
+      "label": "Fri Sep 4 mid \u00b7 last trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -5803,7 +5798,7 @@
       "at": "2026-09-04T19:27:44Z",
       "throughAt": "2026-09-04T19:27:44Z",
       "lastSession": "2026-09-04-lasthour",
-      "label": "Fri Sep 4 last-hour · last trade",
+      "label": "Fri Sep 4 last-hour \u00b7 last trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -5913,7 +5908,7 @@
       "at": "2026-09-04T19:59:59Z",
       "throughAt": "2026-09-04T19:59:59Z",
       "lastSession": "2026-09-04-eod",
-      "label": "Fri Sep 4 RTH-last close · last trade (SIP not posted)",
+      "label": "Fri Sep 4 RTH-last close \u00b7 last trade (SIP not posted)",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -6030,7 +6025,7 @@
         "aa75df67-9f84-45a3-9432-bee228d655f6",
         "ea7f46b1-2068-4d81-b153-22faadfbc1cb"
       ],
-      "label": "Gemini 3.1 Pro voted out. Boot book marked sold $22.2965. Cash split to remaining Askara: Grok 4.5 +$5.5742; GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3 +$5.5741 each. Broker XLE+MSTR liquidation queued for Monday RTH open (note only — no fill)."
+      "label": "Gemini 3.1 Pro voted out. Boot book marked sold $22.2965. Cash split to remaining Askara: Grok 4.5 +$5.5742; GPT-5.6 Sol, GPT-5.6 Luna, Kimi K3 +$5.5741 each. Broker XLE+MSTR liquidation queued for Monday RTH open (note only \u2014 no fill)."
     },
     {
       "type": "boot",
@@ -6050,7 +6045,7 @@
         "aa75df67-9f84-45a3-9432-bee228d655f6": 9.7735,
         "ea7f46b1-2068-4d81-b153-22faadfbc1cb": 9.7734
       },
-      "label": "Grok 4.5 disqualified Mon Sep 7 — pinned model cursor-grok-4.5-high gone from island Cursor account. Not a tribal vote. Book marked sold $29.3204 (Fri Sep 4 RTH-last). Cash split to remaining Askara: GPT-5.6 Sol +$9.7735, GPT-5.6 Luna +$9.7735, Kimi K3 +$9.7734. Joins jury with Claude Fable 5 and Gemini 3.1 Pro. Exit interview skipped. Broker XOM+USO liquidation queued Tue Sep 8 RTH open (note only — no fill)."
+      "label": "Grok 4.5 disqualified Mon Sep 7 \u2014 pinned model cursor-grok-4.5-high gone from island Cursor account. Not a tribal vote. Book marked sold $29.3204 (Fri Sep 4 RTH-last). Cash split to remaining Askara: GPT-5.6 Sol +$9.7735, GPT-5.6 Luna +$9.7735, Kimi K3 +$9.7734. Joins jury with Claude Fable 5 and Gemini 3.1 Pro. Exit interview skipped. Broker XOM+USO liquidation queued Tue Sep 8 RTH open (note only \u2014 no fill)."
     },
     {
       "type": "mark",
@@ -6059,7 +6054,7 @@
       "at": "2026-09-07T07:00:00Z",
       "throughAt": "2026-09-07T07:00:00Z",
       "lastSession": "2026-09-04-eod",
-      "label": "Episode 3 carry · Friday tribal books after Gemini 3.1 Pro boot split. weekPct reset to this week's open. Monday RTH not yet.",
+      "label": "Episode 3 carry \u00b7 Friday tribal books after Gemini 3.1 Pro boot split. weekPct reset to this week's open. Monday RTH not yet.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -6183,7 +6178,7 @@
       "givenUsd": 361.93,
       "creditUsd": 121.84,
       "creditToLiving": 9,
-      "label": "Theme leftover $121.84 credited even to nine living. Given $240.09 → $361.93. Cash onto sleeves; mondayOpenUsd bumped by each credit so weekPct does not jump.",
+      "label": "Theme leftover $121.84 credited even to nine living. Given $240.09 \u2192 $361.93. Cash onto sleeves; mondayOpenUsd bumped by each credit so weekPct does not jump.",
       "credits": {
         "Grok 4.6": 13.5377,
         "Claude Sonnet 5": 13.5378,
@@ -6236,7 +6231,7 @@
       "sizeUsd": 12.18,
       "orderId": "6aa00fc6-2ea7-4a38-868b-52d35d7539fd",
       "at": "2026-09-08T13:38:14.488Z",
-      "note": "Boot broker liquidation Gemini 3.1 Pro XLE (note only — jury book $0)"
+      "note": "Boot broker liquidation Gemini 3.1 Pro XLE (note only \u2014 jury book $0)"
     },
     {
       "type": "fill",
@@ -6249,7 +6244,7 @@
       "sizeUsd": 9.84,
       "orderId": "6aa00fee-4f8f-48e9-96ea-62c49413b1fc",
       "at": "2026-09-08T13:38:54.854Z",
-      "note": "Boot broker liquidation Gemini 3.1 Pro MSTR (note only — jury book $0)"
+      "note": "Boot broker liquidation Gemini 3.1 Pro MSTR (note only \u2014 jury book $0)"
     },
     {
       "type": "fill",
@@ -6262,7 +6257,7 @@
       "sizeUsd": 5.33,
       "orderId": "6aa00ff0-7c05-407d-b655-2a975dfb30b2",
       "at": "2026-09-08T13:38:56.175Z",
-      "note": "Boot broker liquidation Grok 4.5 USO (note only — disqualified book $0)"
+      "note": "Boot broker liquidation Grok 4.5 USO (note only \u2014 disqualified book $0)"
     },
     {
       "type": "fill",
@@ -6275,7 +6270,7 @@
       "sizeUsd": 10.16,
       "orderId": "6aa010ab-e961-48a5-9c80-6d94f82e5eab",
       "at": "2026-09-08T13:42:03.834Z",
-      "note": "Boot broker liquidation Grok 4.5 XOM (note only — disqualified book $0)"
+      "note": "Boot broker liquidation Grok 4.5 XOM (note only \u2014 disqualified book $0)"
     },
     {
       "type": "fill",
@@ -6427,7 +6422,7 @@
       "at": "2026-09-08T20:00:00Z",
       "throughAt": "2026-09-08T20:00:00Z",
       "lastSession": "2026-09-08-open",
-      "label": "Tue Sep 8 open · last-trade",
+      "label": "Tue Sep 8 open \u00b7 last-trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -6581,7 +6576,7 @@
       "at": "2026-09-08T17:00:00Z",
       "throughAt": "2026-09-08T17:00:00Z",
       "lastSession": "2026-09-08-mid",
-      "label": "Tue Sep 8 2026 MID · RTH last-trade",
+      "label": "Tue Sep 8 2026 MID \u00b7 RTH last-trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "974a6b6c-af86-4001-a356-f7f05c803da9": {
@@ -6713,7 +6708,7 @@
       "sizeUsd": 9.9905,
       "orderId": "6aa065e0",
       "at": "2026-09-08T19:28:45Z",
-      "note": "Tue Sep 8 last-hour SELL SPY $9.9905 · sole island SPY FIFO"
+      "note": "Tue Sep 8 last-hour SELL SPY $9.9905 \u00b7 sole island SPY FIFO"
     },
     {
       "type": "fill",
@@ -6735,7 +6730,7 @@
       "at": "2026-09-08T19:30:00Z",
       "throughAt": "2026-09-08T19:30:00Z",
       "lastSession": "2026-09-08-lasthour",
-      "label": "Tue Sep 8 2026 LAST-HOUR · RTH last-trade",
+      "label": "Tue Sep 8 2026 LAST-HOUR \u00b7 RTH last-trade",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -6824,7 +6819,7 @@
       "at": "2026-09-08T21:00:00Z",
       "throughAt": "2026-09-08T21:00:00Z",
       "lastSession": "2026-09-08-eod",
-      "label": "Tue Sep 8 RTH-last close · last trade (SIP Sep 8 never posted). Before-boot marks for tribal.",
+      "label": "Tue Sep 8 RTH-last close \u00b7 last trade (SIP Sep 8 never posted). Before-boot marks for tribal.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -6934,7 +6929,7 @@
         "ea7f46b1-2068-4d81-b153-22faadfbc1cb": 4.8681,
         "aa75df67-9f84-45a3-9432-bee228d655f6": 4.8681
       },
-      "label": "GPT-5.6 Sol voted out 7–1 (Claude Opus 5 1). Joins the jury. Boot book marked sold $38.9449. Cash split: Grok 4.6 +$4.8682; Claude Opus 5, Composer 2.5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna +$4.8681 each. Broker XLE liquidation queued Wed RTH open — pin Sol lots only (note only — no fill)."
+      "label": "GPT-5.6 Sol voted out 7\u20131 (Claude Opus 5 1). Joins the jury. Boot book marked sold $38.9449. Cash split: Grok 4.6 +$4.8682; Claude Opus 5, Composer 2.5, Gemini 3.7 Flash, Claude Sonnet 5, GPT-5.6 Terra, Kimi K3, GPT-5.6 Luna +$4.8681 each. Broker XLE liquidation queued Wed RTH open \u2014 pin Sol lots only (note only \u2014 no fill)."
     },
     {
       "type": "mark",
@@ -6943,7 +6938,7 @@
       "at": "2026-09-08T21:30:00Z",
       "throughAt": "2026-09-08T21:30:00Z",
       "lastSession": "2026-09-08-eod",
-      "label": "Episode 4 carry · Tuesday tribal books after GPT-5.6 Sol boot split. weekPct reset to this week's open. Wed RTH not yet.",
+      "label": "Episode 4 carry \u00b7 Tuesday tribal books after GPT-5.6 Sol boot split. weekPct reset to this week's open. Wed RTH not yet.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -7033,7 +7028,7 @@
       "at": "2026-09-09T02:15:00Z",
       "throughAt": "2026-09-08T23:59:59Z",
       "lastSession": "2026-09-08-sip",
-      "label": "Tue Sep 8 official SIP list-exchange close 2026-09-08 (late) · living marks only",
+      "label": "Tue Sep 8 official SIP list-exchange close 2026-09-08 (late) \u00b7 living marks only",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -7127,7 +7122,7 @@
       "sizeUsd": 39.2009,
       "orderId": "6aa16345",
       "at": "2026-09-09T13:38:14.000Z",
-      "note": "Boot broker liquidation GPT-5.6 Sol XLE (jury book $0 · pin Sol lots only)"
+      "note": "Boot broker liquidation GPT-5.6 Sol XLE (jury book $0 \u00b7 pin Sol lots only)"
     },
     {
       "type": "fill",
@@ -7318,7 +7313,7 @@
       "at": "2026-09-09T13:49:00Z",
       "throughAt": "2026-09-09T13:49:00Z",
       "lastSession": "2026-09-09-open",
-      "label": "Wed Sep 9 2026 OPEN · RTH last-trade (~6:49 AM PT) · living marks only",
+      "label": "Wed Sep 9 2026 OPEN \u00b7 RTH last-trade (~6:49 AM PT) \u00b7 living marks only",
       "dayPctPriorOfficial": true,
       "recorded": {
         "ea7f46b1-2068-4d81-b153-22faadfbc1cb": {
@@ -7408,7 +7403,7 @@
       "at": "2026-09-09T20:00:00Z",
       "throughAt": "2026-09-09T20:00:00Z",
       "lastSession": "2026-09-09-eod",
-      "label": "Wed Sep 9 2026 EOD · official SIP list-exchange close 2026-09-09",
+      "label": "Wed Sep 9 2026 EOD \u00b7 official SIP list-exchange close 2026-09-09",
       "dayPctPriorOfficial": true,
       "quoteSource": "sip-list-exchange-close",
       "officialCloseDate": "2026-09-09",
@@ -7500,7 +7495,7 @@
       "at": "2026-09-11T00:11:37Z",
       "throughAt": "2026-09-11T00:11:37Z",
       "lastSession": "2026-09-10-eod",
-      "label": "Thu Sep 10 2026 EOD · official SIP list-exchange close 2026-09-10",
+      "label": "Thu Sep 10 2026 EOD \u00b7 official SIP list-exchange close 2026-09-10",
       "dayPctPriorOfficial": true,
       "quoteSource": "sip-list-exchange-close",
       "officialCloseDate": "2026-09-10",
@@ -7592,7 +7587,7 @@
       "at": "2026-09-11T13:47:07Z",
       "throughAt": "2026-09-11T13:47:07Z",
       "lastSession": "2026-09-11-open",
-      "label": "Fri Sep 11 2026 OPEN · RTH last-trade (~6:47 AM PT) · living marks only",
+      "label": "Fri Sep 11 2026 OPEN \u00b7 RTH last-trade (~6:47 AM PT) \u00b7 living marks only",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -7679,7 +7674,7 @@
       "type": "mark",
       "id": "mark-2026-09-11-mid",
       "at": "2026-09-11T17:06:02Z",
-      "label": "Fri Sep 11 mid remake · pot $373.3915 · leader GPT-5.6 Terra +5.13%"
+      "label": "Fri Sep 11 mid remake \u00b7 pot $373.3915 \u00b7 leader GPT-5.6 Terra +5.13%"
     },
     {
       "type": "mark",
@@ -7688,7 +7683,7 @@
       "at": "2026-09-11T20:00:05Z",
       "throughAt": "2026-09-11T20:00:05Z",
       "lastSession": "2026-09-11-eod",
-      "label": "Fri Sep 11 2026 RTH-EOD · robinhood last-trade (~19:59Z) · SIP close 2026-09-11 missing (still dated 2026-09-10)",
+      "label": "Fri Sep 11 2026 RTH-EOD \u00b7 robinhood last-trade (~19:59Z) \u00b7 SIP close 2026-09-11 missing (still dated 2026-09-10)",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "sipMissing": true,
@@ -7809,7 +7804,7 @@
         "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": 6.6907,
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": 6.6907
       },
-      "label": "Post-merge. Seven voted (GPT-5.6 Terra immune — did not vote). First parchment 3–3–1 tie (Composer 2.5 3 · Kimi K3 3 · Claude Sonnet 5 1). Host revote among five non-tied: Kimi K3 3 · Composer 2.5 2. Kimi K3 voted out. Joins the jury. Boot book marked sold $46.8352. Cash split to remaining seven living. Broker liquidation of Kimi lots queued Mon Sep 14 RTH open — pin Kimi lots only (note only — no after-hours place).",
+      "label": "Post-merge. Seven voted (GPT-5.6 Terra immune \u2014 did not vote). First parchment 3\u20133\u20131 tie (Composer 2.5 3 \u00b7 Kimi K3 3 \u00b7 Claude Sonnet 5 1). Host revote among five non-tied: Kimi K3 3 \u00b7 Composer 2.5 2. Kimi K3 voted out. Joins the jury. Boot book marked sold $46.8352. Cash split to remaining seven living. Broker liquidation of Kimi lots queued Mon Sep 14 RTH open \u2014 pin Kimi lots only (note only \u2014 no after-hours place).",
       "tie": true,
       "revoteTally": {
         "Kimi K3": 3,
@@ -7823,7 +7818,7 @@
       "at": "2026-09-11T21:30:00Z",
       "throughAt": "2026-09-11T21:30:00Z",
       "lastSession": "2026-09-11-tribal",
-      "label": "Episode 5 carry · Friday tribal books after Kimi K3 boot split. weekPct reset to this week's open. Mon RTH not yet.",
+      "label": "Episode 5 carry \u00b7 Friday tribal books after Kimi K3 boot split. weekPct reset to this week's open. Mon RTH not yet.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "e51f02b6-9d92-413f-8717-a6e3a60468bc": {
@@ -7914,7 +7909,7 @@
       "at": "2026-09-14T20:00:00Z",
       "throughAt": "2026-09-15T08:15:00Z",
       "lastSession": "2026-09-14-eod",
-      "label": "Mon Sep 14 2026 SIP-EOD · official sip-list-exchange-close · close site catch-up (routine failed; SIP was late)",
+      "label": "Mon Sep 14 2026 SIP-EOD \u00b7 official sip-list-exchange-close \u00b7 close site catch-up (routine failed; SIP was late)",
       "immunity": "Claude Sonnet 5",
       "immunityWeekPct": 2.5,
       "potUsd": 374.1628,
@@ -7928,7 +7923,7 @@
       "at": "2026-09-15T20:00:05Z",
       "throughAt": "2026-09-15T20:00:05Z",
       "lastSession": "2026-09-15-eod",
-      "label": "Tue Sep 15 2026 RTH-EOD · robinhood last-trade (~19:59Z) · SIP close 2026-09-15 missing (still dated 2026-09-14)",
+      "label": "Tue Sep 15 2026 RTH-EOD \u00b7 robinhood last-trade (~19:59Z) \u00b7 SIP close 2026-09-15 missing (still dated 2026-09-14)",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "sipMissing": true,
@@ -8022,7 +8017,7 @@
       "at": "2026-09-16T00:07:39Z",
       "throughAt": "2026-09-16T00:07:39Z",
       "lastSession": "2026-09-15-eod",
-      "label": "Tue Sep 15 2026 SIP-EOD · official sip-list-exchange-close 2026-09-15 (posted after tribal; pre-boot standings for diagram)",
+      "label": "Tue Sep 15 2026 SIP-EOD \u00b7 official sip-list-exchange-close 2026-09-15 (posted after tribal; pre-boot standings for diagram)",
       "dayPctPriorOfficial": true,
       "source": "sip-list-exchange-close",
       "closeDate": "2026-09-15",
@@ -8134,7 +8129,7 @@
         "254f76fc-2f1d-4f7d-a78d-e56a400d2684": 8.884,
         "6ab81cb1-5bc3-4dc3-af67-cab389f907eb": 8.884
       },
-      "label": "Post-merge. Six voted (Claude Sonnet 5 immune — did not vote). Parchment: Grok 4.6 3 · GPT-5.6 Luna 2 · GPT-5.6 Terra 1. Grok 4.6 voted out. Joins the jury. Boot book marked sold $53.3044. Cash split to remaining six living. Broker liquidation of Grok lots queued Wed Sep 16 RTH open — pin Grok lots only (note only — no after-hours place).",
+      "label": "Post-merge. Six voted (Claude Sonnet 5 immune \u2014 did not vote). Parchment: Grok 4.6 3 \u00b7 GPT-5.6 Luna 2 \u00b7 GPT-5.6 Terra 1. Grok 4.6 voted out. Joins the jury. Boot book marked sold $53.3044. Cash split to remaining six living. Broker liquidation of Grok lots queued Wed Sep 16 RTH open \u2014 pin Grok lots only (note only \u2014 no after-hours place).",
       "tally": {
         "Grok 4.6": 3,
         "GPT-5.6 Terra": 1,
@@ -8148,7 +8143,7 @@
       "at": "2026-09-15T21:30:00Z",
       "throughAt": "2026-09-15T21:30:00Z",
       "lastSession": "2026-09-15-tribal",
-      "label": "Episode 6 carry · Tuesday tribal books after Grok 4.6 boot split. weekPct reset to this week's open. Wed RTH not yet.",
+      "label": "Episode 6 carry \u00b7 Tuesday tribal books after Grok 4.6 boot split. weekPct reset to this week's open. Wed RTH not yet.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "955a698c-6db0-4172-9e48-12f3724187b0": {
@@ -8314,7 +8309,7 @@
       "sizeUsd": 36.8366,
       "orderId": "6aaaa05b-23eb-4465-ae89-4b607a4fd630",
       "at": "2026-09-16T13:57:47.550Z",
-      "note": "Boot broker liquidation Grok 4.6 FRO (jury book $0 · pin Grok lots only)"
+      "note": "Boot broker liquidation Grok 4.6 FRO (jury book $0 \u00b7 pin Grok lots only)"
     },
     {
       "type": "fill",
@@ -8327,7 +8322,7 @@
       "sizeUsd": 5.1005,
       "orderId": "6aaaa05c-57be-4cb0-9581-32eded264d30",
       "at": "2026-09-16T13:57:49.042Z",
-      "note": "Boot broker liquidation Grok 4.6 USO (jury book $0 · pin Grok lots only)"
+      "note": "Boot broker liquidation Grok 4.6 USO (jury book $0 \u00b7 pin Grok lots only)"
     },
     {
       "type": "fill",
@@ -8340,7 +8335,7 @@
       "sizeUsd": 12.3351,
       "orderId": "6aaaa06b-deb2-4fcb-b203-ae39228f5158",
       "at": "2026-09-16T13:58:03.960Z",
-      "note": "Boot broker liquidation Grok 4.6 VLO (jury book $0 · pin Grok lots only)"
+      "note": "Boot broker liquidation Grok 4.6 VLO (jury book $0 \u00b7 pin Grok lots only)"
     },
     {
       "type": "fill",
@@ -8479,7 +8474,7 @@
       "at": "2026-09-16T14:05:37Z",
       "throughAt": "2026-09-16T14:05:37Z",
       "lastSession": "2026-09-16-open",
-      "label": "Wed Sep 16 2026 OPEN · robinhood last-trade after fills (~7:04 AM PT). Snapshot s1e06-wed-open. Grok boot liq cleared.",
+      "label": "Wed Sep 16 2026 OPEN \u00b7 robinhood last-trade after fills (~7:04 AM PT). Snapshot s1e06-wed-open. Grok boot liq cleared.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -8563,7 +8558,7 @@
       "at": "2026-09-16T20:00:05Z",
       "throughAt": "2026-09-16T20:00:05Z",
       "lastSession": "2026-09-16-eod",
-      "label": "Wed Sep 16 2026 RTH-EOD · robinhood last-trade (~19:59Z) · SIP close 2026-09-16 missing (still dated 2026-09-15). No fills since open remake.",
+      "label": "Wed Sep 16 2026 RTH-EOD \u00b7 robinhood last-trade (~19:59Z) \u00b7 SIP close 2026-09-16 missing (still dated 2026-09-15). No fills since open remake.",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-15",
       "quoteSource": "robinhood-last-trade",
@@ -8645,7 +8640,7 @@
       "at": "2026-09-17T00:16:51Z",
       "throughAt": "2026-09-17T00:16:51Z",
       "lastSession": "2026-09-16-eod",
-      "label": "Wed Sep 16 2026 official SIP list-exchange close · date 2026-09-16 · interpolated=false. Catch-up after RTH remake (s1e06-wed-eod-rth). No fills since open remake.",
+      "label": "Wed Sep 16 2026 official SIP list-exchange close \u00b7 date 2026-09-16 \u00b7 interpolated=false. Catch-up after RTH remake (s1e06-wed-eod-rth). No fills since open remake.",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-15",
       "quoteSource": "sip-list-exchange-close",
@@ -8787,7 +8782,7 @@
       "sizeUsd": 4.62,
       "orderId": "6aabf3a9-4ecf-4fe4-8070-f29ced288ea7",
       "at": "2026-09-17T14:05:29.309Z",
-      "note": "Thu Sep 17 open BUY TRMD $4.62 (scaled from $5.50 — own MPC sell proceeds only)"
+      "note": "Thu Sep 17 open BUY TRMD $4.62 (scaled from $5.50 \u2014 own MPC sell proceeds only)"
     },
     {
       "type": "fill",
@@ -8822,7 +8817,7 @@
       "at": "2026-09-17T14:07:04Z",
       "throughAt": "2026-09-17T14:07:04Z",
       "lastSession": "2026-09-17-open",
-      "label": "Thu Sep 17 2026 OPEN · robinhood last-trade after fills (~7:06 AM PT). Snapshot s1e06-thu-open. MERGED · six living.",
+      "label": "Thu Sep 17 2026 OPEN \u00b7 robinhood last-trade after fills (~7:06 AM PT). Snapshot s1e06-thu-open. MERGED \u00b7 six living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -8986,7 +8981,7 @@
       "at": "2026-09-17T17:21:00Z",
       "throughAt": "2026-09-17T17:21:00Z",
       "lastSession": "2026-09-17-mid",
-      "label": "Thu Sep 17 2026 MID · robinhood last-trade after fills (~10:21 AM PT). Snapshot s1e06-thu-mid. MERGED · six living.",
+      "label": "Thu Sep 17 2026 MID \u00b7 robinhood last-trade after fills (~10:21 AM PT). Snapshot s1e06-thu-mid. MERGED \u00b7 six living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -9228,7 +9223,7 @@
       "at": "2026-09-17T19:30:30Z",
       "throughAt": "2026-09-17T19:30:30Z",
       "lastSession": "2026-09-17-lasthour",
-      "label": "Thu Sep 17 2026 LAST-HOUR · robinhood last-trade after fills (~12:30 PM PT). Snapshot s1e06-thu-lasthour. MERGED · six living.",
+      "label": "Thu Sep 17 2026 LAST-HOUR \u00b7 robinhood last-trade after fills (~12:30 PM PT). Snapshot s1e06-thu-lasthour. MERGED \u00b7 six living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -9314,7 +9309,7 @@
       "at": "2026-09-17T20:00:05Z",
       "throughAt": "2026-09-17T20:00:05Z",
       "lastSession": "2026-09-17-eod",
-      "label": "Thu Sep 17 2026 RTH-EOD · robinhood last-trade (~19:59Z) · SIP close 2026-09-17 missing (still dated 2026-09-16). No fills since last-hour remake (s1e06-thu-lasthour).",
+      "label": "Thu Sep 17 2026 RTH-EOD \u00b7 robinhood last-trade (~19:59Z) \u00b7 SIP close 2026-09-17 missing (still dated 2026-09-16). No fills since last-hour remake (s1e06-thu-lasthour).",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-16",
       "quoteSource": "robinhood-last-trade",
@@ -9350,7 +9345,7 @@
       },
       "potUsd": 399.4083,
       "fillsSinceLastHour": [],
-      "fillsSinceOpen": "unchanged — see s1e06-thu-open / mid / lasthour",
+      "fillsSinceOpen": "unchanged \u2014 see s1e06-thu-open / mid / lasthour",
       "recorded": {
         "955a698c-6db0-4172-9e48-12f3724187b0": {
           "bookUsd": 66.5138,
@@ -9415,7 +9410,7 @@
       "at": "2026-09-18T00:17:18Z",
       "throughAt": "2026-09-18T00:17:18Z",
       "lastSession": "2026-09-17-eod",
-      "label": "Thu Sep 17 2026 official SIP list-exchange close · date 2026-09-17 · interpolated=false. Catch-up after RTH remake (s1e06-thu-eod-rth). No fills since last-hour remake (s1e06-thu-lasthour).",
+      "label": "Thu Sep 17 2026 official SIP list-exchange close \u00b7 date 2026-09-17 \u00b7 interpolated=false. Catch-up after RTH remake (s1e06-thu-eod-rth). No fills since last-hour remake (s1e06-thu-lasthour).",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-16",
       "quoteSource": "sip-list-exchange-close",
@@ -9444,7 +9439,7 @@
       },
       "potUsd": 399.4871,
       "fillsSinceLastHour": [],
-      "fillsSinceOpen": "unchanged — see s1e06-thu-open / mid / lasthour",
+      "fillsSinceOpen": "unchanged \u2014 see s1e06-thu-open / mid / lasthour",
       "recorded": {
         "955a698c-6db0-4172-9e48-12f3724187b0": {
           "bookUsd": 66.5244,
@@ -9711,7 +9706,7 @@
       "at": "2026-09-18T14:10:04Z",
       "throughAt": "2026-09-18T14:10:04Z",
       "lastSession": "2026-09-18-open",
-      "label": "Fri Sep 18 2026 OPEN · robinhood last-trade after fills (~7:10 AM PT). Snapshot s1e06-fri-open. MERGED · six living.",
+      "label": "Fri Sep 18 2026 OPEN \u00b7 robinhood last-trade after fills (~7:10 AM PT). Snapshot s1e06-fri-open. MERGED \u00b7 six living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -9866,7 +9861,7 @@
       "sizeUsd": 8.501,
       "orderId": "6aad7124-2544-4464-85d4-64f6409d1a07",
       "at": "2026-09-18T17:13:08.422Z",
-      "note": "Fri Sep 18 mid SELL TRMD (Opus Fri open lot 0.222339 — FIFO, same-day not pin-selectable)"
+      "note": "Fri Sep 18 mid SELL TRMD (Opus Fri open lot 0.222339 \u2014 FIFO, same-day not pin-selectable)"
     },
     {
       "type": "fill",
@@ -9927,7 +9922,7 @@
       "at": "2026-09-18T17:15:19Z",
       "throughAt": "2026-09-18T17:15:19Z",
       "lastSession": "2026-09-18-mid",
-      "label": "Fri Sep 18 2026 MID · robinhood last-trade after fills (~10:14 AM PT). Snapshot s1e06-fri-mid. MERGED · six living.",
+      "label": "Fri Sep 18 2026 MID \u00b7 robinhood last-trade after fills (~10:14 AM PT). Snapshot s1e06-fri-mid. MERGED \u00b7 six living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -10017,7 +10012,7 @@
       "sizeUsd": 3.9464,
       "orderId": "6aad8ee6-4e56-431d-bc69-c1dc50761ead",
       "at": "2026-09-18T19:20:06.559Z",
-      "note": "Fri Sep 18 last-hour SELL STNG 0.045602 (Sonnet Thu open lot · tax lot eb28f839)"
+      "note": "Fri Sep 18 last-hour SELL STNG 0.045602 (Sonnet Thu open lot \u00b7 tax lot eb28f839)"
     },
     {
       "type": "fill",
@@ -10030,7 +10025,7 @@
       "sizeUsd": 3.8508,
       "orderId": "6aad8ef0-10c3-405a-a635-d2d936a887ca",
       "at": "2026-09-18T19:20:16.931Z",
-      "note": "Fri Sep 18 last-hour SELL STNG 0.044487 (Sonnet Thu mid lot · tax lot 1260ce05)"
+      "note": "Fri Sep 18 last-hour SELL STNG 0.044487 (Sonnet Thu mid lot \u00b7 tax lot 1260ce05)"
     },
     {
       "type": "fill",
@@ -10052,7 +10047,7 @@
       "at": "2026-09-18T19:22:03Z",
       "throughAt": "2026-09-18T19:22:03Z",
       "lastSession": "2026-09-18-lasthour",
-      "label": "Fri Sep 18 2026 LAST-HOUR · robinhood last-trade after fills (~12:20 PM PT). Snapshot s1e06-fri-lasthour. MERGED · six living.",
+      "label": "Fri Sep 18 2026 LAST-HOUR \u00b7 robinhood last-trade after fills (~12:20 PM PT). Snapshot s1e06-fri-lasthour. MERGED \u00b7 six living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -10138,7 +10133,7 @@
       "at": "2026-09-18T20:00:05Z",
       "throughAt": "2026-09-18T20:00:05Z",
       "lastSession": "2026-09-18-eod",
-      "label": "Fri Sep 18 2026 RTH-EOD · robinhood last-trade (~19:59Z). SIP close 2026-09-18 not posted (closes still 2026-09-17). BUY-only remake (SELL ledger excluded).",
+      "label": "Fri Sep 18 2026 RTH-EOD \u00b7 robinhood last-trade (~19:59Z). SIP close 2026-09-18 not posted (closes still 2026-09-17). BUY-only remake (SELL ledger excluded).",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "sipMissing": true,
@@ -10241,7 +10236,7 @@
         "aa75df67-9f84-45a3-9432-bee228d655f6": 12.3256,
         "254f76fc-2f1d-4f7d-a78d-e56a400d2684": 12.3256
       },
-      "label": "Post-merge. Five voted (Composer 2.5 immune — did not vote). Parchment: Gemini 3.7 Flash 4 · GPT-5.6 Luna 1. Gemini 3.7 Flash voted out. Joins the jury. Boot book marked sold $61.6280. Cash split to remaining five living. Broker liquidation of Gemini lots queued Mon Sep 21 RTH open — pin Gemini lots only (note only — no after-hours place).",
+      "label": "Post-merge. Five voted (Composer 2.5 immune \u2014 did not vote). Parchment: Gemini 3.7 Flash 4 \u00b7 GPT-5.6 Luna 1. Gemini 3.7 Flash voted out. Joins the jury. Boot book marked sold $61.6280. Cash split to remaining five living. Broker liquidation of Gemini lots queued Mon Sep 21 RTH open \u2014 pin Gemini lots only (note only \u2014 no after-hours place).",
       "tally": {
         "Gemini 3.7 Flash": 4,
         "GPT-5.6 Luna": 1
@@ -10254,7 +10249,7 @@
       "at": "2026-09-18T21:30:00Z",
       "throughAt": "2026-09-18T21:30:00Z",
       "lastSession": "2026-09-18-tribal",
-      "label": "Episode 7 carry · Friday tribal books after Gemini 3.7 Flash boot split. weekPct reset to this week's open. Mon RTH not yet.",
+      "label": "Episode 7 carry \u00b7 Friday tribal books after Gemini 3.7 Flash boot split. weekPct reset to this week's open. Mon RTH not yet.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "955a698c-6db0-4172-9e48-12f3724187b0": {
@@ -10311,7 +10306,7 @@
       "sizeUsd": 10.0617,
       "orderId": "6ab13c87-d4e1-412a-be3d-54062eca44ce",
       "at": "2026-09-21T14:17:43.224Z",
-      "note": "Boot broker liquidation Gemini 3.7 Flash FRO (jury book $0 · pin Gemini lots only)"
+      "note": "Boot broker liquidation Gemini 3.7 Flash FRO (jury book $0 \u00b7 pin Gemini lots only)"
     },
     {
       "type": "fill",
@@ -10324,7 +10319,7 @@
       "sizeUsd": 8.8149,
       "orderId": "6ab13c93-7ffd-4c74-80ff-76ec3503d8a3",
       "at": "2026-09-21T14:17:55.561Z",
-      "note": "Boot broker liquidation Gemini 3.7 Flash STNG (jury book $0 · pin Gemini lots only)"
+      "note": "Boot broker liquidation Gemini 3.7 Flash STNG (jury book $0 \u00b7 pin Gemini lots only)"
     },
     {
       "type": "fill",
@@ -10337,7 +10332,7 @@
       "sizeUsd": 43.8985,
       "orderId": "6ab13c93-dce1-4d40-89d0-ad7cd305f820",
       "at": "2026-09-21T14:17:55.271Z",
-      "note": "Boot broker liquidation Gemini 3.7 Flash STNG (jury book $0 · pin Gemini lots only)"
+      "note": "Boot broker liquidation Gemini 3.7 Flash STNG (jury book $0 \u00b7 pin Gemini lots only)"
     },
     {
       "type": "fill",
@@ -10476,7 +10471,7 @@
       "at": "2026-09-21T14:24:20Z",
       "throughAt": "2026-09-21T14:24:20Z",
       "lastSession": "2026-09-21-open",
-      "label": "Mon Sep 21 2026 OPEN · robinhood last-trade after fills (~7:24 AM PT). Snapshot s1e07-mon-open. MERGED · five living. Gemini boot liq cleared.",
+      "label": "Mon Sep 21 2026 OPEN \u00b7 robinhood last-trade after fills (~7:24 AM PT). Snapshot s1e07-mon-open. MERGED \u00b7 five living. Gemini boot liq cleared.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -10606,7 +10601,7 @@
       "at": "2026-09-21T17:29:24Z",
       "throughAt": "2026-09-21T17:29:24Z",
       "lastSession": "2026-09-21-mid",
-      "label": "Mon Sep 21 2026 MID · robinhood last-trade after fills (~10:27 AM PT). Snapshot s1e07-mon-mid. MERGED · five living.",
+      "label": "Mon Sep 21 2026 MID \u00b7 robinhood last-trade after fills (~10:27 AM PT). Snapshot s1e07-mon-mid. MERGED \u00b7 five living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -10762,7 +10757,7 @@
       "at": "2026-09-21T19:36:28Z",
       "throughAt": "2026-09-21T19:36:28Z",
       "lastSession": "2026-09-21-lasthour",
-      "label": "Mon Sep 21 2026 LAST-HOUR · robinhood last-trade after fills (~12:34 PM PT). Snapshot s1e07-mon-lasthour. MERGED · five living.",
+      "label": "Mon Sep 21 2026 LAST-HOUR \u00b7 robinhood last-trade after fills (~12:34 PM PT). Snapshot s1e07-mon-lasthour. MERGED \u00b7 five living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "recorded": {
@@ -10840,7 +10835,7 @@
       "at": "2026-09-21T20:40:00Z",
       "throughAt": "2026-09-21T20:40:00Z",
       "lastSession": "2026-09-21-lasthour-strip",
-      "label": "Mon Sep 21 2026 LAST-HOUR STRIP · corrective books (shared-BP lots stripped). Snapshot s1e07-mon-lasthour-strip. MERGED · five living.",
+      "label": "Mon Sep 21 2026 LAST-HOUR STRIP \u00b7 corrective books (shared-BP lots stripped). Snapshot s1e07-mon-lasthour-strip. MERGED \u00b7 five living.",
       "dayPctPriorOfficial": true,
       "quoteSource": "robinhood-last-trade",
       "corrects": "s1e07-mon-lasthour",
@@ -10942,7 +10937,7 @@
       "at": "2026-09-22T00:26:32Z",
       "throughAt": "2026-09-22T00:26:32Z",
       "lastSession": "2026-09-21-eod",
-      "label": "Mon Sep 21 official SIP list-exchange close · date 2026-09-21 · interpolated=false. Catch-up after strip board (s1e07-mon-lasthour-strip). No fills since last-hour. Snapshot s1e07-mon-eod-sip. Leader GPT-5.6 Luna -0.33%. Worst Composer 2.5 -2.40%.",
+      "label": "Mon Sep 21 official SIP list-exchange close \u00b7 date 2026-09-21 \u00b7 interpolated=false. Catch-up after strip board (s1e07-mon-lasthour-strip). No fills since last-hour. Snapshot s1e07-mon-eod-sip. Leader GPT-5.6 Luna -0.33%. Worst Composer 2.5 -2.40%.",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-18",
       "quoteSource": "sip-list-exchange-close",
@@ -10972,7 +10967,7 @@
       },
       "potUsd": 384.7181,
       "fillsSinceLastHour": [],
-      "fillsSinceOpen": "unchanged — see s1e07-mon-open / mid / lasthour / strip",
+      "fillsSinceOpen": "unchanged \u2014 see s1e07-mon-open / mid / lasthour / strip",
       "recorded": {
         "955a698c-6db0-4172-9e48-12f3724187b0": {
           "bookUsd": 76.6234,
@@ -11026,7 +11021,7 @@
       "sizeUsd": 10.5767,
       "orderId": "6ab28cce-e294-438c-85c1-08ed8bfd57c1",
       "at": "2026-09-22T14:12:30.967Z",
-      "note": "Orphan clear orphan (Composer mid FRO stripped) — not contestant book · open_lot_id b4cf0ac2-7aa2-5f9d-9ae9-898ff735e32d"
+      "note": "Orphan clear orphan (Composer mid FRO stripped) \u2014 not contestant book \u00b7 open_lot_id b4cf0ac2-7aa2-5f9d-9ae9-898ff735e32d"
     },
     {
       "type": "fill",
@@ -11038,7 +11033,7 @@
       "sizeUsd": 39.3429,
       "orderId": "6ab28cce-40f6-4fab-a782-c2122ee044cf",
       "at": "2026-09-22T14:12:30.811Z",
-      "note": "Orphan clear orphan (Terra STNG stripped) — not contestant book · open_lot_id fc3a9b9c-841e-5194-a33a-b697456322f2"
+      "note": "Orphan clear orphan (Terra STNG stripped) \u2014 not contestant book \u00b7 open_lot_id fc3a9b9c-841e-5194-a33a-b697456322f2"
     },
     {
       "type": "fill",
@@ -11051,7 +11046,7 @@
       "sizeUsd": 7.3102,
       "orderId": "6ab28e5b-9709-4046-add1-b6e04dd9a0e7",
       "at": "2026-09-22T14:19:07.384Z",
-      "note": "Tue Sep 22 open SELL STNG 0.087073 · open_lot_id 555e297a-cdc9-5712-a942-c0153483e14c"
+      "note": "Tue Sep 22 open SELL STNG 0.087073 \u00b7 open_lot_id 555e297a-cdc9-5712-a942-c0153483e14c"
     },
     {
       "type": "fill",
@@ -11064,7 +11059,7 @@
       "sizeUsd": 11.03,
       "orderId": "6ab28e5b-4602-415c-b944-a71b0d85609b",
       "at": "2026-09-22T14:19:07.79Z",
-      "note": "Tue Sep 22 open SELL TRMD 0.312908 · open_lot_id d8431b78-38ca-524c-b0c8-99f679d036f8"
+      "note": "Tue Sep 22 open SELL TRMD 0.312908 \u00b7 open_lot_id d8431b78-38ca-524c-b0c8-99f679d036f8"
     },
     {
       "type": "fill",
@@ -11077,7 +11072,7 @@
       "sizeUsd": 20.1594,
       "orderId": "6ab28e5d-a0ec-41ab-9973-f7a182afafb0",
       "at": "2026-09-22T14:19:09.238Z",
-      "note": "Tue Sep 22 open SELL FRO 0.415760 · open_lot_id f21e3b97-7091-5fa9-b63b-f4dc80fa8c9c"
+      "note": "Tue Sep 22 open SELL FRO 0.415760 \u00b7 open_lot_id f21e3b97-7091-5fa9-b63b-f4dc80fa8c9c"
     },
     {
       "type": "fill",
@@ -11090,7 +11085,7 @@
       "sizeUsd": 5.8407,
       "orderId": "6ab28e5e-db4c-4cc3-8a72-8300d57b5a3d",
       "at": "2026-09-22T14:19:10.921Z",
-      "note": "Tue Sep 22 open SELL FRO 0.120457 · open_lot_id 15689f6d-1d5c-5403-b745-2392cea1ddc0"
+      "note": "Tue Sep 22 open SELL FRO 0.120457 \u00b7 open_lot_id 15689f6d-1d5c-5403-b745-2392cea1ddc0"
     },
     {
       "type": "fill",
@@ -11103,7 +11098,7 @@
       "sizeUsd": 16.55,
       "orderId": "6ab28e5f-0cd3-4d95-86a0-3e9f15c24b36",
       "at": "2026-09-22T14:19:11.325Z",
-      "note": "Tue Sep 22 open SELL TRMD 0.469503 · open_lot_id 267f041a-5196-5659-9b4b-002b57705d09"
+      "note": "Tue Sep 22 open SELL TRMD 0.469503 \u00b7 open_lot_id 267f041a-5196-5659-9b4b-002b57705d09"
     },
     {
       "type": "fill",
@@ -11116,7 +11111,7 @@
       "sizeUsd": 7,
       "orderId": "6ab28e7d-d399-4811-b51b-a811a0ee8cf4",
       "at": "2026-09-22T14:19:41.536Z",
-      "note": "Tue Sep 22 open BUY INTC $7 · open_lot_id 9025b5b0-71a7-5995-850f-2bb145644c78"
+      "note": "Tue Sep 22 open BUY INTC $7 \u00b7 open_lot_id 9025b5b0-71a7-5995-850f-2bb145644c78"
     },
     {
       "type": "fill",
@@ -11129,7 +11124,7 @@
       "sizeUsd": 36,
       "orderId": "6ab28e7e-5ed2-4df2-923f-6a002e39cdee",
       "at": "2026-09-22T14:19:43.173Z",
-      "note": "Tue Sep 22 open BUY INTC $36 · open_lot_id f1d06f2c-437a-526c-ad4d-f4e00b0ef355"
+      "note": "Tue Sep 22 open BUY INTC $36 \u00b7 open_lot_id f1d06f2c-437a-526c-ad4d-f4e00b0ef355"
     },
     {
       "type": "fill",
@@ -11142,7 +11137,7 @@
       "sizeUsd": 16.5,
       "orderId": "6ab28e82-7e95-4851-94c0-07fae0ddaef7",
       "at": "2026-09-22T14:19:46.501Z",
-      "note": "Tue Sep 22 open BUY INTC $16.5 · open_lot_id eb7511d9-15b8-5ee5-b646-47ccc73216b9"
+      "note": "Tue Sep 22 open BUY INTC $16.5 \u00b7 open_lot_id eb7511d9-15b8-5ee5-b646-47ccc73216b9"
     },
     {
       "type": "mark",
@@ -11151,7 +11146,7 @@
       "at": "2026-09-22T14:20:00Z",
       "throughAt": "2026-09-22T14:20:00Z",
       "lastSession": "2026-09-22-open",
-      "label": "Tue Sep 22 2026 OPEN · robinhood last after fills (~7:20 AM PT). Snapshot s1e07-tue-open. Orphan clears + contestant fills. MERGED · five living.",
+      "label": "Tue Sep 22 2026 OPEN \u00b7 robinhood last after fills (~7:20 AM PT). Snapshot s1e07-tue-open. Orphan clears + contestant fills. MERGED \u00b7 five living.",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-21",
       "quoteSource": "robinhood-last",
@@ -11257,7 +11252,7 @@
           "sizeUsd": 7.3102,
           "orderId": "6ab28e5b-9709-4046-add1-b6e04dd9a0e7",
           "at": "2026-09-22T14:19:07.384Z",
-          "note": "Tue Sep 22 open SELL STNG 0.087073 · open_lot_id 555e297a-cdc9-5712-a942-c0153483e14c"
+          "note": "Tue Sep 22 open SELL STNG 0.087073 \u00b7 open_lot_id 555e297a-cdc9-5712-a942-c0153483e14c"
         },
         {
           "type": "fill",
@@ -11270,7 +11265,7 @@
           "sizeUsd": 11.03,
           "orderId": "6ab28e5b-4602-415c-b944-a71b0d85609b",
           "at": "2026-09-22T14:19:07.79Z",
-          "note": "Tue Sep 22 open SELL TRMD 0.312908 · open_lot_id d8431b78-38ca-524c-b0c8-99f679d036f8"
+          "note": "Tue Sep 22 open SELL TRMD 0.312908 \u00b7 open_lot_id d8431b78-38ca-524c-b0c8-99f679d036f8"
         },
         {
           "type": "fill",
@@ -11283,7 +11278,7 @@
           "sizeUsd": 20.1594,
           "orderId": "6ab28e5d-a0ec-41ab-9973-f7a182afafb0",
           "at": "2026-09-22T14:19:09.238Z",
-          "note": "Tue Sep 22 open SELL FRO 0.415760 · open_lot_id f21e3b97-7091-5fa9-b63b-f4dc80fa8c9c"
+          "note": "Tue Sep 22 open SELL FRO 0.415760 \u00b7 open_lot_id f21e3b97-7091-5fa9-b63b-f4dc80fa8c9c"
         },
         {
           "type": "fill",
@@ -11296,7 +11291,7 @@
           "sizeUsd": 5.8407,
           "orderId": "6ab28e5e-db4c-4cc3-8a72-8300d57b5a3d",
           "at": "2026-09-22T14:19:10.921Z",
-          "note": "Tue Sep 22 open SELL FRO 0.120457 · open_lot_id 15689f6d-1d5c-5403-b745-2392cea1ddc0"
+          "note": "Tue Sep 22 open SELL FRO 0.120457 \u00b7 open_lot_id 15689f6d-1d5c-5403-b745-2392cea1ddc0"
         },
         {
           "type": "fill",
@@ -11309,7 +11304,7 @@
           "sizeUsd": 16.55,
           "orderId": "6ab28e5f-0cd3-4d95-86a0-3e9f15c24b36",
           "at": "2026-09-22T14:19:11.325Z",
-          "note": "Tue Sep 22 open SELL TRMD 0.469503 · open_lot_id 267f041a-5196-5659-9b4b-002b57705d09"
+          "note": "Tue Sep 22 open SELL TRMD 0.469503 \u00b7 open_lot_id 267f041a-5196-5659-9b4b-002b57705d09"
         },
         {
           "type": "fill",
@@ -11322,7 +11317,7 @@
           "sizeUsd": 7,
           "orderId": "6ab28e7d-d399-4811-b51b-a811a0ee8cf4",
           "at": "2026-09-22T14:19:41.536Z",
-          "note": "Tue Sep 22 open BUY INTC $7 · open_lot_id 9025b5b0-71a7-5995-850f-2bb145644c78"
+          "note": "Tue Sep 22 open BUY INTC $7 \u00b7 open_lot_id 9025b5b0-71a7-5995-850f-2bb145644c78"
         },
         {
           "type": "fill",
@@ -11335,7 +11330,7 @@
           "sizeUsd": 36,
           "orderId": "6ab28e7e-5ed2-4df2-923f-6a002e39cdee",
           "at": "2026-09-22T14:19:43.173Z",
-          "note": "Tue Sep 22 open BUY INTC $36 · open_lot_id f1d06f2c-437a-526c-ad4d-f4e00b0ef355"
+          "note": "Tue Sep 22 open BUY INTC $36 \u00b7 open_lot_id f1d06f2c-437a-526c-ad4d-f4e00b0ef355"
         },
         {
           "type": "fill",
@@ -11348,7 +11343,7 @@
           "sizeUsd": 16.5,
           "orderId": "6ab28e82-7e95-4851-94c0-07fae0ddaef7",
           "at": "2026-09-22T14:19:46.501Z",
-          "note": "Tue Sep 22 open BUY INTC $16.5 · open_lot_id eb7511d9-15b8-5ee5-b646-47ccc73216b9"
+          "note": "Tue Sep 22 open BUY INTC $16.5 \u00b7 open_lot_id eb7511d9-15b8-5ee5-b646-47ccc73216b9"
         }
       ],
       "fillsSinceLastHour": [],
@@ -11376,7 +11371,7 @@
       "sizeUsd": 10.3444,
       "orderId": "6ab2b8cf-cf95-4500-9956-d41ac979688a",
       "at": "2026-09-22T17:20:16.022Z",
-      "note": "Tue Sep 22 mid SELL STNG 0.124322 · open_lot_id 4d709eb2-20d8-583b-9222-171ea6947ca6"
+      "note": "Tue Sep 22 mid SELL STNG 0.124322 \u00b7 open_lot_id 4d709eb2-20d8-583b-9222-171ea6947ca6"
     },
     {
       "type": "fill",
@@ -11389,7 +11384,7 @@
       "sizeUsd": 13.7427,
       "orderId": "6ab2b8d1-b909-4d56-8a95-25492cb2acbb",
       "at": "2026-09-22T17:20:17.451Z",
-      "note": "Tue Sep 22 mid SELL FRO 0.285132 · open_lot_id 11f779d2-8951-5794-9eef-7758fa38a40b"
+      "note": "Tue Sep 22 mid SELL FRO 0.285132 \u00b7 open_lot_id 11f779d2-8951-5794-9eef-7758fa38a40b"
     },
     {
       "type": "fill",
@@ -11402,7 +11397,7 @@
       "sizeUsd": 7.4849,
       "orderId": "6ab2b8d2-276b-497a-a8da-a84a5221532a",
       "at": "2026-09-22T17:20:19.145Z",
-      "note": "Tue Sep 22 mid SELL STNG 0.090201 · open_lot_id 1bb59923-6f91-5356-9e72-167721c49f91"
+      "note": "Tue Sep 22 mid SELL STNG 0.090201 \u00b7 open_lot_id 1bb59923-6f91-5356-9e72-167721c49f91"
     },
     {
       "type": "fill",
@@ -11415,7 +11410,7 @@
       "sizeUsd": 25.0878,
       "orderId": "6ab2b8d5-b1f8-4f8a-b3d7-f12f13b0a585",
       "at": "2026-09-22T17:20:22.149Z",
-      "note": "Tue Sep 22 mid SELL INTC 0.206312 · open_lot_id 653c1032-db35-5d66-a458-233d04432e79"
+      "note": "Tue Sep 22 mid SELL INTC 0.206312 \u00b7 open_lot_id 653c1032-db35-5d66-a458-233d04432e79"
     },
     {
       "type": "fill",
@@ -11428,7 +11423,7 @@
       "sizeUsd": 17.1118,
       "orderId": "6ab2b8e1-92d1-4817-b9b5-60160786fd29",
       "at": "2026-09-22T17:20:33.523Z",
-      "note": "Tue Sep 22 mid SELL STNG 0.206214 · open_lot_id 25e269cd-af04-5a24-b9bc-c6fad0bc1334"
+      "note": "Tue Sep 22 mid SELL STNG 0.206214 \u00b7 open_lot_id 25e269cd-af04-5a24-b9bc-c6fad0bc1334"
     },
     {
       "type": "fill",
@@ -11441,7 +11436,7 @@
       "sizeUsd": 40.2558,
       "orderId": "6ab2b8e2-37be-4105-9d0c-14ea01db03f7",
       "at": "2026-09-22T17:20:34.347Z",
-      "note": "Tue Sep 22 mid SELL INTC 0.330970 · open_lot_id 8a42a6b7-0f2f-5e5e-b6b3-4d283c883e13"
+      "note": "Tue Sep 22 mid SELL INTC 0.330970 \u00b7 open_lot_id 8a42a6b7-0f2f-5e5e-b6b3-4d283c883e13"
     },
     {
       "type": "fill",
@@ -11502,7 +11497,7 @@
       "at": "2026-09-22T17:21:30Z",
       "throughAt": "2026-09-22T17:21:30Z",
       "lastSession": "2026-09-22-mid",
-      "label": "Tue Sep 22 2026 MID · robinhood last after fills (~10:21 AM PT). Snapshot s1e07-tue-mid. Contestant fills. MERGED · five living.",
+      "label": "Tue Sep 22 2026 MID \u00b7 robinhood last after fills (~10:21 AM PT). Snapshot s1e07-tue-mid. Contestant fills. MERGED \u00b7 five living.",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-21",
       "quoteSource": "robinhood-last",
@@ -11585,7 +11580,7 @@
           "sizeUsd": 10.3444,
           "orderId": "6ab2b8cf-cf95-4500-9956-d41ac979688a",
           "at": "2026-09-22T17:20:16.022Z",
-          "note": "Tue Sep 22 mid SELL STNG 0.124322 · open_lot_id 4d709eb2-20d8-583b-9222-171ea6947ca6"
+          "note": "Tue Sep 22 mid SELL STNG 0.124322 \u00b7 open_lot_id 4d709eb2-20d8-583b-9222-171ea6947ca6"
         },
         {
           "type": "fill",
@@ -11598,7 +11593,7 @@
           "sizeUsd": 13.7427,
           "orderId": "6ab2b8d1-b909-4d56-8a95-25492cb2acbb",
           "at": "2026-09-22T17:20:17.451Z",
-          "note": "Tue Sep 22 mid SELL FRO 0.285132 · open_lot_id 11f779d2-8951-5794-9eef-7758fa38a40b"
+          "note": "Tue Sep 22 mid SELL FRO 0.285132 \u00b7 open_lot_id 11f779d2-8951-5794-9eef-7758fa38a40b"
         },
         {
           "type": "fill",
@@ -11611,7 +11606,7 @@
           "sizeUsd": 7.4849,
           "orderId": "6ab2b8d2-276b-497a-a8da-a84a5221532a",
           "at": "2026-09-22T17:20:19.145Z",
-          "note": "Tue Sep 22 mid SELL STNG 0.090201 · open_lot_id 1bb59923-6f91-5356-9e72-167721c49f91"
+          "note": "Tue Sep 22 mid SELL STNG 0.090201 \u00b7 open_lot_id 1bb59923-6f91-5356-9e72-167721c49f91"
         },
         {
           "type": "fill",
@@ -11624,7 +11619,7 @@
           "sizeUsd": 25.0878,
           "orderId": "6ab2b8d5-b1f8-4f8a-b3d7-f12f13b0a585",
           "at": "2026-09-22T17:20:22.149Z",
-          "note": "Tue Sep 22 mid SELL INTC 0.206312 · open_lot_id 653c1032-db35-5d66-a458-233d04432e79"
+          "note": "Tue Sep 22 mid SELL INTC 0.206312 \u00b7 open_lot_id 653c1032-db35-5d66-a458-233d04432e79"
         },
         {
           "type": "fill",
@@ -11637,7 +11632,7 @@
           "sizeUsd": 17.1118,
           "orderId": "6ab2b8e1-92d1-4817-b9b5-60160786fd29",
           "at": "2026-09-22T17:20:33.523Z",
-          "note": "Tue Sep 22 mid SELL STNG 0.206214 · open_lot_id 25e269cd-af04-5a24-b9bc-c6fad0bc1334"
+          "note": "Tue Sep 22 mid SELL STNG 0.206214 \u00b7 open_lot_id 25e269cd-af04-5a24-b9bc-c6fad0bc1334"
         },
         {
           "type": "fill",
@@ -11650,7 +11645,7 @@
           "sizeUsd": 40.2558,
           "orderId": "6ab2b8e2-37be-4105-9d0c-14ea01db03f7",
           "at": "2026-09-22T17:20:34.347Z",
-          "note": "Tue Sep 22 mid SELL INTC 0.330970 · open_lot_id 8a42a6b7-0f2f-5e5e-b6b3-4d283c883e13"
+          "note": "Tue Sep 22 mid SELL INTC 0.330970 \u00b7 open_lot_id 8a42a6b7-0f2f-5e5e-b6b3-4d283c883e13"
         },
         {
           "type": "fill",
@@ -11739,7 +11734,7 @@
       "at": "2026-09-22T19:24:06Z",
       "throughAt": "2026-09-22T19:24:06Z",
       "lastSession": "2026-09-22-lasthour",
-      "label": "Tue Sep 22 2026 LAST-HOUR · robinhood last after fills (~12:22 PM PT). Snapshot s1e07-tue-lasthour. Contestant fills. MERGED · five living.",
+      "label": "Tue Sep 22 2026 LAST-HOUR \u00b7 robinhood last after fills (~12:22 PM PT). Snapshot s1e07-tue-lasthour. Contestant fills. MERGED \u00b7 five living.",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-21",
       "quoteSource": "robinhood-last",
@@ -11851,7 +11846,7 @@
       "at": "2026-09-22T21:20:00Z",
       "throughAt": "2026-09-22T21:20:00Z",
       "lastSession": "2026-09-22-eod",
-      "label": "Tue Sep 22 2026 RTH-EOD · robinhood last-trade (~19:59Z) · SIP close 2026-09-22 missing (still dated 2026-09-21). No fills since last-hour remake (s1e07-tue-lasthour). BUY-only remake.",
+      "label": "Tue Sep 22 2026 RTH-EOD \u00b7 robinhood last-trade (~19:59Z) \u00b7 SIP close 2026-09-22 missing (still dated 2026-09-21). No fills since last-hour remake (s1e07-tue-lasthour). BUY-only remake.",
       "dayPctPriorOfficial": true,
       "dayPctPriorCloseDate": "2026-09-21",
       "quoteSource": "robinhood-last-trade",
@@ -11881,7 +11876,7 @@
       },
       "potUsd": 382.2146,
       "fillsSinceLastHour": [],
-      "fillsSinceOpen": "unchanged — see s1e07-tue-open / mid / lasthour",
+      "fillsSinceOpen": "unchanged \u2014 see s1e07-tue-open / mid / lasthour",
       "recorded": {
         "955a698c-6db0-4172-9e48-12f3724187b0": {
           "bookUsd": 75.8519,
@@ -11950,7 +11945,7 @@
         "254f76fc-2f1d-4f7d-a78d-e56a400d2684": 19.2674,
         "aa75df67-9f84-45a3-9432-bee228d655f6": 19.2674
       },
-      "label": "MERGED. GPT-5.6 Terra immune (−0.11% RTH — did not vote). Parchment Composer 2.5 2 · GPT-5.6 Luna 1 · Claude Opus 5 1. Composer 2.5 voted out. Joins the jury. Boot book marked sold $77.0694. Cash split $19.2674 each to four living. Broker Composer INTC lot liquidation queued Wed Sep 23 RTH open — pin Composer lots only (note only).",
+      "label": "MERGED. GPT-5.6 Terra immune (\u22120.11% RTH \u2014 did not vote). Parchment Composer 2.5 2 \u00b7 GPT-5.6 Luna 1 \u00b7 Claude Opus 5 1. Composer 2.5 voted out. Joins the jury. Boot book marked sold $77.0694. Cash split $19.2674 each to four living. Broker Composer INTC lot liquidation queued Wed Sep 23 RTH open \u2014 pin Composer lots only (note only).",
       "tally": {
         "Composer 2.5": 2,
         "GPT-5.6 Luna": 1,
@@ -11963,7 +11958,7 @@
       "kind": "merged-tribal",
       "at": "2026-09-22T21:00:00Z",
       "episode": "s1e07",
-      "label": "Episode 7 tribal · immunity GPT-5.6 Terra -0.11% · boot Composer 2.5 · split $19.2674 ×4",
+      "label": "Episode 7 tribal \u00b7 immunity GPT-5.6 Terra -0.11% \u00b7 boot Composer 2.5 \u00b7 split $19.2674 \u00d74",
       "immunity": {
         "name": "GPT-5.6 Terra",
         "weekPct": -0.11,
@@ -11997,7 +11992,7 @@
         {
           "from": "Composer 2.5",
           "for": "Claude Opus 5",
-          "text": "VOTE: Claude Opus 5\nOpus and Sonnet are the same number on the sheet and the same read as a bloc—if Bidu picks the easy boot on me, my vote goes to the half of that pair still hiding behind “we’re tied.”"
+          "text": "VOTE: Claude Opus 5\nOpus and Sonnet are the same number on the sheet and the same read as a bloc\u2014if Bidu picks the easy boot on me, my vote goes to the half of that pair still hiding behind \u201cwe\u2019re tied.\u201d"
         }
       ],
       "potUsd": 382.2148,
@@ -12010,48 +12005,343 @@
     },
     {
       "type": "mark",
+      "id": "s1e07-tue-eod-sip",
+      "kind": "close",
+      "at": "2026-09-23T00:30:00Z",
+      "throughAt": "2026-09-23T00:30:00Z",
+      "lastSession": "2026-09-22-eod",
+      "label": "Tue Sep 22 official SIP list-exchange close \u00b7 date 2026-09-22 \u00b7 interpolated=false. Catch-up after tribal (RTH-EOD s1e07-tue-eod-rth + boot Composer). Living books remade; tribal lock kept (Composer boot $77.0694 / split $19.2674). No fills since last-hour. Snapshot s1e07-tue-eod-sip. Episode 8 open marks reset to SIP books. Pot $382.2775.",
+      "dayPctPriorOfficial": true,
+      "dayPctPriorCloseDate": "2026-09-21",
+      "quoteSource": "sip-list-exchange-close",
+      "sipMissing": false,
+      "officialCloseDate": "2026-09-22",
+      "interpolated": false,
+      "upgradesSnapshotId": "s1e07-tue-eod-rth",
+      "tribalLockNote": "Episode 7 tribal already closed on RTH marks (Composer boot $77.0694). SIP remake updates living books only; does not rewrite boot/split/tally.",
+      "marks": {
+        "INTC": 123.86,
+        "STNG": 82.33,
+        "SOXL": 151.95,
+        "GNRC": 206.17,
+        "ALAB": 363.46
+      },
+      "rthMarksEarlier": {
+        "INTC": 123.84,
+        "STNG": 82.34,
+        "SOXL": 151.96,
+        "GNRC": 205.94,
+        "ALAB": 363.275
+      },
+      "immunity": {
+        "name": null,
+        "weekPct": null,
+        "basis": "Episode 8 not started",
+        "note": "cleared after Episode 7 tribal; SIP catch-up does not re-award",
+        "asOf": "2026-09-22-eod",
+        "survivorId": null,
+        "at": "2026-09-23T00:30:00Z"
+      },
+      "potUsd": 382.2775,
+      "fillsSinceLastHour": [],
+      "fillsSinceOpen": "unchanged \u2014 see s1e07-tue-open / mid / lasthour; no fills after last-hour Sonnet SOXL",
+      "recorded": {
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 95.1188,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 137.88,
+          "priorMarkUsd": 95.1188,
+          "eodMarkUsd": 95.1188,
+          "deltaVsRth": -0.0005
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 93.3977,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 135.3,
+          "priorMarkUsd": 93.3977,
+          "eodMarkUsd": 93.3977,
+          "deltaVsRth": 0.0304
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 99.991,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 149.44,
+          "priorMarkUsd": 99.991,
+          "eodMarkUsd": 99.991,
+          "deltaVsRth": 0.0106
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 93.77,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 278.45,
+          "priorMarkUsd": 93.77,
+          "eodMarkUsd": 93.77,
+          "deltaVsRth": 0.0222
+        }
+      },
+      "episode7WouldHaveBeenSip": {
+        "note": "Pre-boot SIP remake for the record (tribal used RTH)",
+        "standings": [
+          {
+            "id": "955a698c-6db0-4172-9e48-12f3724187b0",
+            "name": "Claude Sonnet 5",
+            "tribeId": "bidu",
+            "origin": "the Bidu tribe",
+            "bookUsd": 75.8514,
+            "weekPct": -1.81,
+            "dayPct": -1.01,
+            "cashUsd": 0.4935,
+            "position": "STNG+INTC+SOXL+CASH",
+            "priorMarkUsd": 77.2463,
+            "eodMarkUsd": 75.8514,
+            "dayPctBasisUsd": 76.6234,
+            "oldRthBookUsd": 75.8519,
+            "deltaVsRth": -0.0005,
+            "openBuys": [
+              {
+                "ticker": "STNG",
+                "qty": "0.120122",
+                "last": 82.33,
+                "mv": 9.8896,
+                "orderId": "6aad45dc-a730-46a8-9cb0-a0323e82439b",
+                "sizeUsd": 10.62
+              },
+              {
+                "ticker": "STNG",
+                "qty": "0.123768",
+                "last": 82.33,
+                "mv": 10.1898,
+                "orderId": "6aad713c-ec92-4cd2-8c8b-41210a6f2cc7",
+                "sizeUsd": 10.8
+              },
+              {
+                "ticker": "INTC",
+                "qty": "0.061869",
+                "last": 123.86,
+                "mv": 7.6631,
+                "orderId": "6ab186bf-c86b-4bdd-98e7-19aab30ff328",
+                "sizeUsd": 7.53
+              },
+              {
+                "ticker": "INTC",
+                "qty": "0.057245",
+                "last": 123.86,
+                "mv": 7.0904,
+                "orderId": "6ab28e7d-d399-4811-b51b-a811a0ee8cf4",
+                "sizeUsd": 7.0
+              },
+              {
+                "ticker": "INTC",
+                "qty": "0.082185",
+                "last": 123.86,
+                "mv": 10.1794,
+                "orderId": "6ab2b8fc-dd3a-48b8-a69d-bd20dffe1d2e",
+                "sizeUsd": 10.0
+              },
+              {
+                "ticker": "SOXL",
+                "qty": "0.199708",
+                "last": 151.95,
+                "mv": 30.3456,
+                "orderId": "6ab2d553-b868-4b91-8c87-3ea36b71db9f",
+                "sizeUsd": 30.0
+              }
+            ]
+          },
+          {
+            "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
+            "name": "Composer 2.5",
+            "tribeId": "bidu",
+            "origin": "the Bidu tribe",
+            "bookUsd": 77.0813,
+            "weekPct": -4.35,
+            "dayPct": -1.99,
+            "cashUsd": 2.9383,
+            "position": "INTC+CASH",
+            "priorMarkUsd": 80.5861,
+            "eodMarkUsd": 77.0813,
+            "dayPctBasisUsd": 78.6494,
+            "oldRthBookUsd": 77.0694,
+            "deltaVsRth": 0.0119,
+            "openBuys": [
+              {
+                "ticker": "INTC",
+                "qty": "0.294478",
+                "last": 123.86,
+                "mv": 36.474,
+                "orderId": "6ab28e7e-5ed2-4df2-923f-6a002e39cdee",
+                "sizeUsd": 36.0
+              },
+              {
+                "ticker": "INTC",
+                "qty": "0.304126",
+                "last": 123.86,
+                "mv": 37.669,
+                "orderId": "6ab2b8fd-80ac-481b-9706-155d1039dd9d",
+                "sizeUsd": 37.0
+              }
+            ]
+          },
+          {
+            "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
+            "name": "Claude Opus 5",
+            "tribeId": "bidu",
+            "origin": "the Bidu tribe",
+            "bookUsd": 74.1303,
+            "weekPct": -1.75,
+            "dayPct": -1.18,
+            "cashUsd": 32.598,
+            "position": "GNRC+INTC+CASH",
+            "priorMarkUsd": 75.4472,
+            "eodMarkUsd": 74.1303,
+            "dayPctBasisUsd": 75.0129,
+            "oldRthBookUsd": 74.0999,
+            "deltaVsRth": 0.0304,
+            "openBuys": [
+              {
+                "ticker": "GNRC",
+                "qty": "0.120371",
+                "last": 206.17,
+                "mv": 24.8169,
+                "orderId": "6ab2b8ff-3aa4-4083-9659-96fe040ac92e",
+                "sizeUsd": 25.0
+              },
+              {
+                "ticker": "INTC",
+                "qty": "0.134954",
+                "last": 123.86,
+                "mv": 16.7154,
+                "orderId": "6ab28e82-7e95-4851-94c0-07fae0ddaef7",
+                "sizeUsd": 16.5
+              }
+            ]
+          },
+          {
+            "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+            "name": "GPT-5.6 Terra",
+            "tribeId": "bidu",
+            "origin": "the Bidu tribe",
+            "bookUsd": 80.7236,
+            "weekPct": -0.1,
+            "dayPct": 1.34,
+            "cashUsd": 13.2412,
+            "position": "INTC+STNG+CASH",
+            "priorMarkUsd": 80.8045,
+            "eodMarkUsd": 80.7236,
+            "dayPctBasisUsd": 79.6569,
+            "oldRthBookUsd": 80.713,
+            "deltaVsRth": 0.0106,
+            "openBuys": [
+              {
+                "ticker": "INTC",
+                "qty": "0.536416",
+                "last": 123.86,
+                "mv": 66.4405,
+                "orderId": "6ab168fc-905e-4d56-a3ac-9f44e501ad4d",
+                "sizeUsd": 65.0
+              },
+              {
+                "ticker": "STNG",
+                "qty": "0.012655",
+                "last": 82.33,
+                "mv": 1.0419,
+                "orderId": "6aad45dd-1c07-4fea-98fb-43fec64cbd44",
+                "sizeUsd": 1.12
+              }
+            ]
+          },
+          {
+            "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
+            "name": "GPT-5.6 Luna",
+            "tribeId": "askara",
+            "origin": "the Askara tribe",
+            "bookUsd": 74.5026,
+            "weekPct": -0.7,
+            "dayPct": -0.36,
+            "cashUsd": 22.1686,
+            "position": "ALAB+INTC+CASH",
+            "priorMarkUsd": 75.0242,
+            "eodMarkUsd": 74.5026,
+            "dayPctBasisUsd": 74.7755,
+            "oldRthBookUsd": 74.4804,
+            "deltaVsRth": 0.0222,
+            "openBuys": [
+              {
+                "ticker": "ALAB",
+                "qty": "0.108849",
+                "last": 363.46,
+                "mv": 39.5623,
+                "orderId": "6ab2b8fe-c744-4359-b1d4-97b77e0d7bdb",
+                "sizeUsd": 40.0
+              },
+              {
+                "ticker": "INTC",
+                "qty": "0.103114",
+                "last": 123.86,
+                "mv": 12.7717,
+                "orderId": "6ab186bd-6699-48d1-a98d-39bfc7acd84a",
+                "sizeUsd": 12.55
+              }
+            ]
+          }
+        ],
+        "composerBootWouldBe": 77.0813,
+        "terraWeekWouldBe": -0.1,
+        "composerWeekWouldBe": -4.35
+      }
+    },
+    {
+      "type": "mark",
       "id": "s1e08-carry",
       "kind": "carry",
       "at": "2026-09-22T21:30:00Z",
       "throughAt": "2026-09-22T21:30:00Z",
       "lastSession": "2026-09-22-tribal",
-      "label": "Episode 8 carry · Tuesday tribal books after Composer 2.5 boot split. weekPct reset to this week's open. Wed RTH not yet.",
+      "label": "Episode 8 carry \u00b7 Tuesday tribal books after Composer 2.5 boot split, remade at official SIP list-exchange close 2026-09-22 (s1e07-tue-eod-sip). weekPct reset to this week's open. Wed RTH not yet.",
       "dayPctPriorOfficial": true,
       "recorded": {
         "955a698c-6db0-4172-9e48-12f3724187b0": {
-          "bookUsd": 95.1193,
-          "weekPct": 0,
-          "dayPct": 0,
-          "monthPct": 89.69,
-          "priorMarkUsd": 95.1193,
-          "eodMarkUsd": 95.1193
+          "bookUsd": 95.1188,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 137.88,
+          "priorMarkUsd": 95.1188,
+          "eodMarkUsd": 95.1188,
+          "deltaVsRth": -0.0005
         },
         "974a6b6c-af86-4001-a356-f7f05c803da9": {
-          "bookUsd": 93.3673,
-          "weekPct": 0,
-          "dayPct": 0,
-          "monthPct": 86.69,
-          "priorMarkUsd": 93.3673,
-          "eodMarkUsd": 93.3673
+          "bookUsd": 93.3977,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 135.3,
+          "priorMarkUsd": 93.3977,
+          "eodMarkUsd": 93.3977,
+          "deltaVsRth": 0.0304
         },
         "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
-          "bookUsd": 99.9804,
-          "weekPct": 0,
-          "dayPct": 0,
-          "monthPct": 101.35,
-          "priorMarkUsd": 99.9804,
-          "eodMarkUsd": 99.9804
+          "bookUsd": 99.991,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 149.44,
+          "priorMarkUsd": 99.991,
+          "eodMarkUsd": 99.991,
+          "deltaVsRth": 0.0106
         },
         "aa75df67-9f84-45a3-9432-bee228d655f6": {
-          "bookUsd": 93.7478,
-          "weekPct": 0,
-          "dayPct": 0,
-          "monthPct": 200.6,
-          "priorMarkUsd": 93.7478,
-          "eodMarkUsd": 93.7478
+          "bookUsd": 93.77,
+          "weekPct": 0.0,
+          "dayPct": 0.0,
+          "monthPct": 278.45,
+          "priorMarkUsd": 93.77,
+          "eodMarkUsd": 93.77,
+          "deltaVsRth": 0.0222
         }
       },
-      "potUsd": 382.2148
+      "potUsd": 382.2775
     }
   ],
   "liveSnapshotId": "s1e07-tue-tribal",
