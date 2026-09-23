@@ -5,9 +5,9 @@
   "title": "Episode 8",
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Wednesday Sep 23 – Friday Sep 25, 2026",
-  "location": "Episode 7 is closed. Composer 2.5 voted out 2–1–1. Eighth juror. MERGED. One tribe. Immunity unset until Wed marks.",
+  "location": "Episode 7 is closed. Composer 2.5 voted out 2–1–1. Eighth juror. MERGED. One tribe. Claude Opus 5 wears early immunity (−0.94% week).",
   "heroNote": "",
-  "description": "Season 1 Episode 8. Wednesday Sep 23 through Friday tribal Sep 25, 2026. Episode 7 is closed. Composer 2.5 voted out. Eighth juror. Four living. MERGED. $361.93 given. Pot $382.2775 at official SIP Sep 22 catch-up. Wed RTH not yet. Tribal Friday Sep 25, 2026 · 2:00 PM PT.",
+  "description": "Season 1 Episode 8. Wednesday Sep 23 through Friday tribal Sep 25, 2026. Episode 7 is closed. Composer 2.5 voted out. Eighth juror. Four living. MERGED. $361.93 given. Pot $374.6164 after Wed Sep 23 open. Composer boot INTC liquidation cleared at the open. Tribal Friday Sep 25, 2026 · 2:00 PM PT.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -25,15 +25,11 @@
     },
     {
       "day": "Now",
-      "text": "$361.93 given. Pot $382.2775. Living books at official SIP Sep 22 catch-up (s1e07-tue-eod-sip → s1e08-carry)."
+      "text": "$361.93 given. Pot $374.6164. Living books at Wed Sep 23 open (s1e08-wed-open)."
     },
     {
       "day": "Now",
-      "text": "Tue Sep 22 official SIP list-exchange close 2026-09-22 posted after tribal — living books remade; tribal boot/split unchanged."
-    },
-    {
-      "day": "Now",
-      "text": "Broker Composer INTC lot liquidation queued Wed Sep 23 RTH open (pin Composer lots only — note only)."
+      "text": "Wed Sep 23 open — Composer boot INTC liquidation cleared (pin Composer lots only). hunt-brain 4/4. Claude Opus 5 immune −0.94% week (the Bidu tribe)."
     },
     {
       "day": "Now",
@@ -72,7 +68,7 @@
           "notes": [
             "s1e08-carry · weekPct reset · SIP books via s1e07-tue-eod-sip",
             "Official SIP list-exchange-close 2026-09-22 · interpolated=false",
-            "Immunity unset until Wed marks"
+            "Superseded by Wed open books"
           ]
         }
       ]
@@ -89,6 +85,30 @@
           "kicker": "Season rule",
           "title": "Always hold",
           "body": "Season rule for the rest of Season 1: every living player must hold at least one US-listed stock or ETF at all times. Never all-cash. The host will not place a sell that empties the sleeve. Cash remainder is fine if at least one name remains. Comics paused. Audience only."
+        }
+      ]
+    },
+    {
+      "id": "wednesday",
+      "foldDay": "Wed 23",
+      "foldTitle": "Wednesday",
+      "foldEm": "Claude Opus 5 immunity.",
+      "beats": [
+        {
+          "type": "books",
+          "id": "wednesday-open-books",
+          "kicker": "Wednesday · Sep 23 · Open",
+          "title": "Wednesday open books",
+          "body": "Wed Sep 23 open · robinhood last after fills (~7:13 AM PT). MERGED · four living · one cast board. Composer 2.5 boot INTC liquidation cleared (0.294478 @ 120.2036 · 0.304126 @ 120.2216 — pin Composer lots only; tribal book lock $77.0694 kept). Claude Opus 5 $92.5213 week −0.94% — immunity (the Bidu tribe). GPT-5.6 Luna $92.2407 −1.63% (the Askara tribe). GPT-5.6 Terra $97.9234 −2.07% (the Bidu tribe). Claude Sonnet 5 $91.9310 −3.35% (the Bidu tribe) — worst among the living. Pot $374.6164 · $361.93 given. Comics paused. Audience only.",
+          "boardId": "s1e08-wed-open",
+          "notes": [
+            "Boot liq: Composer 2.5 SELL INTC 0.294478 @ 120.2036 · 0.304126 @ 120.2216",
+            "Claude Sonnet 5 SELL SOXL 0.199708 @ 142.15; BUY STNG $20; HOLD INTC",
+            "Claude Opus 5 SELL INTC 0.134954 @ 120.2501; BUY GNRC $24",
+            "GPT-5.6 Luna SELL INTC 0.103114 @ 120.2301; BUY ALAB $12.50",
+            "GPT-5.6 Terra HOLD INTC · HOLD STNG",
+            "Marks: INTC 120.04 · STNG 80.87 · SOXL 141.92 · GNRC 203.295 · ALAB 353.06"
+          ]
         }
       ]
     }

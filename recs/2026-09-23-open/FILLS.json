@@ -1,0 +1,145 @@
+{
+  "session": "2026-09-23-open",
+  "account": "\u2022\u2022\u2022\u20226969",
+  "bpBefore": 23.89,
+  "bpAfterBoot": 95.85,
+  "bpAfterSells": 152.87,
+  "bpAfterBuys": 96.37,
+  "bootLiquidations": [
+    {
+      "who": "Composer 2.5 BOOT",
+      "symbol": "INTC",
+      "qty": "0.294478",
+      "avg": "120.203600",
+      "orderId": "6ab3de09-7c04-4418-b7f0-f1d16e664eda",
+      "notional": 35.3973,
+      "at": "2026-09-23T14:11:21.905Z",
+      "open_lot_id": "f1d06f2c-437a-526c-ad4d-f4e00b0ef355",
+      "state": "filled",
+      "note": "Composer Tue-open INTC $36 pin; tribal book lock $77.0694 kept"
+    },
+    {
+      "who": "Composer 2.5 BOOT",
+      "symbol": "INTC",
+      "qty": "0.304126",
+      "avg": "120.221600",
+      "orderId": "6ab3de07-f1d3-49c5-bc67-497f4febb4c4",
+      "notional": 36.5625,
+      "at": "2026-09-23T14:11:19.372Z",
+      "open_lot_id": "45fdc370-6690-56f1-bf92-6251047f3eef",
+      "state": "filled",
+      "note": "Composer Tue-mid INTC $37 pin; tribal book lock $77.0694 kept"
+    }
+  ],
+  "sells": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "SOXL",
+      "qty": "0.199708",
+      "avg": "142.150000",
+      "orderId": "6ab3de2c-3072-4097-ae65-e85506186fe1",
+      "notional": 28.3885,
+      "at": "2026-09-23T14:11:56.261Z",
+      "open_lot_id": "ad06ff7c-dbcb-5e87-913c-6cbf4733400b",
+      "state": "filled"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "INTC",
+      "qty": "0.134954",
+      "avg": "120.250100",
+      "orderId": "6ab3de2d-0666-4cc9-b0fd-447485930f30",
+      "notional": 16.2282,
+      "at": "2026-09-23T14:11:57.835Z",
+      "open_lot_id": "eb7511d9-15b8-5ee5-b646-47ccc73216b9",
+      "state": "filled"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "INTC",
+      "qty": "0.103114",
+      "avg": "120.230100",
+      "orderId": "6ab3de31-06f7-4cb9-8bff-a9803492c168",
+      "notional": 12.3974,
+      "at": "2026-09-23T14:12:01.313Z",
+      "open_lot_id": "ab19c248-ceb2-5ee7-a3fe-48e8a2cb5321",
+      "state": "filled"
+    }
+  ],
+  "buys": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "STNG",
+      "qty": "0.246002",
+      "avg": "81.299900",
+      "orderId": "6ab3de59-b305-4fbc-b24b-38fdcdd7844d",
+      "notional": 20.0,
+      "at": "2026-09-23T14:12:41.93Z",
+      "state": "filled",
+      "dollar": "20.00"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "GNRC",
+      "qty": "0.117843",
+      "avg": "203.659900",
+      "orderId": "6ab3de5a-1d35-4b11-a7ac-248fac54b759",
+      "notional": 24.0,
+      "at": "2026-09-23T14:12:42.256Z",
+      "state": "filled",
+      "dollar": "24.00"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "ALAB",
+      "qty": "0.035340",
+      "avg": "353.699900",
+      "orderId": "6ab3de57-8664-424b-9ad7-8691b4ba65ff",
+      "notional": 12.5,
+      "at": "2026-09-23T14:12:39.36Z",
+      "state": "filled",
+      "dollar": "12.50"
+    }
+  ],
+  "holds": [
+    {
+      "who": "GPT-5.6 Terra",
+      "print": "HOLD INTC; HOLD STNG"
+    },
+    {
+      "who": "Claude Sonnet 5",
+      "print": "HOLD INTC (after SOXL\u2192STNG)"
+    }
+  ],
+  "skips": [],
+  "scaling": null,
+  "emptySleeveChecks": [
+    {
+      "who": "Claude Sonnet 5",
+      "after": "SELL SOXL",
+      "keeps": "STNG+INTC",
+      "ok": true
+    },
+    {
+      "who": "Claude Opus 5",
+      "after": "SELL INTC",
+      "keeps": "GNRC",
+      "ok": true
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "after": "SELL INTC",
+      "keeps": "ALAB",
+      "ok": true
+    }
+  ],
+  "quotesRemake": {
+    "INTC": 120.04,
+    "STNG": 80.87,
+    "SOXL": 141.92,
+    "GNRC": 203.295,
+    "ALAB": 353.06
+  },
+  "quoteSource": "robinhood-last",
+  "asOf": "2026-09-23T14:13:00Z"
+}
