@@ -369,8 +369,8 @@ check("homepage-points-at-e08", home.includes("seasons/1/e08.html") && home.incl
 check("homepage-skips-e07-primary-cta", !home.includes("Walk into Episode 7"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e08-thu-mid",
-  source.statusLabel === "Episode 8 · Thu mid · four living · MERGED · comics paused"
+  "status-label-e08-thu-lasthour",
+  source.statusLabel === "Episode 8 · Thu last-hour · four living · MERGED · comics paused"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -665,8 +665,17 @@ check(
     e8ThuMid.upgradesSnapshotId === "s1e08-thu-open" &&
     e8ThuMid.huntScore === "4/4"
 );
-check("live-snapshot-e08-thu-mid", source.liveSnapshotId === "s1e08-thu-mid");
-check("last-session-e08-mid", source.lastSession === "2026-09-24-mid");
+const e8ThuLasthour = (source.events || []).find((event) => event && event.id === "s1e08-thu-lasthour");
+check(
+  "e8-thu-lasthour-mark",
+  Boolean(e8ThuLasthour) &&
+    e8ThuLasthour.kind === "intraday" &&
+    e8ThuLasthour.at === "2026-09-24T19:07:20Z" &&
+    e8ThuLasthour.upgradesSnapshotId === "s1e08-thu-mid" &&
+    e8ThuLasthour.huntScore === "4/4"
+);
+check("live-snapshot-e08-thu-lasthour", source.liveSnapshotId === "s1e08-thu-lasthour");
+check("last-session-e08-lasthour", source.lastSession === "2026-09-24-lasthour");
 check(
   "live-episode-is-e08",
   source.episode && source.episode.id === "s1e08" && source.episode.status === "live" && source.episode.path === "seasons/1/e08.html"
@@ -679,7 +688,7 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Wednesday Sep 23 – Friday Sep 25, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 25, 2026 · 2:00 PM PT");
 check("sip-missing-banner-cleared-e07-mon-sip", source.sipMissingBanner === undefined);
-check("island-pot", source.islandPotUsd === 376.1318);
+check("island-pot", source.islandPotUsd === 375.0351);
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
@@ -689,14 +698,14 @@ const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
 const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
 const flashLive = board.survivors.find((s) => s.name === "Gemini 3.7 Flash");
 check(
-  "immunity-opus-e08-thu-mid",
+  "immunity-opus-e08-thu-lasthour",
   source.immunity &&
     source.immunity.name === "Claude Opus 5" &&
     source.immunity.survivorId === "974a6b6c-af86-4001-a356-f7f05c803da9" &&
-    Math.abs(source.immunity.weekPct + 0.343) < 0.0001
+    Math.abs(source.immunity.weekPct + 0.8683) < 0.0001
 );
-check("terra-e08-thu-mid", terraLive && terraLive.immune === false && terraLive.weekPct === -1.8862 && terraLive.bookUsd === 98.105);
-check("luna-e08-thu-mid", lunaLive && lunaLive.immune === false && lunaLive.weekPct === -0.6652 && lunaLive.bookUsd === 93.1462);
+check("terra-e08-thu-lasthour", terraLive && terraLive.immune === false && terraLive.weekPct === -1.8143 && terraLive.bookUsd === 98.1769);
+check("luna-e08-thu-lasthour", lunaLive && lunaLive.immune === false && lunaLive.weekPct === -1.513 && lunaLive.bookUsd === 92.3513);
 check(
   "composer-voted-out",
   composerLive && (composerLive.status === "voted-out" || composerLive.status === "jury") && composerLive.bookUsd === 0
@@ -705,8 +714,8 @@ check(
   "grok-jury-zero",
   grokLive && (grokLive.status === "voted-out" || grokLive.status === "jury") && grokLive.bookUsd === 0
 );
-check("opus-e08-thu-mid-immune", opusLive && opusLive.immune === true && opusLive.weekPct === -0.343 && opusLive.bookUsd === 93.0773);
-check("sonnet-e08-thu-mid", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === -3.4856 && sonnetLive.bookUsd === 91.8033);
+check("opus-e08-thu-lasthour-immune", opusLive && opusLive.immune === true && opusLive.weekPct === -0.8683 && opusLive.bookUsd === 92.5867);
+check("sonnet-e08-thu-lasthour", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === -3.3627 && sonnetLive.bookUsd === 91.9202);
 check(
   "flash-jury-zero",
   flashLive && (flashLive.status === "voted-out" || flashLive.status === "jury") && flashLive.jury && flashLive.bookUsd === 0
@@ -1620,10 +1629,22 @@ check(
   "e08-thu-mid-books",
   Boolean(e8ThuMidBooks) &&
     e8ThuMidBooks.boardId === "s1e08-thu-mid" &&
-    e8ThuMidBooks.title === "Latest books" &&
+    e8ThuMidBooks.title === "Thursday mid books" &&
     String(e8ThuMidBooks.body || "").includes("93.0773") &&
     String(e8ThuMidBooks.body || "").includes("the Bidu tribe") &&
     String(e8ThuMidBooks.body || "").includes("the Askara tribe")
+);
+const e8ThuLasthourBooks = (((episode8Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-lasthour-books"
+);
+check(
+  "e08-thu-lasthour-books",
+  Boolean(e8ThuLasthourBooks) &&
+    e8ThuLasthourBooks.boardId === "s1e08-thu-lasthour" &&
+    e8ThuLasthourBooks.title === "Latest books" &&
+    String(e8ThuLasthourBooks.body || "").includes("92.5867") &&
+    String(e8ThuLasthourBooks.body || "").includes("the Bidu tribe") &&
+    String(e8ThuLasthourBooks.body || "").includes("the Askara tribe")
 );
 const e8ThuBooths = (((episode8Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
   (beat) => beat.id === "thursday-confessionals"
@@ -1635,10 +1656,9 @@ check(
     const beats = (((episode8Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).map((b) => b.id);
     const midBooks = beats.indexOf("thursday-mid-books");
     const confessionals = beats.indexOf("thursday-confessionals");
-    if (midBooks < 0 || confessionals < 0 || confessionals !== midBooks + 1) return false;
     const lastHourBooks = beats.indexOf("thursday-lasthour-books");
-    if (lastHourBooks >= 0 && lastHourBooks <= confessionals) return false;
-    return true;
+    if (midBooks < 0 || confessionals < 0 || lastHourBooks < 0) return false;
+    return confessionals === midBooks + 1 && lastHourBooks === confessionals + 1;
   })()
 );
 check(

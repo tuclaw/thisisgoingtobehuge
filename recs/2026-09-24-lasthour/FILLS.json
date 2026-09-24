@@ -1,0 +1,85 @@
+{
+  "session": "2026-09-24-lasthour",
+  "accountLast4": "6969",
+  "bpBefore": 0.51,
+  "bpAfterSells": 38.3,
+  "bpAfterBuys": 19.3,
+  "themeBufferUntouched": true,
+  "leftoversLeftAlone": {
+    "VLO": 0.014984,
+    "MPC": 0.044873,
+    "FRO": 0.358734
+  },
+  "bootLiquidations": [],
+  "contestantFills": [
+    {
+      "name": "Claude Sonnet 5",
+      "side": "SELL",
+      "ticker": "AR",
+      "qty": "0.529839",
+      "avg": "35.870100",
+      "notional": 19.0054,
+      "orderId": "6ab574c5-d528-4632-a203-e273bfc587ce",
+      "open_lot_id": "275953df-0a08-5c62-aa0a-f8e82e8ec5b4",
+      "filledAt": "2026-09-24T19:06:45.647Z",
+      "ref_id": "f3ffdfe4-721f-4d25-97e4-a8aa40c7ddbc",
+      "note": "Thu last-hour SELL AR 0.529839 (Wed LH lot) \u2192 INTC"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "SELL",
+      "ticker": "VLO",
+      "qty": "0.048824",
+      "avg": "384.667200",
+      "notional": 18.781,
+      "orderId": "6ab574c5-b8fb-48d0-b0df-e304ca772329",
+      "open_lot_id": "03caeb00-80c7-57cb-aacf-b26aff7a72c0",
+      "filledAt": "2026-09-24T19:06:45.44Z",
+      "ref_id": "34a47199-4ddd-4751-864f-7c340ed5f340",
+      "note": "Thu last-hour SELL VLO 0.048824 (Wed mid lot) \u2192 cash; HOLD remaining VLO+MPC"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "side": "BUY",
+      "ticker": "INTC",
+      "qty": "0.150650",
+      "avg": "126.119900",
+      "notional": 19.0,
+      "dollar_amount": 19.0,
+      "orderId": "6ab574d5-b5c9-41a7-b98b-e7b93cf5dc0e",
+      "open_lot_id": "74f94336-1d0e-53ef-b32f-cc193e09cc66",
+      "filledAt": "2026-09-24T19:07:01.423Z",
+      "ref_id": "7d11a067-1a37-48f9-9a99-f51bcc26e5df",
+      "note": "Thu last-hour BUY INTC $19.00 from AR Wed LH exit"
+    }
+  ],
+  "holds": [
+    {
+      "name": "GPT-5.6 Terra",
+      "tickers": [
+        "MU",
+        "AR"
+      ],
+      "note": "HOLD MU+AR"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tickers": [
+        "USO",
+        "P"
+      ],
+      "note": "HOLD USO+P"
+    },
+    {
+      "name": "Claude Opus 5",
+      "tickers": [
+        "VLO",
+        "MPC"
+      ],
+      "note": "HOLD remaining VLO lots + MPC after trim"
+    }
+  ],
+  "skips": [],
+  "scaling": null,
+  "huntScore": "4/4"
+}

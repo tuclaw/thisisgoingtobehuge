@@ -1,0 +1,69 @@
+{
+  "snapshotId": "s1e08-thu-lasthour",
+  "session": "2026-09-24-lasthour",
+  "asOf": "2026-09-24T19:07:20Z",
+  "pot": 375.0351,
+  "given": 361.93,
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.8683,
+    "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+    "note": "Thu Sep 24 last-hour remake",
+    "asOf": "2026-09-24-lasthour",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-24T19:07:20Z"
+  },
+  "worst": {
+    "name": "Claude Sonnet 5",
+    "weekPct": -3.3627
+  },
+  "standings": [
+    {
+      "name": "Claude Opus 5",
+      "origin": "the Bidu tribe",
+      "bookUsd": 92.5867,
+      "weekPct": -0.8683,
+      "dayPct": 0.5804,
+      "cashUsd": 49.435,
+      "position": "MPC+VLO+CASH"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "origin": "the Askara tribe",
+      "bookUsd": 92.3513,
+      "weekPct": -1.513,
+      "dayPct": -0.2665,
+      "cashUsd": 11.0893,
+      "position": "P+USO+CASH"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "origin": "the Bidu tribe",
+      "bookUsd": 98.1769,
+      "weekPct": -1.8143,
+      "dayPct": 0.4195,
+      "cashUsd": -21.0496,
+      "position": "AR+MU+CASH"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "origin": "the Bidu tribe",
+      "bookUsd": 91.9202,
+      "weekPct": -3.3627,
+      "dayPct": 0.3438,
+      "cashUsd": 29.5478,
+      "position": "AR+INTC+CASH"
+    }
+  ],
+  "quotes": {
+    "AR": 35.885,
+    "INTC": 126.21,
+    "VLO": 385.27,
+    "MPC": 392.735,
+    "MU": 1072.71,
+    "USO": 152.6825,
+    "P": 124.67
+  },
+  "huntScore": "4/4",
+  "fillsSummary": "Sonnet AR\u2192INTC $19; Opus SELL VLO trim (no buy); HOLD Terra/Luna"
+}
