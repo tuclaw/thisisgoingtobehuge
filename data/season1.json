@@ -4,12 +4,12 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Live · Episode 8 · Wed RTH-EOD · immunity GPT-5.6 Luna -1.24% · pot $373.98",
+  "statusLabel": "Episode 8 · Wed SIP-EOD · four living · MERGED · comics paused",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 373.9803,
+  "islandPotUsd": 374.0226,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -200,18 +200,14 @@
       "source": "data/episodes/s1e08.json",
       "diagramStartSnapshotId": "s1e08-carry",
       "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash).",
-      "liveSnapshotId": "s1e08-wed-eod-rth",
-      "islandPotUsd": 373.9803,
+      "liveSnapshotId": "s1e08-wed-eod-sip",
+      "islandPotUsd": 374.0226,
       "immunity": {
         "name": "GPT-5.6 Luna",
-        "weekPct": -1.2422,
-        "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
-        "asOf": "2026-09-23-eod",
-        "at": "2026-09-23T21:27:00Z",
-        "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
-        "note": "Wed Sep 23 RTH-EOD remake (SIP 2026-09-23 missing; still dated 2026-09-22)"
+        "weekPct": -1.2497,
+        "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6"
       },
-      "weekBoardSnapshotId": "s1e08-wed-lasthour"
+      "weekBoardSnapshotId": "s1e08-wed-eod-sip"
     }
   ],
   "notes": "Season live. S1E08 live Wed Sep 23 – Fri Sep 25. MERGED. Four living. Wed last-hour remake after hunt-brain fills. Given $361.93. Pot $374.5898. GPT-5.6 Luna leads −0.97% and wears immunity. Claude Sonnet 5 worst −3.79%. hunt-brain 4/4. Comics paused. Audience only. Tribal Fri Sep 25 2:00 PM PT.",
@@ -288,8 +284,8 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 91.5811,
-      "weekPct": -3.7192,
+      "bookUsd": 91.6053,
+      "weekPct": -3.6938,
       "position": 4,
       "immune": false,
       "monogram": "S",
@@ -308,10 +304,10 @@
           "orderId": "6ab3de59-b305-4fbc-b24b-38fdcdd7844d",
           "filledAt": "2026-09-23T14:12:41.93Z",
           "open_lot_id": "bdd74393-8792-5adc-b20c-713a0b056938",
-          "last": 81.205,
-          "lastSource": "robinhood-last",
+          "last": 81.25,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 19.9003
+          "liveMv": 19.9877
         },
         {
           "action": "BUY",
@@ -324,10 +320,10 @@
           "orderId": "6ab40b81-190c-4738-a8db-e09cddc703e6",
           "filledAt": "2026-09-23T17:25:22.168Z",
           "open_lot_id": "1a83497e-20c0-5c5e-89ed-f8a90cdad58c",
-          "last": 81.205,
-          "lastSource": "robinhood-last",
+          "last": 81.25,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 23.5874
+          "liveMv": 23.6909
         },
         {
           "action": "BUY",
@@ -341,17 +337,17 @@
           "filledAt": "2026-09-23T19:25:05.521Z",
           "open_lot_id": null,
           "last": 35.65,
-          "lastSource": "robinhood-last",
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 18.9921
+          "liveMv": 18.8888
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": -3.7192,
+      "dayPct": -3.6938,
       "priorMarkUsd": 95.1188,
       "lastSource": "robinhood-last-trade",
       "lastSession": "2026-09-23-eod",
-      "eodMarkUsd": 91.5811,
+      "eodMarkUsd": 91.6053,
       "mondayOpenUsd": 39.9865,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.4487,
@@ -413,8 +409,8 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 92.0541,
-      "weekPct": -1.4386,
+      "bookUsd": 92.0524,
+      "weekPct": -1.4404,
       "position": 2,
       "immune": false,
       "monogram": "O",
@@ -433,10 +429,10 @@
           "orderId": "6ab3de5a-1d35-4b11-a7ac-248fac54b759",
           "filledAt": "2026-09-23T14:12:41.000Z",
           "open_lot_id": "766c2398-2d13-594f-9910-052e66a6f68f",
-          "last": 199.36,
-          "lastSource": "robinhood-last",
+          "last": 199.42,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 23.6682
+          "liveMv": 23.5003
         },
         {
           "action": "BUY",
@@ -449,10 +445,10 @@
           "orderId": "6ab40b82-03fc-44e9-8e9e-0ecce9c7941f",
           "filledAt": "2026-09-23T17:25:22.69Z",
           "open_lot_id": "03caeb00-80c7-57cb-aacf-b26aff7a72c0",
-          "last": 375.93,
-          "lastSource": "robinhood-last",
+          "last": 375.84,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 18.3974
+          "liveMv": 18.35
         },
         {
           "action": "BUY",
@@ -465,18 +461,18 @@
           "orderId": "6ab42790-2bbb-4027-bca6-5c2c140aeba3",
           "filledAt": "2026-09-23T19:25:04.604Z",
           "open_lot_id": null,
-          "last": 375.93,
-          "lastSource": "robinhood-last",
+          "last": 375.84,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 17.9863
+          "liveMv": 17.94
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": -1.4386,
+      "dayPct": -1.4404,
       "priorMarkUsd": 93.3977,
       "lastSource": "robinhood-last-trade",
       "lastSession": "2026-09-23-eod",
-      "eodMarkUsd": 92.0541,
+      "eodMarkUsd": 92.0524,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.2517,
@@ -538,8 +534,8 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 97.7399,
-      "weekPct": -2.2513,
+      "bookUsd": 97.7668,
+      "weekPct": -2.2244,
       "position": 3,
       "immune": false,
       "monogram": "T",
@@ -559,10 +555,10 @@
           "orderId": "6ab40b83-e442-4810-956d-157267f6f974",
           "filledAt": "2026-09-23T17:25:23.336Z",
           "open_lot_id": "9d716fa8-bd37-5ec9-b983-3c1d98af20c3",
-          "last": 1071.43,
-          "lastSource": "robinhood-last",
+          "last": 1071.88,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 63.9568
+          "liveMv": 64.1231
         },
         {
           "action": "BUY",
@@ -576,17 +572,17 @@
           "filledAt": "2026-09-23T19:25:33.552Z",
           "open_lot_id": null,
           "last": 35.65,
-          "lastSource": "robinhood-last",
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 54.9925
+          "liveMv": 54.6933
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": -2.2513,
+      "dayPct": -2.2244,
       "priorMarkUsd": 99.991,
       "lastSource": "robinhood-last-trade",
       "lastSession": "2026-09-23-eod",
-      "eodMarkUsd": 97.7399,
+      "eodMarkUsd": 97.7668,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
@@ -757,8 +753,8 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 92.6052,
-      "weekPct": -1.2422,
+      "bookUsd": 92.5981,
+      "weekPct": -1.2497,
       "position": 1,
       "immune": true,
       "monogram": "L",
@@ -777,10 +773,10 @@
           "orderId": "6ab3de57-8664-424b-9ad7-8691b4ba65ff",
           "filledAt": "2026-09-23T14:12:41.000Z",
           "open_lot_id": "43b5bf45-33a1-5152-8441-63767ca64a13",
-          "last": 360.44,
-          "lastSource": "robinhood-last",
+          "last": 360.46,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 12.7832
+          "liveMv": 12.7387
         },
         {
           "action": "BUY",
@@ -794,9 +790,9 @@
           "filledAt": "2026-09-23T17:25:24.139Z",
           "open_lot_id": "c7679e5d-e32e-5ba1-925f-17e61255c00f",
           "last": 35.65,
-          "lastSource": "robinhood-last",
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 39.9849
+          "liveMv": 39.7674
         },
         {
           "action": "BUY",
@@ -809,18 +805,18 @@
           "orderId": "6ab427ab-35da-44cd-a752-720b6b7399c5",
           "filledAt": "2026-09-23T19:25:31.751Z",
           "open_lot_id": null,
-          "last": 148.87,
-          "lastSource": "robinhood-last",
+          "last": 148.83,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-23-eod",
-          "liveMv": 28.9901
+          "liveMv": 28.9921
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": -1.2422,
+      "dayPct": -1.2497,
       "priorMarkUsd": 93.77,
       "lastSource": "robinhood-last-trade",
       "lastSession": "2026-09-23-eod",
-      "eodMarkUsd": 92.6052,
+      "eodMarkUsd": 92.5981,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
       "mondayOpenUsd": 24.7771,
@@ -1620,30 +1616,30 @@
   "goldenPortfolio": [],
   "immunity": {
     "name": "GPT-5.6 Luna",
-    "weekPct": -1.2422,
+    "weekPct": -1.2497,
     "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
-    "note": "Wed Sep 23 RTH-EOD remake (SIP 2026-09-23 missing; still dated 2026-09-22)",
+    "note": "Wed Sep 23 official SIP-EOD catch-up (upgrades s1e08-wed-eod-rth)",
     "asOf": "2026-09-23-eod",
     "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
-    "at": "2026-09-23T21:27:00Z"
+    "at": "2026-09-24T00:20:00Z"
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-23T21:27:00Z",
+  "markedAt": "2026-09-24T00:20:00Z",
   "quotes": {
-    "STNG": 81.205,
-    "GNRC": 199.36,
-    "VLO": 375.93,
-    "ALAB": 360.44,
+    "STNG": 81.25,
+    "GNRC": 199.42,
+    "VLO": 375.84,
+    "ALAB": 360.46,
     "AR": 35.65,
-    "MU": 1071.43,
-    "USO": 148.87,
+    "MU": 1071.88,
+    "USO": 148.83,
     "INTC": 122.6,
     "SOXL": 146.3236,
     "MPC": 388.425,
     "FRO": 47.56
   },
-  "markLabel": "Wed Sep 23 RTH-EOD · robinhood last-trade (~19:59Z). SIP settle 2026-09-23 not posted (closes still 2026-09-22). Snapshot s1e08-wed-eod-rth. No fills since last-hour. Leader GPT-5.6 Luna -1.2422%. Worst Claude Sonnet 5 -3.7192%. Immunity GPT-5.6 Luna.",
+  "markLabel": "Wed Sep 23 official SIP list-exchange close · date 2026-09-23 · interpolated=false. Catch-up after RTH-EOD s1e08-wed-eod-rth (SIP was missing at 2:27 PM PT). No fills since last-hour. Snapshot s1e08-wed-eod-sip. Leader GPT-5.6 Luna -1.2497%. Worst Claude Sonnet 5 -3.6938%.",
   "dayPctBasis": "vs Episode 8 carry priorMarkUsd (Tue SIP open marks · s1e08-carry)",
   "weekPctBasis": "vs Episode 8 carry priorMarkUsd (Tue SIP open marks · s1e08-carry)",
   "islandGivenUsd": 361.93,
@@ -13127,10 +13123,93 @@
           "dayPctBasisUsd": 93.77
         }
       }
+    },
+    {
+      "type": "mark",
+      "id": "s1e08-wed-eod-sip",
+      "kind": "close",
+      "at": "2026-09-24T00:20:00Z",
+      "throughAt": "2026-09-24T00:20:00Z",
+      "lastSession": "2026-09-23-eod",
+      "label": "Wed Sep 23 official SIP list-exchange close · date 2026-09-23 · interpolated=false. Catch-up after RTH-EOD s1e08-wed-eod-rth (SIP was missing at 2:27 PM PT). No fills since last-hour. Snapshot s1e08-wed-eod-sip. Leader GPT-5.6 Luna -1.2497%. Worst Claude Sonnet 5 -3.6938%.",
+      "dayPctPriorOfficial": true,
+      "dayPctPriorCloseDate": "2026-09-22",
+      "quoteSource": "sip-list-exchange-close",
+      "sipMissing": false,
+      "officialCloseDate": "2026-09-23",
+      "interpolated": false,
+      "upgradesSnapshotId": "s1e08-wed-eod-rth",
+      "marks": {
+        "STNG": 81.25,
+        "AR": 35.65,
+        "GNRC": 199.42,
+        "VLO": 375.84,
+        "MU": 1071.88,
+        "ALAB": 360.46,
+        "USO": 148.83
+      },
+      "rthMarksEarlier": {
+        "STNG": 81.205,
+        "AR": 35.65,
+        "GNRC": 199.36,
+        "VLO": 375.93,
+        "MU": 1071.43,
+        "ALAB": 360.44,
+        "USO": 148.87
+      },
+      "immunity": {
+        "name": "GPT-5.6 Luna",
+        "weekPct": -1.2497,
+        "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+        "asOf": "2026-09-23-eod",
+        "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
+        "at": "2026-09-24T00:20:00Z"
+      },
+      "potUsd": 374.0226,
+      "fillsSinceLastHour": [],
+      "fillsSinceOpen": "see ledger / last-hour remake",
+      "recorded": {
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 92.5981,
+          "weekPct": -1.2497,
+          "monthPct": 273.75,
+          "dayPct": -1.2497,
+          "priorMarkUsd": 93.77,
+          "eodMarkUsd": 92.5981,
+          "dayPctBasisUsd": 93.77
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 92.0524,
+          "weekPct": -1.4404,
+          "monthPct": 131.92,
+          "dayPct": -1.4404,
+          "priorMarkUsd": 93.3977,
+          "eodMarkUsd": 92.0524,
+          "dayPctBasisUsd": 93.3977
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 97.7668,
+          "weekPct": -2.2244,
+          "monthPct": 143.82,
+          "dayPct": -2.2244,
+          "priorMarkUsd": 99.991,
+          "eodMarkUsd": 97.7668,
+          "dayPctBasisUsd": 99.991
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 91.6053,
+          "weekPct": -3.6938,
+          "monthPct": 129.03,
+          "dayPct": -3.6938,
+          "priorMarkUsd": 95.1188,
+          "eodMarkUsd": 91.6053,
+          "dayPctBasisUsd": 95.1188
+        }
+      }
     }
   ],
-  "liveSnapshotId": "s1e08-wed-eod-rth",
-  "lastSource": "robinhood-last",
+  "liveSnapshotId": "s1e08-wed-eod-sip",
+  "lastSource": "sip-list-exchange-close",
   "lastSession": "2026-09-23-eod",
   "themeLeftoverParked": false,
   "themeLeftoverCreditedUsd": 121.84,
@@ -13145,6 +13224,6 @@
     "Grok 4.6": 13.5377,
     "Kimi K3": 13.5377
   },
-  "lastSnapshotId": "s1e08-wed-eod-rth",
-  "lastRemakeAt": "2026-09-23T21:27:00Z"
+  "lastSnapshotId": "s1e08-wed-eod-sip",
+  "lastRemakeAt": "2026-09-24T00:20:00Z"
 }
