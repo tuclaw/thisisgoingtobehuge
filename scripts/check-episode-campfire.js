@@ -117,9 +117,10 @@ if (
   !appJs.includes("function tickerPctScale") ||
   !appJs.includes("function despikeTickerPcts") ||
   !appJs.includes("function tickerEvenGuide") ||
-  !appJs.includes("function bookWeekPctFromSnap")
+  !appJs.includes("function bookWeekPctFromSnap") ||
+  !appJs.includes("function islandSeasonPct")
 ) {
-  throw new Error("app.js money ticker must plot week % on a percentage y-axis");
+  throw new Error("app.js money ticker must plot week % or season return on a percentage y-axis");
 }
 if (appJs.includes('lineLabel: "even"') || appJs.includes('{ label: "even"')) {
   throw new Error("app.js money ticker must not print the word even on the 0% guide");
@@ -381,8 +382,9 @@ const pctHelpers = new Function(`
     const sign = n > 0 ? "+" : "";
     return sign + n.toFixed(2) + "%";
   }
+  function roundMoney(n) { return Math.round(n * 10000) / 10000; }
   ${appJs.slice(pctHelpStart, pctHelpEnd)}
-  return { tickerAxisPct, bookWeekPctFromSnap };
+  return { tickerAxisPct, bookWeekPctFromSnap, islandSeasonPct };
 `)();
 if (pctHelpers.tickerAxisPct(0) !== "0%") {
   throw new Error("tickerAxisPct(0) should be 0%, got " + pctHelpers.tickerAxisPct(0));
@@ -398,6 +400,37 @@ if (pctHelpers.bookWeekPctFromSnap({ weekPct: 1.27, bookUsd: 24.278 }) !== 1.27)
 }
 if (pctHelpers.bookWeekPctFromSnap({ bookUsd: 10 }) != null) {
   throw new Error("bookWeekPctFromSnap must not invent a percentage from bookUsd");
+}
+if (pctHelpers.islandSeasonPct(375.1481, 361.93) !== 3.6521) {
+  throw new Error("islandSeasonPct must be (cash - putIn) / putIn, got " + pctHelpers.islandSeasonPct(375.1481, 361.93));
+}
+if (pctHelpers.islandSeasonPct(118.4, 120) !== -1.3333) {
+  throw new Error("islandSeasonPct must stay negative when the pot is under the funded given, got " + pctHelpers.islandSeasonPct(118.4, 120));
+}
+if (pctHelpers.islandSeasonPct(240.26, 240.09) !== 0.0708) {
+  throw new Error("islandSeasonPct must stay small and positive on a slight funded-pot gain, got " + pctHelpers.islandSeasonPct(240.26, 240.09));
+}
+if (pctHelpers.islandSeasonPct(120, 0) !== 0) {
+  throw new Error("islandSeasonPct must not divide by a zero put-in");
+}
+if (
+  !appJs.includes('range === "season" ? frame.seasonTotal : frame.weekTotal') ||
+  !appJs.includes("Island return versus the funded pot") ||
+  !appJs.includes("Island combined week % over recorded marks")
+) {
+  throw new Error("Season Island must plot funded-pot return; Week Island must keep combined week %");
+}
+{
+  const liveBoard = JSON.parse(readFileSync(join(root, "data/fixtures/live-board.json"), "utf8"));
+  const pot = liveBoard.islandPotUsd;
+  const given = liveBoard.islandGivenUsd;
+  const seasonPct = pctHelpers.islandSeasonPct(pot, given);
+  if (typeof pot === "number" && typeof given === "number" && pot > given && !(seasonPct > 0)) {
+    throw new Error("Season Island must sit above 0% when the live pot is above the funded given, got " + seasonPct);
+  }
+  if (typeof pot === "number" && typeof given === "number" && pot < given && !(seasonPct < 0)) {
+    throw new Error("Season Island must sit below 0% when the live pot is under the funded given, got " + seasonPct);
+  }
 }
 
 const footStart = appJs.indexOf("function lerpFrameNum");
