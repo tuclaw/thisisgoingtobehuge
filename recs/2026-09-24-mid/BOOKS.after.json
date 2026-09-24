@@ -1,0 +1,204 @@
+{
+  "asOf": "2026-09-24T16:58:07Z",
+  "session": "2026-09-24-mid",
+  "snapshotId": "s1e08-thu-mid",
+  "living": [
+    {
+      "name": "Claude Opus 5",
+      "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "bookUsd": 93.0773,
+      "weekPct": -0.343,
+      "dayPct": 1.1134,
+      "cashUsd": 30.654,
+      "position": "MPC+VLO+CASH",
+      "priorMarkUsd": 93.3977,
+      "eodMarkUsd": 92.0524,
+      "openBuys": [
+        {
+          "ticker": "VLO",
+          "qty": "0.048824",
+          "last": 387.9419,
+          "mv": 18.9409,
+          "orderId": "6ab40b82-03fc-44e9-8e9e-0ecce9c7941f"
+        },
+        {
+          "ticker": "VLO",
+          "qty": "0.047733",
+          "last": 387.9419,
+          "mv": 18.5176,
+          "orderId": "6ab42790-2bbb-4027-bca6-5c2c140aeba3"
+        },
+        {
+          "ticker": "VLO",
+          "qty": "0.033453",
+          "last": 387.9419,
+          "mv": 12.9778,
+          "orderId": "6ab55640-77b8-414f-bd57-ba046fe38609"
+        },
+        {
+          "ticker": "MPC",
+          "qty": "0.030232",
+          "last": 396.5,
+          "mv": 11.987,
+          "orderId": "6ab55640-1ad5-4e39-bc99-61c1ce2f9d9c"
+        }
+      ],
+      "book": 93.0773,
+      "week": -0.343,
+      "day": 1.1134,
+      "cash": 30.654,
+      "legs": "MPC+VLO+CASH",
+      "prior": 93.3977,
+      "eod": 92.0524
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "bookUsd": 93.1462,
+      "weekPct": -0.6652,
+      "dayPct": 0.5919,
+      "cashUsd": 11.0893,
+      "position": "P+USO+CASH",
+      "priorMarkUsd": 93.77,
+      "eodMarkUsd": 92.5981,
+      "openBuys": [
+        {
+          "ticker": "USO",
+          "qty": "0.194800",
+          "last": 151.9041,
+          "mv": 29.5909,
+          "orderId": "6ab427ab-35da-44cd-a752-720b6b7399c5"
+        },
+        {
+          "ticker": "USO",
+          "qty": "0.082681",
+          "last": 151.9041,
+          "mv": 12.5596,
+          "orderId": "6ab52bb0-e2c4-4f3f-8499-bd190ce9a5cb"
+        },
+        {
+          "ticker": "P",
+          "qty": "0.311988",
+          "last": 127.91,
+          "mv": 39.9064,
+          "orderId": "6ab5564a-fbb3-4d33-9428-fcf4515bac2c"
+        }
+      ],
+      "book": 93.1462,
+      "week": -0.6652,
+      "day": 0.5919,
+      "cash": 11.0893,
+      "legs": "P+USO+CASH",
+      "prior": 93.77,
+      "eod": 92.5981
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "bookUsd": 98.105,
+      "weekPct": -1.8862,
+      "dayPct": 0.3459,
+      "cashUsd": -21.0496,
+      "position": "AR+MU+CASH",
+      "priorMarkUsd": 99.991,
+      "eodMarkUsd": 97.7668,
+      "openBuys": [
+        {
+          "ticker": "MU",
+          "qty": "0.059823",
+          "last": 1071.635,
+          "mv": 64.1084,
+          "orderId": "6ab40b83-e442-4810-956d-157267f6f974"
+        },
+        {
+          "ticker": "AR",
+          "qty": "1.534174",
+          "last": 35.88,
+          "mv": 55.0462,
+          "orderId": "6ab427ad-3404-4098-b454-c581044a1ec4"
+        }
+      ],
+      "book": 98.105,
+      "week": -1.8862,
+      "day": 0.3459,
+      "cash": -21.0496,
+      "legs": "AR+MU+CASH",
+      "prior": 99.991,
+      "eod": 97.7668
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "id": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "bookUsd": 91.8033,
+      "weekPct": -3.4856,
+      "dayPct": 0.2161,
+      "cashUsd": 29.5424,
+      "position": "AR+INTC+CASH",
+      "priorMarkUsd": 95.1188,
+      "eodMarkUsd": 91.6053,
+      "openBuys": [
+        {
+          "ticker": "AR",
+          "qty": "0.529839",
+          "last": 35.88,
+          "mv": 19.0106,
+          "orderId": "6ab42791-cb2c-4b3c-9a0d-44c2bec93162"
+        },
+        {
+          "ticker": "AR",
+          "qty": "0.647108",
+          "last": 35.88,
+          "mv": 23.2182,
+          "orderId": "6ab52baf-af86-4429-a68a-4eb515585e4e"
+        },
+        {
+          "ticker": "INTC",
+          "qty": "0.159555",
+          "last": 125.55,
+          "mv": 20.0321,
+          "orderId": "6ab55639-3ba5-4a25-b714-e13fc89cf57a"
+        }
+      ],
+      "book": 91.8033,
+      "week": -3.4856,
+      "day": 0.2161,
+      "cash": 29.5424,
+      "legs": "AR+INTC+CASH",
+      "prior": 95.1188,
+      "eod": 91.6053
+    }
+  ],
+  "pot": 376.1318,
+  "given": 361.93,
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.343,
+    "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+    "note": "Thu Sep 24 mid remake",
+    "asOf": "2026-09-24-mid",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-24T16:58:07Z"
+  },
+  "quotes": {
+    "STNG": 80.62,
+    "AR": 35.88,
+    "GNRC": 198.655,
+    "VLO": 387.9419,
+    "MU": 1071.635,
+    "USO": 151.9041,
+    "ALAB": 365.61,
+    "INTC": 125.55,
+    "SOXL": 145.84,
+    "MPC": 396.5,
+    "FRO": 47.75,
+    "P": 127.91
+  }
+}

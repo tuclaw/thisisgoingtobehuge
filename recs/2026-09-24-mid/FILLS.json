@@ -1,0 +1,123 @@
+{
+  "session": "2026-09-24-mid",
+  "accountLast4": "6969",
+  "bpBefore": 2.31,
+  "bpAfterSells": 85.51,
+  "bpAfterBuys": 0.51,
+  "themeBufferUntouched": true,
+  "leftoversLeftAlone": {
+    "VLO": 0.014984,
+    "MPC": 0.044873,
+    "FRO": 0.358734
+  },
+  "bootLiquidations": [],
+  "contestantFills": [
+    {
+      "name": "Claude Sonnet 5",
+      "side": "SELL",
+      "ticker": "STNG",
+      "qty": "0.246002",
+      "avg": "80.530100",
+      "notional": 19.8106,
+      "orderId": "6ab55612-67c4-4f18-96e0-c94d03aa2cb5",
+      "open_lot_id": "bdd74393-8792-5adc-b20c-713a0b056938",
+      "filledAt": "2026-09-24T16:55:46.658Z",
+      "ref_id": "c30d7ac1-029f-4697-a765-9ca9961ae24e",
+      "note": "Thu mid SELL STNG 0.246002 (Wed open lot) \u2192 INTC"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "SELL",
+      "ticker": "GNRC",
+      "qty": "0.117843",
+      "avg": "198.500100",
+      "notional": 23.3918,
+      "orderId": "6ab5561d-bdb5-4ab1-903d-3c7f987847ba",
+      "open_lot_id": "766c2398-2d13-594f-9910-052e66a6f68f",
+      "filledAt": "2026-09-24T16:55:57.83Z",
+      "ref_id": "12a6b80f-d695-4421-b279-ed93faf08715",
+      "note": "Thu mid SELL GNRC 0.117843 \u2192 VLO+MPC"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "SELL",
+      "ticker": "AR",
+      "qty": "1.115495",
+      "avg": "35.861500",
+      "notional": 40.0033,
+      "orderId": "6ab5561d-e3df-433b-9cb5-3956755187c0",
+      "open_lot_id": "c7679e5d-e32e-5ba1-925f-17e61255c00f",
+      "filledAt": "2026-09-24T16:55:57.357Z",
+      "ref_id": "8286b6ba-ede7-485d-8619-368a5f784360",
+      "note": "Thu mid SELL AR 1.115495 (Wed mid lot) \u2192 P"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "side": "BUY",
+      "ticker": "INTC",
+      "qty": "0.159555",
+      "avg": "125.348300",
+      "notional": 20.0,
+      "dollar_amount": 20.0,
+      "orderId": "6ab55639-3ba5-4a25-b714-e13fc89cf57a",
+      "open_lot_id": "0e1b5d2f-9940-5cd4-836f-cbc3a94f8a95",
+      "filledAt": "2026-09-24T16:56:26.119Z",
+      "ref_id": "0af60ae2-d159-4765-bf42-19fb9ae5781c",
+      "note": "Thu mid BUY INTC $20.00 from STNG exit"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "VLO",
+      "qty": "0.033453",
+      "avg": "388.600200",
+      "notional": 13.0,
+      "dollar_amount": 13.0,
+      "orderId": "6ab55640-77b8-414f-bd57-ba046fe38609",
+      "open_lot_id": "471ee129-19cc-5b42-9cc1-3b7da3526340",
+      "filledAt": "2026-09-24T16:56:32.474Z",
+      "ref_id": "6b3a8ab9-ecb0-40ee-8df7-fb6f819a8962",
+      "note": "Thu mid BUY VLO $13.00 from GNRC exit"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "MPC",
+      "qty": "0.030232",
+      "avg": "396.929900",
+      "notional": 12.0,
+      "dollar_amount": 12.0,
+      "orderId": "6ab55640-1ad5-4e39-bc99-61c1ce2f9d9c",
+      "open_lot_id": "a75993a1-5c2f-53fe-b995-95c8b756585b",
+      "filledAt": "2026-09-24T16:56:33.076Z",
+      "ref_id": "a7cbf309-b36f-4891-a49d-b9068fec5938",
+      "note": "Thu mid BUY MPC $12.00 from GNRC exit"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "BUY",
+      "ticker": "P",
+      "qty": "0.311988",
+      "avg": "128.209900",
+      "notional": 40.0,
+      "dollar_amount": 40.0,
+      "orderId": "6ab5564a-fbb3-4d33-9428-fcf4515bac2c",
+      "open_lot_id": "d087bdd8-7776-5732-b735-6cbe45a1dcdb",
+      "filledAt": "2026-09-24T16:56:42.921Z",
+      "ref_id": "c6b215ac-470d-4041-ae7f-9c69d41771ae",
+      "note": "Thu mid BUY P $40.00 from AR exit"
+    }
+  ],
+  "holds": [
+    {
+      "name": "GPT-5.6 Terra",
+      "actions": [
+        "HOLD MU",
+        "HOLD AR"
+      ],
+      "fills": []
+    }
+  ],
+  "skips": [],
+  "huntScore": "4/4"
+}
