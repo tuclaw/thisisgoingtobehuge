@@ -750,6 +750,7 @@ check("e07-heroNote-empty", episode7Copy.heroNote === "");
 check("e07-weekBoard-lede-empty", episode7Copy.weekBoard && episode7Copy.weekBoard.lede === "");
 check("e08-heroNote-empty", episode8Copy.heroNote === "");
 check("e08-weekBoard-lede-empty", episode8Copy.weekBoard && episode8Copy.weekBoard.lede === "");
+check("e08-conversationFeed-false", episode8Copy.conversationFeed === false);
 check(
   "e02-kept-dinners",
   ["monday-dinner", "tuesday-dinner", "wednesday-dinner", "thursday-dinner", "saturday-dinner", "sunday-dinner"].every((id) =>
@@ -1589,8 +1590,21 @@ check(
     "wednesday-confessionals",
     "wednesday-lasthour-books",
     "wednesday-eod-rth-books",
-    "wednesday-eod-sip-books"
+    "wednesday-eod-sip-books",
+    "wednesday-dinner"
   ])
+);
+const e8WedDinner = (((episode8Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).find(
+  (beat) => beat.id === "wednesday-dinner"
+);
+check(
+  "e08-wednesday-dinner-beat",
+  Boolean(e8WedDinner) &&
+    e8WedDinner.type === "dinner-fires" &&
+    (() => {
+      const beats = (((episode8Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).map((b) => b.id);
+      return beats.indexOf("wednesday-eod-sip-books") === beats.indexOf("wednesday-dinner") - 1;
+    })()
 );
 const e8WedBooths = (((episode8Copy.days || []).find((day) => day.id === "wednesday") || {}).beats || []).find(
   (beat) => beat.id === "wednesday-confessionals"
