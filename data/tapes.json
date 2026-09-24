@@ -227,6 +227,16 @@
       "campfireFeed": false,
       "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03", "s1e04", "s1e05", "s1e06"],
       "participantCount": 5
+    },
+    {
+      "file": "e08-wednesday-dinner.js",
+      "dayId": "wednesday",
+      "beatId": "wednesday-dinner",
+      "global": "WEDNESDAY_DINNER_CONVERSATIONS",
+      "afterBeatIds": ["wednesday-eod-sip-books"],
+      "campfireFeed": false,
+      "isolateFromEpisodes": ["s1e01", "s1e02", "s1e03", "s1e04", "s1e05", "s1e06", "s1e07"],
+      "participantCount": 4
     }
   ]
 }
