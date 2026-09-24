@@ -1,0 +1,61 @@
+{
+  "session": "2026-09-24-open",
+  "account": "••••6969",
+  "bpBefore": 1.63,
+  "bpAfterSells": 37.81,
+  "bpAfterBuys": 2.31,
+  "sells": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "STNG",
+      "qty": "0.291580",
+      "avg": "81.260100",
+      "orderId": "6ab52b8a-280b-46d5-b47a-ccd07e916850",
+      "notional": 23.6938,
+      "at": "2026-09-24T13:54:18.731Z",
+      "open_lot_id": "1a83497e-20c0-5c5e-89ed-f8a90cdad58c",
+      "state": "filled",
+      "note": "Thu open SELL STNG 0.291580 (Wed mid lot) → AR"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "ALAB",
+      "qty": "0.035340",
+      "avg": "353.309900",
+      "orderId": "6ab52b8d-b51d-40cd-a240-5ad5562fc6b3",
+      "notional": 12.486,
+      "at": "2026-09-24T13:54:21.698Z",
+      "open_lot_id": "43b5bf45-33a1-5152-8441-63767ca64a13",
+      "state": "filled",
+      "note": "Thu open SELL ALAB 0.035340 → USO"
+    }
+  ],
+  "buys": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "AR",
+      "qty": "0.647108",
+      "avg": "35.542700",
+      "orderId": "6ab52baf-af86-4429-a68a-4eb515585e4e",
+      "notional": 23,
+      "at": "2026-09-24T13:54:55.942Z",
+      "open_lot_id": null,
+      "state": "filled",
+      "note": "Thu open BUY AR $23.00 from STNG mid-lot exit; open_lot_id pending broker sync",
+      "dollar": 23
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "USO",
+      "qty": "0.082681",
+      "avg": "151.183100",
+      "orderId": "6ab52bb0-e2c4-4f3f-8499-bd190ce9a5cb",
+      "notional": 12.5,
+      "at": "2026-09-24T13:54:56.231Z",
+      "open_lot_id": "7d61a994-0716-5fa8-a58e-34361796f44b",
+      "state": "filled",
+      "note": "Thu open BUY USO $12.50 from ALAB exit",
+      "dollar": 12.5
+    }
+  ]
+}
