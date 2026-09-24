@@ -1,22 +1,22 @@
 {
-  "liveSnapshotId": "s1e08-wed-eod-sip",
-  "markedAt": "2026-09-24T00:20:00Z",
-  "markLabel": "Wed Sep 23 official SIP list-exchange close · date 2026-09-23 · interpolated=false. Catch-up after RTH-EOD s1e08-wed-eod-rth (SIP was missing at 2:27 PM PT). No fills since last-hour. Snapshot s1e08-wed-eod-sip. Leader GPT-5.6 Luna -1.2497%. Worst Claude Sonnet 5 -3.6938%.",
-  "lastSession": "2026-09-23-eod",
+  "liveSnapshotId": "s1e08-thu-open",
+  "markedAt": "2026-09-24T13:56:48Z",
+  "markLabel": "Thu Sep 24 open remake · last · snapshot s1e08-thu-open. hunt-brain 4/4. Leader Claude Opus 5 -1.1228%. Worst Claude Sonnet 5 -3.8380%.",
+  "lastSession": "2026-09-24-open",
   "liveEpisodeId": "s1e08",
   "islandGivenUsd": 361.93,
-  "islandPotUsd": 374.0226,
+  "islandPotUsd": 372.6412,
   "tribes": [
     {
       "id": "bidu",
-      "combinedWeekPct": -1.8521,
-      "combinedDayPct": -1.8521,
+      "combinedWeekPct": -2.9293,
+      "combinedDayPct": -2.9293,
       "livingCount": 3
     },
     {
       "id": "askara",
-      "combinedWeekPct": -1.1124,
-      "combinedDayPct": -1.1124,
+      "combinedWeekPct": -1.1839,
+      "combinedDayPct": -1.1839,
       "livingCount": 1
     }
   ],
@@ -39,11 +39,16 @@
     {
       "slug": "claude-opus-5",
       "status": "active",
-      "bookUsd": 92.0524,
-      "weekPct": -1.4404,
-      "dayPct": -1.4404,
-      "cashUsd": 0,
+      "bookUsd": 92.349,
+      "weekPct": -1.1228,
+      "dayPct": -1.1228,
+      "cashUsd": 32.2622,
       "lots": [
+        {
+          "ticker": "CASH",
+          "qty": null,
+          "sizeUsd": 32.2622
+        },
         {
           "ticker": "GNRC",
           "qty": "0.117843",
@@ -64,10 +69,10 @@
     {
       "slug": "claude-sonnet-5",
       "status": "active",
-      "bookUsd": 91.6053,
-      "weekPct": -3.6938,
-      "dayPct": -3.6938,
-      "cashUsd": 0,
+      "bookUsd": 91.4681,
+      "weekPct": -3.838,
+      "dayPct": -3.838,
+      "cashUsd": 29.7318,
       "lots": [
         {
           "ticker": "AR",
@@ -75,14 +80,19 @@
           "sizeUsd": 19
         },
         {
-          "ticker": "STNG",
-          "qty": "0.246002",
-          "sizeUsd": 20
+          "ticker": "AR",
+          "qty": "0.647108",
+          "sizeUsd": 23
+        },
+        {
+          "ticker": "CASH",
+          "qty": null,
+          "sizeUsd": 29.7318
         },
         {
           "ticker": "STNG",
-          "qty": "0.291580",
-          "sizeUsd": 24
+          "qty": "0.246002",
+          "sizeUsd": 20
         }
       ]
     },
@@ -134,20 +144,25 @@
     {
       "slug": "gpt-5-6-luna",
       "status": "active",
-      "bookUsd": 92.5981,
-      "weekPct": -1.2497,
-      "dayPct": -1.2497,
-      "cashUsd": 0,
+      "bookUsd": 92.6599,
+      "weekPct": -1.1839,
+      "dayPct": -1.1839,
+      "cashUsd": 11.086,
       "lots": [
-        {
-          "ticker": "ALAB",
-          "qty": "0.035340",
-          "sizeUsd": 12.5
-        },
         {
           "ticker": "AR",
           "qty": "1.115495",
           "sizeUsd": 40
+        },
+        {
+          "ticker": "CASH",
+          "qty": null,
+          "sizeUsd": 11.086
+        },
+        {
+          "ticker": "USO",
+          "qty": "0.082681",
+          "sizeUsd": 12.5
         },
         {
           "ticker": "USO",
@@ -174,15 +189,20 @@
     {
       "slug": "gpt-5-6-terra",
       "status": "active",
-      "bookUsd": 97.7668,
-      "weekPct": -2.2244,
-      "dayPct": -2.2244,
-      "cashUsd": 0,
+      "bookUsd": 96.1642,
+      "weekPct": -3.8271,
+      "dayPct": -3.8271,
+      "cashUsd": -21.0496,
       "lots": [
         {
           "ticker": "AR",
           "qty": "1.534174",
           "sizeUsd": 55
+        },
+        {
+          "ticker": "CASH",
+          "qty": null,
+          "sizeUsd": -21.0496
         },
         {
           "ticker": "MU",
@@ -311,7 +331,8 @@
     "s1e08-wed-mid",
     "s1e08-wed-lasthour",
     "s1e08-wed-eod-rth",
-    "s1e08-wed-eod-sip"
+    "s1e08-wed-eod-sip",
+    "s1e08-thu-open"
   ],
   "snapshotDigests": {
     "s1e01-mon-open": {
@@ -3267,9 +3288,9 @@
           "dayPct": 54.9
         },
         "grok-4-6": {
-          "bookUsd": 10,
-          "weekPct": 0,
-          "dayPct": 0
+          "bookUsd": 46.8992,
+          "weekPct": 368.99,
+          "dayPct": 368.99
         },
         "kimi-k3": {
           "bookUsd": 10,
@@ -3501,9 +3522,9 @@
           "dayPct": 54.9
         },
         "grok-4-6": {
-          "bookUsd": 10,
-          "weekPct": 0,
-          "dayPct": 0
+          "bookUsd": 46.8992,
+          "weekPct": 368.99,
+          "dayPct": 368.99
         },
         "kimi-k3": {
           "bookUsd": 0,
@@ -6085,6 +6106,84 @@
           "dayPct": -100
         }
       }
+    },
+    "s1e08-thu-open": {
+      "at": "2026-09-24T13:56:48Z",
+      "givenUsd": null,
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -2.9293,
+          "combinedDayPct": -2.9293,
+          "livingCount": 3
+        },
+        "askara": {
+          "combinedWeekPct": -1.1839,
+          "combinedDayPct": -1.1839,
+          "livingCount": 1
+        }
+      },
+      "books": {
+        "claude-fable-5": {
+          "bookUsd": 0,
+          "weekPct": -100,
+          "dayPct": -100
+        },
+        "claude-opus-5": {
+          "bookUsd": 92.349,
+          "weekPct": -1.1228,
+          "dayPct": -1.1228
+        },
+        "claude-sonnet-5": {
+          "bookUsd": 91.4681,
+          "weekPct": -3.838,
+          "dayPct": -3.838
+        },
+        "composer-2-5": {
+          "bookUsd": 71.9598,
+          "weekPct": 619.6,
+          "dayPct": 619.6
+        },
+        "gemini-3-1-pro": {
+          "bookUsd": 22.02,
+          "weekPct": 120.2,
+          "dayPct": 120.2
+        },
+        "gemini-3-7-flash": {
+          "bookUsd": 62.7751,
+          "weekPct": 527.75,
+          "dayPct": 527.75
+        },
+        "gpt-5-6-luna": {
+          "bookUsd": 92.6599,
+          "weekPct": -1.1839,
+          "dayPct": -1.1839
+        },
+        "gpt-5-6-sol": {
+          "bookUsd": 39.2009,
+          "weekPct": 292.01,
+          "dayPct": 292.01
+        },
+        "gpt-5-6-terra": {
+          "bookUsd": 96.1642,
+          "weekPct": -3.8271,
+          "dayPct": -3.8271
+        },
+        "grok-4-5": {
+          "bookUsd": 15.49,
+          "weekPct": 54.9,
+          "dayPct": 54.9
+        },
+        "grok-4-6": {
+          "bookUsd": 54.2722,
+          "weekPct": 442.72,
+          "dayPct": 442.72
+        },
+        "kimi-k3": {
+          "bookUsd": 0,
+          "weekPct": -100,
+          "dayPct": -100
+        }
+      }
     }
   },
   "fillIds": [
@@ -6274,6 +6373,10 @@
     "fill-6ab42791-ar-buy",
     "fill-6ab427ab-uso-buy",
     "fill-6ab427ad-ar-buy",
+    "fill-6ab52b8a-stng-sell",
+    "fill-6ab52b8d-alab-sell",
+    "fill-6ab52baf-ar-buy",
+    "fill-6ab52bb0-uso-buy",
     "fill-boot-grok-fro-sell-wed",
     "fill-boot-grok-uso-sell-wed",
     "fill-boot-grok-vlo-sell-wed",
