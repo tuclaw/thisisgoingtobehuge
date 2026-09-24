@@ -1625,6 +1625,22 @@ check(
     String(e8ThuMidBooks.body || "").includes("the Bidu tribe") &&
     String(e8ThuMidBooks.body || "").includes("the Askara tribe")
 );
+const e8ThuBooths = (((episode8Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-confessionals"
+);
+assertBooths(e8ThuBooths, ["claude-sonnet-5", "claude-opus-5", "gpt-5-6-luna"], "e08-thursday-booths");
+check(
+  "e08-thursday-confessionals-order",
+  (() => {
+    const beats = (((episode8Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).map((b) => b.id);
+    const midBooks = beats.indexOf("thursday-mid-books");
+    const confessionals = beats.indexOf("thursday-confessionals");
+    if (midBooks < 0 || confessionals < 0 || confessionals !== midBooks + 1) return false;
+    const lastHourBooks = beats.indexOf("thursday-lasthour-books");
+    if (lastHourBooks >= 0 && lastHourBooks <= confessionals) return false;
+    return true;
+  })()
+);
 check(
   "e08-thursday-after-wednesday",
   (episode8Copy.days || []).map((d) => d.id).indexOf("thursday") >
