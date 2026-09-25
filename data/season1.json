@@ -4,12 +4,12 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Episode 8 · Thu RTH-EOD · four living · MERGED · comics paused",
+  "statusLabel": "Episode 8 · Thu SIP-EOD · four living · MERGED · comics paused",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 375.1481,
+  "islandPotUsd": 375.3093,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -200,21 +200,21 @@
       "source": "data/episodes/s1e08.json",
       "diagramStartSnapshotId": "s1e08-carry",
       "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash).",
-      "liveSnapshotId": "s1e08-thu-eod-rth",
-      "islandPotUsd": 375.1481,
+      "liveSnapshotId": "s1e08-thu-eod-sip",
+      "islandPotUsd": 375.3093,
       "immunity": {
-        "name": "Claude Opus 5",
-        "weekPct": -1.1329,
-        "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+        "name": "GPT-5.6 Terra",
+        "weekPct": -1.0318,
+        "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
         "asOf": "2026-09-24-eod",
-        "at": "2026-09-24T21:10:00Z",
+        "at": "2026-09-25T00:10:00Z",
         "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
-        "note": "Thu Sep 24 RTH-EOD remake (SIP 2026-09-24 missing; still dated 2026-09-23)"
+        "note": "Thu Sep 24 SIP-EOD catch-up (official SIP 2026-09-24; interpolated=false). Immunity flips from Claude Opus 5 (RTH) to GPT-5.6 Terra."
       },
-      "weekBoardSnapshotId": "s1e08-thu-eod-rth"
+      "weekBoardSnapshotId": "s1e08-thu-eod-sip"
     }
   ],
-  "notes": "Season live. S1E08 live Wed Sep 23 – Fri Sep 25. MERGED. Four living. Thu RTH-EOD remake — no fills since last-hour. Given $361.93. Pot $375.1481. Claude Opus 5 leads −1.1329% and wears immunity. Claude Sonnet 5 worst −2.8550%. Comics paused. Audience only. No tribal today (Thu). Tribal Fri Sep 25 2:00 PM PT.",
+  "notes": "Season live. S1E08 live Wed Sep 23 – Fri Sep 25. MERGED. Four living. Thu SIP-EOD catch-up (official SIP 2026-09-24). Given $361.93. Pot $375.3093. GPT-5.6 Terra leads -1.0318% and wears immunity. Claude Sonnet 5 worst -2.8385%. No fills since last-hour. Comics paused. Audience only. No tribal today (Thu). Tribal Fri Sep 25 2:00 PM PT.",
   "tribes": [
     {
       "id": "bidu",
@@ -288,12 +288,12 @@
       "tribeId": "bidu",
       "archetype": "stubborn value",
       "status": "active",
-      "bookUsd": 92.4032,
-      "weekPct": -2.855,
+      "bookUsd": 92.4189,
+      "weekPct": -2.8385,
       "position": {
         "action": "HOLD",
         "ticker": "AR / INTC / CASH",
-        "sizeUsd": 92.4032,
+        "sizeUsd": 92.4189,
         "status": "filled",
         "note": "ar / intc / cash"
       },
@@ -314,10 +314,10 @@
           "orderId": "6ab52baf-af86-4429-a68a-4eb515585e4e",
           "filledAt": "2026-09-24T13:54:55.942Z",
           "open_lot_id": "1a2df8a4-2130-5b42-930e-366c9b2e89b4",
-          "last": 36.08,
-          "lastSource": "robinhood-last-trade",
+          "last": 36.09,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 23.3477
+          "liveMv": 23.3541
         },
         {
           "action": "BUY",
@@ -330,10 +330,10 @@
           "orderId": "6ab55639-3ba5-4a25-b714-e13fc89cf57a",
           "filledAt": "2026-09-24T16:56:26.119Z",
           "open_lot_id": "0e1b5d2f-9940-5cd4-836f-cbc3a94f8a95",
-          "last": 127.36,
-          "lastSource": "robinhood-last-trade",
+          "last": 127.39,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 20.3209
+          "liveMv": 20.3257
         },
         {
           "action": "BUY",
@@ -346,22 +346,22 @@
           "orderId": "6ab574d5-b5c9-41a7-b98b-e7b93cf5dc0e",
           "filledAt": "2026-09-24T19:07:01.423Z",
           "open_lot_id": "74f94336-1d0e-53ef-b32f-cc193e09cc66",
-          "last": 127.36,
-          "lastSource": "robinhood-last-trade",
+          "last": 127.39,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 19.1868
+          "liveMv": 19.1913
         }
       ],
       "model": "Claude Sonnet 5",
-      "dayPct": 0.871,
+      "dayPct": 0.8882,
       "priorMarkUsd": 95.1188,
-      "lastSource": "robinhood-last-trade",
+      "lastSource": "sip-list-exchange-close",
       "lastSession": "2026-09-24-eod",
-      "eodMarkUsd": 92.4032,
+      "eodMarkUsd": 92.4189,
       "mondayOpenUsd": 39.9865,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.4487,
-      "monthPct": -5.71,
+      "monthPct": -5.677,
       "cashUsd": 29.5478,
       "tickersSummary": "AR+INTC+CASH"
     },
@@ -419,16 +419,16 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 92.3396,
-      "weekPct": -1.1329,
+      "bookUsd": 92.3371,
+      "weekPct": -1.1356,
       "position": {
         "action": "HOLD",
         "ticker": "MPC / VLO / CASH",
-        "sizeUsd": 92.3396,
+        "sizeUsd": 92.3371,
         "status": "filled",
         "note": "mpc / vlo / cash"
       },
-      "immune": true,
+      "immune": false,
       "monogram": "O",
       "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
       "portrait": "cast/claude-opus-5/portrait.jpg",
@@ -445,10 +445,10 @@
           "orderId": "6ab42790-2bbb-4027-bca6-5c2c140aeba3",
           "filledAt": "2026-09-23T19:25:04.604Z",
           "open_lot_id": "f7e7cfbc-41b8-5ea7-aaf7-b92366db8c47",
-          "last": 383.11,
-          "lastSource": "robinhood-last-trade",
+          "last": 382.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 18.287
+          "liveMv": 18.2751
         },
         {
           "action": "BUY",
@@ -461,10 +461,10 @@
           "orderId": "6ab55640-77b8-414f-bd57-ba046fe38609",
           "filledAt": "2026-09-24T16:56:32.474Z",
           "open_lot_id": "471ee129-19cc-5b42-9cc1-3b7da3526340",
-          "last": 383.11,
-          "lastSource": "robinhood-last-trade",
+          "last": 382.86,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 12.8162
+          "liveMv": 12.8078
         },
         {
           "action": "BUY",
@@ -477,22 +477,22 @@
           "orderId": "6ab55640-1ad5-4e39-bc99-61c1ce2f9d9c",
           "filledAt": "2026-09-24T16:56:33.076Z",
           "open_lot_id": "a75993a1-5c2f-53fe-b995-95c8b756585b",
-          "last": 390.36,
-          "lastSource": "robinhood-last-trade",
+          "last": 390.95,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 11.8014
+          "liveMv": 11.8192
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": 0.312,
+      "dayPct": 0.3093,
       "priorMarkUsd": 93.3977,
-      "lastSource": "robinhood-last-trade",
+      "lastSource": "sip-list-exchange-close",
       "lastSession": "2026-09-24-eod",
-      "eodMarkUsd": 92.3396,
+      "eodMarkUsd": 92.3371,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.2517,
-      "monthPct": -2.2658,
+      "monthPct": -2.2712,
       "cashUsd": 49.435,
       "tickersSummary": "MPC+VLO+CASH"
     },
@@ -550,16 +550,16 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 98.8297,
-      "weekPct": -1.1614,
+      "bookUsd": 98.9593,
+      "weekPct": -1.0318,
       "position": {
         "action": "HOLD",
         "ticker": "AR / MU / CASH",
-        "sizeUsd": 98.8297,
+        "sizeUsd": 98.9593,
         "status": "filled",
         "note": "ar / mu / cash"
       },
-      "immune": false,
+      "immune": true,
       "monogram": "T",
       "bio": "Dayton. Steward, not a hero.",
       "caption": "Slow hands. Long horizon. The adults’ table.",
@@ -577,10 +577,10 @@
           "orderId": "6ab40b83-e442-4810-956d-157267f6f974",
           "filledAt": "2026-09-23T17:25:23.336Z",
           "open_lot_id": "9d716fa8-bd37-5ec9-b983-3c1d98af20c3",
-          "last": 1078.62,
-          "lastSource": "robinhood-last-trade",
+          "last": 1080.53,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 64.5263
+          "liveMv": 64.6405
         },
         {
           "action": "BUY",
@@ -593,22 +593,22 @@
           "orderId": "6ab427ad-3404-4098-b454-c581044a1ec4",
           "filledAt": "2026-09-23T19:25:33.552Z",
           "open_lot_id": "4580e41b-3232-5327-a748-5e07015a00f7",
-          "last": 36.08,
-          "lastSource": "robinhood-last-trade",
+          "last": 36.09,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 55.353
+          "liveMv": 55.3683
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": 1.0872,
+      "dayPct": 1.2197,
       "priorMarkUsd": 99.991,
-      "lastSource": "robinhood-last-trade",
+      "lastSource": "sip-list-exchange-close",
       "lastSession": "2026-09-24-eod",
-      "eodMarkUsd": 98.8297,
+      "eodMarkUsd": 98.9593,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
-      "monthPct": -2.3228,
+      "monthPct": -2.0636,
       "cashUsd": -21.0496,
       "tickersSummary": "AR+MU+CASH"
     },
@@ -778,12 +778,12 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 91.5756,
-      "weekPct": -2.3402,
+      "bookUsd": 91.594,
+      "weekPct": -2.3206,
       "position": {
         "action": "HOLD",
         "ticker": "P / USO / CASH",
-        "sizeUsd": 91.5756,
+        "sizeUsd": 91.594,
         "status": "filled",
         "note": "p / uso / cash"
       },
@@ -804,10 +804,10 @@
           "orderId": "6ab427ab-35da-44cd-a752-720b6b7399c5",
           "filledAt": "2026-09-23T19:25:31.751Z",
           "open_lot_id": "39e84a68-a936-5344-bec0-3d335c19f7f1",
-          "last": 153.08,
-          "lastSource": "robinhood-last-trade",
+          "last": 153.09,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 29.82
+          "liveMv": 29.8219
         },
         {
           "action": "BUY",
@@ -820,10 +820,10 @@
           "orderId": "6ab52bb0-e2c4-4f3f-8499-bd190ce9a5cb",
           "filledAt": "2026-09-24T13:54:56.231Z",
           "open_lot_id": "7d61a994-0716-5fa8-a58e-34361796f44b",
-          "last": 153.08,
-          "lastSource": "robinhood-last-trade",
+          "last": 153.09,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 12.6568
+          "liveMv": 12.6576
         },
         {
           "action": "BUY",
@@ -836,24 +836,24 @@
           "orderId": "6ab5564a-fbb3-4d33-9428-fcf4515bac2c",
           "filledAt": "2026-09-24T16:56:42.921Z",
           "open_lot_id": "d087bdd8-7776-5732-b735-6cbe45a1dcdb",
-          "last": 121.83,
-          "lastSource": "robinhood-last-trade",
+          "last": 121.88,
+          "lastSource": "sip-list-exchange-close",
           "lastSession": "2026-09-24-eod",
-          "liveMv": 38.0095
+          "liveMv": 38.0251
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": -1.1042,
+      "dayPct": -1.0844,
       "priorMarkUsd": 93.77,
-      "lastSource": "robinhood-last-trade",
+      "lastSource": "sip-list-exchange-close",
       "lastSession": "2026-09-24-eod",
-      "eodMarkUsd": 91.5756,
+      "eodMarkUsd": 91.594,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
       "mondayOpenUsd": 24.7771,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": -12.6804,
-      "monthPct": -4.6804,
+      "monthPct": -4.6412,
       "cashUsd": 11.0893,
       "tickersSummary": "P+USO+CASH"
     },
@@ -1646,17 +1646,17 @@
   ],
   "goldenPortfolio": [],
   "immunity": {
-    "name": "Claude Opus 5",
-    "weekPct": -1.1329,
+    "name": "GPT-5.6 Terra",
+    "weekPct": -1.0318,
     "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
-    "note": "Thu Sep 24 RTH-EOD remake (SIP 2026-09-24 missing; still dated 2026-09-23)",
+    "note": "Thu Sep 24 SIP-EOD catch-up (official SIP 2026-09-24; interpolated=false). Immunity flips from Claude Opus 5 (RTH) to GPT-5.6 Terra.",
     "asOf": "2026-09-24-eod",
-    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
-    "at": "2026-09-24T21:10:00Z"
+    "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+    "at": "2026-09-25T00:10:00Z"
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-24T21:10:00Z",
+  "markedAt": "2026-09-25T00:10:00Z",
   "quotes": {
     "STNG": {
       "last": 80.62,
@@ -1682,7 +1682,7 @@
       "priorCloseSource": "robinhood-last (Thu Sep 24 open · s1e08-thu-open)",
       "interpolated": false
     },
-    "VLO": 383.11,
+    "VLO": 382.86,
     "ALAB": {
       "last": 365.61,
       "close": 365.61,
@@ -1695,10 +1695,10 @@
       "priorCloseSource": "robinhood-last (Thu Sep 24 open · s1e08-thu-open)",
       "interpolated": false
     },
-    "AR": 36.08,
-    "MU": 1078.62,
-    "USO": 153.08,
-    "INTC": 127.36,
+    "AR": 36.09,
+    "MU": 1080.53,
+    "USO": 153.09,
+    "INTC": 127.39,
     "SOXL": {
       "last": 145.84,
       "close": 145.84,
@@ -1710,7 +1710,7 @@
       "priorCloseSource": "robinhood-last (Thu Sep 24 open · s1e08-thu-open)",
       "interpolated": false
     },
-    "MPC": 390.36,
+    "MPC": 390.95,
     "FRO": {
       "last": 47.75,
       "close": 47.75,
@@ -1722,9 +1722,9 @@
       "priorCloseSource": "robinhood-last (Thu Sep 24 open · s1e08-thu-open)",
       "interpolated": false
     },
-    "P": 121.83
+    "P": 121.88
   },
-  "markLabel": "Thu Sep 24 RTH-EOD · robinhood last-trade (~19:59Z). SIP settle 2026-09-24 not posted (closes still 2026-09-23). Snapshot s1e08-thu-eod-rth. No fills since last-hour. Leader Claude Opus 5 -1.1329%. Worst Claude Sonnet 5 -2.8550%. Immunity Claude Opus 5.",
+  "markLabel": "Thu Sep 24 official SIP list-exchange close · date 2026-09-24 · interpolated=false. Catch-up after RTH-EOD s1e08-thu-eod-rth (SIP was missing at ~2:10 PM PT). No fills since last-hour. Snapshot s1e08-thu-eod-sip. Leader GPT-5.6 Terra -1.0318%. Worst Claude Sonnet 5 -2.8385%.",
   "dayPctBasis": "vs Wed SIP eodMarkUsd",
   "weekPctBasis": "vs Tue SIP priorMarkUsd",
   "islandGivenUsd": 361.93,
@@ -13955,10 +13955,94 @@
         }
       },
       "upgradesSnapshotId": "s1e08-thu-lasthour"
+    },
+    {
+      "type": "mark",
+      "id": "s1e08-thu-eod-sip",
+      "kind": "close",
+      "at": "2026-09-25T00:10:00Z",
+      "throughAt": "2026-09-25T00:10:00Z",
+      "lastSession": "2026-09-24-eod",
+      "label": "Thu Sep 24 official SIP list-exchange close · date 2026-09-24 · interpolated=false. Catch-up after RTH-EOD s1e08-thu-eod-rth (SIP was missing at ~2:10 PM PT). No fills since last-hour. Snapshot s1e08-thu-eod-sip. Leader GPT-5.6 Terra -1.0318%. Worst Claude Sonnet 5 -2.8385%.",
+      "dayPctPriorOfficial": true,
+      "dayPctPriorCloseDate": "2026-09-23",
+      "quoteSource": "sip-list-exchange-close",
+      "sipMissing": false,
+      "officialCloseDate": "2026-09-24",
+      "interpolated": false,
+      "upgradesSnapshotId": "s1e08-thu-eod-rth",
+      "marks": {
+        "AR": 36.09,
+        "INTC": 127.39,
+        "VLO": 382.86,
+        "MPC": 390.95,
+        "USO": 153.09,
+        "P": 121.88,
+        "MU": 1080.53
+      },
+      "rthMarksEarlier": {
+        "AR": 36.08,
+        "INTC": 127.36,
+        "VLO": 383.11,
+        "MPC": 390.36,
+        "USO": 153.08,
+        "P": 121.83,
+        "MU": 1078.62
+      },
+      "immunity": {
+        "name": "GPT-5.6 Terra",
+        "weekPct": -1.0318,
+        "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+        "note": "Thu Sep 24 SIP-EOD catch-up (official SIP 2026-09-24; interpolated=false). Immunity flips from Claude Opus 5 (RTH) to GPT-5.6 Terra.",
+        "asOf": "2026-09-24-eod",
+        "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+        "at": "2026-09-25T00:10:00Z"
+      },
+      "potUsd": 375.3093,
+      "fillsSinceLastHour": [],
+      "fillsSinceOpen": "see ledger / last-hour remake",
+      "recorded": {
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 98.9593,
+          "weekPct": -1.0318,
+          "monthPct": -2.0636,
+          "dayPct": 1.2197,
+          "priorMarkUsd": 99.991,
+          "eodMarkUsd": 98.9593,
+          "dayPctBasisUsd": 97.7668
+        },
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 92.3371,
+          "weekPct": -1.1356,
+          "monthPct": -2.2712,
+          "dayPct": 0.3093,
+          "priorMarkUsd": 93.3977,
+          "eodMarkUsd": 92.3371,
+          "dayPctBasisUsd": 92.0524
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 91.594,
+          "weekPct": -2.3206,
+          "monthPct": -4.6412,
+          "dayPct": -1.0844,
+          "priorMarkUsd": 93.77,
+          "eodMarkUsd": 91.594,
+          "dayPctBasisUsd": 92.5981
+        },
+        "955a698c-6db0-4172-9e48-12f3724187b0": {
+          "bookUsd": 92.4189,
+          "weekPct": -2.8385,
+          "monthPct": -5.677,
+          "dayPct": 0.8882,
+          "priorMarkUsd": 95.1188,
+          "eodMarkUsd": 92.4189,
+          "dayPctBasisUsd": 91.6053
+        }
+      }
     }
   ],
-  "liveSnapshotId": "s1e08-thu-eod-rth",
-  "lastSource": "robinhood-last-trade",
+  "liveSnapshotId": "s1e08-thu-eod-sip",
+  "lastSource": "sip-list-exchange-close",
   "lastSession": "2026-09-24-eod",
   "themeLeftoverParked": false,
   "themeLeftoverCreditedUsd": 121.84,
@@ -13973,6 +14057,6 @@
     "Grok 4.6": 13.5377,
     "Kimi K3": 13.5377
   },
-  "lastSnapshotId": "s1e08-thu-eod-rth",
-  "lastRemakeAt": "2026-09-24T21:10:00Z"
+  "lastSnapshotId": "s1e08-thu-eod-sip",
+  "lastRemakeAt": "2026-09-25T00:10:00Z"
 }

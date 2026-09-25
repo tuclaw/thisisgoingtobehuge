@@ -401,8 +401,8 @@ if (pctHelpers.bookWeekPctFromSnap({ weekPct: 1.27, bookUsd: 24.278 }) !== 1.27)
 if (pctHelpers.bookWeekPctFromSnap({ bookUsd: 10 }) != null) {
   throw new Error("bookWeekPctFromSnap must not invent a percentage from bookUsd");
 }
-if (pctHelpers.islandSeasonPct(375.1481, 361.93) !== 3.6521) {
-  throw new Error("islandSeasonPct must be (cash - putIn) / putIn, got " + pctHelpers.islandSeasonPct(375.1481, 361.93));
+if (pctHelpers.islandSeasonPct(375.3093, 361.93) !== 3.6967) {
+  throw new Error("islandSeasonPct must be (cash - putIn) / putIn, got " + pctHelpers.islandSeasonPct(375.3093, 361.93));
 }
 if (pctHelpers.islandSeasonPct(118.4, 120) !== -1.3333) {
   throw new Error("islandSeasonPct must stay negative when the pot is under the funded given, got " + pctHelpers.islandSeasonPct(118.4, 120));
