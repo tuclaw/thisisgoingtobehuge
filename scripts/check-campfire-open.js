@@ -388,7 +388,14 @@ if (!css.includes(".open-hero .money-ticker") || !css.includes("max-width: min(6
   throw new Error("styles.css missing home hero books diagram layout");
 }
 if (!appJs.includes("tickerEvenGuide") || !appJs.includes('label: "0%"') || !css.includes(".money-ticker-putin")) {
-  throw new Error("home books diagram must plot week % against a 0% even line");
+  throw new Error("home books diagram must plot percentages against a 0% even line");
+}
+if (
+  !appJs.includes("function islandSeasonPct") ||
+  !appJs.includes("Island return versus the funded pot") ||
+  !appJs.includes("range === \"season\" ? frame.seasonTotal : frame.weekTotal")
+) {
+  throw new Error("home Season/Island diagram must plot funded-pot return, not this week's week %");
 }
 const homeVoteIdx = html.indexOf('id="home-vote"');
 const homeTribalIdx = html.indexOf('id="home-tribal"');

@@ -2718,6 +2718,13 @@ function bookWeekPctFromSnap(row) {
   return null;
 }
 
+/* Season tape: return vs the host-add-aware funded pot, not this week's week %. */
+function islandSeasonPct(cash, putIn) {
+  if (typeof cash !== "number" || Number.isNaN(cash)) return 0;
+  if (typeof putIn !== "number" || Number.isNaN(putIn) || Math.abs(putIn) < 1e-9) return 0;
+  return roundMoney(((cash - putIn) / putIn) * 100);
+}
+
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
   const mode = range || (moneyTicker && moneyTicker.range) || "week";
@@ -3136,9 +3143,11 @@ function framesFromSnapshots(season, snaps, range) {
         putIn: tickerPutInAt(season, plotAt || snap.at)
       };
       frame.tribes = tribePctsFromFrame(frame, season, snap);
-      frame.total = roundMoney(
+      frame.weekTotal = roundMoney(
         Object.values(frame.tribes).reduce((acc, v) => acc + (typeof v === "number" ? v : 0), 0)
       );
+      frame.seasonTotal = islandSeasonPct(frame.cash, frame.putIn);
+      frame.total = range === "season" ? frame.seasonTotal : frame.weekTotal;
       return frame;
     });
   moneyTickerAssignAxis(frames, range);
@@ -3784,9 +3793,13 @@ function moneyTickerDiagramSeries(season, frames) {
   const scale = tickerPctScale(values, 1.6);
   const potDown = last && last.total < -0.00005;
   const potStroke = potDown ? "#e89354" : "#8ee8d8";
+  const seasonTape = (moneyTicker.range || "week") === "season";
+  const islandLabel = seasonTape ? "Island return %" : "Island combined %";
   return {
     title: "Island",
-    aria: "Island combined week % over recorded marks. Dotted line is 0%.",
+    aria: seasonTape
+      ? "Island return versus the funded pot over recorded marks. Dotted line is 0%."
+      : "Island combined week % over recorded marks. Dotted line is 0%.",
     putIn: 0,
     putInLabel: "0%",
     guides: [even],
@@ -3795,7 +3808,7 @@ function moneyTickerDiagramSeries(season, frames) {
     series: [
       {
         id: "island",
-        label: "Island combined %",
+        label: islandLabel,
         color: potStroke,
         values,
         seed: 7,
@@ -3803,7 +3816,7 @@ function moneyTickerDiagramSeries(season, frames) {
       }
     ],
     legend: [
-      { label: "Island combined %", color: potStroke }
+      { label: islandLabel, color: potStroke }
     ],
     liveSeries: "total",
     strokeForDot: potStroke
