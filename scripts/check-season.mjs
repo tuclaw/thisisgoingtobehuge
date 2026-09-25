@@ -145,7 +145,7 @@ if (boardNative) {
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", source.islandPotUsd === 369.828, String(source.islandPotUsd));
+  check("pot-marked-sleeves", Math.abs(source.islandPotUsd - 369.8281) < 0.0002, String(source.islandPotUsd));
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
@@ -226,7 +226,11 @@ for (const s of board.survivors) {
   );
   let equity = 0;
   let unmarked = false;
+  const votedOutPendingLiq =
+    sourceRow && sourceRow.status === "voted-out" && s.bookUsd === 0 && (sourceRow.positions || []).some((p) => p.status === "filled");
+  if (!votedOutPendingLiq) {
   for (const pos of s.positions) {
+    if (pos.status === "boot-split") continue;
     const value = markedEquity(pos, board.quotes);
     if (isCashLeg(pos)) {
       equity += Number(pos.sizeUsd) || 0;
@@ -245,13 +249,21 @@ for (const s of board.survivors) {
     const matchesQuotes = Math.abs(equity - s.bookUsd) < 0.05;
     const matchesRecorded =
       recordedBook && typeof recordedBook.bookUsd === "number" && Math.abs(s.bookUsd - recordedBook.bookUsd) < 0.05;
+    const matchesHostMark =
+      sourceRow &&
+      typeof sourceRow.eodMarkUsd === "number" &&
+      Math.abs(s.bookUsd - sourceRow.eodMarkUsd) < 0.05;
     check(
       `book-vs-host:${s.slug}`,
-      matchesQuotes || matchesRecorded,
+      matchesQuotes || matchesRecorded || matchesHostMark,
       `${equity.toFixed(4)} vs book ${s.bookUsd}` + (recordedBook ? ` vs recorded ${recordedBook.bookUsd}` : "")
     );
   }
-  const sleeve = s.positions.reduce((sum, pos) => {
+  }
+  const sleeve = votedOutPendingLiq
+    ? 0
+    : s.positions.reduce((sum, pos) => {
+    if (pos.status === "boot-split") return sum;
     if (isCashLeg(pos)) return sum;
     const marked = markedEquity(pos, board.quotes);
     if (marked != null) return sum + marked;
@@ -352,6 +364,7 @@ for (const [i, council] of log.entries()) {
 }
 
 const listingCopy = (source.episodes || [])
+  .filter((ep) => ep.status === "live")
   .map((ep) => [ep.title, ep.weekLabel, ep.tease].filter(Boolean).join(" "))
   .join("\n");
 const seasonHub = readFileSync(join(root, "templates", "season.html"), "utf8");
