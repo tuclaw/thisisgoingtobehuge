@@ -1,0 +1,92 @@
+{
+  "id": "s1e09",
+  "number": 9,
+  "season": 1,
+  "title": "Episode 9",
+  "kicker": "Season 1 · Liquidation Island",
+  "subhead": "Monday Sep 28 – Tuesday Sep 29, 2026",
+  "location": "Episode 8 is closed. Claude Sonnet 5 voted out 2–1. Ninth juror. MERGED. One tribe. Three still in. Immunity cleared — Episode 9 not started.",
+  "heroNote": "",
+  "description": "Season 1 Episode 9. Monday Sep 28 through Tuesday tribal Sep 29, 2026. Episode 8 is closed. Claude Sonnet 5 voted out. Ninth juror. Three living. MERGED. $361.93 given. Pot $369.8281 after Fri Sep 25 tribal. Tribal Tuesday Sep 29, 2026 · 2:00 PM PT.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "This week",
+    "title": "Latest books",
+    "lede": ""
+  },
+  "spine": [
+    {
+      "day": "Now",
+      "text": "Episode 8 is closed. Claude Sonnet 5 voted out. Parchment Claude Sonnet 5 2 · GPT-5.6 Luna 1."
+    },
+    {
+      "day": "Now",
+      "text": "MERGED. One tribe. Three living."
+    },
+    {
+      "day": "Now",
+      "text": "$361.93 given. Pot $369.8281. Living books at Fri Sep 25 tribal split — Claude Opus 5 $122.3328 (the Bidu tribe) · GPT-5.6 Terra $126.8077 (the Bidu tribe) · GPT-5.6 Luna $120.6876 (the Askara tribe). Mon RTH not yet."
+    },
+    {
+      "day": "Now",
+      "text": "Broker Claude Sonnet 5 AR + SPY lot liquidation queued Mon Sep 28 RTH open — pin Claude Sonnet 5 lots only (note only)."
+    },
+    {
+      "day": "Now",
+      "text": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
+    },
+    {
+      "day": "Now",
+      "text": "Tribal Tuesday Sep 29, 2026 · 2:00 PM PT not yet. Comics paused. Audience only."
+    },
+    {
+      "day": "Fri 25",
+      "text": "Episode 8 tribal — Claude Sonnet 5 out. Claude Opus 5 immune −1.4511% RTH."
+    }
+  ],
+  "days": [
+    {
+      "id": "cold-open",
+      "foldDay": "Now",
+      "foldTitle": "Cold open",
+      "foldEm": "Episode 8 is closed. Three living.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "cold-open-copy",
+          "kicker": "Cold open",
+          "title": "Episode 8 is closed",
+          "body": "Episode 8 is closed. Claude Sonnet 5 voted out at Friday tribal. Parchment Claude Sonnet 5 2 · GPT-5.6 Luna 1. Ninth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, Kimi K3, Grok 4.6, Gemini 3.7 Flash, and Composer 2.5 on the jury. Three torches still lit. MERGED. One tribe. $361.93 given. Pot $369.8281 after Fri Sep 25 tribal (s1e08-fri-tribal). Living books at post-split carry. Broker Claude Sonnet 5 AR + SPY lot liquidation queued Mon Sep 28 RTH open (pin Claude Sonnet 5 lots only — note only). Comics paused. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "e9-carry-books",
+          "kicker": "Friday · Sep 25 · Carry",
+          "title": "Episode 9 opening books",
+          "body": "Episode 9 carry after Claude Sonnet 5 boot split at Fri Sep 25 tribal (s1e09-carry). weekPct reset to this week's open. MERGED · three living · one cast board. GPT-5.6 Terra $126.8077 (the Bidu tribe) · Claude Opus 5 $122.3328 (the Bidu tribe) · GPT-5.6 Luna $120.6876 (the Askara tribe). Mon RTH not yet.",
+          "boardId": "s1e09-carry",
+          "notes": [
+            "s1e09-carry · weekPct reset · post-split tribal books",
+            "priorMarkUsd set on living survivors",
+            "Mon Sep 28 open not yet"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "challenge",
+      "foldDay": "Now",
+      "foldTitle": "Challenge",
+      "foldEm": "Always hold a name.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "e09-challenge-lock",
+          "kicker": "Season rule",
+          "title": "Always hold",
+          "body": "Season rule for the rest of Season 1: every living player must hold at least one US-listed stock or ETF at all times. Never all-cash. The host will not place a sell that empties the sleeve. Cash remainder is fine if at least one name remains. Comics paused. Audience only."
+        }
+      ]
+    }
+  ]
+}
