@@ -1812,9 +1812,32 @@ check(
     String(e8FriLasthourBooks.body || "").includes("the Askara tribe") &&
     String(e8FriLasthourBooks.body || "").includes("hunt-brain 4/4")
 );
+const e8FriBooths = (((episode8Copy.days || []).find((day) => day.id === "friday") || {}).beats || []).find(
+  (beat) => beat.id === "friday-confessionals"
+);
+assertBooths(e8FriBooths, ["claude-sonnet-5", "claude-opus-5", "gpt-5-6-luna"], "e08-friday-booths");
+check(
+  "e08-friday-confessionals-order",
+  (() => {
+    const beats = (((episode8Copy.days || []).find((day) => day.id === "friday") || {}).beats || []).map((b) => b.id);
+    const midBooks = beats.indexOf("friday-mid-books");
+    const confessionals = beats.indexOf("friday-confessionals");
+    const lastHourBooks = beats.indexOf("friday-lasthour-books");
+    if (midBooks < 0 || confessionals < 0 || confessionals <= midBooks) return false;
+    if (lastHourBooks >= 0) {
+      return lastHourBooks === midBooks + 1 && confessionals === lastHourBooks + 1;
+    }
+    return confessionals === midBooks + 1;
+  })()
+);
 check(
   "e08-friday-books-order",
-  beatOrder(episode8Copy.days || [], "friday", ["friday-open-books", "friday-mid-books", "friday-lasthour-books"])
+  beatOrder(episode8Copy.days || [], "friday", [
+    "friday-open-books",
+    "friday-mid-books",
+    "friday-lasthour-books",
+    "friday-confessionals"
+  ])
 );
 check(
   "e08-thursday-after-wednesday",
