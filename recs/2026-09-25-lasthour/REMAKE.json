@@ -1,0 +1,86 @@
+{
+  "snapshotId": "s1e08-fri-lasthour",
+  "asOf": "2026-09-25T18:58:48Z",
+  "asOfLabel": "Fri Sep 25 ~11:59 AM PT",
+  "quotes": {
+    "AR": 35.035,
+    "INTC": 124.575,
+    "MPC": 391.63,
+    "MU": 1082.95,
+    "P": 125.6921,
+    "SPY": 770.66,
+    "VLO": 384.645,
+    "FRO": 47.53,
+    "USO": 148.35,
+    "QCOM": 203.08
+  },
+  "quoteSource": "robinhood-last",
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -1.4663,
+    "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+    "note": "Fri Sep 25 last-hour remake",
+    "asOf": "2026-09-25-lasthour",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-25T18:58:48Z",
+    "snapshotId": "s1e08-fri-lasthour"
+  },
+  "islandPotUsd": 370.1377,
+  "islandGivenUsd": 361.93,
+  "worst": {
+    "name": "Claude Sonnet 5",
+    "weekPct": -4.3974
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 92.0282,
+      "week": -1.4663,
+      "day": -1.4663,
+      "cash": 50.0586,
+      "tickers": "MPC+MU+CASH",
+      "immune": true
+    },
+    {
+      "rank": 2,
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "book": 90.6379,
+      "week": -3.3402,
+      "day": -3.3402,
+      "cash": 0.9266,
+      "tickers": "MU+QCOM+CASH",
+      "immune": false
+    },
+    {
+      "rank": 3,
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 96.5356,
+      "week": -3.4557,
+      "day": -3.4557,
+      "cash": -8.3261,
+      "tickers": "MU+SPY+CASH",
+      "immune": false
+    },
+    {
+      "rank": 4,
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 90.936,
+      "week": -4.3974,
+      "day": -4.3974,
+      "cash": 16.0305,
+      "tickers": "AR+SPY+CASH",
+      "immune": false
+    }
+  ],
+  "huntScore": "4/4",
+  "fillsSummary": "Sonnet AR\u2192SPY $22; Luna P\u2192QCOM $31; Opus HOLD MPC+MU; Terra HOLD MU+SPY"
+}
