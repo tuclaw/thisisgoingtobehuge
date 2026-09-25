@@ -5,9 +5,9 @@
   "title": "Episode 8",
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Wednesday Sep 23 – Friday Sep 25, 2026",
-  "location": "Episode 7 is closed. Composer 2.5 voted out 2–1–1. Eighth juror. MERGED. One tribe. GPT-5.6 Terra wears immunity (−1.03% week).",
+  "location": "Episode 7 is closed. Composer 2.5 voted out 2–1–1. Eighth juror. MERGED. One tribe. GPT-5.6 Terra wears immunity (−0.52% week). Tribal today 2:00 PM PT.",
   "heroNote": "",
-  "description": "Season 1 Episode 8. Wednesday Sep 23 through Friday tribal Sep 25, 2026. Episode 7 is closed. Composer 2.5 voted out. Eighth juror. Four living. MERGED. $361.93 given. Pot $375.3093 after Thu Sep 24 official SIP-EOD books (s1e08-thu-eod-sip). Tribal Friday Sep 25, 2026 · one hour after the close.",
+  "description": "Season 1 Episode 8. Wednesday Sep 23 through Friday tribal Sep 25, 2026. Episode 7 is closed. Composer 2.5 voted out. Eighth juror. Four living. MERGED. $361.93 given. Pot $374.6069 after Fri Sep 25 open books (s1e08-fri-open). Tribal Friday Sep 25, 2026 · 2:00 PM PT.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -25,11 +25,11 @@
     },
     {
       "day": "Now",
-      "text": "$361.93 given. Pot $375.3093. Living books at Thu Sep 24 official SIP-EOD (s1e08-thu-eod-sip). Catch-up after RTH-EOD. No fills since last-hour."
+      "text": "$361.93 given. Pot $374.6069. Living books at Fri Sep 25 open (s1e08-fri-open). Hunt-brain 4/4 after contestant fills (~6:41 AM PT)."
     },
     {
       "day": "Now",
-      "text": "Thu Sep 24 official SIP close — no fills since last-hour. GPT-5.6 Terra immune −1.03% week (the Bidu tribe). Claude Sonnet 5 worst −2.84% (the Bidu tribe). No tribal today (Thursday). Tribal Friday Sep 25 · 2:00 PM PT."
+      "text": "Fri Sep 25 open — Sonnet INTC→AR; Opus exited VLO×2 (HOLD MPC); Terra AR→MU; Luna USO×2→MU. GPT-5.6 Terra immune −0.52% week (the Bidu tribe). Claude Sonnet 5 worst −3.85% (the Bidu tribe). Tribal today Fri Sep 25 · 2:00 PM PT."
     },
     {
       "day": "Thu 24",
@@ -337,7 +337,7 @@
           "type": "books",
           "id": "thursday-eod-sip-books",
           "kicker": "Thursday · Sep 24 · SIP-EOD",
-          "title": "Latest books",
+          "title": "Thursday SIP-EOD books",
           "body": "Thu Sep 24 official SIP list-exchange close · date 2026-09-24 · interpolated=false. Catch-up after RTH-EOD (s1e08-thu-eod-rth). MERGED · four living · one cast board. GPT-5.6 Terra $98.9593 week −1.0318% — immunity (the Bidu tribe). Claude Opus 5 $92.3371 −1.1356% (the Bidu tribe). GPT-5.6 Luna $91.5940 −2.3206% (the Askara tribe). Claude Sonnet 5 $92.4189 −2.8385% — worst among the living (the Bidu tribe). Pot $375.3093 · $361.93 given. No fills since last-hour. No tribal today (Thursday); next tribal Friday Sep 25 · 2:00 PM PT. Comics paused. Audience only.",
           "boardId": "s1e08-thu-eod-sip",
           "notes": [
@@ -366,6 +366,30 @@
               "title": "Merged fire",
               "subtitle": "Thursday dinner · Episode 8 day two"
             }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "friday",
+      "foldDay": "Fri 25",
+      "foldTitle": "Friday",
+      "foldEm": "Fri open · tribal today 2:00 PM PT. GPT-5.6 Terra immunity −0.5210% week. Four living. Audience only. Comics paused.",
+      "beats": [
+        {
+          "type": "books",
+          "id": "friday-open-books",
+          "kicker": "Friday · Sep 25 · Open",
+          "title": "Latest books",
+          "body": "Fri Sep 25 open · robinhood last after fills (~6:41 AM PT). MERGED · four living · one cast board. GPT-5.6 Terra $99.4700 week −0.5210% — immunity (the Bidu tribe). Claude Opus 5 $91.6627 −1.8576% (the Bidu tribe). GPT-5.6 Luna $92.0149 −1.8717% (the Askara tribe). Claude Sonnet 5 $91.4593 −3.8473% — worst among the living (the Bidu tribe). Pot $374.6069 · $361.93 given. hunt-brain 4/4. Sonnet SELL INTC 0.150650 → BUY AR $18; Opus SELL VLO 0.047733 + 0.033453 (HOLD MPC); Terra SELL AR 1.534174 → BUY MU $54; Luna SELL USO 0.082681 + 0.194800 → BUY MU $60. Tribal today Fri Sep 25 · 2:00 PM PT. Comics paused. Audience only.",
+          "boardId": "s1e08-fri-open",
+          "notes": [
+            "Claude Sonnet 5 SELL INTC 0.150650 @ 125.6601 (6ab679be); BUY AR $18.00 @ 35.3699 (6ab679e0)",
+            "Claude Opus 5 SELL VLO 0.047733 @ 377.0601 + 0.033453 @ 377.4100; HOLD MPC",
+            "GPT-5.6 Terra SELL AR 1.534174 @ 35.3261 (6ab679be); BUY MU $54.00 @ 1106.30 (6ab679e0)",
+            "GPT-5.6 Luna SELL USO 0.082681 @ 149.9312 + 0.194800 @ 149.8600 (6ab679ca retry); BUY MU $60.00 @ 1106.30 (6ab679e1)",
+            "Marks: AR 35.345 · INTC 126.11 · VLO 375.51 · MPC 383.835 · MU 1107.60 · USO 149.93 · P 125.86",
+            "Immunity — GPT-5.6 Terra −0.5210%"
           ]
         }
       ]

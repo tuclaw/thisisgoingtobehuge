@@ -1,0 +1,128 @@
+{
+  "session": "2026-09-25-open",
+  "account": "••••6969",
+  "bpBefore": 19.3,
+  "bpAfterSells": 164.65,
+  "bpAfterBuys": 32.65,
+  "sells": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "INTC",
+      "qty": "0.150650",
+      "avg": "125.660100",
+      "orderId": "6ab679be-830d-4e4f-8ca6-b5f189263727",
+      "notional": 18.9307,
+      "at": "2026-09-25T13:40:14.694Z",
+      "open_lot_id": "74f94336-1d0e-53ef-b32f-cc193e09cc66",
+      "state": "filled",
+      "note": "Fri open SELL INTC 0.150650 (Thu last-hour lot) → AR"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "VLO",
+      "qty": "0.047733",
+      "avg": "377.060100",
+      "orderId": "6ab679be-62d9-4e02-8619-9d12df9c5805",
+      "notional": 17.9981,
+      "at": "2026-09-25T13:40:15.162Z",
+      "open_lot_id": "f7e7cfbc-41b8-5ea7-aaf7-b92366db8c47",
+      "state": "filled",
+      "note": "Fri open SELL VLO 0.047733 (Wed mid lot)"
+    },
+    {
+      "who": "Claude Opus 5",
+      "symbol": "VLO",
+      "qty": "0.033453",
+      "avg": "377.410000",
+      "orderId": "6ab679be-008e-4f1e-a773-ef65dd7cfa5a",
+      "notional": 12.6255,
+      "at": "2026-09-25T13:40:14.887Z",
+      "open_lot_id": "471ee129-19cc-5b42-9cc1-3b7da3526340",
+      "state": "filled",
+      "note": "Fri open SELL VLO 0.033453 (Thu open lot)"
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "AR",
+      "qty": "1.534174",
+      "avg": "35.326100",
+      "orderId": "6ab679be-8569-4650-bf57-aa6e0dbb9f42",
+      "notional": 54.1965,
+      "at": "2026-09-25T13:40:14.793Z",
+      "open_lot_id": "4580e41b-3232-5327-a748-5e07015a00f7",
+      "state": "filled",
+      "note": "Fri open SELL AR 1.534174 (Wed LH lot) → MU"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "USO",
+      "qty": "0.082681",
+      "avg": "149.931200",
+      "orderId": "6ab679be-53a1-4dad-b368-43703b552b32",
+      "notional": 12.3965,
+      "at": "2026-09-25T13:40:15.042Z",
+      "open_lot_id": "7d61a994-0716-5fa8-a58e-34361796f44b",
+      "state": "filled",
+      "note": "Fri open SELL USO 0.082681 (Thu open lot)"
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "USO",
+      "qty": "0.194800",
+      "avg": "149.860000",
+      "orderId": "6ab679ca-f19d-4114-8286-bea33693014c",
+      "notional": 29.1927,
+      "at": "2026-09-25T13:40:26.283Z",
+      "open_lot_id": "39e84a68-a936-5344-bec0-3d335c19f7f1",
+      "state": "filled",
+      "note": "Fri open SELL USO 0.194800 (Thu mid lot; retry after tax-lot unavailable)"
+    }
+  ],
+  "buys": [
+    {
+      "who": "Claude Sonnet 5",
+      "symbol": "AR",
+      "qty": "0.508907",
+      "avg": "35.369900",
+      "orderId": "6ab679e0-ff34-463a-b4a0-de11d1012a53",
+      "notional": 18.0,
+      "at": "2026-09-25T13:40:48.203Z",
+      "open_lot_id": "76d0dcfb-9f33-5983-8126-80b8bda32918",
+      "state": "filled",
+      "note": "Fri open BUY AR $18.00 from INTC last-hour lot exit",
+      "dollar": 18
+    },
+    {
+      "who": "GPT-5.6 Terra",
+      "symbol": "MU",
+      "qty": "0.048811",
+      "avg": "1106.300000",
+      "orderId": "6ab679e0-d64f-452c-9d31-0c65f43039ee",
+      "notional": 54.0,
+      "at": "2026-09-25T13:40:48.956Z",
+      "open_lot_id": "2b701292-60f1-5987-86a6-99aee43225ab",
+      "state": "filled",
+      "note": "Fri open BUY MU $54.00 from AR Wed LH exit",
+      "dollar": 54
+    },
+    {
+      "who": "GPT-5.6 Luna",
+      "symbol": "MU",
+      "qty": "0.054234",
+      "avg": "1106.300000",
+      "orderId": "6ab679e1-1c2a-4b86-9caa-c75e76d03aa6",
+      "notional": 60.0,
+      "at": "2026-09-25T13:40:49.467Z",
+      "open_lot_id": "6a305f2a-0320-515d-b143-d8f04cc4c812",
+      "state": "filled",
+      "note": "Fri open BUY MU $60.00 from USO full exit",
+      "dollar": 60
+    }
+  ],
+  "holds": [
+    {
+      "who": "Claude Opus 5",
+      "note": "HOLD MPC after exiting both VLO lots"
+    }
+  ]
+}

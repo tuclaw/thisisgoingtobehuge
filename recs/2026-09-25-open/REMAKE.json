@@ -1,0 +1,83 @@
+{
+  "snapshotId": "s1e08-fri-open",
+  "asOf": "2026-09-25T13:41:51.058154Z",
+  "asOfLabel": "Fri Sep 25 ~6:41 AM PT",
+  "quotes": {
+    "AR": 35.345,
+    "INTC": 126.11,
+    "VLO": 375.51,
+    "MPC": 383.835,
+    "MU": 1107.6,
+    "USO": 149.93,
+    "P": 125.86,
+    "FRO": 47.43
+  },
+  "quoteSource": "robinhood-last",
+  "immunity": {
+    "name": "GPT-5.6 Terra",
+    "weekPct": -0.521,
+    "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+    "note": "Fri Sep 25 open remake",
+    "asOf": "2026-09-25-open",
+    "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+    "at": "2026-09-25T13:41:51.058154Z"
+  },
+  "islandPotUsd": 374.6069,
+  "islandGivenUsd": 361.93,
+  "worst": {
+    "name": "Claude Sonnet 5",
+    "weekPct": -3.8473
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 99.47,
+      "week": -0.521,
+      "day": -0.521,
+      "cash": -20.8531,
+      "tickers": "MU+CASH",
+      "immune": true
+    },
+    {
+      "rank": 2,
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 91.6627,
+      "week": -1.8576,
+      "day": -1.8576,
+      "cash": 80.0586,
+      "tickers": "MPC+CASH",
+      "immune": false
+    },
+    {
+      "rank": 3,
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "book": 92.0149,
+      "week": -1.8717,
+      "day": -1.8717,
+      "cash": -7.3215,
+      "tickers": "MU+P+CASH",
+      "immune": false
+    },
+    {
+      "rank": 4,
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 91.4593,
+      "week": -3.8473,
+      "day": -3.8473,
+      "cash": 30.4785,
+      "tickers": "AR+INTC+CASH",
+      "immune": false
+    }
+  ],
+  "huntScore": "4/4",
+  "fillsSummary": "Sonnet INTC\u2192AR; Opus VLO\u00d72 exit HOLD MPC; Terra AR\u2192MU; Luna USO\u00d72\u2192MU"
+}
