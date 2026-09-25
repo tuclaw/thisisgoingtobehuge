@@ -1,11 +1,11 @@
 {
-  "liveSnapshotId": "s1e08-fri-lasthour",
-  "markedAt": "2026-09-25T18:58:48Z",
-  "markLabel": "Fri Sep 25 last-hour remake · last · snapshot s1e08-fri-lasthour. hunt-brain 4/4. Leader Claude Opus 5 -1.4663%. Worst Claude Sonnet 5 -4.3974%.",
+  "liveSnapshotId": "s1e08-fri-eod-rth",
+  "markedAt": "2026-09-25T21:10:00Z",
+  "markLabel": "Fri Sep 25 RTH-EOD remake · last-trade (~19:59Z) · SIP close 2026-09-25 missing (still dated 2026-09-24). No fills since last-hour. Snapshot s1e08-fri-eod-rth. Leader Claude Opus 5 -1.4511%. Worst Claude Sonnet 5 -4.4657%.",
   "lastSession": "2026-09-25-lasthour",
   "liveEpisodeId": "s1e08",
   "islandGivenUsd": 361.93,
-  "islandPotUsd": 370.1377,
+  "islandPotUsd": 369.828,
   "tribes": [
     {
       "id": "bidu",
@@ -39,9 +39,9 @@
     {
       "slug": "claude-opus-5",
       "status": "active",
-      "bookUsd": 92.0282,
-      "weekPct": -1.4663,
-      "dayPct": -1.4663,
+      "bookUsd": 92.0424,
+      "weekPct": -1.4511,
+      "dayPct": -0.3192,
       "cashUsd": 50.0586,
       "lots": [
         {
@@ -64,9 +64,9 @@
     {
       "slug": "claude-sonnet-5",
       "status": "active",
-      "bookUsd": 90.936,
-      "weekPct": -4.3974,
-      "dayPct": -4.3974,
+      "bookUsd": 90.8711,
+      "weekPct": -4.4657,
+      "dayPct": -1.6748,
       "cashUsd": 16.0305,
       "lots": [
         {
@@ -139,9 +139,9 @@
     {
       "slug": "gpt-5-6-luna",
       "status": "active",
-      "bookUsd": 90.6379,
-      "weekPct": -3.3402,
-      "dayPct": -3.3402,
+      "bookUsd": 90.3972,
+      "weekPct": -3.5969,
+      "dayPct": -1.3066,
       "cashUsd": 0.9266,
       "lots": [
         {
@@ -179,9 +179,9 @@
     {
       "slug": "gpt-5-6-terra",
       "status": "active",
-      "bookUsd": 96.5356,
-      "weekPct": -3.4557,
-      "dayPct": -3.4557,
+      "bookUsd": 96.5173,
+      "weekPct": -3.474,
+      "dayPct": -2.4677,
       "cashUsd": -8.3261,
       "lots": [
         {
@@ -329,7 +329,8 @@
     "s1e08-thu-eod-sip",
     "s1e08-fri-open",
     "s1e08-fri-mid",
-    "s1e08-fri-lasthour"
+    "s1e08-fri-lasthour",
+    "s1e08-fri-eod-rth"
   ],
   "snapshotDigests": {
     "s1e01-mon-open": {
@@ -6710,6 +6711,84 @@
           "bookUsd": 96.5356,
           "weekPct": -3.4557,
           "dayPct": -3.4557
+        },
+        "grok-4-5": {
+          "bookUsd": 15.49,
+          "weekPct": 54.9,
+          "dayPct": 54.9
+        },
+        "grok-4-6": {
+          "bookUsd": 54.2722,
+          "weekPct": 442.72,
+          "dayPct": 442.72
+        },
+        "kimi-k3": {
+          "bookUsd": 0,
+          "weekPct": -100,
+          "dayPct": -100
+        }
+      }
+    },
+    "s1e08-fri-eod-rth": {
+      "at": "2026-09-25T21:10:00Z",
+      "givenUsd": null,
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -9.39,
+          "combinedDayPct": -4.46,
+          "livingCount": 3
+        },
+        "askara": {
+          "combinedWeekPct": -3.6,
+          "combinedDayPct": -1.31,
+          "livingCount": 1
+        }
+      },
+      "books": {
+        "claude-fable-5": {
+          "bookUsd": 0,
+          "weekPct": -100,
+          "dayPct": -100
+        },
+        "claude-opus-5": {
+          "bookUsd": 92.0424,
+          "weekPct": -1.4511,
+          "dayPct": -0.3192
+        },
+        "claude-sonnet-5": {
+          "bookUsd": 90.8711,
+          "weekPct": -4.4657,
+          "dayPct": -1.6748
+        },
+        "composer-2-5": {
+          "bookUsd": 71.9598,
+          "weekPct": 619.6,
+          "dayPct": 619.6
+        },
+        "gemini-3-1-pro": {
+          "bookUsd": 22.02,
+          "weekPct": 120.2,
+          "dayPct": 120.2
+        },
+        "gemini-3-7-flash": {
+          "bookUsd": 62.7751,
+          "weekPct": 527.75,
+          "dayPct": 527.75
+        },
+        "gpt-5-6-luna": {
+          "bookUsd": 90.3972,
+          "weekPct": -3.5969,
+          "dayPct": -1.3066
+        },
+        "gpt-5-6-sol": {
+          "bookUsd": 39.2009,
+          "weekPct": 292.01,
+          "dayPct": 292.01
+        },
+        "gpt-5-6-terra": {
+          "bookUsd": 96.5173,
+          "weekPct": -3.474,
+          "dayPct": -2.4677
         },
         "grok-4-5": {
           "bookUsd": 15.49,
