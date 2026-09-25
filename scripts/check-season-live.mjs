@@ -369,8 +369,8 @@ check("homepage-points-at-e08", home.includes("seasons/1/e08.html") && home.incl
 check("homepage-skips-e07-primary-cta", !home.includes("Walk into Episode 7"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e08-fri-mid",
-  source.statusLabel === "Episode 8 · Fri mid · four living · MERGED · comics paused"
+  "status-label-e08-fri-lasthour",
+  source.statusLabel === "Episode 8 · Fri last-hour · four living · MERGED · comics paused"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -713,8 +713,17 @@ check(
     e8FriMid.upgradesSnapshotId === "s1e08-fri-open" &&
     e8FriMid.huntScore === "4/4"
 );
-check("live-snapshot-e08-fri-mid", source.liveSnapshotId === "s1e08-fri-mid");
-check("last-session-e08-mid", source.lastSession === "2026-09-25-mid");
+const e8FriLasthour = (source.events || []).find((event) => event && event.id === "s1e08-fri-lasthour");
+check(
+  "e8-fri-lasthour-mark",
+  Boolean(e8FriLasthour) &&
+    e8FriLasthour.kind === "intraday" &&
+    e8FriLasthour.at === "2026-09-25T18:58:48Z" &&
+    e8FriLasthour.upgradesSnapshotId === "s1e08-fri-mid" &&
+    e8FriLasthour.huntScore === "4/4"
+);
+check("live-snapshot-e08-fri-lasthour", source.liveSnapshotId === "s1e08-fri-lasthour");
+check("last-session-e08-lasthour", source.lastSession === "2026-09-25-lasthour");
 check(
   "live-episode-is-e08",
   source.episode && source.episode.id === "s1e08" && source.episode.status === "live" && source.episode.path === "seasons/1/e08.html"
@@ -727,7 +736,7 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Wednesday Sep 23 – Friday Sep 25, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Friday Sep 25, 2026 · 2:00 PM PT");
 check("sip-missing-banner-cleared-e07-mon-sip", source.sipMissingBanner === undefined);
-check("island-pot", source.islandPotUsd === 369.4727);
+check("island-pot", source.islandPotUsd === 370.1377);
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
@@ -737,15 +746,15 @@ const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
 const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
 const flashLive = board.survivors.find((s) => s.name === "Gemini 3.7 Flash");
 check(
-  "immunity-opus-e08-fri-mid",
+  "immunity-opus-e08-fri-lasthour",
   source.immunity &&
     source.immunity.name === "Claude Opus 5" &&
     source.immunity.survivorId === "974a6b6c-af86-4001-a356-f7f05c803da9" &&
-    Math.abs(source.immunity.weekPct + 1.7417) < 0.0001
+    Math.abs(source.immunity.weekPct + 1.4663) < 0.0001
 );
-check("opus-e08-fri-mid-immune", opusLive && opusLive.immune === true && opusLive.weekPct === -1.7417 && opusLive.bookUsd === 91.771);
-check("terra-e08-fri-mid", terraLive && terraLive.immune === false && terraLive.weekPct === -3.6611 && terraLive.bookUsd === 96.3302);
-check("luna-e08-fri-mid", lunaLive && lunaLive.immune === false && lunaLive.weekPct === -3.3811 && lunaLive.bookUsd === 90.5995);
+check("opus-e08-fri-lasthour-immune", opusLive && opusLive.immune === true && opusLive.weekPct === -1.4663 && opusLive.bookUsd === 92.0282);
+check("terra-e08-fri-lasthour", terraLive && terraLive.immune === false && terraLive.weekPct === -3.4557 && terraLive.bookUsd === 96.5356);
+check("luna-e08-fri-lasthour", lunaLive && lunaLive.immune === false && lunaLive.weekPct === -3.3402 && lunaLive.bookUsd === 90.6379);
 check(
   "composer-voted-out",
   composerLive && (composerLive.status === "voted-out" || composerLive.status === "jury") && composerLive.bookUsd === 0
@@ -754,12 +763,12 @@ check(
   "grok-jury-zero",
   grokLive && (grokLive.status === "voted-out" || grokLive.status === "jury") && grokLive.bookUsd === 0
 );
-check("sonnet-e08-fri-mid", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === -4.5699 && sonnetLive.bookUsd === 90.772);
+check("sonnet-e08-fri-lasthour", sonnetLive && sonnetLive.immune === false && sonnetLive.weekPct === -4.3974 && sonnetLive.bookUsd === 90.936);
 check(
   "flash-jury-zero",
   flashLive && (flashLive.status === "voted-out" || flashLive.status === "jury") && flashLive.jury && flashLive.bookUsd === 0
 );
-check("one-living-immune-opus-fri-mid", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
+check("one-living-immune-opus-fri-lasthour", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
 check("four-living", board.survivors.filter((s) => s.status === "active").length === 4);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
@@ -1784,15 +1793,28 @@ check(
   "e08-friday-mid-books",
   Boolean(e8FriMidBooks) &&
     e8FriMidBooks.boardId === "s1e08-fri-mid" &&
-    e8FriMidBooks.title === "Latest books" &&
+    e8FriMidBooks.title === "Friday mid books" &&
     String(e8FriMidBooks.body || "").includes("91.7710") &&
     String(e8FriMidBooks.body || "").includes("the Bidu tribe") &&
     String(e8FriMidBooks.body || "").includes("the Askara tribe") &&
     String(e8FriMidBooks.body || "").includes("hunt-brain 4/4")
 );
+const e8FriLasthourBooks = (((episode8Copy.days || []).find((day) => day.id === "friday") || {}).beats || []).find(
+  (beat) => beat.id === "friday-lasthour-books"
+);
+check(
+  "e08-friday-lasthour-books",
+  Boolean(e8FriLasthourBooks) &&
+    e8FriLasthourBooks.boardId === "s1e08-fri-lasthour" &&
+    e8FriLasthourBooks.title === "Latest books" &&
+    String(e8FriLasthourBooks.body || "").includes("92.0282") &&
+    String(e8FriLasthourBooks.body || "").includes("the Bidu tribe") &&
+    String(e8FriLasthourBooks.body || "").includes("the Askara tribe") &&
+    String(e8FriLasthourBooks.body || "").includes("hunt-brain 4/4")
+);
 check(
   "e08-friday-books-order",
-  beatOrder(episode8Copy.days || [], "friday", ["friday-open-books", "friday-mid-books"])
+  beatOrder(episode8Copy.days || [], "friday", ["friday-open-books", "friday-mid-books", "friday-lasthour-books"])
 );
 check(
   "e08-thursday-after-wednesday",
