@@ -1706,14 +1706,40 @@ check(
     const lastHourBooks = beats.indexOf("thursday-lasthour-books");
     const eodRthBooks = beats.indexOf("thursday-eod-rth-books");
     const eodSipBooks = beats.indexOf("thursday-eod-sip-books");
-    if (midBooks < 0 || confessionals < 0 || lastHourBooks < 0 || eodRthBooks < 0 || eodSipBooks < 0) return false;
+    const dinner = beats.indexOf("thursday-dinner");
+    if (midBooks < 0 || confessionals < 0 || lastHourBooks < 0 || eodRthBooks < 0 || eodSipBooks < 0 || dinner < 0) return false;
     return (
       confessionals === midBooks + 1 &&
       lastHourBooks === confessionals + 1 &&
       eodRthBooks === lastHourBooks + 1 &&
-      eodSipBooks === eodRthBooks + 1
+      eodSipBooks === eodRthBooks + 1 &&
+      dinner === eodSipBooks + 1
     );
   })()
+);
+check(
+  "e08-thursday-books-order",
+  beatOrder(episode8Copy.days || [], "thursday", [
+    "thursday-open-books",
+    "thursday-mid-books",
+    "thursday-confessionals",
+    "thursday-lasthour-books",
+    "thursday-eod-rth-books",
+    "thursday-eod-sip-books",
+    "thursday-dinner"
+  ])
+);
+const e8ThuDinner = (((episode8Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).find(
+  (beat) => beat.id === "thursday-dinner"
+);
+check(
+  "e08-thursday-dinner-beat",
+  Boolean(e8ThuDinner) &&
+    e8ThuDinner.type === "dinner-fires" &&
+    (() => {
+      const beats = (((episode8Copy.days || []).find((day) => day.id === "thursday") || {}).beats || []).map((b) => b.id);
+      return beats.indexOf("thursday-eod-sip-books") === beats.indexOf("thursday-dinner") - 1;
+    })()
 );
 check(
   "e08-thursday-after-wednesday",
