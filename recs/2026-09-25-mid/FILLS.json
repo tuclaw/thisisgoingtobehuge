@@ -1,0 +1,109 @@
+{
+  "session": "2026-09-25-mid",
+  "accountLast4": "6969",
+  "bpBefore": 32.65,
+  "bpAfterSells": 117.07,
+  "bpAfterBuys": 0.07,
+  "themeBufferUntouched": true,
+  "leftoversLeftAlone": {
+    "VLO": 0.014984,
+    "MPC": 0.044873,
+    "FRO": 0.358734
+  },
+  "bootLiquidations": [],
+  "notes": [
+    "Terra SPY buy scaled $60 \u2192 $52 to real BP ($117.07 after sells; Opus $30 + Sonnet $35 left $52.07).",
+    "No order_checks alerts. Theme ~$250 buffer untouched.",
+    "New lots is_selectable=false (syncing): Sonnet AR 340d269f\u2026; Opus MU 68f9a460\u2026; Terra SPY cd6e67ba\u2026",
+    "Luna HOLD P + HOLD MU (no fills)."
+  ],
+  "contestantFills": [
+    {
+      "name": "Claude Sonnet 5",
+      "side": "SELL",
+      "ticker": "INTC",
+      "qty": "0.159555",
+      "avg": "124.650100",
+      "notional": 19.8885,
+      "orderId": "6ab6a7c4-cef2-4aa2-816f-e135ef16e131",
+      "open_lot_id": "0e1b5d2f-9940-5cd4-836f-cbc3a94f8a95",
+      "filledAt": "2026-09-25T16:56:36.666Z",
+      "ref_id": "0ec3ffed-5a5a-4e7d-a74d-e5868fb1f7e8",
+      "note": "Fri mid SELL INTC 0.159555 (Thu mid lot) \u2192 AR"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "SELL",
+      "ticker": "MU",
+      "qty": "0.059823",
+      "avg": "1078.632200",
+      "notional": 64.527,
+      "orderId": "6ab6a7c5-5960-4790-a2d6-dd6f039ec5c0",
+      "open_lot_id": "9d716fa8-bd37-5ec9-b983-3c1d98af20c3",
+      "filledAt": "2026-09-25T16:56:37.222Z",
+      "ref_id": "317fe990-dc35-4934-93dc-3b4396ce1862",
+      "note": "Fri mid SELL MU 0.059823 (Wed mid lot) \u2192 SPY; keep Fri-open MU"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "MU",
+      "qty": "0.027822",
+      "avg": "1078.250000",
+      "notional": 30.0,
+      "dollar_amount": 30.0,
+      "orderId": "6ab6a7e8-75fb-4af7-92cf-90be173a2ca4",
+      "open_lot_id": "68f9a460-ef22-557d-9c98-6d0d2bc95759",
+      "filledAt": "2026-09-25T16:57:12.686Z",
+      "ref_id": "a32b15e4-d1ad-4607-9da0-6a7a7cded34a",
+      "note": "Fri mid BUY MU $30 (HOLD MPC)"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "side": "BUY",
+      "ticker": "AR",
+      "qty": "1.001187",
+      "avg": "34.958500",
+      "notional": 35.0,
+      "dollar_amount": 35.0,
+      "orderId": "6ab6a7e9-88e3-44f7-af5e-81aac4a8d442",
+      "open_lot_id": "340d269f-f40b-593f-b907-d9899f50e68c",
+      "filledAt": "2026-09-25T16:57:13.497Z",
+      "ref_id": "62863070-d14e-4cde-a050-ca8ff76a9528",
+      "note": "Fri mid BUY AR $35 from INTC exit"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "BUY",
+      "ticker": "SPY",
+      "qty": "0.067477",
+      "avg": "770.626700",
+      "notional": 52.0,
+      "dollar_amount": 52.0,
+      "requestedUsd": 60.0,
+      "scaled": true,
+      "orderId": "6ab6a7f9-3e63-4ff8-a147-bff0574333bb",
+      "open_lot_id": "cd6e67ba-7899-5fbf-bfa0-f26be031eef3",
+      "filledAt": "2026-09-25T16:57:29.371Z",
+      "ref_id": "776181f2-e611-41ff-a7e2-c47bb8921383",
+      "note": "Fri mid BUY SPY $52 scaled from $60 to real BP after sells"
+    }
+  ],
+  "holds": [
+    {
+      "name": "Claude Opus 5",
+      "ticker": "MPC",
+      "note": "HOLD MPC; BUY MU $30"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "ticker": "P",
+      "note": "HOLD P"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "ticker": "MU",
+      "note": "HOLD MU"
+    }
+  ]
+}
