@@ -1,22 +1,22 @@
 {
   "liveSnapshotId": "s1e08-fri-eod-rth",
-  "markedAt": "2026-09-25T21:10:00Z",
-  "markLabel": "Fri Sep 25 RTH-EOD remake · last-trade (~19:59Z) · SIP close 2026-09-25 missing (still dated 2026-09-24). No fills since last-hour. Snapshot s1e08-fri-eod-rth. Leader Claude Opus 5 -1.4511%. Worst Claude Sonnet 5 -4.4657%.",
+  "markedAt": "2026-09-25T21:00:00Z",
+  "markLabel": "Fri Sep 25 tribal closed. Boot Claude Sonnet 5 (book $90.8711). Split $30.2904 each to 3 living. Episode 9 open Mon Sep 28 – Tue Sep 29. Immunity cleared. Pot $369.8281.",
   "lastSession": "2026-09-25-lasthour",
-  "liveEpisodeId": "s1e08",
+  "liveEpisodeId": "s1e09",
   "islandGivenUsd": 361.93,
-  "islandPotUsd": 369.828,
+  "islandPotUsd": 369.8281,
   "tribes": [
     {
       "id": "bidu",
-      "combinedWeekPct": -3.1065,
-      "combinedDayPct": -3.1065,
-      "livingCount": 3
+      "combinedWeekPct": 0,
+      "combinedDayPct": 0,
+      "livingCount": 2
     },
     {
       "id": "askara",
-      "combinedWeekPct": -3.3402,
-      "combinedDayPct": -3.3402,
+      "combinedWeekPct": 0,
+      "combinedDayPct": 0,
       "livingCount": 1
     }
   ],
@@ -39,15 +39,20 @@
     {
       "slug": "claude-opus-5",
       "status": "active",
-      "bookUsd": 92.0424,
-      "weekPct": -1.4511,
-      "dayPct": -0.3192,
-      "cashUsd": 50.0586,
+      "bookUsd": 122.3328,
+      "weekPct": 0,
+      "dayPct": 0,
+      "cashUsd": 110.6394,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
-          "sizeUsd": 50.0586
+          "sizeUsd": 80.349
+        },
+        {
+          "ticker": "CASH",
+          "qty": null,
+          "sizeUsd": 30.2904
         },
         {
           "ticker": "MPC",
@@ -63,11 +68,11 @@
     },
     {
       "slug": "claude-sonnet-5",
-      "status": "active",
-      "bookUsd": 90.8711,
+      "status": "jury",
+      "bookUsd": 0,
       "weekPct": -4.4657,
       "dayPct": -1.6748,
-      "cashUsd": 16.0305,
+      "cashUsd": 0,
       "lots": [
         {
           "ticker": "AR",
@@ -82,7 +87,7 @@
         {
           "ticker": "CASH",
           "qty": null,
-          "sizeUsd": 16.0305
+          "sizeUsd": 0
         },
         {
           "ticker": "SPY",
@@ -139,15 +144,20 @@
     {
       "slug": "gpt-5-6-luna",
       "status": "active",
-      "bookUsd": 90.3972,
-      "weekPct": -3.5969,
-      "dayPct": -1.3066,
-      "cashUsd": 0.9266,
+      "bookUsd": 120.6876,
+      "weekPct": 0,
+      "dayPct": 0,
+      "cashUsd": 61.5074,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
-          "sizeUsd": 0.9266
+          "sizeUsd": 31.217
+        },
+        {
+          "ticker": "CASH",
+          "qty": null,
+          "sizeUsd": 30.2904
         },
         {
           "ticker": "MU",
@@ -179,15 +189,20 @@
     {
       "slug": "gpt-5-6-terra",
       "status": "active",
-      "bookUsd": 96.5173,
-      "weekPct": -3.474,
-      "dayPct": -2.4677,
-      "cashUsd": -8.3261,
+      "bookUsd": 126.8077,
+      "weekPct": 0,
+      "dayPct": 0,
+      "cashUsd": 52.2547,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
-          "sizeUsd": -8.3261
+          "sizeUsd": 21.9643
+        },
+        {
+          "ticker": "CASH",
+          "qty": null,
+          "sizeUsd": 30.2904
         },
         {
           "ticker": "MU",
@@ -340,7 +355,7 @@
         "bidu": {
           "combinedWeekPct": 0,
           "combinedDayPct": 0,
-          "livingCount": 3
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -496,7 +511,7 @@
         "bidu": {
           "combinedWeekPct": -2.87,
           "combinedDayPct": -0.4,
-          "livingCount": 3
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -962,9 +977,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": 0.12,
-          "combinedDayPct": 0.12,
-          "livingCount": 3
+          "combinedWeekPct": 0.27,
+          "combinedDayPct": 0.27,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -1040,9 +1055,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -0.75,
-          "combinedDayPct": -0.75,
-          "livingCount": 3
+          "combinedWeekPct": 0.47,
+          "combinedDayPct": 0.47,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -0.07,
@@ -3226,7 +3241,7 @@
         "bidu": {
           "combinedWeekPct": 0,
           "combinedDayPct": 0,
-          "livingCount": 3
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -3460,7 +3475,7 @@
         "bidu": {
           "combinedWeekPct": 0,
           "combinedDayPct": 0,
-          "livingCount": 3
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -3926,9 +3941,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": 5.75,
-          "combinedDayPct": 5.75,
-          "livingCount": 3
+          "combinedWeekPct": 3.54,
+          "combinedDayPct": 3.54,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 1.49,
@@ -4004,9 +4019,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": 5.74,
-          "combinedDayPct": 5.74,
-          "livingCount": 3
+          "combinedWeekPct": 3.55,
+          "combinedDayPct": 3.55,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 1.46,
@@ -4316,9 +4331,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": 9.45,
-          "combinedDayPct": 3.63,
-          "livingCount": 3
+          "combinedWeekPct": 6.61,
+          "combinedDayPct": 3,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 2.05,
@@ -4394,9 +4409,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": 9.5,
-          "combinedDayPct": 3.67,
-          "livingCount": 3
+          "combinedWeekPct": 6.65,
+          "combinedDayPct": 3.03,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 2.06,
@@ -4786,7 +4801,7 @@
         "bidu": {
           "combinedWeekPct": 0,
           "combinedDayPct": 0,
-          "livingCount": 3
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -5174,9 +5189,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -2.81,
-          "combinedDayPct": -2.81,
-          "livingCount": 3
+          "combinedWeekPct": -2,
+          "combinedDayPct": -2,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -0.33,
@@ -5486,9 +5501,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -3.71,
-          "combinedDayPct": -0.9,
-          "livingCount": 3
+          "combinedWeekPct": -1.9,
+          "combinedDayPct": 0.11,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -0.72,
@@ -5566,7 +5581,7 @@
         "bidu": {
           "combinedWeekPct": 0,
           "combinedDayPct": 0,
-          "livingCount": 3
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -5644,7 +5659,7 @@
         "bidu": {
           "combinedWeekPct": 0,
           "combinedDayPct": 0,
-          "livingCount": 3
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": 0,
@@ -5954,9 +5969,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -7.41,
-          "combinedDayPct": -7.41,
-          "livingCount": 3
+          "combinedWeekPct": -3.69,
+          "combinedDayPct": -3.69,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -1.24,
@@ -6032,9 +6047,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -7.36,
-          "combinedDayPct": -7.36,
-          "livingCount": 3
+          "combinedWeekPct": -3.66,
+          "combinedDayPct": -3.66,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -1.25,
@@ -6344,9 +6359,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -5.15,
-          "combinedDayPct": 2.27,
-          "livingCount": 3
+          "combinedWeekPct": -2.29,
+          "combinedDayPct": 1.4,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -2.34,
@@ -6422,9 +6437,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -5.01,
-          "combinedDayPct": 2.42,
-          "livingCount": 3
+          "combinedWeekPct": -2.17,
+          "combinedDayPct": 1.53,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -2.32,
@@ -6734,9 +6749,9 @@
       "givenUsd": null,
       "tribes": {
         "bidu": {
-          "combinedWeekPct": -9.39,
-          "combinedDayPct": -4.46,
-          "livingCount": 3
+          "combinedWeekPct": -4.93,
+          "combinedDayPct": -2.79,
+          "livingCount": 2
         },
         "askara": {
           "combinedWeekPct": -3.6,

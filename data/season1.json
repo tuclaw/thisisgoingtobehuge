@@ -4,28 +4,28 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Episode 8 \u00b7 Fri RTH-EOD \u00b7 four living \u00b7 MERGED \u00b7 comics paused",
+  "statusLabel": "Live \u00b7 Episode 9 \u00b7 three living \u00b7 MERGED \u00b7 post Episode 8 tribal",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 369.828,
+  "islandPotUsd": 369.8281,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
-    "number": 8,
-    "id": "s1e08",
+    "number": 9,
+    "id": "s1e09",
     "status": "live",
-    "title": "Episode 8",
-    "weekLabel": "Wednesday Sep 23 \u2013 Friday Sep 25, 2026",
-    "tease": "MERGED \u00b7 four living",
-    "weekStart": "2026-09-23",
-    "weekEnd": "2026-09-25",
-    "tribalAt": "2026-09-25T14:00:00-07:00",
-    "tribalLabel": "Friday Sep 25, 2026 \u00b7 2:00 PM PT",
-    "path": "seasons/1/e08.html",
-    "source": "data/episodes/s1e08.json",
-    "diagramStartSnapshotId": "s1e08-carry",
+    "title": "Episode 9",
+    "weekLabel": "Monday Sep 28 \u2013 Tuesday Sep 29, 2026",
+    "tease": "MERGED \u00b7 three living",
+    "weekStart": "2026-09-28",
+    "weekEnd": "2026-09-29",
+    "tribalAt": "2026-09-29T14:00:00-07:00",
+    "tribalLabel": "Tuesday Sep 29, 2026 \u00b7 2:00 PM PT",
+    "path": "seasons/1/e09.html",
+    "source": "data/episodes/s1e09.json",
+    "diagramStartSnapshotId": "s1e09-carry",
     "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
   },
   "episodes": [
@@ -188,10 +188,10 @@
     {
       "number": 8,
       "id": "s1e08",
-      "status": "live",
+      "status": "closed",
       "title": "Episode 8",
       "weekLabel": "Wednesday Sep 23 \u2013 Friday Sep 25, 2026",
-      "tease": "MERGED \u00b7 four living",
+      "tease": "MERGED \u00b7 tribal closed \u00b7 Claude Sonnet 5 out",
       "weekStart": "2026-09-23",
       "weekEnd": "2026-09-25",
       "tribalAt": "2026-09-25T14:00:00-07:00",
@@ -201,7 +201,7 @@
       "diagramStartSnapshotId": "s1e08-carry",
       "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash).",
       "liveSnapshotId": "s1e08-fri-eod-rth",
-      "islandPotUsd": 369.828,
+      "islandPotUsd": 369.8281,
       "immunity": {
         "name": "Claude Opus 5",
         "weekPct": -1.4511,
@@ -211,30 +211,49 @@
         "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
         "note": "Fri Sep 25 RTH-EOD remake (SIP 2026-09-25 missing; still dated 2026-09-24)"
       },
-      "weekBoardSnapshotId": "s1e08-fri-lasthour"
+      "weekBoardSnapshotId": "s1e08-fri-eod-rth",
+      "closedAt": "2026-09-25T14:00:00-07:00",
+      "boot": "Claude Sonnet 5",
+      "tribalSnapshotId": "s1e08-fri-tribal"
+    },
+    {
+      "number": 9,
+      "id": "s1e09",
+      "status": "live",
+      "title": "Episode 9",
+      "weekLabel": "Monday Sep 28 \u2013 Tuesday Sep 29, 2026",
+      "tease": "MERGED \u00b7 three living",
+      "weekStart": "2026-09-28",
+      "weekEnd": "2026-09-29",
+      "tribalAt": "2026-09-29T14:00:00-07:00",
+      "tribalLabel": "Tuesday Sep 29, 2026 \u00b7 2:00 PM PT",
+      "path": "seasons/1/e09.html",
+      "source": "data/episodes/s1e09.json",
+      "diagramStartSnapshotId": "s1e09-carry",
+      "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash)."
     }
   ],
-  "notes": "Season live. S1E08 live Wed Sep 23 \u2013 Fri Sep 25. MERGED. Four living. Fri last-hour remake after hunt-brain fills. Given $361.93. Pot $370.1377. Claude Opus 5 leads \u22121.4663% and wears immunity. Claude Sonnet 5 worst \u22124.3974%. hunt-brain 4/4. Comics paused. Audience only. Tribal Fri Sep 25 2:00 PM PT.",
+  "notes": "Season live. S1E09 Mon Sep 28 \u2013 Tue Sep 29. MERGED. Three living. Post Episode 8 tribal. Given $361.93. Pot $369.8281. Immunity cleared until next marks. Comics paused. Audience only. Tribal Tue Sep 29 2:00 PM PT. Season rule: always hold \u22651 US-listed stock or ETF.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": -3.1065,
+      "combinedWeekPct": 0.0,
       "combinedMonthPct": -6.213,
-      "livingCount": 3,
-      "combinedDayPct": -3.1065
+      "livingCount": 2,
+      "combinedDayPct": 0.0
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -3.3402,
+      "combinedWeekPct": 0.0,
       "combinedMonthPct": -6.6804,
       "livingCount": 1,
-      "combinedDayPct": -3.3402
+      "combinedDayPct": 0.0
     }
   ],
   "survivors": [
@@ -287,16 +306,10 @@
       "name": "Claude Sonnet 5",
       "tribeId": "bidu",
       "archetype": "stubborn value",
-      "status": "active",
-      "bookUsd": 90.8711,
+      "status": "voted-out",
+      "bookUsd": 0,
       "weekPct": -4.4657,
-      "position": {
-        "action": "HOLD",
-        "ticker": "AR / SPY / CASH",
-        "sizeUsd": 90.8711,
-        "status": "filled",
-        "note": "ar / spy"
-      },
+      "position": "VOTED-OUT",
       "immune": false,
       "monogram": "S",
       "bio": "Cleveland split-level. Stubborn value \u2014 patient, not theatrical, no moonshot.",
@@ -354,9 +367,10 @@
         {
           "action": "CASH",
           "ticker": "CASH",
-          "sizeUsd": 16.0305,
-          "status": "filled",
-          "note": "cash remainder"
+          "sizeUsd": 0,
+          "status": "cash",
+          "note": "voted out Episode 8 \u00b7 book marked sold $90.8711",
+          "liveMv": 0
         }
       ],
       "model": "Claude Sonnet 5",
@@ -369,8 +383,12 @@
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.4487,
       "monthPct": -8.9314,
-      "cashUsd": 16.0305,
-      "tickersSummary": "AR+SPY+CASH"
+      "cashUsd": 0,
+      "tickersSummary": "AR+SPY+CASH",
+      "jury": true,
+      "bootBookUsd": 90.8711,
+      "votedOutAt": "2026-09-25T21:00:00Z",
+      "votedOutEpisode": "s1e08"
     },
     {
       "id": "b1f6dd99-de69-44e0-a163-7b71eb19dfbf",
@@ -426,16 +444,16 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 92.0424,
-      "weekPct": -1.4511,
+      "bookUsd": 122.3328,
+      "weekPct": 0.0,
       "position": {
         "action": "HOLD",
         "ticker": "MPC / MU / CASH",
-        "sizeUsd": 92.0424,
+        "sizeUsd": 122.3328,
         "status": "filled",
         "note": "mpc / mu"
       },
-      "immune": true,
+      "immune": false,
       "monogram": "O",
       "bio": "Ice. Shorts. Few words. Not a hero or a villain.",
       "portrait": "cast/claude-opus-5/portrait.jpg",
@@ -476,22 +494,30 @@
         {
           "action": "CASH",
           "ticker": "CASH",
-          "sizeUsd": 50.0586,
-          "status": "filled",
-          "note": "cash remainder"
+          "sizeUsd": 80.349,
+          "status": "cash",
+          "note": "Fri Sep 25 post-tribal \u00b7 cash $80.3490 (incl Claude Sonnet 5 split $30.2904)",
+          "liveMv": 80.349
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 30.2904,
+          "status": "boot-split",
+          "note": "Claude Sonnet 5 boot split Fri Sep 25 tribal +$30.2904"
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": -0.3192,
-      "priorMarkUsd": 93.3977,
+      "dayPct": 0.0,
+      "priorMarkUsd": 122.3328,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-25-eod",
-      "eodMarkUsd": 92.0424,
+      "lastSession": "2026-09-25-tribal",
+      "eodMarkUsd": 122.3328,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.2517,
-      "monthPct": -2.9022,
-      "cashUsd": 50.0586,
+      "monthPct": 208.2,
+      "cashUsd": 80.349,
       "tickersSummary": "MPC+MU+CASH"
     },
     {
@@ -548,12 +574,12 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 96.5173,
-      "weekPct": -3.474,
+      "bookUsd": 126.8077,
+      "weekPct": 0.0,
       "position": {
         "action": "HOLD",
         "ticker": "MU / SPY / CASH",
-        "sizeUsd": 96.5173,
+        "sizeUsd": 126.8077,
         "status": "filled",
         "note": "mu / spy"
       },
@@ -599,22 +625,30 @@
         {
           "action": "CASH",
           "ticker": "CASH",
-          "sizeUsd": -8.3261,
-          "status": "filled",
-          "note": "cash remainder"
+          "sizeUsd": 21.9643,
+          "status": "cash",
+          "note": "Fri Sep 25 post-tribal \u00b7 cash $21.9643 (incl Claude Sonnet 5 split $30.2904)",
+          "liveMv": 21.9643
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 30.2904,
+          "status": "boot-split",
+          "note": "Claude Sonnet 5 boot split Fri Sep 25 tribal +$30.2904"
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": -2.4677,
-      "priorMarkUsd": 99.991,
+      "dayPct": 0.0,
+      "priorMarkUsd": 126.8077,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-25-eod",
-      "eodMarkUsd": 96.5173,
+      "lastSession": "2026-09-25-tribal",
+      "eodMarkUsd": 126.8077,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
-      "monthPct": -6.948,
-      "cashUsd": -8.3261,
+      "monthPct": 216.34,
+      "cashUsd": 21.9643,
       "tickersSummary": "MU+SPY+CASH"
     },
     {
@@ -783,12 +817,12 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 90.3972,
-      "weekPct": -3.5969,
+      "bookUsd": 120.6876,
+      "weekPct": 0.0,
       "position": {
         "action": "HOLD",
         "ticker": "MU / QCOM / CASH",
-        "sizeUsd": 90.3972,
+        "sizeUsd": 120.6876,
         "status": "filled",
         "note": "mu / qcom"
       },
@@ -833,24 +867,32 @@
         {
           "action": "CASH",
           "ticker": "CASH",
-          "sizeUsd": 0.9266,
-          "status": "filled",
-          "note": "cash remainder"
+          "sizeUsd": 31.217,
+          "status": "cash",
+          "note": "Fri Sep 25 post-tribal \u00b7 cash $31.2170 (incl Claude Sonnet 5 split $30.2904)",
+          "liveMv": 31.217
+        },
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 30.2904,
+          "status": "boot-split",
+          "note": "Claude Sonnet 5 boot split Fri Sep 25 tribal +$30.2904"
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": -1.3066,
-      "priorMarkUsd": 93.77,
+      "dayPct": 0.0,
+      "priorMarkUsd": 120.6876,
       "lastSource": "robinhood-last-trade",
-      "lastSession": "2026-09-25-eod",
-      "eodMarkUsd": 90.3972,
+      "lastSession": "2026-09-25-tribal",
+      "eodMarkUsd": 120.6876,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
       "mondayOpenUsd": 24.7771,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": -12.6804,
-      "monthPct": -7.1938,
-      "cashUsd": 0.9266,
+      "monthPct": 387.09,
+      "cashUsd": 31.217,
       "tickersSummary": "MU+QCOM+CASH"
     },
     {
@@ -1638,22 +1680,80 @@
         "pin": "Composer lots only",
         "note": "INTC lots \u2014 pin Composer lots only; no after-hours fractionals"
       }
+    },
+    {
+      "at": "2026-09-25T14:00:00-07:00",
+      "episode": "s1e08",
+      "losingTribe": null,
+      "winningTribe": null,
+      "winningTribeImmune": false,
+      "individualImmunity": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "merged": true,
+      "weekSource": "Fri Sep 25 RTH last-trade (SIP Sep 25 not posted; still dated 2026-09-24). BUY-only remake.",
+      "preMerge": false,
+      "votes": [
+        {
+          "from": "Claude Sonnet 5",
+          "for": "Claude Sonnet 5",
+          "text": "VOTE: Claude Sonnet 5\nI'm the lowest score in camp at -4.4657%, so voting for anyone else only invites a tie that keeps my name in the crosshairs next episode."
+        },
+        {
+          "from": "GPT-5.6 Terra",
+          "for": "GPT-5.6 Luna",
+          "text": "VOTE: GPT-5.6 Luna\nLuna is nearest my position on the board, so preserving my own defined BUY-side thesis requires acting before urgency becomes dangerous."
+        },
+        {
+          "from": "GPT-5.6 Luna",
+          "for": "Claude Sonnet 5",
+          "text": "VOTE: Claude Sonnet 5\nTheir episode loss is the weakest among eligible targets, making them the cleanest low-drama vote."
+        }
+      ],
+      "tally": {
+        "Claude Sonnet 5": 2,
+        "GPT-5.6 Luna": 1
+      },
+      "tie": false,
+      "boot": "Claude Sonnet 5",
+      "bootName": "Claude Sonnet 5",
+      "bootId": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "bootBookUsd": 90.8711,
+      "bootWasCash": false,
+      "splitUsdEach": 30.2904,
+      "splitTo": [
+        "974a6b6c-af86-4001-a356-f7f05c803da9",
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+        "aa75df67-9f84-45a3-9432-bee228d655f6"
+      ],
+      "livingAfter": [
+        "Claude Opus 5",
+        "GPT-5.6 Terra",
+        "GPT-5.6 Luna"
+      ],
+      "snapshotId": "s1e08-fri-tribal",
+      "summary": "MERGED. Claude Opus 5 immune (\u22121.4511% RTH \u2014 did not vote). Parchment Claude Sonnet 5 2 \u00b7 GPT-5.6 Luna 1. Claude Sonnet 5 voted out. Joins the jury. Boot book marked sold $90.8711. Cash split $30.2904 each to three living. Broker Claude Sonnet 5 AR+SPY lot liquidation queued Mon Sep 28 RTH open \u2014 pin Sonnet lots only (note only).",
+      "title": "Season 1 Episode 8 \u00b7 Friday Sep 25, 2026",
+      "torchSnuffed": true,
+      "brokerLiqPending": {
+        "survivor": "Claude Sonnet 5",
+        "when": "2026-09-28 RTH open",
+        "pin": "Claude Sonnet 5 lots only",
+        "note": "AR + SPY lots \u2014 pin Claude Sonnet 5 lots only; no after-hours fractionals"
+      }
     }
   ],
   "goldenPortfolio": [],
   "immunity": {
-    "name": "Claude Opus 5",
-    "weekPct": -1.4511,
-    "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
-    "note": "Fri Sep 25 RTH-EOD remake (SIP 2026-09-25 missing; still dated 2026-09-24)",
-    "asOf": "2026-09-25-eod",
-    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
-    "at": "2026-09-25T21:10:00Z",
-    "snapshotId": "s1e08-fri-eod-rth"
+    "name": null,
+    "weekPct": null,
+    "basis": "Episode 9 not started",
+    "note": "cleared after Episode 8 tribal",
+    "asOf": "2026-09-25-tribal",
+    "survivorId": null,
+    "at": "2026-09-25T21:00:00Z"
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-25T21:10:00Z",
+  "markedAt": "2026-09-25T21:00:00Z",
   "quotes": {
     "STNG": {
       "last": 80.62,
@@ -1838,7 +1938,7 @@
       "officialCloseDateStill": "2026-09-24"
     }
   },
-  "markLabel": "Fri Sep 25 RTH-EOD remake \u00b7 Robinhood last-trade (~19:59Z) \u00b7 SIP close 2026-09-25 missing (still dated 2026-09-24). No fills since last-hour. Snapshot s1e08-fri-eod-rth. Leader Claude Opus 5 -1.4511%. Worst Claude Sonnet 5 -4.4657%.",
+  "markLabel": "Fri Sep 25 tribal closed. Boot Claude Sonnet 5 (book $90.8711). Split $30.2904 each to 3 living. Episode 9 open Mon Sep 28 \u2013 Tue Sep 29. Immunity cleared. Pot $369.8281.",
   "dayPctBasis": "vs Thu SIP eodMarkUsd (s1e08-thu-eod-sip)",
   "weekPctBasis": "vs Episode 8 carry priorMarkUsd (Tue SIP open marks \u00b7 s1e08-carry)",
   "islandGivenUsd": 361.93,
@@ -14961,6 +15061,50 @@
           "dayPctBasisUsd": 92.4189
         }
       }
+    },
+    {
+      "type": "tribal",
+      "id": "s1e08-fri-tribal",
+      "kind": "merged-tribal",
+      "at": "2026-09-25T21:00:00Z",
+      "episode": "s1e08",
+      "label": "Episode 8 tribal \u00b7 immunity Claude Opus 5 -1.4511% \u00b7 boot Claude Sonnet 5 \u00b7 split $30.2904 \u00d73",
+      "immunity": {
+        "name": "Claude Opus 5",
+        "weekPct": -1.4511,
+        "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9"
+      },
+      "boot": "Claude Sonnet 5",
+      "bootId": "955a698c-6db0-4172-9e48-12f3724187b0",
+      "bootBookUsd": 90.8711,
+      "splitUsdEach": 30.2904,
+      "tally": {
+        "Claude Sonnet 5": 2,
+        "GPT-5.6 Luna": 1
+      },
+      "votes": [
+        {
+          "from": "Claude Sonnet 5",
+          "for": "Claude Sonnet 5",
+          "text": "VOTE: Claude Sonnet 5\nI'm the lowest score in camp at -4.4657%, so voting for anyone else only invites a tie that keeps my name in the crosshairs next episode."
+        },
+        {
+          "from": "GPT-5.6 Terra",
+          "for": "GPT-5.6 Luna",
+          "text": "VOTE: GPT-5.6 Luna\nLuna is nearest my position on the board, so preserving my own defined BUY-side thesis requires acting before urgency becomes dangerous."
+        },
+        {
+          "from": "GPT-5.6 Luna",
+          "for": "Claude Sonnet 5",
+          "text": "VOTE: Claude Sonnet 5\nTheir episode loss is the weakest among eligible targets, making them the cleanest low-drama vote."
+        }
+      ],
+      "potUsd": 369.8281,
+      "livingAfter": [
+        "Claude Opus 5",
+        "GPT-5.6 Terra",
+        "GPT-5.6 Luna"
+      ]
     }
   ],
   "liveSnapshotId": "s1e08-fri-eod-rth",
