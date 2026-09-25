@@ -1,0 +1,99 @@
+{
+  "session": "2026-09-25-lasthour",
+  "accountLast4": "6969",
+  "bpBefore": 0.07,
+  "bpAfterSells": 61.98,
+  "bpAfterBuys": 8.98,
+  "themeBufferUntouched": true,
+  "leftoversLeftAlone": {
+    "VLO": 0.014984,
+    "MPC": 0.044873,
+    "FRO": 0.358734
+  },
+  "bootLiquidations": [],
+  "notes": [
+    "No buy scaling \u2014 BP $61.98 after sells covered SPY $22 + QCOM $31.",
+    "No order_checks alerts. Theme ~$250 buffer untouched.",
+    "New lots is_selectable=false: Sonnet SPY d703748d\u2026; Luna QCOM 66c841e5\u2026",
+    "Opus HOLD MPC+MU (no fills). Terra HOLD MU+SPY (no fills; both lots same-day non-selectable).",
+    "Zero-activity today: none \u2014 all four had fills earlier today (open and/or mid). Luna had open fills; last-hour also moved."
+  ],
+  "contestantFills": [
+    {
+      "name": "Claude Sonnet 5",
+      "side": "SELL",
+      "ticker": "AR",
+      "qty": "0.647108",
+      "avg": "35.022800",
+      "notional": 22.6635,
+      "orderId": "6ab6c40c-5bbd-4bd0-a9d1-6dae5862cb16",
+      "open_lot_id": "1a2df8a4-2130-5b42-930e-366c9b2e89b4",
+      "filledAt": "2026-09-25T18:57:16.883Z",
+      "ref_id": "b5477105-1d5c-400d-a7a9-3d95394f4da7",
+      "note": "Fri last-hour SELL AR 0.647108 (Thu open lot) \u2192 SPY"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "SELL",
+      "ticker": "P",
+      "qty": "0.311988",
+      "avg": "125.799900",
+      "notional": 39.248,
+      "orderId": "6ab6c40d-2176-4307-b891-b2ead17f2163",
+      "open_lot_id": "d087bdd8-7776-5732-b735-6cbe45a1dcdb",
+      "filledAt": "2026-09-25T18:57:17.802Z",
+      "ref_id": "410bdbf5-d358-462b-9cf1-bd4602167a96",
+      "note": "Fri last-hour SELL P 0.311988 (Thu mid lot) \u2192 QCOM; keep Fri-open MU"
+    },
+    {
+      "name": "Claude Sonnet 5",
+      "side": "BUY",
+      "ticker": "SPY",
+      "qty": "0.028546",
+      "avg": "770.669900",
+      "notional": 22.0,
+      "dollar_amount": 22.0,
+      "orderId": "6ab6c42c-116a-476e-b973-f31f8f7c24db",
+      "open_lot_id": "d703748d-b142-5f4c-8948-b48950559c67",
+      "filledAt": "2026-09-25T18:57:48.295Z",
+      "ref_id": "fffd03dd-3c13-48a6-8c62-7d0b3ae311d3",
+      "note": "Fri last-hour BUY SPY $22 from AR exit"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "BUY",
+      "ticker": "QCOM",
+      "qty": "0.152544",
+      "avg": "203.219900",
+      "notional": 31.0,
+      "dollar_amount": 31.0,
+      "orderId": "6ab6c42b-9b3c-4bc3-8378-7f935589f7ac",
+      "open_lot_id": "66c841e5-a28d-5249-bed3-69729ff7cf37",
+      "filledAt": "2026-09-25T18:57:48.131Z",
+      "ref_id": "c8f26084-5220-4268-b6c8-29333f27dd21",
+      "note": "Fri last-hour BUY QCOM $31 from P exit"
+    }
+  ],
+  "holds": [
+    {
+      "name": "Claude Opus 5",
+      "ticker": "MPC",
+      "note": "HOLD MPC"
+    },
+    {
+      "name": "Claude Opus 5",
+      "ticker": "MU",
+      "note": "HOLD MU"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "ticker": "MU",
+      "note": "HOLD MU (same-day non-selectable)"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "ticker": "SPY",
+      "note": "HOLD SPY (same-day non-selectable)"
+    }
+  ]
+}
