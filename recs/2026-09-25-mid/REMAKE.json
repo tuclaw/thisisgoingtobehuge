@@ -1,0 +1,85 @@
+{
+  "snapshotId": "s1e08-fri-mid",
+  "asOf": "2026-09-25T16:57:41Z",
+  "asOfLabel": "Fri Sep 25 ~9:57 AM PT",
+  "quotes": {
+    "AR": 34.955,
+    "INTC": 124.66,
+    "MPC": 386.97,
+    "MU": 1078.77,
+    "P": 126.335,
+    "SPY": 770.641,
+    "VLO": 378.01,
+    "FRO": 47.275,
+    "USO": 148.24
+  },
+  "quoteSource": "robinhood-last",
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -1.7417,
+    "basis": "Episode 8 weekPct vs priorMarkUsd (Tue SIP open marks)",
+    "note": "Fri Sep 25 mid remake",
+    "asOf": "2026-09-25-mid",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-25T16:57:41Z",
+    "snapshotId": "s1e08-fri-mid"
+  },
+  "islandPotUsd": 369.4727,
+  "islandGivenUsd": 361.93,
+  "worst": {
+    "name": "Claude Sonnet 5",
+    "weekPct": -4.5699
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 91.771,
+      "week": -1.7417,
+      "day": -1.7417,
+      "cash": 50.0586,
+      "tickers": "MPC+MU+CASH",
+      "immune": true
+    },
+    {
+      "rank": 2,
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "book": 90.5995,
+      "week": -3.3811,
+      "day": -3.3811,
+      "cash": -7.3215,
+      "tickers": "MU+P+CASH",
+      "immune": false
+    },
+    {
+      "rank": 3,
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 96.3302,
+      "week": -3.6611,
+      "day": -3.6611,
+      "cash": -8.3261,
+      "tickers": "MU+SPY+CASH",
+      "immune": false
+    },
+    {
+      "rank": 4,
+      "name": "Claude Sonnet 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 90.772,
+      "week": -4.5699,
+      "day": -4.5699,
+      "cash": 15.367,
+      "tickers": "AR+CASH",
+      "immune": false
+    }
+  ],
+  "huntScore": "4/4",
+  "fillsSummary": "Sonnet INTC\u2192AR $35; Opus HOLD MPC + BUY MU $30; Terra MU\u2192SPY $52 (scaled from $60); Luna HOLD P+MU"
+}
