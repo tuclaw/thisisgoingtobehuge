@@ -36,4 +36,4 @@ Given stays **$361.93**. Pot stays **$369.8281**.
 
 ## Remake
 
-Snapshot **`s1e09-carry`**. Live cut moves off `s1e08-fri-eod-rth` (Episode 8 week board stays there). Duplicate Sonnet split lots dropped. SIP Sep 25 still missing — no invented close.
+Live cut stays **`s1e08-fri-eod-rth`**. Do not stamp `s1e09-carry` until Mon Sep 28 week tape — a Friday carry snapshot would flip public Watch Live to Episode 9. Duplicate Sonnet split lots dropped. SIP Sep 25 still missing — no invented close.

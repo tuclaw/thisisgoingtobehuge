@@ -763,31 +763,11 @@ check(
   "e8-fri-tribal-event",
   Boolean(e8FriTribal) && e8FriTribal.type === "tribal" && e8FriTribal.boot === "Claude Sonnet 5"
 );
-check("live-snapshot-e09-carry", source.liveSnapshotId === "s1e09-carry");
+check("live-snapshot-e08-fri-eod-rth", source.liveSnapshotId === "s1e08-fri-eod-rth");
 check("last-session-e09-post-tribal", source.lastSession === "2026-09-25-tribal");
-const e9Carry = (source.events || []).find((event) => event && event.id === "s1e09-carry");
 check(
-  "e9-carry-mark",
-  Boolean(e9Carry) &&
-    e9Carry.kind === "carry" &&
-    e9Carry.at === "2026-09-25T21:30:00Z" &&
-    e9Carry.upgradesSnapshotId === "s1e08-fri-eod-rth" &&
-    e9Carry.sipMissing === true
-);
-check(
-  "e9-carry-snapshot",
-  (board.snapshots || []).some((snap) => snap && snap.id === "s1e09-carry")
-);
-const e9CarryBooks = (((episode9Copy.days || []).find((day) => day.id === "cold-open") || {}).beats || []).find(
-  (beat) => beat.id === "e9-carry-books"
-);
-check(
-  "e09-carry-books",
-  Boolean(e9CarryBooks) &&
-    e9CarryBooks.boardId === "s1e09-carry" &&
-    String(e9CarryBooks.body || "").includes("126.8077") &&
-    String(e9CarryBooks.body || "").includes("122.3328") &&
-    String(e9CarryBooks.body || "").includes("120.6876")
+  "no-e09-carry-until-week-tape",
+  !(source.events || []).some((event) => event && event.id === "s1e09-carry")
 );
 check(
   "live-episode-is-e09",

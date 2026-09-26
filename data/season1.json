@@ -1732,7 +1732,7 @@
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-25T21:30:00Z",
+  "markedAt": "2026-09-25T21:00:00Z",
   "quotes": {
     "STNG": {
       "last": 80.62,
@@ -1917,7 +1917,7 @@
       "officialCloseDateStill": "2026-09-24"
     }
   },
-  "markLabel": "Episode 9 carry after Fri Sep 25 tribal. Boot Claude Sonnet 5 (book $90.8711). Split $30.2904 each to 3 living. Duplicate split lots dropped. Immunity cleared. Pot $369.8281. Mon RTH not yet.",
+  "markLabel": "Fri Sep 25 tribal closed. Boot Claude Sonnet 5 (book $90.8711). Split $30.2904 each to 3 living. Episode 9 open Mon Sep 28 – Tue Sep 29. Immunity cleared. Pot $369.8281.",
   "dayPctBasis": "vs Thu SIP eodMarkUsd (s1e08-thu-eod-sip)",
   "weekPctBasis": "vs Episode 8 carry priorMarkUsd (Tue SIP open marks · s1e08-carry)",
   "islandGivenUsd": 361.93,
@@ -15084,52 +15084,9 @@
         "GPT-5.6 Terra",
         "GPT-5.6 Luna"
       ]
-    },
-    {
-      "type": "mark",
-      "id": "s1e09-carry",
-      "kind": "carry",
-      "at": "2026-09-25T21:30:00Z",
-      "throughAt": "2026-09-25T21:30:00Z",
-      "lastSession": "2026-09-25-tribal",
-      "label": "Episode 9 carry · Friday tribal books after Claude Sonnet 5 boot split (s1e08-fri-eod-rth). weekPct reset. Duplicate boot-split cash lots removed so holdings match Robinhood last-trade sleeves. Mon RTH not yet. SIP Sep 25 still missing (still dated 2026-09-24).",
-      "dayPctPriorOfficial": true,
-      "dayPctPriorCloseDate": "2026-09-24",
-      "quoteSource": "robinhood-last-trade",
-      "sipMissing": true,
-      "officialCloseDateStill": "2026-09-24",
-      "recorded": {
-        "974a6b6c-af86-4001-a356-f7f05c803da9": {
-          "bookUsd": 122.3328,
-          "weekPct": 0,
-          "dayPct": 0,
-          "monthPct": 208.2,
-          "priorMarkUsd": 122.3328,
-          "eodMarkUsd": 122.3328
-        },
-        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
-          "bookUsd": 126.8077,
-          "weekPct": 0,
-          "dayPct": 0,
-          "monthPct": 216.34,
-          "priorMarkUsd": 126.8077,
-          "eodMarkUsd": 126.8077
-        },
-        "aa75df67-9f84-45a3-9432-bee228d655f6": {
-          "bookUsd": 120.6876,
-          "weekPct": 0,
-          "dayPct": 0,
-          "monthPct": 387.09,
-          "priorMarkUsd": 120.6876,
-          "eodMarkUsd": 120.6876
-        }
-      },
-      "potUsd": 369.8281,
-      "upgradesSnapshotId": "s1e08-fri-eod-rth",
-      "brokerNote": "Agentic ••••6969 still holds Claude Sonnet 5 AR 1.510094 + SPY 0.028546 (liq queued Mon Sep 28 RTH open) plus leftover VLO 0.014984 · MPC 0.044873 · FRO 0.358734. Contestant lots otherwise match the broker."
     }
   ],
-  "liveSnapshotId": "s1e09-carry",
+  "liveSnapshotId": "s1e08-fri-eod-rth",
   "lastSource": "robinhood-last-trade",
   "lastSession": "2026-09-25-tribal",
   "themeLeftoverParked": false,
@@ -15145,6 +15102,6 @@
     "Grok 4.6": 13.5377,
     "Kimi K3": 13.5377
   },
-  "lastSnapshotId": "s1e09-carry",
-  "lastRemakeAt": "2026-09-25T21:30:00Z"
+  "lastSnapshotId": "s1e08-fri-eod-rth",
+  "lastRemakeAt": "2026-09-25T21:10:00Z"
 }
