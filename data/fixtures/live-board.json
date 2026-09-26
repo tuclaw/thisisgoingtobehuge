@@ -1,8 +1,8 @@
 {
-  "liveSnapshotId": "s1e08-fri-eod-rth",
-  "markedAt": "2026-09-25T21:00:00Z",
-  "markLabel": "Fri Sep 25 tribal closed. Boot Claude Sonnet 5 (book $90.8711). Split $30.2904 each to 3 living. Episode 9 open Mon Sep 28 – Tue Sep 29. Immunity cleared. Pot $369.8281.",
-  "lastSession": "2026-09-25-lasthour",
+  "liveSnapshotId": "s1e09-carry",
+  "markedAt": "2026-09-25T21:30:00Z",
+  "markLabel": "Episode 9 carry after Fri Sep 25 tribal. Boot Claude Sonnet 5 (book $90.8711). Split $30.2904 each to 3 living. Duplicate split lots dropped. Immunity cleared. Pot $369.8281. Mon RTH not yet.",
+  "lastSession": "2026-09-25-tribal",
   "liveEpisodeId": "s1e09",
   "islandGivenUsd": 361.93,
   "islandPotUsd": 369.8281,
@@ -42,17 +42,12 @@
       "bookUsd": 122.3328,
       "weekPct": 0,
       "dayPct": 0,
-      "cashUsd": 110.6394,
+      "cashUsd": 80.349,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
           "sizeUsd": 80.349
-        },
-        {
-          "ticker": "CASH",
-          "qty": null,
-          "sizeUsd": 30.2904
         },
         {
           "ticker": "MPC",
@@ -147,17 +142,12 @@
       "bookUsd": 120.6876,
       "weekPct": 0,
       "dayPct": 0,
-      "cashUsd": 61.5074,
+      "cashUsd": 31.217,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
           "sizeUsd": 31.217
-        },
-        {
-          "ticker": "CASH",
-          "qty": null,
-          "sizeUsd": 30.2904
         },
         {
           "ticker": "MU",
@@ -192,17 +182,12 @@
       "bookUsd": 126.8077,
       "weekPct": 0,
       "dayPct": 0,
-      "cashUsd": 52.2547,
+      "cashUsd": 21.9643,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
           "sizeUsd": 21.9643
-        },
-        {
-          "ticker": "CASH",
-          "qty": null,
-          "sizeUsd": 30.2904
         },
         {
           "ticker": "MU",
@@ -345,7 +330,8 @@
     "s1e08-fri-open",
     "s1e08-fri-mid",
     "s1e08-fri-lasthour",
-    "s1e08-fri-eod-rth"
+    "s1e08-fri-eod-rth",
+    "s1e09-carry"
   ],
   "snapshotDigests": {
     "s1e01-mon-open": {
@@ -6804,6 +6790,84 @@
           "bookUsd": 96.5173,
           "weekPct": -3.474,
           "dayPct": -2.4677
+        },
+        "grok-4-5": {
+          "bookUsd": 15.49,
+          "weekPct": 54.9,
+          "dayPct": 54.9
+        },
+        "grok-4-6": {
+          "bookUsd": 54.2722,
+          "weekPct": 442.72,
+          "dayPct": 442.72
+        },
+        "kimi-k3": {
+          "bookUsd": 0,
+          "weekPct": -100,
+          "dayPct": -100
+        }
+      }
+    },
+    "s1e09-carry": {
+      "at": "2026-09-25T21:30:00Z",
+      "givenUsd": null,
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": 0,
+          "combinedDayPct": 0,
+          "livingCount": 2
+        },
+        "askara": {
+          "combinedWeekPct": 0,
+          "combinedDayPct": 0,
+          "livingCount": 1
+        }
+      },
+      "books": {
+        "claude-fable-5": {
+          "bookUsd": 0,
+          "weekPct": -100,
+          "dayPct": -100
+        },
+        "claude-opus-5": {
+          "bookUsd": 122.3328,
+          "weekPct": 0,
+          "dayPct": 0
+        },
+        "claude-sonnet-5": {
+          "bookUsd": 10,
+          "weekPct": 0,
+          "dayPct": 0
+        },
+        "composer-2-5": {
+          "bookUsd": 71.9598,
+          "weekPct": 619.6,
+          "dayPct": 619.6
+        },
+        "gemini-3-1-pro": {
+          "bookUsd": 22.02,
+          "weekPct": 120.2,
+          "dayPct": 120.2
+        },
+        "gemini-3-7-flash": {
+          "bookUsd": 62.7751,
+          "weekPct": 527.75,
+          "dayPct": 527.75
+        },
+        "gpt-5-6-luna": {
+          "bookUsd": 120.6876,
+          "weekPct": 0,
+          "dayPct": 0
+        },
+        "gpt-5-6-sol": {
+          "bookUsd": 39.2009,
+          "weekPct": 292.01,
+          "dayPct": 292.01
+        },
+        "gpt-5-6-terra": {
+          "bookUsd": 126.8077,
+          "weekPct": 0,
+          "dayPct": 0
         },
         "grok-4-5": {
           "bookUsd": 15.49,

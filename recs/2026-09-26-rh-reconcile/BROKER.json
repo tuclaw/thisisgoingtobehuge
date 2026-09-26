@@ -1,0 +1,60 @@
+{
+  "asOf": "2026-09-26T01:45:00Z",
+  "accountLast4": "6969",
+  "nickname": "Agentic",
+  "totalValue": 361.3432,
+  "equityValue": 352.3632,
+  "cash": 8.98,
+  "buyingPower": 8.98,
+  "unsettledFunds": 291.68,
+  "rthLastTrade": {
+    "AR": 34.98,
+    "MPC": 393.26,
+    "MU": 1081.69,
+    "SPY": 771.3,
+    "QCOM": 201.95,
+    "VLO": 387.145,
+    "FRO": 47.73
+  },
+  "extendedLastNonReg": {
+    "AR": 35.0,
+    "MPC": 393.7947,
+    "MU": 1085.02,
+    "SPY": 772.04,
+    "QCOM": 202.91,
+    "VLO": 387.2,
+    "FRO": 47.5354
+  },
+  "sipClose": {
+    "dateStill": "2026-09-24",
+    "sep25Interpolated": true
+  },
+  "positions": [
+    { "symbol": "SPY", "quantity": "0.096023", "averageBuyPrice": "770.650000" },
+    { "symbol": "VLO", "quantity": "0.014984", "averageBuyPrice": "393.750000" },
+    { "symbol": "MPC", "quantity": "0.075105", "averageBuyPrice": "400.640000" },
+    { "symbol": "FRO", "quantity": "0.358734", "averageBuyPrice": "48.560000" },
+    { "symbol": "MU", "quantity": "0.130867", "averageBuyPrice": "1100.350000" },
+    { "symbol": "AR", "quantity": "1.510094", "averageBuyPrice": "35.100000" },
+    { "symbol": "QCOM", "quantity": "0.152544", "averageBuyPrice": "203.220000" }
+  ],
+  "attribution": {
+    "living": {
+      "MU": "0.130867",
+      "QCOM": "0.152544",
+      "MPC": "0.030232",
+      "SPY": "0.067477"
+    },
+    "sonnetPendingLiq": {
+      "AR": "1.510094",
+      "SPY": "0.028546",
+      "when": "2026-09-28 RTH open",
+      "pin": "Claude Sonnet 5 lots only"
+    },
+    "leftoversLeftAlone": {
+      "VLO": "0.014984",
+      "MPC": "0.044873",
+      "FRO": "0.358734"
+    }
+  }
+}
