@@ -286,6 +286,33 @@ for (const s of board.survivors) {
     }
   }
   check(`sleeve:${s.slug}`, sleeve <= sleeveCap, `${sleeve} vs cap ${sleeveCap}`);
+  if (s.status === "active" && sourceRow && Array.isArray(sourceRow.positions)) {
+    let legsUsd = 0;
+    let legsReady = true;
+    for (const pos of sourceRow.positions) {
+      if (isCashLeg(pos) || tickerOf(pos) === "CASH") {
+        legsUsd += Number(pos.sizeUsd) || 0;
+        continue;
+      }
+      if (typeof pos.liveMv === "number" && Number.isFinite(pos.liveMv)) {
+        legsUsd += pos.liveMv;
+        continue;
+      }
+      const marked = markedEquity(pos, board.quotes);
+      if (marked == null) {
+        legsReady = false;
+        break;
+      }
+      legsUsd += marked;
+    }
+    if (legsReady) {
+      check(
+        `holdings-sum-vs-book:${s.slug}`,
+        Math.abs(legsUsd - s.bookUsd) < 0.05,
+        `${legsUsd.toFixed(4)} vs book ${s.bookUsd}`
+      );
+    }
+  }
 }
 
 for (const tribe of board.tribes) {

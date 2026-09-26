@@ -764,7 +764,11 @@ check(
   Boolean(e8FriTribal) && e8FriTribal.type === "tribal" && e8FriTribal.boot === "Claude Sonnet 5"
 );
 check("live-snapshot-e08-fri-eod-rth", source.liveSnapshotId === "s1e08-fri-eod-rth");
-check("last-session-e09-post-tribal", source.lastSession === "2026-09-25-lasthour");
+check("last-session-e09-post-tribal", source.lastSession === "2026-09-25-tribal");
+check(
+  "no-e09-carry-until-week-tape",
+  !(source.events || []).some((event) => event && event.id === "s1e09-carry")
+);
 check(
   "live-episode-is-e09",
   source.episode && source.episode.id === "s1e09" && source.episode.status === "live" && source.episode.path === "seasons/1/e09.html"

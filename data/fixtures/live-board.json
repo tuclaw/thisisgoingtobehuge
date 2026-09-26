@@ -2,7 +2,7 @@
   "liveSnapshotId": "s1e08-fri-eod-rth",
   "markedAt": "2026-09-25T21:00:00Z",
   "markLabel": "Fri Sep 25 tribal closed. Boot Claude Sonnet 5 (book $90.8711). Split $30.2904 each to 3 living. Episode 9 open Mon Sep 28 – Tue Sep 29. Immunity cleared. Pot $369.8281.",
-  "lastSession": "2026-09-25-lasthour",
+  "lastSession": "2026-09-25-tribal",
   "liveEpisodeId": "s1e09",
   "islandGivenUsd": 361.93,
   "islandPotUsd": 369.8281,
@@ -42,17 +42,12 @@
       "bookUsd": 122.3328,
       "weekPct": 0,
       "dayPct": 0,
-      "cashUsd": 110.6394,
+      "cashUsd": 80.349,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
           "sizeUsd": 80.349
-        },
-        {
-          "ticker": "CASH",
-          "qty": null,
-          "sizeUsd": 30.2904
         },
         {
           "ticker": "MPC",
@@ -147,17 +142,12 @@
       "bookUsd": 120.6876,
       "weekPct": 0,
       "dayPct": 0,
-      "cashUsd": 61.5074,
+      "cashUsd": 31.217,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
           "sizeUsd": 31.217
-        },
-        {
-          "ticker": "CASH",
-          "qty": null,
-          "sizeUsd": 30.2904
         },
         {
           "ticker": "MU",
@@ -192,17 +182,12 @@
       "bookUsd": 126.8077,
       "weekPct": 0,
       "dayPct": 0,
-      "cashUsd": 52.2547,
+      "cashUsd": 21.9643,
       "lots": [
         {
           "ticker": "CASH",
           "qty": null,
           "sizeUsd": 21.9643
-        },
-        {
-          "ticker": "CASH",
-          "qty": null,
-          "sizeUsd": 30.2904
         },
         {
           "ticker": "MU",
