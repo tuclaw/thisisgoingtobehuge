@@ -1955,6 +1955,28 @@ check("e09-heroNote-empty", episode9Copy.heroNote === "");
 check("e09-weekBoard-lede-empty", episode9Copy.weekBoard && episode9Copy.weekBoard.lede === "");
 check("e09-conversationFeed-false", episode9Copy.conversationFeed === false);
 check(
+  "e09-saturday-after-challenge",
+  (episode9Copy.days || []).map((d) => d.id).indexOf("saturday") >
+    (episode9Copy.days || []).map((d) => d.id).indexOf("challenge")
+);
+const e9SatDinner = (((episode9Copy.days || []).find((day) => day.id === "saturday") || {}).beats || []).find(
+  (beat) => beat.id === "saturday-dinner"
+);
+check(
+  "e09-saturday-dinner-beat",
+  Boolean(e9SatDinner) &&
+    e9SatDinner.type === "dinner-fires" &&
+    (e9SatDinner.threads || []).some((thread) => thread.id === "merged-sat-dinner-fire") &&
+    String(e9SatDinner.body || "").includes("Episode 9")
+);
+check(
+  "e09-saturday-foldEm",
+  (() => {
+    const foldEm = String(((episode9Copy.days || []).find((day) => day.id === "saturday") || {}).foldEm || "");
+    return /the bidu tribe/i.test(foldEm) && /the askara tribe/i.test(foldEm) && foldEm.includes("Sit none");
+  })()
+);
+check(
   "e08-thursday-after-wednesday",
   (episode8Copy.days || []).map((d) => d.id).indexOf("thursday") >
     (episode8Copy.days || []).map((d) => d.id).indexOf("wednesday")
