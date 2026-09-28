@@ -145,7 +145,14 @@ if (boardNative) {
   check("episode2-even-up-printed", source.islandEpisode2EvenUpUsd === 10.09, String(source.islandEpisode2EvenUpUsd));
   check("episode2-even-up-each", source.islandEpisode2EvenUpEachUsd === 2, String(source.islandEpisode2EvenUpEachUsd));
   check("episode2-even-up-leftover", source.islandEpisode2EvenUpLeftoverUsd === 0.09, String(source.islandEpisode2EvenUpLeftoverUsd));
-  check("pot-marked-sleeves", Math.abs(source.islandPotUsd - 369.8281) < 0.0002, String(source.islandPotUsd));
+  const activeBookSum = (source.survivors || [])
+    .filter((row) => row && row.status === "active")
+    .reduce((sum, row) => sum + (row.bookUsd || 0), 0);
+  check(
+    "pot-marked-sleeves",
+    Math.abs(source.islandPotUsd - activeBookSum) < 0.0002,
+    `${source.islandPotUsd} vs ${activeBookSum}`
+  );
 } else {
   check("pot-is-sleeves", board.islandPotUsd === start * cast.length);
   check("given-total", typeof source.islandGivenUsd === "number" && source.islandGivenUsd > 0, String(source.islandGivenUsd));
