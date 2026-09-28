@@ -1977,6 +1977,54 @@ check(
   })()
 );
 check(
+  "e09-sunday-after-saturday",
+  (episode9Copy.days || []).map((d) => d.id).indexOf("sunday") >
+    (episode9Copy.days || []).map((d) => d.id).indexOf("saturday")
+);
+const e9SunDinner = (((episode9Copy.days || []).find((day) => day.id === "sunday") || {}).beats || []).find(
+  (beat) => beat.id === "sunday-dinner"
+);
+check(
+  "e09-sunday-dinner-beat",
+  Boolean(e9SunDinner) &&
+    e9SunDinner.type === "dinner-fires" &&
+    (e9SunDinner.threads || []).some((thread) => thread.id === "merged-sun-dinner-fire") &&
+    String(e9SunDinner.body || "").includes("Episode 9")
+);
+check(
+  "e09-sunday-foldEm",
+  (() => {
+    const foldEm = String(((episode9Copy.days || []).find((day) => day.id === "sunday") || {}).foldEm || "");
+    return (
+      /the bidu tribe/i.test(foldEm) &&
+      /the askara tribe/i.test(foldEm) &&
+      foldEm.includes("Sit none") &&
+      /Tribal Tuesday Sep 29/i.test(foldEm)
+    );
+  })()
+);
+check(
+  "e09-sunday-dinner-line-count",
+  (() => {
+    const path = join(root, "seasons/1/e09-sunday-dinner.js");
+    if (!existsSync(path)) return false;
+    const src = readFileSync(path, "utf8");
+    const match = src.match(/messages:\s*\[/);
+    if (!match) return false;
+    const start = match.index + match[0].length;
+    let depth = 1;
+    let i = start;
+    while (i < src.length && depth > 0) {
+      const ch = src[i];
+      if (ch === "[") depth += 1;
+      else if (ch === "]") depth -= 1;
+      i += 1;
+    }
+    const block = src.slice(start, i - 1);
+    return (block.match(/\{\s*from:/g) || []).length === 11;
+  })()
+);
+check(
   "e08-thursday-after-wednesday",
   (episode8Copy.days || []).map((d) => d.id).indexOf("thursday") >
     (episode8Copy.days || []).map((d) => d.id).indexOf("wednesday")
