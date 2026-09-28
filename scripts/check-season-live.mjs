@@ -395,8 +395,8 @@ check("homepage-points-at-e09", home.includes("seasons/1/e09.html") && home.incl
 check("homepage-skips-e08-primary-cta", !home.includes("Walk into Episode 8"));
 check("merged-true", source.merged === true);
 check(
-  "status-label-e09-mon-mid",
-  source.statusLabel === "Live · Episode 9 · Mon mid · three living · MERGED"
+  "status-label-e09-mon-lasthour",
+  source.statusLabel === "Live · Episode 9 · Mon last-hour · three living · MERGED"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -777,8 +777,17 @@ check(
     e9MonMid.dayPctPriorOfficial === false &&
     e9MonMid.upgradesSnapshotId === "s1e09-mon-open"
 );
-check("live-snapshot-e09-mon-mid", source.liveSnapshotId === "s1e09-mon-mid");
-check("last-session-e09-mon-mid", source.lastSession === "2026-09-28-mid");
+const e9MonLasthour = (source.events || []).find((event) => event && event.id === "s1e09-mon-lasthour");
+check(
+  "e9-mon-lasthour-mark",
+  Boolean(e9MonLasthour) &&
+    e9MonLasthour.kind === "intraday" &&
+    e9MonLasthour.at === "2026-09-28T19:02:28Z" &&
+    e9MonLasthour.dayPctPriorOfficial === false &&
+    e9MonLasthour.upgradesSnapshotId === "s1e09-mon-mid"
+);
+check("live-snapshot-e09-mon-lasthour", source.liveSnapshotId === "s1e09-mon-lasthour");
+check("last-session-e09-mon-lasthour", source.lastSession === "2026-09-28-lasthour");
 check(
   "no-e09-carry-until-week-tape",
   !(source.events || []).some((event) => event && event.id === "s1e09-carry")
@@ -795,7 +804,7 @@ check(
 check("live-episode-week", source.episode && source.episode.weekLabel === "Monday Sep 28 – Tuesday Sep 29, 2026");
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 29, 2026 · 2:00 PM PT");
 check("sip-missing-banner-cleared-e07-mon-sip", source.sipMissingBanner === undefined);
-check("island-pot", Math.abs(source.islandPotUsd - 362.738) < 0.0002);
+check("island-pot", Math.abs(source.islandPotUsd - 362.3734) < 0.0002);
 const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
 const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
 const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
@@ -805,23 +814,23 @@ const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
 const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
 const flashLive = board.survivors.find((s) => s.name === "Gemini 3.7 Flash");
 check(
-  "immunity-opus-e09-mon-mid",
+  "immunity-opus-e09-mon-lasthour",
   source.immunity &&
     source.immunity.name === "Claude Opus 5" &&
     source.immunity.survivorId === "974a6b6c-af86-4001-a356-f7f05c803da9" &&
-    Math.abs(source.immunity.weekPct - -0.8386) < 0.0002
+    Math.abs(source.immunity.weekPct - -0.9061) < 0.0002
 );
 check(
-  "opus-e09-mon-mid-book",
-  opusLive && opusLive.immune === true && Math.abs(opusLive.weekPct - -0.8386) < 0.0002 && opusLive.bookUsd === 121.3069
+  "opus-e09-mon-lasthour-book",
+  opusLive && opusLive.immune === true && Math.abs(opusLive.weekPct - -0.9061) < 0.0002 && opusLive.bookUsd === 121.2244
 );
 check(
-  "terra-e09-mon-mid-book",
-  terraLive && terraLive.immune === false && Math.abs(terraLive.weekPct - -1.1929) < 0.0002 && terraLive.bookUsd === 125.295
+  "terra-e09-mon-lasthour-book",
+  terraLive && terraLive.immune === false && Math.abs(terraLive.weekPct - -1.4443) < 0.0002 && terraLive.bookUsd === 124.9762
 );
 check(
-  "luna-e09-mon-mid-book",
-  lunaLive && lunaLive.immune === false && Math.abs(lunaLive.weekPct - -3.7713) < 0.0002 && lunaLive.bookUsd === 116.1361
+  "luna-e09-mon-lasthour-book",
+  lunaLive && lunaLive.immune === false && Math.abs(lunaLive.weekPct - -3.7409) < 0.0002 && lunaLive.bookUsd === 116.1728
 );
 check(
   "composer-voted-out",
@@ -842,7 +851,7 @@ check(
   "flash-jury-zero",
   flashLive && (flashLive.status === "voted-out" || flashLive.status === "jury") && flashLive.jury && flashLive.bookUsd === 0
 );
-check("one-living-immune-e09-mon-mid", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
+check("one-living-immune-e09-mon-lasthour", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
 check("three-living", board.survivors.filter((s) => s.status === "active").length === 3);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
@@ -895,7 +904,7 @@ check("episode-9-live", e9 && e9.status === "live" && e9.path === "seasons/1/e09
 check("episode-9-week-bounds", e9 && e9.weekStart === "2026-09-28" && e9.weekEnd === "2026-09-29");
 check(
   "episode-9-week-board-snapshot",
-  e9 && e9.weekBoardSnapshotId === "s1e09-mon-mid" && e9.liveSnapshotId === "s1e09-mon-mid"
+  e9 && e9.weekBoardSnapshotId === "s1e09-mon-lasthour" && e9.liveSnapshotId === "s1e09-mon-lasthour"
 );
 check(
   "episode-1-list-tease-no-boot",
@@ -2083,6 +2092,18 @@ check(
     String(e9MonBooths.body || "").includes("−0.8386%") &&
     String(e9MonBooths.body || "").includes("−3.7713%")
 );
+const e9MonLasthourBooks = (((episode9Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).find(
+  (beat) => beat.id === "monday-lasthour-books"
+);
+check(
+  "e09-mon-lasthour-books",
+  Boolean(e9MonLasthourBooks) &&
+    e9MonLasthourBooks.boardId === "s1e09-mon-lasthour" &&
+    String(e9MonLasthourBooks.body || "").includes("121.2244") &&
+    String(e9MonLasthourBooks.body || "").includes("−0.9061%") &&
+    String(e9MonLasthourBooks.body || "").includes("hunt-brain 3/3") &&
+    !String(e9MonLasthourBooks.body || "").includes("the Bidu tribe")
+);
 check(
   "e09-monday-confessionals-order",
   (() => {
@@ -2092,12 +2113,17 @@ check(
     if (midBooks < 0 || confessionals < 0 || confessionals !== midBooks + 1) return false;
     const lastHourBooks = beats.indexOf("monday-lasthour-books");
     if (lastHourBooks >= 0 && lastHourBooks <= confessionals) return false;
-    return true;
+    return lastHourBooks < 0 || lastHourBooks === confessionals + 1;
   })()
 );
 check(
   "e09-monday-books-order",
-  beatOrder(episode9Copy.days || [], "monday", ["monday-open-books", "monday-mid-books", "monday-confessionals"])
+  beatOrder(episode9Copy.days || [], "monday", [
+    "monday-open-books",
+    "monday-mid-books",
+    "monday-confessionals",
+    "monday-lasthour-books",
+  ])
 );
 check(
   "e08-thursday-after-wednesday",
