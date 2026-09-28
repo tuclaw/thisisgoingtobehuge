@@ -1300,13 +1300,13 @@ const watchHelpers = new Function(`
 `)();
 const seasonBoard = JSON.parse(readFileSync(join(root, "dist", "season1.json"), "utf8"));
 if (!watchHelpers.episodeLiveWatchable(seasonBoard, seasonBoard.episodes.find((ep) => ep && ep.id === "s1e09"))) {
-  throw new Error("Episode 9 must be watchable after Mon Sep 28 open week tape");
+  throw new Error("Episode 9 must be watchable after Mon Sep 28 mid week tape");
 }
 if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e09") {
-  throw new Error("public Watch Live must sit on Episode 9 after Mon open week tape, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
+  throw new Error("public Watch Live must sit on Episode 9 after Mon mid week tape, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
 }
-if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e09-mon-open")) {
-  throw new Error("Episode 9 mon-open snapshot must exist");
+if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e09-mon-mid")) {
+  throw new Error("Episode 9 mon-mid snapshot must exist");
 }
 if (seasonBoard.episode.id !== "s1e09" || seasonBoard.episode.status !== "live") {
   throw new Error("dist season episode must be live Episode 9");

@@ -1,0 +1,73 @@
+{
+  "session": "2026-09-28-mid",
+  "accountLast4": "6969",
+  "bpBefore": 29.11,
+  "bpAfterSells": 40.94,
+  "bpAfter": 0.94,
+  "themeBufferUntouched": true,
+  "leftoversLeftAlone": {
+    "VLO": 0.014984,
+    "MPC": [
+      "889bbf73-2981-50d0-a124-52c51bb88383",
+      "d6cb4e0d-1a2a-5a7f-a57c-828abcdbfdf3"
+    ],
+    "FRO": 0.358734
+  },
+  "notes": [
+    "hunt-brain 3/3. Only Opus moved; Terra HOLD; Luna HOLD.",
+    "Opus sold selectable MPC lot a75993a1\u2026; kept Mon-open MPC 36951bbe\u2026 (is_selectable=false).",
+    "BUY SPY $40 filled at print size (no scaling). BP 29.11\u219240.94 after sell\u21920.94 after buy.",
+    "New SPY lot 83edbc8f\u2026 is_selectable=false (syncing).",
+    "No order_checks alerts. Leftovers left alone. Theme ~$250 buffer untouched."
+  ],
+  "contestantFills": [
+    {
+      "name": "Claude Opus 5",
+      "side": "SELL",
+      "ticker": "MPC",
+      "qty": "0.030232",
+      "avg": "391.400400",
+      "notional": 11.8328,
+      "orderId": "6aba9f23-d9d7-472b-812d-cbed6dd0e1e2",
+      "open_lot_id": "a75993a1-5c2f-53fe-b995-95c8b756585b",
+      "filledAt": "2026-09-28T17:08:51.548Z",
+      "ref_id": "ce1347b1-2e1b-444b-8d6d-bd5bcbed6122"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "SPY",
+      "qty": "0.052179",
+      "avg": "766.584300",
+      "notional": 40.0,
+      "dollar_amount": "40",
+      "orderId": "6aba9f35-0563-4b66-8bba-beb1bfc4ae4f",
+      "open_lot_id": "83edbc8f-a980-55d6-955b-14c96ea2667c",
+      "filledAt": "2026-09-28T17:09:09.349Z",
+      "ref_id": "1dde95b0-c35d-4378-a653-426c70d7e17b",
+      "is_selectable": false
+    }
+  ],
+  "holds": [
+    {
+      "name": "Claude Opus 5",
+      "tickers": [
+        "MPC 0.073104"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "tickers": [
+        "SPY",
+        "XLE"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tickers": [
+        "MU",
+        "MPC"
+      ]
+    }
+  ]
+}
