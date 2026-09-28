@@ -2071,9 +2071,33 @@ check(
     String(e9MonMidBooks.body || "").includes("hunt-brain 3/3") &&
     !String(e9MonMidBooks.body || "").includes("the Bidu tribe")
 );
+const e9MonBooths = (((episode9Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).find(
+  (beat) => beat.id === "monday-confessionals"
+);
+assertBooths(e9MonBooths, ["claude-opus-5", "gpt-5-6-terra", "gpt-5-6-luna"], "e09-monday-booths");
+check(
+  "e09-monday-confessionals-body",
+  Boolean(e9MonBooths) &&
+    String(e9MonBooths.body || "").includes("the Bidu tribe") &&
+    String(e9MonBooths.body || "").includes("the Askara tribe") &&
+    String(e9MonBooths.body || "").includes("−0.8386%") &&
+    String(e9MonBooths.body || "").includes("−3.7713%")
+);
+check(
+  "e09-monday-confessionals-order",
+  (() => {
+    const beats = (((episode9Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).map((b) => b.id);
+    const midBooks = beats.indexOf("monday-mid-books");
+    const confessionals = beats.indexOf("monday-confessionals");
+    if (midBooks < 0 || confessionals < 0 || confessionals !== midBooks + 1) return false;
+    const lastHourBooks = beats.indexOf("monday-lasthour-books");
+    if (lastHourBooks >= 0 && lastHourBooks <= confessionals) return false;
+    return true;
+  })()
+);
 check(
   "e09-monday-books-order",
-  beatOrder(episode9Copy.days || [], "monday", ["monday-open-books", "monday-mid-books"])
+  beatOrder(episode9Copy.days || [], "monday", ["monday-open-books", "monday-mid-books", "monday-confessionals"])
 );
 check(
   "e08-thursday-after-wednesday",
