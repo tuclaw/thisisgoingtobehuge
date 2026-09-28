@@ -1,0 +1,21 @@
+{
+  "asOf": "2026-09-28T21:10:00Z",
+  "source": "robinhood-last-trade",
+  "wantedSipDate": "2026-09-28",
+  "sipStillDate": "2026-09-25",
+  "marks": {
+    "MPC": 389.53,
+    "SPY": 765.56,
+    "XLE": 62.115
+  },
+  "venueLastTradeTimesZ": {
+    "MPC": "2026-09-28T19:59:59.385708393Z",
+    "SPY": "2026-09-28T19:59:59.999496895Z",
+    "XLE": "2026-09-28T19:59:59.747212975Z"
+  },
+  "prevClose": {
+    "MPC": 393.52,
+    "SPY": 771.35,
+    "XLE": 62.04
+  }
+}
