@@ -1,0 +1,140 @@
+{
+  "session": "2026-09-28-open",
+  "accountLast4": "6969",
+  "bpAfter": 29.11,
+  "themeBufferUntouched": true,
+  "leftoversLeftAlone": {
+    "MPC": [
+      "889bbf73-2981-50d0-a124-52c51bb88383",
+      "d6cb4e0d-1a2a-5a7f-a57c-828abcdbfdf3"
+    ]
+  },
+  "bootLiquidations": [
+    {
+      "name": "Claude Sonnet 5",
+      "note": "Pin-sold Sonnet lots only at Mon RTH open. Cash stays in shared Agentic BP \u2014 books already credited at Fri tribal (bootBook $90.8711 \u00b7 split $30.2904 \u00d73). Terra SPY lot untouched.",
+      "fills": [
+        {
+          "ticker": "AR",
+          "qty": "1.510094",
+          "avg": "34.650100",
+          "notional": 52.3249,
+          "orderId": "6aba6efa-5c3b-40ce-998d-0ed4348d8048",
+          "open_lot_ids": [
+            "76d0dcfb-9f33-5983-8126-80b8bda32918",
+            "340d269f-f40b-593f-b907-d9899f50e68c"
+          ],
+          "filledAt": "2026-09-28T13:43:22.709Z"
+        },
+        {
+          "ticker": "SPY",
+          "qty": "0.028546",
+          "avg": "767.512000",
+          "notional": 21.9094,
+          "orderId": "6aba6efa-9b59-42b6-8833-7797047086c6",
+          "open_lot_id": "d703748d-b142-5f4c-8948-b48950559c67",
+          "filledAt": "2026-09-28T13:43:22.276Z"
+        }
+      ],
+      "totalBrokerProceeds": 74.2343,
+      "terraSpyLotPreserved": "cd6e67ba-7899-5fbf-bfa0-f26be031eef3"
+    }
+  ],
+  "notes": [
+    "hunt-brain 3/3. Contestant fills at RTH open after Sonnet boot pin-sell.",
+    "New lots is_selectable=false (syncing): Opus MPC 36951bbe\u2026; Luna MPC f4a96bac\u2026; Terra XLE ac1e1b1b\u2026",
+    "Leftover MPC lots 889bbf73\u2026 and d6cb4e0d\u2026 left alone.",
+    "No host open cut / confessionals. Comics paused. Audience only."
+  ],
+  "contestantFills": [
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "SELL",
+      "ticker": "MU",
+      "qty": "0.048811",
+      "avg": "1060.916200",
+      "notional": 51.7844,
+      "orderId": "6aba6fd2-6320-459d-b340-050abd42a402",
+      "open_lot_id": "2b701292-60f1-5987-86a6-99aee43225ab",
+      "filledAt": "2026-09-28T13:46:58.584Z"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "SELL",
+      "ticker": "QCOM",
+      "qty": "0.152544",
+      "avg": "187.550100",
+      "notional": 28.6096,
+      "orderId": "6aba6fd3-a83d-4078-b806-4d884e8f6040",
+      "open_lot_id": "66c841e5-a28d-5249-bed3-69729ff7cf37",
+      "filledAt": "2026-09-28T13:46:59.564Z"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "SELL",
+      "ticker": "MU",
+      "qty": "0.027822",
+      "avg": "1060.780100",
+      "notional": 29.513,
+      "orderId": "6aba6fe8-5ccc-46ef-8723-a91faf9c8f71",
+      "open_lot_id": "68f9a460-ef22-557d-9c98-6d0d2bc95759",
+      "filledAt": "2026-09-28T13:47:20.489Z"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "BUY",
+      "ticker": "MPC",
+      "qty": "0.138646",
+      "avg": "396.691600",
+      "notional": 55.0,
+      "dollars": 55.0,
+      "sizeUsd": 54.9997,
+      "orderId": "6aba6fff-fe4b-425e-aebd-1ee2c1c88245",
+      "open_lot_id": "f4a96bac-57aa-5594-b852-f6b2b699010c",
+      "filledAt": "2026-09-28T13:47:43.54Z"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "BUY",
+      "ticker": "XLE",
+      "qty": "1.280821",
+      "avg": "62.459900",
+      "notional": 80.0,
+      "dollars": 80.0,
+      "sizeUsd": 80.0,
+      "orderId": "6aba6fff-0abc-4b63-9f4a-1ea331564231",
+      "open_lot_id": "ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026",
+      "filledAt": "2026-09-28T13:47:43.712Z"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "MPC",
+      "qty": "0.073104",
+      "avg": "396.691600",
+      "notional": 29.0,
+      "dollars": 29.0,
+      "sizeUsd": 28.9997,
+      "orderId": "6aba6fff-2c0f-4f80-8faf-b58a4f78c9dc",
+      "open_lot_id": "36951bbe-03dc-5045-927d-e6d152add35f",
+      "filledAt": "2026-09-28T13:47:43.876Z"
+    }
+  ],
+  "holds": [
+    {
+      "name": "Claude Opus 5",
+      "ticker": "MPC",
+      "note": "Keeps prior MPC lot a75993a1\u2026 after MU\u2192MPC rotate"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "ticker": "SPY",
+      "note": "Keeps SPY lot cd6e67ba\u2026 after MU\u2192XLE"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "ticker": "MU",
+      "note": "Keeps MU lot 6a305f2a\u2026 after QCOM\u2192MPC"
+    }
+  ]
+}

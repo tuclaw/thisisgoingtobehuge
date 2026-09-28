@@ -1,0 +1,88 @@
+{
+  "snapshotId": "s1e09-mon-open",
+  "asOf": "2026-09-28T13:51:05Z",
+  "asOfLabel": "Mon Sep 28 ~6:51 AM PT",
+  "quotes": {
+    "MPC": 396.04,
+    "MU": 1057.6901,
+    "SPY": 767.75,
+    "XLE": 62.5,
+    "QCOM": 187.45,
+    "AR": 34.71
+  },
+  "priorClose": {
+    "MPC": 393.52,
+    "MU": 1082.28,
+    "SPY": 771.35,
+    "XLE": 62.04,
+    "QCOM": 201.97,
+    "AR": 35.0
+  },
+  "priorCloseDate": "2026-09-25",
+  "quoteSource": "robinhood-last",
+  "dayPctPriorOfficial": true,
+  "dayPctPriorCloseDate": "2026-09-25",
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.446,
+    "basis": "Episode 9 weekPct vs priorMarkUsd (Fri Sep 25 tribal carry)",
+    "note": "Mon Sep 28 open remake",
+    "asOf": "2026-09-28-open",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-28T13:51:05Z"
+  },
+  "islandPotUsd": 364.4914,
+  "islandGivenUsd": 361.93,
+  "worst": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -2.9737
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 121.7872,
+      "week": -0.446,
+      "day": -0.446,
+      "cash": 80.862,
+      "tickers": "MPC+CASH",
+      "immune": true,
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9"
+    },
+    {
+      "rank": 2,
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 125.6055,
+      "week": -0.948,
+      "day": -0.948,
+      "cash": -6.2513,
+      "tickers": "SPY+XLE+CASH",
+      "immune": false,
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684"
+    },
+    {
+      "rank": 3,
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "book": 117.0987,
+      "week": -2.9737,
+      "day": -2.9737,
+      "cash": 4.8266,
+      "tickers": "MU+MPC+CASH",
+      "immune": false,
+      "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6"
+    }
+  ],
+  "huntScore": "3/3",
+  "fillsSummary": "Opus MU\u2192MPC $29; Terra MU\u2192XLE $80; Luna QCOM\u2192MPC $55. Sonnet AR+SPY pin-sold (books already credited Fri tribal).",
+  "liveEpisode": "s1e09",
+  "tribalLabel": "Tuesday Sep 29, 2026 \u00b7 2:00 PM PT",
+  "merged": true,
+  "comicsPaused": true,
+  "audienceOnly": true
+}

@@ -1,0 +1,183 @@
+{
+  "session": "2026-09-28-open",
+  "asOf": "2026-09-28T13:51:05Z",
+  "asOfLabel": "Mon Sep 28 ~6:51 AM PT",
+  "living": [
+    {
+      "name": "Claude Opus 5",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "cash": 80.862,
+      "bookUsd": 121.7872,
+      "priorMarkUsd": 122.3328,
+      "weekPct": -0.446,
+      "dayPct": -0.446,
+      "tickers": "MPC+CASH",
+      "immune": true,
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "MPC",
+          "qty": "0.030232",
+          "avg": "396.929900",
+          "sizeUsd": 11.8398,
+          "status": "filled",
+          "orderId": "6ab55640-1ad5-4e39-bc99-61c1ce2f9d9c",
+          "open_lot_id": "a75993a1-5c2f-53fe-b995-95c8b756585b",
+          "last": 396.04,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-28-open",
+          "liveMv": 11.9731,
+          "liveUsd": 11.8398,
+          "note": "Thu mid BUY MPC $12.00 from GNRC exit \u00b7 HOLD"
+        },
+        {
+          "action": "BUY",
+          "ticker": "MPC",
+          "qty": "0.073104",
+          "avg": "396.691600",
+          "sizeUsd": 28.9997,
+          "status": "filled",
+          "orderId": "6aba6fff-2c0f-4f80-8faf-b58a4f78c9dc",
+          "open_lot_id": "36951bbe-03dc-5045-927d-e6d152add35f",
+          "last": 396.04,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-28-open",
+          "liveMv": 28.9521,
+          "liveUsd": 28.9997,
+          "note": "Mon open BUY MPC $29.00 from MU exit"
+        },
+        {
+          "action": "CASH",
+          "ticker": "CASH",
+          "sizeUsd": 80.862,
+          "status": "cash",
+          "note": "Mon Sep 28 open after MU\u2192MPC",
+          "liveMv": 80.862
+        }
+      ]
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "cash": -6.2513,
+      "bookUsd": 125.6055,
+      "priorMarkUsd": 126.8077,
+      "weekPct": -0.948,
+      "dayPct": -0.948,
+      "tickers": "SPY+XLE+CASH",
+      "immune": false,
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "SPY",
+          "qty": "0.067477",
+          "avg": "770.626700",
+          "sizeUsd": 52.0018,
+          "status": "filled",
+          "orderId": "6ab6a7f9-3e63-4ff8-a147-bff0574333bb",
+          "open_lot_id": "cd6e67ba-7899-5fbf-bfa0-f26be031eef3",
+          "last": 767.75,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-28-open",
+          "liveMv": 51.8055,
+          "liveUsd": 52.0018,
+          "note": "Fri mid BUY SPY $52.00 \u00b7 HOLD"
+        },
+        {
+          "action": "BUY",
+          "ticker": "XLE",
+          "qty": "1.280821",
+          "avg": "62.459900",
+          "sizeUsd": 80.0,
+          "status": "filled",
+          "orderId": "6aba6fff-0abc-4b63-9f4a-1ea331564231",
+          "open_lot_id": "ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026",
+          "last": 62.5,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-28-open",
+          "liveMv": 80.0513,
+          "liveUsd": 80.0,
+          "note": "Mon open BUY XLE $80.00 from MU exit"
+        },
+        {
+          "action": "CASH",
+          "ticker": "CASH",
+          "sizeUsd": -6.2513,
+          "status": "cash",
+          "note": "Mon Sep 28 open after MU\u2192XLE",
+          "liveMv": -6.2513
+        }
+      ]
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "cash": 4.8266,
+      "bookUsd": 117.0987,
+      "priorMarkUsd": 120.6876,
+      "weekPct": -2.9737,
+      "dayPct": -2.9737,
+      "tickers": "MU+MPC+CASH",
+      "immune": false,
+      "positions": [
+        {
+          "action": "BUY",
+          "ticker": "MU",
+          "qty": "0.054234",
+          "avg": "1106.300000",
+          "sizeUsd": 58.7327,
+          "status": "filled",
+          "orderId": "6ab679e1-1c2a-4b86-9caa-c75e76d03aa6",
+          "open_lot_id": "6a305f2a-0320-515d-b143-d8f04cc4c812",
+          "last": 1057.6901,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-28-open",
+          "liveMv": 57.3628,
+          "liveUsd": 58.7327,
+          "note": "Fri open BUY MU $60.00 \u00b7 HOLD"
+        },
+        {
+          "action": "BUY",
+          "ticker": "MPC",
+          "qty": "0.138646",
+          "avg": "396.691600",
+          "sizeUsd": 54.9997,
+          "status": "filled",
+          "orderId": "6aba6fff-fe4b-425e-aebd-1ee2c1c88245",
+          "open_lot_id": "f4a96bac-57aa-5594-b852-f6b2b699010c",
+          "last": 396.04,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-28-open",
+          "liveMv": 54.9094,
+          "liveUsd": 54.9997,
+          "note": "Mon open BUY MPC $55.00 from QCOM exit"
+        },
+        {
+          "action": "CASH",
+          "ticker": "CASH",
+          "sizeUsd": 4.8266,
+          "status": "cash",
+          "note": "Mon Sep 28 open after QCOM\u2192MPC",
+          "liveMv": 4.8266
+        }
+      ]
+    }
+  ],
+  "pot": 364.4914,
+  "given": 361.93,
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.446,
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9"
+  },
+  "worst": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -2.9737
+  }
+}
