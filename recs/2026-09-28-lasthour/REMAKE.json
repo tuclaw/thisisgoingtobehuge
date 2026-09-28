@@ -1,0 +1,68 @@
+{
+  "snapshotId": "s1e09-mon-lasthour",
+  "session": "2026-09-28-lasthour",
+  "asOf": "2026-09-28T19:02:28Z",
+  "asOfLabel": "Mon Sep 28 ~12:02 PM PT",
+  "quoteSource": "robinhood-last",
+  "priorCloseDate": "2026-09-25",
+  "quotes": {
+    "MPC": 390.29,
+    "MU": 1054.255,
+    "SPY": 766.55,
+    "XLE": 62.065
+  },
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.9061,
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "basis": "Episode 9 weekPct vs priorMarkUsd (Fri Sep 25 tribal carry)"
+  },
+  "worst": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -3.7409
+  },
+  "pot": 362.3734,
+  "given": 361.93,
+  "standings": [
+    {
+      "name": "Claude Opus 5",
+      "origin": "the Bidu tribe",
+      "bookUsd": 121.2244,
+      "weekPct": -0.9061,
+      "dayPct": -0.9061,
+      "cash": 52.6948,
+      "tickers": "MPC+SPY+CASH",
+      "immune": true
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "origin": "the Bidu tribe",
+      "bookUsd": 124.9762,
+      "weekPct": -1.4443,
+      "dayPct": -1.4443,
+      "cash": 0.4842,
+      "tickers": "XLE+CASH",
+      "immune": false
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "origin": "the Askara tribe",
+      "bookUsd": 116.1728,
+      "weekPct": -3.7409,
+      "dayPct": -3.7409,
+      "cash": 5.0652,
+      "tickers": "MPC+XLE+CASH",
+      "immune": false
+    }
+  ],
+  "priors": {
+    "Claude Opus 5": 122.3328,
+    "GPT-5.6 Terra": 126.8077,
+    "GPT-5.6 Luna": 120.6876
+  },
+  "bpPath": {
+    "before": 0.94,
+    "afterSells": 109.92,
+    "after": 7.92
+  }
+}

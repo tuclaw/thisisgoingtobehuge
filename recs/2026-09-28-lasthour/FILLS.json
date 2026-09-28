@@ -1,0 +1,98 @@
+{
+  "session": "2026-09-28-lasthour",
+  "accountLast4": "6969",
+  "bpBefore": 0.94,
+  "bpAfterSells": 109.92,
+  "bpAfter": 7.92,
+  "themeBufferUntouched": true,
+  "leftoversLeftAlone": {
+    "VLO": 0.014984,
+    "MPC": [
+      "889bbf73-2981-50d0-a124-52c51bb88383",
+      "d6cb4e0d-1a2a-5a7f-a57c-828abcdbfdf3"
+    ],
+    "FRO": 0.358734
+  },
+  "notes": [
+    "hunt-brain 3/3. Opus HOLD; Terra SPY\u2192XLE; Luna MU\u2192XLE.",
+    "Terra sold selectable Fri SPY cd6e67ba\u2026; kept Mon-open XLE ac1e1b1b\u2026; BUY XLE $45 lot 633b0834\u2026",
+    "Luna sold selectable Fri MU 6a305f2a\u2026; kept Mon-open MPC f4a96bac\u2026; BUY XLE $57 lot 2d1d5ab0\u2026",
+    "Both buys filled at print size (no scaling). BP 0.94\u2192109.92 after sells\u21927.92 after buys.",
+    "New XLE lots is_selectable=false (syncing). No order_checks. Leftovers left alone. Theme ~$250 buffer untouched."
+  ],
+  "contestantFills": [
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "SELL",
+      "ticker": "SPY",
+      "qty": "0.067477",
+      "avg": "766.713500",
+      "notional": 51.7355,
+      "orderId": "6abab950-f78c-49c8-a207-16e61bb8e7a8",
+      "open_lot_id": "cd6e67ba-7899-5fbf-bfa0-f26be031eef3",
+      "filledAt": "2026-09-28T19:00:32.784Z",
+      "ref_id": "31974af0-8b9a-4f77-82ce-b509cb6a399e"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "SELL",
+      "ticker": "MU",
+      "qty": "0.054234",
+      "avg": "1055.400000",
+      "notional": 57.2386,
+      "orderId": "6abab951-bc7f-4f55-ba68-3077a4640eec",
+      "open_lot_id": "6a305f2a-0320-515d-b143-d8f04cc4c812",
+      "filledAt": "2026-09-28T19:00:33.563Z",
+      "ref_id": "2c99c754-0201-4e49-a340-4371dce281f2"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "BUY",
+      "ticker": "XLE",
+      "qty": "0.918319",
+      "avg": "62.069900",
+      "notional": 57.0,
+      "dollar_amount": "57",
+      "orderId": "6abab96c-823e-4c57-8958-9e1b73b38a90",
+      "open_lot_id": "2d1d5ab0-fac4-53a5-9cee-65429b9f4f71",
+      "filledAt": "2026-09-28T19:01:00.936Z",
+      "ref_id": "45fdbbf1-778c-413e-9401-4684f063fb22",
+      "is_selectable": false
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "BUY",
+      "ticker": "XLE",
+      "qty": "0.725011",
+      "avg": "62.068000",
+      "notional": 45.0,
+      "dollar_amount": "45",
+      "orderId": "6abab96d-bc9e-469a-8fcd-7f8b20a798a2",
+      "open_lot_id": "633b0834-0b03-5340-ab60-3eb79db151dd",
+      "filledAt": "2026-09-28T19:01:01.403Z",
+      "ref_id": "718295fe-f1b4-4828-bce5-50923daba469",
+      "is_selectable": false
+    }
+  ],
+  "holds": [
+    {
+      "name": "Claude Opus 5",
+      "tickers": [
+        "MPC",
+        "SPY"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "tickers": [
+        "XLE 1.280821"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tickers": [
+        "MPC"
+      ]
+    }
+  ]
+}
