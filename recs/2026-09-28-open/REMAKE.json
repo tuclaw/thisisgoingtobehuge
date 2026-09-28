@@ -1,0 +1,73 @@
+{
+  "snapshotId": "s1e09-mon-open",
+  "asOf": "2026-09-28T13:51:26Z",
+  "asOfLabel": "Mon Sep 28 ~6:51 AM PT",
+  "quotes": {
+    "MPC": 395.945,
+    "MU": 1061.915,
+    "SPY": 767.82,
+    "XLE": 62.43,
+    "QCOM": 187.8995
+  },
+  "quoteSource": "robinhood-last",
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.454,
+    "basis": "Episode 9 weekPct vs priorMarkUsd (Fri tribal post-split priors)",
+    "note": "Mon Sep 28 open remake",
+    "asOf": "2026-09-28-open",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-28T13:51:26Z"
+  },
+  "islandPotUsd": 364.6126,
+  "islandGivenUsd": 361.93,
+  "worst": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -2.7947
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 121.7774,
+      "week": -0.454,
+      "day": -0.454,
+      "cash": 80.862,
+      "tickers": "MPC+CASH",
+      "immune": true
+    },
+    {
+      "rank": 2,
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 125.5205,
+      "week": -1.0151,
+      "day": -1.0151,
+      "cash": -6.2513,
+      "tickers": "XLE+SPY+CASH",
+      "immune": false
+    },
+    {
+      "rank": 3,
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "book": 117.3147,
+      "week": -2.7947,
+      "day": -2.7947,
+      "cash": 4.8266,
+      "tickers": "MU+MPC+CASH",
+      "immune": false
+    }
+  ],
+  "huntScore": "3/3",
+  "fillsSummary": "Sonnet boot AR+SPY pin; Opus MU\u2192MPC $29; Terra MU\u2192XLE $80; Luna QCOM\u2192MPC $55",
+  "bootLiquidation": {
+    "AR": "1.510094@34.6501",
+    "SPY": "0.028546@767.5120",
+    "totalProceeds": 74.2343
+  }
+}

@@ -1302,11 +1302,11 @@ const seasonBoard = JSON.parse(readFileSync(join(root, "dist", "season1.json"), 
 if (!watchHelpers.episodeLiveWatchable(seasonBoard, seasonBoard.episodes.find((ep) => ep && ep.id === "s1e08"))) {
   throw new Error("Episode 8 must stay watchable after Episode 8 tribal close");
 }
-if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e08") {
-  throw new Error("public Watch Live must sit on Episode 8 until Episode 9 week tape, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
+if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e09") {
+  throw new Error("public Watch Live must sit on Episode 9 after Mon open week tape, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
 }
-if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e08-carry")) {
-  throw new Error("Episode 8 carry snapshot must exist");
+if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e09-mon-open")) {
+  throw new Error("Episode 9 Mon open snapshot must exist");
 }
 if (seasonBoard.episode.id !== "s1e09" || seasonBoard.episode.status !== "live") {
   throw new Error("dist season episode must be live Episode 9");
