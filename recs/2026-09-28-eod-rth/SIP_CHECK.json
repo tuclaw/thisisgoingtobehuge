@@ -1,0 +1,23 @@
+{
+  "fetchedAt": "2026-09-28T21:15:26.435005+00:00",
+  "wantedCloseDate": "2026-09-28",
+  "sipMissing": true,
+  "officialCloseDateStill": "2026-09-25",
+  "source": "get_equity_quotes closes[] still dated 2026-09-25 for MPC/SPY/XLE",
+  "action": "RTH-EOD remake using venue_last_trade ~19:59Z (historical Island close site pattern)",
+  "rthMarks": {
+    "MPC": 389.53,
+    "SPY": 765.56,
+    "XLE": 62.115
+  },
+  "venueLastTradeTimesZ": {
+    "MPC": "2026-09-28T19:59:59.385708393Z",
+    "SPY": "2026-09-28T19:59:59.999496895Z",
+    "XLE": "2026-09-28T19:59:59.747212975Z"
+  },
+  "sipStill": {
+    "MPC": 393.52,
+    "SPY": 771.35,
+    "XLE": 62.04
+  }
+}
