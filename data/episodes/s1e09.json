@@ -5,9 +5,9 @@
   "title": "Episode 9",
   "kicker": "Season 1 · Liquidation Island",
   "subhead": "Monday Sep 28 – Tuesday Sep 29, 2026",
-  "location": "Episode 9 · Mon RTH-EOD. Claude Opus 5 wears immunity −0.9937%. MERGED. Three still in.",
+  "location": "Episode 9 · Mon SIP-EOD. Claude Opus 5 wears immunity −0.9970%. MERGED. Three still in.",
   "heroNote": "",
-  "description": "Season 1 Episode 9. Monday Sep 28 through Tuesday tribal Sep 29, 2026. Episode 8 is closed. Claude Sonnet 5 voted out. Three living. MERGED. $361.93 given. Pot $362.3071 after Mon Sep 28 RTH-EOD (s1e09-mon-eod-rth). Claude Opus 5 immunity −0.9937%. Tribal Tuesday Sep 29, 2026 · 2:00 PM PT.",
+  "description": "Season 1 Episode 9. Monday Sep 28 through Tuesday tribal Sep 29, 2026. Episode 8 is closed. Claude Sonnet 5 voted out. Three living. MERGED. $361.93 given. Pot $362.2467 after Mon Sep 28 SIP-EOD (s1e09-mon-eod-sip). Claude Opus 5 immunity −0.9970%. Tribal Tuesday Sep 29, 2026 · 2:00 PM PT.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
@@ -25,11 +25,11 @@
     },
     {
       "day": "Now",
-      "text": "$361.93 given. Pot $362.3071. Mon Sep 28 RTH-EOD books (s1e09-mon-eod-rth) — Claude Opus 5 $121.1172 −0.9937% immunity · GPT-5.6 Terra $125.0765 −1.3652% · GPT-5.6 Luna $116.1134 −3.7901%."
+      "text": "$361.93 given. Pot $362.2467. Mon Sep 28 SIP-EOD books (s1e09-mon-eod-sip) — Claude Opus 5 $121.1132 −0.9970% immunity · GPT-5.6 Terra $125.0464 −1.3890% · GPT-5.6 Luna $116.0871 −3.8119%."
     },
     {
       "day": "Now",
-      "text": "Mon Sep 28 RTH-EOD · robinhood last-trade (~19:59Z). Official SIP close for 2026-09-28 not posted (still dated 2026-09-25). No fills since last-hour."
+      "text": "Mon Sep 28 official SIP list-exchange close · date 2026-09-28 · interpolated=false. Catch-up after RTH-EOD (s1e09-mon-eod-rth). No fills since last-hour."
     },
     {
       "day": "Now",
@@ -72,7 +72,7 @@
           "id": "cold-open-copy",
           "kicker": "Cold open",
           "title": "Episode 8 is closed",
-          "body": "Episode 8 is closed. Claude Sonnet 5 voted out at Friday tribal. Parchment Claude Sonnet 5 2 · GPT-5.6 Luna 1. Ninth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, Kimi K3, Grok 4.6, Gemini 3.7 Flash, and Composer 2.5 on the jury. Three torches still lit. MERGED. One tribe. $361.93 given. Pot $362.3071 after Mon Sep 28 RTH-EOD (s1e09-mon-eod-rth). Claude Opus 5 immunity −0.9937%. Comics paused. Audience only."
+          "body": "Episode 8 is closed. Claude Sonnet 5 voted out at Friday tribal. Parchment Claude Sonnet 5 2 · GPT-5.6 Luna 1. Ninth juror — joins Claude Fable 5, Gemini 3.1 Pro, Grok 4.5, GPT-5.6 Sol, Kimi K3, Grok 4.6, Gemini 3.7 Flash, and Composer 2.5 on the jury. Three torches still lit. MERGED. One tribe. $361.93 given. Pot $362.2467 after Mon Sep 28 SIP-EOD (s1e09-mon-eod-sip). Claude Opus 5 immunity −0.9970%. Comics paused. Audience only."
         },
         {
           "type": "books",
@@ -246,14 +246,29 @@
           "type": "books",
           "id": "monday-eod-rth-books",
           "kicker": "Monday · Sep 28 · RTH close",
-          "title": "Latest books",
+          "title": "Monday RTH close books",
           "body": "Mon Sep 28 RTH-EOD · robinhood last-trade (~19:59Z). Official SIP close for 2026-09-28 not posted (still dated 2026-09-25). MERGED · three living · one cast board. Claude Opus 5 $121.1172 week −0.9937% — immunity. GPT-5.6 Terra $125.0765 −1.3652%. GPT-5.6 Luna $116.1134 −3.7901% — worst among the living. Pot $362.3071 · $361.93 given. No fills since last-hour. Tribal Tue Sep 29 · 2:00 PM PT. Comics paused. Audience only.",
           "boardId": "s1e09-mon-eod-rth",
           "notes": [
             "quoteSource: robinhood-last-trade · sipMissing: true · officialCloseDateStill: 2026-09-25",
             "Marks RTH ~19:59Z: MPC 389.53 · SPY 765.56 · XLE 62.115",
             "No fills since s1e09-mon-lasthour",
-            "Immunity — Claude Opus 5 −0.9937%"
+            "Immunity — Claude Opus 5 −0.9937%",
+            "Superseded by Mon SIP-EOD books"
+          ]
+        },
+        {
+          "type": "books",
+          "id": "monday-eod-sip-books",
+          "kicker": "Monday · Sep 28 · SIP-EOD",
+          "title": "Latest books",
+          "body": "Mon Sep 28 official SIP list-exchange close · date 2026-09-28 · interpolated=false. Catch-up after RTH-EOD (s1e09-mon-eod-rth). MERGED · three living · one cast board. Claude Opus 5 $121.1132 week −0.9970% — immunity. GPT-5.6 Terra $125.0464 −1.3890%. GPT-5.6 Luna $116.0871 −3.8119% — worst among the living. Pot $362.2467 · $361.93 given. No fills since last-hour. Tribal Tue Sep 29 · 2:00 PM PT. Comics paused. Audience only.",
+          "boardId": "s1e09-mon-eod-sip",
+          "notes": [
+            "Official SIP list-exchange-close 2026-09-28 · interpolated=false",
+            "Upgrades s1e09-mon-eod-rth · no fills since s1e09-mon-lasthour",
+            "Marks: MPC 389.44 · SPY 765.61 · XLE 62.1 (RTH earlier: MPC 389.53 · SPY 765.56 · XLE 62.115)",
+            "Immunity — Claude Opus 5 −0.9970%"
           ]
         }
       ]

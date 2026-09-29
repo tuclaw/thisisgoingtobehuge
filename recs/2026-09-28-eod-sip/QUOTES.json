@@ -1,0 +1,25 @@
+{
+  "asOf": "2026-09-29T00:10:00Z",
+  "source": "sip-list-exchange-close",
+  "officialCloseDate": "2026-09-28",
+  "interpolated": false,
+  "marks": {
+    "MPC": 389.44,
+    "SPY": 765.61,
+    "XLE": 62.1
+  },
+  "rthMarksEarlier": {
+    "MPC": 389.53,
+    "SPY": 765.56,
+    "XLE": 62.115
+  },
+  "prevCloseFri": {
+    "MPC": 393.52,
+    "SPY": 771.35,
+    "XLE": 62.04
+  },
+  "muUnused": {
+    "MU": 1053.98,
+    "note": "no living open MU"
+  }
+}

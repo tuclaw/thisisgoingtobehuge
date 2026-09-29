@@ -1,0 +1,24 @@
+{
+  "kind": "s1e09-mon-eod-sip-check",
+  "fetchedAt": "2026-09-29T00:10:00Z",
+  "routine": "Island close site \u2014 delayed SIP catch-up after RTH-EOD",
+  "sipMissing": false,
+  "officialCloseDate": "2026-09-28",
+  "interpolated": false,
+  "source": "sip-list-exchange-close",
+  "action": "remake applied \u2014 s1e09-mon-eod-sip",
+  "priorRth": "Earlier ~2:15 PM PT applied RTH-EOD (s1e09-mon-eod-rth, PR 280 merged)",
+  "fillsSinceLastHour": [],
+  "marks": {
+    "MPC": 389.44,
+    "SPY": 765.61,
+    "XLE": 62.1
+  },
+  "rthMarksEarlier": {
+    "MPC": 389.53,
+    "SPY": 765.56,
+    "XLE": 62.115
+  },
+  "pot": 362.2467,
+  "immunity": "Claude Opus 5 -0.997%"
+}

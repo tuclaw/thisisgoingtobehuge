@@ -1,0 +1,156 @@
+{
+  "kind": "s1e09-mon-eod-sip",
+  "asOf": "2026-09-29T00:10:00Z",
+  "session": "2026-09-28-eod",
+  "snapshotId": "s1e09-mon-eod-sip",
+  "quoteSource": "sip-list-exchange-close",
+  "officialCloseDate": "2026-09-28",
+  "interpolated": false,
+  "upgrades": "s1e09-mon-eod-rth",
+  "sipMissing": false,
+  "marks": {
+    "MPC": 389.44,
+    "SPY": 765.61,
+    "XLE": 62.1
+  },
+  "rthMarksEarlier": {
+    "MPC": 389.53,
+    "SPY": 765.56,
+    "XLE": 62.115
+  },
+  "fillsSinceLastHour": [],
+  "islandGivenUsd": 361.93,
+  "islandPotUsd": 362.2467,
+  "standings": [
+    {
+      "id": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "bookUsd": 121.1132,
+      "weekPct": -0.9970,
+      "dayPct": -0.9970,
+      "monthPct": 205.13,
+      "cashUsd": 52.6948,
+      "position": "MPC+SPY+CASH",
+      "priorMarkUsd": 122.3328,
+      "eodMarkUsd": 121.1132,
+      "dayPctBasisUsd": 122.3328,
+      "mondayOpenUsd": 39.6923,
+      "openBuys": [
+        {
+          "ticker": "MPC",
+          "qty": "0.073104",
+          "last": 389.44,
+          "mv": 28.4696,
+          "orderId": "6aba6fff-2c0f-4f80-8faf-b58a4f78c9dc"
+        },
+        {
+          "ticker": "SPY",
+          "qty": "0.052179",
+          "last": 765.61,
+          "mv": 39.9488,
+          "orderId": "6aba9f35-0563-4b66-8bba-beb1bfc4ae4f"
+        }
+      ],
+      "oldBookUsd": 121.1172,
+      "deltaVsRth": -0.004,
+      "immune": true
+    },
+    {
+      "id": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "bookUsd": 125.0464,
+      "weekPct": -1.3890,
+      "dayPct": -1.3890,
+      "monthPct": 211.94,
+      "cashUsd": 0.4842,
+      "position": "XLE+CASH",
+      "priorMarkUsd": 126.8077,
+      "eodMarkUsd": 125.0464,
+      "dayPctBasisUsd": 126.8077,
+      "mondayOpenUsd": 40.0863,
+      "openBuys": [
+        {
+          "ticker": "XLE",
+          "qty": "1.280821",
+          "last": 62.1,
+          "mv": 79.539,
+          "orderId": "6aba6fff-0abc-4b63-9f4a-1ea331564231"
+        },
+        {
+          "ticker": "XLE",
+          "qty": "0.725011",
+          "last": 62.1,
+          "mv": 45.0232,
+          "orderId": "6abab96d-bc9e-469a-8fcd-7f8b20a798a2"
+        }
+      ],
+      "oldBookUsd": 125.0765,
+      "deltaVsRth": -0.0301,
+      "immune": false
+    },
+    {
+      "id": "aa75df67-9f84-45a3-9432-bee228d655f6",
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "bookUsd": 116.0871,
+      "weekPct": -3.8119,
+      "dayPct": -3.8119,
+      "monthPct": 368.53,
+      "cashUsd": 5.0652,
+      "position": "MPC+XLE+CASH",
+      "priorMarkUsd": 120.6876,
+      "eodMarkUsd": 116.0871,
+      "dayPctBasisUsd": 120.6876,
+      "mondayOpenUsd": 24.7771,
+      "openBuys": [
+        {
+          "ticker": "MPC",
+          "qty": "0.138646",
+          "last": 389.44,
+          "mv": 53.9943,
+          "orderId": "6aba6fff-fe4b-425e-aebd-1ee2c1c88245"
+        },
+        {
+          "ticker": "XLE",
+          "qty": "0.918319",
+          "last": 62.1,
+          "mv": 57.0276,
+          "orderId": "6abab96c-823e-4c57-8958-9e1b73b38a90"
+        }
+      ],
+      "oldBookUsd": 116.1134,
+      "deltaVsRth": -0.0263,
+      "immune": false
+    }
+  ],
+  "leader": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.9970,
+    "bookUsd": 121.1132
+  },
+  "worst": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -3.8119,
+    "bookUsd": 116.0871
+  },
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -0.9970,
+    "basis": "Episode 9 weekPct vs priorMarkUsd (Fri Sep 25 tribal carry)",
+    "note": "Mon Sep 28 SIP-EOD catch-up (official SIP 2026-09-28; interpolated=false). Upgrades s1e09-mon-eod-rth.",
+    "asOf": "2026-09-28-eod",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-29T00:10:00Z",
+    "snapshotId": "s1e09-mon-eod-sip"
+  },
+  "markLabel": "Mon Sep 28 official SIP list-exchange close \u00b7 date 2026-09-28 \u00b7 interpolated=false. Catch-up after RTH-EOD s1e09-mon-eod-rth (SIP was missing at ~2:15 PM PT). No fills since last-hour. Snapshot s1e09-mon-eod-sip. Leader Claude Opus 5 -0.997%. Worst GPT-5.6 Luna -3.8119%.",
+  "statusLabel": "Episode 9 \u00b7 Mon SIP-EOD \u00b7 three living \u00b7 MERGED \u00b7 comics paused",
+  "tribalToday": false,
+  "tribalAt": "2026-09-29T14:00:00-07:00",
+  "tribalLabel": "Tuesday Sep 29, 2026 \u00b7 2:00 PM PT"
+}
