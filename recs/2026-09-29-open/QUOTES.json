@@ -1,0 +1,45 @@
+{
+  "session": "2026-09-29-open",
+  "fetchedAt": "2026-09-29T06:44:30-07:00",
+  "bp": 0.0,
+  "accountLast4": "6969",
+  "priorCloseDate": "2026-09-28",
+  "quotes": {
+    "MPC": {
+      "last": 388.49,
+      "sipClose": 389.44,
+      "sipDate": "2026-09-28",
+      "interpolated": false
+    },
+    "SPY": {
+      "last": 765.0506,
+      "sipClose": 765.61,
+      "sipDate": "2026-09-28",
+      "interpolated": false
+    },
+    "XLE": {
+      "last": 61.525,
+      "sipClose": 62.1,
+      "sipDate": "2026-09-28",
+      "interpolated": false
+    },
+    "MU": {
+      "last": 1063.43,
+      "sipClose": 1053.98,
+      "sipDate": "2026-09-28",
+      "interpolated": false
+    },
+    "VLO": {
+      "last": 385.0,
+      "sipClose": 389.57,
+      "sipDate": "2026-09-28",
+      "interpolated": false
+    },
+    "FRO": {
+      "last": 48.735,
+      "sipClose": 48.1,
+      "sipDate": "2026-09-28",
+      "interpolated": false
+    }
+  }
+}

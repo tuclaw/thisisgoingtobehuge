@@ -1,0 +1,136 @@
+{
+  "session": "2026-09-29-open",
+  "accountLast4": "6969",
+  "bpBefore": 20.12,
+  "bpAfterSells": 113.8,
+  "bpAfter": 0.0,
+  "themeBufferUntouched": true,
+  "buyScale": {
+    "requested": {
+      "Claude Opus 5": 55,
+      "GPT-5.6 Terra": 20,
+      "GPT-5.6 Luna": 55
+    },
+    "placed": {
+      "Claude Opus 5": 48.15,
+      "GPT-5.6 Terra": 17.5,
+      "GPT-5.6 Luna": 48.15
+    },
+    "reason": "Post-sell BP $113.80 < requested buys $130; proportional scale ~0.8754"
+  },
+  "leftoversLeftAlone": {
+    "VLO": [
+      "e839f534-9ab9-58ef-9409-bc9f9975d2f3"
+    ],
+    "MPC": [
+      "889bbf73-2981-50d0-a124-52c51bb88383",
+      "d6cb4e0d-1a2a-5a7f-a57c-828abcdbfdf3"
+    ],
+    "FRO": [
+      "d1e4d9db-fe43-587e-9cd7-b0b120070730",
+      "36df98e4-5f48-5df4-85ae-af5881cf8348"
+    ]
+  },
+  "bootLiquidations": [],
+  "notes": [
+    "hunt-brain 3/3. All lots selectable at open; new buy lots is_selectable=false pending sync.",
+    "Buys scaled to real BP after sells. Theme buffer untouched. Leftovers left alone.",
+    "No boot liquidations today (Sonnet cleared Mon). Comics paused. Audience only."
+  ],
+  "contestantFills": [
+    {
+      "name": "Claude Opus 5",
+      "side": "SELL",
+      "ticker": "SPY",
+      "qty": "0.052179",
+      "avg": "765.3830",
+      "notional": 39.9369,
+      "orderId": "6abbc074-ddb8-43ac-849c-8a08e700bafb",
+      "open_lot_id": "83edbc8f-a980-55d6-955b-14c96ea2667c",
+      "filledAt": "2026-09-29T13:43:16.84Z",
+      "ref_id": "b4483fa0-45f5-4ef6-b9bc-a913f1ae6388"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "XLE",
+      "qty": "0.782419",
+      "avg": "61.5399",
+      "dollar_amount": 48.15,
+      "notional": 48.15,
+      "orderId": "6abbc0ad-5b60-48d0-b7a0-66f342bf66c0",
+      "open_lot_id": "194533bb-6a06-5863-8b8f-d08c0a2d34a2",
+      "filledAt": "2026-09-29T13:44:13.287Z",
+      "ref_id": "f10482e4-359a-4127-9c28-98ddc9b86fc7",
+      "printed": 55,
+      "scaled": true
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "HOLD",
+      "ticker": "MPC",
+      "qty": "0.073104",
+      "open_lot_id": "36951bbe-03dc-5045-927d-e6d152add35f"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "HOLD",
+      "ticker": "XLE",
+      "note": "both lots held",
+      "lots": [
+        "ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026",
+        "633b0834-0b03-5340-ab60-3eb79db151dd"
+      ]
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "BUY",
+      "ticker": "MU",
+      "qty": "0.016482",
+      "avg": "1061.7492",
+      "dollar_amount": 17.5,
+      "notional": 17.4998,
+      "orderId": "6abbc0a2-f059-425b-a204-0dcab665015d",
+      "open_lot_id": "d896020b-458b-5669-9ab1-615c07b58d62",
+      "filledAt": "2026-09-29T13:44:02.644Z",
+      "ref_id": "af285551-cf3e-4ad6-8bae-e2213a3d265b",
+      "printed": 20,
+      "scaled": true
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "SELL",
+      "ticker": "MPC",
+      "qty": "0.138646",
+      "avg": "387.6101",
+      "notional": 53.7406,
+      "orderId": "6abbc074-2b70-4a3d-97c7-2ca3137c0892",
+      "open_lot_id": "f4a96bac-57aa-5594-b852-f6b2b699010c",
+      "filledAt": "2026-09-29T13:43:16.44Z",
+      "ref_id": "1ed4c2b0-987d-4fed-9ebb-3ac85553aa1d"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "BUY",
+      "ticker": "MU",
+      "qty": "0.045330",
+      "avg": "1062.2099",
+      "dollar_amount": 48.15,
+      "notional": 48.15,
+      "orderId": "6abbc0b0-290d-47b2-9710-d23c8e821575",
+      "open_lot_id": "bfe34649-d1fb-5410-9cd5-cc91edc19b2d",
+      "filledAt": "2026-09-29T13:44:17.202Z",
+      "ref_id": "a201e39b-9a1c-44bb-8884-9bec6abdf992",
+      "printed": 55,
+      "scaled": true
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "HOLD",
+      "ticker": "XLE",
+      "qty": "0.918319",
+      "open_lot_id": "2d1d5ab0-fac4-53a5-9cee-65429b9f4f71"
+    }
+  ],
+  "skips": []
+}
