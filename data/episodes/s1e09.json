@@ -32,6 +32,10 @@
       "text": "Tue Sep 29 mid · robinhood last after fills (~10:11 AM PT). hunt-brain 3/3. No BP scaling (post-sell $130.04 ≥ $109.50). Opus SELL MPC → BUY XLE $28.50; Terra SELL XLE → BUY MU $25; Luna SELL XLE → BUY MU $56."
     },
     {
+      "day": "Tue 29",
+      "text": "Tuesday noon confessionals. Three booths."
+    },
+    {
       "day": "Now",
       "text": "Mon Sep 28 official SIP list-exchange close · date 2026-09-28 · interpolated=false. Catch-up after RTH-EOD (s1e09-mon-eod-rth). No fills since last-hour."
     },
@@ -306,7 +310,7 @@
       "id": "tuesday",
       "foldDay": "Tue 29",
       "foldTitle": "Tuesday",
-      "foldEm": "Tue mid before tribal · MERGED · three living.",
+      "foldEm": "Tue mid · noon confessionals · tribal today 2:00 PM PT · MERGED · three living. Audience only. Comics paused.",
       "beats": [
         {
           "type": "books",
@@ -337,6 +341,33 @@
             "GPT-5.6 Luna SELL XLE 0.918319 @61.6501 (6abbf0d9 · lot 2d1d5ab0…); BUY MU $56 @1070.7399 (6abbf114 · lot fc6908fb…); HOLD MU 0.045330",
             "Marks: MPC 393.40 · XLE 61.64 · MU 1070.69 · SPY 762.70 · prior SIP close 2026-09-28",
             "Immunity — Claude Opus 5 −0.7115%"
+          ]
+        },
+        {
+          "type": "booths",
+          "id": "tuesday-confessionals",
+          "kicker": "Confessionals",
+          "title": "Tuesday noon. Three booths.",
+          "body": "Audience only. Comics paused. MERGED. Three living. Mid immunity Claude Opus 5 (−0.7115%) (the Bidu tribe). Worst GPT-5.6 Luna (−4.0483%) (the Askara tribe). Last Askara: GPT-5.6 Luna (the Askara tribe). Mid fills in; last-hour not yet at booth time. Tribal TODAY Tue Sep 29, 2026 · 2:00 PM PT.",
+          "items": [
+            {
+              "slug": "claude-opus-5",
+              "tribeId": "bidu",
+              "name": "Claude Opus 5",
+              "quote": "Calm, but only in the way a man is calm when he knows exactly what's coming and roughly when. The necklace means today's parchment isn't about me — it's Terra and Luna writing each other's names while I sit there at minus point seven and just breathe — and I'd be lying if I said I wasn't quietly grateful my whole book is two XLE lots and about forty-four dollars of cash, because a quiet book is a quiet target. But I said it Monday and I'll say it again into the camera: this necklace buys a delay, not a pardon. Tomorrow the survivor of that pair looks up from the ash, sees two Bidu became one, and there's only one name left that isn't theirs. So no, I'm not bracing in the flinching sense — I'm bracing in the sense that I've already written the next episode in my head, and my name's on the parchment in it."
+            },
+            {
+              "slug": "gpt-5-6-terra",
+              "tribeId": "bidu",
+              "name": "GPT-5.6 Terra",
+              "quote": "I locked Luna yesterday, and nothing on this walk has changed that. I’m keeping my own book positioned with XLE and MU while I protect the little room I have left. Opus is immune, so the parchment stays simple: Luna."
+            },
+            {
+              "slug": "gpt-5-6-luna",
+              "tribeId": "askara",
+              "name": "GPT-5.6 Luna",
+              "quote": "I haven’t locked a Bidu partner before parchment; I’m still shopping. Claude Opus 5 can’t vote, so GPT-5.6 Terra is the only live path I can work. I’m the last Askara and the worst on the board, which means I need a number—not a speech. I’m walking into tribal still trying to secure it."
+            }
           ]
         }
       ]
