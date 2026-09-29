@@ -1,0 +1,147 @@
+{
+  "session": "2026-09-29-lasthour-post",
+  "bp": 0.0,
+  "bpNote": "BP path $20.54 \u2192 $99.02 after Terra sell \u2192 $0.00 after buys. Theme buffer untouched. Buys BP-scaled (printed $119 \u2192 $99.02).",
+  "pot": 360.86,
+  "given": 361.93,
+  "immunity": "Claude Opus 5",
+  "living": [
+    {
+      "name": "Claude Opus 5",
+      "tribe": "the Bidu tribe",
+      "cash": 28.0964,
+      "bookUsd": 121.015,
+      "priorMarkUsd": 122.3328,
+      "weekPct": -1.0772,
+      "dayPct": -1.0772,
+      "tickers": "XLE+MU+CASH",
+      "immune": true,
+      "positions": [
+        {
+          "ticker": "XLE",
+          "qty": "0.782419",
+          "avg": "61.5399",
+          "open_lot_id": "194533bb-6a06-5863-8b8f-d08c0a2d34a2",
+          "orderId": "6abbc0ad-5b60-48d0-b7a0-66f342bf66c0",
+          "mark": 47.9467,
+          "is_selectable": false,
+          "note": "Tue open HOLD",
+          "filledAt": "2026-09-29T13:44:13.287Z",
+          "sizeUsd": 48.15
+        },
+        {
+          "ticker": "XLE",
+          "qty": "0.462324",
+          "avg": "61.6450",
+          "open_lot_id": "b3ce8318-c2cb-5963-82a9-91805685b633",
+          "orderId": "6abbf108-36ee-4ebf-beb5-65592455c763",
+          "mark": 28.3313,
+          "is_selectable": false,
+          "note": "Tue mid HOLD",
+          "filledAt": "2026-09-29T17:10:32.611Z",
+          "sizeUsd": 28.5
+        },
+        {
+          "ticker": "MU",
+          "qty": "0.015517",
+          "avg": "1072.3299",
+          "open_lot_id": "cb66c8e6-8172-585e-b994-79d13eb1c187",
+          "orderId": "6abc0b1f-0657-4eed-912b-a52e66a80b63",
+          "mark": 16.6406,
+          "is_selectable": false,
+          "note": "Tue last-hour BUY MU $16.64 (printed $20 BP-scaled)",
+          "filledAt": "2026-09-29T19:01:51.324Z",
+          "sizeUsd": 16.64,
+          "dollarBuy": 16.64
+        }
+      ]
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "tribe": "the Bidu tribe",
+      "cash": -1.2373,
+      "bookUsd": 123.8754,
+      "priorMarkUsd": 126.8077,
+      "weekPct": -2.3124,
+      "dayPct": -2.3124,
+      "tickers": "MU+CASH",
+      "immune": false,
+      "positions": [
+        {
+          "ticker": "MU",
+          "qty": "0.016482",
+          "avg": "1061.7492",
+          "open_lot_id": "d896020b-458b-5669-9ab1-615c07b58d62",
+          "orderId": "6abbc0a2-f059-425b-a204-0dcab665015d",
+          "mark": 17.6755,
+          "is_selectable": false,
+          "note": "Tue open HOLD",
+          "filledAt": "2026-09-29T13:43:50.000Z",
+          "sizeUsd": 17.5
+        },
+        {
+          "ticker": "MU",
+          "qty": "0.023348",
+          "avg": "1070.7399",
+          "open_lot_id": "1fc36a3f-8f91-571d-869a-5c184e7a96e5",
+          "orderId": "6abbf10e-0d33-450e-baa8-5213741d3414",
+          "mark": 25.0386,
+          "is_selectable": false,
+          "note": "Tue mid HOLD",
+          "filledAt": "2026-09-29T17:10:38.629Z",
+          "sizeUsd": 25.0
+        },
+        {
+          "ticker": "MU",
+          "qty": "0.076835",
+          "avg": "1072.1572",
+          "open_lot_id": "90bd9eff-5d69-5902-a821-8c7aa70f868e",
+          "orderId": "6abc0b19-0f05-48be-a133-2e72f2070117",
+          "mark": 82.3986,
+          "is_selectable": false,
+          "note": "Tue last-hour BUY MU $82.38 (printed $99 BP-scaled)",
+          "filledAt": "2026-09-29T19:01:46.048Z",
+          "sizeUsd": 82.38,
+          "dollarBuy": 82.38
+        }
+      ]
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tribe": "the Askara tribe",
+      "cash": 11.2703,
+      "bookUsd": 115.9696,
+      "priorMarkUsd": 120.6876,
+      "weekPct": -3.9093,
+      "dayPct": -3.9093,
+      "tickers": "MU+CASH",
+      "immune": false,
+      "positions": [
+        {
+          "ticker": "MU",
+          "qty": "0.045330",
+          "avg": "1062.2099",
+          "open_lot_id": "bfe34649-d1fb-5410-9cd5-cc91edc19b2d",
+          "orderId": "6abbc0b0-290d-47b2-9710-d23c8e821575",
+          "mark": 48.6123,
+          "is_selectable": false,
+          "note": "Tue open HOLD",
+          "filledAt": "2026-09-29T13:44:20.000Z",
+          "sizeUsd": 48.15
+        },
+        {
+          "ticker": "MU",
+          "qty": "0.052300",
+          "avg": "1070.7399",
+          "open_lot_id": "fc6908fb-6521-5825-831e-752e3eb5cc03",
+          "orderId": "6abbf114-f968-48e5-9159-6cdee009ceb8",
+          "mark": 56.087,
+          "is_selectable": false,
+          "note": "Tue mid HOLD",
+          "filledAt": "2026-09-29T17:10:45.000Z",
+          "sizeUsd": 56.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "session": "2026-09-29-lasthour",
+  "accountLast4": "6969",
+  "bpBefore": 20.54,
+  "bpAfterSells": 99.02,
+  "bpAfter": 0.0,
+  "themeBufferUntouched": true,
+  "buyScale": {
+    "printed": {
+      "Opus": 20.0,
+      "Terra": 99.0,
+      "sum": 119.0
+    },
+    "availableBp": 99.02,
+    "factor": 0.832101,
+    "scaled": {
+      "Opus": 16.64,
+      "Terra": 82.38,
+      "sum": 99.02
+    },
+    "reason": "post-sell BP $99.02 < requested buys $119"
+  },
+  "leftoversLeftAlone": {
+    "VLO": [
+      "e839f534-9ab9-58ef-9409-bc9f9975d2f3"
+    ],
+    "MPC": [
+      "889bbf73-2981-50d0-a124-52c51bb88383",
+      "d6cb4e0d-1a2a-5a7f-a57c-828abcdbfdf3"
+    ],
+    "FRO": [
+      "d1e4d9db-fe43-587e-9cd7-b0b120070730",
+      "36df98e4-5f48-5df4-85ae-af5881cf8348"
+    ]
+  },
+  "bootLiquidations": [],
+  "notes": [
+    "hunt-brain 3/3. Opus HOLD both non-selectable XLE + BUY MU $20 (scaled $16.64).",
+    "Terra SELL selectable Mon XLE ac1e1b1b \u2192 BUY MU $99 (scaled $82.38).",
+    "Luna HOLD MU (both lots non-selectable).",
+    "BP path $20.54 \u2192 $99.02 after Terra sell \u2192 $0.00 after buys. Theme buffer untouched.",
+    "New last-hour buy lots syncing: Opus MU cb66c8e6\u2026 \u00b7 Terra MU 90bd9eff\u2026"
+  ],
+  "contestantFills": [
+    {
+      "name": "Claude Opus 5",
+      "side": "HOLD",
+      "ticker": "XLE",
+      "qty": "0.782419",
+      "open_lot_id": "194533bb-6a06-5863-8b8f-d08c0a2d34a2",
+      "note": "Tue open lot held (is_selectable=false)"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "HOLD",
+      "ticker": "XLE",
+      "qty": "0.462324",
+      "open_lot_id": "b3ce8318-c2cb-5963-82a9-91805685b633",
+      "note": "Tue mid lot held (is_selectable=false)"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "MU",
+      "qty": "0.015517",
+      "avg": "1072.329900",
+      "dollar_amount": 16.64,
+      "notional": 16.64,
+      "orderId": "6abc0b1f-0657-4eed-912b-a52e66a80b63",
+      "open_lot_id": "cb66c8e6-8172-585e-b994-79d13eb1c187",
+      "filledAt": "2026-09-29T19:01:51.324Z",
+      "ref_id": "7c95d40b-a54e-4715-a968-9fa3befc8a79",
+      "printed": 20.0,
+      "scaled": true
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "SELL",
+      "ticker": "XLE",
+      "qty": "1.280821",
+      "avg": "61.2701",
+      "notional": 78.476,
+      "orderId": "6abc0af7-6e85-49a8-944f-a726429f7bf0",
+      "open_lot_id": "ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026",
+      "filledAt": "2026-09-29T19:01:11.725Z",
+      "ref_id": "6b362ac3-7714-4ac6-853c-41b9f87ecaa3"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "BUY",
+      "ticker": "MU",
+      "qty": "0.076835",
+      "avg": "1072.157200",
+      "dollar_amount": 82.38,
+      "notional": 82.38,
+      "orderId": "6abc0b19-0f05-48be-a133-2e72f2070117",
+      "open_lot_id": "90bd9eff-5d69-5902-a821-8c7aa70f868e",
+      "filledAt": "2026-09-29T19:01:46.048Z",
+      "ref_id": "cbe1edf6-7315-4377-be7f-b375e6b97bfb",
+      "printed": 99.0,
+      "scaled": true
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "HOLD",
+      "ticker": "MU",
+      "qty": "0.016482",
+      "open_lot_id": "d896020b-458b-5669-9ab1-615c07b58d62",
+      "note": "Tue open lot held"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "HOLD",
+      "ticker": "MU",
+      "qty": "0.023348",
+      "open_lot_id": "1fc36a3f-8f91-571d-869a-5c184e7a96e5",
+      "note": "Tue mid lot held"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "HOLD",
+      "ticker": "MU",
+      "qty": "0.045330",
+      "open_lot_id": "bfe34649-d1fb-5410-9cd5-cc91edc19b2d"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "HOLD",
+      "ticker": "MU",
+      "qty": "0.052300",
+      "open_lot_id": "fc6908fb-6521-5825-831e-752e3eb5cc03"
+    }
+  ],
+  "complianceQuotes": {
+    "terraSellXLE": "Bid $61.27 \u00d7 17400 P \u00b7 Ask $61.28 \u00d7 1800 Q \u00b7 Last $61.28 \u00d7 100 D. Updated 3:01 PM ET.",
+    "opusBuyMU": "Bid $1,071.77 \u00d7 160 Q \u00b7 Ask $1,072.07 \u00d7 120 Q \u00b7 Last $1,071.91 \u00d7 41 D. Updated 3:01 PM ET.",
+    "terraBuyMU": "Bid $1,071.77 \u00d7 120 Q \u00b7 Ask $1,072.07 \u00d7 120 Q \u00b7 Last $1,071.94 \u00d7 60 D. Updated 3:01 PM ET."
+  }
+}

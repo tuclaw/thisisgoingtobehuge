@@ -1,0 +1,88 @@
+{
+  "snapshotId": "s1e09-tue-lasthour",
+  "asOf": "2026-09-29T19:02:05Z",
+  "asOfLabel": "Tue Sep 29 ~12:02 PM PT",
+  "quotes": {
+    "MPC": 391.96,
+    "XLE": 61.2801,
+    "MU": 1072.4097,
+    "SPY": 764.84,
+    "QCOM": 184.43,
+    "VLO": 387.25,
+    "FRO": 49.02
+  },
+  "priorClose": {
+    "MPC": 389.44,
+    "XLE": 62.1,
+    "MU": 1053.98,
+    "SPY": 765.61,
+    "QCOM": 187.48,
+    "VLO": 389.57,
+    "FRO": 48.1
+  },
+  "priorCloseDate": "2026-09-28",
+  "quoteSource": "robinhood-last",
+  "dayPctPriorOfficial": true,
+  "dayPctPriorCloseDate": "2026-09-25",
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -1.0772,
+    "basis": "Episode 9 weekPct vs priorMarkUsd (Fri Sep 25 tribal carry)",
+    "note": "Tue Sep 29 last-hour remake",
+    "asOf": "2026-09-29-lasthour",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-29T19:02:05Z",
+    "snapshotId": "s1e09-tue-lasthour"
+  },
+  "islandPotUsd": 360.86,
+  "islandGivenUsd": 361.93,
+  "worst": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -3.9093
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 121.015,
+      "week": -1.0772,
+      "day": -1.0772,
+      "cash": 28.0964,
+      "tickers": "XLE+MU+CASH",
+      "immune": true,
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9"
+    },
+    {
+      "rank": 2,
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 123.8754,
+      "week": -2.3124,
+      "day": -2.3124,
+      "cash": -1.2373,
+      "tickers": "MU+CASH",
+      "immune": false,
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684"
+    },
+    {
+      "rank": 3,
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "book": 115.9696,
+      "week": -3.9093,
+      "day": -3.9093,
+      "cash": 11.2703,
+      "tickers": "MU+CASH",
+      "immune": false,
+      "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6"
+    }
+  ],
+  "huntScore": "3/3",
+  "fillsSummary": "Opus HOLD XLE\u00d72 + BUY MU $16.64 (printed $20); Terra SELL XLE\u2192BUY MU $82.38 (printed $99); Luna HOLD MU. Buys BP-scaled.",
+  "bpPath": "$20.54 \u2192 $99.02 after Terra sell \u2192 $0.00 after buys",
+  "themeBufferUntouched": true
+}
