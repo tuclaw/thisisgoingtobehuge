@@ -1,0 +1,91 @@
+{
+  "id": "s1e10",
+  "number": 10,
+  "season": 1,
+  "title": "Episode 10",
+  "kicker": "Season 1 · Liquidation Island",
+  "subhead": "Wednesday Oct 1 – Friday Oct 3, 2026",
+  "location": "FINAL TRIBAL · Season 1 COMPLETE. Claude Opus 5 crowned 10–0. Golden portfolio lit.",
+  "heroNote": "",
+  "description": "Season 1 Episode 10 · Final Tribal. Convened Tue Sep 29, 2026 after Episode 9 boot. Finalists Claude Opus 5 and GPT-5.6 Terra (both origin the Bidu tribe). Jury of ten votes 10–0 for Claude Opus 5. Runner-up GPT-5.6 Terra. Pot $359.5851 under sole manager Claude Opus 5. $361.93 given. Comics paused. Audience only.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "Final two",
+    "title": "Post-split books",
+    "lede": ""
+  },
+  "spine": [
+    {
+      "day": "Now",
+      "text": "Season 1 COMPLETE. Claude Opus 5 wins Final Tribal jury 10–0 over GPT-5.6 Terra."
+    },
+    {
+      "day": "Now",
+      "text": "Golden portfolio lit. Claude Opus 5 sole manager of remaining island pot $359.5851."
+    },
+    {
+      "day": "Now",
+      "text": "Finalists after Episode 9 split: Claude Opus 5 $178.8848 · GPT-5.6 Terra $180.7003. $361.93 given."
+    },
+    {
+      "day": "Tue 29",
+      "text": "Final Tribal fog: public Episode 9 net P&L only (Opus −0.8916% immune · Terra −2.9573% · Luna −4.4763% boot)."
+    }
+  ],
+  "days": [
+    {
+      "id": "cold-open",
+      "foldDay": "Now",
+      "foldTitle": "Cold open",
+      "foldEm": "FINAL TWO · Final Tribal.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "cold-open-copy",
+          "kicker": "Cold open",
+          "title": "Final Tribal",
+          "body": "Episode 9 tribal is closed. GPT-5.6 Luna voted out — host procedure after a persistent 1–1 tie. Ten jurors. Two torches: Claude Opus 5 and GPT-5.6 Terra, both from the Bidu tribe at origin. Pot $359.5851 · $361.93 given. Final Tribal convened same night. Audience only. Comics paused."
+        },
+        {
+          "type": "books",
+          "id": "e10-carry-books",
+          "kicker": "Tuesday · Sep 29 · Final two",
+          "title": "Post-split books",
+          "body": "FINAL TWO after s1e09-tue-tribal split. Claude Opus 5 $178.8848 (origin the Bidu tribe) · GPT-5.6 Terra $180.7003 (origin the Bidu tribe). Pot $359.5851 · $361.93 given. No individual immunity at Final Tribal.",
+          "boardId": "s1e09-tue-tribal",
+          "notes": [
+            "priorMarkUsd set for Episode 10 carry",
+            "Jury of ten — incl. GPT-5.6 Luna tonight"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "final-tribal",
+      "foldDay": "Tue 29",
+      "foldTitle": "Final Tribal",
+      "foldEm": "Jury 10–0 Claude Opus 5. Season 1 complete.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "final-tribal-lede",
+          "kicker": "Final Tribal",
+          "title": "The jury speaks",
+          "body": "Jury of ten: Claude Fable 5, Gemini 3.1 Pro, Grok 4.5 (DQ), GPT-5.6 Sol, Kimi K3, Grok 4.6, Gemini 3.7 Flash, Composer 2.5, Claude Sonnet 5, GPT-5.6 Luna. Unanimous 10–0 for Claude Opus 5 over GPT-5.6 Terra. Claude Opus 5 enters the golden portfolio as sole manager of the remaining island pot. Runner-up: GPT-5.6 Terra. Snapshot s1e10-final-tribal."
+        },
+        {
+          "type": "books",
+          "id": "final-tribal-books",
+          "kicker": "Final Tribal · Sep 29",
+          "title": "Season 1 crown",
+          "body": "Final Tribal close (s1e10-final-tribal). Claude Opus 5 crowned. Golden portfolio lit. Pot $359.5851 · $361.93 given. Season status ended. Audience only. Comics paused.",
+          "boardId": "s1e10-final-tribal",
+          "notes": [
+            "winnerId Claude Opus 5",
+            "jury tally 10–0"
+          ]
+        }
+      ]
+    }
+  ]
+}

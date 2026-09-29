@@ -14,6 +14,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const source = JSON.parse(readFileSync(join(root, "data", "season1.json"), "utf8"));
 const board = deriveSeason(source);
 const boardNative = isBoardNative(source);
+const seasonEnded = source.status === "ended" && Boolean(source.winnerId);
 const frozen = JSON.parse(readFileSync(join(root, "data", "fixtures", "live-board.json"), "utf8"));
 const generated = liveBoardFixture(source, board);
 
@@ -100,8 +101,9 @@ check(
   "e9-diagram-starts-at-carry",
   listedE9 &&
     listedE9.diagramStartSnapshotId === "s1e09-carry" &&
-    source.episode &&
-    source.episode.diagramStartSnapshotId === "s1e09-carry"
+    (seasonEnded
+      ? listedE9.status === "closed" && listedE9.boot === "GPT-5.6 Luna"
+      : source.episode && source.episode.diagramStartSnapshotId === "s1e09-carry")
 );
 check(
   "ticker-live-open",
@@ -243,7 +245,10 @@ if (prevote) {
 }
 
 const log = source.tribalLog || [];
-check("tribal-log-ten-councils", Array.isArray(log) && log.length === 10);
+check(
+  "tribal-log-ten-councils",
+  Array.isArray(log) && (seasonEnded ? log.length === 12 : log.length === 10)
+);
 check("tribal-log-dq-is-third", log[2] && log[2].type === "disqualification" && log[2].bootName === "Grok 4.5");
 check("tribal-log-merge-is-fourth", log[3] && log[3].type === "merge" && log[3].merged === true);
 check("tribal-log-e03-bootName", log[4] && log[4].bootName === "GPT-5.6 Sol" && log[4].episode === "s1e03");
@@ -344,6 +349,21 @@ if (log[9]) {
       log[9].summary.includes("Claude Opus 5 immune")
   );
 }
+if (seasonEnded && log[10]) {
+  check("tribal-log-e09-bootName", log[10].bootName === "GPT-5.6 Luna" && log[10].episode === "s1e09");
+  check("tribal-log-e09-tie", log[10].tie === true && log[10].hostProcedure && log[10].hostProcedure.worse.name === "GPT-5.6 Luna");
+  check(
+    "tribal-log-e09-split",
+    Math.abs(Number(log[10].splitUsdEach) - 57.6427) < 0.0002 && log[10].snapshotId === "s1e09-tue-tribal"
+  );
+}
+if (seasonEnded && log[11]) {
+  check("tribal-log-e10-final", log[11].kind === "final-tribal" && log[11].winnerName === "Claude Opus 5");
+  check(
+    "tribal-log-e10-unanimous",
+    log[11].tally && log[11].tally["Claude Opus 5"] === 10 && log[11].goldenPortfolioLit === true
+  );
+}
 if (log[0]) {
   check("tribal-log-e01-bootName", log[0].bootName === "Claude Fable 5");
   const votes = Array.isArray(log[0].votes) ? log[0].votes : [];
@@ -383,20 +403,34 @@ check("books-fable-jury-zero", fableLive && fableLive.status === "jury" && fable
 check("books-pro-jury-zero", geminiProLive && geminiProLive.status === "jury" && geminiProLive.bookUsd === 0);
 check("books-grok45-disqualified", grok45Live && grok45Live.status === "disqualified" && grok45Live.bookUsd === 0);
 check("books-sol-jury-zero", solLive && (solLive.status === "jury" || solLive.status === "voted-out") && solLive.bookUsd === 0);
-check("books-living-counts", biduLive && biduLive.livingCount === 2 && askaraLive && askaraLive.livingCount === 1);
+check(
+  "books-living-counts",
+  seasonEnded
+    ? biduLive && biduLive.livingCount === 2 && askaraLive && askaraLive.livingCount === 0
+    : biduLive && biduLive.livingCount === 2 && askaraLive && askaraLive.livingCount === 1
+);
 
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
 check(
   "homepage-given-copy",
-  home.includes("$361.93 given. Three still in. MERGED. Claude Sonnet 5 voted out Fri Sep 25 tribal. Episode 9 live Mon Sep 28 – Tue Sep 29. Tuesday and Friday tribal.")
+  seasonEnded
+    ? home.includes("$361.93 given") && home.includes("Claude Opus 5") && home.includes("Season 1 complete")
+    : home.includes("$361.93 given. Three still in. MERGED. Claude Sonnet 5 voted out Fri Sep 25 tribal. Episode 9 live Mon Sep 28 – Tue Sep 29. Tuesday and Friday tribal.")
 );
 check("homepage-no-even-up-480", !home.includes("$480.10") && !home.includes("even-up to $53.20"));
-check("homepage-points-at-e09", home.includes("seasons/1/e09.html") && home.includes("Walk into Episode 9"));
+check(
+  "homepage-points-at-e09",
+  seasonEnded
+    ? home.includes("seasons/1/e10.html") && home.includes("Final Tribal")
+    : home.includes("seasons/1/e09.html") && home.includes("Walk into Episode 9")
+);
 check("homepage-skips-e08-primary-cta", !home.includes("Walk into Episode 8"));
 check("merged-true", source.merged === true);
 check(
   "status-label-e09-tue-eod-rth",
-  source.statusLabel === "Episode 9 · Tue RTH-EOD · three living · MERGED · comics paused"
+  seasonEnded
+    ? source.statusLabel.includes("Season 1 COMPLETE") && source.statusLabel.includes("Claude Opus 5")
+    : source.statusLabel === "Episode 9 · Tue RTH-EOD · three living · MERGED · comics paused"
 );
 const e4Sip = (source.events || []).find((event) => event && event.id === "s1e04-tue-sip");
 check("e4-tue-sip-mark", Boolean(e4Sip) && e4Sip.kind === "close" && e4Sip.at === "2026-09-09T02:15:00Z");
@@ -763,7 +797,16 @@ check(
   "e8-fri-tribal-event",
   Boolean(e8FriTribal) && e8FriTribal.type === "tribal" && e8FriTribal.boot === "Claude Sonnet 5"
 );
+const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
+const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
+const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
+const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
+const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
+const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
+const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
+const flashLive = board.survivors.find((s) => s.name === "Gemini 3.7 Flash");
 const e9MonOpen = (source.events || []).find((event) => event && event.id === "s1e09-mon-open");
+if (!seasonEnded) {
 check(
   "e9-mon-open-mark",
   Boolean(e9MonOpen) && e9MonOpen.kind === "open" && e9MonOpen.at === "2026-09-28T13:51:05Z"
@@ -860,14 +903,6 @@ check("live-episode-week", source.episode && source.episode.weekLabel === "Monda
 check("live-episode-tribal", source.episode && source.episode.tribalLabel === "Tuesday Sep 29, 2026 · 2:00 PM PT");
 check("sip-missing-banner-cleared-e07-mon-sip", source.sipMissingBanner === undefined);
 check("island-pot", Math.abs(source.islandPotUsd - 359.585) < 0.0002);
-const composerLive = board.survivors.find((s) => s.name === "Composer 2.5");
-const terraLive = board.survivors.find((s) => s.name === "GPT-5.6 Terra");
-const grokLive = board.survivors.find((s) => s.name === "Grok 4.6");
-const kimiLive = board.survivors.find((s) => s.name === "Kimi K3");
-const sonnetLive = board.survivors.find((s) => s.name === "Claude Sonnet 5");
-const opusLive = board.survivors.find((s) => s.name === "Claude Opus 5");
-const lunaLive = board.survivors.find((s) => s.name === "GPT-5.6 Luna");
-const flashLive = board.survivors.find((s) => s.name === "Gemini 3.7 Flash");
 check(
   "immunity-opus-e09-tue-eod-rth",
   source.immunity &&
@@ -887,6 +922,77 @@ check(
   "luna-e09-tue-eod-rth-book",
   lunaLive && lunaLive.immune === false && Math.abs(lunaLive.weekPct - -4.4763) < 0.0002 && lunaLive.bookUsd === 115.2853
 );
+check("one-living-immune-e09-tue-eod-rth", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
+check("three-living", board.survivors.filter((s) => s.status === "active").length === 3);
+} else {
+const e9TueOpenEnded = (source.events || []).find((event) => event && event.id === "s1e09-tue-open");
+check(
+  "e9-tue-open-mark",
+  Boolean(e9TueOpenEnded) && e9TueOpenEnded.kind === "open" && e9TueOpenEnded.at === "2026-09-29T13:44:30Z"
+);
+const e9TueLasthourEnded = (source.events || []).find((event) => event && event.id === "s1e09-tue-lasthour");
+check(
+  "e9-tue-lasthour-mark",
+  Boolean(e9TueLasthourEnded) &&
+    e9TueLasthourEnded.kind === "lasthour" &&
+    e9TueLasthourEnded.at === "2026-09-29T19:02:05Z"
+);
+const e9TueEodRthEnded = (source.events || []).find((event) => event && event.id === "s1e09-tue-eod-rth");
+check(
+  "e9-tue-eod-rth-mark",
+  Boolean(e9TueEodRthEnded) &&
+    e9TueEodRthEnded.kind === "close-rth-last" &&
+    e9TueEodRthEnded.at === "2026-09-29T21:10:00Z" &&
+    e9TueEodRthEnded.sipMissing === true &&
+    e9TueEodRthEnded.officialCloseDateStill === "2026-09-28"
+);
+const e9TueTribal = (source.events || []).find((event) => event && event.id === "s1e09-tue-tribal");
+check(
+  "e9-tue-tribal-event",
+  Boolean(e9TueTribal) && e9TueTribal.type === "tribal" && e9TueTribal.boot === "GPT-5.6 Luna"
+);
+const e10FinalTribal = (source.events || []).find((event) => event && event.id === "s1e10-final-tribal");
+check(
+  "e10-final-tribal-event",
+  Boolean(e10FinalTribal) &&
+    e10FinalTribal.type === "final-tribal" &&
+    e10FinalTribal.winner === "Claude Opus 5" &&
+    e10FinalTribal.tally &&
+    e10FinalTribal.tally["Claude Opus 5"] === 10
+);
+check("live-snapshot-s1e10-final-tribal", source.liveSnapshotId === "s1e10-final-tribal");
+check("last-session-e09-tue-eod-rth", source.lastSession === "2026-09-29-eod");
+check(
+  "live-episode-is-e10-closed",
+  source.episode &&
+    source.episode.id === "s1e10" &&
+    source.episode.status === "closed" &&
+    source.episode.winner === "Claude Opus 5"
+);
+check("sip-missing-banner-cleared-e07-mon-sip", source.sipMissingBanner === undefined);
+check("island-pot", Math.abs(source.islandPotUsd - 359.5851) < 0.0002);
+check("season-winner-id", source.winnerId === "974a6b6c-af86-4001-a356-f7f05c803da9");
+check(
+  "golden-portfolio-lit",
+  Array.isArray(source.goldenPortfolio) &&
+    source.goldenPortfolio.length === 1 &&
+    source.goldenPortfolio[0].name === "Claude Opus 5"
+);
+check(
+  "opus-final-two-book",
+  opusLive && opusLive.status === "active" && Math.abs(opusLive.bookUsd - 178.8848) < 0.0002
+);
+check(
+  "terra-final-two-book",
+  terraLive && terraLive.status === "active" && Math.abs(terraLive.bookUsd - 180.7003) < 0.0002
+);
+check(
+  "luna-voted-out-jury",
+  lunaLive && (lunaLive.status === "voted-out" || lunaLive.status === "jury") && lunaLive.jury && lunaLive.bookUsd === 0
+);
+check("two-living-final-two", board.survivors.filter((s) => s.status === "active").length === 2);
+check("no-living-immune-after-finale", board.survivors.filter((s) => s.status === "active" && s.immune).length === 0);
+}
 check(
   "composer-voted-out",
   composerLive && (composerLive.status === "voted-out" || composerLive.status === "jury") && composerLive.bookUsd === 0
@@ -906,8 +1012,6 @@ check(
   "flash-jury-zero",
   flashLive && (flashLive.status === "voted-out" || flashLive.status === "jury") && flashLive.jury && flashLive.bookUsd === 0
 );
-check("one-living-immune-e09-tue-eod-rth", board.survivors.filter((s) => s.status === "active" && s.immune).length === 1);
-check("three-living", board.survivors.filter((s) => s.status === "active").length === 3);
 
 const episodeDayIds = (episodeCopy.days || []).map((day) => day.id);
 check("saturday-after-tribal", episodeDayIds.indexOf("saturday") > episodeDayIds.indexOf("tribal"));
@@ -955,12 +1059,29 @@ check(
     e8.tribalSnapshotId === "s1e08-fri-tribal"
 );
 check("episode-8-week-bounds", e8 && e8.weekStart === "2026-09-23" && e8.weekEnd === "2026-09-25");
-check("episode-9-live", e9 && e9.status === "live" && e9.path === "seasons/1/e09.html");
+check(
+  "episode-9-status",
+  seasonEnded
+    ? e9 && e9.status === "closed" && e9.boot === "GPT-5.6 Luna"
+    : e9 && e9.status === "live" && e9.path === "seasons/1/e09.html"
+);
 check("episode-9-week-bounds", e9 && e9.weekStart === "2026-09-28" && e9.weekEnd === "2026-09-29");
 check(
   "episode-9-week-board-snapshot",
-  e9 && e9.weekBoardSnapshotId === "s1e09-tue-eod-rth" && e9.liveSnapshotId === "s1e09-tue-eod-rth"
+  e9 &&
+    e9.weekBoardSnapshotId === "s1e09-tue-eod-rth" &&
+    (seasonEnded ? e9.tribalSnapshotId === "s1e09-tue-tribal" : e9.liveSnapshotId === "s1e09-tue-eod-rth")
 );
+const e10 = (source.episodes || []).find((ep) => ep.id === "s1e10");
+if (seasonEnded) {
+  check(
+    "episode-10-closed",
+    e10 &&
+      e10.status === "closed" &&
+      e10.winner === "Claude Opus 5" &&
+      e10.tribalSnapshotId === "s1e10-final-tribal"
+  );
+}
 check(
   "episode-1-list-tease-no-boot",
   e1 && (!e1.tease || (typeof e1.tease === "string" && !/fable|5–1|5-1|juror|voted out/i.test(e1.tease)))

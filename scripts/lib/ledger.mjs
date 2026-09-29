@@ -282,7 +282,7 @@ function deriveBoardNative(source) {
     tribes,
     survivors,
     tribalLog: publicTribalLog(source.tribalLog),
-    goldenPortfolio: source.goldenPortfolio || [],
+    goldenPortfolio: publicGoldenPortfolio(source.goldenPortfolio),
     immunity: source.immunity ?? null,
     winnerId: source.winnerId ?? null,
     mergeSecret: source.mergeSecret !== false,
@@ -567,6 +567,16 @@ function publicPosition(pos) {
   return copy;
 }
 
+function publicGoldenPortfolio(rows) {
+  return (rows || []).map((entry) => {
+    if (!entry || typeof entry !== "object") return entry;
+    return {
+      ...entry,
+      positions: (entry.positions || []).map(publicPosition)
+    };
+  });
+}
+
 function publicTribalLog(log) {
   return (log || []).map((entry) => {
     if (!entry || !entry.brokerLiqPending) return entry;
@@ -845,7 +855,7 @@ export function deriveSeason(source) {
     tribes,
     survivors,
     tribalLog: publicTribalLog(source.tribalLog),
-    goldenPortfolio: source.goldenPortfolio || [],
+    goldenPortfolio: publicGoldenPortfolio(source.goldenPortfolio),
     immunity: source.immunity ?? null,
     winnerId: source.winnerId ?? null,
     mergeSecret: source.mergeSecret !== false,
