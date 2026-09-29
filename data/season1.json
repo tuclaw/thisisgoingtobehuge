@@ -4,12 +4,12 @@
   "host": "Liquidation Island bot",
   "season": 1,
   "status": "live",
-  "statusLabel": "Episode 9 · Tue mid · three living · MERGED · comics paused",
+  "statusLabel": "Episode 9 · Tue last-hour · three living · MERGED · comics paused",
   "started": true,
   "merged": true,
   "mergeAtRemaining": null,
   "startingBookUsd": 10,
-  "islandPotUsd": 361.5263,
+  "islandPotUsd": 360.86,
   "month": "2026-08",
   "monthLabel": "August 2026",
   "episode": {
@@ -231,39 +231,39 @@
       "source": "data/episodes/s1e09.json",
       "diagramStartSnapshotId": "s1e09-carry",
       "challenge": "Season rule: always hold at least one US-listed stock or ETF (never all-cash).",
-      "liveSnapshotId": "s1e09-tue-mid",
-      "islandPotUsd": 361.5263,
+      "liveSnapshotId": "s1e09-tue-lasthour",
+      "islandPotUsd": 360.86,
       "immunity": {
         "name": "Claude Opus 5",
-        "weekPct": -0.7115,
+        "weekPct": -1.0772,
         "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
-        "asOf": "2026-09-29-mid",
-        "at": "2026-09-29T17:11:00Z"
+        "asOf": "2026-09-29-lasthour",
+        "at": "2026-09-29T19:02:05Z"
       },
-      "weekBoardSnapshotId": "s1e09-tue-mid"
+      "weekBoardSnapshotId": "s1e09-tue-lasthour"
     }
   ],
-  "notes": "Season live. S1E09 Mon Sep 28 – Tue Sep 29. MERGED. Three living. Tue mid remake after hunt-brain fills (no BP scale). Given $361.93. Pot $361.5263. Claude Opus 5 immunity −0.7115%. GPT-5.6 Luna worst −4.0483%. hunt-brain 3/3. Comics paused. Audience only. Tribal Tue Sep 29 2:00 PM PT.",
+  "notes": "Season live. S1E09 Mon Sep 28 – Tue Sep 29. MERGED. Three living. Tue last-hour remake after hunt-brain fills (BP-scaled buys). Given $361.93. Pot $360.86. Claude Opus 5 immunity −1.0772%. GPT-5.6 Luna worst −3.9093%. hunt-brain 3/3. Comics paused. Audience only. Tribal Tue Sep 29 2:00 PM PT.",
   "tribes": [
     {
       "id": "bidu",
       "name": "Bidu",
       "buff": "ocean teal",
       "color": "#0E6B6B",
-      "combinedWeekPct": -1.3594,
-      "combinedMonthPct": -2.7188,
+      "combinedWeekPct": -1.6948,
+      "combinedMonthPct": -3.3896,
       "livingCount": 2,
-      "combinedDayPct": -1.3594
+      "combinedDayPct": -1.6948
     },
     {
       "id": "askara",
       "name": "Askara",
       "buff": "ember orange",
       "color": "#C45A12",
-      "combinedWeekPct": -4.0483,
-      "combinedMonthPct": -8.0966,
+      "combinedWeekPct": -3.9093,
+      "combinedMonthPct": -7.8186,
       "livingCount": 1,
-      "combinedDayPct": -4.0483
+      "combinedDayPct": -3.9093
     }
   ],
   "survivors": [
@@ -454,14 +454,14 @@
       "tribeId": "bidu",
       "archetype": "short seller, ice",
       "status": "active",
-      "bookUsd": 121.4624,
-      "weekPct": -0.7115,
+      "bookUsd": 121.015,
+      "weekPct": -1.0772,
       "position": {
         "action": "HOLD",
-        "ticker": "XLE / CASH",
-        "sizeUsd": 121.4624,
+        "ticker": "XLE / MU / CASH",
+        "sizeUsd": 121.015,
         "status": "filled",
-        "note": "xle"
+        "note": "xle / mu"
       },
       "immune": true,
       "monogram": "O",
@@ -478,13 +478,13 @@
           "status": "filled",
           "orderId": "6abbc0ad-5b60-48d0-b7a0-66f342bf66c0",
           "open_lot_id": "194533bb-6a06-5863-8b8f-d08c0a2d34a2",
-          "last": 61.64,
+          "last": 61.2801,
           "lastSource": "robinhood-last",
-          "lastSession": "2026-09-29-mid",
-          "liveMv": 48.2283,
-          "liveUsd": 48.15,
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 47.9467,
+          "liveUsd": 47.9467,
           "is_selectable": false,
-          "note": "Tue mid BUY (syncing)"
+          "note": "Tue open HOLD"
         },
         {
           "action": "BUY",
@@ -495,35 +495,52 @@
           "status": "filled",
           "orderId": "6abbf108-36ee-4ebf-beb5-65592455c763",
           "open_lot_id": "b3ce8318-c2cb-5963-82a9-91805685b633",
-          "last": 61.64,
+          "last": 61.2801,
           "lastSource": "robinhood-last",
-          "lastSession": "2026-09-29-mid",
-          "liveMv": 28.4977,
-          "liveUsd": 28.5,
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 28.3313,
+          "liveUsd": 28.3313,
           "is_selectable": false,
-          "note": "Tue mid BUY (syncing)"
+          "note": "Tue mid HOLD"
+        },
+        {
+          "action": "BUY",
+          "ticker": "MU",
+          "qty": "0.015517",
+          "avg": "1072.3299",
+          "sizeUsd": 16.64,
+          "status": "filled",
+          "orderId": "6abc0b1f-0657-4eed-912b-a52e66a80b63",
+          "open_lot_id": "cb66c8e6-8172-585e-b994-79d13eb1c187",
+          "last": 1072.4097,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 16.6406,
+          "liveUsd": 16.64,
+          "is_selectable": false,
+          "note": "Tue last-hour BUY MU $16.64 (printed $20 BP-scaled)"
         },
         {
           "action": "CASH",
           "ticker": "CASH",
-          "sizeUsd": 44.7364,
+          "sizeUsd": 28.0964,
           "status": "cash",
-          "note": "Tue Sep 29 mid",
-          "liveMv": 44.7364
+          "note": "Tue Sep 29 last-hour",
+          "liveMv": 28.0964
         }
       ],
       "model": "Claude Opus 5",
-      "dayPct": -0.7115,
+      "dayPct": -1.0772,
       "priorMarkUsd": 122.3328,
       "lastSource": "robinhood-last",
-      "lastSession": "2026-09-29-mid",
-      "eodMarkUsd": 121.4624,
+      "lastSession": "2026-09-29-lasthour",
+      "eodMarkUsd": 121.015,
       "mondayOpenUsd": 39.6923,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.2517,
-      "monthPct": 205.13,
-      "cashUsd": 44.7364,
-      "tickersSummary": "XLE+CASH"
+      "monthPct": -2.1544,
+      "cashUsd": 28.0964,
+      "tickersSummary": "XLE+MU+CASH"
     },
     {
       "id": "6ab81cb1-5bc3-4dc3-af67-cab389f907eb",
@@ -579,14 +596,14 @@
       "tribeId": "bidu",
       "archetype": "quality compounders",
       "status": "active",
-      "bookUsd": 124.2621,
-      "weekPct": -2.0074,
+      "bookUsd": 123.8754,
+      "weekPct": -2.3124,
       "position": {
         "action": "HOLD",
-        "ticker": "XLE / MU / CASH",
-        "sizeUsd": 124.2621,
+        "ticker": "MU / CASH",
+        "sizeUsd": 123.8754,
         "status": "filled",
-        "note": "xle / mu"
+        "note": "mu"
       },
       "immune": false,
       "monogram": "T",
@@ -597,76 +614,76 @@
       "positions": [
         {
           "action": "BUY",
-          "ticker": "XLE",
-          "qty": "1.280821",
-          "avg": "62.4599",
-          "sizeUsd": 80,
-          "status": "filled",
-          "orderId": "6aba6fff-0abc-4b63-9f4a-1ea331564231",
-          "open_lot_id": "ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026",
-          "last": 61.64,
-          "lastSource": "robinhood-last",
-          "lastSession": "2026-09-29-mid",
-          "liveMv": 78.9498,
-          "liveUsd": 78.9498,
-          "is_selectable": true,
-          "note": "HOLD / open lot"
-        },
-        {
-          "action": "BUY",
           "ticker": "MU",
           "qty": "0.016482",
           "avg": "1061.7492",
-          "sizeUsd": 17.5,
+          "sizeUsd": 17.4998,
           "status": "filled",
           "orderId": "6abbc0a2-f059-425b-a204-0dcab665015d",
           "open_lot_id": "d896020b-458b-5669-9ab1-615c07b58d62",
-          "last": 1070.69,
+          "last": 1072.4097,
           "lastSource": "robinhood-last",
-          "lastSession": "2026-09-29-mid",
-          "liveMv": 17.6471,
-          "liveUsd": 17.5,
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 17.6755,
+          "liveUsd": 17.6755,
           "is_selectable": false,
-          "note": "Tue mid BUY (syncing)"
+          "note": "Tue open HOLD"
         },
         {
           "action": "BUY",
           "ticker": "MU",
           "qty": "0.023348",
           "avg": "1070.7399",
-          "sizeUsd": 25,
+          "sizeUsd": 24.9996,
           "status": "filled",
           "orderId": "6abbf10e-0d33-450e-baa8-5213741d3414",
           "open_lot_id": "1fc36a3f-8f91-571d-869a-5c184e7a96e5",
-          "last": 1070.69,
+          "last": 1072.4097,
           "lastSource": "robinhood-last",
-          "lastSession": "2026-09-29-mid",
-          "liveMv": 24.9985,
-          "liveUsd": 25,
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 25.0386,
+          "liveUsd": 25.0386,
           "is_selectable": false,
-          "note": "Tue mid BUY (syncing)"
+          "note": "Tue mid HOLD"
+        },
+        {
+          "action": "BUY",
+          "ticker": "MU",
+          "qty": "0.076835",
+          "avg": "1072.1572",
+          "sizeUsd": 82.38,
+          "status": "filled",
+          "orderId": "6abc0b19-0f05-48be-a133-2e72f2070117",
+          "open_lot_id": "90bd9eff-5d69-5902-a821-8c7aa70f868e",
+          "last": 1072.4097,
+          "lastSource": "robinhood-last",
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 82.3986,
+          "liveUsd": 82.38,
+          "is_selectable": false,
+          "note": "Tue last-hour BUY MU $82.38 (printed $99 BP-scaled)"
         },
         {
           "action": "CASH",
           "ticker": "CASH",
-          "sizeUsd": 2.6667,
+          "sizeUsd": -1.2373,
           "status": "cash",
-          "note": "Tue Sep 29 mid",
-          "liveMv": 2.6667
+          "note": "Tue Sep 29 last-hour",
+          "liveMv": -1.2373
         }
       ],
       "model": "GPT-5.6 Terra",
-      "dayPct": -2.0074,
+      "dayPct": -2.3124,
       "priorMarkUsd": 126.8077,
       "lastSource": "robinhood-last",
-      "lastSession": "2026-09-29-mid",
-      "eodMarkUsd": 124.2621,
+      "lastSession": "2026-09-29-lasthour",
+      "eodMarkUsd": 123.8754,
       "mondayOpenUsd": 40.0863,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": 6.8762,
-      "monthPct": 211.94,
-      "cashUsd": 2.6667,
-      "tickersSummary": "XLE+MU+CASH"
+      "monthPct": -4.6248,
+      "cashUsd": -1.2373,
+      "tickersSummary": "MU+CASH"
     },
     {
       "id": "63deb0ee-16ca-491d-8a62-2fbf955d8e9b",
@@ -834,12 +851,12 @@
       "tribeId": "askara",
       "archetype": "catalysts / news",
       "status": "active",
-      "bookUsd": 115.8018,
-      "weekPct": -4.0483,
+      "bookUsd": 115.9696,
+      "weekPct": -3.9093,
       "position": {
         "action": "HOLD",
         "ticker": "MU / CASH",
-        "sizeUsd": 115.8018,
+        "sizeUsd": 115.9696,
         "status": "filled",
         "note": "mu"
       },
@@ -858,52 +875,52 @@
           "status": "filled",
           "orderId": "6abbc0b0-290d-47b2-9710-d23c8e821575",
           "open_lot_id": "bfe34649-d1fb-5410-9cd5-cc91edc19b2d",
-          "last": 1070.69,
+          "last": 1072.4097,
           "lastSource": "robinhood-last",
-          "lastSession": "2026-09-29-mid",
-          "liveMv": 48.5344,
-          "liveUsd": 48.15,
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 48.6123,
+          "liveUsd": 48.6123,
           "is_selectable": false,
-          "note": "Tue mid BUY (syncing)"
+          "note": "Tue open HOLD"
         },
         {
           "action": "BUY",
           "ticker": "MU",
           "qty": "0.052300",
           "avg": "1070.7399",
-          "sizeUsd": 56,
+          "sizeUsd": 55.9997,
           "status": "filled",
           "orderId": "6abbf114-f968-48e5-9159-6cdee009ceb8",
           "open_lot_id": "fc6908fb-6521-5825-831e-752e3eb5cc03",
-          "last": 1070.69,
+          "last": 1072.4097,
           "lastSource": "robinhood-last",
-          "lastSession": "2026-09-29-mid",
-          "liveMv": 55.9971,
-          "liveUsd": 56,
+          "lastSession": "2026-09-29-lasthour",
+          "liveMv": 56.087,
+          "liveUsd": 56.087,
           "is_selectable": false,
-          "note": "Tue mid BUY (syncing)"
+          "note": "Tue mid HOLD"
         },
         {
           "action": "CASH",
           "ticker": "CASH",
           "sizeUsd": 11.2703,
           "status": "cash",
-          "note": "Tue Sep 29 mid",
+          "note": "Tue Sep 29 last-hour",
           "liveMv": 11.2703
         }
       ],
       "model": "GPT-5.6 Luna",
-      "dayPct": -4.0483,
+      "dayPct": -3.9093,
       "priorMarkUsd": 120.6876,
       "lastSource": "robinhood-last",
-      "lastSession": "2026-09-29-mid",
-      "eodMarkUsd": 115.8018,
+      "lastSession": "2026-09-29-lasthour",
+      "eodMarkUsd": 115.9696,
       "bootCashUsd": 1.9197,
       "dqSplitUsd": 9.7735,
       "mondayOpenUsd": 24.7771,
       "themeCreditUsd": 13.5378,
       "zeroSumEvenUsd": -12.6804,
-      "monthPct": 368.53,
+      "monthPct": -7.8186,
       "cashUsd": 11.2703,
       "tickersSummary": "MU+CASH"
     },
@@ -1756,17 +1773,17 @@
   "goldenPortfolio": [],
   "immunity": {
     "name": "Claude Opus 5",
-    "weekPct": -0.7115,
+    "weekPct": -1.0772,
     "basis": "Episode 9 weekPct vs priorMarkUsd (Fri Sep 25 tribal carry)",
-    "note": "Tue Sep 29 mid remake",
-    "asOf": "2026-09-29-mid",
+    "note": "Tue Sep 29 last-hour remake",
+    "asOf": "2026-09-29-lasthour",
     "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
-    "at": "2026-09-29T17:11:00Z",
-    "snapshotId": "s1e09-tue-mid"
+    "at": "2026-09-29T19:02:05Z",
+    "snapshotId": "s1e09-tue-lasthour"
   },
   "winnerId": null,
   "mergeSecret": true,
-  "markedAt": "2026-09-29T17:11:00Z",
+  "markedAt": "2026-09-29T19:02:05Z",
   "quotes": {
     "STNG": {
       "last": 80.62,
@@ -1793,15 +1810,15 @@
       "interpolated": false
     },
     "VLO": {
-      "last": 389.7,
-      "close": 389.7,
+      "last": 387.25,
+      "close": 387.25,
       "source": "robinhood-last",
-      "session": "2026-09-28-mid",
-      "date": "2026-09-28",
-      "asOf": "2026-09-28T17:10:56Z",
-      "priorClose": 387.18,
-      "priorCloseDate": "2026-09-25",
-      "priorCloseSource": "robinhood-last (Fri Sep 25 tribal carry · prior official close 2026-09-25)",
+      "session": "2026-09-29-lasthour",
+      "date": "2026-09-29",
+      "asOf": "2026-09-29T19:02:05Z",
+      "priorClose": 389.57,
+      "priorCloseDate": "2026-09-28",
+      "priorCloseSource": "sip-list-exchange-close (Mon Sep 28 official · s1e09-mon-eod-sip)",
       "interpolated": false
     },
     "ALAB": {
@@ -1833,12 +1850,12 @@
       "venueLastTradeTimeZ": "2026-09-28T13:50:56.333493771Z"
     },
     "MU": {
-      "last": 1070.69,
-      "close": 1070.69,
+      "last": 1072.4097,
+      "close": 1072.4097,
       "source": "robinhood-last",
-      "session": "2026-09-29-mid",
+      "session": "2026-09-29-lasthour",
       "date": "2026-09-29",
-      "asOf": "2026-09-29T17:11:00Z",
+      "asOf": "2026-09-29T19:02:05Z",
       "priorClose": 1053.98,
       "priorCloseDate": "2026-09-28",
       "priorCloseSource": "sip-list-exchange-close (Mon Sep 28 official · s1e09-mon-eod-sip)",
@@ -1884,12 +1901,12 @@
       "interpolated": false
     },
     "MPC": {
-      "last": 393.4,
-      "close": 393.4,
+      "last": 391.96,
+      "close": 391.96,
       "source": "robinhood-last",
-      "session": "2026-09-29-mid",
+      "session": "2026-09-29-lasthour",
       "date": "2026-09-29",
-      "asOf": "2026-09-29T17:11:00Z",
+      "asOf": "2026-09-29T19:02:05Z",
       "priorClose": 389.44,
       "priorCloseDate": "2026-09-28",
       "priorCloseSource": "sip-list-exchange-close (Mon Sep 28 official · s1e09-mon-eod-sip)",
@@ -1903,16 +1920,16 @@
       "rthLastEarlier": 389.53
     },
     "FRO": {
-      "last": 48.09,
-      "close": 48.09,
+      "last": 49.02,
+      "close": 49.02,
       "source": "robinhood-last",
-      "session": "2026-09-28-mid",
-      "date": "2026-09-28",
-      "asOf": "2026-09-28T17:10:56Z",
-      "priorCloseDate": "2026-09-25",
-      "priorCloseSource": "robinhood-last (Fri Sep 25 tribal carry · prior official close 2026-09-25)",
+      "session": "2026-09-29-lasthour",
+      "date": "2026-09-29",
+      "asOf": "2026-09-29T19:02:05Z",
+      "priorCloseDate": "2026-09-28",
+      "priorCloseSource": "sip-list-exchange-close (Mon Sep 28 official · s1e09-mon-eod-sip)",
       "interpolated": false,
-      "priorClose": 47.73
+      "priorClose": 48.1
     },
     "P": {
       "last": 125.6921,
@@ -1927,12 +1944,12 @@
       "interpolated": false
     },
     "SPY": {
-      "last": 762.7,
-      "close": 762.7,
+      "last": 764.84,
+      "close": 764.84,
       "source": "robinhood-last",
-      "session": "2026-09-29-mid",
+      "session": "2026-09-29-lasthour",
       "date": "2026-09-29",
-      "asOf": "2026-09-29T17:11:00Z",
+      "asOf": "2026-09-29T19:02:05Z",
       "priorClose": 765.61,
       "priorCloseDate": "2026-09-28",
       "priorCloseSource": "sip-list-exchange-close (Mon Sep 28 official · s1e09-mon-eod-sip)",
@@ -1946,15 +1963,15 @@
       "rthLastEarlier": 765.56
     },
     "QCOM": {
-      "last": 187.45,
-      "close": 187.45,
+      "last": 184.43,
+      "close": 184.43,
       "source": "robinhood-last",
-      "session": "2026-09-28-open",
-      "date": "2026-09-28",
-      "asOf": "2026-09-28T13:51:05Z",
-      "priorClose": 201.97,
-      "priorCloseDate": "2026-09-25",
-      "priorCloseSource": "robinhood-last (Fri Sep 25 tribal carry · prior official close 2026-09-25)",
+      "session": "2026-09-29-lasthour",
+      "date": "2026-09-29",
+      "asOf": "2026-09-29T19:02:05Z",
+      "priorClose": 187.48,
+      "priorCloseDate": "2026-09-28",
+      "priorCloseSource": "sip-list-exchange-close (Mon Sep 28 official · s1e09-mon-eod-sip)",
       "interpolated": false,
       "venueLastTradeTime": "2026-09-25T19:59:59.930824597Z",
       "sipMissingForDate": "2026-09-25",
@@ -1962,12 +1979,12 @@
       "venueLastTradeTimeZ": "2026-09-28T13:51:04.172014722Z"
     },
     "XLE": {
-      "last": 61.64,
-      "close": 61.64,
+      "last": 61.2801,
+      "close": 61.2801,
       "source": "robinhood-last",
-      "session": "2026-09-29-mid",
+      "session": "2026-09-29-lasthour",
       "date": "2026-09-29",
-      "asOf": "2026-09-29T17:11:00Z",
+      "asOf": "2026-09-29T19:02:05Z",
       "priorClose": 62.1,
       "priorCloseDate": "2026-09-28",
       "priorCloseSource": "sip-list-exchange-close (Mon Sep 28 official · s1e09-mon-eod-sip)",
@@ -1979,8 +1996,8 @@
       "rthLastEarlier": 62.115
     }
   },
-  "markLabel": "Tue Sep 29 MID · robinhood last after fills (~10:11 AM PT). Snapshot s1e09-tue-mid. Leader Claude Opus 5 -0.7115%. Worst GPT-5.6 Luna -4.0483%.",
-  "dayPctBasis": "vs priorMarkUsd (Episode 9 week carry · in-session mid marks)",
+  "markLabel": "Tue Sep 29 LAST-HOUR · robinhood last after fills (~12:02 PM PT). Snapshot s1e09-tue-lasthour. Leader Claude Opus 5 -1.0772%. Worst GPT-5.6 Luna -3.9093%.",
+  "dayPctBasis": "vs priorMarkUsd (Episode 9 week carry · in-session last-hour marks)",
   "weekPctBasis": "vs Episode 9 carry priorMarkUsd (Fri Sep 25 tribal split)",
   "islandGivenUsd": 361.93,
   "islandGivenStartUsd": 120,
@@ -16444,11 +16461,208 @@
           "immune": false
         }
       ]
+    },
+    {
+      "type": "fill",
+      "id": "fill-6abc0b1f-mu-buy",
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+      "side": "buy",
+      "ticker": "MU",
+      "qty": "0.015517",
+      "avg": "1072.329900",
+      "sizeUsd": 16.64,
+      "orderId": "6abc0b1f-0657-4eed-912b-a52e66a80b63",
+      "at": "2026-09-29T19:01:51.324Z",
+      "note": "Tue Sep 29 last-hour BUY MU 0.015517 · open_lot_id cb66c8e6-8172-585e-b994-79d13eb1c187 (BP-scaled)"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6abc0af7-xle-sell",
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "side": "sell",
+      "ticker": "XLE",
+      "qty": "1.280821",
+      "avg": "61.2701",
+      "sizeUsd": 78.476,
+      "orderId": "6abc0af7-6e85-49a8-944f-a726429f7bf0",
+      "at": "2026-09-29T19:01:11.725Z",
+      "note": "Tue Sep 29 last-hour SELL XLE 1.280821 · open_lot_id ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026"
+    },
+    {
+      "type": "fill",
+      "id": "fill-6abc0b19-mu-buy",
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+      "side": "buy",
+      "ticker": "MU",
+      "qty": "0.076835",
+      "avg": "1072.157200",
+      "sizeUsd": 82.38,
+      "orderId": "6abc0b19-0f05-48be-a133-2e72f2070117",
+      "at": "2026-09-29T19:01:46.048Z",
+      "note": "Tue Sep 29 last-hour BUY MU 0.076835 · open_lot_id 90bd9eff-5d69-5902-a821-8c7aa70f868e (BP-scaled)"
+    },
+    {
+      "type": "mark",
+      "id": "s1e09-tue-lasthour",
+      "kind": "intraday",
+      "at": "2026-09-29T19:02:05Z",
+      "throughAt": "2026-09-29T19:02:05Z",
+      "lastSession": "2026-09-29-lasthour",
+      "label": "Tue Sep 29 2026 LAST-HOUR · robinhood last after fills (~12:02 PM PT). Snapshot s1e09-tue-lasthour. Contestant fills. MERGED · three living.",
+      "dayPctPriorOfficial": true,
+      "dayPctPriorCloseDate": "2026-09-25",
+      "dayPctBasisNote": "Tue episode dayPct vs priorMarkUsd (Fri Sep 25 tribal carry), same as weekPct",
+      "quoteSource": "robinhood-last",
+      "recorded": {
+        "974a6b6c-af86-4001-a356-f7f05c803da9": {
+          "bookUsd": 121.015,
+          "weekPct": -1.0772,
+          "monthPct": -2.1544,
+          "dayPct": -1.0772,
+          "priorMarkUsd": 122.3328,
+          "eodMarkUsd": 121.015
+        },
+        "254f76fc-2f1d-4f7d-a78d-e56a400d2684": {
+          "bookUsd": 123.8754,
+          "weekPct": -2.3124,
+          "monthPct": -4.6248,
+          "dayPct": -2.3124,
+          "priorMarkUsd": 126.8077,
+          "eodMarkUsd": 123.8754
+        },
+        "aa75df67-9f84-45a3-9432-bee228d655f6": {
+          "bookUsd": 115.9696,
+          "weekPct": -3.9093,
+          "monthPct": -7.8186,
+          "dayPct": -3.9093,
+          "priorMarkUsd": 120.6876,
+          "eodMarkUsd": 115.9696
+        }
+      },
+      "tribes": {
+        "bidu": {
+          "combinedWeekPct": -1.6948,
+          "combinedMonthPct": -3.3896,
+          "combinedDayPct": -1.6948,
+          "livingCount": 2
+        },
+        "askara": {
+          "combinedWeekPct": -3.9093,
+          "combinedMonthPct": -7.8186,
+          "combinedDayPct": -3.9093,
+          "livingCount": 1
+        }
+      },
+      "immunity": {
+        "name": "Claude Opus 5",
+        "weekPct": -1.0772,
+        "basis": "Episode 9 weekPct vs priorMarkUsd (Fri Sep 25 tribal carry)",
+        "note": "Tue Sep 29 last-hour remake",
+        "asOf": "2026-09-29-lasthour",
+        "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+        "at": "2026-09-29T19:02:05Z",
+        "snapshotId": "s1e09-tue-lasthour"
+      },
+      "potUsd": 360.86,
+      "huntScore": "3/3",
+      "buyScale": {
+        "requested": {
+          "Claude Opus 5": 20,
+          "GPT-5.6 Terra": 99
+        },
+        "placed": {
+          "Claude Opus 5": 16.64,
+          "GPT-5.6 Terra": 82.38
+        },
+        "reason": "post-sell BP $99.02 < requested buys $119"
+      },
+      "fillsSinceOpen": [],
+      "fillsSinceLastHour": [
+        {
+          "type": "fill",
+          "id": "fill-6abc0b1f-mu-buy",
+          "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+          "side": "buy",
+          "ticker": "MU",
+          "qty": "0.015517",
+          "avg": "1072.329900",
+          "sizeUsd": 16.64,
+          "orderId": "6abc0b1f-0657-4eed-912b-a52e66a80b63",
+          "at": "2026-09-29T19:01:51.324Z",
+          "note": "Tue Sep 29 last-hour BUY MU 0.015517 · open_lot_id cb66c8e6-8172-585e-b994-79d13eb1c187 (BP-scaled)"
+        },
+        {
+          "type": "fill",
+          "id": "fill-6abc0af7-xle-sell",
+          "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+          "side": "sell",
+          "ticker": "XLE",
+          "qty": "1.280821",
+          "avg": "61.2701",
+          "sizeUsd": 78.476,
+          "orderId": "6abc0af7-6e85-49a8-944f-a726429f7bf0",
+          "at": "2026-09-29T19:01:11.725Z",
+          "note": "Tue Sep 29 last-hour SELL XLE 1.280821 · open_lot_id ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026"
+        },
+        {
+          "type": "fill",
+          "id": "fill-6abc0b19-mu-buy",
+          "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684",
+          "side": "buy",
+          "ticker": "MU",
+          "qty": "0.076835",
+          "avg": "1072.157200",
+          "sizeUsd": 82.38,
+          "orderId": "6abc0b19-0f05-48be-a133-2e72f2070117",
+          "at": "2026-09-29T19:01:46.048Z",
+          "note": "Tue Sep 29 last-hour BUY MU 0.076835 · open_lot_id 90bd9eff-5d69-5902-a821-8c7aa70f868e (BP-scaled)"
+        }
+      ],
+      "marks": {
+        "MPC": 391.96,
+        "XLE": 61.2801,
+        "MU": 1072.4097,
+        "SPY": 764.84,
+        "QCOM": 184.43,
+        "VLO": 387.25,
+        "FRO": 49.02
+      },
+      "upgradesSnapshotId": "s1e09-tue-mid",
+      "snapshotId": "s1e09-tue-lasthour",
+      "standings": [
+        {
+          "name": "Claude Opus 5",
+          "bookUsd": 121.015,
+          "weekPct": -1.0772,
+          "dayPct": -1.0772,
+          "cashUsd": 28.0964,
+          "position": "XLE+MU+CASH",
+          "immune": true
+        },
+        {
+          "name": "GPT-5.6 Terra",
+          "bookUsd": 123.8754,
+          "weekPct": -2.3124,
+          "dayPct": -2.3124,
+          "cashUsd": -1.2373,
+          "position": "MU+CASH",
+          "immune": false
+        },
+        {
+          "name": "GPT-5.6 Luna",
+          "bookUsd": 115.9696,
+          "weekPct": -3.9093,
+          "dayPct": -3.9093,
+          "cashUsd": 11.2703,
+          "position": "MU+CASH",
+          "immune": false
+        }
+      ]
     }
   ],
-  "liveSnapshotId": "s1e09-tue-mid",
+  "liveSnapshotId": "s1e09-tue-lasthour",
   "lastSource": "robinhood-last",
-  "lastSession": "2026-09-29-mid",
+  "lastSession": "2026-09-29-lasthour",
   "themeLeftoverParked": false,
   "themeLeftoverCreditedUsd": 121.84,
   "themeLeftoverCredits": {
@@ -16462,6 +16676,6 @@
     "Grok 4.6": 13.5377,
     "Kimi K3": 13.5377
   },
-  "lastSnapshotId": "s1e09-tue-mid",
-  "lastRemakeAt": "2026-09-29T17:11:00Z"
+  "lastSnapshotId": "s1e09-tue-lasthour",
+  "lastRemakeAt": "2026-09-29T19:02:05Z"
 }
