@@ -1,0 +1,85 @@
+{
+  "snapshotId": "s1e09-tue-open",
+  "asOf": "2026-09-29T13:44:30Z",
+  "asOfLabel": "Tue Sep 29 ~6:44 AM PT",
+  "quotes": {
+    "MPC": 388.49,
+    "SPY": 765.0506,
+    "XLE": 61.525,
+    "MU": 1063.43
+  },
+  "priorClose": {
+    "MPC": 389.44,
+    "SPY": 765.61,
+    "XLE": 62.1,
+    "MU": 1053.98
+  },
+  "priorCloseDate": "2026-09-28",
+  "quoteSource": "robinhood-last",
+  "dayPctPriorOfficial": true,
+  "dayPctPriorCloseDate": "2026-09-25",
+  "immunity": {
+    "name": "Claude Opus 5",
+    "weekPct": -1.073,
+    "basis": "Episode 9 weekPct vs priorMarkUsd (Fri Sep 25 tribal carry)",
+    "note": "Tue Sep 29 open remake",
+    "asOf": "2026-09-29-open",
+    "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9",
+    "at": "2026-09-29T13:44:30Z",
+    "snapshotId": "s1e09-tue-open"
+  },
+  "islandPotUsd": 360.3014,
+  "islandGivenUsd": 361.93,
+  "worst": {
+    "name": "GPT-5.6 Luna",
+    "weekPct": -4.4138
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "name": "Claude Opus 5",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 121.0202,
+      "week": -1.073,
+      "day": -1.073,
+      "cash": 44.4817,
+      "tickers": "MPC+XLE+CASH",
+      "immune": true,
+      "survivorId": "974a6b6c-af86-4001-a356-f7f05c803da9"
+    },
+    {
+      "rank": 2,
+      "name": "GPT-5.6 Terra",
+      "tribeId": "bidu",
+      "origin": "the Bidu tribe",
+      "book": 123.9205,
+      "week": -2.2768,
+      "day": -2.2768,
+      "cash": -17.0158,
+      "tickers": "XLE+MU+CASH",
+      "immune": false,
+      "survivorId": "254f76fc-2f1d-4f7d-a78d-e56a400d2684"
+    },
+    {
+      "rank": 3,
+      "name": "GPT-5.6 Luna",
+      "tribeId": "askara",
+      "origin": "the Askara tribe",
+      "book": 115.3607,
+      "week": -4.4138,
+      "day": -4.4138,
+      "cash": 10.6558,
+      "tickers": "XLE+MU+CASH",
+      "immune": false,
+      "survivorId": "aa75df67-9f84-45a3-9432-bee228d655f6"
+    }
+  ],
+  "huntScore": "3/3",
+  "fillsSummary": "Opus SELL SPY\u2192BUY XLE $48.15 (printed $55, scaled); Terra HOLD XLE + BUY MU $17.5 (printed $20, scaled); Luna SELL MPC\u2192BUY MU $48.15 (printed $55, scaled). BP scale post-sell $113.80.",
+  "liveEpisode": "s1e09",
+  "tribalLabel": "Tuesday Sep 29, 2026 \u00b7 2:00 PM PT",
+  "merged": true,
+  "comicsPaused": true,
+  "audienceOnly": true
+}

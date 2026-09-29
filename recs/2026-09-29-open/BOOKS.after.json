@@ -1,0 +1,115 @@
+{
+  "session": "2026-09-29-open-post",
+  "bp": 0.0,
+  "bpNote": "Post buys BP $0.00 (scaled buys exhausted $113.80 post-sell BP)",
+  "pot": 360.3014,
+  "given": 361.93,
+  "immunity": "Claude Opus 5",
+  "living": [
+    {
+      "name": "Claude Opus 5",
+      "tribe": "the Bidu tribe",
+      "cash": 44.4817,
+      "bookUsd": 121.0202,
+      "priorMarkUsd": 122.3328,
+      "weekPct": -1.073,
+      "dayPct": -1.073,
+      "tickers": "MPC+XLE+CASH",
+      "immune": true,
+      "positions": [
+        {
+          "ticker": "MPC",
+          "qty": "0.073104",
+          "avg": "396.6916",
+          "open_lot_id": "36951bbe-03dc-5045-927d-e6d152add35f",
+          "orderId": "6aba6fff-2c0f-4f80-8faf-b58a4f78c9dc",
+          "mark": 28.4002,
+          "is_selectable": true
+        },
+        {
+          "ticker": "XLE",
+          "qty": "0.782419",
+          "avg": "61.5399",
+          "open_lot_id": "194533bb-6a06-5863-8b8f-d08c0a2d34a2",
+          "orderId": "6abbc0ad-5b60-48d0-b7a0-66f342bf66c0",
+          "mark": 48.1383,
+          "is_selectable": false,
+          "dollarBuy": 48.15
+        }
+      ]
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "tribe": "the Bidu tribe",
+      "cash": -17.0158,
+      "bookUsd": 123.9205,
+      "priorMarkUsd": 126.8077,
+      "weekPct": -2.2768,
+      "dayPct": -2.2768,
+      "tickers": "XLE+MU+CASH",
+      "immune": false,
+      "positions": [
+        {
+          "ticker": "XLE",
+          "qty": "1.280821",
+          "avg": "62.4599",
+          "open_lot_id": "ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026",
+          "orderId": "6aba6fff-0abc-4b63-9f4a-1ea331564231",
+          "mark": 78.8025,
+          "is_selectable": true
+        },
+        {
+          "ticker": "XLE",
+          "qty": "0.725011",
+          "avg": "62.0680",
+          "open_lot_id": "633b0834-0b03-5340-ab60-3eb79db151dd",
+          "orderId": "6abab96d-bc9e-469a-8fcd-7f8b20a798a2",
+          "mark": 44.6063,
+          "is_selectable": true
+        },
+        {
+          "ticker": "MU",
+          "qty": "0.016482",
+          "avg": "1061.7492",
+          "open_lot_id": "d896020b-458b-5669-9ab1-615c07b58d62",
+          "orderId": "6abbc0a2-f059-425b-a204-0dcab665015d",
+          "mark": 17.5275,
+          "is_selectable": false,
+          "dollarBuy": 17.5
+        }
+      ]
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "tribe": "the Askara tribe",
+      "cash": 10.6558,
+      "bookUsd": 115.3607,
+      "priorMarkUsd": 120.6876,
+      "weekPct": -4.4138,
+      "dayPct": -4.4138,
+      "tickers": "XLE+MU+CASH",
+      "immune": false,
+      "positions": [
+        {
+          "ticker": "XLE",
+          "qty": "0.918319",
+          "avg": "62.0699",
+          "open_lot_id": "2d1d5ab0-fac4-53a5-9cee-65429b9f4f71",
+          "orderId": "6abab96c-823e-4c57-8958-9e1b73b38a90",
+          "mark": 56.4996,
+          "is_selectable": true
+        },
+        {
+          "ticker": "MU",
+          "qty": "0.045330",
+          "avg": "1062.2099",
+          "open_lot_id": "bfe34649-d1fb-5410-9cd5-cc91edc19b2d",
+          "orderId": "6abbc0b0-290d-47b2-9710-d23c8e821575",
+          "mark": 48.2053,
+          "is_selectable": false,
+          "dollarBuy": 48.15
+        }
+      ]
+    }
+  ]
+}
