@@ -297,6 +297,7 @@ for (const s of board.survivors) {
     let legsUsd = 0;
     let legsReady = true;
     for (const pos of sourceRow.positions) {
+      if (pos.status === "boot-split") continue;
       if (isCashLeg(pos) || tickerOf(pos) === "CASH") {
         legsUsd += Number(pos.sizeUsd) || 0;
         continue;
@@ -380,6 +381,26 @@ for (const [i, council] of log.entries()) {
     check(`merge-true:${i}`, council.merged === true);
     check(`merge-summary:${i}`, typeof council.summary === "string" && /merge/i.test(council.summary));
     check(`merge-no-votes:${i}`, !council.votes);
+    continue;
+  }
+  if (council && (council.kind === "final-tribal" || council.finalTribal === true)) {
+    const winner = council.winnerName || council.winner;
+    check(`final-tribal-winner-known:${i}`, names.has(winner), winner);
+    check(`final-tribal-runner-up-known:${i}`, names.has(council.runnerUp), council.runnerUp);
+    const votes = Array.isArray(council.votes) ? council.votes : [];
+    check(`final-tribal-votes-nonempty:${i}`, votes.length > 0);
+    for (const [j, vote] of votes.entries()) {
+      check(`final-tribal-vote-from:${i}.${j}`, names.has(vote.from), vote.from);
+      check(`final-tribal-vote-for:${i}.${j}`, names.has(vote.for), vote.for);
+    }
+    const tally = council.tally || {};
+    const tallySum = Object.values(tally).reduce((sum, n) => sum + Number(n || 0), 0);
+    check(`final-tribal-tally-sums:${i}`, tallySum === votes.length, `${tallySum} vs ${votes.length}`);
+    check(
+      `final-tribal-summary:${i}`,
+      typeof council.summary === "string" && council.summary.includes(winner)
+    );
+    check(`final-tribal-golden:${i}`, council.goldenPortfolioLit === true);
     continue;
   }
   requireKeys(council, ["bootName", "votes", "tally"], `tribalLog[${i}]`);

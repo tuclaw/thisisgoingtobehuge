@@ -609,8 +609,18 @@ if (hostHelpers.moneyPutInTotal(seasonSource) !== 120) {
 if (hostHelpers.islandHostAddUsd(seasonSource) !== 120.09) {
   throw new Error("islandHostAddUsd should be Episode 2 host +$120.09, got " + hostHelpers.islandHostAddUsd(seasonSource));
 }
-if (hostHelpers.islandHostAddEpisodeLabel(seasonSource) !== "E9") {
-  throw new Error("islandHostAddEpisodeLabel should be E9");
+const hostAddLabel = hostHelpers.islandHostAddEpisodeLabel(seasonSource);
+const hostAddOk =
+  seasonSource.status === "ended" && seasonSource.winnerId
+    ? hostAddLabel === "E10"
+    : hostAddLabel === "E9";
+if (!hostAddOk) {
+  throw new Error(
+    "islandHostAddEpisodeLabel should be " +
+      (seasonSource.status === "ended" ? "E10" : "E9") +
+      ", got " +
+      hostAddLabel
+  );
 }
 if (hostHelpers.islandHostAddUsd({ startingBookUsd: 10, islandGivenUsd: 120, cast: new Array(12).fill({}) }) != null) {
   throw new Error("islandHostAddUsd must stay hidden when given equals the opening $120");
@@ -681,8 +691,17 @@ const chapterHelpers = new Function(`
   return { listedTickerEpisodes, groupSnapshotsByEpisode, snapshotMatchesEpisode };
 `)();
 const chapterEps = chapterHelpers.listedTickerEpisodes(seasonSource);
-if (chapterEps.map((ep) => ep.id).join("|") !== "s1e01|s1e02|s1e03|s1e04|s1e05|s1e06|s1e07|s1e08") {
-  throw new Error("listedTickerEpisodes should keep closed episodes until Episode 9 has week tape, got " + chapterEps.map((ep) => ep.id).join("|"));
+const chapterExpect =
+  seasonSource.status === "ended" && seasonSource.winnerId
+    ? "s1e01|s1e02|s1e03|s1e04|s1e05|s1e06|s1e07|s1e08|s1e09|s1e10"
+    : "s1e01|s1e02|s1e03|s1e04|s1e05|s1e06|s1e07|s1e08";
+if (chapterEps.map((ep) => ep.id).join("|") !== chapterExpect) {
+  throw new Error(
+    "listedTickerEpisodes should list " +
+      chapterExpect +
+      ", got " +
+      chapterEps.map((ep) => ep.id).join("|")
+  );
 }
 const grouped = chapterHelpers.groupSnapshotsByEpisode(seasonSource, [
   { id: "s1e01-mon-open", at: "2026-08-24T16:06:00Z" },
@@ -1299,17 +1318,35 @@ const watchHelpers = new Function(`
   return { episodeWatchReady, episodeLiveWatchable, watchEpisode };
 `)();
 const seasonBoard = JSON.parse(readFileSync(join(root, "dist", "season1.json"), "utf8"));
-if (!watchHelpers.episodeLiveWatchable(seasonBoard, seasonBoard.episodes.find((ep) => ep && ep.id === "s1e09"))) {
-  throw new Error("Episode 9 must be watchable after Mon Sep 28 last-hour week tape");
-}
-if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e09") {
-  throw new Error("public Watch Live must sit on Episode 9 after Mon last-hour week tape, got " + (watchHelpers.watchEpisode(seasonBoard).id || "none"));
-}
-if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e09-mon-lasthour")) {
-  throw new Error("Episode 9 mon-lasthour snapshot must exist");
-}
-if (seasonBoard.episode.id !== "s1e09" || seasonBoard.episode.status !== "live") {
-  throw new Error("dist season episode must be live Episode 9");
+if (seasonSource.status === "ended" && seasonSource.winnerId) {
+  if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e10") {
+    throw new Error(
+      "public Watch Live must sit on Episode 10 after finale, got " +
+        (watchHelpers.watchEpisode(seasonBoard).id || "none")
+    );
+  }
+  if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e10-final-tribal")) {
+    throw new Error("s1e10-final-tribal snapshot must exist");
+  }
+  if (seasonBoard.episode.id !== "s1e10" || seasonBoard.episode.status !== "closed") {
+    throw new Error("dist season episode must be closed Episode 10 finale");
+  }
+} else {
+  if (!watchHelpers.episodeLiveWatchable(seasonBoard, seasonBoard.episodes.find((ep) => ep && ep.id === "s1e09"))) {
+    throw new Error("Episode 9 must be watchable after Mon Sep 28 last-hour week tape");
+  }
+  if (watchHelpers.watchEpisode(seasonBoard).id !== "s1e09") {
+    throw new Error(
+      "public Watch Live must sit on Episode 9 after Mon last-hour week tape, got " +
+        (watchHelpers.watchEpisode(seasonBoard).id || "none")
+    );
+  }
+  if (!seasonBoard.snapshots.some((snap) => snap && snap.id === "s1e09-mon-lasthour")) {
+    throw new Error("Episode 9 mon-lasthour snapshot must exist");
+  }
+  if (seasonBoard.episode.id !== "s1e09" || seasonBoard.episode.status !== "live") {
+    throw new Error("dist season episode must be live Episode 9");
+  }
 }
 const rangeStart = appJs.indexOf("function snapshotsForTickerRange");
 const rangeEnd = appJs.indexOf("function candidateStroke");
