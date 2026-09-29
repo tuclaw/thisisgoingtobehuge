@@ -2177,7 +2177,56 @@ check(
     "monday-lasthour-books",
     "monday-eod-rth-books",
     "monday-eod-sip-books",
+    "monday-dinner",
   ])
+);
+const e9MonDinner = (((episode9Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).find(
+  (beat) => beat.id === "monday-dinner"
+);
+check(
+  "e09-monday-dinner-beat",
+  Boolean(e9MonDinner) &&
+    e9MonDinner.type === "dinner-fires" &&
+    (e9MonDinner.threads || []).some((thread) => thread.id === "merged-mon-dinner-fire") &&
+    String(e9MonDinner.body || "").includes("Episode 9") &&
+    (() => {
+      const beats = (((episode9Copy.days || []).find((day) => day.id === "monday") || {}).beats || []).map((b) => b.id);
+      return beats.indexOf("monday-eod-sip-books") === beats.indexOf("monday-dinner") - 1;
+    })()
+);
+check(
+  "e09-monday-foldEm",
+  (() => {
+    const foldEm = String(((episode9Copy.days || []).find((day) => day.id === "monday") || {}).foldEm || "");
+    return (
+      /the bidu tribe/i.test(foldEm) &&
+      /the askara tribe/i.test(foldEm) &&
+      foldEm.includes("Sit none") &&
+      /Tribal Tuesday Sep 29/i.test(foldEm) &&
+      /−0\.9970%/.test(foldEm)
+    );
+  })()
+);
+check(
+  "e09-monday-dinner-line-count",
+  (() => {
+    const path = join(root, "seasons/1/e09-monday-dinner.js");
+    if (!existsSync(path)) return false;
+    const src = readFileSync(path, "utf8");
+    const match = src.match(/messages:\s*\[/);
+    if (!match) return false;
+    const start = match.index + match[0].length;
+    let depth = 1;
+    let i = start;
+    while (i < src.length && depth > 0) {
+      const ch = src[i];
+      if (ch === "[") depth += 1;
+      else if (ch === "]") depth -= 1;
+      i += 1;
+    }
+    const block = src.slice(start, i - 1);
+    return (block.match(/\{\s*from:/g) || []).length === 9;
+  })()
 );
 check(
   "e08-thursday-after-wednesday",
