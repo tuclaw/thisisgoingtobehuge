@@ -1,0 +1,159 @@
+{
+  "session": "2026-09-29-mid",
+  "accountLast4": "6969",
+  "bpBefore": 0.0,
+  "bpAfterSells": 130.04,
+  "bpAfter": 20.54,
+  "themeBufferUntouched": true,
+  "buyScale": null,
+  "leftoversLeftAlone": {
+    "VLO": [
+      "e839f534-9ab9-58ef-9409-bc9f9975d2f3"
+    ],
+    "MPC": [
+      "889bbf73-2981-50d0-a124-52c51bb88383",
+      "d6cb4e0d-1a2a-5a7f-a57c-828abcdbfdf3"
+    ],
+    "FRO": [
+      "d1e4d9db-fe43-587e-9cd7-b0b120070730",
+      "36df98e4-5f48-5df4-85ae-af5881cf8348"
+    ]
+  },
+  "bootLiquidations": [],
+  "notes": [
+    "hunt-brain 3/3. All printed sells on selectable lots; no empty-sleeve risk.",
+    "Terra first place_equity_order (XLE tax-lot) returned API 400 'Tax lot orders are currently unavailable for XLE'; retry with new ref_id succeeded.",
+    "Post-sell BP $130.04 >= requested buys $109.50 \u2014 no BP scaling. Theme buffer untouched. Leftovers left alone.",
+    "New mid buy lots is_selectable=false (syncing): Opus XLE b3ce8318\u2026 \u00b7 Terra MU 1fc36a3f\u2026 \u00b7 Luna MU fc6908fb\u2026",
+    "Still syncing from open: Opus XLE 194533bb\u2026 \u00b7 Terra MU d896020b\u2026 \u00b7 Luna MU bfe34649\u2026"
+  ],
+  "contestantFills": [
+    {
+      "name": "Claude Opus 5",
+      "side": "SELL",
+      "ticker": "MPC",
+      "qty": "0.073104",
+      "avg": "393.3401",
+      "notional": 28.7547,
+      "orderId": "6abbf0cf-ace2-4d63-abd7-4ee27415e305",
+      "open_lot_id": "36951bbe-03dc-5045-927d-e6d152add35f",
+      "filledAt": "2026-09-29T17:09:35.339Z",
+      "ref_id": "28dd2bef-3a40-42fb-bd79-810dcd0266ca"
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "BUY",
+      "ticker": "XLE",
+      "qty": "0.462324",
+      "avg": "61.645000",
+      "dollar_amount": 28.5,
+      "notional": 28.5,
+      "orderId": "6abbf108-36ee-4ebf-beb5-65592455c763",
+      "open_lot_id": "b3ce8318-c2cb-5963-82a9-91805685b633",
+      "filledAt": "2026-09-29T17:10:32.611Z",
+      "ref_id": "70b35f6b-903c-4ce9-a859-f7c5bb85d8f5",
+      "printed": 28.5,
+      "scaled": false
+    },
+    {
+      "name": "Claude Opus 5",
+      "side": "HOLD",
+      "ticker": "XLE",
+      "qty": "0.782419",
+      "open_lot_id": "194533bb-6a06-5863-8b8f-d08c0a2d34a2",
+      "note": "Tue open lot held (was is_selectable=false)"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "SELL",
+      "ticker": "XLE",
+      "qty": "0.725011",
+      "avg": "61.6301",
+      "notional": 44.6825,
+      "orderId": "6abbf0eb-64ed-4842-a7db-4c873d9f1363",
+      "open_lot_id": "633b0834-0b03-5340-ab60-3eb79db151dd",
+      "filledAt": "2026-09-29T17:10:03.838Z",
+      "ref_id": "70d01c18-d6d3-41de-bf47-73bb91a6cb18",
+      "note": "first attempt 4a07fd66\u2026 API 400 tax-lot unavailable; retry succeeded"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "BUY",
+      "ticker": "MU",
+      "qty": "0.023348",
+      "avg": "1070.739900",
+      "dollar_amount": 25.0,
+      "notional": 25.0,
+      "orderId": "6abbf10e-0d33-450e-baa8-5213741d3414",
+      "open_lot_id": "1fc36a3f-8f91-571d-869a-5c184e7a96e5",
+      "filledAt": "2026-09-29T17:10:38.629Z",
+      "ref_id": "bced30d1-f855-4023-8532-8768567a56b5",
+      "printed": 25.0,
+      "scaled": false
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "HOLD",
+      "ticker": "XLE",
+      "qty": "1.280821",
+      "open_lot_id": "ac1e1b1b-1152-5e7c-8dd9-6f9ca1a88026"
+    },
+    {
+      "name": "GPT-5.6 Terra",
+      "side": "HOLD",
+      "ticker": "MU",
+      "qty": "0.016482",
+      "open_lot_id": "d896020b-458b-5669-9ab1-615c07b58d62",
+      "note": "Tue open lot held (is_selectable=false)"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "SELL",
+      "ticker": "XLE",
+      "qty": "0.918319",
+      "avg": "61.6501",
+      "notional": 56.6145,
+      "orderId": "6abbf0d9-3ef0-456a-b347-a398beace47a",
+      "open_lot_id": "2d1d5ab0-fac4-53a5-9cee-65429b9f4f71",
+      "filledAt": "2026-09-29T17:09:45.174Z",
+      "ref_id": "e35f3aca-c0b3-414c-80c1-693b531d041c"
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "BUY",
+      "ticker": "MU",
+      "qty": "0.052300",
+      "avg": "1070.739900",
+      "dollar_amount": 56.0,
+      "notional": 56.0,
+      "orderId": "6abbf114-f968-48e5-9159-6cdee009ceb8",
+      "open_lot_id": "fc6908fb-6521-5825-831e-752e3eb5cc03",
+      "filledAt": "2026-09-29T17:10:44.496Z",
+      "ref_id": "98ff3382-7453-4d4f-9584-852a65f10177",
+      "printed": 56.0,
+      "scaled": false
+    },
+    {
+      "name": "GPT-5.6 Luna",
+      "side": "HOLD",
+      "ticker": "MU",
+      "qty": "0.045330",
+      "open_lot_id": "bfe34649-d1fb-5410-9cd5-cc91edc19b2d",
+      "note": "Tue open lot held (is_selectable=false)"
+    }
+  ],
+  "skips": [],
+  "order_checks": [],
+  "complianceQuotes": {
+    "sells": {
+      "MPC": "Bid $393.34 \u00d7 100 N \u00b7 Ask $393.53 \u00d7 100 V \u00b7 Last $393.33 \u00d7 176 D. Updated 1:08 PM ET.",
+      "XLE_Terra": "Bid $61.65 \u00d7 6300 P \u00b7 Ask $61.66 \u00d7 6900 P \u00b7 Last $61.65 \u00d7 758 D. Updated 1:09 PM ET.",
+      "XLE_Luna": "Bid $61.65 \u00d7 5000 P \u00b7 Ask $61.66 \u00d7 10200 Q \u00b7 Last $61.65 \u00d7 758 D. Updated 1:09 PM ET."
+    },
+    "buys": {
+      "XLE": "Bid $61.62 \u00d7 15800 P \u00b7 Ask $61.63 \u00d7 2500 Z \u00b7 Last $61.63 \u00d7 200 K. Updated 1:10 PM ET.",
+      "MU_Terra": "Bid $1,070.18 \u00d7 200 K \u00b7 Ask $1,070.45 \u00d7 120 Q \u00b7 Last $1,070.325 \u00d7 72 D. Updated 1:10 PM ET.",
+      "MU_Luna": "Bid $1,070.18 \u00d7 200 K \u00b7 Ask $1,070.45 \u00d7 200 Q \u00b7 Last $1,070.16 \u00d7 45 X. Updated 1:10 PM ET."
+    }
+  }
+}
