@@ -193,6 +193,7 @@ const episode6Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e
 const episode7Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e07.json"), "utf8"));
 const episode8Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e08.json"), "utf8"));
 const episode9Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e09.json"), "utf8"));
+const episode10Copy = JSON.parse(readFileSync(join(root, "data", "episodes", "s1e10.json"), "utf8"));
 
 const wednesday = (episodeCopy.days || []).find((day) => day.id === "wednesday");
 const wednesdayBeats = (wednesday && wednesday.beats) || [];
@@ -1081,6 +1082,23 @@ if (seasonEnded) {
       e10.winner === "Claude Opus 5" &&
       e10.tribalSnapshotId === "s1e10-final-tribal"
   );
+}
+if (seasonEnded && episode10Copy) {
+  const e10Audience = JSON.stringify(episode10Copy).toLowerCase();
+  check("e10-heroNote-empty", episode10Copy.heroNote === "");
+  check("e10-weekBoard-lede-empty", episode10Copy.weekBoard && episode10Copy.weekBoard.lede === "");
+  check("e10-no-immune-shorthand", !/\bimmune\b/.test(e10Audience));
+  const e10ImmunitySansNone = e10Audience.replace(/no individual immunity/g, "");
+  check("e10-no-immunity-framing", !e10ImmunitySansNone.includes("immunity"));
+  const e10NecklaceSansNone = e10Audience.replace(/no necklace/g, "");
+  check("e10-no-necklace-framing", !e10NecklaceSansNone.includes("necklace"));
+  check(
+    "e10-final-tribal-survivor-frame",
+    e10Audience.includes("overall survivor") && e10Audience.includes("no individual immunity")
+  );
+  if (seasonEnded && log[11]) {
+    check("e10-final-tribal-no-individual-immunity", log[11].individualImmunity == null && log[11].winningTribeImmune === false);
+  }
 }
 check(
   "episode-1-list-tease-no-boot",
