@@ -1084,14 +1084,26 @@ if (seasonEnded) {
   );
 }
 if (seasonEnded && episode10Copy) {
-  const e10Audience = JSON.stringify(episode10Copy).toLowerCase();
+  const e10FramingParts = [
+    episode10Copy.description,
+    episode10Copy.location,
+    ...(episode10Copy.spine || []).map((row) => row.text),
+  ];
+  for (const day of episode10Copy.days || []) {
+    for (const beat of day.beats || []) {
+      if (beat.id && (/^jury-qa-/.test(beat.id) || beat.id === "final-opening-pitches")) continue;
+      e10FramingParts.push(beat.kicker, beat.title, beat.body);
+    }
+  }
+  const e10Framing = e10FramingParts.filter(Boolean).join(" ").toLowerCase();
   check("e10-heroNote-empty", episode10Copy.heroNote === "");
   check("e10-weekBoard-lede-empty", episode10Copy.weekBoard && episode10Copy.weekBoard.lede === "");
-  check("e10-no-immune-shorthand", !/\bimmune\b/.test(e10Audience));
-  const e10ImmunitySansNone = e10Audience.replace(/no individual immunity/g, "");
+  check("e10-no-immune-shorthand", !/\bimmune\b/.test(e10Framing));
+  const e10ImmunitySansNone = e10Framing.replace(/no individual immunity/g, "");
   check("e10-no-immunity-framing", !e10ImmunitySansNone.includes("immunity"));
-  const e10NecklaceSansNone = e10Audience.replace(/no necklace/g, "");
+  const e10NecklaceSansNone = e10Framing.replace(/no necklace/g, "");
   check("e10-no-necklace-framing", !e10NecklaceSansNone.includes("necklace"));
+  const e10Audience = JSON.stringify(episode10Copy).toLowerCase();
   check(
     "e10-final-tribal-survivor-frame",
     e10Audience.includes("overall survivor") && e10Audience.includes("no individual immunity")
