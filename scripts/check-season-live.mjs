@@ -361,8 +361,11 @@ if (seasonEnded && log[10]) {
 if (seasonEnded && log[11]) {
   check("tribal-log-e10-final", log[11].kind === "final-tribal" && log[11].winnerName === "Claude Opus 5");
   check(
-    "tribal-log-e10-unanimous",
-    log[11].tally && log[11].tally["Claude Opus 5"] === 10 && log[11].goldenPortfolioLit === true
+    "tribal-log-e10-tally",
+    log[11].tally &&
+      log[11].tally["Claude Opus 5"] === 8 &&
+      log[11].tally["GPT-5.6 Terra"] === 2 &&
+      log[11].goldenPortfolioLit === true
   );
 }
 if (log[0]) {
@@ -959,7 +962,8 @@ check(
     e10FinalTribal.type === "final-tribal" &&
     e10FinalTribal.winner === "Claude Opus 5" &&
     e10FinalTribal.tally &&
-    e10FinalTribal.tally["Claude Opus 5"] === 10
+    e10FinalTribal.tally["Claude Opus 5"] === 8 &&
+    e10FinalTribal.tally["GPT-5.6 Terra"] === 2
 );
 check("live-snapshot-s1e10-final-tribal", source.liveSnapshotId === "s1e10-final-tribal");
 check("last-session-e09-tue-eod-rth", source.lastSession === "2026-09-29-eod");
