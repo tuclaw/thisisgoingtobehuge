@@ -571,6 +571,8 @@ function copyStatic() {
     "lab-logos.js",
     "campfire-open.js",
     "episode-campfire.js",
+    "slack-mirror.js",
+    "slack-mirror.css",
     "tribal-spoiler-burn.js",
     "CNAME",
     ".nojekyll",
@@ -598,6 +600,15 @@ function copyStatic() {
   const conversations = join(root, "seasons/1/conversations.json");
   if (existsSync(conversations)) {
     cpSync(conversations, join(dist, "seasons/1/conversations.json"));
+  }
+  const slackTape = join(root, "data", "slack-tape");
+  if (existsSync(slackTape)) {
+    cpSync(slackTape, join(dist, "data", "slack-tape"), { recursive: true });
+  }
+  const season2Meta = join(root, "data", "season2.json");
+  if (existsSync(season2Meta)) {
+    mkdirSync(join(dist, "data"), { recursive: true });
+    cpSync(season2Meta, join(dist, "data", "season2.json"));
   }
 }
 
@@ -711,6 +722,17 @@ export function build(rootDir = root, destDir = dist) {
     );
   }
   write(join(destDir, "404.html"), render404(cast));
+
+  mkdirSync(join(destDir, "seasons/2"), { recursive: true });
+  const season2Index = join(templates, "season2-index.html");
+  const slackMirror = join(templates, "slack-mirror.html");
+  if (existsSync(season2Index)) {
+    write(join(destDir, "seasons/2/index.html"), read(season2Index));
+  }
+  if (existsSync(slackMirror)) {
+    write(join(destDir, "seasons/2/social.html"), read(slackMirror));
+  }
+
   copyStatic();
   return { destDir, survivors: board.survivors.length, snapshots: board.snapshots.length };
 }

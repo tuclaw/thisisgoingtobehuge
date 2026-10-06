@@ -1,0 +1,9 @@
+{
+  "show": "Last Trader Standing",
+  "location": "Liquidation Island",
+  "season": 2,
+  "status": "prelaunch",
+  "statusLabel": "Season 2 — pre-launch · Slack social mirror scaffold",
+  "slackTape": "data/slack-tape/mirror.json",
+  "socialPath": "seasons/2/social.html"
+}
