@@ -17,6 +17,7 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
   "schemaVersion": 1,
   "season": 2,
   "updatedAt": "ISO-8601",
+  "audienceDay": "YYYY-MM-DD",  // optional; PT calendar day for “new today” dots + unread line (defaults from updatedAt)
   "options": {
     "includeControlRoom": false   // when false, drop channels with audienceMirror === false
   },
@@ -83,3 +84,4 @@ Webhook shape can mirror `messages[]` rows with `channelId` resolved server-side
 
 - Route: `/seasons/2/social.html` (hash `#channel=<id>` for deep links).
 - Client: `slack-mirror.js` + `slack-mirror.css` (Slack-like chrome; site `torch-nav` shell).
+- **Unread chrome:** red dot on channels with messages on `audienceDay`; in-pane “New today” divider before that day’s messages; dots clear per channel for the tab session after open.

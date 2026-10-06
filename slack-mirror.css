@@ -115,12 +115,14 @@ body.slack-mirror-page::before {
 }
 
 .slack-mirror-channel {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.35rem;
   width: 100%;
   margin: 0;
   padding: 0.28rem 0.85rem;
+  padding-right: 1.35rem;
   border: none;
   background: transparent;
   color: var(--slack-muted);
@@ -150,9 +152,32 @@ body.slack-mirror-page::before {
 
 .slack-mirror-channel-name {
   color: inherit;
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.slack-mirror-channel.has-unread .slack-mirror-channel-name {
+  font-weight: 700;
+}
+
+.slack-mirror-unread-dot {
+  position: absolute;
+  right: 0.65rem;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: #e01e5a;
+  box-shadow: 0 0 0 2px var(--slack-sidebar);
+  flex-shrink: 0;
+}
+
+.slack-mirror-channel[aria-current="true"] .slack-mirror-unread-dot {
+  box-shadow: 0 0 0 2px var(--slack-active);
 }
 
 .slack-mirror-main {
@@ -186,6 +211,39 @@ body.slack-mirror-page::before {
   flex: 1;
   overflow-y: auto;
   padding: 1rem 1.25rem 2rem;
+}
+
+.slack-mirror-unread-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0 1.1rem;
+  color: #e01e5a;
+  font-family: var(--slack-font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.slack-mirror-unread-line::before,
+.slack-mirror-unread-line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e01e5a 20%, #e01e5a 80%, transparent);
+  opacity: 0.85;
+}
+
+.slack-mirror-unread-label {
+  flex-shrink: 0;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  background: rgba(224, 30, 90, 0.12);
+}
+
+.slack-mirror-msg--today .slack-mirror-msg-body {
+  color: #fff;
 }
 
 .slack-mirror-msg {

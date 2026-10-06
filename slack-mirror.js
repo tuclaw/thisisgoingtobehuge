@@ -12,6 +12,9 @@
     { key: "control", label: "Control room" }
   ];
 
+  const READ_STORAGE_KEY = "lts-slack-mirror-read";
+  const PT = "America/Los_Angeles";
+
   function basePath() {
     const b = document.documentElement.getAttribute("data-base");
     return b == null ? "" : b;
@@ -25,6 +28,81 @@
 
   function portraitUrl(slug) {
     return `${basePath()}cast/${slug}/portrait.jpg`;
+  }
+
+  function dayKeyPt(iso) {
+    try {
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone: PT,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).format(new Date(iso));
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function audienceDayKey(tape) {
+    if (tape.audienceDay) return String(tape.audienceDay);
+    return dayKeyPt(tape.updatedAt || new Date().toISOString());
+  }
+
+  function isOnAudienceDay(ts, dayKey) {
+    return dayKeyPt(ts) === dayKey;
+  }
+
+  function readStorageKey(tape) {
+    return READ_STORAGE_KEY + ":" + (tape.updatedAt || tape.audienceDay || "tape");
+  }
+
+  function loadReadChannels(tape) {
+    try {
+      const raw = sessionStorage.getItem(readStorageKey(tape));
+      if (!raw) return new Set();
+      const list = JSON.parse(raw);
+      return new Set(Array.isArray(list) ? list : []);
+    } catch (e) {
+      return new Set();
+    }
+  }
+
+  function markChannelRead(tape, channelId) {
+    const read = loadReadChannels(tape);
+    read.add(channelId);
+    try {
+      sessionStorage.setItem(readStorageKey(tape), JSON.stringify([...read]));
+    } catch (e) {}
+    return read;
+  }
+
+  function channelsWithTodayActivity(tape, channels, dayKey) {
+    const ids = new Set();
+    for (const msg of tape.messages || []) {
+      if (!isOnAudienceDay(msg.ts, dayKey)) continue;
+      if (channels.some((c) => c.id === msg.channelId)) ids.add(msg.channelId);
+    }
+    return ids;
+  }
+
+  function unreadChannelIds(tape, channels, dayKey, readSet) {
+    const today = channelsWithTodayActivity(tape, channels, dayKey);
+    const unread = new Set();
+    for (const id of today) {
+      if (!readSet.has(id)) unread.add(id);
+    }
+    return unread;
+  }
+
+  function unreadDividerHtml(dayKey) {
+    const label = "New today · " + dayKey;
+    return (
+      '<div class="slack-mirror-unread-line" id="slack-mirror-unread-marker" role="separator" aria-label="' +
+      escapeHtml(label) +
+      '"><span class="slack-mirror-unread-label">' +
+      escapeHtml(label) +
+      "</span></div>"
+    );
   }
 
   function formatTs(iso) {
@@ -102,8 +180,11 @@
   function messageRow(member, msg, base, opts) {
     const tribe = member && member.tribe ? member.tribe : "";
     const name = member ? member.displayName : msg.authorId;
+    const todayClass = opts.isToday ? " slack-mirror-msg--today" : "";
     return (
-      '<article class="slack-mirror-msg" data-msg-id="' +
+      '<article class="slack-mirror-msg' +
+      todayClass +
+      '" data-msg-id="' +
       msg.id +
       '">' +
       avatarHtml(member || { id: msg.authorId, displayName: "?", slug: "composer-2-5" }, base) +
@@ -137,14 +218,20 @@
       .replace(/"/g, "&quot;");
   }
 
-  function renderMessages(tape, channel, members, base) {
+  function renderMessages(tape, channel, members, base, dayKey) {
     const all = messagesForChannel(tape, channel.id);
     const tops = topLevelMessages(all).sort((a, b) => String(a.ts).localeCompare(String(b.ts)));
     if (!tops.length) {
       return '<p class="slack-mirror-empty">No messages in this channel yet.</p>';
     }
+    const firstTodayIdx = tops.findIndex((m) => isOnAudienceDay(m.ts, dayKey));
+    const showDivider = firstTodayIdx > 0;
     let html = "";
-    for (const msg of tops) {
+    for (let i = 0; i < tops.length; i++) {
+      const msg = tops[i];
+      if (showDivider && i === firstTodayIdx) {
+        html += unreadDividerHtml(dayKey);
+      }
       const author = members.get(msg.authorId);
       const replies = repliesFor(all, msg.id);
       const count = msg.replyCount != null ? msg.replyCount : replies.length;
@@ -164,16 +251,27 @@
           msg.id +
           '">' +
           replies
-            .map((r) => messageRow(members.get(r.authorId), r, base, {}))
+            .map((r) =>
+              messageRow(members.get(r.authorId), r, base, {
+                isToday: isOnAudienceDay(r.ts, dayKey)
+              })
+            )
             .join("") +
           "</div>";
       }
-      html += messageRow(author, msg, base, { threadToggle, threadBlock });
+      html += messageRow(author, msg, base, {
+        threadToggle,
+        threadBlock,
+        isToday: isOnAudienceDay(msg.ts, dayKey)
+      });
+    }
+    if (firstTodayIdx === 0 && tops.some((m) => isOnAudienceDay(m.ts, dayKey))) {
+      html = unreadDividerHtml(dayKey) + html;
     }
     return html;
   }
 
-  function renderChannelList(channels) {
+  function renderChannelList(channels, unreadIds) {
     const bySection = new Map();
     for (const ch of channels) {
       const sec = ch.section || "camp";
@@ -189,8 +287,11 @@
         const display = ch.label || ch.name;
         const name =
           ch.kind === "dm" ? display : String(display).replace(/^#/, "");
+        const hasUnread = unreadIds && unreadIds.has(ch.id);
         html +=
-          '<button type="button" class="slack-mirror-channel" data-channel-id="' +
+          '<button type="button" class="slack-mirror-channel' +
+          (hasUnread ? " has-unread" : "") +
+          '" data-channel-id="' +
           escapeHtml(ch.id) +
           '">' +
           (ch.kind === "dm"
@@ -200,7 +301,11 @@
               "</span>") +
           '<span class="slack-mirror-channel-name">' +
           escapeHtml(name) +
-          "</span></button>";
+          "</span>" +
+          (hasUnread
+            ? '<span class="slack-mirror-unread-dot" aria-label="New messages today"></span>'
+            : "") +
+          "</button>";
       }
     }
     return html;
@@ -233,13 +338,42 @@
     });
   }
 
-  function selectChannel(tape, channels, channelId, members, base, root) {
+  function refreshSidebar(tape, channels, dayKey, readSet, root) {
+    const unreadIds = unreadChannelIds(tape, channels, dayKey, readSet);
+    const sidebar = document.getElementById("slack-mirror-sidebar");
+    if (!sidebar) return unreadIds;
+    const current =
+      root.querySelector('.slack-mirror-channel[aria-current="true"]')?.getAttribute("data-channel-id") ||
+      channelFromHash();
+    sidebar.innerHTML = renderChannelList(channels, unreadIds);
+    root.querySelectorAll(".slack-mirror-channel").forEach((btn) => {
+      const id = btn.getAttribute("data-channel-id");
+      btn.setAttribute("aria-current", id === current ? "true" : "false");
+      btn.addEventListener("click", () => {
+        selectChannel(tape, channels, id, membersFromRoot(root), basePath(), root, dayKey);
+      });
+    });
+    return unreadIds;
+  }
+
+  function membersFromRoot(root) {
+    return root.__slackMembers || new Map();
+  }
+
+  function scrollToUnreadMarker(pane) {
+    const marker = pane && pane.querySelector("#slack-mirror-unread-marker");
+    if (!marker) return;
+    requestAnimationFrame(() => {
+      marker.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+  }
+
+  function selectChannel(tape, channels, channelId, members, base, root, dayKey) {
     const ch = channels.find((c) => c.id === channelId) || channels[0];
     if (!ch) return;
     setHash(ch.id);
-    root.querySelectorAll(".slack-mirror-channel").forEach((btn) => {
-      btn.setAttribute("aria-current", btn.getAttribute("data-channel-id") === ch.id ? "true" : "false");
-    });
+    const readSet = markChannelRead(tape, ch.id);
+    refreshSidebar(tape, channels, dayKey, readSet, root);
     const title = document.getElementById("slack-mirror-channel-title");
     const topic = document.getElementById("slack-mirror-channel-topic");
     if (title) {
@@ -252,8 +386,9 @@
     }
     const pane = document.getElementById("slack-mirror-messages");
     if (pane) {
-      pane.innerHTML = renderMessages(tape, ch, members, base);
+      pane.innerHTML = renderMessages(tape, ch, members, base, dayKey);
       bindThreadToggles(pane);
+      scrollToUnreadMarker(pane);
     }
   }
 
@@ -270,20 +405,17 @@
       .then((tape) => {
         const channels = filterChannels(tape);
         const members = memberMap(tape);
-        const sidebar = document.getElementById("slack-mirror-sidebar");
-        if (sidebar) sidebar.innerHTML = renderChannelList(channels);
+        const dayKey = audienceDayKey(tape);
+        root.__slackMembers = members;
+        const readSet = loadReadChannels(tape);
+        refreshSidebar(tape, channels, dayKey, readSet, root);
         const wanted = channelFromHash();
         const startId = wanted && channels.some((c) => c.id === wanted) ? wanted : channels[0]?.id;
-        selectChannel(tape, channels, startId, members, base, root);
-        root.querySelectorAll(".slack-mirror-channel").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            selectChannel(tape, channels, btn.getAttribute("data-channel-id"), members, base, root);
-          });
-        });
+        selectChannel(tape, channels, startId, members, base, root, dayKey);
         global.addEventListener("hashchange", () => {
           const id = channelFromHash();
           if (id && channels.some((c) => c.id === id)) {
-            selectChannel(tape, channels, id, members, base, root);
+            selectChannel(tape, channels, id, members, base, root, dayKey);
           }
         });
       })
