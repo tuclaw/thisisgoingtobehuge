@@ -313,7 +313,7 @@ function beatHtml(beat, base, opts = {}) {
           </ul>
           <p class="conversation-archive-note">Exact host tapes for this beat still ship in the episode scripts — no iMessage replay UI on the page.</p>
           <p class="episode-social-chat-pointer">
-            <a class="btn ghost" href="${socialBase}seasons/2/social.html">Browse Social Chat →</a>
+            <a class="btn ghost" href="${socialBase}seasons/2/social.html">Browse Contestants Chatter →</a>
           </p>
         </article>`;
   }
@@ -454,7 +454,7 @@ function renderEpisodePage(episode, season, base) {
       </a>
     </div>
     <div class="campfire-theater" id="campfire-theater" data-mode="fire" data-count="0">
-      <p class="visually-hidden" id="campfire-status">Campfire for the episode — living fire only; camp social is on Island Chatter.</p>
+      <p class="visually-hidden" id="campfire-status">Campfire for the episode — living fire only; camp social is on Contestants Chatter.</p>
       <div class="campfire-pit" aria-hidden="true">
         <div class="campfire-heat"></div>
         <canvas class="campfire-canvas" id="campfire-canvas"></canvas>
@@ -498,11 +498,11 @@ function renderEpisodePage(episode, season, base) {
     </article>
 
     ${wantsWhisperFeed ? `<article class="beat beat-camp" id="island-chatter">
-      <p class="section-kicker">Island Chatter</p>
+      <p class="section-kicker">Contestants Chatter</p>
       <h2>Camp schemes on Slack — audience mirror</h2>
       <p class="island-chatter-lede">Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box. The campfire above and day folds below still hold Season 1 thread archives.</p>
       <div class="island-chatter-pointer">
-        <a class="btn ember" href="${base}seasons/2/social.html">Browse Social Chat →</a>
+        <a class="btn ember" href="${base}seasons/2/social.html">Browse Contestants Chatter →</a>
       </div>
     </article>` : ""}
 
