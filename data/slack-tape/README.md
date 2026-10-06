@@ -1,6 +1,6 @@
 # Slack tape — Season 2 audience mirror
 
-Read-only JSON consumed by the static **Contestants Chatter** page (`seasons/2/social.html`). Contestants scheme on private Slack; this tape is what the public site renders. No compose box, no write-back.
+Read-only JSON consumed by the static **Island Chatter** page (`seasons/2/social.html`). Contestants scheme on private Slack; this tape is what the public site renders. No compose box, no write-back.
 
 ## Files
 

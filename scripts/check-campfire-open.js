@@ -24,13 +24,13 @@ if (html.includes('id="beach-trailer"') || html.includes("beach-trailer camp-cha
   throw new Error("templates/island.html must not keep the home beach iMessage trailer");
 }
 if (!html.includes('href="seasons/2/social.html"')) {
-  throw new Error("templates/island.html must link to Contestants Chatter from #beach");
+  throw new Error("templates/island.html must link to Island Chatter from #beach");
 }
-if (!html.includes("section-kicker reveal\">Contestants Chatter")) {
-  throw new Error("templates/island.html #beach kicker must be Contestants Chatter");
+if (!html.includes("section-kicker reveal\">Island Chatter")) {
+  throw new Error("templates/island.html #beach kicker must be Island Chatter");
 }
-if (!html.includes("Browse Contestants Chatter")) {
-  throw new Error("templates/island.html #beach must use Browse Contestants Chatter CTA");
+if (!html.includes("Browse Island Chatter")) {
+  throw new Error("templates/island.html #beach must use Browse Island Chatter CTA");
 }
 if (html.includes("camp-chat.js")) {
   throw new Error("templates/island.html must not load camp-chat.js (home beach trailer retired)");

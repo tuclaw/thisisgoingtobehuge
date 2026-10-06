@@ -22,8 +22,8 @@ if (episodeHtml.includes('id="campfire-pings"') || episodeHtml.includes('id="cam
 if (episodeHtml.includes("camp-chat-demo") || episodeHtml.includes("camp-chat-trigger")) {
   throw new Error("episode renderer must not ship lunch/dinner iMessage bubble UI");
 }
-if (!episodeHtml.includes("conversation-archive-index") || !episodeHtml.includes("Browse Contestants Chatter")) {
-  throw new Error("episode renderer must index archived threads and link to Contestants Chatter");
+if (!episodeHtml.includes("conversation-archive-index") || !episodeHtml.includes("Browse Island Chatter")) {
+  throw new Error("episode renderer must index archived threads and link to Island Chatter");
 }
 
 ["campfire-open.js", "episode-campfire.js"].forEach((src) => {
@@ -88,8 +88,8 @@ if (!episodeHtml.includes('id="week-board"')) {
 if (!episodeHtml.includes('id="trade-tape"') || !episodeHtml.includes("trade-tape-root") || !episodeHtml.includes("books-board-tabs")) {
   throw new Error("episode renderer missing books/tape tabs on latest books");
 }
-if (!episodeHtml.includes('id="island-chatter"') || !episodeHtml.includes("Browse Contestants Chatter")) {
-  throw new Error("episode renderer missing Contestants Chatter pointer below week-board");
+if (!episodeHtml.includes('id="island-chatter"') || !episodeHtml.includes("Browse Island Chatter")) {
+  throw new Error("episode renderer missing Island Chatter pointer below week-board");
 }
 if (episodeHtml.includes('id="camp-whispers"') || episodeHtml.includes("camp-whispers-feed")) {
   throw new Error("episode renderer must not keep the iMessage whispers feed below week-board");
@@ -1080,10 +1080,10 @@ if (!episodeJs.includes("mountRecentConversations")) {
   throw new Error("episode-campfire.js missing mountRecentConversations helper");
 }
 if (!episodeHtml.includes("seasons/2/social.html")) {
-  throw new Error("episode renderer Contestants Chatter pointer must link to seasons/2/social.html");
+  throw new Error("episode renderer Island Chatter pointer must link to seasons/2/social.html");
 }
 if (!stylesCss.includes(".island-chatter-pointer")) {
-  throw new Error("styles.css missing Contestants Chatter pointer styles");
+  throw new Error("styles.css missing Island Chatter pointer styles");
 }
 if (
   !episodeJs.includes("resolveLatestConversations") ||
