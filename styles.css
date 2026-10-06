@@ -7709,3 +7709,199 @@ body.castaway-sheet-open {
     grid-template-columns: 1fr;
   }
 }
+
+/* Season 2 — Robinhood-style pre-launch standings */
+.s2-standings-wrap {
+  margin-bottom: 2.5rem;
+}
+
+.s2-standings-kicker {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--worn);
+}
+
+.s2-performance {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border: 1px solid rgba(196, 165, 116, 0.16);
+  background: rgba(8, 6, 4, 0.62);
+  padding: 0.35rem 0;
+}
+
+.s2-row {
+  display: grid;
+  grid-template-columns: minmax(9rem, 1.35fr) minmax(5.5rem, 7rem) auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  color: var(--parchment);
+  border-bottom: 1px solid rgba(196, 165, 116, 0.08);
+  animation: money-in 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 0.03s);
+}
+
+.s2-row:last-child {
+  border-bottom: 0;
+}
+
+.s2-id {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.s2-face {
+  flex: 0 0 2.15rem;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  background: #1a1410;
+  display: grid;
+  place-items: center;
+}
+
+.s2-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+.s2-mono {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--parchment);
+}
+
+.s2-names {
+  min-width: 0;
+}
+
+.s2-names strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  color: var(--gold-bright);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.s2-names em {
+  display: block;
+  font-style: normal;
+  font-size: 0.72rem;
+  color: var(--sand);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.s2-spark-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.s2-spark {
+  display: block;
+  color: var(--worn);
+}
+
+.s2-spark.up {
+  color: #00c805;
+}
+
+.s2-spark.down {
+  color: #ff5000;
+}
+
+.s2-spark.flat {
+  color: rgba(196, 165, 116, 0.55);
+}
+
+.s2-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 5.5rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.45rem;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  background: rgba(18, 12, 8, 0.85);
+  border: 1px solid rgba(196, 165, 116, 0.12);
+}
+
+.s2-pill.up {
+  background: rgba(0, 200, 5, 0.12);
+  border-color: rgba(0, 200, 5, 0.35);
+}
+
+.s2-pill.down {
+  background: rgba(255, 80, 0, 0.12);
+  border-color: rgba(255, 80, 0, 0.35);
+}
+
+.s2-pill.flat {
+  background: rgba(196, 165, 116, 0.08);
+}
+
+.s2-pill-book {
+  font-size: 0.82rem;
+  color: var(--bone);
+}
+
+.s2-pill-pct {
+  font-size: 0.72rem;
+  margin-top: 0.08rem;
+}
+
+.s2-pill.up .s2-pill-pct {
+  color: #00c805;
+}
+
+.s2-pill.down .s2-pill-pct {
+  color: #ff5000;
+}
+
+.s2-pill.flat .s2-pill-pct {
+  color: var(--worn);
+}
+
+@media (max-width: 640px) {
+  .s2-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "id pill"
+      "spark spark";
+    row-gap: 0.45rem;
+  }
+
+  .s2-id {
+    grid-area: id;
+  }
+
+  .s2-spark-wrap {
+    grid-area: spark;
+    justify-content: flex-start;
+    padding-left: 2.8rem;
+  }
+
+  .s2-pill {
+    grid-area: pill;
+  }
+}

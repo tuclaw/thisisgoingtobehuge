@@ -612,6 +612,14 @@ function copyStatic() {
   }
 }
 
+function writeSeason2Board(destDir) {
+  const season2Path = join(root, "data", "season2.json");
+  if (!existsSync(season2Path)) return;
+  const board = JSON.parse(read(season2Path));
+  if (!board || !Array.isArray(board.survivors) || board.survivors.length < 1) return;
+  write(join(destDir, "season2.json"), JSON.stringify(board, null, 2) + "\n");
+}
+
 function survivorRedirectHtml(slug, name) {
   const dest = `../index.html#castaway=${slug}`;
   return `<!DOCTYPE html>
@@ -668,6 +676,7 @@ export function build(rootDir = root, destDir = dist) {
   if (existsSync(destDir)) rmSync(destDir, { recursive: true, force: true });
   mkdirSync(destDir, { recursive: true });
   writeBoard(board, join(destDir, "season1.json"));
+  writeSeason2Board(destDir);
   write(join(destDir, "season.fallback.js"), `window.__SEASON_FALLBACK__ = ${JSON.stringify(board)};\n`);
 
   write(join(destDir, "index.html"), injectFallback(read(join(templates, "island.html")), ""));
