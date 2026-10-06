@@ -64,10 +64,10 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
 | `fire` | Fire | Dinner fire window (`#fire`) |
 | `tribal` | Tribal | Tribal council nights (`#tribal`; votes / parchment / exits) |
 | `alliances` | Alliances | Private multi-person rooms |
-| `dms` | Direct messages | 1:1 threads; `label` is human title |
+| `dms` | DMs | Private Slack channels named `dm-<a>-<b>` (not Slack IMs); `label` is audience-facing participant names |
 | `control` | Control room | Omitted unless `options.includeControlRoom` |
 
-`kind: "dm"` channels should list `participantIds` (two or more member ids) instead of `memberIds`.
+`kind: "dm"` channels should list `participantIds` (exactly two contestant ids), use `section: "dms"`, and set `name` to the workspace channel slug (`dm-<slug-a>-<slug-b>`). Island Chatter lists them under **DMs**, not as `#` channels.
 
 ## Ingest (deferred)
 

@@ -9,7 +9,7 @@
     { key: "fire", label: "Fire" },
     { key: "tribal", label: "Tribal" },
     { key: "alliances", label: "Alliances" },
-    { key: "dms", label: "Direct messages" },
+    { key: "dms", label: "DMs" },
     { key: "control", label: "Control room" }
   ];
 

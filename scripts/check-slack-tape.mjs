@@ -93,6 +93,17 @@ for (const ch of control) {
   check(ch.audienceMirror === false, `control channel ${ch.id} should set audienceMirror: false`);
 }
 
+for (const ch of tape.channels) {
+  if (ch.kind !== "dm") continue;
+  check(ch.section === "dms", `DM channel ${ch.id} must use section dms`);
+  check(
+    /^dm-[a-z0-9-]+-[a-z0-9-]+$/.test(String(ch.name || "")),
+    `DM channel ${ch.id} name must be dm-<a>-<b> (got ${ch.name})`
+  );
+  const parts = ch.participantIds || [];
+  check(parts.length === 2, `DM channel ${ch.id} must list exactly two participantIds`);
+}
+
 if (errors.length) {
   console.error("check-slack-tape failed:\n" + errors.map((e) => "  - " + e).join("\n"));
   process.exit(1);
