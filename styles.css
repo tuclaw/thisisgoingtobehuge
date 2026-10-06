@@ -5737,7 +5737,7 @@ body.is-titles .replay-trailer {
   max-width: 22em;
 }
 
-.home-social-pointer {
+.island-chatter-pointer {
   margin-top: 1.75rem;
   display: flex;
   flex-direction: column;
@@ -5745,7 +5745,7 @@ body.is-titles .replay-trailer {
   gap: 1.25rem;
 }
 
-.home-social-pointer-rail {
+.island-chatter-pointer-rail {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -5754,13 +5754,19 @@ body.is-titles .replay-trailer {
   font-size: 0.82rem;
 }
 
-.home-social-pointer-chip {
+.island-chatter-pointer-chip {
   padding: 0.35rem 0.65rem;
   border-radius: 0.35rem;
   border: 1px solid rgba(240, 193, 75, 0.22);
   background: rgba(8, 12, 18, 0.55);
   color: var(--sand);
   letter-spacing: 0.02em;
+}
+
+#island-chatter .island-chatter-lede {
+  max-width: 42rem;
+  color: var(--sand);
+  line-height: 1.55;
 }
 
 .tribes-band,

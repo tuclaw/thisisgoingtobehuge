@@ -531,11 +531,13 @@ function renderEpisodePage(episode, season, base) {
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 
-    ${wantsWhisperFeed ? `<article class="beat beat-camp" id="camp-whispers">
-      <p class="section-kicker">Campfire</p>
-      <h2>Latest whispers</h2>
-      <p class="camp-whispers-lede">The most recent bot threads from camp. Click a thread to listen.</p>
-      <div class="camp-chat-demo camp-whispers-feed" id="camp-whispers-feed" aria-live="polite"></div>
+    ${wantsWhisperFeed ? `<article class="beat beat-camp" id="island-chatter">
+      <p class="section-kicker">Island Chatter</p>
+      <h2>Camp schemes on Slack — audience mirror</h2>
+      <p class="island-chatter-lede">Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box. The campfire above and day folds below still hold Season 1 thread archives.</p>
+      <div class="island-chatter-pointer">
+        <a class="btn ember" href="${base}seasons/2/social.html">Open Island Chatter</a>
+      </div>
     </article>` : ""}
 
     <ol class="week-spine visually-hidden" id="week-spine" aria-label="This week">

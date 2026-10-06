@@ -50,7 +50,7 @@ if (appJs.includes("leads the week") && /renderTradeTape[\s\S]{0,400}leads the w
 const booksIdx = builder.indexOf('id="latest-books"');
 const tapeIdx = builder.indexOf('id="trade-tape"');
 const booksEnd = builder.indexOf("</article>", booksIdx);
-const whispersIdx = builder.indexOf('id="camp-whispers"');
+const whispersIdx = builder.indexOf('id="island-chatter"');
 if (!(booksIdx > -1 && tapeIdx > booksIdx && booksEnd > tapeIdx)) {
   fail("episode renderer must put #trade-tape inside #latest-books as a tab");
 }
@@ -61,7 +61,7 @@ if (!builder.includes('data-books-tab="books"') || !builder.includes('data-books
   fail("latest books must tab Books and Buys and sells");
 }
 if (whispersIdx > -1 && !(booksEnd < whispersIdx)) {
-  fail("latest books must stay above #camp-whispers");
+  fail("latest books must stay above #island-chatter");
 }
 if (!builder.includes("Each mark is a real fill. An empty lane means they sat.")) {
   fail("trade tape must keep the short sit-vs-trade lede");
