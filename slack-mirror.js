@@ -187,19 +187,20 @@
       html += '<p class="slack-mirror-section-label">' + escapeHtml(label) + "</p>";
       for (const ch of list) {
         const display = ch.label || ch.name;
-        const prefixed =
-          ch.kind === "dm"
-            ? display
-            : channelPrefix(ch) + (display.startsWith("#") ? display.slice(1) : display);
+        const name =
+          ch.kind === "dm" ? display : String(display).replace(/^#/, "");
         html +=
           '<button type="button" class="slack-mirror-channel" data-channel-id="' +
           escapeHtml(ch.id) +
           '">' +
-          '<span class="slack-mirror-channel-prefix">' +
-          (ch.kind === "dm" ? "" : escapeHtml(channelPrefix(ch))) +
-          "</span>" +
-          escapeHtml(ch.kind === "dm" ? display : display.replace(/^#/, "")) +
-          "</button>";
+          (ch.kind === "dm"
+            ? ""
+            : '<span class="slack-mirror-channel-prefix">' +
+              escapeHtml(channelPrefix(ch)) +
+              "</span>") +
+          '<span class="slack-mirror-channel-name">' +
+          escapeHtml(name) +
+          "</span></button>";
       }
     }
     return html;

@@ -1,5 +1,9 @@
 /* Season 2 — read-only Slack-style social mirror (audience) */
 
+body.slack-mirror-page::before {
+  display: none;
+}
+
 .slack-mirror-page {
   --slack-bg: #1a1d21;
   --slack-sidebar: #121016;
@@ -14,6 +18,14 @@
   background: var(--slack-bg);
   color: var(--slack-text);
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.slack-mirror-hero,
+.slack-mirror-shell {
+  position: relative;
+  z-index: 1;
 }
 
 .slack-mirror-page .torch-nav {
@@ -117,6 +129,7 @@
   text-align: left;
   cursor: pointer;
   border-radius: 0;
+  color: var(--slack-text);
 }
 
 .slack-mirror-channel:hover {
@@ -132,6 +145,14 @@
 .slack-mirror-channel-prefix {
   opacity: 0.65;
   font-weight: 500;
+  flex-shrink: 0;
+}
+
+.slack-mirror-channel-name {
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .slack-mirror-main {
