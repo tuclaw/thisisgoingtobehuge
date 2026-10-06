@@ -42,12 +42,19 @@ for (const ch of tape.channels) {
   }
 }
 
+const living = (tape.members || []).filter((m) => m.status === "living");
+check(living.length === 10, `Season 2 launch expects 10 living members (got ${living.length})`);
+
 const camp = tape.channels.find((c) => c.id === "camp");
 if (camp && camp.memberIds) {
   check(
-    camp.memberIds.length >= 10,
-    "#camp should list at least 10 living members for mid-season launch framing"
+    camp.memberIds.length === living.length,
+    "#camp memberIds should match all living members"
   );
+  const livingIds = new Set(living.map((m) => m.id));
+  for (const id of camp.memberIds) {
+    check(livingIds.has(id), `#camp lists non-living or unknown member ${id}`);
+  }
 }
 
 for (const msg of tape.messages) {

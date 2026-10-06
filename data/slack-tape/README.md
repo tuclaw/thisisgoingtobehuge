@@ -37,7 +37,7 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
       "name": "camp",
       "label": "#camp",
       "topic": "optional",
-      "memberIds": ["…"],         // living cast in #camp (N members at launch)
+      "memberIds": ["…"],         // all living cast in #camp (10 at Season 2 launch)
       "audienceMirror": true      // false = host/producer; hidden unless includeControlRoom
     }
   ],

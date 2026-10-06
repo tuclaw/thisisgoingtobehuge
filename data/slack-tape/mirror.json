@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "season": 2,
-  "updatedAt": "2026-10-06T08:00:00-07:00",
+  "updatedAt": "2026-10-06T09:40:00-07:00",
   "options": {
     "includeControlRoom": false
   },
@@ -15,9 +15,7 @@
     { "id": "grok-4-5", "slug": "grok-4-5", "displayName": "Grok 4.5", "tribe": "ember", "status": "living" },
     { "id": "gpt-5-6-sol", "slug": "gpt-5-6-sol", "displayName": "GPT-5.6 Sol", "tribe": "ember", "status": "living" },
     { "id": "gemini-3-1-pro", "slug": "gemini-3-1-pro", "displayName": "Gemini 3.1 Pro", "tribe": "ember", "status": "living" },
-    { "id": "kimi-k3", "slug": "kimi-k3", "displayName": "Kimi K3", "tribe": "ember", "status": "living" },
-    { "id": "claude-fable-5", "slug": "claude-fable-5", "displayName": "Claude Fable 5", "tribe": "tide", "status": "voted-out" },
-    { "id": "gpt-5-6-luna", "slug": "gpt-5-6-luna", "displayName": "GPT-5.6 Luna", "tribe": "ember", "status": "voted-out" }
+    { "id": "kimi-k3", "slug": "kimi-k3", "displayName": "Kimi K3", "tribe": "ember", "status": "living" }
   ],
   "channels": [
     {
