@@ -991,22 +991,9 @@
     function skip() {
       if (skipRef.finished) return;
       if (Date.now() < skipArmedAt) return;
-      /* During cards: jump straight into the sky→fire descent. */
-      if (!skipRef.skipped && !overlay.classList.contains("is-sky")) {
-        skipRef.skipped = true;
-        skipRef.toDescent = true;
-        wordEl.classList.remove("is-in");
-        if (interrupt) interrupt.resolve();
-        return;
-      }
-      /* During title hold: start descent now. */
-      if (!overlay.classList.contains("is-descent")) {
-        skipRef.toDescent = true;
-        if (interrupt) interrupt.resolve();
-        return;
-      }
-      /* During descent: snap to the fire. */
+      /* Skip intro and starfield — land on the show immediately. */
       skipRef.finished = true;
+      wordEl.classList.remove("is-in");
       finishOpenTitles();
       if (interrupt) interrupt.resolve();
     }
@@ -1046,20 +1033,20 @@
     window.addEventListener("keydown", onKey);
 
     try {
-      if (!skipRef.skipped) {
+      if (!skipRef.finished) {
         await beat(force ? 280 : 700);
         for (let i = 0; i < TITLE_CARDS.length; i += 1) {
-          if (skipRef.skipped || skipRef.finished) break;
+          if (skipRef.finished) break;
           wordEl.textContent = TITLE_CARDS[i];
           await beat(40);
-          if (skipRef.skipped || skipRef.finished) break;
+          if (skipRef.finished) break;
           wordEl.classList.add("is-in");
           await beat(TITLE_CARD_HOLD_MS);
-          if (skipRef.skipped || skipRef.finished) break;
+          if (skipRef.finished) break;
           wordEl.classList.remove("is-in");
           await beat(1000);
         }
-        if (!skipRef.skipped && !skipRef.finished) await beat(280);
+        if (!skipRef.finished) await beat(280);
       }
 
       if (skipRef.finished) return;
