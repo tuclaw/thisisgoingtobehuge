@@ -553,6 +553,12 @@
   }
 
   function mountCampChat(root, conversation) {
+    if (
+      document.documentElement &&
+      document.documentElement.dataset.page === "episode"
+    ) {
+      return { open: function () {}, close: function () {}, isOpen: false };
+    }
     const player = new CampChatPlayer(root, conversation);
     root._campChatPlayer = player;
     return player;

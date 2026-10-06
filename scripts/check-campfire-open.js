@@ -23,7 +23,7 @@ if (!html.includes("campfire-open.js")) {
 if (html.includes('id="beach-trailer"') || html.includes("beach-trailer camp-chat-demo")) {
   throw new Error("templates/island.html must not keep the home beach iMessage trailer");
 }
-if (!html.includes('href="seasons/2/social.html"') || !html.includes("Open Island Chatter")) {
+if (!html.includes('href="seasons/2/social.html"')) {
   throw new Error("templates/island.html must link to Island Chatter from #beach");
 }
 if (!html.includes("section-kicker reveal\">Island Chatter")) {

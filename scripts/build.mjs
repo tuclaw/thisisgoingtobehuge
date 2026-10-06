@@ -294,49 +294,27 @@ function beatHtml(beat, base, opts = {}) {
   }
   if (beat.type === "lunch-chats" || beat.type === "dinner-fires") {
     const audience = beat.audienceCut ? `<p class="audience-cut">${escapeHtml(beat.audienceCut)}</p>` : "";
-    const gridClass = beat.type === "dinner-fires" ? "fire-chats" : "lunch-chats";
     const threads = (beat.threads || [])
       .map((thread) => {
-        const sceneKicker = thread.kicker || (beat.type === "lunch-chats" ? "Audience only" : "");
-        const sceneKickerHtml = sceneKicker ? `<p class="camp-scene-kicker">${escapeHtml(sceneKicker)}</p>` : "";
-        return `<article class="camp-scene ${escapeHtml(thread.tribeId)}" id="${escapeHtml(thread.id)}">
-              <div class="camp-scene-embers" aria-hidden="true"></div>
-              <div class="camp-scene-body">
-                ${sceneKickerHtml}
-                <h3>${escapeHtml(thread.heading)}</h3>
-                <p class="camp-scene-desc">${escapeHtml(thread.desc)}</p>
-              </div>
-              <div class="camp-chat-trigger-wrap">
-                <button type="button" class="camp-chat-trigger" aria-expanded="false" aria-controls="${escapeHtml(thread.panelId)}">
-                  <span class="camp-chat-trigger-icon" aria-hidden="true">💬</span>
-                  <span class="camp-chat-trigger-label">${escapeHtml(thread.triggerLabel)}</span>
-                  <span class="camp-chat-trigger-pulse" aria-hidden="true"></span>
-                </button>
-              </div>
-              <div class="camp-chat-panel" id="${escapeHtml(thread.panelId)}" role="dialog" aria-label="${escapeHtml(thread.ariaLabel)}">
-                <div class="camp-chat-header">
-                  <button type="button" class="camp-chat-back" aria-label="Close thread">‹</button>
-                  <div class="camp-chat-header-meta">
-                    <p class="camp-chat-title">${escapeHtml(thread.title)}</p>
-                    <p class="camp-chat-subtitle">${escapeHtml(thread.subtitle)}</p>
-                  </div>
-                </div>
-                <div class="camp-chat-thread"></div>
-                <div class="camp-chat-footer">
-                  <button type="button" class="camp-chat-replay">Replay thread</button>
-                </div>
-              </div>
-            </article>`;
+        return `<li class="conversation-archive-thread ${escapeHtml(thread.tribeId)}" id="${escapeHtml(thread.id)}">
+              <strong>${escapeHtml(thread.heading)}</strong>
+              <span>${escapeHtml(thread.desc)}</span>
+            </li>`;
       })
-      .join("\n\n            ");
+      .join("\n            ");
+    const socialBase = base || "../../";
     return `<article class="beat"${id}>
           ${audience}
           ${kicker}
           ${title}
           ${body}
-          <div class="camp-chat-demo ${gridClass}">
+          <ul class="conversation-archive-index" aria-label="Archived conversation threads">
             ${threads}
-          </div>
+          </ul>
+          <p class="conversation-archive-note">Exact host tapes for this beat still ship in the episode scripts — no iMessage replay UI on the page.</p>
+          <p class="episode-social-chat-pointer">
+            <a class="btn ghost" href="${socialBase}seasons/2/social.html">Browse Social Chat →</a>
+          </p>
         </article>`;
   }
   return `<article class="beat"${id}>
@@ -393,7 +371,7 @@ function renderEpisodePage(episode, season, base) {
   const focusHref = "#week-board";
   const wantsCamp = episodeWantsCamp(episode);
   const wantsWhisperFeed = wantsCamp && episode.conversationFeed !== false;
-  const lunchCss = `\n  <link rel="stylesheet" href="${base}camp-chat.css" />`;
+  const lunchCss = "";
   const seasonDir = join(root, "seasons/1");
   const manifest = loadTapeManifest(root);
   const lunchScripts = tapeScriptsForEpisode(episode, seasonDir);
@@ -461,7 +439,7 @@ function renderEpisodePage(episode, season, base) {
     </nav>
   </header>
 
-  <section class="episode-hero episode-campfire-hero" id="episode"${wantsWhisperFeed ? ' data-conversation-feed="conversations.json"' : ""}>
+  <section class="episode-hero episode-campfire-hero" id="episode">
     <div class="hero-stage" aria-hidden="true">
       <div class="hero-glow"></div>
       <div class="hero-veil"></div>
@@ -475,24 +453,12 @@ function renderEpisodePage(episode, season, base) {
         <span></span>
       </a>
     </div>
-    <div class="campfire-theater" id="campfire-theater" data-mode="feed" data-count="0">
-      <p class="visually-hidden" id="campfire-status">A campfire lights. Message bubbles fade in around it — click one to hear the latest bot thread.</p>
+    <div class="campfire-theater" id="campfire-theater" data-mode="fire" data-count="0">
+      <p class="visually-hidden" id="campfire-status">Campfire for the episode — living fire only; camp social is on Island Chatter.</p>
       <div class="campfire-pit" aria-hidden="true">
         <div class="campfire-heat"></div>
         <canvas class="campfire-canvas" id="campfire-canvas"></canvas>
         <div class="campfire-logs"></div>
-      </div>
-      <div class="campfire-pings" id="campfire-pings" aria-label="Latest camp conversations"></div>
-      <div class="campfire-imessage" id="campfire-imessage">
-        <div class="campfire-imessage-head">
-          <button type="button" class="campfire-imessage-close" id="campfire-imessage-close" aria-label="Close conversation">‹</button>
-          <div class="campfire-imessage-head-meta">
-            <div class="campfire-imessage-faces" id="campfire-imessage-faces" aria-hidden="true"></div>
-            <p class="campfire-imessage-title" id="campfire-imessage-title">Messages</p>
-            <p class="campfire-imessage-sub" id="campfire-imessage-sub">private thread</p>
-          </div>
-        </div>
-        <div class="campfire-thread" id="campfire-thread" aria-live="polite"></div>
       </div>
     </div>
     ${episode.heroNote ? `<div class="hero-inner">
@@ -536,7 +502,7 @@ function renderEpisodePage(episode, season, base) {
       <h2>Camp schemes on Slack — audience mirror</h2>
       <p class="island-chatter-lede">Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box. The campfire above and day folds below still hold Season 1 thread archives.</p>
       <div class="island-chatter-pointer">
-        <a class="btn ember" href="${base}seasons/2/social.html">Open Island Chatter</a>
+        <a class="btn ember" href="${base}seasons/2/social.html">Browse Social Chat →</a>
       </div>
     </article>` : ""}
 
@@ -555,7 +521,6 @@ function renderEpisodePage(episode, season, base) {
   <script src="${base}season.fallback.js"></script>
   <script src="${base}tribal-spoiler-burn.js"></script>
   <script src="${base}lab-logos.js"></script>
-  <script src="${base}camp-chat.js"></script>
   <script src="${base}campfire-open.js"></script>${tapeGlobalTag}${lunchScripts}
   <script src="${base}episode-campfire.js"></script>
   <script src="${base}app.js"></script>
