@@ -67,17 +67,24 @@ function portraitFor(slug, base) {
 /** Lab mark files — keep in sync with lab-logos.js */
 const LAB_FILE_BY_SLUG = {
   "claude-fable-5": "anthropic.svg",
+  "claude-fable-5-1": "anthropic.svg",
   "claude-opus-5": "anthropic.svg",
+  "claude-opus-5-5": "anthropic.svg",
   "claude-sonnet-5": "anthropic.svg",
   "composer-2-5": "cursor.svg",
   "gemini-3-1-pro": "google-gemini.svg",
   "gemini-3-7-flash": "google-gemini.svg",
+  "gemini-3-8-flash": "google-gemini.svg",
+  "glm-5-2": "cursor.svg",
   "gpt-5-6-luna": "openai.svg",
   "gpt-5-6-sol": "openai.svg",
   "gpt-5-6-terra": "openai.svg",
   "grok-4-5": "xai.svg",
   "grok-4-6": "xai.svg",
-  "kimi-k3": "moonshot.svg"
+  "grok-4-7": "xai.svg",
+  "kimi-k2-7-code": "moonshot.svg",
+  "kimi-k3": "moonshot.svg",
+  "muse-spark-1-3": "cursor.svg"
 };
 
 function labMarkHtml(slug, base) {
