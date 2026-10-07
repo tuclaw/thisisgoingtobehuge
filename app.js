@@ -21,12 +21,25 @@ function assetUrl(path) {
   return assetBase() + raw;
 }
 
+function pageSeasonNumber() {
+  const raw = document.documentElement.getAttribute("data-season");
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? n : 1;
+}
+
 function seasonJsonUrls() {
   const base = assetBase();
+  const seasonNum = pageSeasonNumber();
+  const file = seasonNum === 2 ? "season2.json" : "season1.json";
   const urls = [];
-  if (base) urls.push(base + "season1.json");
-  urls.push("/season1.json");
-  urls.push("season1.json");
+  if (base) urls.push(base + file);
+  urls.push("/" + file);
+  urls.push(file);
+  if (seasonNum === 2) {
+    if (base) urls.push(base + "data/season2.json");
+    urls.push("/data/season2.json");
+    urls.push("data/season2.json");
+  }
   return [...new Set(urls)];
 }
 
@@ -281,6 +294,116 @@ function tribeCampBanner(tribeOrId) {
 
 function tribeLine(s, tribe) {
   return tribeChromeName(tribe || (s && s.tribeId));
+}
+
+function survivorSubtitle(s) {
+  if (!s) return "";
+  const archetype = s.archetype ? String(s.archetype).trim() : "";
+  if (archetype) return archetype;
+  const tribe = tribeLine(s, null);
+  return tribe || "";
+}
+
+function episodePctOf(s) {
+  if (s && typeof s.episodePct === "number" && !Number.isNaN(s.episodePct)) return s.episodePct;
+  return weekPctOf(s);
+}
+
+function survivorEpisodeBookSeries(season, s) {
+  if (s && Array.isArray(s.episodeBookSeries) && s.episodeBookSeries.length) {
+    return s.episodeBookSeries.map((v) => (typeof v === "number" ? v : Number(v)));
+  }
+  const start =
+    typeof season.startingBookUsd === "number" && !Number.isNaN(season.startingBookUsd)
+      ? season.startingBookUsd
+      : 200;
+  const id = s && s.id;
+  const snaps = (season.snapshots || []).filter((snap) => snap && snap.books && id && snap.books[id]);
+  if (!snaps.length) {
+    const book = typeof s.bookUsd === "number" && !Number.isNaN(s.bookUsd) ? s.bookUsd : start;
+    return [start, book];
+  }
+  const values = snaps.map((snap) => {
+    const row = snap.books[id];
+    return typeof row.bookUsd === "number" && !Number.isNaN(row.bookUsd) ? row.bookUsd : start;
+  });
+  if (values[0] !== start) values.unshift(start);
+  return values;
+}
+
+function sparklineSvg(values, trendClass) {
+  const nums = (values || []).filter((v) => typeof v === "number" && !Number.isNaN(v));
+  if (!nums.length) nums.push(200, 200);
+  const w = 88;
+  const h = 28;
+  const pad = 2;
+  const min = Math.min(...nums);
+  const max = Math.max(...nums);
+  const span = max - min || 1;
+  const innerW = w - pad * 2;
+  const innerH = h - pad * 2;
+  const pts = nums.map((v, i) => {
+    const x = pad + (nums.length === 1 ? innerW / 2 : (i / (nums.length - 1)) * innerW);
+    const y = pad + innerH - ((v - min) / span) * innerH;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const path = pts.length === 1 ? `M ${pts[0]} L ${pts[0]}` : `M ${pts.join(" L ")}`;
+  const cls = trendClass || "flat";
+  return `<svg class="s2-spark ${cls}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true" focusable="false"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function sparkTrendClass(values) {
+  const nums = (values || []).filter((v) => typeof v === "number" && !Number.isNaN(v));
+  if (nums.length < 2) return "flat";
+  const delta = nums[nums.length - 1] - nums[0];
+  if (delta > 0) return "up";
+  if (delta < 0) return "down";
+  return "flat";
+}
+
+function s2PerformanceRowHtml(s, season, index) {
+  const series = survivorEpisodeBookSeries(season, s);
+  const trend = sparkTrendClass(series);
+  const book = typeof s.bookUsd === "number" ? s.bookUsd : season.startingBookUsd || 200;
+  const epPct = episodePctOf(s);
+  const pillClass = chgClass(epPct);
+  const face = s.portrait
+    ? `<span class="s2-face"><img src="${escapeHtml(assetUrl(s.portrait))}" alt=""></span>`
+    : `<span class="s2-face"><span class="s2-mono">${escapeHtml(s.monogram || modelOf(s).slice(0, 1) || "?")}</span></span>`;
+  return `<div class="s2-row" style="--i:${index}">
+    <div class="s2-id">
+      ${face}
+      <div class="s2-names">
+        <strong>${escapeHtml(modelOf(s))}</strong>
+        <em>${escapeHtml(survivorSubtitle(s))}</em>
+      </div>
+    </div>
+    <div class="s2-spark-wrap">${sparklineSvg(series, trend)}</div>
+    <div class="s2-pill ${pillClass}">
+      <span class="s2-pill-book">${money(book)}</span>
+      <span class="s2-pill-pct">${pct(epPct)}</span>
+    </div>
+  </div>`;
+}
+
+function renderSeason2Performance(season) {
+  const root = document.getElementById("s2-performance");
+  if (!root) return;
+  const banner = document.getElementById("season-banner");
+  if (banner && season.statusLabel) banner.textContent = season.statusLabel;
+  const kicker = document.getElementById("s2-standings-kicker");
+  const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 200;
+  const given =
+    typeof season.islandGivenUsd === "number" ? season.islandGivenUsd : start * (season.survivors || []).length;
+  if (kicker) {
+    kicker.textContent = `Ten independent $${start} books · $${given.toLocaleString("en-US")} on the island · episode sparklines fill in as remakes post marks.`;
+  }
+  const ranked = [...(season.survivors || [])].sort((a, b) => {
+    const ep = episodePctOf(b) - episodePctOf(a);
+    if (ep !== 0) return ep;
+    return (b.bookUsd || 0) - (a.bookUsd || 0);
+  });
+  root.innerHTML = ranked.map((s, i) => s2PerformanceRowHtml(s, season, i)).join("");
 }
 
 function modelBadge(s, tiny) {
@@ -4494,6 +4617,7 @@ function episodeFileHref(ep) {
 function renderSeasonHub(season) {
   const list = document.getElementById("episode-list");
   if (!list) return;
+  if (Number(season.season) === 2 && list.querySelector("a, .episode-card")) return;
   const byNum = new Map();
   (Array.isArray(season.episodes) ? season.episodes : []).forEach((ep) => {
     byNum.set(ep.number, ep);
@@ -4564,6 +4688,7 @@ function render(season, sourceNote) {
   renderLettersFromHome(season);
   renderSurvivor(season);
   renderStandings(season);
+  renderSeason2Performance(season);
   renderSeasonHub(season);
   renderEpisode(season);
   renderMoneyJourney(season);
