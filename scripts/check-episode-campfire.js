@@ -91,6 +91,15 @@ if (!episodeHtml.includes('id="trade-tape"') || !episodeHtml.includes("trade-tap
 if (!episodeHtml.includes('id="island-chatter"') || !episodeHtml.includes("Browse Island Chatter")) {
   throw new Error("episode renderer missing Island Chatter pointer below week-board");
 }
+if (!episodeHtml.includes("See how the contestants are chatting to each other and plotting")) {
+  throw new Error("episode Island Chatter pointer must use contestant chatting/plotting copy");
+}
+if (episodeHtml.includes("Camp schemes on Slack") || episodeHtml.includes("audience mirror")) {
+  throw new Error("episode Island Chatter pointer must not use Slack-scheme / audience-mirror chrome");
+}
+if (episodeHtml.includes("island-chatter-lede") || episodeHtml.includes("No compose box")) {
+  throw new Error("episode Island Chatter pointer must not print a Slack-channel lede");
+}
 if (episodeHtml.includes('id="camp-whispers"') || episodeHtml.includes("camp-whispers-feed")) {
   throw new Error("episode renderer must not keep the iMessage whispers feed below week-board");
 }
