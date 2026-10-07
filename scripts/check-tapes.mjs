@@ -180,10 +180,10 @@ for (const tape of manifest) {
       check(`${label}:html-feed-global`, html.includes(tape.global));
     }
     if (episode.conversationFeed === false) {
-      check(`${label}:html-no-whispers`, !html.includes('id="camp-whispers"') && !html.includes("data-conversation-feed"));
+      check(`${label}:html-no-whispers`, !html.includes('id="island-chatter"') && !html.includes("data-conversation-feed"));
     }
     if (tape.whisperFeed) {
-      check(`${label}:html-whispers`, html.includes('id="camp-whispers"'));
+      check(`${label}:html-whispers`, html.includes('id="island-chatter"'));
     }
     for (const id of threadIds) {
       check(`${label}:html-thread:${id}`, html.includes(`id="${id}"`));

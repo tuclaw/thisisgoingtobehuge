@@ -10,26 +10,30 @@ const openJs = readFileSync(join(root, "campfire-open.js"), "utf8");
 const fridayLunchJs = readFileSync(join(root, "seasons/1/e01-friday-lunch.js"), "utf8");
 const feed = JSON.parse(readFileSync(join(root, "seasons/1/conversations.json"), "utf8"));
 
-const requiredIds = [
-  "campfire-theater",
-  "campfire-canvas",
-  "campfire-pings",
-  "campfire-thread",
-  "campfire-imessage",
-  "campfire-imessage-close",
-  "campfire-imessage-faces"
-];
+const requiredIds = ["campfire-theater", "campfire-canvas"];
 requiredIds.forEach((id) => {
   if (!episodeHtml.includes('id="' + id + '"')) {
     throw new Error("episode renderer missing #" + id);
   }
 });
+if (episodeHtml.includes('id="campfire-pings"') || episodeHtml.includes('id="campfire-imessage"')) {
+  throw new Error("episode renderer must not ship hero iMessage ping/mockup chrome");
+}
+if (episodeHtml.includes("camp-chat-demo") || episodeHtml.includes("camp-chat-trigger")) {
+  throw new Error("episode renderer must not ship lunch/dinner iMessage bubble UI");
+}
+if (!episodeHtml.includes("conversation-archive-index") || !episodeHtml.includes("Browse Island Chatter")) {
+  throw new Error("episode renderer must index archived threads and link to Island Chatter");
+}
 
-["camp-chat.js", "campfire-open.js", "episode-campfire.js"].forEach((src) => {
+["campfire-open.js", "episode-campfire.js"].forEach((src) => {
   if (!episodeHtml.includes(src)) {
     throw new Error("episode renderer does not load " + src);
   }
 });
+if (episodeHtml.includes('<script src="${base}camp-chat.js"></script>')) {
+  throw new Error("episode renderer must not load camp-chat.js (iMessage UI retired on episodes)");
+}
 
 const lunchBeforeCampfire =
   episodeHtml.indexOf("${lunchScripts}") >= 0 &&
@@ -38,8 +42,8 @@ if (!lunchBeforeCampfire) {
   throw new Error("episode renderer must load day lunch/dinner scripts before episode-campfire.js");
 }
 
-if (!episodeHtml.includes('data-mode="feed"')) {
-  throw new Error("episode renderer campfire theater missing data-mode=feed");
+if (!episodeHtml.includes('data-mode="fire"')) {
+  throw new Error("episode renderer campfire theater must use data-mode=fire (no hero iMessage feed)");
 }
 if (!episodeHtml.includes("episode-campfire-hero")) {
   throw new Error("episode renderer missing episode-campfire-hero landing");
@@ -84,8 +88,11 @@ if (!episodeHtml.includes('id="week-board"')) {
 if (!episodeHtml.includes('id="trade-tape"') || !episodeHtml.includes("trade-tape-root") || !episodeHtml.includes("books-board-tabs")) {
   throw new Error("episode renderer missing books/tape tabs on latest books");
 }
-if (!episodeHtml.includes('id="camp-whispers"') || !episodeHtml.includes("camp-whispers-feed")) {
-  throw new Error("episode renderer missing recent camp whispers section below week-board");
+if (!episodeHtml.includes('id="island-chatter"') || !episodeHtml.includes("Browse Island Chatter")) {
+  throw new Error("episode renderer missing Island Chatter pointer below week-board");
+}
+if (episodeHtml.includes('id="camp-whispers"') || episodeHtml.includes("camp-whispers-feed")) {
+  throw new Error("episode renderer must not keep the iMessage whispers feed below week-board");
 }
 if (!episodeHtml.includes("wantsWhisperFeed") || !episodeHtml.includes("conversationFeed !== false")) {
   throw new Error("episode renderer must gate latest whispers on conversationFeed, not just dinner-fires");
@@ -1069,20 +1076,14 @@ if (!stylesCss.includes("--ping-anchor-y") || !stylesCss.includes('.campfire-pin
 if (!stylesCss.includes(".campfire-theater.is-reading .campfire-ping[data-slot=\"2\"]")) {
   throw new Error("styles.css must only park lower pings while reading, not always on mobile");
 }
-if (!episodeJs.includes("camp-whispers-feed") || !episodeJs.includes("mountRecentConversations")) {
-  throw new Error("episode-campfire.js missing recent whispers section mount");
+if (!episodeJs.includes("mountRecentConversations")) {
+  throw new Error("episode-campfire.js missing mountRecentConversations helper");
 }
-if (/#camp-whispers \.camp-scene\s*\{[^}]*min-height:\s*([1-9]\d{2,}|[3-9]\d)px/.test(stylesCss)) {
-  throw new Error("#camp-whispers cards must stay compact; do not reserve a standing min-height");
+if (!episodeHtml.includes("seasons/2/social.html")) {
+  throw new Error("episode renderer Island Chatter pointer must link to seasons/2/social.html");
 }
-if (!stylesCss.includes("#camp-whispers .camp-whispers-feed") || !stylesCss.includes("align-items: start")) {
-  throw new Error("#camp-whispers feed must align-items:start so a closed neighbor does not stretch");
-}
-if (!stylesCss.includes("#camp-whispers .camp-chat-panel.is-open")) {
-  throw new Error("#camp-whispers chat panel must grow in-flow when the thread is opened");
-}
-if (!stylesCss.includes("grid-template-columns: minmax(0, 1fr) auto")) {
-  throw new Error("#camp-whispers cards must keep the 4 messages trigger on the heading row");
+if (!stylesCss.includes(".island-chatter-pointer")) {
+  throw new Error("styles.css missing Island Chatter pointer styles");
 }
 if (
   !episodeJs.includes("resolveLatestConversations") ||

@@ -20,8 +20,20 @@ if (html.includes('id="campfire-theater"') || html.includes("campfire-canvas")) 
 if (!html.includes("campfire-open.js")) {
   throw new Error("templates/island.html does not load campfire-open.js");
 }
-if (!html.includes("camp-chat.js")) {
-  throw new Error("templates/island.html does not load camp-chat.js");
+if (html.includes('id="beach-trailer"') || html.includes("beach-trailer camp-chat-demo")) {
+  throw new Error("templates/island.html must not keep the home beach iMessage trailer");
+}
+if (!html.includes('href="seasons/2/social.html"')) {
+  throw new Error("templates/island.html must link to Island Chatter from #beach");
+}
+if (!html.includes("section-kicker reveal\">Island Chatter")) {
+  throw new Error("templates/island.html #beach kicker must be Island Chatter");
+}
+if (!html.includes("Browse Island Chatter")) {
+  throw new Error("templates/island.html #beach must use Browse Island Chatter CTA");
+}
+if (html.includes("camp-chat.js")) {
+  throw new Error("templates/island.html must not load camp-chat.js (home beach trailer retired)");
 }
 if (!chat.includes("playConversation")) {
   throw new Error("camp-chat.js missing playConversation export");

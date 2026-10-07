@@ -5734,7 +5734,81 @@ body.is-titles .replay-trailer {
 }
 
 .beach-band h2 {
-  max-width: 18em;
+  max-width: 22em;
+}
+
+.island-chatter-pointer {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.island-chatter-pointer-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-size: 0.82rem;
+}
+
+.island-chatter-pointer-chip {
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgba(240, 193, 75, 0.22);
+  background: rgba(8, 12, 18, 0.55);
+  color: var(--sand);
+  letter-spacing: 0.02em;
+}
+
+#island-chatter .island-chatter-lede {
+  max-width: 42rem;
+  color: var(--sand);
+  line-height: 1.55;
+}
+
+.conversation-archive-index {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.conversation-archive-thread {
+  padding: 0.85rem 1rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(240, 193, 75, 0.14);
+  background: rgba(8, 12, 18, 0.45);
+}
+
+.conversation-archive-thread strong {
+  display: block;
+  font-family: var(--font-display, "Cinzel", serif);
+  font-size: 1.02rem;
+  color: var(--gold);
+  margin-bottom: 0.25rem;
+}
+
+.conversation-archive-thread span {
+  display: block;
+  color: var(--sand);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.conversation-archive-note {
+  margin: 1rem 0 0;
+  max-width: 42rem;
+  color: var(--worn);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.episode-social-chat-pointer {
+  margin: 1.25rem 0 0;
 }
 
 .tribes-band,

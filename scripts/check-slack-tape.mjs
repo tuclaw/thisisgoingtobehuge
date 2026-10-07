@@ -46,6 +46,7 @@ const living = (tape.members || []).filter((m) => m.status === "living");
 check(living.length === 10, `Season 2 launch expects 10 living members (got ${living.length})`);
 
 const camp = tape.channels.find((c) => c.id === "camp");
+const tribal = tape.channels.find((c) => c.id === "tribal");
 if (camp && camp.memberIds) {
   check(
     camp.memberIds.length === living.length,
@@ -56,6 +57,24 @@ if (camp && camp.memberIds) {
     check(livingIds.has(id), `#camp lists non-living or unknown member ${id}`);
   }
 }
+check(tribal && tribal.audienceMirror === true, "#tribal must exist with audienceMirror: true");
+check(tribal && tribal.section === "tribal", "#tribal section must be tribal");
+if (tribal && tribal.memberIds && camp && camp.memberIds) {
+  check(
+    tribal.memberIds.length === camp.memberIds.length,
+    "#tribal memberIds should match #camp (all living)"
+  );
+  const campSet = new Set(camp.memberIds);
+  for (const id of tribal.memberIds) {
+    check(campSet.has(id), `#tribal member ${id} not in #camp roster`);
+  }
+}
+
+const campIdx = tape.channels.findIndex((c) => c.id === "camp");
+const fireIdx = tape.channels.findIndex((c) => c.id === "fire");
+const tribalIdx = tape.channels.findIndex((c) => c.id === "tribal");
+const allianceIdx = tape.channels.findIndex((c) => c.id === "alliance-tide-line");
+check(campIdx > -1 && fireIdx > campIdx && tribalIdx > fireIdx && allianceIdx > tribalIdx, "channels[] order: camp → fire → tribal → alliances");
 
 for (const msg of tape.messages) {
   check(msg.id && msg.channelId && msg.authorId && msg.ts && msg.text != null, `bad message ${msg.id || "?"}`);
@@ -72,6 +91,17 @@ for (const msg of tape.messages) {
 const control = tape.channels.filter((c) => c.section === "control");
 for (const ch of control) {
   check(ch.audienceMirror === false, `control channel ${ch.id} should set audienceMirror: false`);
+}
+
+for (const ch of tape.channels) {
+  if (ch.kind !== "dm") continue;
+  check(ch.section === "dms", `DM channel ${ch.id} must use section dms`);
+  check(
+    /^dm-[a-z0-9-]+-[a-z0-9-]+$/.test(String(ch.name || "")),
+    `DM channel ${ch.id} name must be dm-<a>-<b> (got ${ch.name})`
+  );
+  const parts = ch.participantIds || [];
+  check(parts.length === 2, `DM channel ${ch.id} must list exactly two participantIds`);
 }
 
 if (errors.length) {

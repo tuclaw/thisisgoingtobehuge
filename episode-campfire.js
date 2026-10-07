@@ -347,18 +347,72 @@
     }
   }
 
+  function initEpisodeCampfireFireOnly(theater, canvas) {
+    const engine = global.CampfireEngine;
+    if (!engine || typeof engine.createCampfire !== "function") {
+      console.warn("CampfireEngine missing — load campfire-open.js before episode-campfire.js");
+      return;
+    }
+    const fire = engine.createCampfire(canvas);
+    const reduce = prefersReducedMotion();
+    const hero = theater.closest(".episode-campfire-hero") || theater.closest(".episode-hero");
+
+    function onResize() {
+      fire.resize();
+    }
+    window.addEventListener("resize", onResize);
+
+    const io =
+      "IntersectionObserver" in window
+        ? new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) fire.start();
+                else fire.stop();
+              });
+            },
+            { threshold: 0, rootMargin: "80px 0px 80px 0px" }
+          )
+        : null;
+    if (io) io.observe(theater);
+    else fire.start();
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) fire.stop();
+      else fire.start();
+    });
+
+    theater.classList.add("is-ready");
+    requestAnimationFrame(() => theater.classList.add("is-lit"));
+    window.setTimeout(
+      () => {
+        if (hero) hero.classList.add("is-copy-in");
+      },
+      reduce ? 80 : 900
+    );
+  }
+
   function initEpisodeCampfire() {
     const theater = document.getElementById("campfire-theater");
-    if (!theater || theater.getAttribute("data-mode") !== "feed") return;
+    if (!theater) return;
 
     const canvas = document.getElementById("campfire-canvas");
+    if (!canvas) return;
+
+    const mode = theater.getAttribute("data-mode") || "feed";
+    if (mode === "fire" || !document.getElementById("campfire-pings")) {
+      initEpisodeCampfireFireOnly(theater, canvas);
+      return;
+    }
+    if (mode !== "feed") return;
+
     const pingsEl = document.getElementById("campfire-pings");
     const threadEl = document.getElementById("campfire-thread");
     const card = document.getElementById("campfire-imessage");
     const statusEl = document.getElementById("campfire-status");
     const closeBtn = document.getElementById("campfire-imessage-close");
     const hero = theater.closest(".episode-campfire-hero") || theater.closest(".episode-hero");
-    if (!canvas || !pingsEl || !threadEl || !card) return;
+    if (!pingsEl || !threadEl || !card) return;
 
     const engine = global.CampfireEngine;
     if (!engine || typeof engine.createCampfire !== "function") {

@@ -1,6 +1,6 @@
 # Slack tape — Season 2 audience mirror
 
-Read-only JSON consumed by the static **Season 2 social** page (`seasons/2/social.html`). Contestants scheme on private Slack; this tape is what the public site renders. No compose box, no write-back.
+Read-only JSON consumed by the static **Island Chatter** page (`seasons/2/social.html`). Contestants scheme on private Slack; this tape is what the public site renders. No compose box, no write-back.
 
 ## Files
 
@@ -34,7 +34,7 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
     {
       "id": "camp",
       "kind": "public",           // public | private | dm
-      "section": "camp",          // camp | fire | alliances | dms | control
+      "section": "camp",          // camp | fire | tribal | alliances | dms | control
       "name": "camp",
       "label": "#camp",
       "topic": "optional",
@@ -62,11 +62,12 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
 |-----------|----------|--------|
 | `camp` | Camp | All living contestants (`#camp`) |
 | `fire` | Fire | Dinner fire window (`#fire`) |
+| `tribal` | Tribal | Tribal council nights (`#tribal`; votes / parchment / exits) |
 | `alliances` | Alliances | Private multi-person rooms |
-| `dms` | Direct messages | 1:1 threads; `label` is human title |
+| `dms` | DMs | Private Slack channels named `dm-<a>-<b>` (not Slack IMs); `label` is audience-facing participant names |
 | `control` | Control room | Omitted unless `options.includeControlRoom` |
 
-`kind: "dm"` channels should list `participantIds` (two or more member ids) instead of `memberIds`.
+`kind: "dm"` channels should list `participantIds` (exactly two contestant ids), use `section: "dms"`, and set `name` to the workspace channel slug (`dm-<slug-a>-<slug-b>`). Island Chatter lists them under **DMs**, not as `#` channels.
 
 ## Ingest (deferred)
 
