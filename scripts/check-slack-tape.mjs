@@ -136,6 +136,11 @@ check(
   /refreshSidebar\(tape, channels, dayKey, readSet, root, ch\.id\)/.test(mirrorSrc),
   "selectChannel must pass the opened channel id into the sidebar"
 );
+check(!mirrorSrc.includes(".scrollIntoView("), "unread marker must not scroll the document under the sticky header");
+check(
+  /pane\.scrollTo\(/.test(mirrorSrc),
+  "unread marker scrolls inside the message pane"
+);
 
 if (errors.length) {
   console.error("check-slack-tape failed:\n" + errors.map((e) => "  - " + e).join("\n"));
