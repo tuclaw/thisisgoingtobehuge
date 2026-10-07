@@ -123,6 +123,20 @@ for (const ch of tape.channels) {
   check(parts.length === 2, `DM channel ${ch.id} must list exactly two participantIds`);
 }
 
+const mirrorSrc = readFileSync(join(root, "slack-mirror.js"), "utf8");
+check(
+  /function refreshSidebar\(tape, channels, dayKey, readSet, root, activeId\)/.test(mirrorSrc),
+  "refreshSidebar must take the channel being opened"
+);
+check(
+  /const current = activeId \|\| channelFromHash\(\)/.test(mirrorSrc),
+  "sidebar highlight must follow the opened channel, not a previous aria-current"
+);
+check(
+  /refreshSidebar\(tape, channels, dayKey, readSet, root, ch\.id\)/.test(mirrorSrc),
+  "selectChannel must pass the opened channel id into the sidebar"
+);
+
 if (errors.length) {
   console.error("check-slack-tape failed:\n" + errors.map((e) => "  - " + e).join("\n"));
   process.exit(1);
