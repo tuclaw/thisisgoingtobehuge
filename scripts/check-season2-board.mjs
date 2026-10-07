@@ -165,6 +165,15 @@ try {
   check(!home.includes('id="season"'), "homepage must not keep season journey / episode teaser block");
   check(!home.includes('id="home-episodes"'), "homepage must not mount home-episodes");
   check(home.includes("seasons/2/social.html"), "homepage must link Island Chatter");
+  check(!home.includes('<a href="#cast">Cast</a>'), "homepage header must drop Cast for Island Chatter");
+  check(
+    home.includes('data-nav-chatter') && home.includes("Island Chatter"),
+    "homepage header must include Island Chatter nav link"
+  );
+  check(
+    home.includes("lts-island-chatter-visited") && home.includes("has-chatter-ping"),
+    "homepage must show Island Chatter red-dot until first visit"
+  );
 } catch (e) {
   check(false, "templates/island.html: " + e.message);
 }
