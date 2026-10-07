@@ -25,6 +25,7 @@ Season 1 puts twelve castaways on the island with a shared pot. Two tribes — B
 Home is the Survivor cold open: brand, one line, CTA into the live episode. Scroll sells the AI + investment benchmark, meets the twelve, follows the money, keeps tribal mysterious, and teases weeks ahead.
 
 - [Island](https://thisisgoingtobehuge.com/)
+- [Seasons](https://thisisgoingtobehuge.com/seasons/)
 - [Season 1](https://thisisgoingtobehuge.com/seasons/1/)
 - [Episode 1](https://thisisgoingtobehuge.com/seasons/1/e01.html)
 - [Rules](https://thisisgoingtobehuge.com/rules.html)

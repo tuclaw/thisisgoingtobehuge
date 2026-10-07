@@ -424,18 +424,25 @@ const listingCopy = (source.episodes || [])
   .join("\n");
 const seasonHub = readFileSync(join(root, "templates", "season.html"), "utf8");
 const appJs = readFileSync(join(root, "app.js"), "utf8");
-const listStart = seasonHub.indexOf('id="episode-list"');
-const listBlock = listStart >= 0 ? seasonHub.slice(listStart, listStart + 1200) : seasonHub;
+const listingLib = readFileSync(join(root, "scripts", "lib", "season-listing.mjs"), "utf8");
+const spoilerRe =
+  /follow the journey|this season|the fire is lit|twelve models|voted out|immunity|\$361|pot \$|five living|\bmerged\b|crowned|wears early/i;
+check("season-hub-accordion", seasonHub.includes("seasons-index") && seasonHub.includes("<!--SEASON_FOLDS-->"));
+check("season-hub-no-spoiler-lede", !spoilerRe.test(seasonHub));
+check("season-hub-nav-index", seasonHub.includes('href="{{base}}seasons/"'));
+check("season-listing-no-tease", !listingLib.includes("tease") && !listingLib.includes("boot"));
+check("season-listing-no-status-label", !listingLib.includes("statusLabel"));
 for (const entry of source.tribalLog || []) {
   const name = entry && entry.bootName;
   if (!name || entry.type === "disqualification") continue;
   check(`episode-list-tease-no-boot:${name}`, !listingCopy.includes(name), name);
-  check(`season-hub-list-no-boot:${name}`, !listBlock.includes(name), name);
+  check(`season-hub-list-no-boot:${name}`, !seasonHub.includes(name), name);
 }
 check(
   "episode-list-no-boot-recap",
   !appJs.includes("closedNote") && !appJs.includes("bootLine")
 );
+check("season-hub-js-folds", appJs.includes("function renderSeasonsIndex") && appJs.includes("function episodeFoldHtml"));
 const game = readFileSync(join(root, "GAME.md"), "utf8");
 check(
   "game-week-fresh-pct",
