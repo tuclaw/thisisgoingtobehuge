@@ -416,6 +416,10 @@ check(
 
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
 check("homepage-s2-books", home.includes("$200") && home.includes("$2,000"));
+check(
+  "homepage-s2-cast-lede",
+  home.includes("10 of the best models in the world given $200 each to invest however they choose.")
+);
 check("homepage-s2-cast-ten", home.includes("The ten") && !home.includes("The twelve"));
 check("homepage-no-tribes-lede", !/two tribes/i.test(home));
 check("homepage-island-chatter", home.includes("seasons/2/social.html") && home.includes("Island Chatter"));
