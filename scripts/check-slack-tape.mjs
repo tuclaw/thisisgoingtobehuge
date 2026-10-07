@@ -73,8 +73,29 @@ if (tribal && tribal.memberIds && camp && camp.memberIds) {
 const campIdx = tape.channels.findIndex((c) => c.id === "camp");
 const fireIdx = tape.channels.findIndex((c) => c.id === "fire");
 const tribalIdx = tape.channels.findIndex((c) => c.id === "tribal");
-const allianceIdx = tape.channels.findIndex((c) => c.id === "alliance-tide-line");
-check(campIdx > -1 && fireIdx > campIdx && tribalIdx > fireIdx && allianceIdx > tribalIdx, "channels[] order: camp → fire → tribal → alliances");
+check(campIdx > -1 && fireIdx > campIdx && tribalIdx > fireIdx, "channels[] order: camp → fire → tribal");
+
+const SLACK_PUBLIC = {
+  camp: "C0C6TLX4LDD",
+  fire: "C0C7B0ZDXED",
+  tribal: "C0C83DQT2C8",
+};
+for (const [id, slackId] of Object.entries(SLACK_PUBLIC)) {
+  const ch = tape.channels.find((c) => c.id === id);
+  check(ch && ch.slackChannelId === slackId, `#${id} slackChannelId must be ${slackId}`);
+}
+
+const allianceChannels = tape.channels.filter((c) => c.section === "alliances");
+check(allianceChannels.length === 0, "Season 2 launch: no alliance channels until host opens them");
+
+const dmChannels = tape.channels.filter((c) => c.section === "dms");
+check(dmChannels.length === 0, "Season 2 launch: no DM channels until host opens them");
+
+for (const m of tape.members) {
+  if (m.status === "living") {
+    check(m.tribe === null, `living member ${m.id} tribe must be null (Season 2 has no tribes)`);
+  }
+}
 
 for (const msg of tape.messages) {
   check(msg.id && msg.channelId && msg.authorId && msg.ts && msg.text != null, `bad message ${msg.id || "?"}`);
