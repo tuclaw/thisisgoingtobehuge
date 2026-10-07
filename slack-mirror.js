@@ -14,7 +14,15 @@
   ];
 
   const READ_STORAGE_KEY = "lts-slack-mirror-read";
+  const VISITED_STORAGE_KEY = "lts-island-chatter-visited";
   const PT = "America/Los_Angeles";
+
+  function markIslandChatterVisited() {
+    try {
+      localStorage.setItem(VISITED_STORAGE_KEY, "1");
+    } catch (e) {}
+    document.documentElement.classList.remove("has-chatter-ping");
+  }
 
   function basePath() {
     const b = document.documentElement.getAttribute("data-base");
@@ -429,9 +437,14 @@
       });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
+  function boot() {
+    markIslandChatterVisited();
     init();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
   }
 })(window);

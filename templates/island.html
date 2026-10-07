@@ -22,6 +22,14 @@
         document.body.classList.remove("is-titles");
       }
     } catch (e) {}
+    /* Ping Island Chatter in the header until the audience has opened it once. */
+    try {
+      if (localStorage.getItem("lts-island-chatter-visited") !== "1") {
+        document.documentElement.classList.add("has-chatter-ping");
+      }
+    } catch (e) {
+      document.documentElement.classList.add("has-chatter-ping");
+    }
   </script>
   <noscript><style>body.is-titles{overflow:auto}body.is-titles .open-titles{display:none}</style></noscript>
   <div class="open-titles" id="open-titles">
@@ -72,7 +80,12 @@
         <li><a href="index.html" aria-current="page">Island</a></li>
         <li><a href="#" data-nav-watch class="nav-watch">Watch</a></li>
         <li><a href="seasons/">Seasons</a></li>
-        <li><a href="#cast">Cast</a></li>
+        <li>
+          <a href="seasons/2/social.html" class="nav-chatter" data-nav-chatter>
+            Island Chatter
+            <span class="nav-chatter-dot" aria-hidden="true"></span>
+          </a>
+        </li>
         <li><a href="rules.html">Rules</a></li>
       </ul>
     </nav>

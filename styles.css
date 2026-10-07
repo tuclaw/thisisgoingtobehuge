@@ -224,6 +224,31 @@ img {
   margin-left: 0.1rem;
 }
 
+.nav-chatter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-chatter-dot {
+  display: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e02020;
+  box-shadow: 0 0 0 2px rgba(10, 7, 6, 0.85);
+  flex-shrink: 0;
+}
+
+html.has-chatter-ping .nav-chatter-dot {
+  display: inline-block;
+}
+
+html.has-chatter-ping .nav-chatter {
+  padding-right: 0.05rem;
+}
+
 .episode-hero .live-badge {
   font-size: 0.62rem;
   padding: 0.18rem 0.55rem 0.15rem;
