@@ -381,8 +381,13 @@ if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow
 if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {
   throw new Error("app.js missing home money ticker Season/Island-only tab config");
 }
-if (!appJs.includes("$2,000 on the island") || !appJs.includes("live Episode")) {
-  throw new Error("app.js missing home money ticker Season 2 lede copy");
+if (
+  appJs.includes("Ten $200 books") ||
+  appJs.includes("money-ticker-lede") ||
+  appJs.includes("money-ticker-lede-link") ||
+  appJs.includes("tickerHead")
+) {
+  throw new Error("home money ticker must not print the books/live Episode lede");
 }
 if (!appJs.includes('MONEY_TICKER_HOME_DIAGRAMS = ["island", "contestants"]')) {
   throw new Error("home money ticker must offer Island and Contestants diagrams");
@@ -393,17 +398,11 @@ if (
 ) {
   throw new Error("home season ticker must keep carry/opening books when the live week is unready");
 }
-if (!appJs.includes('class="money-ticker-lede-link"') || !appJs.includes(">live Episode</a>")) {
-  throw new Error("home money ticker lede must hyperlink live Episode");
+if (css.includes(".money-ticker-lede") || css.includes(".money-ticker-lede-link")) {
+  throw new Error("styles.css must not keep home money ticker lede styles");
 }
-if (!appJs.includes("assetUrl(liveEpisodePath(season))")) {
-  throw new Error("home money ticker lede must point live Episode at the live episode path");
-}
-if (!css.includes(".money-ticker-lede-link") || !css.includes("text-underline-offset")) {
-  throw new Error("styles.css missing home money ticker live Episode link treatment");
-}
-if (!appJs.includes("tickerHead") || !appJs.includes("homeMode")) {
-  throw new Error("app.js must keep a home-only money ticker lede");
+if (!appJs.includes("homeMode")) {
+  throw new Error("app.js must keep home money ticker mode");
 }
 if (appJs.includes("Replay the books") || appJs.includes("Watch the island, the tribes")) {
   throw new Error("episode money ticker must not print Replay the books copy");
