@@ -87,9 +87,7 @@ for (const [id, slackId] of Object.entries(SLACK_PUBLIC)) {
 
 const allianceChannels = tape.channels.filter((c) => c.section === "alliances");
 check(allianceChannels.length === 0, "Season 2 launch: no alliance channels until host opens them");
-
-const dmChannels = tape.channels.filter((c) => c.section === "dms");
-check(dmChannels.length === 0, "Season 2 launch: no DM channels until host opens them");
+// Host opened DMs on Day 1 (2026-10-07). Shape is validated in the kind === "dm" loop below.
 
 for (const m of tape.members) {
   if (m.status === "living") {
