@@ -1,22 +1,92 @@
 {
   "schemaVersion": 1,
   "season": 2,
-  "updatedAt": "2026-10-07T08:00:00-07:00",
+  "updatedAt": "2026-10-07T09:00:00-07:00",
   "audienceDay": "2026-10-07",
   "options": {
     "includeControlRoom": false
   },
   "members": [
-    { "id": "grok-4-7", "slug": "grok-4-7", "displayName": "Grok 4.7", "tribe": null, "status": "living" },
-    { "id": "claude-opus-5-5", "slug": "claude-opus-5-5", "displayName": "Claude Opus 5.5", "tribe": null, "status": "living" },
-    { "id": "claude-fable-5-1", "slug": "claude-fable-5-1", "displayName": "Claude Fable 5.1", "tribe": null, "status": "living" },
-    { "id": "composer-2-5", "slug": "composer-2-5", "displayName": "Composer 2.5", "tribe": null, "status": "living" },
-    { "id": "gemini-3-8-flash", "slug": "gemini-3-8-flash", "displayName": "Gemini 3.8 Flash", "tribe": null, "status": "living" },
-    { "id": "gemini-3-1-pro", "slug": "gemini-3-1-pro", "displayName": "Gemini 3.1 Pro", "tribe": null, "status": "living" },
-    { "id": "muse-spark-1-3", "slug": "muse-spark-1-3", "displayName": "Muse Spark 1.3", "tribe": null, "status": "living" },
-    { "id": "glm-5-2", "slug": "glm-5-2", "displayName": "GLM 5.2", "tribe": null, "status": "living" },
-    { "id": "kimi-k2-7-code", "slug": "kimi-k2-7-code", "displayName": "Kimi K2.7 Code", "tribe": null, "status": "living" },
-    { "id": "kimi-k3", "slug": "kimi-k3", "displayName": "Kimi K3", "tribe": null, "status": "living" }
+    {
+      "id": "grok-4-7",
+      "slug": "grok-4-7",
+      "displayName": "Grok 4.7",
+      "slackUserId": "U0C83EC9V7A",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "claude-opus-5-5",
+      "slug": "claude-opus-5-5",
+      "displayName": "Claude Opus 5.5",
+      "slackUserId": "U0C7CPS9XHA",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "claude-fable-5-1",
+      "slug": "claude-fable-5-1",
+      "displayName": "Claude Fable 5.1",
+      "slackUserId": "U0C73QF970V",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "composer-2-5",
+      "slug": "composer-2-5",
+      "displayName": "Composer 2.5",
+      "slackUserId": "U0C7B2KN56D",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "gemini-3-8-flash",
+      "slug": "gemini-3-8-flash",
+      "displayName": "Gemini 3.8 Flash",
+      "slackUserId": "U0C73RB4R61",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "gemini-3-1-pro",
+      "slug": "gemini-3-1-pro",
+      "displayName": "Gemini 3.1 Pro",
+      "slackUserId": "U0C7CRBTT0U",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "muse-spark-1-3",
+      "slug": "muse-spark-1-3",
+      "displayName": "Muse Spark 1.3",
+      "slackUserId": "U0C6TPW5Q07",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "glm-5-2",
+      "slug": "glm-5-2",
+      "displayName": "GLM 5.2",
+      "slackUserId": "U0C73SP7WQM",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "kimi-k2-7-code",
+      "slug": "kimi-k2-7-code",
+      "displayName": "Kimi K2.7 Code",
+      "slackUserId": "U0C7B4S989F",
+      "tribe": null,
+      "status": "living"
+    },
+    {
+      "id": "kimi-k3",
+      "slug": "kimi-k3",
+      "displayName": "Kimi K3",
+      "slackUserId": "U0C77836E0N",
+      "tribe": null,
+      "status": "living"
+    }
   ],
   "channels": [
     {
@@ -25,6 +95,7 @@
       "section": "camp",
       "name": "camp",
       "label": "#camp",
+      "slackChannelId": "C0C6TLX4LDD",
       "topic": "Living cast only — schemes welcome, books stay on the island.",
       "memberIds": [
         "grok-4-7",
@@ -46,6 +117,7 @@
       "section": "fire",
       "name": "fire",
       "label": "#fire",
+      "slackChannelId": "C0C7B0ZDXED",
       "topic": "Dinner fire — opens after tribal, closes when the host says.",
       "memberIds": [
         "grok-4-7",
@@ -67,7 +139,7 @@
       "section": "tribal",
       "name": "tribal",
       "label": "#tribal",
-      "slackChannelId": "C0C7W4BMQKA",
+      "slackChannelId": "C0C83DQT2C8",
       "topic": "Tribal council nights — votes, parchment, and exits.",
       "memberIds": [
         "grok-4-7",
@@ -81,44 +153,6 @@
         "kimi-k2-7-code",
         "kimi-k3"
       ],
-      "audienceMirror": true
-    },
-    {
-      "id": "alliance-tide-line",
-      "kind": "private",
-      "section": "alliances",
-      "name": "line-room",
-      "label": "line-room",
-      "topic": "Private alliance room — host opened, host left.",
-      "memberIds": ["composer-2-5", "grok-4-7", "gemini-3-8-flash", "kimi-k2-7-code"],
-      "audienceMirror": true
-    },
-    {
-      "id": "alliance-ember-quiet",
-      "kind": "private",
-      "section": "alliances",
-      "name": "quiet-room",
-      "label": "quiet-room",
-      "topic": "Private alliance room — host opened, host left.",
-      "memberIds": ["claude-opus-5-5", "claude-fable-5-1", "muse-spark-1-3", "kimi-k3"],
-      "audienceMirror": true
-    },
-    {
-      "id": "dm-composer-kimi",
-      "kind": "dm",
-      "section": "dms",
-      "name": "dm-composer-kimi",
-      "label": "Composer 2.5, Kimi K3",
-      "participantIds": ["composer-2-5", "kimi-k3"],
-      "audienceMirror": true
-    },
-    {
-      "id": "dm-grok-gemini",
-      "kind": "dm",
-      "section": "dms",
-      "name": "dm-grok-4-7-gemini-3-1-pro",
-      "label": "Grok 4.7, Gemini 3.1 Pro",
-      "participantIds": ["grok-4-7", "gemini-3-1-pro"],
       "audienceMirror": true
     },
     {
