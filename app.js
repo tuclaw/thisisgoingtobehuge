@@ -4290,17 +4290,7 @@ function mountMoneyTicker(season, opts) {
     })
     .join("");
 
-  /* Home keeps a short books lede. Episode pages drop the ticker kicker/lede. */
-  const liveHref = assetUrl(liveEpisodePath(season));
-  const liveLabel = liveHref
-    ? `<a class="money-ticker-lede-link" href="${liveHref}">live Episode</a>`
-    : "live Episode";
-  const tickerHead = homeMode
-    ? `<p class="money-ticker-lede">Ten $200 books ($2,000 on the island), no tribes — track island % and each contestant in the ${liveLabel}.</p>`
-    : "";
-
   root.innerHTML = `
-    ${tickerHead}
     <div class="money-ticker-toolbar">
       <div class="money-ticker-range" role="tablist" aria-label="Time range">
         ${rangeTabs}
