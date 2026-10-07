@@ -347,13 +347,13 @@
     });
   }
 
-  function refreshSidebar(tape, channels, dayKey, readSet, root) {
+  function refreshSidebar(tape, channels, dayKey, readSet, root, activeId) {
     const unreadIds = unreadChannelIds(tape, channels, dayKey, readSet);
     const sidebar = document.getElementById("slack-mirror-sidebar");
     if (!sidebar) return unreadIds;
-    const current =
-      root.querySelector('.slack-mirror-channel[aria-current="true"]')?.getAttribute("data-channel-id") ||
-      channelFromHash();
+    // The previous aria-current is still on the old row until this rebuild.
+    // Prefer the channel being opened so the blue wash follows the pane.
+    const current = activeId || channelFromHash();
     sidebar.innerHTML = renderChannelList(channels, unreadIds);
     root.querySelectorAll(".slack-mirror-channel").forEach((btn) => {
       const id = btn.getAttribute("data-channel-id");
@@ -382,7 +382,7 @@
     if (!ch) return;
     setHash(ch.id);
     const readSet = markChannelRead(tape, ch.id);
-    refreshSidebar(tape, channels, dayKey, readSet, root);
+    refreshSidebar(tape, channels, dayKey, readSet, root, ch.id);
     const title = document.getElementById("slack-mirror-channel-title");
     const topic = document.getElementById("slack-mirror-channel-topic");
     if (title) {
