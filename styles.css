@@ -5872,12 +5872,6 @@ body.is-titles .replay-trailer {
   letter-spacing: 0.02em;
 }
 
-#island-chatter .island-chatter-lede {
-  max-width: 42rem;
-  color: var(--sand);
-  line-height: 1.55;
-}
-
 .conversation-archive-index {
   list-style: none;
   margin: 1.25rem 0 0;
