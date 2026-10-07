@@ -423,13 +423,17 @@ const listingCopy = (source.episodes || [])
   .map((ep) => [ep.title, ep.weekLabel, ep.tease].filter(Boolean).join(" "))
   .join("\n");
 const seasonHub = readFileSync(join(root, "templates", "season.html"), "utf8");
+const siteNav = readFileSync(join(root, "templates", "partials", "site-nav.html"), "utf8");
 const appJs = readFileSync(join(root, "app.js"), "utf8");
 const listingLib = readFileSync(join(root, "scripts", "lib", "season-listing.mjs"), "utf8");
 const spoilerRe =
   /follow the journey|this season|the fire is lit|twelve models|voted out|immunity|\$361|pot \$|five living|\bmerged\b|crowned|wears early/i;
 check("season-hub-accordion", seasonHub.includes("seasons-index") && seasonHub.includes("<!--SEASON_FOLDS-->"));
 check("season-hub-no-spoiler-lede", !spoilerRe.test(seasonHub));
-check("season-hub-nav-index", seasonHub.includes('href="{{base}}seasons/"'));
+check(
+  "season-hub-nav-index",
+  seasonHub.includes("{{partial:site-nav}}") && siteNav.includes('href="{{base}}seasons/"')
+);
 check("season-listing-no-tease", !listingLib.includes("tease") && !listingLib.includes("boot"));
 check("season-listing-no-status-label", !listingLib.includes("statusLabel"));
 for (const entry of source.tribalLog || []) {

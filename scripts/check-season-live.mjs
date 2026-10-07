@@ -433,7 +433,14 @@ check(
 );
 check("homepage-no-even-up-480", !home.includes("$480.10") && !home.includes("even-up to $53.20"));
 check("homepage-data-season-2", home.includes('data-season="2"'));
-check("homepage-seasons-nav", home.includes('href="seasons/"') && !home.includes('href="seasons/1/">Seasons'));
+const siteNavPartial = readFileSync(join(root, "templates", "partials", "site-nav.html"), "utf8");
+check(
+  "homepage-seasons-nav",
+  home.includes("{{partial:site-nav}}") &&
+    siteNavPartial.includes('href="{{base}}seasons/"') &&
+    !siteNavPartial.includes('seasons/1/">Seasons') &&
+    !home.includes('href="seasons/1/">Seasons')
+);
 const seasonsIndexTpl = readFileSync(join(root, "templates", "season.html"), "utf8");
 check("seasons-index-collapsed-shell", seasonsIndexTpl.includes("<!--SEASON_FOLDS-->") && !seasonsIndexTpl.includes("Follow the journey"));
 const seasonsIndexBuilt = join(root, "dist", "seasons", "index.html");

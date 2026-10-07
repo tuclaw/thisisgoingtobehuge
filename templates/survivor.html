@@ -12,24 +12,11 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  {{partial:chatter-ping}}
 </head>
 <body class="survivor-page">
   <a class="skip" href="#survivor">Skip to {{name}}</a>
-  <header class="torch-nav">
-    <a class="brand" href="{{base}}index.html">
-      {{partial:flame}}
-      Last Trader Standing
-    </a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="{{base}}index.html">Island</a></li>
-        <li><a href="#" data-nav-watch class="nav-watch">Watch</a></li>
-        <li><a href="{{base}}seasons/">Seasons</a></li>
-        <li><a href="{{base}}index.html#cast" aria-current="page">Cast</a></li>
-        <li><a href="{{base}}rules.html">Rules</a></li>
-      </ul>
-    </nav>
-  </header>
+  {{partial:site-nav}}
 
   <div id="survivor-root">
     <section class="survivor-hero" id="survivor">
