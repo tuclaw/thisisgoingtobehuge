@@ -3299,6 +3299,20 @@ a.brand:hover {
   text-align: right;
 }
 
+@media (max-width: 720px) {
+  .season-fold > summary,
+  .episode-fold > summary {
+    grid-template-columns: 1fr;
+    gap: 0.28rem;
+    padding-right: 2.4rem;
+  }
+
+  .season-fold-meta,
+  .ep-fold-meta {
+    text-align: left;
+  }
+}
+
 .season-fold .episode-list {
   padding: 0 0.75rem 0.85rem;
   gap: 0.65rem;
