@@ -1349,10 +1349,10 @@ if (seasonSource.status === "ended" && seasonSource.winnerId) {
     throw new Error("dist season episode must be live Episode 9");
   }
 }
-const rangeStart = appJs.indexOf("function snapshotsForTickerRange");
+const rangeStart = appJs.indexOf("function tickerSnapIsOpeningBooks");
 const rangeEnd = appJs.indexOf("function candidateStroke");
 if (!(rangeStart > -1 && rangeEnd > rangeStart)) {
-  throw new Error("app.js missing snapshotsForTickerRange before candidateStroke");
+  throw new Error("app.js missing tickerSnapIsOpeningBooks / snapshotsForTickerRange before candidateStroke");
 }
 const seasonRangeFn = new Function(`
   function getLiveEpisode(season) {
@@ -1394,6 +1394,79 @@ if (
   !seasonTape.some((snap) => snap.id === "s1e03-tue-lasthour")
 ) {
   throw new Error("home season tape must keep Friday EOD and show Episode 3 Tue last-hour; carry drops after first RTH mark");
+}
+const s2CarryOnly = seasonRangeFn(
+  {
+    episode: { id: "s2e01", status: "live", path: "seasons/2/e01.html" },
+    episodes: [{ id: "s2e01", status: "live", path: "seasons/2/e01.html" }],
+    snapshots: [{ id: "s2e01-carry", kind: "carry", books: { "s2-grok-4-7": { bookUsd: 200, weekPct: 0 } } }]
+  },
+  "season"
+);
+if (s2CarryOnly.length !== 1 || s2CarryOnly[0].id !== "s2e01-carry") {
+  throw new Error(
+    "home season tape must keep the live episode carry snapshot before first RTH mark, got " +
+      s2CarryOnly.map((s) => s.id).join(",")
+  );
+}
+const unreadyCarryWithPrior = seasonRangeFn(
+  {
+    episode: { id: "s1e03", status: "live", path: "seasons/1/e03.html" },
+    episodes: [
+      { id: "s1e02", status: "closed", path: "seasons/1/e02.html" },
+      { id: "s1e03", status: "live", path: "seasons/1/e03.html" }
+    ],
+    snapshots: [
+      { id: "s1e02-fri-eod", kind: "close" },
+      { id: "s1e03-carry", kind: "carry" }
+    ]
+  },
+  "season"
+);
+if (
+  !unreadyCarryWithPrior.some((snap) => snap.id === "s1e02-fri-eod") ||
+  !unreadyCarryWithPrior.some((snap) => snap.id === "s1e03-carry")
+) {
+  throw new Error(
+    "home season tape must keep prior weeks and the live episode carry/open before first RTH mark, got " +
+      unreadyCarryWithPrior.map((s) => s.id).join(",")
+  );
+}
+const gatedRangeFn = new Function(`
+  function getLiveEpisode(season) {
+    return (season.episodes || []).find((ep) => ep.status === "live") || null;
+  }
+  function episodeIsClosed(ep) {
+    return ep && (ep.status === "closed" || ep.status === "cut");
+  }
+  function episodeWatchReady() { return false; }
+  function tickerEpisodeForRange() { return null; }
+  function currentPageEpisode() { return null; }
+  function snapshotsInTickerRange(snapshots) { return snapshots; }
+  ${appJs.slice(rangeStart, rangeEnd)}
+  return snapshotsForTickerRange;
+`)();
+const gatedLiveWeek = gatedRangeFn(
+  {
+    episode: { id: "s2e01", status: "live", path: "seasons/2/e01.html" },
+    episodes: [{ id: "s2e01", status: "live", path: "seasons/2/e01.html" }],
+    snapshots: [
+      { id: "s1e10-final", kind: "close" },
+      { id: "s2e01-carry", kind: "carry" },
+      { id: "s2e01-tue-mid", kind: "intraday" }
+    ]
+  },
+  "season"
+);
+if (
+  !gatedLiveWeek.some((snap) => snap.id === "s1e10-final") ||
+  !gatedLiveWeek.some((snap) => snap.id === "s2e01-carry") ||
+  gatedLiveWeek.some((snap) => snap.id === "s2e01-tue-mid")
+) {
+  throw new Error(
+    "unready live week must keep prior tape + carry/open and hide later live marks, got " +
+      gatedLiveWeek.map((s) => s.id).join(",")
+  );
 }
 
 console.log("episode campfire checks passed (" + feed.conversations.length + " latest threads)");

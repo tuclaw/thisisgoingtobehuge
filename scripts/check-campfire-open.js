@@ -374,6 +374,12 @@ if (!appJs.includes("$2,000 on the island") || !appJs.includes("live Episode")) 
 if (!appJs.includes('MONEY_TICKER_HOME_DIAGRAMS = ["island", "contestants"]')) {
   throw new Error("home money ticker must offer Island and Contestants diagrams");
 }
+if (
+  !appJs.includes("function tickerSnapIsOpeningBooks") ||
+  !appJs.includes("return tickerSnapIsOpeningBooks(snap)")
+) {
+  throw new Error("home season ticker must keep carry/opening books when the live week is unready");
+}
 if (!appJs.includes('class="money-ticker-lede-link"') || !appJs.includes(">live Episode</a>")) {
   throw new Error("home money ticker lede must hyperlink live Episode");
 }

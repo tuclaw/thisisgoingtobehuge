@@ -3217,6 +3217,15 @@ function groupSnapshotsByEpisode(season, snapshots) {
   return groups.filter((g) => g.snaps.length);
 }
 
+function tickerSnapIsOpeningBooks(snap) {
+  if (!snap) return false;
+  const kind = String(snap.kind || "").toLowerCase();
+  if (kind === "carry" || kind === "funding") return true;
+  const id = String(snap.id || "");
+  /* s2e01-carry / *-funding seeds — not later RTH marks (open, mid, close). */
+  return /-(carry|funding)(?:-|$)/i.test(id);
+}
+
 function snapshotsForTickerRange(season, range) {
   /* Page episode, not the live week — Episode 1 WEEK must not use Episode 2 dates. */
   const ep = tickerEpisodeForRange(season) || currentPageEpisode(season) || season.episode || {};
@@ -3225,7 +3234,17 @@ function snapshotsForTickerRange(season, range) {
   const live = getLiveEpisode(season);
   if (live && !episodeWatchReady(season, live)) {
     const prefix = String(live.id || "");
-    return all.filter((snap) => !prefix || !String(snap.id || "").startsWith(prefix));
+    const kept = all.filter((snap) => {
+      if (!prefix) return true;
+      const id = String(snap.id || "");
+      if (!id.startsWith(prefix)) return true;
+      /* Carry/open books are the funded pot, not a P&L spoiler. Stripping
+         every live-id prefix wiped Season 2 home (only s2e01-carry exists). */
+      return tickerSnapIsOpeningBooks(snap);
+    });
+    if (kept.length) return kept;
+    const opening = all.filter(tickerSnapIsOpeningBooks);
+    return opening.length ? opening : all;
   }
   return all;
 }

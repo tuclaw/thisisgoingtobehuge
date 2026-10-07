@@ -85,6 +85,40 @@ try {
   check(false, "data/episodes/s2e01.json must exist: " + e.message);
 }
 
+const appJs = readFileSync(join(root, "app.js"), "utf8");
+const rangeStart = appJs.indexOf("function tickerSnapIsOpeningBooks");
+const rangeEnd = appJs.indexOf("function candidateStroke");
+if (!(rangeStart > -1 && rangeEnd > rangeStart)) {
+  check(false, "app.js missing tickerSnapIsOpeningBooks / snapshotsForTickerRange");
+} else {
+  const seasonRangeFn = new Function(`
+    function getLiveEpisode(season) {
+      return (season.episodes || []).find((ep) => ep.status === "live") || null;
+    }
+    function episodeIsClosed(ep) {
+      return ep && (ep.status === "closed" || ep.status === "cut");
+    }
+    function episodeWatchReady(season, episode) {
+      if (!episode || !episode.path) return false;
+      if (episodeIsClosed(episode)) return true;
+      return (season.snapshots || []).some((snap) => {
+        return String(snap.id || "").startsWith(String(episode.id || "")) && snap.kind && snap.kind !== "carry";
+      });
+    }
+    function tickerEpisodeForRange() { return null; }
+    function currentPageEpisode() { return null; }
+    function snapshotsInTickerRange(snapshots) { return snapshots; }
+    ${appJs.slice(rangeStart, rangeEnd)}
+    return snapshotsForTickerRange;
+  `)();
+  const homeTape = seasonRangeFn(data, "season");
+  check(
+    Array.isArray(homeTape) && homeTape.some((snap) => snap && snap.id === "s2e01-carry"),
+    "home season ticker must keep s2e01-carry before first RTH mark (not wipe #money-ticker)"
+  );
+  check(homeTape.length > 0, "home season ticker must not receive zero frames while snapshots exist");
+}
+
 const islandPath = join(root, "templates", "island.html");
 try {
   const home = readFileSync(islandPath, "utf8");
