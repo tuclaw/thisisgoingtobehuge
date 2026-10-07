@@ -82,8 +82,8 @@ if (e1) {
   check(e1.status === "live", "s2e01 must be live");
   check(e1.path === "seasons/2/e01.html", "s2e01 path must be seasons/2/e01.html");
   check(e1.source === "data/episodes/s2e01.json", "s2e01 source must be data/episodes/s2e01.json");
-  check(e1.weekBoardSnapshotId === "s2e01-wed-lasthour", "s2e01 weekBoardSnapshotId must be s2e01-wed-lasthour");
-  check(e1.liveSnapshotId === "s2e01-wed-lasthour", "s2e01 liveSnapshotId must be s2e01-wed-lasthour");
+  check(e1.weekBoardSnapshotId === "s2e01-wed-eod-rth", "s2e01 weekBoardSnapshotId must be s2e01-wed-eod-rth");
+  check(e1.liveSnapshotId === "s2e01-wed-eod-rth", "s2e01 liveSnapshotId must be s2e01-wed-eod-rth");
   check(e1.diagramStartSnapshotId === "s2e01-carry", "s2e01 diagramStartSnapshotId must stay s2e01-carry");
   check(e1.weekEnd === "2026-10-09", "s2e01 weekEnd must be 2026-10-09");
   check(e1.tribalAt === "2026-10-09T14:00:00-07:00", "s2e01 tribalAt must be Fri Oct 9 2026 2:00 PM PT");
@@ -102,6 +102,10 @@ const wedLasthour = (Array.isArray(data.snapshots) ? data.snapshots : []).find(
   (s) => s && s.id === "s2e01-wed-lasthour"
 );
 check(wedLasthour && wedLasthour.kind === "intraday", "snapshots must include s2e01-wed-lasthour intraday row");
+const wedEodRth = (Array.isArray(data.snapshots) ? data.snapshots : []).find(
+  (s) => s && s.id === "s2e01-wed-eod-rth"
+);
+check(wedEodRth && wedEodRth.kind === "close-rth-last", "snapshots must include s2e01-wed-eod-rth close-rth-last row");
 if (carry && carry.books) {
   for (const s of survivors) {
     const row = carry.books[s.id];
@@ -114,8 +118,8 @@ try {
   check(e1Copy.season === 2 && e1Copy.number === 1, "s2e01.json season/number");
   check(e1Copy.subhead === "Wednesday Oct 7 – Friday Oct 9, 2026", "s2e01 subhead week range");
   check(
-    e1Copy.weekBoard && e1Copy.weekBoard.snapshotId === "s2e01-wed-lasthour",
-    "s2e01 weekBoard.snapshotId must be s2e01-wed-lasthour"
+    e1Copy.weekBoard && e1Copy.weekBoard.snapshotId === "s2e01-wed-eod-rth",
+    "s2e01 weekBoard.snapshotId must be s2e01-wed-eod-rth"
   );
   const wedBooks = (e1Copy.days || []).some((day) =>
     (day.beats || []).some((b) => b.type === "books" && b.id === "wed-open-books")
@@ -129,6 +133,10 @@ try {
     (day.beats || []).some((b) => b.type === "books" && b.id === "wed-lasthour-books")
   );
   check(wedLasthourBooks, "s2e01 must include wed-lasthour-books beat");
+  const wedEodRthBooks = (e1Copy.days || []).some((day) =>
+    (day.beats || []).some((b) => b.type === "books" && b.id === "wed-eod-rth-books")
+  );
+  check(wedEodRthBooks, "s2e01 must include wed-eod-rth-books beat");
   check(e1Copy.conversationFeed === false, "s2e01 must not enable beach iMessage conversationFeed");
   const hasSocial = (e1Copy.days || []).some((day) =>
     (day.beats || []).some((b) => b.type === "social" && String(b.href || "").includes("social.html"))
