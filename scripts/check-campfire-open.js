@@ -32,6 +32,25 @@ if (!html.includes("section-kicker reveal\">Island Chatter")) {
 if (!html.includes("Browse Island Chatter")) {
   throw new Error("templates/island.html #beach must use Browse Island Chatter CTA");
 }
+if (html.includes('<a href="#cast">Cast</a>')) {
+  throw new Error("templates/island.html header must not keep the Cast nav link");
+}
+if (!html.includes('data-nav-chatter') || !html.includes("nav-chatter-dot")) {
+  throw new Error("templates/island.html header must link Island Chatter with a notification dot");
+}
+if (!html.includes('lts-island-chatter-visited') || !html.includes("has-chatter-ping")) {
+  throw new Error("templates/island.html must ping Island Chatter until localStorage visit key is set");
+}
+if (!css.includes(".nav-chatter-dot") || !css.includes("html.has-chatter-ping .nav-chatter-dot")) {
+  throw new Error("styles.css missing Island Chatter nav notification-dot styles");
+}
+const slackMirror = readFileSync(join(root, "slack-mirror.js"), "utf8");
+if (
+  !slackMirror.includes('VISITED_STORAGE_KEY = "lts-island-chatter-visited"') ||
+  !slackMirror.includes("markIslandChatterVisited")
+) {
+  throw new Error("slack-mirror.js must mark Island Chatter visited on load");
+}
 if (html.includes("camp-chat.js")) {
   throw new Error("templates/island.html must not load camp-chat.js (home beach trailer retired)");
 }
