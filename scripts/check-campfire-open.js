@@ -39,9 +39,22 @@ if (!chat.includes("playConversation")) {
   throw new Error("camp-chat.js missing playConversation export");
 }
 
-["composer-2-5", "claude-opus-5", "claude-fable-5", "gemini-3-1-pro", "kimi-k3"].forEach((name) => {
-  const file = join(root, "cast", name, "portrait.jpg");
-  if (!existsSync(file)) throw new Error("missing Season 2 portrait " + file);
+[
+  "grok-4-7",
+  "claude-opus-5-5",
+  "claude-fable-5-1",
+  "composer-2-5",
+  "gemini-3-8-flash",
+  "gemini-3-1-pro",
+  "muse-spark-1-3",
+  "glm-5-2",
+  "kimi-k2-7-code",
+  "kimi-k3"
+].forEach((name) => {
+  const portrait = join(root, "cast", name, "portrait.jpg");
+  const camp = join(root, "cast", name, "camp.jpg");
+  if (!existsSync(portrait)) throw new Error("missing Season 2 portrait " + portrait);
+  if (!existsSync(camp)) throw new Error("missing Season 2 camp " + camp);
 });
 if (!html.includes('data-season="2"')) {
   throw new Error("templates/island.html must load Season 2 board (data-season=2)");

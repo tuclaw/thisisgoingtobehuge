@@ -1,7 +1,8 @@
 /** Season 2 pre-launch board invariants ($200 books, locked cast). */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { canonicalCastAsset } from "./lib/ledger.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const path = join(root, "data", "season2.json");
@@ -50,9 +51,29 @@ check(
   `cast models must match locked list (got ${models.join(", ")})`
 );
 
+const S1_LEFTOVER_FOLDERS = [
+  "claude-opus-5",
+  "claude-fable-5",
+  "gemini-3-7-flash",
+  "grok-4-5",
+  "grok-4-6"
+];
+
 for (const s of survivors) {
   check(s.bookUsd === 200, `${s.model}: bookUsd must be 200`);
   check(!s.tribeId, `${s.model}: Season 2 has no tribes (tribeId must be absent)`);
+  const portrait = canonicalCastAsset(s.slug, "portrait");
+  const camp = canonicalCastAsset(s.slug, "camp");
+  check(s.portrait === portrait, `${s.model}: portrait must be ${portrait} (got ${s.portrait})`);
+  check(s.camp === camp, `${s.model}: camp must be ${camp} (got ${s.camp})`);
+  check(existsSync(join(root, portrait)), `${s.model}: missing ${portrait}`);
+  check(existsSync(join(root, camp)), `${s.model}: missing ${camp}`);
+  for (const folder of S1_LEFTOVER_FOLDERS) {
+    check(
+      !String(s.portrait || "").includes(`cast/${folder}/`) && !String(s.camp || "").includes(`cast/${folder}/`),
+      `${s.model}: must not point at Season 1 folder cast/${folder}/`
+    );
+  }
 }
 
 const episodes = Array.isArray(data.episodes) ? data.episodes : [];
