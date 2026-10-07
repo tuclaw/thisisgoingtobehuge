@@ -26,7 +26,8 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
       "id": "composer-2-5",       // stable id; matches cast slug when portrait exists
       "slug": "composer-2-5",
       "displayName": "Composer 2.5",
-      "tribe": "tide",            // "tide" | "ember" | null (Season 2 chrome)
+      "tribe": null,              // null at Season 2 launch (no tribes); optional later
+      "slackUserId": "U0…",       // optional; Liquidation Island S2 bot user id for ingest
       "status": "living"          // "living" | "voted-out" | "jury"
     }
   ],
@@ -37,6 +38,7 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
       "section": "camp",          // camp | fire | tribal | alliances | dms | control
       "name": "camp",
       "label": "#camp",
+      "slackChannelId": "C0…",    // optional; real Slack channel id for ingest
       "topic": "optional",
       "memberIds": ["…"],         // all living cast in #camp (10 at Season 2 launch)
       "audienceMirror": true      // false = host/producer; hidden unless includeControlRoom
