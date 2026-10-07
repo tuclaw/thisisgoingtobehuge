@@ -121,6 +121,7 @@ function combinedDayPctOf(tribe) {
 
 function showLiveTribeCombinedTotals(season) {
   if (!season || !season.merged) return true;
+  if (Number(season.season) === 2) return true;
   const ep = currentPageEpisode(season);
   if (ep && ep.status === "closed" && Number(ep.number) < 3) return true;
   return false;
@@ -2384,7 +2385,7 @@ function moneyTickerAllowedDiagrams() {
 
 function moneyTickerEpisodeDiagrams(season) {
   const diagrams = MONEY_TICKER_DIAGRAMS.slice();
-  if (!showLiveTribeCombinedTotals(season)) {
+  if (Number(season && season.season) === 2 || !showLiveTribeCombinedTotals(season)) {
     return diagrams.filter((id) => id !== "tribes");
   }
   return diagrams;
@@ -4617,7 +4618,7 @@ function episodeFileHref(ep) {
 function renderSeasonHub(season) {
   const list = document.getElementById("episode-list");
   if (!list) return;
-  if (Number(season.season) === 2 && list.querySelector("a, .episode-card")) return;
+  if (Number(season.season) === 2 && list.querySelector("a[href^='e']")) return;
   const byNum = new Map();
   (Array.isArray(season.episodes) ? season.episodes : []).forEach((ep) => {
     byNum.set(ep.number, ep);

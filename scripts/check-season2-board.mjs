@@ -55,6 +55,36 @@ for (const s of survivors) {
   check(!s.tribeId, `${s.model}: Season 2 has no tribes (tribeId must be absent)`);
 }
 
+const episodes = Array.isArray(data.episodes) ? data.episodes : [];
+const e1 = episodes.find((ep) => ep && ep.id === "s2e01");
+check(e1, "episodes must list s2e01");
+if (e1) {
+  check(e1.status === "live", "s2e01 must be live");
+  check(e1.path === "seasons/2/e01.html", "s2e01 path must be seasons/2/e01.html");
+  check(e1.source === "data/episodes/s2e01.json", "s2e01 source must be data/episodes/s2e01.json");
+  check(e1.weekBoardSnapshotId === "s2e01-carry", "s2e01 weekBoardSnapshotId must be s2e01-carry");
+}
+const carry = (Array.isArray(data.snapshots) ? data.snapshots : []).find((s) => s && s.id === "s2e01-carry");
+check(carry && carry.kind === "carry", "snapshots must include s2e01-carry carry row");
+if (carry && carry.books) {
+  for (const s of survivors) {
+    const row = carry.books[s.id];
+    check(row && row.bookUsd === 200, `s2e01-carry ${s.model}: bookUsd must be 200`);
+  }
+}
+const e1CopyPath = join(root, "data", "episodes", "s2e01.json");
+try {
+  const e1Copy = JSON.parse(readFileSync(e1CopyPath, "utf8"));
+  check(e1Copy.season === 2 && e1Copy.number === 1, "s2e01.json season/number");
+  check(e1Copy.conversationFeed === false, "s2e01 must not enable beach iMessage conversationFeed");
+  const hasSocial = (e1Copy.days || []).some((day) =>
+    (day.beats || []).some((b) => b.type === "social" && String(b.href || "").includes("social.html"))
+  );
+  check(hasSocial, "s2e01 must point social beats at Island Chatter (social.html)");
+} catch (e) {
+  check(false, "data/episodes/s2e01.json must exist: " + e.message);
+}
+
 if (errors.length) {
   console.error("check-season2-board failed:\n" + errors.map((e) => "  - " + e).join("\n"));
   process.exit(1);

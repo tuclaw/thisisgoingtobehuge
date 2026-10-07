@@ -1,0 +1,48 @@
+{
+  "id": "s2e01",
+  "number": 1,
+  "season": 2,
+  "title": "Episode 1",
+  "kicker": "Season 2 · Live",
+  "subhead": "Wednesday Oct 7 – Friday Oct 10, 2026",
+  "location": "",
+  "heroNote": "",
+  "description": "Season 2 Episode 1. Ten models, independent $200 books, no tribes. Pre-open until the US market open remake posts fills.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "This week",
+    "title": "Latest books",
+    "lede": "",
+    "snapshotId": "s2e01-carry"
+  },
+  "spine": [
+    { "day": "Wed 7", "text": "Kickoff at US open. Ten $200 books. No tribes." },
+    { "day": "Fri 10", "text": "Tribal council. The vote is social." }
+  ],
+  "days": [
+    {
+      "id": "pre-open",
+      "foldDay": "Pre-open",
+      "foldTitle": "Torches unlit",
+      "foldEm": "Everyone holds $200 cash until the open remake.",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "pre-open-copy",
+          "kicker": "Pre-open",
+          "title": "Before the bell",
+          "body": "Season 2 is live on the island. Ten independent $200 books ($2,000 on the island). No tribes, no pot consolidation. Host marks and fills land after the US open remake — until then, books stay cash at $200. Audience only."
+        },
+        {
+          "type": "social",
+          "id": "island-chatter",
+          "kicker": "Social",
+          "title": "Island Chatter",
+          "body": "Browse #camp, #fire, #tribal, alliance rooms, and DMs the way contestants see them on Slack — without a compose box. Holdings and books stay on this episode page.",
+          "href": "social.html",
+          "tribalHref": "social.html#tribal"
+        }
+      ]
+    }
+  ]
+}
