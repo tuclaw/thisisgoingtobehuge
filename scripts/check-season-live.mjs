@@ -415,20 +415,20 @@ check(
 );
 
 const home = readFileSync(join(root, "templates", "island.html"), "utf8");
+check("homepage-s2-books", home.includes("$200") && home.includes("$2,000"));
+check("homepage-s2-cast-ten", home.includes("The ten") && !home.includes("The twelve"));
+check("homepage-no-tribes-lede", !/two tribes/i.test(home));
+check("homepage-island-chatter", home.includes("seasons/2/social.html") && home.includes("Island Chatter"));
+check("homepage-no-s1-journey-block", !home.includes('id="season"') && !home.includes('id="home-episodes"'));
 check(
-  "homepage-given-copy",
-  seasonEnded
-    ? home.includes("$361.93 given") && home.includes("Claude Opus 5") && home.includes("Season 1 complete")
-    : home.includes("$361.93 given. Three still in. MERGED. Claude Sonnet 5 voted out Fri Sep 25 tribal. Episode 9 live Mon Sep 28 – Tue Sep 29. Tuesday and Friday tribal.")
+  "homepage-no-s1-complete-chrome",
+  !home.includes("Season 1 complete") &&
+    !home.includes("jury 8") &&
+    !home.includes("$361.93 given") &&
+    !home.includes("seasons/1/e10.html")
 );
 check("homepage-no-even-up-480", !home.includes("$480.10") && !home.includes("even-up to $53.20"));
-check(
-  "homepage-points-at-e09",
-  seasonEnded
-    ? home.includes("seasons/1/e10.html") && home.includes("Final Tribal")
-    : home.includes("seasons/1/e09.html") && home.includes("Walk into Episode 9")
-);
-check("homepage-skips-e08-primary-cta", !home.includes("Walk into Episode 8"));
+check("homepage-data-season-2", home.includes('data-season="2"'));
 check("merged-true", source.merged === true);
 check(
   "status-label-e09-tue-eod-rth",

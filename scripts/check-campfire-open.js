@@ -39,23 +39,16 @@ if (!chat.includes("playConversation")) {
   throw new Error("camp-chat.js missing playConversation export");
 }
 
-const portraits = [
-  "composer-2-5",
-  "claude-opus-5",
-  "grok-4-5",
-  "kimi-k3",
-  "gpt-5-6-sol",
-  "grok-4-6",
-  "claude-sonnet-5",
-  "gpt-5-6-terra",
-  "gemini-3-7-flash",
-  "claude-fable-5",
-  "gemini-3-1-pro"
-];
-portraits.forEach((name) => {
+["composer-2-5", "claude-opus-5", "claude-fable-5", "gemini-3-1-pro", "kimi-k3"].forEach((name) => {
   const file = join(root, "cast", name, "portrait.jpg");
-  if (!existsSync(file)) throw new Error("missing portrait " + file);
+  if (!existsSync(file)) throw new Error("missing Season 2 portrait " + file);
 });
+if (!html.includes('data-season="2"')) {
+  throw new Error("templates/island.html must load Season 2 board (data-season=2)");
+}
+if (!html.includes("The ten") || html.includes("The twelve") || html.includes("two tribes")) {
+  throw new Error("homepage cast chrome must describe ten players with no tribes");
+}
 
 ["target", "alliance", "blindside"].forEach((id) => {
   if (!js.includes('id: "' + id + '"')) throw new Error("missing scene " + id);
@@ -179,10 +172,13 @@ if (
 }
 const lettersIdx = html.indexOf('id="letters"');
 const castIdx = html.indexOf('id="cast"');
-const seasonIdx = html.indexOf('id="season"');
 const closeIdx = html.indexOf('id="close"');
-if (!(seasonIdx > -1 && lettersIdx > seasonIdx && closeIdx > lettersIdx)) {
-  throw new Error("Letters from home must sit after The journey is weekly and before the close");
+const tribalTeaseIdx = html.indexOf('id="tribal-tease"');
+if (html.includes('id="season"') || html.includes('id="home-episodes"')) {
+  throw new Error("templates/island.html must not keep the home season journey / episode teaser block");
+}
+if (!(castIdx > -1 && tribalTeaseIdx > castIdx && lettersIdx > tribalTeaseIdx && closeIdx > lettersIdx)) {
+  throw new Error("Letters from home must sit after tribal tease and before the close");
 }
 const laughIdx = html.indexOf('id="laughs"');
 if (!(closeIdx > -1 && laughIdx > closeIdx)) {
@@ -372,8 +368,11 @@ if (!appJs.includes("initArchifyEmbedFlow") || !appJs.includes("lts-diagram-flow
 if (!appJs.includes("MONEY_TICKER_HOME_RANGES") || !appJs.includes("MONEY_TICKER_HOME_DIAGRAMS")) {
   throw new Error("app.js missing home money ticker Season/Island-only tab config");
 }
-if (!appJs.includes("See how each tribe and contestant is doing in the") || !appJs.includes("live Episode")) {
-  throw new Error("app.js missing home money ticker lede copy");
+if (!appJs.includes("$2,000 on the island") || !appJs.includes("live Episode")) {
+  throw new Error("app.js missing home money ticker Season 2 lede copy");
+}
+if (!appJs.includes('MONEY_TICKER_HOME_DIAGRAMS = ["island", "contestants"]')) {
+  throw new Error("home money ticker must offer Island and Contestants diagrams");
 }
 if (!appJs.includes('class="money-ticker-lede-link"') || !appJs.includes(">live Episode</a>")) {
   throw new Error("home money ticker lede must hyperlink live Episode");
@@ -427,14 +426,18 @@ if (/episode one|first Friday vote/i.test(html.slice(homeVoteIdx, beachIdx))) {
 if (!appJs.includes('title: "See who has been voted off so far"')) {
   throw new Error("app.js home spoiler card title must match the band heading");
 }
-if (!html.includes('id="home-vote-episode"') || !html.includes('href="seasons/1/e01.html">Episode 1 Page')) {
-  throw new Error("templates/island.html Episode 1 Page button must link to seasons/1/e01.html");
+if (!html.includes('id="home-vote-episode"') || !html.includes('href="seasons/2/e01.html">Episode 1 Page')) {
+  throw new Error("templates/island.html Episode 1 Page button must link to seasons/2/e01.html");
 }
 const firstHrefFn = appJs.match(/function firstEpisodeHref\([\s\S]*?\n\}/);
 if (!firstHrefFn) {
   throw new Error("app.js missing firstEpisodeHref for the home Episode 1 Page button");
 }
-if (!firstHrefFn[0].includes('item.id === "s1e01"') || !firstHrefFn[0].includes("item.number === 1")) {
+if (
+  !firstHrefFn[0].includes('item.id === "s1e01"') ||
+  !firstHrefFn[0].includes('item.id === "s2e01"') ||
+  !firstHrefFn[0].includes("item.number === 1")
+) {
   throw new Error("firstEpisodeHref must resolve Episode 1 from the episode list");
 }
 if (/season\.episode(?!s)/.test(firstHrefFn[0])) {

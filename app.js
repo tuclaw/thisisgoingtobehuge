@@ -214,7 +214,8 @@ function livingContestantCount(season) {
   const list = season.survivors || [];
   const living = list.filter((s) => s && (s.status === "active" || s.status === "immune"));
   if (living.length) return living.length;
-  return list.length || 12;
+  if (list.length) return list.length;
+  return Number(season && season.season) === 2 ? 10 : 12;
 }
 
 function seasonOngoing(season) {
@@ -1340,34 +1341,50 @@ function councilTorchRowHtml(season, entry) {
 }
 
 
-function renderFaces(season) {
-  const grid = document.getElementById("face-grid");
-  if (!grid) return;
-  const tribes = season.tribes || [];
-  grid.innerHTML = tribes
-    .map((tribe) => {
-      const members = (season.survivors || []).filter((s) => s.tribeId === tribe.id);
-      const cards = members
-        .map((s) => {
-          const model = modelOf(s);
-          const slug = slugOf(s);
-          const face = s.portrait
-            ? `<img class="portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
-            : totemSvg(s, tribe);
-          const mark =
-            globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
-              ? LabLogos.labMarkHtml({ slug: slug, className: "face-lab-mark" })
-              : "";
-          return `<a class="face-card ${s.tribeId}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
+function faceCardHtml(s, tribeOrNull) {
+  const model = modelOf(s);
+  const slug = slugOf(s);
+  const face = s.portrait
+    ? `<img class="portrait" src="${escapeHtml(assetUrl(s.portrait))}" alt="${escapeHtml(model)}">`
+    : totemSvg(s, tribeOrNull);
+  const mark =
+    globalThis.LabLogos && typeof LabLogos.labMarkHtml === "function"
+      ? LabLogos.labMarkHtml({ slug: slug, className: "face-lab-mark" })
+      : "";
+  const tribeClass = s.tribeId ? ` ${escapeHtml(s.tribeId)}` : "";
+  const sub = s.tribeId
+    ? escapeHtml(tribeChromeName(tribeOrNull || s.tribeId))
+    : typeof s.bookUsd === "number"
+      ? `${money(s.bookUsd)} book`
+      : escapeHtml(survivorSubtitle(s));
+  return `<a class="face-card${tribeClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
         <span class="face-photo">${face}</span>
         <span class="face-id">
           ${mark ? `<span class="face-lab">${mark}</span>` : ""}
           <h3 class="face-name">${escapeHtml(model)}</h3>
         </span>
-        <p class="face-tribe">${escapeHtml(tribeChromeName(tribe))}</p>
+        <p class="face-tribe">${sub}</p>
       </a>`;
-        })
-        .join("");
+}
+
+function renderFaces(season) {
+  const grid = document.getElementById("face-grid");
+  if (!grid) return;
+  const tribes = season.tribes || [];
+  if (!tribes.length) {
+    const members = (season.survivors || []).filter(
+      (s) => s && (s.status === "active" || s.status === "immune" || !s.status)
+    );
+    const cards = members.map((s) => faceCardHtml(s, null)).join("");
+    grid.innerHTML = `<div class="face-tribe-block merged reveal">
+      <div class="face-row">${cards}</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = tribes
+    .map((tribe) => {
+      const members = (season.survivors || []).filter((s) => s.tribeId === tribe.id);
+      const cards = members.map((s) => faceCardHtml(s, tribe)).join("");
       const buff = tribe.buff ? ` · ${escapeHtml(tribe.buff)}` : "";
       return `<div class="face-tribe-block ${tribe.id} reveal">
       <p class="face-tribe-kicker">${escapeHtml(tribeChromeName(tribe))}${buff}</p>
@@ -2335,7 +2352,7 @@ function renderEpisodeLiveIndicator(season) {
 const MONEY_TICKER_SPEEDS = [0.5, 1, 4, 16];
 const MONEY_TICKER_DIAGRAMS = ["island", "tribes", "contestants"];
 const MONEY_TICKER_RANGES = ["week", "season"];
-const MONEY_TICKER_HOME_DIAGRAMS = ["island"];
+const MONEY_TICKER_HOME_DIAGRAMS = ["island", "contestants"];
 const MONEY_TICKER_HOME_RANGES = ["season"];
 const moneyTicker = {
   root: null,
@@ -4192,10 +4209,10 @@ function mountMoneyTicker(season, opts) {
   const pageEp = currentPageEpisode(season) || season.episode || {};
   moneyTicker.sleevePutIn = tickerSleevePutIn(season, pageEp, moneyTicker.range);
   moneyTicker.putIn = moneyPutInTotal(season, pageEp, moneyTicker.range);
-  const livingPerTribe = Math.max(
-    1,
-    Math.round(((season.survivors || []).length || 12) / Math.max(1, (season.tribes || []).length || 2))
-  );
+  const tribeCount = (season.tribes || []).length;
+  const livingPerTribe = tribeCount
+    ? Math.max(1, Math.round(((season.survivors || []).length || 12) / tribeCount))
+    : livingContestantCount(season);
   moneyTicker.tribePutIn = roundMoney(moneyTicker.sleevePutIn * livingPerTribe);
   const keepEnd = opts && opts.keepEnd;
   moneyTicker.chapters = [];
@@ -4254,7 +4271,7 @@ function mountMoneyTicker(season, opts) {
     ? `<a class="money-ticker-lede-link" href="${liveHref}">live Episode</a>`
     : "live Episode";
   const tickerHead = homeMode
-    ? `<p class="money-ticker-lede">See how each tribe and contestant is doing in the ${liveLabel}.</p>`
+    ? `<p class="money-ticker-lede">Ten $200 books ($2,000 on the island), no tribes — track island % and each contestant in the ${liveLabel}.</p>`
     : "";
 
   root.innerHTML = `
@@ -4474,8 +4491,11 @@ function renderEpisodeRecapSpoiler(season) {
 
 function firstEpisodeHref(season) {
   const episodes = Array.isArray(season && season.episodes) ? season.episodes : [];
-  const ep = episodes.find((item) => item && (item.number === 1 || item.id === "s1e01"));
-  return ep && ep.path ? assetUrl(ep.path) : assetUrl("seasons/1/e01.html");
+  const ep = episodes.find(
+    (item) => item && (item.number === 1 || item.id === "s1e01" || item.id === "s2e01")
+  );
+  const fallback = Number(season && season.season) === 2 ? "seasons/2/e01.html" : "seasons/1/e01.html";
+  return ep && ep.path ? assetUrl(ep.path) : assetUrl(fallback);
 }
 
 function renderHomeTribalSpoiler(season) {

@@ -38,9 +38,9 @@ function render(template, vars) {
   return out;
 }
 
-function injectFallback(html, base) {
-  const tag = `<script src="${base}season.fallback.js"></script>\n`;
-  if (html.includes("season.fallback.js")) return html;
+function injectFallback(html, base, fallbackScript = "season.fallback.js") {
+  const tag = `<script src="${base}${fallbackScript}"></script>\n`;
+  if (html.includes("season.fallback.js") || html.includes("season2.fallback.js")) return html;
   if (html.includes('src="app.js"')) return html.replace('<script src="app.js"></script>', `${tag}<script src="app.js"></script>`);
   if (html.includes('src="../app.js"')) {
     return html.replace('<script src="../app.js"></script>', `${tag}<script src="../app.js"></script>`);
@@ -696,7 +696,11 @@ export function build(rootDir = root, destDir = dist) {
     );
   }
 
-  write(join(destDir, "index.html"), injectFallback(read(join(templates, "island.html")), ""));
+  const homeFallback =
+    season2Board && Array.isArray(season2Board.survivors) && season2Board.survivors.length
+      ? "season2.fallback.js"
+      : "season.fallback.js";
+  write(join(destDir, "index.html"), injectFallback(read(join(templates, "island.html")), "", homeFallback));
   write(join(destDir, "rules.html"), injectFallback(read(join(templates, "rules.html")), ""));
   write(join(destDir, "seasons/1/index.html"), injectFallback(read(join(templates, "season.html")), "../../"));
 

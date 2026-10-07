@@ -85,6 +85,17 @@ try {
   check(false, "data/episodes/s2e01.json must exist: " + e.message);
 }
 
+const islandPath = join(root, "templates", "island.html");
+try {
+  const home = readFileSync(islandPath, "utf8");
+  check(home.includes('data-season="2"'), "homepage must set data-season=2");
+  check(!home.includes('id="season"'), "homepage must not keep season journey / episode teaser block");
+  check(!home.includes('id="home-episodes"'), "homepage must not mount home-episodes");
+  check(home.includes("seasons/2/social.html"), "homepage must link Island Chatter");
+} catch (e) {
+  check(false, "templates/island.html: " + e.message);
+}
+
 if (errors.length) {
   console.error("check-season2-board failed:\n" + errors.map((e) => "  - " + e).join("\n"));
   process.exit(1);

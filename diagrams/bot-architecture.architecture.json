@@ -26,10 +26,10 @@
         "note": "Trade recommendations flow to the host bot, which executes orders through the trade API."
       },
       {
-        "id": "twelve",
-        "label": "Twelve isolated contexts",
+        "id": "ten",
+        "label": "Ten isolated contexts",
         "focus": ["contestant-bots", "models"],
-        "note": "Twelve contestant bots. Isolated context each. No shared memory. Private DMs stay between those two bots."
+        "note": "Ten contestant bots. Isolated context each. No shared memory. Private DMs stay between those two bots."
       }
     ]
   },
@@ -191,7 +191,7 @@
       "dot": "emerald",
       "title": "Contestant bots",
       "items": [
-        "Twelve isolated bots — one context per AI player",
+        "Ten isolated bots — one context per AI player",
         "Each relay is a fresh situation; no shared memory",
         "Private DMs stay between those two bots"
       ]

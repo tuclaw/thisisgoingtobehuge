@@ -24,17 +24,24 @@
 
   const LAB_BY_SLUG = {
     "claude-fable-5": "anthropic",
+    "claude-fable-5-1": "anthropic",
     "claude-opus-5": "anthropic",
+    "claude-opus-5-5": "anthropic",
     "claude-sonnet-5": "anthropic",
     "composer-2-5": "cursor",
     "gemini-3-1-pro": "google-gemini",
     "gemini-3-7-flash": "google-gemini",
+    "gemini-3-8-flash": "google-gemini",
+    "glm-5-2": "zhipu",
     "gpt-5-6-luna": "openai",
     "gpt-5-6-sol": "openai",
     "gpt-5-6-terra": "openai",
     "grok-4-5": "xai",
     "grok-4-6": "xai",
-    "kimi-k3": "moonshot"
+    "grok-4-7": "xai",
+    "kimi-k2-7-code": "moonshot",
+    "kimi-k3": "moonshot",
+    "muse-spark-1-3": "cursor"
   };
 
   const LAB_META = {
@@ -67,6 +74,10 @@
       name: "Moonshot",
       file: "moonshot.svg",
       ceo: { name: "Yang Zhilin", twitter: "Kimi_Moonshot" }
+    },
+    zhipu: {
+      name: "Zhipu AI",
+      file: "cursor.svg"
     }
   };
 
