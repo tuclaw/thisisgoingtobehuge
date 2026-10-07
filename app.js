@@ -27,20 +27,24 @@ function pageSeasonNumber() {
   return Number.isFinite(n) && n > 0 ? n : 1;
 }
 
-function seasonJsonUrls() {
+function seasonJsonUrlsFor(seasonNum) {
   const base = assetBase();
-  const seasonNum = pageSeasonNumber();
-  const file = seasonNum === 2 ? "season2.json" : "season1.json";
+  const n = Number(seasonNum) === 2 ? 2 : 1;
+  const file = n === 2 ? "season2.json" : "season1.json";
   const urls = [];
   if (base) urls.push(base + file);
   urls.push("/" + file);
   urls.push(file);
-  if (seasonNum === 2) {
+  if (n === 2) {
     if (base) urls.push(base + "data/season2.json");
     urls.push("/data/season2.json");
     urls.push("data/season2.json");
   }
   return [...new Set(urls)];
+}
+
+function seasonJsonUrls() {
+  return seasonJsonUrlsFor(pageSeasonNumber());
 }
 
 const LEGACY_SLUGS = {
@@ -1173,11 +1177,13 @@ function castawayTapeHtml(season, survivor) {
 
 function openFoldForTarget(target) {
   if (!target) return;
-  const fold = target.classList && target.classList.contains("day-fold")
-    ? target
-    : target.closest
-      ? target.closest(".day-fold")
-      : null;
+  const fold =
+    target.classList &&
+    (target.classList.contains("day-fold") || target.classList.contains("season-fold"))
+      ? target
+      : target.closest
+        ? target.closest(".day-fold, .season-fold")
+        : null;
   if (fold) fold.open = true;
 }
 
@@ -1198,7 +1204,7 @@ function openFoldForHash() {
 }
 
 function initDayFolds() {
-  if (!document.querySelector(".day-fold")) return;
+  if (!document.querySelector(".day-fold, .season-fold")) return;
   openFoldForHash();
   if (initDayFolds.bound) return;
   initDayFolds.bound = true;
@@ -4654,8 +4660,87 @@ function episodeFileHref(ep) {
   return parts[parts.length - 1] || "";
 }
 
+function episodePublicHref(ep) {
+  const path = String((ep && ep.path) || "").replace(/^\//, "");
+  return path ? "/" + path : "";
+}
+
+function seasonListingStatus(season) {
+  const status = season && season.status;
+  if (status === "ended" || status === "closed") return "Closed";
+  if (status === "live") return "Live";
+  return "";
+}
+
+function episodeFoldHtml(season, ep, href) {
+  const title = escapeHtml((ep && ep.title) || "Episode " + ((ep && ep.number) || ""));
+  const label = escapeHtml((ep && ep.weekLabel) || "");
+  const locked = episodePublicLocked(season, ep);
+  if (locked) {
+    const meta = ["Unlit", label].filter(Boolean).join(" · ");
+    return `<details class="episode-fold">
+      <summary>
+        <span class="ep-fold-title">${title}</span>
+        <span class="ep-fold-meta">${escapeHtml(meta)}</span>
+      </summary>
+      <div class="episode-card locked" aria-disabled="true">
+        <p class="ep-kicker">Torches unlit</p>
+        <h3>${title}</h3>
+        ${label ? `<p>${label}</p>` : ""}
+        <p class="ep-locked-note">After Friday tribal</p>
+      </div>
+    </details>`;
+  }
+  const live = ep.status === "live" && episodeLiveWatchable(season, ep);
+  const status = live ? "Now playing" : episodeIsClosed(ep) ? "Closed" : ep.status || "cut";
+  const meta = [status, label].filter(Boolean).join(" · ");
+  const liveClass = live ? " live" : episodeIsClosed(ep) ? " closed" : "";
+  return `<details class="episode-fold">
+    <summary>
+      <span class="ep-fold-title">${title}</span>
+      <span class="ep-fold-meta">${escapeHtml(meta)}</span>
+    </summary>
+    <a class="episode-card${liveClass}" href="${escapeHtml(href)}">
+      <p class="ep-kicker">${escapeHtml(status)}</p>
+      <h3 class="ep-title-row"><span>${title}</span>${live ? liveIndicatorHtml() : ""}</h3>
+      ${label ? `<p>${label}</p>` : ""}
+    </a>
+  </details>`;
+}
+
+function episodeFoldsHtml(season, hrefFor) {
+  const byNum = new Map();
+  (Array.isArray(season && season.episodes) ? season.episodes : []).forEach((ep) => {
+    byNum.set(ep.number, ep);
+  });
+  const episodes = [...byNum.values()].sort((a, b) => (a.number || 0) - (b.number || 0));
+  return episodes.map((ep) => episodeFoldHtml(season, ep, hrefFor(ep))).join("");
+}
+
+function fillSeasonFold(list, season, hrefFor) {
+  if (!list || !season) return;
+  list.innerHTML = episodeFoldsHtml(season, hrefFor);
+  const fold = list.closest(".season-fold");
+  if (!fold) return;
+  const meta = fold.querySelector(".season-fold-meta");
+  const status = seasonListingStatus(season);
+  if (meta && status) meta.textContent = status;
+}
+
+function renderSeasonsIndex(season) {
+  const root = document.getElementById("seasons-index");
+  if (!root) return;
+  const pageSeason = Number(season && season.season);
+  const list = root.querySelector("[data-season-episodes='" + pageSeason + "']");
+  fillSeasonFold(list, season, episodePublicHref);
+}
+
 function renderSeasonHub(season) {
   const list = document.getElementById("episode-list");
+  if (document.getElementById("seasons-index")) {
+    renderSeasonsIndex(season);
+    return;
+  }
   if (!list) return;
   if (Number(season.season) === 2 && list.querySelector("a[href^='e']")) return;
   const byNum = new Map();
@@ -4673,7 +4758,7 @@ function renderSeasonHub(season) {
         <p class="ep-kicker">Torches unlit</p>
         <h3>${title}</h3>
         <p>${label}</p>
-        <p class="ep-locked-note">${escapeHtml(ep.tease || "After Friday tribal")}</p>
+        <p class="ep-locked-note">${escapeHtml("After Friday tribal")}</p>
       </div>`;
       }
       const href = episodeFileHref(ep);
@@ -4753,18 +4838,24 @@ function emptySeason() {
   return { survivors: [], tribes: [], episodes: [], snapshots: [] };
 }
 
-async function loadSeason() {
-  for (const path of seasonJsonUrls()) {
+async function fetchSeasonJson(seasonNum) {
+  for (const path of seasonJsonUrlsFor(seasonNum)) {
     try {
       const res = await fetch(path, { cache: "no-store" });
       if (!res.ok) continue;
       const data = await res.json();
       if (!data || !Array.isArray(data.survivors) || data.survivors.length < 1) continue;
-      return { season: data, note: null };
+      return data;
     } catch {
       /* file:// or missing path */
     }
   }
+  return null;
+}
+
+async function loadSeason() {
+  const data = await fetchSeasonJson(pageSeasonNumber());
+  if (data) return { season: data, note: null };
   if (window.__SEASON_FALLBACK__ && Array.isArray(window.__SEASON_FALLBACK__.survivors)) {
     return {
       season: window.__SEASON_FALLBACK__,
@@ -4775,6 +4866,13 @@ async function loadSeason() {
     season: emptySeason(),
     note: "Could not fetch the live board."
   };
+}
+
+async function hydrateSeasonsIndex(loadedSeason) {
+  if (!document.getElementById("seasons-index")) return;
+  const otherNum = Number(loadedSeason && loadedSeason.season) === 2 ? 1 : 2;
+  const other = await fetchSeasonJson(otherNum);
+  if (other) renderSeasonsIndex(other);
 }
 
 const CONTRIBUTE = {
@@ -5001,7 +5099,11 @@ function applyDemoTribal(season) {
 initContribute();
 initArchifyEmbedFlow();
 loadSeason()
-  .then(({ season, note }) => render(applyDemoTribal(season), note))
+  .then(({ season, note }) => {
+    const next = applyDemoTribal(season);
+    render(next, note);
+    return hydrateSeasonsIndex(next);
+  })
   .catch((err) => {
     console.error("Failed to load season data:", err);
     const fallback =

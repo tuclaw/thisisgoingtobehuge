@@ -429,6 +429,31 @@ check(
 );
 check("homepage-no-even-up-480", !home.includes("$480.10") && !home.includes("even-up to $53.20"));
 check("homepage-data-season-2", home.includes('data-season="2"'));
+check("homepage-seasons-nav", home.includes('href="seasons/"') && !home.includes('href="seasons/1/">Seasons'));
+const seasonsIndexTpl = readFileSync(join(root, "templates", "season.html"), "utf8");
+check("seasons-index-collapsed-shell", seasonsIndexTpl.includes("<!--SEASON_FOLDS-->") && !seasonsIndexTpl.includes("Follow the journey"));
+const seasonsIndexBuilt = join(root, "dist", "seasons", "index.html");
+const seasons1Built = join(root, "dist", "seasons", "1", "index.html");
+if (existsSync(seasonsIndexBuilt) && existsSync(seasons1Built)) {
+  const seasonsHtml = readFileSync(seasonsIndexBuilt, "utf8");
+  const seasons1Html = readFileSync(seasons1Built, "utf8");
+  check("seasons-index-built", seasonsHtml.includes("Season 1") && seasonsHtml.includes("Season 2"));
+  check("seasons-index-s2-episode", seasonsHtml.includes("/seasons/2/e01.html") && seasonsHtml.includes("Episode 1"));
+  check("seasons-index-details", seasonsHtml.includes('class="season-fold"') && seasonsHtml.includes('class="episode-fold"'));
+  check("seasons-index-default-closed", !/<details[^>]*\sopen\b/.test(seasonsHtml));
+  check(
+    "seasons-index-no-journey",
+    !/follow the journey|the fire is lit|twelve models|voted out|immunity|\$361|five living|\bmerged\b|crowned/i.test(
+      seasonsHtml
+    )
+  );
+  check("seasons-1-same-listing", seasons1Html.includes("Season 2") && seasons1Html.includes('class="season-fold"'));
+  for (const entry of source.tribalLog || []) {
+    const name = entry && entry.bootName;
+    if (!name || entry.type === "disqualification") continue;
+    check(`seasons-index-no-boot:${name}`, !seasonsHtml.includes(name), name);
+  }
+}
 check("merged-true", source.merged === true);
 check(
   "status-label-e09-tue-eod-rth",

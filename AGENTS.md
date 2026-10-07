@@ -57,6 +57,7 @@ Season checks are split:
 
 - Prefer `templates/` for structure, root CSS/JS for behavior and look.
 - Home is a Survivor cold open (brand, one line, CTA) — not a dashboard. Live standings live on the episode page.
+- Seasons index (`templates/season.html` → `seasons/` and `seasons/1/`) is a collapsed accordion of seasons, then episodes. No journey / pot / immunity / boot recap.
 - Prefer `npm run check` before claiming UI work is done; some checks need a prior build (`dist/`).
 
 ## Episode 2 chrome (do not restore)

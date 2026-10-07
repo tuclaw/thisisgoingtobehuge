@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 import { LEGACY_SLUGS, deriveSeason, castFromSource } from "./lib/ledger.mjs";
 import { collectThreads } from "./lib/collect-threads.mjs";
 import { listTapeFiles, loadTapeManifest, tapeMetaFromFilename } from "./lib/tapes.mjs";
+import { episodeFoldsHtml, seasonFoldHtml } from "./lib/season-listing.mjs";
 import { writeBoard } from "./derive-board.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -460,7 +461,7 @@ function renderEpisodePage(episode, season, base, opts = {}) {
       <ul class="nav-links">
         <li><a href="${base}index.html">Island</a></li>
         <li><a href="#" data-nav-watch class="nav-watch">Watch</a></li>
-        <li><a href="${base}seasons/${episode.season || season.season}/">Seasons</a></li>
+        <li><a href="${base}seasons/">Seasons</a></li>
         <li><a href="${base}index.html#cast">Cast</a></li>
         <li><a href="${base}rules.html">Rules</a></li>
       </ul>
@@ -686,6 +687,33 @@ function episodePagesFromSeason(source, rootDir, seasonNum) {
   return toBuild;
 }
 
+function writeSeasonsIndex(destDir, season1, season2) {
+  const template = read(join(templates, "season.html"));
+  const folds = [
+    seasonFoldHtml(season1, {
+      id: "season-1",
+      title: "Season 1",
+      episodesHtml: episodeFoldsHtml(season1)
+    }),
+    season2
+      ? seasonFoldHtml(season2, {
+          id: "season-2",
+          title: "Season 2",
+          episodesHtml: episodeFoldsHtml(season2)
+        })
+      : ""
+  ]
+    .filter(Boolean)
+    .join("\n");
+  for (const { out, base } of [
+    { out: "seasons/index.html", base: "../" },
+    { out: "seasons/1/index.html", base: "../../" }
+  ]) {
+    const html = render(template, { base }).replace("<!--SEASON_FOLDS-->", folds);
+    write(join(destDir, out), injectFallback(html, base, "season2.fallback.js"));
+  }
+}
+
 export function build(rootDir = root, destDir = dist) {
   const source = JSON.parse(read(join(rootDir, "data", "season1.json")));
   const board = deriveSeason(source);
@@ -709,7 +737,7 @@ export function build(rootDir = root, destDir = dist) {
       : "season.fallback.js";
   write(join(destDir, "index.html"), injectFallback(read(join(templates, "island.html")), "", homeFallback));
   write(join(destDir, "rules.html"), injectFallback(read(join(templates, "rules.html")), ""));
-  write(join(destDir, "seasons/1/index.html"), injectFallback(read(join(templates, "season.html")), "../../"));
+  writeSeasonsIndex(destDir, board, season2Board);
 
   let toBuild = episodePagesFromSeason(source, rootDir, source.season || 1);
   if (!toBuild.length) {

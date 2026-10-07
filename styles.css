@@ -3213,6 +3213,115 @@ a.brand:hover {
 .day-nums .down { color: #ff9a6a; }
 .day-nums .flat { color: var(--worn); }
 
+.seasons-hero {
+  padding-bottom: 1.6rem;
+}
+
+.seasons-wrap {
+  padding-top: 0.4rem;
+}
+
+.seasons-index-list {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 40rem;
+}
+
+.season-fold,
+.episode-fold {
+  margin: 0;
+  border: 1px solid rgba(232, 213, 176, 0.16);
+  background:
+    linear-gradient(180deg, rgba(232, 213, 176, 0.06), rgba(18, 12, 8, 0.55)),
+    #16110c;
+}
+
+.season-fold > summary,
+.episode-fold > summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  padding: 0.95rem 2.4rem 0.95rem 1.1rem;
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+}
+
+.season-fold > summary::-webkit-details-marker,
+.episode-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.season-fold > summary::after,
+.episode-fold > summary::after {
+  content: "";
+  position: absolute;
+  right: 1.1rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.16s ease;
+}
+
+.season-fold[open] > summary::after,
+.episode-fold[open] > summary::after {
+  transform: translateY(-20%) rotate(225deg);
+}
+
+.season-fold > summary:hover,
+.episode-fold > summary:hover {
+  background: rgba(232, 213, 176, 0.04);
+}
+
+.season-fold-title,
+.ep-fold-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--parchment);
+}
+
+.season-fold-title {
+  font-size: 1.45rem;
+}
+
+.season-fold-meta,
+.ep-fold-meta {
+  font-family: var(--font-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  color: var(--gold);
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .season-fold > summary,
+  .episode-fold > summary {
+    grid-template-columns: 1fr;
+    gap: 0.28rem;
+    padding-right: 2.4rem;
+  }
+
+  .season-fold-meta,
+  .ep-fold-meta {
+    text-align: left;
+  }
+}
+
+.season-fold .episode-list {
+  padding: 0 0.75rem 0.85rem;
+  gap: 0.65rem;
+}
+
+.episode-fold .episode-card {
+  margin: 0 0.75rem 0.75rem;
+}
+
 .episode-list {
   display: grid;
   gap: 1rem;
