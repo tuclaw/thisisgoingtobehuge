@@ -3834,13 +3834,6 @@ body.is-titles .replay-trailer {
   margin-top: 0.85rem;
 }
 
-.open-hero .money-ticker-head,
-.open-hero .money-ticker-lede {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .open-hero .money-ticker-toolbar {
   justify-content: center;
 }
@@ -5128,10 +5121,6 @@ body.is-titles .replay-trailer {
   margin: 1.1rem 0 0;
 }
 
-.wager-band .money-ticker-lede {
-  max-width: 36rem;
-}
-
 .money-ticker-ctas {
   display: flex;
   flex-wrap: wrap;
@@ -5342,26 +5331,6 @@ body.is-titles .replay-trailer {
 
 .money-ticker-foot .money-ticker-chg {
   margin: 0;
-}
-
-.money-ticker-lede {
-  margin: 0;
-  max-width: 40rem;
-  color: var(--sand);
-  font-size: 1rem;
-  line-height: 1.45;
-}
-
-.money-ticker-lede-link {
-  color: var(--gold-bright);
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
-}
-
-.money-ticker-lede-link:hover,
-.money-ticker-lede-link:focus-visible {
-  color: var(--parchment);
-  outline: none;
 }
 
 .money-ticker-toolbar {
@@ -5895,12 +5864,6 @@ body.is-titles .replay-trailer {
   background: rgba(8, 12, 18, 0.55);
   color: var(--sand);
   letter-spacing: 0.02em;
-}
-
-#island-chatter .island-chatter-lede {
-  max-width: 42rem;
-  color: var(--sand);
-  line-height: 1.55;
 }
 
 .conversation-archive-index {
@@ -6981,8 +6944,7 @@ body.is-titles .replay-trailer {
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(232, 93, 4, 0.08), transparent 55%);
 }
 
-.laugh-band h2,
-.laugh-band .lede {
+.laugh-band h2 {
   margin-left: auto;
   margin-right: auto;
 }

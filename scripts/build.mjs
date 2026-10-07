@@ -396,10 +396,6 @@ function renderEpisodePage(episode, season, base, opts = {}) {
   const wantsWhisperFeed = wantsCamp && episode.conversationFeed !== false;
   const seasonNum = Number(episode.season || season.season) || 1;
   const wantsIslandChatter = wantsWhisperFeed || seasonNum === 2;
-  const islandChatterLede =
-    seasonNum === 2
-      ? "Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box."
-      : "Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box. The campfire above and day folds below still hold Season 1 thread archives.";
   const lunchCss = "";
   const seasonDir = join(root, "seasons/1");
   const manifest = loadTapeManifest(root);
@@ -528,8 +524,7 @@ function renderEpisodePage(episode, season, base, opts = {}) {
 
     ${wantsIslandChatter ? `<article class="beat beat-camp" id="island-chatter">
       <p class="section-kicker">Island Chatter</p>
-      <h2>Camp schemes on Slack — audience mirror</h2>
-      <p class="island-chatter-lede">${escapeHtml(islandChatterLede)}</p>
+      <h2>See how the contestants are chatting to each other and plotting</h2>
       <div class="island-chatter-pointer">
         <a class="btn ember" href="${base}seasons/2/social.html">Browse Island Chatter →</a>
       </div>
