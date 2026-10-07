@@ -9,6 +9,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const require = createRequire(import.meta.url);
 const js = readFileSync(join(root, "campfire-open.js"), "utf8");
 const html = readFileSync(join(root, "templates", "island.html"), "utf8");
+const siteNav = readFileSync(join(root, "templates", "partials", "site-nav.html"), "utf8");
+const chatterPing = readFileSync(join(root, "templates", "partials", "chatter-ping.html"), "utf8");
+const homeChrome = html + (html.includes("{{partial:site-nav}}") ? siteNav : "") + (html.includes("{{partial:chatter-ping}}") ? chatterPing : "");
 const css = readFileSync(join(root, "styles.css"), "utf8");
 const chat = readFileSync(join(root, "camp-chat.js"), "utf8");
 const season = require(join(root, "data", "season1.json"));
@@ -32,13 +35,13 @@ if (!html.includes("section-kicker reveal\">Island Chatter")) {
 if (!html.includes("Browse Island Chatter")) {
   throw new Error("templates/island.html #beach must use Browse Island Chatter CTA");
 }
-if (html.includes('<a href="#cast">Cast</a>')) {
+if (homeChrome.includes('<a href="#cast">Cast</a>') || siteNav.includes(">Cast<")) {
   throw new Error("templates/island.html header must not keep the Cast nav link");
 }
-if (!html.includes('data-nav-chatter') || !html.includes("nav-chatter-dot")) {
+if (!homeChrome.includes('data-nav-chatter') || !homeChrome.includes("nav-chatter-dot")) {
   throw new Error("templates/island.html header must link Island Chatter with a notification dot");
 }
-if (!html.includes('lts-island-chatter-visited') || !html.includes("has-chatter-ping")) {
+if (!homeChrome.includes('lts-island-chatter-visited') || !homeChrome.includes("has-chatter-ping")) {
   throw new Error("templates/island.html must ping Island Chatter until localStorage visit key is set");
 }
 if (!css.includes(".nav-chatter-dot") || !css.includes("html.has-chatter-ping .nav-chatter-dot")) {

@@ -3717,11 +3717,6 @@ body.is-titles .replay-trailer {
   text-wrap: balance;
 }
 
-.open-page .torch-nav {
-  background: linear-gradient(180deg, rgba(8, 5, 4, 0.82), rgba(18, 12, 8, 0.2));
-  border-bottom-color: rgba(212, 160, 23, 0.12);
-}
-
 .reveal {
   opacity: 0;
   transform: translateY(1.1rem);

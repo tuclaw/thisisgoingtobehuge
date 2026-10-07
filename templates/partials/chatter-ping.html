@@ -1,0 +1,10 @@
+<script>
+    /* Ping Island Chatter in the header until the audience has opened it once. */
+    try {
+      if (localStorage.getItem("lts-island-chatter-visited") !== "1") {
+        document.documentElement.classList.add("has-chatter-ping");
+      }
+    } catch (e) {
+      document.documentElement.classList.add("has-chatter-ping");
+    }
+  </script>

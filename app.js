@@ -4990,19 +4990,6 @@ function isFuelPromptTrigger(el) {
 }
 
 function initContribute() {
-  const nav = document.querySelector(".nav-links");
-  if (nav && !nav.querySelector("[data-contribute]")) {
-    const item = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = CONTRIBUTE.url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.dataset.contribute = "true";
-    link.textContent = "Contribute";
-    item.appendChild(link);
-    nav.appendChild(item);
-  }
-
   const footer = document.querySelector("footer");
   if (footer && !footer.querySelector(".contribute-block")) {
     const block = document.createElement("div");

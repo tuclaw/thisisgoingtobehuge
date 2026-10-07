@@ -4,6 +4,7 @@ import {
   cpSync,
   existsSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   rmSync,
   writeFileSync
@@ -29,14 +30,45 @@ function write(path, body) {
   writeFileSync(path, body);
 }
 
+function expandPartials(template) {
+  let out = template;
+  for (let i = 0; i < 6; i++) {
+    if (!out.includes("{{partial:")) return out;
+    out = out.replace(/\{\{partial:([\w-]+)\}\}/g, (_, name) => {
+      const file =
+        name === "flame" ? join(templates, "partials", "flame.svg") : join(templates, "partials", `${name}.html`);
+      return read(file);
+    });
+  }
+  return out;
+}
+
 function render(template, vars) {
-  let out = template.replace(/\{\{partial:([\w-]+)\}\}/g, (_, name) => {
-    const file = name === "flame" ? join(templates, "partials", "flame.svg") : join(templates, "partials", `${name}.html`);
-    return read(file);
-  });
+  let out = expandPartials(template);
   out = out.replace(/\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_, key, inner) => (vars[key] ? inner : ""));
   out = out.replace(/\{\{(\w+)\}\}/g, (_, key) => (vars[key] == null ? "" : String(vars[key])));
   return out;
+}
+
+/** One header for every public page. `active` is island | seasons | season2 | chatter | rules. */
+function siteNavVars(base, active) {
+  const mark = ' aria-current="page"';
+  return {
+    base: base || "",
+    navCurrentIsland: active === "island" ? mark : "",
+    navCurrentSeasons: active === "seasons" ? mark : "",
+    navCurrentSeason2: active === "season2" ? mark : "",
+    navCurrentChatter: active === "chatter" ? mark : "",
+    navCurrentRules: active === "rules" ? mark : ""
+  };
+}
+
+function siteNavHtml(base, active) {
+  return render(read(join(templates, "partials", "site-nav.html")), siteNavVars(base, active));
+}
+
+function chatterPingHtml() {
+  return read(join(templates, "partials", "chatter-ping.html")).trim();
 }
 
 function injectFallback(html, base, fallbackScript = "season.fallback.js") {
@@ -389,7 +421,6 @@ function episodeWantsCamp(episode) {
 
 function renderEpisodePage(episode, season, base, opts = {}) {
   const fallbackScript = opts.fallbackScript || "season.fallback.js";
-  const flame = read(join(templates, "partials", "flame.svg"));
   const votePosted = episodeVotePosted(season, episode);
   const focusHref = "#week-board";
   const wantsCamp = episodeWantsCamp(episode);
@@ -445,24 +476,11 @@ function renderEpisodePage(episode, season, base, opts = {}) {
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  ${chatterPingHtml()}
 </head>
 <body class="episode-page${votePosted ? " episode-vote-posted" : ""}">
   <a class="skip" href="${focusHref}">Skip to episode</a>
-  <header class="torch-nav">
-    <a class="brand" href="${base}index.html">
-      ${flame}
-      Last Trader Standing
-    </a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="${base}index.html">Island</a></li>
-        <li><a href="#" data-nav-watch class="nav-watch">Watch</a></li>
-        <li><a href="${base}seasons/">Seasons</a></li>
-        <li><a href="${base}index.html#cast">Cast</a></li>
-        <li><a href="${base}rules.html">Rules</a></li>
-      </ul>
-    </nav>
-  </header>
+  ${siteNavHtml(base, "")}
 
   <section class="episode-hero episode-campfire-hero" id="episode">
     <div class="hero-stage" aria-hidden="true">
@@ -580,7 +598,7 @@ function copyStatic() {
   const assets = join(root, "assets");
   if (existsSync(assets)) cpSync(assets, join(dist, "assets"), { recursive: true });
   const demos = join(root, "demos");
-  if (existsSync(demos)) cpSync(demos, join(dist, "demos"), { recursive: true });
+  if (existsSync(demos)) copyRenderedTree(demos, join(dist, "demos"), siteNavVars("../", ""));
   const diagrams = join(root, "diagrams");
   if (existsSync(diagrams)) cpSync(diagrams, join(dist, "diagrams"), { recursive: true });
   mkdirSync(join(dist, "seasons/1"), { recursive: true });
@@ -682,6 +700,24 @@ function episodePagesFromSeason(source, rootDir, seasonNum) {
   return toBuild;
 }
 
+function copyRenderedTree(srcDir, destDir, vars) {
+  mkdirSync(destDir, { recursive: true });
+  for (const entry of readdirSync(srcDir, { withFileTypes: true })) {
+    const src = join(srcDir, entry.name);
+    const dest = join(destDir, entry.name);
+    if (entry.isDirectory()) {
+      copyRenderedTree(src, dest, vars);
+      continue;
+    }
+    if (entry.name.endsWith(".html")) {
+      const raw = read(src);
+      write(dest, raw.includes("{{") ? render(raw, vars) : raw);
+      continue;
+    }
+    cpSync(src, dest);
+  }
+}
+
 function writeSeasonsIndex(destDir, season1, season2) {
   const template = read(join(templates, "season.html"));
   const folds = [
@@ -704,7 +740,7 @@ function writeSeasonsIndex(destDir, season1, season2) {
     { out: "seasons/index.html", base: "../" },
     { out: "seasons/1/index.html", base: "../../" }
   ]) {
-    const html = render(template, { base }).replace("<!--SEASON_FOLDS-->", folds);
+    const html = render(template, siteNavVars(base, "seasons")).replace("<!--SEASON_FOLDS-->", folds);
     write(join(destDir, out), injectFallback(html, base, "season2.fallback.js"));
   }
 }
@@ -730,8 +766,14 @@ export function build(rootDir = root, destDir = dist) {
     season2Board && Array.isArray(season2Board.survivors) && season2Board.survivors.length
       ? "season2.fallback.js"
       : "season.fallback.js";
-  write(join(destDir, "index.html"), injectFallback(read(join(templates, "island.html")), "", homeFallback));
-  write(join(destDir, "rules.html"), injectFallback(read(join(templates, "rules.html")), ""));
+  write(
+    join(destDir, "index.html"),
+    injectFallback(render(read(join(templates, "island.html")), siteNavVars("", "island")), "", homeFallback)
+  );
+  write(
+    join(destDir, "rules.html"),
+    injectFallback(render(read(join(templates, "rules.html")), siteNavVars("", "rules")), "")
+  );
   writeSeasonsIndex(destDir, board, season2Board);
 
   let toBuild = episodePagesFromSeason(source, rootDir, source.season || 1);
@@ -780,10 +822,10 @@ export function build(rootDir = root, destDir = dist) {
   const season2Index = join(templates, "season2-index.html");
   const slackMirror = join(templates, "slack-mirror.html");
   if (existsSync(season2Index)) {
-    write(join(destDir, "seasons/2/index.html"), read(season2Index));
+    write(join(destDir, "seasons/2/index.html"), render(read(season2Index), siteNavVars("../../", "season2")));
   }
   if (existsSync(slackMirror)) {
-    write(join(destDir, "seasons/2/social.html"), read(slackMirror));
+    write(join(destDir, "seasons/2/social.html"), render(read(slackMirror), siteNavVars("../../", "chatter")));
   }
 
   copyStatic();

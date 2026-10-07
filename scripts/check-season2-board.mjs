@@ -175,17 +175,23 @@ if (!(rangeStart > -1 && rangeEnd > rangeStart)) {
 const islandPath = join(root, "templates", "island.html");
 try {
   const home = readFileSync(islandPath, "utf8");
+  const siteNav = readFileSync(join(root, "templates", "partials", "site-nav.html"), "utf8");
+  const chatterPing = readFileSync(join(root, "templates", "partials", "chatter-ping.html"), "utf8");
+  const homeChrome =
+    home +
+    (home.includes("{{partial:site-nav}}") ? siteNav : "") +
+    (home.includes("{{partial:chatter-ping}}") ? chatterPing : "");
   check(home.includes('data-season="2"'), "homepage must set data-season=2");
   check(!home.includes('id="season"'), "homepage must not keep season journey / episode teaser block");
   check(!home.includes('id="home-episodes"'), "homepage must not mount home-episodes");
-  check(home.includes("seasons/2/social.html"), "homepage must link Island Chatter");
-  check(!home.includes('<a href="#cast">Cast</a>'), "homepage header must drop Cast for Island Chatter");
+  check(homeChrome.includes("seasons/2/social.html"), "homepage must link Island Chatter");
+  check(!homeChrome.includes('<a href="#cast">Cast</a>') && !siteNav.includes(">Cast<"), "homepage header must drop Cast for Island Chatter");
   check(
-    home.includes('data-nav-chatter') && home.includes("Island Chatter"),
+    homeChrome.includes('data-nav-chatter') && homeChrome.includes("Island Chatter"),
     "homepage header must include Island Chatter nav link"
   );
   check(
-    home.includes("lts-island-chatter-visited") && home.includes("has-chatter-ping"),
+    homeChrome.includes("lts-island-chatter-visited") && homeChrome.includes("has-chatter-ping"),
     "homepage must show Island Chatter red-dot until first visit"
   );
 } catch (e) {

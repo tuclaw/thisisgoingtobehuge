@@ -28,11 +28,6 @@ body.slack-mirror-page::before {
   z-index: 1;
 }
 
-.slack-mirror-page .torch-nav {
-  border-bottom: 1px solid var(--slack-border);
-  background: rgba(18, 16, 22, 0.95);
-}
-
 .slack-mirror-hero {
   padding: 1.25rem 1.5rem 0.75rem;
   border-bottom: 1px solid var(--slack-border);

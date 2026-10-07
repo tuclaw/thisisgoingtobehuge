@@ -371,9 +371,15 @@
 
   function scrollToUnreadMarker(pane) {
     const marker = pane && pane.querySelector("#slack-mirror-unread-marker");
-    if (!marker) return;
+    if (!marker || !pane) return;
+    // Scroll the message pane only. Moving the marker in the window also
+    // scrolls the document, and on a phone the sticky header then covers the channel list.
     requestAnimationFrame(() => {
-      marker.scrollIntoView({ block: "center", behavior: "smooth" });
+      if (pane.scrollHeight <= pane.clientHeight + 1) return;
+      const paneRect = pane.getBoundingClientRect();
+      const markerRect = marker.getBoundingClientRect();
+      const delta = markerRect.top - paneRect.top - (pane.clientHeight - markerRect.height) / 2;
+      pane.scrollTo({ top: Math.max(0, pane.scrollTop + delta), behavior: "smooth" });
     });
   }
 
