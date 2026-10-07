@@ -200,10 +200,10 @@ if (!(closeIdx > -1 && laughIdx > closeIdx)) {
 if (
   !html.includes("Laugh tracker") ||
   !html.includes("laugh-history.svg") ||
-  !html.includes("300k") ||
+  html.includes("star-history-style laugh count") ||
   !html.includes("class=\"laugh-embed")
 ) {
-  throw new Error("templates/island.html missing laugh tracker embed");
+  throw new Error("templates/island.html missing laugh tracker embed or still has the laugh-count lede");
 }
 const laughSvg = readFileSync(join(root, "assets", "laugh-history.svg"), "utf8");
 if (
