@@ -292,6 +292,20 @@ function beatHtml(beat, base, opts = {}) {
           </div>
         </article>`;
   }
+  if (beat.type === "social") {
+    const href = beat.href ? escapeHtml(beat.href) : "social.html";
+    const tribalHref = beat.tribalHref ? escapeHtml(beat.tribalHref) : "";
+    const tribalLink = tribalHref
+      ? ` <a href="${tribalHref}">#tribal</a>`
+      : "";
+    const openLink = `<p class="social-beat-links"><a href="${href}">Open Island Chatter</a>${tribalLink}</p>`;
+    return `<article class="beat beat-social"${id}>
+          ${kicker}
+          ${title}
+          ${body}
+          ${openLink}
+        </article>`;
+  }
   if (beat.type === "lunch-chats" || beat.type === "dinner-fires") {
     const audience = beat.audienceCut ? `<p class="audience-cut">${escapeHtml(beat.audienceCut)}</p>` : "";
     const threads = (beat.threads || [])
@@ -365,12 +379,19 @@ function episodeWantsCamp(episode) {
   );
 }
 
-function renderEpisodePage(episode, season, base) {
+function renderEpisodePage(episode, season, base, opts = {}) {
+  const fallbackScript = opts.fallbackScript || "season.fallback.js";
   const flame = read(join(templates, "partials", "flame.svg"));
   const votePosted = episodeVotePosted(season, episode);
   const focusHref = "#week-board";
   const wantsCamp = episodeWantsCamp(episode);
   const wantsWhisperFeed = wantsCamp && episode.conversationFeed !== false;
+  const seasonNum = Number(episode.season || season.season) || 1;
+  const wantsIslandChatter = wantsWhisperFeed || seasonNum === 2;
+  const islandChatterLede =
+    seasonNum === 2
+      ? "Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box."
+      : "Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box. The campfire above and day folds below still hold Season 1 thread archives.";
   const lunchCss = "";
   const seasonDir = join(root, "seasons/1");
   const manifest = loadTapeManifest(root);
@@ -497,10 +518,10 @@ function renderEpisodePage(episode, season, base) {
       <p class="json-miss hidden" id="json-miss"></p>
     </article>
 
-    ${wantsWhisperFeed ? `<article class="beat beat-camp" id="island-chatter">
+    ${wantsIslandChatter ? `<article class="beat beat-camp" id="island-chatter">
       <p class="section-kicker">Island Chatter</p>
       <h2>Camp schemes on Slack — audience mirror</h2>
-      <p class="island-chatter-lede">Browse #camp, #fire, #tribal, alliance rooms, and DMs read-only. No compose box. The campfire above and day folds below still hold Season 1 thread archives.</p>
+      <p class="island-chatter-lede">${escapeHtml(islandChatterLede)}</p>
       <div class="island-chatter-pointer">
         <a class="btn ember" href="${base}seasons/2/social.html">Browse Island Chatter →</a>
       </div>
@@ -518,7 +539,7 @@ function renderEpisodePage(episode, season, base) {
     <p>The week is the episode.</p>
   </footer>
 
-  <script src="${base}season.fallback.js"></script>
+  <script src="${base}${fallbackScript}"></script>
   <script src="${base}tribal-spoiler-burn.js"></script>
   <script src="${base}lab-logos.js"></script>
   <script src="${base}campfire-open.js"></script>${tapeGlobalTag}${lunchScripts}
@@ -637,19 +658,7 @@ ${entries}
 `;
 }
 
-export function build(rootDir = root, destDir = dist) {
-  const source = JSON.parse(read(join(rootDir, "data", "season1.json")));
-  const board = deriveSeason(source);
-  if (existsSync(destDir)) rmSync(destDir, { recursive: true, force: true });
-  mkdirSync(destDir, { recursive: true });
-  writeBoard(board, join(destDir, "season1.json"));
-  writeSeason2Board(destDir);
-  write(join(destDir, "season.fallback.js"), `window.__SEASON_FALLBACK__ = ${JSON.stringify(board)};\n`);
-
-  write(join(destDir, "index.html"), injectFallback(read(join(templates, "island.html")), ""));
-  write(join(destDir, "rules.html"), injectFallback(read(join(templates, "rules.html")), ""));
-  write(join(destDir, "seasons/1/index.html"), injectFallback(read(join(templates, "season.html")), "../../"));
-
+function episodePagesFromSeason(source, rootDir, seasonNum) {
   const listed = Array.isArray(source.episodes) ? source.episodes : [];
   const toBuild = [];
   const seen = new Set();
@@ -664,9 +673,34 @@ export function build(rootDir = root, destDir = dist) {
     seen.add(srcPath);
     toBuild.push({
       episode: JSON.parse(read(srcPath)),
-      out: ep.path || `seasons/${source.season || 1}/e${String(ep.number).padStart(2, "0")}.html`
+      out: ep.path || `seasons/${seasonNum || source.season || 1}/e${String(ep.number).padStart(2, "0")}.html`
     });
   }
+  return toBuild;
+}
+
+export function build(rootDir = root, destDir = dist) {
+  const source = JSON.parse(read(join(rootDir, "data", "season1.json")));
+  const board = deriveSeason(source);
+  const season2Path = join(rootDir, "data", "season2.json");
+  const season2Board = existsSync(season2Path) ? JSON.parse(read(season2Path)) : null;
+  if (existsSync(destDir)) rmSync(destDir, { recursive: true, force: true });
+  mkdirSync(destDir, { recursive: true });
+  writeBoard(board, join(destDir, "season1.json"));
+  writeSeason2Board(destDir);
+  write(join(destDir, "season.fallback.js"), `window.__SEASON_FALLBACK__ = ${JSON.stringify(board)};\n`);
+  if (season2Board && Array.isArray(season2Board.survivors) && season2Board.survivors.length) {
+    write(
+      join(destDir, "season2.fallback.js"),
+      `window.__SEASON_FALLBACK__ = ${JSON.stringify(season2Board)};\n`
+    );
+  }
+
+  write(join(destDir, "index.html"), injectFallback(read(join(templates, "island.html")), ""));
+  write(join(destDir, "rules.html"), injectFallback(read(join(templates, "rules.html")), ""));
+  write(join(destDir, "seasons/1/index.html"), injectFallback(read(join(templates, "season.html")), "../../"));
+
+  let toBuild = episodePagesFromSeason(source, rootDir, source.season || 1);
   if (!toBuild.length) {
     const fallback = join(rootDir, "data", "episodes", "s1e01.json");
     if (existsSync(fallback)) {
@@ -675,6 +709,15 @@ export function build(rootDir = root, destDir = dist) {
   }
   for (const item of toBuild) {
     write(join(destDir, item.out), renderEpisodePage(item.episode, board, "../../"));
+  }
+  if (season2Board) {
+    const s2Episodes = episodePagesFromSeason(season2Board, rootDir, 2);
+    for (const item of s2Episodes) {
+      write(
+        join(destDir, item.out),
+        renderEpisodePage(item.episode, season2Board, "../../", { fallbackScript: "season2.fallback.js" })
+      );
+    }
   }
 
   const threads = collectThreads(rootDir);

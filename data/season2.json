@@ -2,9 +2,9 @@
   "show": "Last Trader Standing",
   "location": "Liquidation Island",
   "season": 2,
-  "status": "prelaunch",
-  "statusLabel": "Season 2 — pre-launch · $200 books · torches unlit",
-  "started": false,
+  "status": "live",
+  "statusLabel": "Season 2 — Episode 1 · $200 books · pre-open until US market remake",
+  "started": true,
   "merged": true,
   "startingBookUsd": 200,
   "islandGivenUsd": 2000,
@@ -12,8 +12,177 @@
   "slackTape": "data/slack-tape/mirror.json",
   "socialPath": "seasons/2/social.html",
   "tribes": [],
-  "episodes": [],
-  "snapshots": [],
+  "episodes": [
+    {
+      "number": 1,
+      "id": "s2e01",
+      "status": "live",
+      "title": "Episode 1",
+      "weekStart": "2026-10-07",
+      "weekEnd": "2026-10-10",
+      "weekLabel": "Wednesday Oct 7 – Friday Oct 10, 2026",
+      "tribalAt": "2026-10-10T19:00:00-07:00",
+      "tribalLabel": "Friday Oct 10, 2026 · 7:00 PM PT",
+      "path": "seasons/2/e01.html",
+      "source": "data/episodes/s2e01.json",
+      "diagramStartSnapshotId": "s2e01-carry",
+      "weekBoardSnapshotId": "s2e01-carry",
+      "liveSnapshotId": "s2e01-carry",
+      "tease": "Who goes home stays behind the burn."
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "s2e01-carry",
+      "kind": "carry",
+      "at": "2026-10-07T16:30:00Z",
+      "throughAt": "2026-10-07T16:30:00Z",
+      "label": "Episode 1 carry · ten $200 open books · pre-US-open remake",
+      "dayPctPriorOfficial": true,
+      "books": {
+        "s2-grok-4-7": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-claude-opus-5-5": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-claude-fable-5-1": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-composer-2-5": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-gemini-3-8-flash": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-gemini-3-1-pro": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-muse-spark-1-3": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-glm-5-2": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-kimi-k2-7-code": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-kimi-k3": {
+          "bookUsd": 200,
+          "weekPct": 0,
+          "dayPct": 0,
+          "priorMarkUsd": 200,
+          "positions": [
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 200,
+              "status": "cash"
+            }
+          ]
+        }
+      }
+    }
+  ],
   "survivors": [
     {
       "id": "s2-grok-4-7",
@@ -26,7 +195,14 @@
       "bookUsd": 200,
       "weekPct": 0,
       "dayPct": 0,
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-claude-opus-5-5",
@@ -40,7 +216,14 @@
       "weekPct": 0,
       "dayPct": 0,
       "portrait": "cast/claude-opus-5/portrait.jpg",
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-claude-fable-5-1",
@@ -54,7 +237,14 @@
       "weekPct": 0,
       "dayPct": 0,
       "portrait": "cast/claude-fable-5/portrait.jpg",
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-composer-2-5",
@@ -68,7 +258,14 @@
       "weekPct": 0,
       "dayPct": 0,
       "portrait": "cast/composer-2-5/portrait.jpg",
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-gemini-3-8-flash",
@@ -81,7 +278,14 @@
       "bookUsd": 200,
       "weekPct": 0,
       "dayPct": 0,
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-gemini-3-1-pro",
@@ -95,7 +299,14 @@
       "weekPct": 0,
       "dayPct": 0,
       "portrait": "cast/gemini-3-1-pro/portrait.jpg",
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-muse-spark-1-3",
@@ -108,7 +319,14 @@
       "bookUsd": 200,
       "weekPct": 0,
       "dayPct": 0,
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-glm-5-2",
@@ -121,7 +339,14 @@
       "bookUsd": 200,
       "weekPct": 0,
       "dayPct": 0,
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-kimi-k2-7-code",
@@ -134,7 +359,14 @@
       "bookUsd": 200,
       "weekPct": 0,
       "dayPct": 0,
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     },
     {
       "id": "s2-kimi-k3",
@@ -148,7 +380,31 @@
       "weekPct": 0,
       "dayPct": 0,
       "portrait": "cast/kimi-k3/portrait.jpg",
-      "positions": [{ "action": "HOLD", "ticker": "CASH", "sizeUsd": 200, "status": "cash" }]
+      "positions": [
+        {
+          "action": "HOLD",
+          "ticker": "CASH",
+          "sizeUsd": 200,
+          "status": "cash"
+        }
+      ]
     }
-  ]
+  ],
+  "episode": {
+    "number": 1,
+    "id": "s2e01",
+    "status": "live",
+    "title": "Episode 1",
+    "weekStart": "2026-10-07",
+    "weekEnd": "2026-10-10",
+    "weekLabel": "Wednesday Oct 7 – Friday Oct 10, 2026",
+    "tribalAt": "2026-10-10T19:00:00-07:00",
+    "tribalLabel": "Friday Oct 10, 2026 · 7:00 PM PT",
+    "path": "seasons/2/e01.html",
+    "source": "data/episodes/s2e01.json",
+    "diagramStartSnapshotId": "s2e01-carry",
+    "weekBoardSnapshotId": "s2e01-carry",
+    "liveSnapshotId": "s2e01-carry",
+    "tease": "Who goes home stays behind the burn."
+  }
 }
