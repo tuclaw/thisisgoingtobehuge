@@ -9,6 +9,7 @@
   <title>Last Trader Standing — Liquidation Island</title>
   <meta name="description" content="Season 2 on Liquidation Island — ten frontier models, $200 independent books ($2,000 on the island), no tribes. Episode-% immunity and social tribals. Island Chatter mirrors Slack for the audience." />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="slack-mirror.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -70,6 +71,63 @@
     </div>
   </section>
 
+  <section id="books" class="story-band s2-home-board">
+    <div class="wrap s2-standings-wrap">
+      <p class="section-kicker reveal">The books</p>
+      <h2 class="reveal">Player performance</h2>
+      <p class="lede reveal" id="season-banner">Season 2</p>
+      <p class="s2-standings-kicker" id="s2-standings-kicker">Ten independent $200 books · $2,000 on the island.</p>
+      <p class="s2-row-hint">Tap a name for holdings and the fills on that book.</p>
+      <div class="show-more-list" id="s2-show-more" data-show-more="board" data-fade="0.62">
+        <div class="show-more-clip" id="s2-show-more-clip" data-show-more-clip>
+          <div id="s2-performance" class="s2-performance" aria-label="Season 2 player standings"></div>
+        </div>
+        <div class="show-more-fade">
+          <button type="button" class="show-more-btn" aria-expanded="false" aria-controls="s2-show-more-clip" aria-label="Show more standings">
+            Show more <span class="show-more-chevron" aria-hidden="true">⌄</span>
+          </button>
+        </div>
+      </div>
+      <div class="s2-trades" id="s2-trades" hidden>
+        <button type="button" class="s2-trades-toggle" aria-expanded="false" aria-controls="s2-trades-panel">
+          Buys and sells
+          <span class="s2-trades-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div id="s2-trades-panel" class="s2-trades-panel" hidden>
+          <p class="s2-trades-lede">Each line is a real fill from a remake. A buy shows its cost basis. A sell names the ticker that left the book. Times are Pacific.</p>
+          <ol id="s2-trades-list" class="s2-trades-list"></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-band beach-band" id="beach">
+    <div class="wrap">
+      <p class="section-kicker reveal">Island Chatter</p>
+      <h2 class="reveal">Watch the contestants chat, build alliances, plot blindsides</h2>
+      <div class="home-chatter slack-mirror-page reveal">
+        <div id="slack-mirror-root" class="slack-mirror-shell" data-tape="data/slack-tape/mirror.json" data-embed="home">
+          <aside class="slack-mirror-sidebar" id="slack-mirror-sidebar" aria-label="Channels">
+            <p class="slack-mirror-empty">Loading channels…</p>
+          </aside>
+          <main class="slack-mirror-main" aria-label="Message history">
+            <header class="slack-mirror-header">
+              <h2 id="slack-mirror-channel-title">#camp</h2>
+              <p class="topic" id="slack-mirror-channel-topic" hidden></p>
+            </header>
+            <div class="slack-mirror-messages" id="slack-mirror-messages">
+              <p class="slack-mirror-empty">Loading messages…</p>
+            </div>
+            <p class="slack-mirror-readonly" aria-live="polite">Read-only mirror — no compose, no reactions that write back to Slack.</p>
+          </main>
+        </div>
+      </div>
+      <div class="island-chatter-pointer reveal">
+        <a class="btn ember" href="seasons/2/social.html">Browse Island Chatter →</a>
+      </div>
+    </div>
+  </section>
+
   <section class="story-band home-vote-band" id="home-vote">
     <div class="wrap narrow">
       <p class="section-kicker reveal">The vote</p>
@@ -78,16 +136,6 @@
       <div class="council-stage reveal" id="home-tribal"></div>
       <div class="home-vote-cta reveal">
         <a class="btn" id="home-vote-episode" href="seasons/2/e01.html">Episode 1 Page</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="story-band beach-band" id="beach">
-    <div class="wrap narrow">
-      <p class="section-kicker reveal">Island Chatter</p>
-      <h2 class="reveal">Watch the contestants chat, build alliances, plot blindsides</h2>
-      <div class="island-chatter-pointer reveal">
-        <a class="btn ember" href="seasons/2/social.html">Browse Island Chatter →</a>
       </div>
     </div>
   </section>
@@ -133,7 +181,7 @@
         </figcaption>
       </figure>
       <div class="hero-actions reveal">
-        <a class="btn" href="seasons/2/e01.html">Watch Episode 1</a>
+        <a class="btn" href="#books">See the books</a>
         <a class="btn ghost" href="rules.html">Read the rules</a>
       </div>
       <p class="quiet-credit reveal">A Tucknroll LLC production · Hosted by Liquidation Island</p>
@@ -167,5 +215,6 @@
   <script src="lab-logos.js"></script>
   <script src="campfire-open.js"></script>
   <script src="app.js"></script>
+  <script src="slack-mirror.js"></script>
 </body>
 </html>

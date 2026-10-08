@@ -48,6 +48,8 @@ A healthy remake is: append events → `npm run fixtures` → rebuild. Do not pi
 
 A healthy campfire is: `seasons/1/e0N-<beat>.js` + episode beat + one row in `data/tapes.json` → `npm run fixtures`. Do not add a new `scripts/check-*-dinner.js`.
 
+Season 2 remakes still append snapshots to `data/season2.json` (and that episode's `liveSnapshotId` / `weekBoardSnapshotId`) plus beats in `data/episodes/s2eNN.json`. The homepage standings, sparklines, and buys-and-sells list read those snapshots. Do not hand-write fills. A fill is a new, added, trimmed, or closed order across snapshots. Episode pages stay in the archive. The audience board is the homepage (`#books`); `seasons/2/index.html` mirrors it.
+
 Season checks are split:
 - `scripts/check-season.mjs` — durable shape/math/GAME.md invariants (keep green without rewriting for every mark)
 - `scripts/check-season-live.mjs` — live cut vs `data/fixtures/live-board.json` plus episode/tribal structure (not per-qty goldens)
@@ -56,7 +58,7 @@ Season checks are split:
 ## UI / landing changes
 
 - Prefer `templates/` for structure, root CSS/JS for behavior and look.
-- Home is a Survivor cold open (brand, one line, CTA) — not a dashboard. Live standings live on the episode page.
+- Home opens with the cold open, then Meet the contestants, the live Season 2 standings (`#books`), and embedded Island Chatter. Season 2 episode pages are the archive. Season 1 episode pages stay as they are.
 - Seasons index (`templates/season.html` → `seasons/` and `seasons/1/`) is a collapsed accordion of seasons, then episodes. No journey / pot / immunity / boot recap.
 - Prefer `npm run check` before claiming UI work is done; some checks need a prior build (`dist/`).
 
