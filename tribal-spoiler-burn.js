@@ -107,6 +107,7 @@ void main() {
   const TEX_W = 520;
   const TEX_H = 360;
   const BURN_SECONDS = 3.5;
+  const SHOW_MORE_BURN_SECONDS = 2.2;
 
   function easeBurn(raw) {
     if (raw < 0.12) return raw * raw * 3.5;
@@ -772,14 +773,14 @@ void main() {
       const t = (now - this.t0) * 0.001;
       if (this.burning) {
         this.burnTimer += dt;
-        const raw = Math.min(this.burnTimer / BURN_SECONDS, 1);
+        const raw = Math.min(this.burnTimer / SHOW_MORE_BURN_SECONDS, 1);
         this.dissolve = easeBurn(raw);
         if (this.dissolve >= 1) {
           this.finish();
           return;
         }
       }
-      if (this.dissolve < 0.97 && now - this.lastEmber > 55) {
+      if (this.dissolve < 0.97 && now - this.lastEmber > 40) {
         this.lastEmber = now;
         this.emitEmbers();
       }

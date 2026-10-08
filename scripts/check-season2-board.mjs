@@ -204,8 +204,15 @@ try {
   );
   check(home.includes('id="books"') && home.includes('id="s2-performance"'), "homepage must mount the standings board");
   check(
-    home.includes('id="face-show-more"') && home.includes('id="s2-show-more"') && home.includes('class="show-more-btn"'),
-    "homepage must fade contestants and standings behind Show more"
+    home.includes('id="s2-show-more"') && home.includes('class="show-more-btn"') && !home.includes("face-show-more"),
+    "Show more stays on standings and off Meet the contestants"
+  );
+  const booksBlock = home.slice(home.indexOf('id="s2-show-more"'), home.indexOf('id="beach"'));
+  check(
+    booksBlock.includes('id="s2-trades"') &&
+      booksBlock.indexOf('id="s2-trades"') < booksBlock.indexOf("show-more-btn") &&
+      !booksBlock.includes("s2-trades-more"),
+    "buys and sells nest inside the standings Show more"
   );
   check(home.includes('data-embed="home"') && home.includes("slack-mirror.js"), "homepage must embed Island Chatter");
   check(home.indexOf('id="books"') > home.indexOf('id="cast"'), "standings must sit under Meet the contestants");
@@ -223,6 +230,12 @@ check(season2Index.includes("index.html#books"), "season 2 nav page points at th
 const burnSrc = readFileSync(join(root, "tribal-spoiler-burn.js"), "utf8");
 check(burnSrc.includes("window.burnAwayButton"), "show more must reuse the spoiler burn");
 check(burnSrc.includes("prefers-reduced-motion"), "spoiler burn must honor reduced motion");
+const showMoreBurn = burnSrc.match(/SHOW_MORE_BURN_SECONDS = ([0-9.]+)/);
+check(
+  showMoreBurn && Number(showMoreBurn[1]) < 3.5 && Number(showMoreBurn[1]) >= 1.2,
+  "show more burn must be quicker than the tribal card"
+);
+check(burnSrc.includes("this.burnTimer / SHOW_MORE_BURN_SECONDS"), "show more burn must use its own duration");
 check(appJs.includes("burnAwayButton"), "standings Show more must call burnAwayButton");
 check(appJs.includes("function deriveSnapshotFills"), "app.js must derive fills from snapshots");
 check(/pane\.scrollTo\(/.test(readFileSync(join(root, "slack-mirror.js"), "utf8")), "Island Chatter unread scroll stays inside the pane");

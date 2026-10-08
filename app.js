@@ -519,7 +519,7 @@ function fillGroupHtml(group, season) {
   const name = escapeHtml(modelOf(s || { model: group.survivorId }));
   const verbs = group.fills.map(fillVerb).join(", ");
   const when = formatMarkedAt(group.at);
-  return `<li class="s2-trade" data-show-more-item>
+  return `<li class="s2-trade">
     <span class="s2-trade-line"><strong>${name}</strong> ${verbs}${
       when ? ` <time datetime="${escapeHtml(group.at)}">· ${escapeHtml(when)}</time>` : ""
     }</span>
@@ -593,7 +593,6 @@ function renderSeason2Trades(season, groups) {
   }
   if (wrap) wrap.hidden = false;
   list.innerHTML = newest.map((group) => fillGroupHtml(group, season)).join("");
-  syncShowMore(document.getElementById("s2-trades-more"));
 }
 
 const SHOW_MORE_KEEP = 4;
@@ -1693,7 +1692,7 @@ function faceCardHtml(s, tribeOrNull) {
     : typeof s.bookUsd === "number"
       ? `${money(s.bookUsd)} book`
       : escapeHtml(survivorSubtitle(s));
-  return `<a class="face-card${tribeClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}" data-show-more-item>
+  return `<a class="face-card${tribeClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
         <span class="face-photo">${face}</span>
         <span class="face-id">
           ${mark ? `<span class="face-lab">${mark}</span>` : ""}
@@ -1715,7 +1714,6 @@ function renderFaces(season) {
     grid.innerHTML = `<div class="face-tribe-block merged reveal">
       <div class="face-row">${cards}</div>
     </div>`;
-    syncShowMore(document.getElementById("face-show-more"));
     return;
   }
   grid.innerHTML = tribes
@@ -1729,7 +1727,6 @@ function renderFaces(season) {
     </div>`;
     })
     .join("");
-  syncShowMore(document.getElementById("face-show-more"));
 }
 
 function castInTribeOrder(season) {

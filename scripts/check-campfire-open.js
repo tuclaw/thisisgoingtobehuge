@@ -455,8 +455,15 @@ const booksIdx = html.indexOf('id="books"');
 if (!(castIdx > -1 && booksIdx > castIdx && beachIdx > booksIdx && homeVoteIdx > beachIdx && homeTribalIdx > homeVoteIdx)) {
   throw new Error("homepage order must be contestants, standings, Island Chatter, then the tribal spoiler");
 }
-if (!html.includes('id="s2-performance"') || !html.includes('id="face-show-more"') || !html.includes('id="s2-show-more"')) {
-  throw new Error("homepage must fade contestants and standings behind Show more");
+if (!html.includes('id="s2-performance"') || !html.includes('id="s2-show-more"') || html.includes('id="face-show-more"')) {
+  throw new Error("homepage Show more belongs on standings, not Meet the contestants");
+}
+const booksBlock = html.slice(html.indexOf('id="s2-show-more"'), html.indexOf('id="beach"'));
+if (!(booksBlock.includes('id="s2-trades"') && booksBlock.indexOf('id="s2-trades"') < booksBlock.indexOf("show-more-btn"))) {
+  throw new Error("buys and sells must sit inside the standings Show more");
+}
+if (booksBlock.includes("s2-trades-more")) {
+  throw new Error("buys and sells must not keep a second Show more");
 }
 if (!html.includes('class="show-more-btn"') || !html.includes('aria-expanded="false"')) {
   throw new Error("Show more must be a real button");
