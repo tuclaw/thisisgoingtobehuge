@@ -367,29 +367,355 @@ function sparkTrendClass(values) {
   return "flat";
 }
 
-function s2PerformanceRowHtml(s, season, index) {
+function deriveSnapshotFills(season) {
+  const snaps = (season && season.snapshots) || [];
+  const fills = [];
+  const openBy = new Map();
+  function ticker(pos) {
+    return String((pos && pos.ticker) || "").toUpperCase().split("/")[0].trim();
+  }
+  function cash(pos) {
+    if (!pos) return true;
+    const t = ticker(pos);
+    return !t || t === "CASH" || pos.status === "cash" || pos.status === "cash-short-blocked";
+  }
+  function qty(pos) {
+    const q = parseFloat(pos && pos.qty);
+    return Number.isFinite(q) ? q : null;
+  }
+  function avg(pos) {
+    const a = parseFloat(pos && pos.avg);
+    return Number.isFinite(a) ? a : null;
+  }
+  snaps.forEach((snap) => {
+    if (!snap || !snap.books) return;
+    Object.keys(snap.books).forEach((id) => {
+      const book = snap.books[id];
+      if (!openBy.has(id)) openBy.set(id, new Map());
+      const open = openBy.get(id);
+      const seen = new Set();
+      const positions = (book && book.positions) || [];
+      positions.forEach((pos) => {
+        if (!pos || cash(pos)) return;
+        const t = ticker(pos);
+        const key = pos.orderId ? "ord:" + pos.orderId : "tk:" + t;
+        seen.add(key);
+        const q = qty(pos);
+        const a = avg(pos);
+        const prev = open.get(key);
+        if (!prev) {
+          const action = String(pos.action || "BUY").toUpperCase();
+          const side = action === "SELL" || action === "SOLD" ? "sell" : "buy";
+          const size = q != null && a != null ? Math.round(q * a * 100) / 100 : null;
+          fills.push({
+            survivorId: id,
+            side: side,
+            ticker: t,
+            sizeUsd: side === "buy" ? size : null,
+            at: snap.at,
+            snapshotId: snap.id,
+            how: "open"
+          });
+          open.set(key, { qty: q, ticker: t });
+          return;
+        }
+        if (prev.qty != null && q != null && Math.abs(q - prev.qty) > 1e-6) {
+          fills.push({
+            survivorId: id,
+            side: q > prev.qty ? "buy" : "sell",
+            ticker: t,
+            sizeUsd: null,
+            at: snap.at,
+            snapshotId: snap.id,
+            how: q > prev.qty ? "add" : "trim"
+          });
+        }
+        open.set(key, { qty: q, ticker: t });
+      });
+      Array.from(open.keys()).forEach((key) => {
+        if (seen.has(key)) return;
+        const prev = open.get(key);
+        open.delete(key);
+        fills.push({
+          survivorId: id,
+          side: "sell",
+          ticker: prev.ticker,
+          sizeUsd: null,
+          at: snap.at,
+          snapshotId: snap.id,
+          how: "close"
+        });
+      });
+    });
+  });
+  return fills;
+}
+
+function groupSnapshotFills(fills) {
+  const groups = [];
+  const index = new Map();
+  (fills || []).forEach((fill) => {
+    const key = fill.survivorId + "|" + fill.snapshotId;
+    let group = index.get(key);
+    if (!group) {
+      group = {
+        survivorId: fill.survivorId,
+        snapshotId: fill.snapshotId,
+        at: fill.at,
+        fills: []
+      };
+      index.set(key, group);
+      groups.push(group);
+    }
+    group.fills.push(fill);
+  });
+  return groups;
+}
+
+function fillVerb(fill) {
+  const ticker = escapeHtml(fill.ticker || "");
+  if (fill.side === "sell") {
+    const verb = fill.how === "trim" ? "sold some" : "sold";
+    return `<span class="s2-verb is-sell">${verb} ${ticker}</span>`;
+  }
+  if (fill.how === "add") return `<span class="s2-verb is-buy">bought more ${ticker}</span>`;
+  const size = typeof fill.sizeUsd === "number" ? escapeHtml(money(fill.sizeUsd)) + " " : "";
+  return `<span class="s2-verb is-buy">bought ${size}${ticker}</span>`;
+}
+
+function holdingsHtml(s) {
+  const legs = (s && s.positions) || [];
+  if (!legs.length) return `<p class="s2-quiet">No holdings on the book.</p>`;
+  return `<ul class="s2-holds">${legs
+    .map((pos) => {
+      if (!pos) return "";
+      if (isCashLeg(pos)) {
+        const size = typeof pos.sizeUsd === "number" ? money(pos.sizeUsd) : "";
+        return `<li class="is-cash"><strong>Cash</strong>${size ? `<b>${escapeHtml(size)}</b>` : ""}</li>`;
+      }
+      const ticker = escapeHtml(tickerOf(pos));
+      const marked = typeof pos.sizeUsd === "number" ? money(pos.sizeUsd) : "";
+      return `<li class="is-hold"><strong>${ticker}</strong>${marked ? `<b>${escapeHtml(marked)}</b>` : ""}</li>`;
+    })
+    .join("")}</ul>`;
+}
+
+function survivorFillHtml(s, groups) {
+  const mine = (groups || []).filter((g) => g.survivorId === s.id).slice().reverse();
+  if (!mine.length) return `<p class="s2-quiet">No fills on the book yet.</p>`;
+  return `<ol class="s2-detail-fills">${mine
+    .map((g) => {
+      const verbs = g.fills.map(fillVerb).join(", ");
+      const when = formatMarkedAt(g.at);
+      return `<li><span class="s2-trade-line">${verbs}${
+        when ? ` <time datetime="${escapeHtml(g.at)}">· ${escapeHtml(when)}</time>` : ""
+      }</span></li>`;
+    })
+    .join("")}</ol>`;
+}
+
+function fillGroupHtml(group, season) {
+  const s = (season.survivors || []).find((p) => p.id === group.survivorId);
+  const name = escapeHtml(modelOf(s || { model: group.survivorId }));
+  const verbs = group.fills.map(fillVerb).join(", ");
+  const when = formatMarkedAt(group.at);
+  return `<li class="s2-trade" data-show-more-item>
+    <span class="s2-trade-line"><strong>${name}</strong> ${verbs}${
+      when ? ` <time datetime="${escapeHtml(group.at)}">· ${escapeHtml(when)}</time>` : ""
+    }</span>
+  </li>`;
+}
+
+function s2PerformanceRowHtml(s, season, index, groups) {
   const series = survivorEpisodeBookSeries(season, s);
   const trend = sparkTrendClass(series);
   const book = typeof s.bookUsd === "number" ? s.bookUsd : season.startingBookUsd || 200;
   const epPct = episodePctOf(s);
   const pillClass = chgClass(epPct);
+  const name = modelOf(s);
+  const detailId = "s2-detail-" + String(s.id || index).replace(/[^a-z0-9_-]/gi, "");
   const face = s.portrait
     ? `<span class="s2-face"><img src="${escapeHtml(assetUrl(s.portrait))}" alt=""></span>`
-    : `<span class="s2-face"><span class="s2-mono">${escapeHtml(s.monogram || modelOf(s).slice(0, 1) || "?")}</span></span>`;
-  return `<div class="s2-row" style="--i:${index}">
-    <div class="s2-id">
-      ${face}
-      <div class="s2-names">
-        <strong>${escapeHtml(modelOf(s))}</strong>
-        <em>${escapeHtml(survivorSubtitle(s))}</em>
-      </div>
-    </div>
-    <div class="s2-spark-wrap">${sparklineSvg(series, trend)}</div>
-    <div class="s2-pill ${pillClass}">
-      <span class="s2-pill-book">${money(book)}</span>
-      <span class="s2-pill-pct">${pct(epPct)}</span>
+    : `<span class="s2-face"><span class="s2-mono">${escapeHtml(s.monogram || name.slice(0, 1) || "?")}</span></span>`;
+  return `<div class="s2-row" style="--i:${index}" data-show-more-item>
+    <button type="button" class="s2-row-toggle" aria-expanded="false" aria-controls="${escapeHtml(detailId)}" aria-label="${escapeHtml(name)}, ${escapeHtml(pct(epPct))}. Show holdings and fills">
+      <span class="s2-id">
+        ${face}
+        <span class="s2-names">
+          <strong>${escapeHtml(name)}</strong>
+          <em>${escapeHtml(survivorSubtitle(s))}</em>
+        </span>
+      </span>
+      <span class="s2-spark-wrap">${sparklineSvg(series, trend)}</span>
+      <span class="s2-pill ${pillClass}">
+        <span class="s2-pill-book">${money(book)}</span>
+        <span class="s2-pill-pct">${pct(epPct)}</span>
+      </span>
+    </button>
+    <div class="s2-detail" id="${escapeHtml(detailId)}" hidden>
+      <p class="s2-detail-kicker">Holdings now</p>
+      ${holdingsHtml(s)}
+      <p class="s2-detail-kicker">Buys and sells</p>
+      ${survivorFillHtml(s, groups)}
     </div>
   </div>`;
+}
+
+function bindS2Rows(root) {
+  if (!root || root.dataset.rowsBound === "1") return;
+  root.dataset.rowsBound = "1";
+  root.addEventListener("click", (event) => {
+    const btn = event.target.closest(".s2-row-toggle");
+    if (!btn || !root.contains(btn)) return;
+    const row = btn.closest(".s2-row");
+    const detail = row && row.querySelector(".s2-detail");
+    if (!detail) return;
+    const open = !row.classList.contains("is-open");
+    row.classList.toggle("is-open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    detail.hidden = !open;
+    const list = root.closest(".show-more-list");
+    if (list) {
+      list.classList.toggle("has-open-detail", Boolean(root.querySelector(".s2-row.is-open")));
+      if (list.classList.contains("is-collapsed")) applyCollapsedHeight(list);
+    }
+  });
+}
+
+function renderSeason2Trades(season, groups) {
+  const list = document.getElementById("s2-trades-list");
+  const wrap = document.getElementById("s2-trades");
+  if (!list) return;
+  const newest = (groups || []).slice().reverse();
+  if (!newest.length) {
+    if (wrap) wrap.hidden = true;
+    return;
+  }
+  if (wrap) wrap.hidden = false;
+  list.innerHTML = newest.map((group) => fillGroupHtml(group, season)).join("");
+  syncShowMore(document.getElementById("s2-trades-more"));
+}
+
+const SHOW_MORE_KEEP = 4;
+
+function showMoreItems(clip) {
+  return clip ? [...clip.querySelectorAll("[data-show-more-item]")] : [];
+}
+
+function applyCollapsedHeight(root) {
+  if (!root || root.classList.contains("is-open")) return;
+  const clip = root.querySelector("[data-show-more-clip]");
+  if (!clip) return;
+  const items = showMoreItems(clip);
+  if (items.length <= SHOW_MORE_KEEP) {
+    clip.style.maxHeight = "none";
+    return;
+  }
+  const keep = items.slice(0, SHOW_MORE_KEEP);
+  const last = keep[keep.length - 1];
+  const clipTop = clip.getBoundingClientRect().top;
+  const lastBox = last.getBoundingClientRect();
+  const fadeAttr = Number(root.getAttribute("data-fade"));
+  const fadeRatio = root.classList.contains("has-open-detail")
+    ? 0
+    : Number.isFinite(fadeAttr)
+      ? fadeAttr
+      : 0.45;
+  const height = lastBox.bottom - clipTop - lastBox.height * fadeRatio;
+  clip.style.maxHeight = Math.max(48, height) + "px";
+}
+
+function openShowMore(root) {
+  const clip = root.querySelector("[data-show-more-clip]");
+  if (!clip) {
+    root.classList.add("is-open");
+    root.classList.remove("is-collapsed");
+    return;
+  }
+  const from = clip.getBoundingClientRect().height;
+  clip.style.maxHeight = from + "px";
+  root.classList.add("is-open");
+  root.classList.remove("is-collapsed");
+  root.classList.remove("has-open-detail");
+  const reduce =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) {
+    clip.style.maxHeight = "none";
+    root.classList.add("is-settled");
+    return;
+  }
+  window.requestAnimationFrame(() => {
+    clip.style.maxHeight = clip.scrollHeight + "px";
+  });
+  const clear = (event) => {
+    if (event && event.propertyName && event.propertyName !== "max-height") return;
+    clip.style.maxHeight = "none";
+    root.classList.add("is-settled");
+    clip.removeEventListener("transitionend", clear);
+  };
+  clip.addEventListener("transitionend", clear);
+}
+
+function focusRevealed(clip) {
+  const next = showMoreItems(clip)[SHOW_MORE_KEEP];
+  if (!next) return;
+  const target = next.matches("a, button") ? next : next.querySelector("a, button") || next;
+  if (target === next && !next.hasAttribute("tabindex")) next.setAttribute("tabindex", "-1");
+  try {
+    target.focus({ preventScroll: true });
+  } catch (e) {
+    target.focus();
+  }
+}
+
+function bindShowMoreResize() {
+  if (bindShowMoreResize.bound) return;
+  bindShowMoreResize.bound = true;
+  window.addEventListener("resize", () => {
+    document.querySelectorAll(".show-more-list.is-collapsed").forEach((root) => applyCollapsedHeight(root));
+  });
+}
+
+function syncShowMore(root) {
+  if (!root) return;
+  const clip = root.querySelector("[data-show-more-clip]");
+  const btn = root.querySelector(".show-more-btn");
+  if (!clip || !btn) return;
+  bindShowMoreResize();
+  clip.querySelectorAll("img").forEach((img) => {
+    if (img.dataset.showMoreLoad === "1") return;
+    img.dataset.showMoreLoad = "1";
+    img.addEventListener("load", () => {
+      if (root.classList.contains("is-collapsed")) applyCollapsedHeight(root);
+    });
+  });
+  const count = showMoreItems(clip).length;
+  if (count <= SHOW_MORE_KEEP) {
+    root.classList.add("is-open");
+    root.classList.remove("is-collapsed");
+    btn.hidden = true;
+    clip.style.maxHeight = "none";
+    return;
+  }
+  if (root.classList.contains("is-open")) return;
+  root.classList.add("is-collapsed");
+  btn.hidden = false;
+  applyCollapsedHeight(root);
+  window.requestAnimationFrame(() => {
+    if (root.classList.contains("is-collapsed")) applyCollapsedHeight(root);
+  });
+  if (root.dataset.showMoreBound === "1") return;
+  root.dataset.showMoreBound = "1";
+  btn.addEventListener("click", () => {
+    if (root.classList.contains("is-open") || btn.dataset.burnStarted === "1") return;
+    const finish = () => {
+      openShowMore(root);
+      focusRevealed(clip);
+    };
+    if (typeof window.burnAwayButton === "function") window.burnAwayButton(btn, { onDone: finish });
+    else finish();
+  });
 }
 
 function renderSeason2Performance(season) {
@@ -402,14 +728,18 @@ function renderSeason2Performance(season) {
   const given =
     typeof season.islandGivenUsd === "number" ? season.islandGivenUsd : start * (season.survivors || []).length;
   if (kicker) {
-    kicker.textContent = `Ten independent $${start} books · $${given.toLocaleString("en-US")} on the island · episode sparklines fill in as remakes post marks.`;
+    kicker.textContent = `Ten independent $${start} books · $${given.toLocaleString("en-US")} on the island.`;
   }
+  const groups = groupSnapshotFills(deriveSnapshotFills(season));
   const ranked = [...(season.survivors || [])].sort((a, b) => {
     const ep = episodePctOf(b) - episodePctOf(a);
     if (ep !== 0) return ep;
     return (b.bookUsd || 0) - (a.bookUsd || 0);
   });
-  root.innerHTML = ranked.map((s, i) => s2PerformanceRowHtml(s, season, i)).join("");
+  root.innerHTML = ranked.map((s, i) => s2PerformanceRowHtml(s, season, i, groups)).join("");
+  bindS2Rows(root);
+  renderSeason2Trades(season, groups);
+  syncShowMore(root.closest(".show-more-list"));
 }
 
 function modelBadge(s, tiny) {
@@ -1363,7 +1693,7 @@ function faceCardHtml(s, tribeOrNull) {
     : typeof s.bookUsd === "number"
       ? `${money(s.bookUsd)} book`
       : escapeHtml(survivorSubtitle(s));
-  return `<a class="face-card${tribeClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
+  return `<a class="face-card${tribeClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}" data-show-more-item>
         <span class="face-photo">${face}</span>
         <span class="face-id">
           ${mark ? `<span class="face-lab">${mark}</span>` : ""}
@@ -1385,6 +1715,7 @@ function renderFaces(season) {
     grid.innerHTML = `<div class="face-tribe-block merged reveal">
       <div class="face-row">${cards}</div>
     </div>`;
+    syncShowMore(document.getElementById("face-show-more"));
     return;
   }
   grid.innerHTML = tribes
@@ -1398,6 +1729,7 @@ function renderFaces(season) {
     </div>`;
     })
     .join("");
+  syncShowMore(document.getElementById("face-show-more"));
 }
 
 function castInTribeOrder(season) {

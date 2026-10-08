@@ -490,4 +490,321 @@ void main() {
       new TribalSpoilerBurn(wrap);
     });
   };
+
+  function compileBurnProgram(gl) {
+    const mkShader = (src, type) => {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) return null;
+      return s;
+    };
+    const prog = gl.createProgram();
+    const vs = mkShader(VS, gl.VERTEX_SHADER);
+    const fs = mkShader(FS, gl.FRAGMENT_SHADER);
+    if (!vs || !fs) return null;
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
+    gl.useProgram(prog);
+    const bindBuf = (data, attr) => {
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, attr);
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    };
+    bindBuf(QUAD_POS, "a_pos");
+    bindBuf(QUAD_UV, "a_uv");
+    return {
+      prog,
+      U: {
+        u_time: gl.getUniformLocation(prog, "u_time"),
+        u_tex: gl.getUniformLocation(prog, "u_tex"),
+        u_dissolve: gl.getUniformLocation(prog, "u_dissolve")
+      }
+    };
+  }
+
+  function roundRectPath(ctx, x, y, w, h, r) {
+    const radius = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + w, y, x + w, y + h, radius);
+    ctx.arcTo(x + w, y + h, x, y + h, radius);
+    ctx.arcTo(x, y + h, x, y, radius);
+    ctx.arcTo(x, y, x + w, y, radius);
+    ctx.closePath();
+  }
+
+  function pillTexture(button) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = button.getBoundingClientRect();
+    const w = Math.max(2, Math.round(rect.width * dpr));
+    const h = Math.max(2, Math.round(rect.height * dpr));
+    const c = document.createElement("canvas");
+    c.width = w;
+    c.height = h;
+    const ctx = c.getContext("2d");
+    if (!ctx) return null;
+    ctx.clearRect(0, 0, w, h);
+    roundRectPath(ctx, dpr * 0.75, dpr * 0.75, w - dpr * 1.5, h - dpr * 1.5, h / 2);
+    ctx.fillStyle = "#161210";
+    ctx.fill();
+    ctx.lineWidth = Math.max(1, dpr * 1.25);
+    ctx.strokeStyle = "rgba(232, 213, 176, 0.62)";
+    ctx.stroke();
+    ctx.fillStyle = "#f3ead6";
+    ctx.font = `600 ${Math.round(16 * dpr)}px "Source Serif 4", Georgia, serif`;
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    const label = "Show more";
+    const textW = ctx.measureText(label).width;
+    const chevronW = 14 * dpr;
+    const gap = 8 * dpr;
+    const start = (w - (textW + gap + chevronW)) / 2;
+    ctx.fillText(label, start, h / 2 + dpr * 0.4);
+    ctx.strokeStyle = "#f3ead6";
+    ctx.lineWidth = Math.max(1.25, dpr * 1.35);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    const cx = start + textW + gap + chevronW / 2;
+    const cy = h / 2 + dpr * 0.2;
+    ctx.beginPath();
+    ctx.moveTo(cx - 6 * dpr, cy - 3 * dpr);
+    ctx.lineTo(cx, cy + 4 * dpr);
+    ctx.lineTo(cx + 6 * dpr, cy - 3 * dpr);
+    ctx.stroke();
+    return c;
+  }
+
+  class ShowMoreBurn {
+    constructor(button, onDone) {
+      this.button = button;
+      this.onDone = onDone;
+      this.host = button.parentElement;
+      this.done = false;
+      this.burning = false;
+      this.burnTimer = 0;
+      this.dissolve = 0;
+      this.embers = [];
+      this.smoke = [];
+      this.lastEmber = 0;
+      this.lastNow = 0;
+      this.t0 = performance.now();
+      this.raf = 0;
+      this.gl = null;
+      this.U = null;
+      this.start();
+    }
+
+    finish() {
+      if (this.done) return;
+      this.done = true;
+      cancelAnimationFrame(this.raf);
+      if (this.gl) {
+        const lose = this.gl.getExtension("WEBGL_lose_context");
+        if (lose) lose.loseContext();
+        this.gl = null;
+      }
+      if (this.glCanvas) this.glCanvas.remove();
+      if (this.particles) this.particles.remove();
+      if (this.button && this.button.parentNode) this.button.remove();
+      if (typeof this.onDone === "function") this.onDone();
+    }
+
+    start() {
+      const reduce =
+        window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const rect = this.button.getBoundingClientRect();
+      if (reduce || !this.host || rect.width < 2 || rect.height < 2) {
+        this.finish();
+        return;
+      }
+      const tex = pillTexture(this.button);
+      const glCanvas = document.createElement("canvas");
+      glCanvas.className = "show-more-burn-canvas";
+      glCanvas.setAttribute("aria-hidden", "true");
+      const particles = document.createElement("canvas");
+      particles.className = "show-more-burn-particles";
+      particles.setAttribute("aria-hidden", "true");
+      this.glCanvas = glCanvas;
+      this.particles = particles;
+      this.host.appendChild(particles);
+      this.host.appendChild(glCanvas);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      glCanvas.width = Math.max(2, Math.round(rect.width * dpr));
+      glCanvas.height = Math.max(2, Math.round(rect.height * dpr));
+      this.place();
+      const gl = glCanvas.getContext("webgl", { alpha: true, premultipliedAlpha: false });
+      const compiled = gl && compileBurnProgram(gl);
+      if (!gl || !compiled || !tex) {
+        this.finish();
+        return;
+      }
+      this.gl = gl;
+      this.U = compiled.U;
+      gl.uniform1i(this.U.u_tex, 0);
+      gl.uniform1f(this.U.u_dissolve, 0);
+      const texture = gl.createTexture();
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      this.button.classList.add("is-burning");
+      this.button.setAttribute("aria-hidden", "true");
+      this.burning = true;
+      this.renderLoop = this.renderLoop.bind(this);
+      this.raf = requestAnimationFrame(this.renderLoop);
+    }
+
+    place() {
+      if (!this.button || !this.host || !this.glCanvas || !this.particles) return;
+      const r = this.button.getBoundingClientRect();
+      const hr = this.host.getBoundingClientRect();
+      this.glCanvas.style.left = r.left - hr.left + "px";
+      this.glCanvas.style.top = r.top - hr.top + "px";
+      this.glCanvas.style.width = r.width + "px";
+      this.glCanvas.style.height = r.height + "px";
+      const lift = 160;
+      this.particles.width = Math.max(1, Math.round(hr.width));
+      this.particles.height = Math.max(1, Math.round(hr.height + lift));
+      this.particles.style.top = -lift + "px";
+      this.particles.style.height = hr.height + lift + "px";
+    }
+
+    emitEmbers() {
+      const r = this.glCanvas.getBoundingClientRect();
+      const pr = this.particles.getBoundingClientRect();
+      const cx = r.left - pr.left + r.width * 0.5;
+      const cy = r.top - pr.top + r.height * 0.5;
+      const angle = Math.random() * Math.PI * 2;
+      const rad = (0.15 + Math.random() * 0.55) * r.width * 0.5;
+      const ex = cx + Math.cos(angle) * rad;
+      const ey = cy + Math.sin(angle) * Math.min(rad, r.height * 0.45);
+      for (let i = 0; i < 2 + Math.floor(Math.random() * 3); i++) {
+        const a2 = angle + (Math.random() - 0.5) * 1.5;
+        const spd = 1.2 + Math.random() * 2.5;
+        this.embers.push({
+          x: ex,
+          y: ey,
+          vx: Math.cos(a2) * spd,
+          vy: Math.sin(a2) * spd - 1.4,
+          life: 1,
+          decay: 0.02 + Math.random() * 0.025,
+          size: 1.2 + Math.random() * 2,
+          hue: 15 + Math.random() * 35
+        });
+      }
+      if (Math.random() < 0.1) {
+        this.smoke.push({
+          x: ex + (Math.random() - 0.5) * 20,
+          y: ey,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: -(0.35 + Math.random() * 0.7),
+          life: 1,
+          decay: 0.004 + Math.random() * 0.004,
+          size: 10 + Math.random() * 24,
+          op: 0.04 + Math.random() * 0.05
+        });
+      }
+    }
+
+    drawParticles() {
+      const pCtx = this.particles.getContext("2d");
+      if (!pCtx) return;
+      pCtx.clearRect(0, 0, this.particles.width, this.particles.height);
+      for (let i = this.smoke.length - 1; i >= 0; i--) {
+        const s = this.smoke[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.size += 0.5;
+        s.life -= s.decay;
+        if (s.life <= 0) {
+          this.smoke.splice(i, 1);
+          continue;
+        }
+        const g = pCtx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size);
+        const a = s.op * s.life;
+        g.addColorStop(0, `rgba(100,40,0,${a})`);
+        g.addColorStop(0.6, `rgba(40,15,0,${a * 0.3})`);
+        g.addColorStop(1, "rgba(0,0,0,0)");
+        pCtx.fillStyle = g;
+        pCtx.beginPath();
+        pCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        pCtx.fill();
+      }
+      for (let i = this.embers.length - 1; i >= 0; i--) {
+        const e = this.embers[i];
+        e.x += e.vx;
+        e.y += e.vy;
+        e.vy += 0.06;
+        e.vx *= 0.98;
+        e.life -= e.decay;
+        if (e.life <= 0) {
+          this.embers.splice(i, 1);
+          continue;
+        }
+        pCtx.save();
+        pCtx.globalAlpha = e.life * (0.65 + Math.random() * 0.35);
+        const g = pCtx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.size * 3);
+        g.addColorStop(0, `hsl(${e.hue + 25},100%,92%)`);
+        g.addColorStop(0.35, `hsl(${e.hue},100%,60%)`);
+        g.addColorStop(1, "rgba(0,0,0,0)");
+        pCtx.fillStyle = g;
+        pCtx.beginPath();
+        pCtx.arc(e.x, e.y, e.size * 3, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.restore();
+      }
+    }
+
+    renderLoop(now) {
+      if (this.done) return;
+      const dt = Math.min((now - (this.lastNow || now)) * 0.001, 0.05);
+      this.lastNow = now;
+      const t = (now - this.t0) * 0.001;
+      if (this.burning) {
+        this.burnTimer += dt;
+        const raw = Math.min(this.burnTimer / BURN_SECONDS, 1);
+        this.dissolve = easeBurn(raw);
+        if (this.dissolve >= 1) {
+          this.finish();
+          return;
+        }
+      }
+      if (this.dissolve < 0.97 && now - this.lastEmber > 55) {
+        this.lastEmber = now;
+        this.emitEmbers();
+      }
+      this.place();
+      if (this.gl && this.U) {
+        const gl = this.gl;
+        gl.viewport(0, 0, this.glCanvas.width, this.glCanvas.height);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.uniform1f(this.U.u_time, t);
+        gl.uniform1f(this.U.u_dissolve, this.dissolve);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      }
+      this.drawParticles();
+      this.raf = requestAnimationFrame(this.renderLoop);
+    }
+  }
+
+  window.burnAwayButton = function burnAwayButton(button, opts) {
+    const onDone = opts && typeof opts.onDone === "function" ? opts.onDone : function () {};
+    if (!button || button.dataset.burnStarted === "1") return;
+    button.dataset.burnStarted = "1";
+    button.setAttribute("aria-expanded", "true");
+    new ShowMoreBurn(button, onDone);
+  };
 })();

@@ -320,7 +320,17 @@
     return html;
   }
 
+  function mirrorRoot() {
+    return document.getElementById("slack-mirror-root");
+  }
+
+  function mirrorIsEmbedded() {
+    const root = mirrorRoot();
+    return Boolean(root && root.getAttribute("data-embed") === "home");
+  }
+
   function setHash(channelId) {
+    if (mirrorIsEmbedded()) return;
     const next = "channel=" + encodeURIComponent(channelId);
     if (location.hash.replace(/^#/, "") !== next) {
       history.replaceState(null, "", "#" + next);
@@ -424,15 +434,17 @@
         root.__slackMembers = members;
         const readSet = loadReadChannels(tape);
         refreshSidebar(tape, channels, dayKey, readSet, root);
-        const wanted = channelFromHash();
+        const wanted = mirrorIsEmbedded() ? "" : channelFromHash();
         const startId = wanted && channels.some((c) => c.id === wanted) ? wanted : channels[0]?.id;
         selectChannel(tape, channels, startId, members, base, root, dayKey);
-        global.addEventListener("hashchange", () => {
-          const id = channelFromHash();
-          if (id && channels.some((c) => c.id === id)) {
-            selectChannel(tape, channels, id, members, base, root, dayKey);
-          }
-        });
+        if (!mirrorIsEmbedded()) {
+          global.addEventListener("hashchange", () => {
+            const id = channelFromHash();
+            if (id && channels.some((c) => c.id === id)) {
+              selectChannel(tape, channels, id, members, base, root, dayKey);
+            }
+          });
+        }
       })
       .catch((err) => {
         const pane = document.getElementById("slack-mirror-messages");
@@ -444,7 +456,7 @@
   }
 
   function boot() {
-    markIslandChatterVisited();
+    if (!mirrorIsEmbedded()) markIslandChatterVisited();
     init();
   }
 

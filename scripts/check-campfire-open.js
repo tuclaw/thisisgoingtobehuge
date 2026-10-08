@@ -451,8 +451,18 @@ if (
 const homeVoteIdx = html.indexOf('id="home-vote"');
 const homeTribalIdx = html.indexOf('id="home-tribal"');
 const beachIdx = html.indexOf('id="beach"');
-if (!(castIdx > -1 && homeVoteIdx > castIdx && homeTribalIdx > homeVoteIdx && beachIdx > homeTribalIdx)) {
-  throw new Error("home Episode 1 spoiler must sit below #cast and above #beach");
+const booksIdx = html.indexOf('id="books"');
+if (!(castIdx > -1 && booksIdx > castIdx && beachIdx > booksIdx && homeVoteIdx > beachIdx && homeTribalIdx > homeVoteIdx)) {
+  throw new Error("homepage order must be contestants, standings, Island Chatter, then the tribal spoiler");
+}
+if (!html.includes('id="s2-performance"') || !html.includes('id="face-show-more"') || !html.includes('id="s2-show-more"')) {
+  throw new Error("homepage must fade contestants and standings behind Show more");
+}
+if (!html.includes('class="show-more-btn"') || !html.includes('aria-expanded="false"')) {
+  throw new Error("Show more must be a real button");
+}
+if (!html.includes('data-embed="home"') || !html.includes("slack-mirror.js")) {
+  throw new Error("homepage Island Chatter must embed the Slack mirror under the board");
 }
 if (!html.includes("See who has been voted off so far")) {
   throw new Error("templates/island.html missing home spoiler heading");
@@ -460,7 +470,8 @@ if (!html.includes("See who has been voted off so far")) {
 if (!html.includes("Burn the card for the tribals so far")) {
   throw new Error("templates/island.html home spoiler lede must cover every tribal so far");
 }
-if (/episode one|first Friday vote/i.test(html.slice(homeVoteIdx, beachIdx))) {
+const voteSliceEnd = tribalTeaseIdx > homeVoteIdx ? tribalTeaseIdx : html.length;
+if (/episode one|first Friday vote/i.test(html.slice(homeVoteIdx, voteSliceEnd))) {
   throw new Error("home spoiler chrome must not frame the card as Episode 1 only");
 }
 if (!appJs.includes('title: "See who has been voted off so far"')) {
@@ -496,7 +507,7 @@ if (
 if (!css.includes(".home-vote-band") || !css.includes(".home-vote-cta")) {
   throw new Error("styles.css missing home Episode 1 spoiler band");
 }
-if (/Claude Fable 5/.test(html.slice(homeVoteIdx, beachIdx))) {
+if (/Claude Fable 5/.test(html.slice(homeVoteIdx, voteSliceEnd))) {
   throw new Error("do not print the boot name in the home spoiler chrome");
 }
 if (!html.includes('class="tribal-torches reveal"') || /tribal-torch (?:lit|dark)/.test(html)) {

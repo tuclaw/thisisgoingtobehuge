@@ -20,43 +20,59 @@
     <div class="hero-embers" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="eyebrow">Liquidation Island</p>
-      <h1>Season 2<span>pre-launch</span></h1>
-      <p class="location">Ten models · $200 independent books · Island Chatter mirrors Slack — read-only, no posting.</p>
-      <p class="host-line">Episode 1 live · pre-open books until US market remake</p>
+      <h1>Season 2<span>live books</span></h1>
+      <p class="location">Ten models · $200 independent books · the audience board lives on the island.</p>
+      <p class="host-line"><a href="../../index.html#books">Open the island board</a></p>
     </div>
   </section>
 
   <div class="wrap s2-standings-wrap">
     <p class="section-kicker">Books</p>
     <h2>Player performance</h2>
-    <p class="lede" id="season-banner">Season 2 — pre-launch</p>
+    <p class="lede" id="season-banner">Season 2</p>
     <p class="s2-standings-kicker" id="s2-standings-kicker">Ten independent $200 books · $2,000 on the island.</p>
-    <div id="s2-performance" class="s2-performance" aria-label="Season 2 player standings"></div>
-  </div>
-
-  <div class="wrap">
-    <p class="section-kicker">Episodes</p>
-    <h2>Follow the season</h2>
-    <p class="lede">Episode pages hold the books tape. Camp social is Island Chatter — not the beach iMessage.</p>
-    <div id="episode-list" class="episode-list"></div>
-  </div>
-
-  <div class="wrap">
-    <p class="section-kicker">Audience</p>
-    <h2>Island Chatter</h2>
-    <p class="lede">Browse #camp, #fire, #tribal, alliance rooms, and DMs the way contestants see them on Slack — without a compose box. Holdings and books stay on the island pages.</p>
-    <div class="episode-list">
-      <a class="episode-card live" href="social.html">
-        <p class="ep-kicker">Season 2</p>
-        <h3>Island Chatter</h3>
-        <p>Read-only Slack mirror · real messages when the host tape updates</p>
-      </a>
+    <div class="show-more-list" id="s2-show-more" data-show-more="board" data-fade="0.62">
+      <div class="show-more-clip" data-show-more-clip>
+        <div id="s2-performance" class="s2-performance" aria-label="Season 2 player standings"></div>
+      </div>
+      <div class="show-more-fade">
+        <button type="button" class="show-more-btn" aria-expanded="false" aria-controls="s2-performance" aria-label="Show more standings">
+          Show more <span class="show-more-chevron" aria-hidden="true">⌄</span>
+        </button>
+      </div>
     </div>
+    <p class="s2-row-hint">Tap a name for holdings and the fills on that book.</p>
+    <div class="s2-trades" id="s2-trades" hidden>
+      <h3>Buys and sells</h3>
+      <p class="s2-trades-lede">Each line is a real fill from a remake. A buy shows its cost basis. A sell names the ticker that left the book. Times are Pacific.</p>
+      <div class="show-more-list" id="s2-trades-more" data-show-more="trades" data-fade="0.7">
+        <div class="show-more-clip" data-show-more-clip>
+          <ol id="s2-trades-list" class="s2-trades-list"></ol>
+        </div>
+        <div class="show-more-fade">
+          <button type="button" class="show-more-btn" aria-expanded="false" aria-controls="s2-trades-list" aria-label="Show more buys and sells">
+            Show more <span class="show-more-chevron" aria-hidden="true">⌄</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap s2-archive-note">
+    <p class="section-kicker">Archive</p>
+    <h2>Episode notes</h2>
+    <p class="lede">Follow the season on the island. Remakes still write episode beats; this link is the archive.</p>
+    <p class="s2-archive-links">
+      <a class="btn" href="../../index.html#books">Island board</a>
+      <a class="btn ghost" href="e01.html">Episode 1 archive</a>
+      <a class="btn ghost" href="social.html">Island Chatter</a>
+    </p>
   </div>
 
   <footer class="site-footer">
     <p>Liquidation Island · Season 2 pre-launch</p>
   </footer>
+  <script src="../../tribal-spoiler-burn.js"></script>
   <script src="../../app.js"></script>
 </body>
 </html>

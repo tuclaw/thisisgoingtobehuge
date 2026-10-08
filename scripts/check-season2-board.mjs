@@ -202,8 +202,63 @@ try {
     homeChrome.includes("lts-island-chatter-visited") && homeChrome.includes("has-chatter-ping"),
     "homepage must show Island Chatter red-dot until first visit"
   );
+  check(home.includes('id="books"') && home.includes('id="s2-performance"'), "homepage must mount the standings board");
+  check(
+    home.includes('id="face-show-more"') && home.includes('id="s2-show-more"') && home.includes('class="show-more-btn"'),
+    "homepage must fade contestants and standings behind Show more"
+  );
+  check(home.includes('data-embed="home"') && home.includes("slack-mirror.js"), "homepage must embed Island Chatter");
+  check(home.indexOf('id="books"') > home.indexOf('id="cast"'), "standings must sit under Meet the contestants");
+  check(home.indexOf('id="beach"') > home.indexOf('id="books"'), "Island Chatter must sit under the standings");
 } catch (e) {
   check(false, "templates/island.html: " + e.message);
+}
+
+const season2Index = readFileSync(join(root, "templates", "season2-index.html"), "utf8");
+check(season2Index.includes('id="s2-performance"'), "season 2 nav page keeps the standings board");
+check(!season2Index.includes('id="episode-list"'), "season 2 nav page must not lead with the episode list");
+check(season2Index.includes("e01.html"), "season 2 nav page keeps an episode archive link");
+check(season2Index.includes("index.html#books"), "season 2 nav page points at the island board");
+
+const burnSrc = readFileSync(join(root, "tribal-spoiler-burn.js"), "utf8");
+check(burnSrc.includes("window.burnAwayButton"), "show more must reuse the spoiler burn");
+check(burnSrc.includes("prefers-reduced-motion"), "spoiler burn must honor reduced motion");
+check(appJs.includes("burnAwayButton"), "standings Show more must call burnAwayButton");
+check(appJs.includes("function deriveSnapshotFills"), "app.js must derive fills from snapshots");
+check(/pane\.scrollTo\(/.test(readFileSync(join(root, "slack-mirror.js"), "utf8")), "Island Chatter unread scroll stays inside the pane");
+
+const deriveStart = appJs.indexOf("function deriveSnapshotFills(");
+const deriveEnd = appJs.indexOf("function groupSnapshotFills(");
+check(deriveStart > -1 && deriveEnd > deriveStart, "deriveSnapshotFills must stay ahead of groupSnapshotFills");
+if (deriveStart > -1 && deriveEnd > deriveStart) {
+  const derive = new Function(`${appJs.slice(deriveStart, deriveEnd)}\nreturn deriveSnapshotFills;`)();
+  const fills = derive(data);
+  check(Array.isArray(fills) && fills.length >= 24, `snapshot fills must include Wednesday's open book (got ${fills && fills.length})`);
+  const snaps = Array.isArray(data.snapshots) ? data.snapshots : [];
+  const snapIndex = new Map(snaps.map((snap, i) => [snap && snap.id, i]));
+  const held = (book, ticker) =>
+    Boolean(book && (book.positions || []).some((pos) => String((pos && pos.ticker) || "").toUpperCase() === ticker));
+  for (const fill of fills) {
+    check(fill && (fill.side === "buy" || fill.side === "sell"), "fill side must be buy or sell");
+    check(fill.ticker && fill.ticker !== "CASH", `fill ticker must be a position (got ${fill && fill.ticker})`);
+    check(snapIndex.has(fill.snapshotId), `fill snapshot missing: ${fill && fill.snapshotId}`);
+    check(fill.side !== "sell" || fill.sizeUsd == null, `${fill.ticker} sell must not invent proceeds`);
+    if (fill.how === "open" && fill.side === "buy") {
+      check(typeof fill.sizeUsd === "number" && fill.sizeUsd > 0, `${fill.ticker} open buy needs a cost basis`);
+    }
+    const i = snapIndex.get(fill.snapshotId);
+    const cur = i >= 0 && snaps[i] && snaps[i].books ? snaps[i].books[fill.survivorId] : null;
+    const prev = i > 0 && snaps[i - 1] && snaps[i - 1].books ? snaps[i - 1].books[fill.survivorId] : null;
+    if (fill.side === "buy" && fill.how === "open") {
+      check(held(cur, fill.ticker), `${fill.survivorId} bought ${fill.ticker} but it is missing on ${fill.snapshotId}`);
+    }
+    if (fill.side === "sell") {
+      check(held(prev, fill.ticker), `${fill.survivorId} sold ${fill.ticker} but it was not on the prior snapshot`);
+    }
+  }
+  const gemini = fills.filter((fill) => fill.survivorId === "s2-gemini-3-1-pro");
+  check(gemini.some((fill) => fill.side === "sell" && fill.ticker === "CEG"), "Gemini 3.1 Pro CEG close must stay a real sell");
+  check(gemini.some((fill) => fill.side === "buy" && fill.ticker === "SPLV"), "Gemini 3.1 Pro SPLV buy must stay a real fill");
 }
 
 if (errors.length) {
