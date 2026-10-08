@@ -8199,15 +8199,51 @@ body.castaway-sheet-open {
 }
 
 .s2-trades {
-  margin-top: 1.75rem;
+  margin-top: 1.35rem;
 }
 
-.s2-trades h3 {
-  margin: 0 0 0.35rem;
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 700;
+.s2-trades-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(196, 165, 116, 0.28);
+  background: rgba(8, 6, 4, 0.72);
   color: var(--parchment);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.s2-trades-toggle:hover {
+  border-color: rgba(240, 193, 75, 0.55);
+  color: var(--gold-bright);
+}
+
+.s2-trades-toggle:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+
+.s2-trades-chevron {
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.s2-trades.is-open .s2-trades-chevron {
+  transform: rotate(180deg);
+}
+
+.s2-trades-panel {
+  padding-top: 0.35rem;
 }
 
 .s2-archive-note {
@@ -8379,7 +8415,8 @@ body.castaway-sheet-open {
 
 @media (prefers-reduced-motion: reduce) {
   .show-more-list.is-open .show-more-clip,
-  .s2-row {
+  .s2-row,
+  .s2-trades-chevron {
     transition: none;
     animation: none;
   }

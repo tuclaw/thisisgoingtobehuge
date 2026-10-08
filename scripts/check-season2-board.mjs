@@ -210,10 +210,13 @@ try {
   const booksBlock = home.slice(home.indexOf('id="s2-show-more"'), home.indexOf('id="beach"'));
   check(
     booksBlock.includes('id="s2-trades"') &&
-      booksBlock.indexOf('id="s2-trades"') < booksBlock.indexOf("show-more-btn") &&
+      booksBlock.indexOf("show-more-btn") < booksBlock.indexOf('id="s2-trades"') &&
+      booksBlock.includes('class="s2-trades-toggle"') &&
+      /id="s2-trades-panel"[^>]*\shidden/.test(booksBlock) &&
       !booksBlock.includes("s2-trades-more"),
-    "buys and sells nest inside the standings Show more"
+    "buys and sells starts collapsed under the standings"
   );
+  check(appJs.includes("function bindSeason2Trades"), "buys and sells toggle must be wired in app.js");
   check(home.includes('data-embed="home"') && home.includes("slack-mirror.js"), "homepage must embed Island Chatter");
   check(home.indexOf('id="books"') > home.indexOf('id="cast"'), "standings must sit under Meet the contestants");
   check(home.indexOf('id="beach"') > home.indexOf('id="books"'), "Island Chatter must sit under the standings");

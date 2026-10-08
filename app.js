@@ -593,6 +593,21 @@ function renderSeason2Trades(season, groups) {
   }
   if (wrap) wrap.hidden = false;
   list.innerHTML = newest.map((group) => fillGroupHtml(group, season)).join("");
+  bindSeason2Trades(wrap);
+}
+
+function bindSeason2Trades(wrap) {
+  if (!wrap || wrap.dataset.tradesBound === "1") return;
+  const btn = wrap.querySelector(".s2-trades-toggle");
+  const panel = wrap.querySelector(".s2-trades-panel");
+  if (!btn || !panel) return;
+  wrap.dataset.tradesBound = "1";
+  btn.addEventListener("click", () => {
+    const open = btn.getAttribute("aria-expanded") !== "true";
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.hidden = !open;
+    wrap.classList.toggle("is-open", open);
+  });
 }
 
 const SHOW_MORE_KEEP = 4;

@@ -459,8 +459,11 @@ if (!html.includes('id="s2-performance"') || !html.includes('id="s2-show-more"')
   throw new Error("homepage Show more belongs on standings, not Meet the contestants");
 }
 const booksBlock = html.slice(html.indexOf('id="s2-show-more"'), html.indexOf('id="beach"'));
-if (!(booksBlock.includes('id="s2-trades"') && booksBlock.indexOf('id="s2-trades"') < booksBlock.indexOf("show-more-btn"))) {
-  throw new Error("buys and sells must sit inside the standings Show more");
+if (!(booksBlock.includes('id="s2-trades"') && booksBlock.indexOf("show-more-btn") < booksBlock.indexOf('id="s2-trades"'))) {
+  throw new Error("buys and sells must sit under the standings, outside the Show more fade");
+}
+if (!booksBlock.includes('class="s2-trades-toggle"') || !/id="s2-trades-panel"[^>]*\shidden/.test(booksBlock)) {
+  throw new Error("buys and sells must start collapsed behind a toggle");
 }
 if (booksBlock.includes("s2-trades-more")) {
   throw new Error("buys and sells must not keep a second Show more");

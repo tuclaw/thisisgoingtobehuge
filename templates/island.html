@@ -81,16 +81,21 @@
       <div class="show-more-list" id="s2-show-more" data-show-more="board" data-fade="0.62">
         <div class="show-more-clip" id="s2-show-more-clip" data-show-more-clip>
           <div id="s2-performance" class="s2-performance" aria-label="Season 2 player standings"></div>
-          <div class="s2-trades" id="s2-trades" hidden>
-            <h3>Buys and sells</h3>
-            <p class="s2-trades-lede">Each line is a real fill from a remake. A buy shows its cost basis. A sell names the ticker that left the book. Times are Pacific.</p>
-            <ol id="s2-trades-list" class="s2-trades-list"></ol>
-          </div>
         </div>
         <div class="show-more-fade">
           <button type="button" class="show-more-btn" aria-expanded="false" aria-controls="s2-show-more-clip" aria-label="Show more standings">
             Show more <span class="show-more-chevron" aria-hidden="true">⌄</span>
           </button>
+        </div>
+      </div>
+      <div class="s2-trades" id="s2-trades" hidden>
+        <button type="button" class="s2-trades-toggle" aria-expanded="false" aria-controls="s2-trades-panel">
+          Buys and sells
+          <span class="s2-trades-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div id="s2-trades-panel" class="s2-trades-panel" hidden>
+          <p class="s2-trades-lede">Each line is a real fill from a remake. A buy shows its cost basis. A sell names the ticker that left the book. Times are Pacific.</p>
+          <ol id="s2-trades-list" class="s2-trades-list"></ol>
         </div>
       </div>
     </div>
