@@ -42,7 +42,10 @@ check(data.startingBookUsd !== 100, "must not use $100 starting book");
 check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
-check(survivors.length === 10, `expected 10 survivors (got ${survivors.length})`);
+check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
+const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
+check(activeLiving.length === 9, `expected 9 living (got ${activeLiving.length})`);
+check(data.livingCount === 9, "livingCount must be 9 after S2E01 tribal");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -79,7 +82,8 @@ const episodes = Array.isArray(data.episodes) ? data.episodes : [];
 const e1 = episodes.find((ep) => ep && ep.id === "s2e01");
 check(e1, "episodes must list s2e01");
 if (e1) {
-  check(e1.status === "live", "s2e01 must be live");
+  check(e1.status === "closed", "s2e01 must be closed after Fri tribal");
+  check(e1.boot === "Grok 4.7", "s2e01 boot must be Grok 4.7");
   check(e1.path === "seasons/2/e01.html", "s2e01 path must be seasons/2/e01.html");
   check(e1.source === "data/episodes/s2e01.json", "s2e01 source must be data/episodes/s2e01.json");
   check(e1.weekBoardSnapshotId === "s2e01-fri-eod-rth", "s2e01 weekBoardSnapshotId must be s2e01-fri-eod-rth");
@@ -215,6 +219,27 @@ try {
     (day.beats || []).some((b) => b.type === "social" && String(b.href || "").includes("social.html"))
   );
   check(hasSocial, "s2e01 must point social beats at Island Chatter (social.html)");
+  const friDay = (e1Copy.days || []).find((day) => day && day.id === "friday");
+  const friBeats = friDay && Array.isArray(friDay.beats) ? friDay.beats : [];
+  const booksIdx = friBeats.findIndex((b) => b && b.id === "fri-eod-rth-books");
+  const stmtIdx = friBeats.findIndex((b) => b && b.id === "tribal-statements");
+  const voteIdx = friBeats.findIndex((b) => b && b.id === "tribal-vote-readout");
+  const cutIdx = friBeats.findIndex((b) => b && b.id === "tribal-cut");
+  const exitIdx = friBeats.findIndex((b) => b && b.id === "grok-exit-interview");
+  check(stmtIdx > booksIdx, "tribal statements must follow Fri close books");
+  check(voteIdx > stmtIdx, "vote readout must follow statements");
+  check(cutIdx > voteIdx, "tribal-cut must follow vote readout");
+  check(exitIdx > cutIdx, "Grok exit must follow tribal-cut");
+  const stmtBeat = friBeats[stmtIdx];
+  check(stmtBeat && (stmtBeat.notes || []).length === 9, "nine pre-vote statements");
+  const voteBeat = friBeats[voteIdx];
+  check(voteBeat && String(voteBeat.body || "").includes("Composer 2.5 → Grok 4.7"), "vote readout must list pairings");
+  check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
+  const exitBeat = friBeats[exitIdx];
+  check(
+    exitBeat && String(exitBeat.body || "").includes("quiet people were never the threat"),
+    "Grok exit interview must be verbatim final words"
+  );
 } catch (e) {
   check(false, "data/episodes/s2e01.json must exist: " + e.message);
 }
@@ -349,6 +374,34 @@ if (deriveStart > -1 && deriveEnd > deriveStart) {
   check(gemini.some((fill) => fill.side === "sell" && fill.ticker === "CEG"), "Gemini 3.1 Pro CEG close must stay a real sell");
   check(gemini.some((fill) => fill.side === "buy" && fill.ticker === "SPLV"), "Gemini 3.1 Pro SPLV buy must stay a real fill");
 }
+
+const grok = survivors.find((s) => s && s.id === "s2-grok-4-7");
+check(grok && grok.status === "voted-out" && grok.jury === true, "Grok 4.7 must be voted-out jury");
+check(grok && grok.bookHeld === true, "Grok 4.7 book must be held until finale");
+check(grok && grok.bookUsd > 0, "Grok 4.7 bookUsd must stay marked (not boot-split to zero)");
+check(grok && grok.votedOutEpisode === "s2e01", "Grok votedOutEpisode must be s2e01");
+
+const log = Array.isArray(data.tribalLog) ? data.tribalLog : [];
+const tribal = log.find((row) => row && row.episode === "s2e01");
+check(tribal, "tribalLog must include S2E01 council");
+if (tribal) {
+  check(tribal.bootName === "Grok 4.7", "tribal bootName must be Grok 4.7");
+  check(tribal.bookHeld === true, "tribal bookHeld must be true");
+  check(tribal.individualImmunity === "s2-gemini-3-1-pro", "immunity record must pin Gemini 3.1 Pro");
+  check(tribal.tally && tribal.tally["Grok 4.7"] === 4, "Grok tally must be 4");
+  const pairings = (tribal.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    pairings ===
+      "Grok 4.7>Muse Spark 1.3|Claude Opus 5.5>Kimi K3|Claude Fable 5.1>Gemini 3.8 Flash|Composer 2.5>Grok 4.7|Gemini 3.8 Flash>Claude Fable 5.1|Muse Spark 1.3>Grok 4.7|GLM 5.2>Grok 4.7|Kimi K2.7 Code>Claude Opus 5.5|Kimi K3>Grok 4.7",
+    "tribalLog votes must match official pairings"
+  );
+  check(!(tribal.votes || []).some((v) => v && v.text), "tribalLog votes must not store private confessionals");
+}
+
+check(
+  data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
+  "immunity note must record Gemini 3.1 Pro necklace at tribal"
+);
 
 if (errors.length) {
   console.error("check-season2-board failed:\n" + errors.map((e) => "  - " + e).join("\n"));
