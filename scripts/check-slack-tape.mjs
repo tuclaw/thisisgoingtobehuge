@@ -154,24 +154,70 @@ const CONFESSIONALS = [
     label: "Claude Fable 5.1",
     slackChannelId: "C0C7RRCN38V",
     playerId: "claude-fable-5-1",
-    questionSha: "c74a610c70b805a8ea9f05e5b31e862aa8026df53f0a2b8a980ac635fe949bfc",
-    replySha: "0f5e0835c9dc6768b4247bf08db0fff623a801a16eadb07604465d251dbcb06d",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-08T",
+        questionSha: "c74a610c70b805a8ea9f05e5b31e862aa8026df53f0a2b8a980ac635fe949bfc",
+        replySha: "0f5e0835c9dc6768b4247bf08db0fff623a801a16eadb07604465d251dbcb06d",
+      },
+      {
+        dayPrefix: "2026-10-09T",
+        questionSha: "0d46f24efbdb2c6dbacf0026a4f68cd3a4b51731eb53fa2b6e954503de2bb629",
+        replySha: "a82f00a6f478ed1d9aa8cf17e8845278e601d3819a360896718f5337a4b1ee37",
+      },
+    ],
   },
   {
     id: "conf-flash",
     label: "Gemini 3.8 Flash",
     slackChannelId: "C0C80QZD6TE",
     playerId: "gemini-3-8-flash",
-    questionSha: "45b3951572158043250f29a0d3e519abd45cad7d1ad66a2f6e4148c98441b9b2",
-    replySha: "bcbbba54708aa87f3baa4c675f4664c95b802aefe96a8bb510e4b390d1dab2f5",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-08T",
+        questionSha: "45b3951572158043250f29a0d3e519abd45cad7d1ad66a2f6e4148c98441b9b2",
+        replySha: "bcbbba54708aa87f3baa4c675f4664c95b802aefe96a8bb510e4b390d1dab2f5",
+      },
+    ],
   },
   {
     id: "conf-glm",
     label: "GLM 5.2",
     slackChannelId: "C0C8RFX29J4",
     playerId: "glm-5-2",
-    questionSha: "2451c39876e5238372bada6c148c8d66e54b976f5dd807e80831e8501c9eb63a",
-    replySha: "6215722a87140cbaca61f3cac16483b169e5e029844cf990d19735d864b0fc02",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-08T",
+        questionSha: "2451c39876e5238372bada6c148c8d66e54b976f5dd807e80831e8501c9eb63a",
+        replySha: "6215722a87140cbaca61f3cac16483b169e5e029844cf990d19735d864b0fc02",
+      },
+    ],
+  },
+  {
+    id: "conf-opus",
+    label: "Claude Opus 5.5",
+    slackChannelId: "C0C8561JJMQ",
+    playerId: "claude-opus-5-5",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-09T",
+        questionSha: "2dd5bdf2b4d44d16d429c56ca48b425108f5c0e79d3e62d5df41d808bd7c36fa",
+        replySha: "d7d994fcaec8a465e0a9bf8a6995e3021aa03269dfcdcffd9d94a7d6a16f1b33",
+      },
+    ],
+  },
+  {
+    id: "conf-muse",
+    label: "Muse Spark 1.3",
+    slackChannelId: "C0C7PVBQ25D",
+    playerId: "muse-spark-1-3",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-09T",
+        questionSha: "f967a8670d843d7a56614a5ee435fb85bae937a48455682ce594bbebcb9e7d33",
+        replySha: "9711dcfdabcb78606ad7aa28645dc2e00ebc9ed240ddf1d01d2935a1ab8e66e3",
+      },
+    ],
   },
 ];
 
@@ -182,7 +228,7 @@ function sha256(text) {
 const confChannels = tape.channels.filter((c) => c.section === "confessionals");
 check(
   confChannels.map((c) => c.id).join("|") === CONFESSIONALS.map((c) => c.id).join("|"),
-  "Confessionals section lists conf-fable, conf-flash, conf-glm"
+  "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse"
 );
 for (const expected of CONFESSIONALS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
@@ -193,22 +239,32 @@ for (const expected of CONFESSIONALS) {
   check(ch && ch.slackChannelId === expected.slackChannelId, `${expected.id} slackChannelId`);
   check(ch && ch.audienceMirror === true, `${expected.id} is on the audience mirror`);
   const msgs = tape.messages.filter((m) => m.channelId === expected.id);
-  check(msgs.length === 2, `${expected.id} has the host question and one reply`);
+  const exchangeCount = expected.exchanges.length;
+  check(
+    msgs.length === exchangeCount * 2,
+    `${expected.id} has ${exchangeCount} TuClaw question and contestant reply pair(s)`
+  );
   const ordered = [...msgs].sort((a, b) => String(a.ts).localeCompare(String(b.ts)));
-  check(ordered[0] && ordered[0].authorId === "tuclaw", `${expected.id} opens with TuClaw`);
-  check(ordered[1] && ordered[1].authorId === expected.playerId, `${expected.id} reply is the contestant`);
-  check(ordered[0] && !ordered[0].threadParentId, `${expected.id} question is a top-level message`);
-  check(ordered[1] && !ordered[1].threadParentId, `${expected.id} reply is a top-level message like a DM`);
-  check(
-    ordered[0] && String(ordered[0].ts).startsWith("2026-10-08T") && String(ordered[0].ts).endsWith("-07:00"),
-    `${expected.id} question timestamp is Thu Oct 8 2026 PT`
-  );
-  check(
-    ordered[1] && String(ordered[1].ts).startsWith("2026-10-08T") && String(ordered[1].ts).endsWith("-07:00"),
-    `${expected.id} reply timestamp is Thu Oct 8 2026 PT`
-  );
-  check(ordered[0] && sha256(ordered[0].text) === expected.questionSha, `${expected.id} question text is verbatim`);
-  check(ordered[1] && sha256(ordered[1].text) === expected.replySha, `${expected.id} reply text is verbatim`);
+  for (let i = 0; i < exchangeCount; i++) {
+    const pair = expected.exchanges[i];
+    const q = ordered[i * 2];
+    const r = ordered[i * 2 + 1];
+    const label = `${expected.id} exchange ${i + 1}`;
+    check(q && q.authorId === "tuclaw", `${label} opens with TuClaw`);
+    check(r && r.authorId === expected.playerId, `${label} reply is the contestant`);
+    check(q && !q.threadParentId, `${label} question is a top-level message`);
+    check(r && !r.threadParentId, `${label} reply is a top-level message like a DM`);
+    check(
+      q && String(q.ts).startsWith(pair.dayPrefix) && String(q.ts).endsWith("-07:00"),
+      `${label} question timestamp is PT on ${pair.dayPrefix.slice(0, 10)}`
+    );
+    check(
+      r && String(r.ts).startsWith(pair.dayPrefix) && String(r.ts).endsWith("-07:00"),
+      `${label} reply timestamp is PT on ${pair.dayPrefix.slice(0, 10)}`
+    );
+    check(q && sha256(q.text) === pair.questionSha, `${label} question text is verbatim`);
+    check(r && sha256(r.text) === pair.replySha, `${label} reply text is verbatim`);
+  }
 }
 
 check(
