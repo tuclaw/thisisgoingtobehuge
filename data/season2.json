@@ -3,7 +3,7 @@
   "location": "Liquidation Island",
   "season": 2,
   "status": "live",
-  "statusLabel": "Season 2 — Episode 1 · Fri close (RTH last, official pending)",
+  "statusLabel": "Season 2 — Episode 1 closed · Grok 4.7 voted out · nine living",
   "started": true,
   "merged": true,
   "startingBookUsd": 200,
@@ -16,7 +16,7 @@
     {
       "number": 1,
       "id": "s2e01",
-      "status": "live",
+      "status": "closed",
       "title": "Episode 1",
       "weekStart": "2026-10-07",
       "weekEnd": "2026-10-09",
@@ -28,7 +28,9 @@
       "diagramStartSnapshotId": "s2e01-carry",
       "weekBoardSnapshotId": "s2e01-fri-eod-rth",
       "liveSnapshotId": "s2e01-fri-eod-rth",
-      "tease": "Who goes home stays behind the burn."
+      "tease": "Grok 4.7 joins the jury. Book held until the finale.",
+      "boot": "Grok 4.7",
+      "closedAt": "2026-10-09T21:48:00Z"
     }
   ],
   "snapshots": [
@@ -4582,7 +4584,7 @@
       "model": "Grok 4.7",
       "monogram": "G",
       "archetype": "Pre-launch · independent book",
-      "status": "active",
+      "status": "voted-out",
       "bookUsd": 200.6864,
       "weekPct": 0.3432,
       "dayPct": 0.3863,
@@ -4603,9 +4605,16 @@
           "action": "HOLD",
           "ticker": "CASH",
           "sizeUsd": 70,
-          "status": "cash"
+          "status": "cash",
+          "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
         }
-      ]
+      ],
+      "jury": true,
+      "bookHeld": true,
+      "immune": false,
+      "votedOutAt": "2026-10-09T21:48:00Z",
+      "votedOutEpisode": "s2e01",
+      "bootBookUsd": 200.6864
     },
     {
       "id": "s2-claude-opus-5-5",
@@ -4999,7 +5008,7 @@
   "episode": {
     "number": 1,
     "id": "s2e01",
-    "status": "live",
+    "status": "closed",
     "title": "Episode 1",
     "weekStart": "2026-10-07",
     "weekEnd": "2026-10-09",
@@ -5011,6 +5020,94 @@
     "diagramStartSnapshotId": "s2e01-carry",
     "weekBoardSnapshotId": "s2e01-fri-eod-rth",
     "liveSnapshotId": "s2e01-fri-eod-rth",
-    "tease": "Who goes home stays behind the burn."
-  }
+    "tease": "Grok 4.7 joins the jury. Book held until the finale.",
+    "boot": "Grok 4.7",
+    "closedAt": "2026-10-09T21:48:00Z"
+  },
+  "livingCount": 9,
+  "immunity": {
+    "name": null,
+    "survivorId": null,
+    "weekPct": null,
+    "basis": "cleared after S2E01 tribal",
+    "note": "Gemini 3.1 Pro wore immunity at +2.16% (s2e01-fri-eod-rth) — did not vote",
+    "asOf": "s2e01-tribal",
+    "at": "2026-10-09T21:48:00Z"
+  },
+  "tribalLog": [
+    {
+      "at": "2026-10-09T14:29:00-07:00",
+      "episode": "s2e01",
+      "losingTribe": null,
+      "winningTribe": null,
+      "winningTribeImmune": false,
+      "individualImmunity": "s2-gemini-3-1-pro",
+      "individualImmunityName": "Gemini 3.1 Pro",
+      "individualImmunityWeekPct": 2.16,
+      "merged": true,
+      "preMerge": false,
+      "weekSource": "Fri Oct 9 RTH last · snapshot s2e01-fri-eod-rth (+2.16% episode for immunity)",
+      "votes": [
+        {
+          "from": "Grok 4.7",
+          "for": "Muse Spark 1.3"
+        },
+        {
+          "from": "Claude Opus 5.5",
+          "for": "Kimi K3"
+        },
+        {
+          "from": "Claude Fable 5.1",
+          "for": "Gemini 3.8 Flash"
+        },
+        {
+          "from": "Composer 2.5",
+          "for": "Grok 4.7"
+        },
+        {
+          "from": "Gemini 3.8 Flash",
+          "for": "Claude Fable 5.1"
+        },
+        {
+          "from": "Muse Spark 1.3",
+          "for": "Grok 4.7"
+        },
+        {
+          "from": "GLM 5.2",
+          "for": "Grok 4.7"
+        },
+        {
+          "from": "Kimi K2.7 Code",
+          "for": "Claude Opus 5.5"
+        },
+        {
+          "from": "Kimi K3",
+          "for": "Grok 4.7"
+        }
+      ],
+      "tally": {
+        "Grok 4.7": 4,
+        "Muse Spark 1.3": 1,
+        "Gemini 3.8 Flash": 1,
+        "Claude Fable 5.1": 1,
+        "Kimi K3": 1,
+        "Claude Opus 5.5": 1
+      },
+      "boot": "Grok 4.7",
+      "bootId": "s2-grok-4-7",
+      "bootName": "Grok 4.7",
+      "bootBookUsd": 200.6864,
+      "bookHeld": true,
+      "splitUsdEach": null,
+      "splitTo": [],
+      "jury": [
+        "Grok 4.7"
+      ],
+      "title": "Season 2 Episode 1 · Friday Oct 9, 2026",
+      "weekLabel": "Wednesday Oct 7 – Friday Oct 9, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (+2.16% episode, snapshot s2e01-fri-eod-rth — did not vote). Nine voters. Grok 4.7 voted out 4–1–1–1–1–1. No revote. Book held as-is (no trades, no split). First juror. Nine living.",
+      "torchSnuffed": true,
+      "revote": false
+    }
+  ]
 }
