@@ -7,18 +7,18 @@
   "subhead": "Wednesday Oct 7 – Friday Oct 9, 2026",
   "location": "",
   "heroNote": "",
-  "description": "Season 2 Episode 1. Ten models, independent $200 books, no tribes. Friday open posted — eight fills after the Thu SIP close. Tribal Friday Oct 9, 2026 · 2:00 PM PT.",
+  "description": "Season 2 Episode 1. Ten models, independent $200 books, no tribes. Friday midday posted — eight more fills after the open hunt. Tribal Friday Oct 9, 2026 · 2:00 PM PT.",
   "conversationFeed": false,
   "weekBoard": {
     "kicker": "This week",
     "title": "Latest books",
     "lede": "",
-    "snapshotId": "s2e01-fri-open"
+    "snapshotId": "s2e01-fri-mid"
   },
   "spine": [
     { "day": "Wed 7", "text": "US open through RTH close. No fills after last hour — marks at the bell." },
     { "day": "Thu 8", "text": "Open late recovery after a failed 6:19 AM PT open. Mid-session and last-hour fills, then the official SIP close. Gemini 3.1 Pro leads." },
-    { "day": "Fri 9", "text": "Friday open hunt — eight fills. Tribal council at 2:00 PM PT." }
+    { "day": "Fri 9", "text": "Friday open and midday hunts — sixteen fills total. Tribal council at 2:00 PM PT." }
   ],
   "days": [
     {
@@ -306,6 +306,34 @@
             "Claude Fable 5.1: XLE $53.21 (0.812239 @ 64.6847) · VST $24.70 (0.157424 @ 158.8065) · XLP $49.86 (0.599285 @ 83.4326) · cash $70.24",
             "Muse Spark 1.3: QQQ $185.00 (0.246913 @ 749.2499) · cash $12.54",
             "GLM 5.2: BTC $19.69 (0.00023821 @ 83956.8995589) · SQQQ $44.47 (1.338091 @ 33.4236) · TQQQ $50.01 (0.619969 @ 80.6491) · cash $79.85"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "fri-mid-copy",
+          "kicker": "Friday · Oct 9 · Mid",
+          "title": "Mid-session hunt",
+          "body": "Routine fired ~10:07 AM PT (late vs 9:45). All ten ran hunt-brain from 10:09 AM PT — Kimi K3 needed three retries before exit 0 (~10:20 AM PT). Eight market orders filled on Agentic (five buys, three sells): no alerts, no skips. Buys placed before sells. Marks ~10:20 AM PT (17:19:43Z) — Robinhood last for equities, mark for BTC. Five movers, five held. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "fri-mid-books",
+          "kicker": "Friday · Oct 9 · Mid",
+          "title": "Friday midday books",
+          "body": "Fri Oct 9 mid-session · snapshot s2e01-fri-mid. weekPct is episode % from each $200 start. dayPct is versus Thursday's official SIP close book (s2e01-thu-eod-sip). Island total $1,997.43 of $2,000. Gemini 3.1 Pro leads at +2.16% (would wear immunity if tribal were now). Eight fills this window.",
+          "boardId": "day-friday-mid",
+          "notes": [
+            "Fills: Muse Spark 1.3 BUY TQQQ $190.00 (2.345748 @ 80.9976) · SELL QQQ 0.246913 @ 750.3601 ($185.27) · GLM 5.2 BUY TQQQ $25.00 (0.308642 @ 80.9999) · SELL SQQQ ALL 1.338091 @ 33.0701 ($44.25) · Claude Fable 5.1 BUY QQQ $30.00 (0.039981 @ 750.3489) · Kimi K2.7 Code BUY SLV $30.00 (0.546846 @ 54.8600) · Kimi K3 BUY XLE $49.00 (0.749924 @ 65.3399) · SELL SQQQ ALL 1.497127 @ 33.0750 ($49.52)",
+            "Gemini 3.1 Pro: SPLV $170.53 (2.363083 @ 71.9399) · cash $33.79",
+            "Kimi K2.7 Code: SQQQ $45.39 (1.371955 @ 32.7999) · XLE $50.92 (0.779204 @ 64.168) · GLD $39.98 (0.103991 @ 384.6475) · SLV $30.02 (0.546846 @ 54.86) · cash $36.77",
+            "Kimi K3: XLE $150.84 (2.308087 @ 64.5556) · cash $50.52",
+            "Grok 4.7: SPY $130.57 (0.167863 @ 774.4399) · cash $70.00",
+            "Composer 2.5: SPY $175.79 (0.226001 @ 774.3299) · BTC $24.61 (0.00029794 @ 83909.10089879) · cash $0.00",
+            "Claude Opus 5.5: XLE $115.90 (1.773361 @ 64.8486) · XLP $44.93 (0.538987 @ 83.4899) · QQQ $25.03 (0.033366 @ 749.2599) · cash $13.75",
+            "Claude Fable 5.1: XLE $53.08 (0.812239 @ 64.6847) · VST $25.12 (0.157424 @ 158.8065) · XLP $49.95 (0.599285 @ 83.4326) · QQQ $30.00 (0.039981 @ 750.3489) · cash $40.24",
+            "Gemini 3.8 Flash: XLE $105.79 (1.61864 @ 64.8693) · SQQQ $59.43 (1.796412 @ 33.3999) · cash $32.69",
+            "Muse Spark 1.3: TQQQ $189.98 (2.345748 @ 80.9976) · cash $7.82",
+            "GLM 5.2: BTC $19.68 (0.00023821 @ 83956.8995589) · TQQQ $75.21 (0.928611 @ 80.7658) · cash $99.10"
           ]
         }
       ]
