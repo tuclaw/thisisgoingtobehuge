@@ -34,8 +34,8 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
   "channels": [
     {
       "id": "camp",
-      "kind": "public",           // public | private | dm
-      "section": "camp",          // camp | fire | tribal | alliances | dms | control
+      "kind": "public",           // public | private | dm | confessional
+      "section": "camp",          // camp | fire | tribal | alliances | dms | confessionals | control
       "name": "camp",
       "label": "#camp",
       "slackChannelId": "C0…",    // optional; real Slack channel id for ingest
@@ -67,6 +67,7 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
 | `tribal` | Tribal | Tribal council nights (`#tribal`; votes / parchment / exits) |
 | `alliances` | Alliances | Private multi-person rooms |
 | `dms` | DMs | Private Slack channels named `dm-<a>-<b>` (not Slack IMs); `label` is audience-facing participant names |
+| `confessionals` | Confessionals | One booth channel per contestant (`conf-<name>`). `kind` is `confessional`. `label` is the player's public name. Messages are the host question, then that contestant's reply. Later booths append to the same channel. |
 | `control` | Control room | Omitted unless `options.includeControlRoom` |
 
 `kind: "dm"` channels should list `participantIds` (exactly two contestant ids), use `section: "dms"`, and set `name` to the workspace channel slug (`dm-<slug-a>-<slug-b>`). Island Chatter lists them under **DMs**, not as `#` channels.

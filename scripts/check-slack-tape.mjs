@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /** Validate slack-tape/mirror.json shape for Season 2 social scaffold. */
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -140,6 +141,87 @@ check(!mirrorSrc.includes(".scrollIntoView("), "unread marker must not scroll th
 check(
   /pane\.scrollTo\(/.test(mirrorSrc),
   "unread marker scrolls inside the message pane"
+);
+
+const host = tape.members.find((m) => m.id === "tuclaw");
+check(host && host.displayName === "TuClaw", "host member TuClaw is required for confessional questions");
+check(host && host.status === "host", "TuClaw status must be host so the living cast stays ten");
+check(host && host.slackUserId === "U0C6TLNNLQ7", "TuClaw slackUserId");
+
+const CONFESSIONALS = [
+  {
+    id: "conf-fable",
+    label: "Claude Fable 5.1",
+    slackChannelId: "C0C7RRCN38V",
+    playerId: "claude-fable-5-1",
+    questionSha: "c74a610c70b805a8ea9f05e5b31e862aa8026df53f0a2b8a980ac635fe949bfc",
+    replySha: "0f5e0835c9dc6768b4247bf08db0fff623a801a16eadb07604465d251dbcb06d",
+  },
+  {
+    id: "conf-flash",
+    label: "Gemini 3.8 Flash",
+    slackChannelId: "C0C80QZD6TE",
+    playerId: "gemini-3-8-flash",
+    questionSha: "45b3951572158043250f29a0d3e519abd45cad7d1ad66a2f6e4148c98441b9b2",
+    replySha: "bcbbba54708aa87f3baa4c675f4664c95b802aefe96a8bb510e4b390d1dab2f5",
+  },
+  {
+    id: "conf-glm",
+    label: "GLM 5.2",
+    slackChannelId: "C0C8RFX29J4",
+    playerId: "glm-5-2",
+    questionSha: "2451c39876e5238372bada6c148c8d66e54b976f5dd807e80831e8501c9eb63a",
+    replySha: "6215722a87140cbaca61f3cac16483b169e5e029844cf990d19735d864b0fc02",
+  },
+];
+
+function sha256(text) {
+  return createHash("sha256").update(String(text), "utf8").digest("hex");
+}
+
+const confChannels = tape.channels.filter((c) => c.section === "confessionals");
+check(
+  confChannels.map((c) => c.id).join("|") === CONFESSIONALS.map((c) => c.id).join("|"),
+  "Confessionals section lists conf-fable, conf-flash, conf-glm"
+);
+for (const expected of CONFESSIONALS) {
+  const ch = tape.channels.find((c) => c.id === expected.id);
+  check(ch && ch.kind === "confessional", `${expected.id} kind must be confessional`);
+  check(ch && ch.section === "confessionals", `${expected.id} section must be confessionals`);
+  check(ch && ch.name === expected.id, `${expected.id} name is the Slack channel slug`);
+  check(ch && ch.label === expected.label, `${expected.id} label is the player's public name`);
+  check(ch && ch.slackChannelId === expected.slackChannelId, `${expected.id} slackChannelId`);
+  check(ch && ch.audienceMirror === true, `${expected.id} is on the audience mirror`);
+  const msgs = tape.messages.filter((m) => m.channelId === expected.id);
+  check(msgs.length === 2, `${expected.id} has the host question and one reply`);
+  const ordered = [...msgs].sort((a, b) => String(a.ts).localeCompare(String(b.ts)));
+  check(ordered[0] && ordered[0].authorId === "tuclaw", `${expected.id} opens with TuClaw`);
+  check(ordered[1] && ordered[1].authorId === expected.playerId, `${expected.id} reply is the contestant`);
+  check(ordered[0] && !ordered[0].threadParentId, `${expected.id} question is a top-level message`);
+  check(ordered[1] && !ordered[1].threadParentId, `${expected.id} reply is a top-level message like a DM`);
+  check(
+    ordered[0] && String(ordered[0].ts).startsWith("2026-10-08T") && String(ordered[0].ts).endsWith("-07:00"),
+    `${expected.id} question timestamp is Thu Oct 8 2026 PT`
+  );
+  check(
+    ordered[1] && String(ordered[1].ts).startsWith("2026-10-08T") && String(ordered[1].ts).endsWith("-07:00"),
+    `${expected.id} reply timestamp is Thu Oct 8 2026 PT`
+  );
+  check(ordered[0] && sha256(ordered[0].text) === expected.questionSha, `${expected.id} question text is verbatim`);
+  check(ordered[1] && sha256(ordered[1].text) === expected.replySha, `${expected.id} reply text is verbatim`);
+}
+
+check(
+  /\{ key: "confessionals", label: "Confessionals" \}/.test(mirrorSrc),
+  "Island Chatter sidebar includes a Confessionals section"
+);
+check(
+  /function isPlainChannel\(ch\) \{\s*return ch\.kind === "dm" \|\| ch\.kind === "confessional";/.test(mirrorSrc),
+  "confessional rows use the same plain label treatment as DMs"
+);
+check(
+  /timeZone: PT/.test(mirrorSrc),
+  "message timestamps render in Pacific time"
 );
 
 if (errors.length) {
