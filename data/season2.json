@@ -4612,6 +4612,8 @@
       "jury": true,
       "bookHeld": true,
       "immune": false,
+      "votedOut": true,
+      "bootOrder": 1,
       "votedOutAt": "2026-10-09T21:48:00Z",
       "votedOutEpisode": "s2e01",
       "bootBookUsd": 200.6864
