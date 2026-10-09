@@ -310,6 +310,30 @@ function survivorSubtitle(s) {
   return tribe || "";
 }
 
+function bootOrdinal(n) {
+  const v = Math.trunc(Number(n));
+  if (!Number.isFinite(v) || v < 1) return "";
+  const teen = v % 100;
+  const suffix =
+    teen >= 11 && teen <= 13 ? "th" : v % 10 === 1 ? "st" : v % 10 === 2 ? "nd" : v % 10 === 3 ? "rd" : "th";
+  return String(v) + suffix;
+}
+
+function survivorBootOrder(s) {
+  if (!s) return null;
+  const n = Number(s.bootOrder);
+  if (!Number.isFinite(n) || n < 1) return null;
+  return Math.trunc(n);
+}
+
+/* Season 2 boots stay on the board. The label is the boot ordinal: "Voted out · 1st". */
+function votedOutPlaceLabel(s) {
+  const n = survivorBootOrder(s);
+  if (!n) return "";
+  if (s.votedOut !== true && s.status !== "voted-out" && s.status !== "jury" && s.status !== "boot") return "";
+  return "Voted out · " + bootOrdinal(n);
+}
+
 function episodePctOf(s) {
   if (s && typeof s.episodePct === "number" && !Number.isNaN(s.episodePct)) return s.episodePct;
   return weekPctOf(s);
@@ -533,17 +557,22 @@ function s2PerformanceRowHtml(s, season, index, groups) {
   const epPct = episodePctOf(s);
   const pillClass = chgClass(epPct);
   const name = modelOf(s);
+  const place = Number(season && season.season) === 2 ? votedOutPlaceLabel(s) : "";
   const detailId = "s2-detail-" + String(s.id || index).replace(/[^a-z0-9_-]/gi, "");
   const face = s.portrait
     ? `<span class="s2-face"><img src="${escapeHtml(assetUrl(s.portrait))}" alt=""></span>`
     : `<span class="s2-face"><span class="s2-mono">${escapeHtml(s.monogram || name.slice(0, 1) || "?")}</span></span>`;
-  return `<div class="s2-row" style="--i:${index}" data-show-more-item>
-    <button type="button" class="s2-row-toggle" aria-expanded="false" aria-controls="${escapeHtml(detailId)}" aria-label="${escapeHtml(name)}, ${escapeHtml(pct(epPct))}. Show holdings and fills">
+  const sub = place || survivorSubtitle(s);
+  const aria = place
+    ? `${name}, ${place}, ${pct(epPct)}. Show holdings and fills`
+    : `${name}, ${pct(epPct)}. Show holdings and fills`;
+  return `<div class="s2-row${place ? " is-voted-out" : ""}" style="--i:${index}" data-show-more-item>
+    <button type="button" class="s2-row-toggle" aria-expanded="false" aria-controls="${escapeHtml(detailId)}" aria-label="${escapeHtml(aria)}">
       <span class="s2-id">
         ${face}
         <span class="s2-names">
           <strong>${escapeHtml(name)}</strong>
-          <em>${escapeHtml(survivorSubtitle(s))}</em>
+          <em>${escapeHtml(sub)}</em>
         </span>
       </span>
       <span class="s2-spark-wrap">${sparklineSvg(series, trend)}</span>
@@ -1011,14 +1040,24 @@ function holdLegHtml(pos, season, tribeId) {
 }
 
 function holdBookFaded(s, season) {
-  if (!s || (s.status !== "jury" && s.status !== "boot" && s.status !== "disqualified")) return false;
+  if (!s) return false;
+  if (
+    season &&
+    Number(season.season) === 2 &&
+    (s.votedOut === true || s.status === "voted-out" || Number(s.bootOrder) >= 1)
+  ) {
+    return true;
+  }
+  if (s.status !== "jury" && s.status !== "boot" && s.status !== "disqualified") return false;
   const ep = currentPageEpisode(season);
   return Boolean(ep && Number(ep.number) >= 2);
 }
 
 function compareHoldBooks(a, b, season) {
-  const fadeA = holdBookFaded(a, season) ? 1 : 0;
-  const fadeB = holdBookFaded(b, season) ? 1 : 0;
+  /* Season 2 held books stay in the week-% rank. Season 1 fades sort last. */
+  const bury = !(season && Number(season.season) === 2);
+  const fadeA = bury && holdBookFaded(a, season) ? 1 : 0;
+  const fadeB = bury && holdBookFaded(b, season) ? 1 : 0;
   if (fadeA !== fadeB) return fadeA - fadeB;
   const w = weekPctOf(b) - weekPctOf(a);
   if (w !== 0) return w;
@@ -1031,41 +1070,46 @@ function holdBookHtml(s, tribe, season, rank) {
   const week = weekPctOf(s);
   const day = dayPctOf(s);
   const model = escapeHtml(modelOf(s));
+  const place = season && Number(season.season) === 2 ? votedOutPlaceLabel(s) : "";
   const tribeName = tribeChromeName(tribe || s.tribeId);
   const face = s.portrait
     ? `<img src="${escapeHtml(assetUrl(s.portrait))}" alt="">`
     : "";
   const pad = rank < 10 ? "0" + rank : String(rank);
   const immune = s.immune ? `<span class="hold-tag">Immune</span>` : "";
-  const bootTag =
-    s.status === "disqualified"
+  const bootTag = place
+    ? ""
+    : s.status === "disqualified"
       ? `<span class="hold-tag">Disqualified · jury</span>`
-      : s.status === "jury" || s.status === "boot"
+      : s.status === "jury" || s.status === "boot" || s.status === "voted-out"
         ? `<span class="hold-tag">Voted out · jury</span>`
         : "";
   const legsId = `hold-legs-${escapeHtml(slugOf(s))}`;
-  const hasLegs = legs.length > 0;
-  const mark = faded
-    ? ""
-    : `<span class="hold-mark">
+  const keepValue = Boolean(s && s.bookHeld);
+  const shownLegs = faded && keepValue ? bookLegs(s) : legs;
+  const hasLegs = shownLegs.length > 0;
+  const mark =
+    faded && !keepValue
+      ? ""
+      : `<span class="hold-mark">
         <span class="val">${money(s.bookUsd)}</span>
         <b class="${chgClass(week)}">${pct(week)} week</b>
         <b class="day ${chgClass(day)}">${pct(day)} today</b>
       </span>
       ${immune}${bootTag}`;
-  const fadedLabel = faded ? ` aria-label="${model} · voted out"` : "";
+  const fadedLabel = faded ? ` aria-label="${model} · ${escapeHtml(place || "voted out")}"` : "";
   return `<article class="hold-book ${s.tribeId}${hasLegs ? "" : " is-empty"}${faded ? " is-faded" : ""}">
     <button type="button" class="hold-head" aria-expanded="false"${hasLegs ? ` aria-controls="${legsId}"` : ""} ${hasLegs ? "" : "disabled "}${fadedLabel}>
       <span class="hold-rank">${pad}</span>
       <span class="hold-face">${face}</span>
       <span class="hold-id">
         <strong>${model}</strong>
-        <em>${escapeHtml(tribeName || "")}</em>
+        <em>${escapeHtml(place || tribeName || "")}</em>
       </span>
       ${mark}
     </button>
-    ${holdChips(legs)}
-    <div class="hold-legs" id="${legsId}" hidden>${legs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
+    ${holdChips(shownLegs)}
+    <div class="hold-legs" id="${legsId}" hidden>${shownLegs.map((p) => holdLegHtml(p, season, s.tribeId)).join("")}</div>
   </article>`;
 }
 
@@ -1321,8 +1365,9 @@ function tapeBarHtml(sum, maxFills) {
 }
 
 function compareTapeRows(a, b, season) {
-  const fadeA = holdBookFaded(a.survivor, season) ? 1 : 0;
-  const fadeB = holdBookFaded(b.survivor, season) ? 1 : 0;
+  const bury = !(season && Number(season.season) === 2);
+  const fadeA = bury && holdBookFaded(a.survivor, season) ? 1 : 0;
+  const fadeB = bury && holdBookFaded(b.survivor, season) ? 1 : 0;
   if (fadeA !== fadeB) return fadeA - fadeB;
   const n = b.fills.length - a.fills.length;
   if (n !== 0) return n;
@@ -1349,12 +1394,16 @@ function tradeTapeRowHtml(row, season, range, maxFills) {
     range === "season"
       ? tapeBarHtml(sum, maxFills)
       : MONEY_TICKER_WEEKDAYS.map((day) => tapeDayCellHtml(row.byDay[day.key] || [])).join("");
+  const place = season && Number(season.season) === 2 ? votedOutPlaceLabel(s) : "";
+  const tapeSub = place
+    ? place + (typeof s.bookUsd === "number" ? " · " + money(s.bookUsd) : "")
+    : tribeChromeName(tribe || s.tribeId) || "";
   const fadedClass = faded ? " is-faded" : "";
   return `<a class="tape-row ${escapeHtml(s.tribeId || "")}${fadedClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
     <span class="tape-face">${face}</span>
     <span class="tape-id">
       <strong>${model}</strong>
-      <em>${escapeHtml(tribeChromeName(tribe || s.tribeId) || "")}</em>
+      <em>${escapeHtml(tapeSub)}</em>
     </span>
     <span class="tape-count">${escapeHtml(count)}${sizeNote ? `<i>${escapeHtml(sizeNote)}</i>` : ""}${soldNote}</span>
     <span class="tape-lane${range === "season" ? " is-season" : ""}">${lane}</span>
@@ -1462,6 +1511,8 @@ function renderBooksBoard(season) {
 
 function castawayStatusLine(survivor) {
   if (!survivor) return "";
+  const place = votedOutPlaceLabel(survivor);
+  if (place) return `<p class="castaway-status is-boot-order">${escapeHtml(place)}</p>`;
   if (survivor.status === "disqualified" || survivor.disqualified) {
     const note =
       survivor.exitInterview === false && survivor.exitInterviewNote
@@ -1702,18 +1753,26 @@ function faceCardHtml(s, tribeOrNull) {
       ? LabLogos.labMarkHtml({ slug: slug, className: "face-lab-mark" })
       : "";
   const tribeClass = s.tribeId ? ` ${escapeHtml(s.tribeId)}` : "";
-  const sub = s.tribeId
-    ? escapeHtml(tribeChromeName(tribeOrNull || s.tribeId))
-    : typeof s.bookUsd === "number"
-      ? `${money(s.bookUsd)} book`
-      : escapeHtml(survivorSubtitle(s));
-  return `<a class="face-card${tribeClass}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
+  const place = votedOutPlaceLabel(s);
+  const book =
+    typeof s.bookUsd === "number" ? `${money(s.bookUsd)} book` : "";
+  const sub = place
+    ? escapeHtml(place) + (book ? ` · ${book}` : "")
+    : s.tribeId
+      ? escapeHtml(tribeChromeName(tribeOrNull || s.tribeId))
+      : book
+        ? book
+        : escapeHtml(survivorSubtitle(s));
+  const tribeStyle = place
+    ? ` style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.02em;text-transform:none"`
+    : "";
+  return `<a class="face-card${tribeClass}${place ? " is-voted-out" : ""}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
         <span class="face-photo">${face}</span>
         <span class="face-id">
           ${mark ? `<span class="face-lab">${mark}</span>` : ""}
           <h3 class="face-name">${escapeHtml(model)}</h3>
         </span>
-        <p class="face-tribe">${sub}</p>
+        <p class="face-tribe"${tribeStyle}>${sub}</p>
       </a>`;
 }
 
@@ -1722,9 +1781,7 @@ function renderFaces(season) {
   if (!grid) return;
   const tribes = season.tribes || [];
   if (!tribes.length) {
-    const members = (season.survivors || []).filter(
-      (s) => s && (s.status === "active" || s.status === "immune" || !s.status)
-    );
+    const members = (season.survivors || []).filter((s) => s);
     const cards = members.map((s) => faceCardHtml(s, null)).join("");
     grid.innerHTML = `<div class="face-tribe-block merged reveal">
       <div class="face-row">${cards}</div>
@@ -2308,8 +2365,9 @@ function paintCastawaySheet(season, parsed) {
     : "";
 
   const statusLine = castawayStatusLine(survivor);
+  const votedOutCard = votedOutPlaceLabel(survivor) ? " is-voted-out" : "";
   body.innerHTML =
-    `<div class="castaway-card">
+    `<div class="castaway-card${votedOutCard}">
       ${portrait}
       <p class="castaway-kicker">${escapeHtml(tribeName)}</p>
       <h2 id="castaway-sheet-title">${escapeHtml(model)}</h2>
@@ -2561,12 +2619,13 @@ function dayCardHtml(s, tribe, opts) {
     const sign = delta > 0 ? "+" : "";
     deltaHtml = `<span><i>Δ day</i><b class="${dClass}">${sign}${delta.toFixed(2)}</b></span>`;
   }
-  return `<article class="day-card ${s.tribeId}">
+  const place = votedOutPlaceLabel(s);
+  return `<article class="day-card ${s.tribeId || ""}${place ? " is-voted-out" : ""}">
     <div class="day-card-top">
       ${face ? `<a class="day-face" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slugOf(s))}">${face}</a>` : ""}
       <a class="day-id" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slugOf(s))}">
         <strong>${model}</strong>
-        <em>${escapeHtml(tribeLine(s, tribe))}</em>
+        <em>${escapeHtml(place || tribeLine(s, tribe))}</em>
       </a>
       ${moved}
     </div>
@@ -2969,6 +3028,8 @@ function roundMoney(n) {
 
 function survivorInIslandPotAt(season, survivor, iso) {
   if (!survivor) return false;
+  /* Season 2 holds the voted-out book through the finale. Do not subtract it. */
+  if (survivor.bookHeld === true) return true;
   const bootAt = survivorBootAtMs(season, survivor);
   if (bootAt == null) {
     return !survivor.status || survivor.status === "active" || survivor.status === "immune";
@@ -3189,6 +3250,8 @@ function survivorBootAtMs(season, survivor) {
 
 function survivorLivingAt(season, survivor, iso) {
   if (!survivor) return false;
+  /* Season 2 held books stay on the contestants diagram after tribal. */
+  if (survivor.bookHeld === true) return true;
   const bootAt = survivorBootAtMs(season, survivor);
   if (bootAt == null) {
     return !survivor.status || survivor.status === "active" || survivor.status === "immune";
@@ -4270,19 +4333,25 @@ function moneyTickerDiagramSeries(season, frames) {
       despiked.forEach((v) => {
         if (typeof v === "number") values.push(v);
       });
+      const place = s.bookHeld === true ? votedOutPlaceLabel(s) : "";
+      const name = modelOf(s);
       series.push({
         id: s.id,
-        label: modelOf(s),
-        color: s.__tickerTone || "#d4a017",
+        label: place ? name + " · " + place : name,
+        color: place ? "#9a9186" : s.__tickerTone || "#d4a017",
         values: despiked,
         seed: idx + 11,
-        width: 1.45
+        width: 1.45,
+        votedOut: Boolean(place)
       });
     });
     const scale = tickerPctScale(values, 1.2);
+    const keepsHeldBooks = (season.survivors || []).some((s) => s && s.bookHeld === true);
     return {
       title: "Contestants",
-      aria: "Contestant week % over recorded marks. Dotted line is 0%. Voted-out players drop after tribal.",
+      aria: keepsHeldBooks
+        ? "Contestant week % over recorded marks. Dotted line is 0%. Voted-out books stay on the diagram."
+        : "Contestant week % over recorded marks. Dotted line is 0%. Voted-out players drop after tribal.",
       putIn: 0,
       putInLabel: "0%",
       guides: [even],
@@ -4291,7 +4360,8 @@ function moneyTickerDiagramSeries(season, frames) {
       series,
       legend: series.map((item) => ({
         label: item.label,
-        color: item.color
+        color: item.color,
+        votedOut: item.votedOut
       })),
       liveSeries: series[0] ? series[0].id : "total",
       strokeForDot: series[0] ? series[0].color : "#e89354"
@@ -4420,7 +4490,8 @@ function renderMoneyTickerSvg(season, frames) {
         const y = moneyTickerY(series.values[idx], spec.min, spec.max, chartTop, chartHeight);
         markDot = `<circle class="money-ticker-mark-dot" data-series="${escapeHtml(series.id)}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="3" fill="${escapeHtml(series.color)}" />`;
       }
-      return `<path class="money-ticker-line" data-series="${escapeHtml(series.id)}" d="${d}" stroke="${escapeHtml(series.color)}" fill="none" stroke-width="${series.width || 1.6}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"><title>${escapeHtml(series.label)}</title></path>${markDot}`;
+      const votedClass = series.votedOut ? " is-voted-out" : "";
+      return `<path class="money-ticker-line${votedClass}" data-series="${escapeHtml(series.id)}" d="${d}" stroke="${escapeHtml(series.color)}" fill="none" stroke-width="${series.width || 1.6}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"><title>${escapeHtml(series.label)}</title></path>${markDot}`;
     })
     .join("");
 
@@ -4469,7 +4540,8 @@ function moneyTickerLegendHtml(season, frames) {
       const swatchClass = item.swatch === "dash" ? "swatch is-dash" : "swatch";
       const swatchStyle =
         item.swatch === "dash" ? `color:${escapeHtml(item.color)}` : `background:${escapeHtml(item.color)}`;
-      return `<li><span class="${swatchClass}" style="${swatchStyle}"></span>${escapeHtml(item.label)}</li>`;
+      const itemClass = item.votedOut ? ` class="is-voted-out"` : "";
+      return `<li${itemClass}><span class="${swatchClass}" style="${swatchStyle}"></span>${escapeHtml(item.label)}</li>`;
     })
     .join("");
 }

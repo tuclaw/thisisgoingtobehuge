@@ -379,7 +379,97 @@ const grok = survivors.find((s) => s && s.id === "s2-grok-4-7");
 check(grok && grok.status === "voted-out" && grok.jury === true, "Grok 4.7 must be voted-out jury");
 check(grok && grok.bookHeld === true, "Grok 4.7 book must be held until finale");
 check(grok && grok.bookUsd > 0, "Grok 4.7 bookUsd must stay marked (not boot-split to zero)");
+check(grok && grok.votedOut === true, "Grok 4.7 votedOut must be true");
+check(grok && grok.bootOrder === 1, "Grok 4.7 bootOrder must be 1 (first boot)");
 check(grok && grok.votedOutEpisode === "s2e01", "Grok votedOutEpisode must be s2e01");
+check(
+  grok && String(grok.votedOutAt || "").startsWith("2026-10-09"),
+  "Grok votedOutAt must be Fri Oct 9 2026"
+);
+
+const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
+check(stylesCss.includes(".s2-row.is-voted-out"), "standings fade a voted-out row");
+check(stylesCss.includes(".face-card.is-voted-out"), "Meet the Contestants fades a voted-out card");
+check(stylesCss.includes(".money-ticker-line.is-voted-out"), "contestants diagram fades a voted-out line");
+check(/\.is-voted-out[\s\S]{0,220}grayscale\(1\)/.test(stylesCss), "voted-out treatment is greyscale");
+check(appJs.includes('return "Voted out · " + bootOrdinal(n);'), "voted-out label is Voted out · ordinal");
+check(
+  appJs.includes("const members = (season.survivors || []).filter((s) => s);"),
+  "Meet the Contestants keeps voted-out players on the grid"
+);
+check(appJs.includes("survivor.bookHeld === true"), "held books stay in the island total and contestants diagram");
+
+const ordStart = appJs.indexOf("function bootOrdinal");
+const ordEnd = appJs.indexOf("function episodePctOf");
+check(ordStart > -1 && ordEnd > ordStart, "bootOrdinal must sit ahead of episodePctOf");
+if (ordStart > -1 && ordEnd > ordStart) {
+  const labels = new Function(`${appJs.slice(ordStart, ordEnd)}\nreturn { bootOrdinal, votedOutPlaceLabel };`)();
+  check(
+    labels.votedOutPlaceLabel({ votedOut: true, status: "voted-out", bootOrder: 1 }) === "Voted out · 1st",
+    "boot 1 must read Voted out · 1st"
+  );
+  check(labels.bootOrdinal(2) === "2nd" && labels.bootOrdinal(3) === "3rd", "later boots use 2nd and 3rd");
+  check(labels.bootOrdinal(11) === "11th" && labels.bootOrdinal(12) === "12th", "teen ordinals stay th");
+  check(
+    labels.votedOutPlaceLabel({ status: "active" }) === "",
+    "living players must not get a voted-out label"
+  );
+}
+
+const potStart = appJs.indexOf("function survivorInIslandPotAt");
+const potEnd = appJs.indexOf("function pacificDayLabel");
+check(potStart > -1 && potEnd > potStart, "snapshotTotal must stay with survivorInIslandPotAt");
+if (potStart > -1 && potEnd > potStart) {
+  const potHelpers = new Function(`
+    function tickerPlotAt(snap) { return (snap && (snap.throughAt || snap.at)) || ""; }
+    function roundMoney(n) { return Math.round(n * 10000) / 10000; }
+    function survivorBootAtMs(season, survivor) {
+      const log = (season && season.tribalLog) || [];
+      const hit = log.find((entry) => entry && (entry.bootId === survivor.id || entry.bootName === survivor.name));
+      return hit && hit.at ? Date.parse(hit.at) : null;
+    }
+    ${appJs.slice(potStart, potEnd)}
+    return { snapshotTotal };
+  `)();
+  const liveSnap = (Array.isArray(data.snapshots) ? data.snapshots : []).find(
+    (snap) => snap && snap.id === "s2e01-fri-eod-rth"
+  );
+  if (!liveSnap || !liveSnap.books) {
+    check(false, "s2e01-fri-eod-rth must exist for the island-total check");
+  } else {
+    const full = Object.values(liveSnap.books).reduce((acc, book) => {
+      return book && typeof book.bookUsd === "number" ? acc + book.bookUsd : acc;
+    }, 0);
+    const got = potHelpers.snapshotTotal(liveSnap, data);
+    const rounded = Math.round(full * 10000) / 10000;
+    check(
+      Math.abs(got - rounded) < 0.00015,
+      `island total must keep the voted-out book (got ${got}, full ${rounded})`
+    );
+    const grokBook = liveSnap.books["s2-grok-4-7"];
+    const without = rounded - (grokBook && grokBook.bookUsd ? grokBook.bookUsd : 0);
+    check(got > without + 1, "island total must not subtract Grok 4.7 after tribal");
+  }
+}
+
+const livingStart = appJs.indexOf("function survivorLivingAt");
+const livingEnd = appJs.indexOf("function tickerAxisPct");
+check(livingStart > -1 && livingEnd > livingStart, "survivorLivingAt must stay ahead of tickerAxisPct");
+if (livingStart > -1 && livingEnd > livingStart) {
+  const livingAt = new Function(`
+    function survivorBootAtMs() { return Date.parse("2026-10-09T21:29:00Z"); }
+    ${appJs.slice(livingStart, livingEnd)}
+    return survivorLivingAt;
+  `)();
+  check(
+    livingAt(data, grok, "2026-10-10T16:00:00Z") === true,
+    "Grok 4.7 stays on the contestants diagram after tribal"
+  );
+  check(
+    livingAt(data, { id: "s1-boot", status: "jury" }, "2026-10-10T16:00:00Z") === false,
+    "a boot without a held book still drops off the diagram after tribal"
+  );
+}
 
 const log = Array.isArray(data.tribalLog) ? data.tribalLog : [];
 const tribal = log.find((row) => row && row.episode === "s2e01");

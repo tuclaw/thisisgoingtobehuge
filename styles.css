@@ -8421,3 +8421,26 @@ body.castaway-sheet-open {
     animation: none;
   }
 }
+
+/* Season 2 voted-out players stay on the board. Fade the row; keep the book. */
+.face-card.is-voted-out,
+.s2-row.is-voted-out,
+.day-card.is-voted-out,
+.castaway-card.is-voted-out,
+.money-ticker-legend li.is-voted-out {
+  opacity: 0.55;
+  filter: grayscale(1);
+}
+
+.money-ticker-line.is-voted-out {
+  opacity: 0.42;
+  filter: grayscale(1);
+}
+
+.face-card.is-voted-out .face-tribe,
+.castaway-status.is-boot-order {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
