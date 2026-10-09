@@ -1763,13 +1763,16 @@ function faceCardHtml(s, tribeOrNull) {
       : book
         ? book
         : escapeHtml(survivorSubtitle(s));
+  const tribeStyle = place
+    ? ` style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.02em;text-transform:none"`
+    : "";
   return `<a class="face-card${tribeClass}${place ? " is-voted-out" : ""}" href="${escapeHtml(survivorHref(s))}" data-castaway="${escapeHtml(slug)}">
         <span class="face-photo">${face}</span>
         <span class="face-id">
           ${mark ? `<span class="face-lab">${mark}</span>` : ""}
           <h3 class="face-name">${escapeHtml(model)}</h3>
         </span>
-        <p class="face-tribe">${sub}</p>
+        <p class="face-tribe"${tribeStyle}>${sub}</p>
       </a>`;
 }
 
