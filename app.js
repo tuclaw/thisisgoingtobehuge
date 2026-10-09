@@ -1054,8 +1054,10 @@ function holdBookFaded(s, season) {
 }
 
 function compareHoldBooks(a, b, season) {
-  const fadeA = holdBookFaded(a, season) ? 1 : 0;
-  const fadeB = holdBookFaded(b, season) ? 1 : 0;
+  /* Season 2 held books stay in the week-% rank. Season 1 fades sort last. */
+  const bury = !(season && Number(season.season) === 2);
+  const fadeA = bury && holdBookFaded(a, season) ? 1 : 0;
+  const fadeB = bury && holdBookFaded(b, season) ? 1 : 0;
   if (fadeA !== fadeB) return fadeA - fadeB;
   const w = weekPctOf(b) - weekPctOf(a);
   if (w !== 0) return w;
@@ -1363,8 +1365,9 @@ function tapeBarHtml(sum, maxFills) {
 }
 
 function compareTapeRows(a, b, season) {
-  const fadeA = holdBookFaded(a.survivor, season) ? 1 : 0;
-  const fadeB = holdBookFaded(b.survivor, season) ? 1 : 0;
+  const bury = !(season && Number(season.season) === 2);
+  const fadeA = bury && holdBookFaded(a.survivor, season) ? 1 : 0;
+  const fadeB = bury && holdBookFaded(b.survivor, season) ? 1 : 0;
   if (fadeA !== fadeB) return fadeA - fadeB;
   const n = b.fills.length - a.fills.length;
   if (n !== 0) return n;

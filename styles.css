@@ -8439,6 +8439,8 @@ body.castaway-sheet-open {
 
 .face-card.is-voted-out .face-tribe,
 .castaway-status.is-boot-order {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
   text-transform: none;
-  letter-spacing: 0.04em;
 }
