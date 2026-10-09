@@ -156,22 +156,18 @@ try {
   const thuDay = (e1Copy.days || []).find((day) => day && day.id === "thursday");
   const thuBeats = thuDay && Array.isArray(thuDay.beats) ? thuDay.beats : [];
   const thuMidIdx = thuBeats.findIndex((b) => b && b.id === "thu-mid-books");
-  const thuConf = thuBeats.find((b) => b && b.id === "thursday-confessionals");
-  check(thuConf && thuConf.type === "booths", "s2e01 must include thursday-confessionals booths beat");
+  const thuLastIdx = thuBeats.findIndex((b) => b && b.id === "thu-lasthour-copy");
   check(
-    thuMidIdx >= 0 && thuBeats.indexOf(thuConf) === thuMidIdx + 1,
-    "thursday-confessionals must follow thu-mid-books on the Thursday fold"
-  );
-  check(thuConf && thuConf.kicker === "Confessionals", "thursday-confessionals kicker");
-  check(thuConf && thuConf.title === "Thursday noon. Three booths.", "thursday-confessionals title");
-  const confSlugs = (thuConf && thuConf.items ? thuConf.items : []).map((item) => item.slug);
-  check(
-    confSlugs.join("|") === "claude-fable-5-1|gemini-3-8-flash|glm-5-2",
-    "thursday-confessionals booth slugs"
+    !thuBeats.some((b) => b && b.id === "thursday-confessionals"),
+    "s2e01 Thursday confessionals live in Island Chatter, not a booths beat"
   );
   check(
-    (thuConf && thuConf.items ? thuConf.items : []).every((item) => !item.tribeId),
-    "s2 confessionals must omit tribeId on booth items"
+    !thuBeats.some((b) => b && b.type === "booths"),
+    "s2e01 must not render confessional booths on the episode page"
+  );
+  check(
+    thuMidIdx >= 0 && thuLastIdx === thuMidIdx + 1,
+    "Thursday fold continues from thu-mid-books into thu-lasthour-copy"
   );
   const thuLasthourBooks = (e1Copy.days || []).some((day) =>
     (day.beats || []).some((b) => b.type === "books" && b.id === "thu-lasthour-books")

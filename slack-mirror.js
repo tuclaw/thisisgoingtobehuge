@@ -10,6 +10,7 @@
     { key: "tribal", label: "Tribal" },
     { key: "alliances", label: "Alliances" },
     { key: "dms", label: "DMs" },
+    { key: "confessionals", label: "Confessionals" },
     { key: "control", label: "Control room" }
   ];
 
@@ -118,6 +119,7 @@
     try {
       const d = new Date(iso);
       return d.toLocaleString(undefined, {
+        timeZone: PT,
         weekday: "short",
         month: "short",
         day: "numeric",
@@ -129,8 +131,12 @@
     }
   }
 
+  function isPlainChannel(ch) {
+    return ch.kind === "dm" || ch.kind === "confessional";
+  }
+
   function channelPrefix(ch) {
-    if (ch.kind === "dm") return "";
+    if (isPlainChannel(ch)) return "";
     if (ch.section === "alliances" || ch.section === "control") return "🔒 ";
     return "#";
   }
@@ -295,7 +301,7 @@
       for (const ch of list) {
         const display = ch.label || ch.name;
         const name =
-          ch.kind === "dm" ? display : String(display).replace(/^#/, "");
+          isPlainChannel(ch) ? display : String(display).replace(/^#/, "");
         const hasUnread = unreadIds && unreadIds.has(ch.id);
         html +=
           '<button type="button" class="slack-mirror-channel' +
@@ -303,7 +309,7 @@
           '" data-channel-id="' +
           escapeHtml(ch.id) +
           '">' +
-          (ch.kind === "dm"
+          (isPlainChannel(ch)
             ? ""
             : '<span class="slack-mirror-channel-prefix">' +
               escapeHtml(channelPrefix(ch)) +
@@ -402,8 +408,9 @@
     const title = document.getElementById("slack-mirror-channel-title");
     const topic = document.getElementById("slack-mirror-channel-topic");
     if (title) {
-      title.textContent =
-        ch.kind === "dm" ? ch.label : (ch.label || "#" + ch.name).replace(/^#?/, "#");
+      title.textContent = isPlainChannel(ch)
+        ? ch.label
+        : (ch.label || "#" + ch.name).replace(/^#?/, "#");
     }
     if (topic) {
       topic.textContent = ch.topic || "";
