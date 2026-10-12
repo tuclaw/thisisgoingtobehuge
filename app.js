@@ -334,9 +334,35 @@ function votedOutPlaceLabel(s) {
   return "Voted out · " + bootOrdinal(n);
 }
 
+function survivorIsVotedOut(s) {
+  if (!s) return false;
+  if (s.votedOut === true) return true;
+  const status = s.status;
+  return status === "voted-out" || status === "jury" || status === "boot";
+}
+
+/* Voted-out books stay on the island. They have no episode % to rank. */
 function episodePctOf(s) {
+  if (survivorIsVotedOut(s)) return null;
   if (s && typeof s.episodePct === "number" && !Number.isNaN(s.episodePct)) return s.episodePct;
   return weekPctOf(s);
+}
+
+function compareSeason2Standings(a, b) {
+  const aOut = survivorIsVotedOut(a);
+  const bOut = survivorIsVotedOut(b);
+  if (aOut !== bOut) return aOut ? 1 : -1;
+  if (aOut) {
+    const ao = survivorBootOrder(a) || 9999;
+    const bo = survivorBootOrder(b) || 9999;
+    if (ao !== bo) return ao - bo;
+  }
+  const ea = episodePctOf(a);
+  const eb = episodePctOf(b);
+  const na = typeof ea === "number" && !Number.isNaN(ea) ? ea : -Infinity;
+  const nb = typeof eb === "number" && !Number.isNaN(eb) ? eb : -Infinity;
+  if (nb !== na) return nb - na;
+  return (Number(b && b.bookUsd) || 0) - (Number(a && a.bookUsd) || 0);
 }
 
 function survivorEpisodeBookSeries(season, s) {
@@ -554,8 +580,10 @@ function s2PerformanceRowHtml(s, season, index, groups) {
   const series = survivorEpisodeBookSeries(season, s);
   const trend = sparkTrendClass(series);
   const book = typeof s.bookUsd === "number" ? s.bookUsd : season.startingBookUsd || 200;
+  const votedOut = survivorIsVotedOut(s);
   const epPct = episodePctOf(s);
-  const pillClass = chgClass(epPct);
+  const epLabel = votedOut ? "—" : pct(epPct);
+  const pillClass = votedOut ? "flat" : chgClass(epPct);
   const name = modelOf(s);
   const place = Number(season && season.season) === 2 ? votedOutPlaceLabel(s) : "";
   const detailId = "s2-detail-" + String(s.id || index).replace(/[^a-z0-9_-]/gi, "");
@@ -564,8 +592,8 @@ function s2PerformanceRowHtml(s, season, index, groups) {
     : `<span class="s2-face"><span class="s2-mono">${escapeHtml(s.monogram || name.slice(0, 1) || "?")}</span></span>`;
   const sub = place || survivorSubtitle(s);
   const aria = place
-    ? `${name}, ${place}, ${pct(epPct)}. Show holdings and fills`
-    : `${name}, ${pct(epPct)}. Show holdings and fills`;
+    ? `${name}, ${place}. Show holdings and fills`
+    : `${name}, ${epLabel}. Show holdings and fills`;
   return `<div class="s2-row${place ? " is-voted-out" : ""}" style="--i:${index}" data-show-more-item>
     <button type="button" class="s2-row-toggle" aria-expanded="false" aria-controls="${escapeHtml(detailId)}" aria-label="${escapeHtml(aria)}">
       <span class="s2-id">
@@ -578,7 +606,7 @@ function s2PerformanceRowHtml(s, season, index, groups) {
       <span class="s2-spark-wrap">${sparklineSvg(series, trend)}</span>
       <span class="s2-pill ${pillClass}">
         <span class="s2-pill-book">${money(book)}</span>
-        <span class="s2-pill-pct">${pct(epPct)}</span>
+        <span class="s2-pill-pct">${epLabel}</span>
       </span>
     </button>
     <div class="s2-detail" id="${escapeHtml(detailId)}" hidden>
@@ -774,11 +802,7 @@ function renderSeason2Performance(season) {
     kicker.textContent = `Ten independent $${start} books · $${given.toLocaleString("en-US")} on the island.`;
   }
   const groups = groupSnapshotFills(deriveSnapshotFills(season));
-  const ranked = [...(season.survivors || [])].sort((a, b) => {
-    const ep = episodePctOf(b) - episodePctOf(a);
-    if (ep !== 0) return ep;
-    return (b.bookUsd || 0) - (a.bookUsd || 0);
-  });
+  const ranked = [...(season.survivors || [])].sort(compareSeason2Standings);
   root.innerHTML = ranked.map((s, i) => s2PerformanceRowHtml(s, season, i, groups)).join("");
   bindS2Rows(root);
   renderSeason2Trades(season, groups);
@@ -878,6 +902,10 @@ const TICKER_NAMES = {
   TSLA: "Tesla",
   SMCI: "Super Micro Computer",
   SOXL: "Direxion Daily Semiconductor Bull 3X",
+  SOXS: "Direxion Daily Semiconductor Bear 3X",
+  FAS: "Direxion Daily Financial Bull 3X",
+  XLE: "Energy Select Sector SPDR",
+  XLF: "Financial Select Sector SPDR",
   QID: "ProShares UltraShort QQQ",
   BTAL: "AGF U.S. Market Neutral Anti-Beta",
   WM: "Waste Management",
@@ -2951,6 +2979,22 @@ function tickerPlotAt(snap) {
   return snap.throughAt || snap.at || "";
 }
 
+/* Real mark clock. throughAt is the session day; at is when the mark printed. */
+function tickerMarkAt(snap) {
+  if (!snap) return "";
+  return snap.at || snap.asOf || "";
+}
+
+/* open < mid < lasthour < eod. Null when the id is not an intraday phase. */
+function tickerIntradayPhase(snap) {
+  const id = String((snap && snap.id) || "").toLowerCase();
+  if (/(?:^|-)open(?:-|$)/.test(id)) return 0;
+  if (/(?:^|-)mid(?:-|$)/.test(id)) return 1;
+  if (/(?:^|-)lasthour(?:-|$)/.test(id)) return 2;
+  if (/(?:^|-)eod(?:-|$)/.test(id)) return 3;
+  return null;
+}
+
 function sortSnapshotsForTicker(snaps) {
   return (snaps || []).slice().sort((a, b) => {
     const ta = Date.parse(tickerPlotAt(a));
@@ -2958,6 +3002,14 @@ function sortSnapshotsForTicker(snaps) {
     const na = Number.isNaN(ta) ? 0 : ta;
     const nb = Number.isNaN(tb) ? 0 : tb;
     if (na !== nb) return na - nb;
+    const ma = Date.parse(tickerMarkAt(a));
+    const mb = Date.parse(tickerMarkAt(b));
+    const markA = Number.isNaN(ma) ? null : ma;
+    const markB = Number.isNaN(mb) ? null : mb;
+    if (markA != null && markB != null && markA !== markB) return markA - markB;
+    const phaseA = tickerIntradayPhase(a);
+    const phaseB = tickerIntradayPhase(b);
+    if (phaseA != null && phaseB != null && phaseA !== phaseB) return phaseA - phaseB;
     return String((a && a.id) || "").localeCompare(String((b && b.id) || ""));
   });
 }
@@ -3279,6 +3331,40 @@ function islandSeasonPct(cash, putIn) {
   return roundMoney(((cash - putIn) / putIn) * 100);
 }
 
+/*
+  Several Season 2 marks share one end-of-day throughAt, so they land on the
+  same session x. When that happens, walk them by the real mark clock instead
+  of stacking the whole day on the close. A lone mark stays on throughAt.
+*/
+function spreadSharedPlotMarks(list) {
+  const frames = list || [];
+  let i = 0;
+  while (i < frames.length) {
+    const plot = tickerPlotAt(frames[i]);
+    let j = i + 1;
+    while (j < frames.length && tickerPlotAt(frames[j]) === plot) j += 1;
+    if (j - i > 1) {
+      const plotDay = pacificDateParts(plot);
+      const marks = [];
+      for (let k = i; k < j; k += 1) {
+        const mark = frames[k] && frames[k].markAt;
+        const markDay = pacificDateParts(mark);
+        const ms = mark && plotDay && markDay && plotDay.key === markDay.key ? Date.parse(mark) : NaN;
+        marks.push(Number.isNaN(ms) ? null : ms);
+      }
+      const distinct = marks.every((ms) => ms != null) && new Set(marks).size > 1;
+      if (distinct) {
+        for (let k = i; k < j; k += 1) {
+          const u = Math.min(0.98, Math.max(0.02, pacificSessionU(frames[k].markAt)));
+          const slot = typeof frames[k].daySlot === "number" ? frames[k].daySlot : 0;
+          frames[k].axisT = slot + u;
+        }
+      }
+    }
+    i = j;
+  }
+}
+
 function moneyTickerAssignAxis(frames, range) {
   const list = frames || [];
   const mode = range || (moneyTicker && moneyTicker.range) || "week";
@@ -3297,6 +3383,7 @@ function moneyTickerAssignAxis(frames, range) {
       frame.daySlot = slot;
       frame.axisT = slot + u;
     });
+    spreadSharedPlotMarks(list);
     return;
   }
 
@@ -3316,6 +3403,7 @@ function moneyTickerAssignAxis(frames, range) {
     frame.axisT = slot + u;
   });
   moneyTicker.axisMax = Math.max(1, nextSlot);
+  spreadSharedPlotMarks(list);
 }
 
 function moneyTickerAxisTAt(t, frames) {
@@ -3412,6 +3500,11 @@ function pacificHourDecimal(dateOrIso) {
   }
 }
 
+function tickerFrameClock(frame) {
+  if (!frame) return "";
+  return frame.markAt || frame.at || "";
+}
+
 function moneyTickerPlayheadDate(progress) {
   const frames = moneyTicker.frames;
   if (!frames.length) return null;
@@ -3420,8 +3513,8 @@ function moneyTickerPlayheadDate(progress) {
   const i0 = Math.floor(t);
   const i1 = Math.min(max, i0 + 1);
   const u = t - i0;
-  const t0 = Date.parse(frames[i0].at);
-  const t1 = Date.parse(frames[i1].at);
+  const t0 = Date.parse(tickerFrameClock(frames[i0]));
+  const t1 = Date.parse(tickerFrameClock(frames[i1]));
   if (Number.isNaN(t0)) return null;
   if (Number.isNaN(t1) || i0 === i1) return new Date(t0);
   return new Date(lerp(t0, t1, u));
@@ -3709,6 +3802,7 @@ function framesFromSnapshots(season, snaps, range) {
       const frame = {
         id: snap.id,
         at: plotAt || snap.at,
+        markAt: snap.at || "",
         throughAt: snap.throughAt,
         label: snap.label || pacificDayLabel(plotAt || snap.at),
         books,
@@ -4042,12 +4136,12 @@ function setMoneyTickerProgress(next, opts) {
   const stamp = moneyTicker.root && moneyTicker.root.querySelector("[data-ticker-stamp]");
   if (stamp) {
     let when = "";
-    const t0 = Date.parse(a.at);
-    const t1 = Date.parse(b.at);
+    const t0 = Date.parse(tickerFrameClock(a));
+    const t1 = Date.parse(tickerFrameClock(b));
     if (!Number.isNaN(t0) && !Number.isNaN(t1)) {
       when = pacificDayLabel(new Date(lerp(t0, t1, u)).toISOString());
     } else {
-      when = pacificDayLabel(u < 0.5 ? a.at : b.at) || (u < 0.5 ? a.label : b.label) || "";
+      when = pacificDayLabel(u < 0.5 ? tickerFrameClock(a) : tickerFrameClock(b)) || (u < 0.5 ? a.label : b.label) || "";
     }
     stamp.textContent = when ? `Playhead · ${when}` : "";
   }
