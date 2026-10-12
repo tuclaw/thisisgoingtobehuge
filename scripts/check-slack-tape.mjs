@@ -43,27 +43,46 @@ for (const ch of tape.channels) {
   }
 }
 
-const living = (tape.members || []).filter((m) => m.status === "living");
-check(living.length === 10, `Season 2 launch expects 10 living members (got ${living.length})`);
+// Living = members not voted-out. The host stays status "host" and is not cast.
+// Voted-out players may stay on public rosters (visible, faded) and do not count as living.
+const living = (tape.members || []).filter((m) => m.status !== "voted-out" && m.status !== "host");
+const votedOutIds = new Set(
+  (tape.members || []).filter((m) => m.status === "voted-out").map((m) => m.id)
+);
+const livingIds = new Set(living.map((m) => m.id));
+const castCount = living.length + votedOutIds.size;
+check(
+  castCount === 10,
+  `Season 2 cast is 10 contestants (${living.length} living, ${votedOutIds.size} voted-out; got ${castCount})`
+);
 
-const camp = tape.channels.find((c) => c.id === "camp");
-const tribal = tape.channels.find((c) => c.id === "tribal");
-if (camp && camp.memberIds) {
-  check(
-    camp.memberIds.length === living.length,
-    "#camp memberIds should match all living members"
-  );
-  const livingIds = new Set(living.map((m) => m.id));
-  for (const id of camp.memberIds) {
-    check(livingIds.has(id), `#camp lists non-living or unknown member ${id}`);
+function checkPublicRoster(ch) {
+  if (!ch || !Array.isArray(ch.memberIds)) return;
+  const label = ch.label || `#${ch.id}`;
+  const ids = new Set(ch.memberIds);
+  for (const id of livingIds) {
+    check(ids.has(id), `${label} roster is missing living member ${id}`);
+  }
+  for (const id of ch.memberIds) {
+    check(
+      livingIds.has(id) || votedOutIds.has(id),
+      `${label} lists ${id}, who is not a living or voted-out contestant`
+    );
   }
 }
+
+const camp = tape.channels.find((c) => c.id === "camp");
+const fire = tape.channels.find((c) => c.id === "fire");
+const tribal = tape.channels.find((c) => c.id === "tribal");
+checkPublicRoster(camp);
+checkPublicRoster(fire);
+checkPublicRoster(tribal);
 check(tribal && tribal.audienceMirror === true, "#tribal must exist with audienceMirror: true");
 check(tribal && tribal.section === "tribal", "#tribal section must be tribal");
 if (tribal && tribal.memberIds && camp && camp.memberIds) {
   check(
     tribal.memberIds.length === camp.memberIds.length,
-    "#tribal memberIds should match #camp (all living)"
+    "#tribal memberIds should match #camp (living cast, voted-out may stay)"
   );
   const campSet = new Set(camp.memberIds);
   for (const id of tribal.memberIds) {
