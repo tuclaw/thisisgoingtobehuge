@@ -40,7 +40,7 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
       "label": "#camp",
       "slackChannelId": "C0…",    // optional; real Slack channel id for ingest
       "topic": "optional",
-      "memberIds": ["…"],         // all living cast in #camp (10 at Season 2 launch)
+      "memberIds": ["…"],         // public channels list the cast; voted-out may stay and do not count as living
       "audienceMirror": true      // false = host/producer; hidden unless includeControlRoom
     }
   ],
@@ -62,7 +62,7 @@ Build copies `data/slack-tape/` to `dist/data/slack-tape/` unchanged.
 
 | `section` | UI group | Notes |
 |-----------|----------|--------|
-| `camp` | Camp | All living contestants (`#camp`) |
+| `camp` | Camp | Cast on `#camp`. Voted-out players stay on the roster and do not count as living. |
 | `fire` | Fire | Dinner fire window (`#fire`) |
 | `tribal` | Tribal | Tribal council nights (`#tribal`; votes / parchment / exits) |
 | `alliances` | Alliances | Private multi-person rooms |
