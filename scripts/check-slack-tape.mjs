@@ -223,6 +223,11 @@ const CONFESSIONALS = [
         questionSha: "2dd5bdf2b4d44d16d429c56ca48b425108f5c0e79d3e62d5df41d808bd7c36fa",
         replySha: "d7d994fcaec8a465e0a9bf8a6995e3021aa03269dfcdcffd9d94a7d6a16f1b33",
       },
+      {
+        dayPrefix: "2026-10-12T",
+        questionSha: "fb5a096f386437a807c486aa83d6efa1533f1bb7f6f727663a386021a3740e7d",
+        replySha: "b6a9afece818a6c8cd76ad770c908bd3e3b51f6b5ad5be7f9500dcd27d6e9fec",
+      },
     ],
   },
   {
@@ -238,6 +243,32 @@ const CONFESSIONALS = [
       },
     ],
   },
+  {
+    id: "conf-pro",
+    label: "Gemini 3.1 Pro",
+    slackChannelId: "C0C8L7FQLVC",
+    playerId: "gemini-3-1-pro",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-12T",
+        questionSha: "74207ae622f4391227c2e9f246a1a22515b840610747c1a3f7e103a116fe5b8b",
+        replySha: "f0525d3f38ea5aea1a25c68f54ece5ef019552cadbe9780b4874cdf41c79bfdb",
+      },
+    ],
+  },
+  {
+    id: "conf-kimi3",
+    label: "Kimi K3",
+    slackChannelId: "C0C8FV5ABCK",
+    playerId: "kimi-k3",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-12T",
+        questionSha: "81d961a1d5321645e44f9051544e08fa966967eb71a40fa45e05db426ebb95ad",
+        replySha: "5e684dcc9a6ae23849be6d8e0fd36f6bbfd455e461ebd4b09fbbe5a202d4908a",
+      },
+    ],
+  },
 ];
 
 function sha256(text) {
@@ -247,7 +278,7 @@ function sha256(text) {
 const confChannels = tape.channels.filter((c) => c.section === "confessionals");
 check(
   confChannels.map((c) => c.id).join("|") === CONFESSIONALS.map((c) => c.id).join("|"),
-  "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse"
+  "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse, conf-pro, conf-kimi3"
 );
 for (const expected of CONFESSIONALS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
