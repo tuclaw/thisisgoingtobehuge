@@ -416,6 +416,45 @@ if (ordStart > -1 && ordEnd > ordStart) {
   );
 }
 
+const standStart = appJs.indexOf("function survivorBootOrder");
+const standEnd = appJs.indexOf("function survivorEpisodeBookSeries");
+check(standStart > -1 && standEnd > standStart, "episodePctOf must sit with the voted-out standings sort");
+if (standStart > -1 && standEnd > standStart) {
+  const standings = new Function(`
+    function weekPctOf(obj) {
+      if (obj && typeof obj.weekPct === "number" && !Number.isNaN(obj.weekPct)) return obj.weekPct;
+      return 0;
+    }
+    ${appJs.slice(standStart, standEnd)}
+    return { episodePctOf, compareSeason2Standings, survivorIsVotedOut };
+  `)();
+  check(standings.episodePctOf({ votedOut: true, episodePct: -0.1041, weekPct: -0.1041 }) == null, "voted-out episode % is blank");
+  check(
+    standings.episodePctOf({ status: "voted-out", bootOrder: 1, episodePct: 4 }) == null,
+    "a voted-out status has no episode %"
+  );
+  check(standings.episodePctOf({ status: "active", episodePct: 1.25 }) === 1.25, "living episode % stays on the pill");
+  check(
+    /const epLabel = votedOut \? "—" : pct\(epPct\)/.test(appJs),
+    "voted-out standings print an em dash for episode %"
+  );
+  const rows = [
+    { id: "boot2", votedOut: true, bootOrder: 2, episodePct: 9, bookUsd: 220 },
+    { id: "leader", status: "active", episodePct: 1.2, bookUsd: 202 },
+    { id: "boot1", votedOut: true, status: "voted-out", bootOrder: 1, episodePct: 5, bookUsd: 200 },
+    { id: "lag", status: "active", episodePct: -0.4, bookUsd: 198 },
+    { id: "tie", status: "active", episodePct: 1.2, bookUsd: 201 }
+  ].sort(standings.compareSeason2Standings);
+  check(
+    rows.map((row) => row.id).join(",") === "leader,tie,lag,boot1,boot2",
+    "voted-out rows sit below living players in boot order, got " + rows.map((row) => row.id).join(",")
+  );
+}
+check(appJs.includes('FAS: "Direxion Daily Financial Bull 3X"'), "FAS ticker name is Direxion Daily Financial Bull 3X");
+check(appJs.includes('XLE: "Energy Select Sector SPDR"'), "XLE ticker name is Energy Select Sector SPDR");
+check(appJs.includes('XLF: "Financial Select Sector SPDR"'), "XLF ticker name is Financial Select Sector SPDR");
+check(appJs.includes('SOXS: "Direxion Daily Semiconductor Bear 3X"'), "SOXS ticker name is Direxion Daily Semiconductor Bear 3X");
+
 const potStart = appJs.indexOf("function survivorInIslandPotAt");
 const potEnd = appJs.indexOf("function pacificDayLabel");
 check(potStart > -1 && potEnd > potStart, "snapshotTotal must stay with survivorInIslandPotAt");

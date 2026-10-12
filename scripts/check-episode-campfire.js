@@ -548,6 +548,25 @@ if (!(mondaySlots[0] < mondaySlots[1] && mondaySlots[1] < mondaySlots[2] && mond
 if (axisHelpers.axisMax() !== 5) {
   throw new Error("Week axisMax should stay 5 weekday slots, got " + axisHelpers.axisMax());
 }
+const tiedMonday = [
+  { id: "s2e02-mon-open", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z", markAt: "2026-10-12T13:55:34Z" },
+  { id: "s2e02-mon-mid", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z", markAt: "2026-10-12T17:08:40Z" },
+  { id: "s2e02-mon-lasthour", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z", markAt: "2026-10-12T19:13:06Z" },
+  { id: "s2e02-mon-eod-rth", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z", markAt: "2026-10-12T20:28:38Z" }
+];
+axisHelpers.moneyTickerAssignAxis(tiedMonday, "week");
+const tiedAxis = tiedMonday.map((frame) => frame.axisT);
+if (!(tiedAxis[0] < tiedAxis[1] && tiedAxis[1] < tiedAxis[2] && tiedAxis[2] < tiedAxis[3])) {
+  throw new Error("shared throughAt frames must travel by mark time, got " + tiedAxis.join(","));
+}
+if (tiedMonday.some((frame) => frame.daySlot !== 0 || frame.axisT >= 1.0001)) {
+  throw new Error("Monday shared throughAt frames must stay inside Monday, got " + tiedAxis.join(","));
+}
+const loneClose = [{ at: "2026-08-24T16:06:00Z", throughAt: "2026-08-24T23:59:59Z", markAt: "2026-08-24T16:06:00Z" }];
+axisHelpers.moneyTickerAssignAxis(loneClose, "week");
+if (!(loneClose[0].axisT > 0.9)) {
+  throw new Error("a lone throughAt mark must stay on its plot time, got " + loneClose[0].axisT);
+}
 const mondaySpan =
   axisHelpers.moneyTickerXFromAxisT(mondayTape[3].axisT) - axisHelpers.moneyTickerXFromAxisT(mondayTape[0].axisT);
 if (mondaySpan > 160) {
@@ -948,6 +967,31 @@ const sortedTue = plotHelpers.sortSnapshotsForTicker([
 ]).map((snap) => snap.id);
 if (sortedTue.join("|") !== "s1e03-tue-mid|s1e03-tue-lasthour|s1e03-tue-open") {
   throw new Error("Tuesday marks must sort in clock order, got " + sortedTue.join("|"));
+}
+const sortedMon = plotHelpers.sortSnapshotsForTicker([
+  { id: "s2e02-mon-eod-rth", at: "2026-10-12T20:28:38Z", throughAt: "2026-10-12T23:59:59Z" },
+  { id: "s2e02-mon-lasthour", at: "2026-10-12T19:13:06Z", throughAt: "2026-10-12T23:59:59Z" },
+  { id: "s2e02-mon-open", at: "2026-10-12T13:55:34Z", throughAt: "2026-10-12T23:59:59Z" },
+  { id: "s2e02-mon-mid", at: "2026-10-12T17:08:40Z", throughAt: "2026-10-12T23:59:59Z" }
+]).map((snap) => snap.id);
+if (sortedMon.join("|") !== "s2e02-mon-open|s2e02-mon-mid|s2e02-mon-lasthour|s2e02-mon-eod-rth") {
+  throw new Error("Monday frames that share throughAt must play by mark time, got " + sortedMon.join("|"));
+}
+const sortedPhase = plotHelpers.sortSnapshotsForTicker([
+  { id: "s2e02-mon-eod-rth", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z" },
+  { id: "s2e02-mon-lasthour", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z" },
+  { id: "s2e02-mon-mid", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z" },
+  { id: "s2e02-mon-open", at: "2026-10-12T23:59:59Z", throughAt: "2026-10-12T23:59:59Z" }
+]).map((snap) => snap.id);
+if (sortedPhase.join("|") !== "s2e02-mon-open|s2e02-mon-mid|s2e02-mon-lasthour|s2e02-mon-eod-rth") {
+  throw new Error("tied mark clocks must fall back to open < mid < lasthour < eod, got " + sortedPhase.join("|"));
+}
+const sortedSip = plotHelpers.sortSnapshotsForTicker([
+  { id: "day-open", at: "2026-09-08T13:00:00Z", throughAt: "2026-09-08T23:59:59Z" },
+  { id: "late-sip", at: "2026-09-09T02:15:00Z", throughAt: "2026-09-08T20:00:00Z" }
+]).map((snap) => snap.id);
+if (sortedSip.join("|") !== "late-sip|day-open") {
+  throw new Error("distinct throughAt must still beat the raw mark clock, got " + sortedSip.join("|"));
 }
 
 const potStart = appJs.indexOf("function survivorInIslandPotAt");
