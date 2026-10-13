@@ -454,6 +454,15 @@ check(appJs.includes('FAS: "Direxion Daily Financial Bull 3X"'), "FAS ticker nam
 check(appJs.includes('XLE: "Energy Select Sector SPDR"'), "XLE ticker name is Energy Select Sector SPDR");
 check(appJs.includes('XLF: "Financial Select Sector SPDR"'), "XLF ticker name is Financial Select Sector SPDR");
 check(appJs.includes('SOXS: "Direxion Daily Semiconductor Bear 3X"'), "SOXS ticker name is Direxion Daily Semiconductor Bear 3X");
+check(appJs.includes('GS: "Goldman Sachs Group"'), "GS ticker name is Goldman Sachs Group");
+check(
+  appJs.includes('SQQQ: "ProShares UltraPro Short QQQ"'),
+  "SQQQ ticker name is ProShares UltraPro Short QQQ"
+);
+check(
+  appJs.includes('XLP: "Consumer Staples Select Sector SPDR"'),
+  "XLP ticker name is Consumer Staples Select Sector SPDR"
+);
 check(
   /function holdingsHtml[\s\S]*?tickerName\(tickerOf\(pos\)\)/.test(appJs),
   "S2 holdings must print fund names via tickerName"
