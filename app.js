@@ -523,7 +523,7 @@ function groupSnapshotFills(fills) {
 }
 
 function fillVerb(fill) {
-  const ticker = escapeHtml(fill.ticker || "");
+  const ticker = escapeHtml(tickerName(fill.ticker || ""));
   if (fill.side === "sell") {
     const verb = fill.how === "trim" ? "sold some" : "sold";
     return `<span class="s2-verb is-sell">${verb} ${ticker}</span>`;
@@ -543,7 +543,7 @@ function holdingsHtml(s) {
         const size = typeof pos.sizeUsd === "number" ? money(pos.sizeUsd) : "";
         return `<li class="is-cash"><strong>Cash</strong>${size ? `<b>${escapeHtml(size)}</b>` : ""}</li>`;
       }
-      const ticker = escapeHtml(tickerOf(pos));
+      const ticker = escapeHtml(tickerName(tickerOf(pos)));
       const marked = typeof pos.sizeUsd === "number" ? money(pos.sizeUsd) : "";
       return `<li class="is-hold"><strong>${ticker}</strong>${marked ? `<b>${escapeHtml(marked)}</b>` : ""}</li>`;
     })

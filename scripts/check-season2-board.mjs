@@ -454,6 +454,10 @@ check(appJs.includes('FAS: "Direxion Daily Financial Bull 3X"'), "FAS ticker nam
 check(appJs.includes('XLE: "Energy Select Sector SPDR"'), "XLE ticker name is Energy Select Sector SPDR");
 check(appJs.includes('XLF: "Financial Select Sector SPDR"'), "XLF ticker name is Financial Select Sector SPDR");
 check(appJs.includes('SOXS: "Direxion Daily Semiconductor Bear 3X"'), "SOXS ticker name is Direxion Daily Semiconductor Bear 3X");
+check(
+  /function holdingsHtml[\s\S]*?tickerName\(tickerOf\(pos\)\)/.test(appJs),
+  "S2 holdings must print fund names via tickerName"
+);
 
 const potStart = appJs.indexOf("function survivorInIslandPotAt");
 const potEnd = appJs.indexOf("function pacificDayLabel");
