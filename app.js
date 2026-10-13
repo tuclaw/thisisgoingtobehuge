@@ -904,6 +904,7 @@ const TICKER_NAMES = {
   SOXL: "Direxion Daily Semiconductor Bull 3X",
   SOXS: "Direxion Daily Semiconductor Bear 3X",
   FAS: "Direxion Daily Financial Bull 3X",
+  ERX: "Direxion Daily Energy Bull 2X",
   XLE: "Energy Select Sector SPDR",
   XLF: "Financial Select Sector SPDR",
   QID: "ProShares UltraShort QQQ",
