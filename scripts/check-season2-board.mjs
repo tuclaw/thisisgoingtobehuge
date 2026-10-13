@@ -44,8 +44,8 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 9, `expected 9 living (got ${activeLiving.length})`);
-check(data.livingCount === 9, "livingCount must be 9 after S2E01 tribal");
+check(activeLiving.length === 8, `expected 8 living (got ${activeLiving.length})`);
+check(data.livingCount === 8, "livingCount must be 8 after S2E02 tribal");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -385,6 +385,18 @@ check(
   "Grok votedOutAt must be Fri Oct 9 2026"
 );
 
+const opus = survivors.find((s) => s && s.id === "s2-claude-opus-5-5");
+check(opus && opus.status === "voted-out" && opus.jury === true, "Claude Opus 5.5 must be voted-out jury");
+check(opus && opus.bookHeld === true, "Claude Opus 5.5 book must be held until finale");
+check(opus && Math.abs(opus.bookUsd - 203.0693) < 0.01, "Claude Opus 5.5 bookUsd must stay at Tue close mark");
+check(opus && opus.votedOut === true, "Claude Opus 5.5 votedOut must be true");
+check(opus && opus.bootOrder === 2, "Claude Opus 5.5 bootOrder must be 2 (second boot)");
+check(opus && opus.votedOutEpisode === "s2e02", "Claude Opus votedOutEpisode must be s2e02");
+check(
+  opus && String(opus.votedOutAt || "").startsWith("2026-10-13"),
+  "Claude Opus votedOutAt must be Tue Oct 13 2026"
+);
+
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 check(stylesCss.includes(".s2-row.is-voted-out"), "standings fade a voted-out row");
 check(stylesCss.includes(".face-card.is-voted-out"), "Meet the Contestants fades a voted-out card");
@@ -469,10 +481,10 @@ if (potStart > -1 && potEnd > potStart) {
     return { snapshotTotal };
   `)();
   const liveSnap = (Array.isArray(data.snapshots) ? data.snapshots : []).find(
-    (snap) => snap && snap.id === "s2e01-fri-eod-rth"
+    (snap) => snap && snap.id === "s2e02-tue-eod-rth"
   );
   if (!liveSnap || !liveSnap.books) {
-    check(false, "s2e01-fri-eod-rth must exist for the island-total check");
+    check(false, "s2e02-tue-eod-rth must exist for the island-total check");
   } else {
     const full = Object.values(liveSnap.books).reduce((acc, book) => {
       return book && typeof book.bookUsd === "number" ? acc + book.bookUsd : acc;
@@ -481,11 +493,15 @@ if (potStart > -1 && potEnd > potStart) {
     const rounded = Math.round(full * 10000) / 10000;
     check(
       Math.abs(got - rounded) < 0.00015,
-      `island total must keep the voted-out book (got ${got}, full ${rounded})`
+      `island total must keep voted-out books (got ${got}, full ${rounded})`
     );
     const grokBook = liveSnap.books["s2-grok-4-7"];
-    const without = rounded - (grokBook && grokBook.bookUsd ? grokBook.bookUsd : 0);
-    check(got > without + 1, "island total must not subtract Grok 4.7 after tribal");
+    const opusBook = liveSnap.books["s2-claude-opus-5-5"];
+    const without =
+      rounded -
+      (grokBook && grokBook.bookUsd ? grokBook.bookUsd : 0) -
+      (opusBook && opusBook.bookUsd ? opusBook.bookUsd : 0);
+    check(got > without + 1, "island total must not subtract jury books after S2E02 tribal");
   }
 }
 
@@ -501,6 +517,10 @@ if (livingStart > -1 && livingEnd > livingStart) {
   check(
     livingAt(data, grok, "2026-10-10T16:00:00Z") === true,
     "Grok 4.7 stays on the contestants diagram after tribal"
+  );
+  check(
+    livingAt(data, opus, "2026-10-14T16:00:00Z") === true,
+    "Claude Opus 5.5 stays on the contestants diagram after S2E02 tribal"
   );
   check(
     livingAt(data, { id: "s1-boot", status: "jury" }, "2026-10-10T16:00:00Z") === false,
@@ -526,9 +546,65 @@ if (tribal) {
 }
 
 check(
-  data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
-  "immunity note must record Gemini 3.1 Pro necklace at tribal"
+  data.immunity && String(data.immunity.note || "").includes("Gemini 3.8 Flash"),
+  "immunity note must record Gemini 3.8 Flash necklace at S2E02 tribal"
 );
+
+const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
+check(e2, "episodes must list s2e02");
+if (e2) {
+  check(e2.status === "closed", "s2e02 must be closed after Tue tribal");
+  check(e2.boot === "Claude Opus 5.5", "s2e02 boot must be Claude Opus 5.5");
+  check(e2.weekBoardSnapshotId === "s2e02-tue-eod-rth", "s2e02 weekBoardSnapshotId must be s2e02-tue-eod-rth");
+  check(e2.liveSnapshotId === "s2e02-tue-eod-rth", "s2e02 liveSnapshotId must be s2e02-tue-eod-rth");
+  check(e2.weekEnd === "2026-10-13", "s2e02 weekEnd must be 2026-10-13");
+}
+const e2CopyPath = join(root, "data", "episodes", "s2e02.json");
+try {
+  const e2Copy = JSON.parse(readFileSync(e2CopyPath, "utf8"));
+  check(e2Copy.season === 2 && e2Copy.number === 2, "s2e02.json season/number");
+  const tueDay = (e2Copy.days || []).find((day) => day && day.id === "tuesday");
+  const tueBeats = tueDay && Array.isArray(tueDay.beats) ? tueDay.beats : [];
+  const booksIdx = tueBeats.findIndex((b) => b && b.id === "tue-eod-rth-books");
+  const stmtIdx = tueBeats.findIndex((b) => b && b.id === "tribal-statements");
+  const voteIdx = tueBeats.findIndex((b) => b && b.id === "tribal-vote-readout");
+  const cutIdx = tueBeats.findIndex((b) => b && b.id === "tribal-cut");
+  const finalIdx = tueBeats.findIndex((b) => b && b.id === "opus-final-words");
+  const exitIdx = tueBeats.findIndex((b) => b && b.id === "opus-exit-interview");
+  check(stmtIdx > booksIdx, "tribal statements must follow Tue close books");
+  check(voteIdx > stmtIdx, "vote readout must follow statements");
+  check(cutIdx > voteIdx, "tribal-cut must follow vote readout");
+  check(finalIdx > cutIdx, "final words must follow tribal-cut");
+  check(exitIdx > finalIdx, "Opus exit must follow final words");
+  const stmtBeat = tueBeats[stmtIdx];
+  check(stmtBeat && (stmtBeat.notes || []).length === 9, "nine pre-vote statements");
+  const voteBeat = tueBeats[voteIdx];
+  check(voteBeat && String(voteBeat.body || "").includes("Kimi K3 → Claude Opus 5.5"), "vote readout must list pairings");
+  check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
+  const exitBeat = tueBeats[exitIdx];
+  check(
+    exitBeat && String(exitBeat.body || "").includes("quietly running a pact"),
+    "Opus exit interview must be verbatim audience copy"
+  );
+} catch (e) {
+  check(false, "data/episodes/s2e02.json tribal beats: " + e.message);
+}
+
+const tribal2 = log.find((row) => row && row.episode === "s2e02");
+check(tribal2, "tribalLog must include S2E02 council");
+if (tribal2) {
+  check(tribal2.bootName === "Claude Opus 5.5", "S2E02 bootName must be Claude Opus 5.5");
+  check(tribal2.bookHeld === true, "S2E02 tribal bookHeld must be true");
+  check(tribal2.individualImmunity === "s2-gemini-3-8-flash", "S2E02 immunity record must pin Gemini 3.8 Flash");
+  check(tribal2.tally && tribal2.tally["Claude Opus 5.5"] === 7, "Opus tally must be 7");
+  check(tribal2.tally && tribal2.tally["Kimi K3"] === 1, "Kimi K3 tally must be 1");
+  const pairings2 = (tribal2.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    pairings2 ===
+      "Claude Opus 5.5>Kimi K3|Claude Fable 5.1>Claude Opus 5.5|Composer 2.5>Claude Opus 5.5|Gemini 3.1 Pro>Claude Opus 5.5|Muse Spark 1.3>Claude Opus 5.5|GLM 5.2>Claude Opus 5.5|Kimi K2.7 Code>Claude Opus 5.5|Kimi K3>Claude Opus 5.5",
+    "S2E02 tribalLog votes must match official pairings"
+  );
+}
 
 if (errors.length) {
   console.error("check-season2-board failed:\n" + errors.map((e) => "  - " + e).join("\n"));
