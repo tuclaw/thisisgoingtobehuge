@@ -458,6 +458,10 @@ check(
   appJs.includes('ERX: "Direxion Daily Energy Bull 2X"'),
   "ERX ticker name is Direxion Daily Energy Bull 2X"
 );
+check(
+  appJs.includes('SPXS: "Direxion Daily S&P 500 Bear 3X"'),
+  "SPXS ticker name is Direxion Daily S&P 500 Bear 3X"
+);
 check(appJs.includes('GS: "Goldman Sachs Group"'), "GS ticker name is Goldman Sachs Group");
 check(
   appJs.includes('SQQQ: "ProShares UltraPro Short QQQ"'),

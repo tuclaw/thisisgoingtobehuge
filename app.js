@@ -918,6 +918,7 @@ const TICKER_NAMES = {
   GS: "Goldman Sachs Group",
   SQQQ: "ProShares UltraPro Short QQQ",
   XLP: "Consumer Staples Select Sector SPDR",
+  SPXS: "Direxion Daily S&P 500 Bear 3X",
   SPY: "SPDR S&P 500",
   NVDA: "NVIDIA",
   MSFT: "Microsoft",
