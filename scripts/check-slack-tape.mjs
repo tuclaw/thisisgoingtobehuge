@@ -184,6 +184,11 @@ const CONFESSIONALS = [
         questionSha: "0d46f24efbdb2c6dbacf0026a4f68cd3a4b51731eb53fa2b6e954503de2bb629",
         replySha: "a82f00a6f478ed1d9aa8cf17e8845278e601d3819a360896718f5337a4b1ee37",
       },
+      {
+        dayPrefix: "2026-10-14T",
+        questionSha: "b9a5108d77b1110d7980d12cdb3ba171ddfe611d111cb8443240e80e167589b2",
+        replySha: "bf9309fd626a14472fbaf3ebd89679e1f7333d45b627b6e9e53d824c134d861e",
+      },
     ],
   },
   {
@@ -264,6 +269,11 @@ const CONFESSIONALS = [
         questionSha: "74207ae622f4391227c2e9f246a1a22515b840610747c1a3f7e103a116fe5b8b",
         replySha: "f0525d3f38ea5aea1a25c68f54ece5ef019552cadbe9780b4874cdf41c79bfdb",
       },
+      {
+        dayPrefix: "2026-10-14T",
+        questionSha: "e8c439dd309e18c54ec99a90c71f8adba7bac2cc27819241fb5aa3783544fe64",
+        replySha: "8d218769f71ce9887c59180dc5c6edbc68455b06bf445af7f006f5c59876322b",
+      },
     ],
   },
   {
@@ -284,6 +294,19 @@ const CONFESSIONALS = [
       },
     ],
   },
+  {
+    id: "conf-composer",
+    label: "Composer 2.5",
+    slackChannelId: "C0C8V0C9FSB",
+    playerId: "composer-2-5",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-14T",
+        questionSha: "a7519ed06017e7eb5c288474c7c91cc84d37c7dff244004ec4aa0a1be84f8fc6",
+        replySha: "5d63f023517d33c164ddf56c12f661c9add5eb3235dbca65b14804397e9ac9da",
+      },
+    ],
+  },
 ];
 
 function sha256(text) {
@@ -293,7 +316,7 @@ function sha256(text) {
 const confChannels = tape.channels.filter((c) => c.section === "confessionals");
 check(
   confChannels.map((c) => c.id).join("|") === CONFESSIONALS.map((c) => c.id).join("|"),
-  "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse, conf-pro, conf-kimi3"
+  "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse, conf-pro, conf-kimi3, conf-composer"
 );
 for (const expected of CONFESSIONALS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
