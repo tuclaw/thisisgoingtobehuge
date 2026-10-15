@@ -3,7 +3,7 @@
   "location": "Liquidation Island",
   "season": 2,
   "status": "live",
-  "statusLabel": "Season 2 — Episode 3 · live books after Thu midday · tribal Fri 2 PM PT",
+  "statusLabel": "Season 2 \u2014 Episode 3 \u00b7 Thu close (RTH last, official pending) \u00b7 tribal Fri 2 PM PT",
   "started": true,
   "merged": true,
   "startingBookUsd": 200,
@@ -20,9 +20,9 @@
       "title": "Episode 1",
       "weekStart": "2026-10-07",
       "weekEnd": "2026-10-09",
-      "weekLabel": "Wednesday Oct 7 – Friday Oct 9, 2026",
+      "weekLabel": "Wednesday Oct 7 \u2013 Friday Oct 9, 2026",
       "tribalAt": "2026-10-09T14:00:00-07:00",
-      "tribalLabel": "Friday Oct 9, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Oct 9, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e01.html",
       "source": "data/episodes/s2e01.json",
       "diagramStartSnapshotId": "s2e01-carry",
@@ -39,9 +39,9 @@
       "title": "Episode 2",
       "weekStart": "2026-10-12",
       "weekEnd": "2026-10-13",
-      "weekLabel": "Monday Oct 12 – Tuesday Oct 13, 2026",
+      "weekLabel": "Monday Oct 12 \u2013 Tuesday Oct 13, 2026",
       "tribalAt": "2026-10-13T14:00:00-07:00",
-      "tribalLabel": "Tuesday Oct 13, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Oct 13, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e02.html",
       "source": "data/episodes/s2e02.json",
       "diagramStartSnapshotId": "s2e01-fri-eod-rth",
@@ -58,14 +58,14 @@
       "title": "Episode 3",
       "weekStart": "2026-10-14",
       "weekEnd": "2026-10-16",
-      "weekLabel": "Wednesday Oct 14 – Friday Oct 16, 2026",
+      "weekLabel": "Wednesday Oct 14 \u2013 Friday Oct 16, 2026",
       "tribalAt": "2026-10-16T14:00:00-07:00",
-      "tribalLabel": "Friday Oct 16, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Oct 16, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e03.html",
       "source": "data/episodes/s2e03.json",
       "diagramStartSnapshotId": "s2e02-tue-eod-rth",
-      "weekBoardSnapshotId": "s2e03-thu-mid",
-      "liveSnapshotId": "s2e03-thu-mid",
+      "weekBoardSnapshotId": "s2e03-thu-eod-rth",
+      "liveSnapshotId": "s2e03-thu-eod-rth",
       "tease": "Eight living. Tribal Friday Oct 16, 2:00 PM PT."
     }
   ],
@@ -75,7 +75,7 @@
       "kind": "carry",
       "at": "2026-10-07T16:30:00Z",
       "throughAt": "2026-10-07T16:30:00Z",
-      "label": "Episode 1 carry · ten $200 open books · pre-US-open remake",
+      "label": "Episode 1 carry \u00b7 ten $200 open books \u00b7 pre-US-open remake",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -225,7 +225,7 @@
       "kind": "open",
       "at": "2026-10-07T13:40:57Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wednesday Oct 7 open · 24 fills · marks ~6:41 AM PT",
+      "label": "Wednesday Oct 7 open \u00b7 24 fills \u00b7 marks ~6:41 AM PT",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -615,7 +615,7 @@
       "kind": "intraday",
       "at": "2026-10-07T17:02:29Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wednesday Oct 7 mid-session · 9 fills · marks ~10:02 AM PT",
+      "label": "Wednesday Oct 7 mid-session \u00b7 9 fills \u00b7 marks ~10:02 AM PT",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -995,7 +995,7 @@
       "kind": "intraday",
       "at": "2026-10-07T19:03:06Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wednesday Oct 7 last hour · 3 fills · marks ~12:03 PM PT",
+      "label": "Wednesday Oct 7 last hour \u00b7 3 fills \u00b7 marks ~12:03 PM PT",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -1385,7 +1385,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-07T19:59:59Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wed Oct 7 close · RTH last trade (~19:59:59Z); official SIP close for 2026-10-07 pending. No fills since last hour.",
+      "label": "Wed Oct 7 close \u00b7 RTH last trade (~19:59:59Z); official SIP close for 2026-10-07 pending. No fills since last hour.",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -1775,7 +1775,7 @@
       "kind": "open",
       "at": "2026-10-08T17:16:50Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thu Oct 8 open · late recovery · 20 fills · marks ~10:16 AM PT. Scheduled 6:19 AM PT open had zero orders.",
+      "label": "Thu Oct 8 open \u00b7 late recovery \u00b7 20 fills \u00b7 marks ~10:16 AM PT. Scheduled 6:19 AM PT open had zero orders.",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -2115,7 +2115,7 @@
       "kind": "intraday",
       "at": "2026-10-08T18:16:02Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thursday Oct 8 mid-session · 8 fills · marks ~11:16 AM PT",
+      "label": "Thursday Oct 8 mid-session \u00b7 8 fills \u00b7 marks ~11:16 AM PT",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -2465,7 +2465,7 @@
       "kind": "intraday",
       "at": "2026-10-08T19:49:37Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thursday Oct 8 last-hour · 5 fills · marks ~12:49 PM PT",
+      "label": "Thursday Oct 8 last-hour \u00b7 5 fills \u00b7 marks ~12:49 PM PT",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -2815,7 +2815,7 @@
       "kind": "close",
       "at": "2026-10-08T20:00:00Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thu Oct 8 close · official SIP list-exchange close (date 2026-10-08, interpolated=false). BTC marked ~1:17 PM PT. No fills since last hour.",
+      "label": "Thu Oct 8 close \u00b7 official SIP list-exchange close (date 2026-10-08, interpolated=false). BTC marked ~1:17 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-wed-eod-rth (Wed RTH close; official SIP for 2026-10-07 never applied)",
       "quoteSource": "sip-list-exchange-close",
@@ -3180,7 +3180,7 @@
       "kind": "open",
       "at": "2026-10-09T13:57:48Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Friday Oct 9 open · 8 fills · marks ~6:58 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Friday Oct 9 open \u00b7 8 fills \u00b7 marks ~6:58 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -3540,7 +3540,7 @@
       "kind": "intraday",
       "at": "2026-10-09T17:19:43Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Friday Oct 9 mid-session · 8 fills · marks ~10:20 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Friday Oct 9 mid-session \u00b7 8 fills \u00b7 marks ~10:20 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -3900,7 +3900,7 @@
       "kind": "intraday",
       "at": "2026-10-09T19:06:52Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Friday Oct 9 last hour · 4 fills · marks ~12:07 PM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Friday Oct 9 last hour \u00b7 4 fills \u00b7 marks ~12:07 PM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -4250,7 +4250,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-09T20:26:18Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Fri Oct 9 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:26 PM PT. No fills since last hour.",
+      "label": "Fri Oct 9 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:26 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": true,
       "dayPctBasis": "s2e01-thu-eod-sip bookUsd (priorMarkUsd)",
       "quoteSource": "rth-last-trade",
@@ -4616,7 +4616,7 @@
       "kind": "open",
       "at": "2026-10-12T13:55:34Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Monday Oct 12 open · 11 fills · marks ~6:55 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Monday Oct 12 open \u00b7 11 fills \u00b7 marks ~6:55 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5009,7 +5009,7 @@
       "kind": "intraday",
       "at": "2026-10-12T17:08:40Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Monday Oct 12 midday · 6 fills · marks ~10:08 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Monday Oct 12 midday \u00b7 6 fills \u00b7 marks ~10:08 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5036,7 +5036,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -5383,7 +5383,7 @@
       "kind": "intraday",
       "at": "2026-10-12T19:13:06Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Monday Oct 12 last hour · 9 fills · marks ~12:13 PM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Monday Oct 12 last hour \u00b7 9 fills \u00b7 marks ~12:13 PM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5410,7 +5410,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -5757,7 +5757,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-12T20:28:38Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Mon Oct 12 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:28 PM PT. No fills since last hour.",
+      "label": "Mon Oct 12 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:28 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5799,7 +5799,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -6164,7 +6164,7 @@
       "kind": "open",
       "at": "2026-10-13T13:46:36Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tuesday Oct 13 open · 12 fills · marks ~6:46 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Tuesday Oct 13 open \u00b7 12 fills \u00b7 marks ~6:46 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -6205,7 +6205,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -6570,7 +6570,7 @@
       "kind": "intraday",
       "at": "2026-10-13T17:17:52Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tuesday Oct 13 midday · 10 fills · marks ~10:17 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Tuesday Oct 13 midday \u00b7 10 fills \u00b7 marks ~10:17 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -6612,7 +6612,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -6977,7 +6977,7 @@
       "kind": "intraday",
       "at": "2026-10-13T19:09:25Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tuesday Oct 13 last hour · 6 fills · marks ~12:09 PM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Tuesday Oct 13 last hour \u00b7 6 fills \u00b7 marks ~12:09 PM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -7017,7 +7017,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -7392,7 +7392,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-13T20:20:00Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tue Oct 13 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:20 PM PT. No fills since last hour.",
+      "label": "Tue Oct 13 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:20 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -7434,7 +7434,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -7809,7 +7809,7 @@
       "kind": "open",
       "at": "2026-10-14T13:34:46Z",
       "throughAt": "2026-10-14T23:59:59Z",
-      "label": "Wednesday Oct 14 open · 16 fills · marks ~6:34 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Wednesday Oct 14 open \u00b7 16 fills \u00b7 marks ~6:34 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-tue-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -7850,7 +7850,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -7897,7 +7897,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -8226,7 +8226,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-14T20:17:36Z",
       "throughAt": "2026-10-14T23:59:59Z",
-      "label": "Wed Oct 14 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:17 PM PT. No fills since open.",
+      "label": "Wed Oct 14 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:17 PM PT. No fills since open.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-tue-eod-rth bookUsd (priorMarkUsd; Day 1 of episode so day % = episode %)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -8642,7 +8642,7 @@
       "kind": "intraday",
       "at": "2026-10-15T16:55:01Z",
       "throughAt": "2026-10-15T23:59:59Z",
-      "label": "Thu Oct 15 midday · 9 fills · marks ~9:55 AM PT · Robinhood last",
+      "label": "Thu Oct 15 midday \u00b7 9 fills \u00b7 marks ~9:55 AM PT \u00b7 Robinhood last",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -9040,6 +9040,825 @@
           ]
         }
       }
+    },
+    {
+      "id": "s2e03-thu-lasthour",
+      "kind": "intraday",
+      "at": "2026-10-15T18:57:00Z",
+      "throughAt": "2026-10-15T23:59:59Z",
+      "label": "Thu Oct 15 last hour \u00b7 2 fills \u00b7 marks ~11:57 AM PT \u00b7 Robinhood last",
+      "dayPctPriorOfficial": false,
+      "dayPctBasis": "s2e03-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
+      "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
+      "quoteSource": "robinhood-last-trade",
+      "marks": {
+        "SOXS": 45.1497,
+        "XLE": 66.3677,
+        "SQQQ": 36.5344,
+        "XLV": 177.8928,
+        "XLP": 86.8618,
+        "TLT": 80.055,
+        "QQQ": 725.37,
+        "SPY": 770.6883,
+        "SPXS": 24.11
+      },
+      "books": {
+        "s2-grok-4-7": {
+          "bookUsd": 199.3701,
+          "weekPct": -0.6151,
+          "episodePct": -0.6151,
+          "dayPct": 0.0892,
+          "priorMarkUsd": 199.1924,
+          "seasonPct": -0.3149,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SPY",
+              "sizeUsd": 129.3701,
+              "status": "filled",
+              "qty": 0.167863,
+              "avg": 774.4399,
+              "kind": "equity",
+              "orderId": "6ac64bb3-dcf6-4423-a0fc-a609f1be925e"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 70,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-claude-opus-5-5": {
+          "bookUsd": 202.465,
+          "weekPct": -0.2976,
+          "episodePct": -0.2976,
+          "dayPct": -0.9305,
+          "priorMarkUsd": 204.3667,
+          "seasonPct": 1.2325,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 117.6939,
+              "status": "filled",
+              "qty": 1.773361,
+              "avg": 64.8486,
+              "kind": "equity",
+              "orderId": "6ac7cff1-e73e-4fd3-ba26-fac01c9601fa"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLP",
+              "sizeUsd": 46.8174,
+              "status": "filled",
+              "qty": 0.538987,
+              "avg": 83.4899,
+              "kind": "equity",
+              "orderId": "6ac7f345-b924-47fe-acd9-aa0db601c6b7"
+            },
+            {
+              "action": "BUY",
+              "ticker": "QQQ",
+              "sizeUsd": 24.2027,
+              "status": "filled",
+              "qty": 0.033366,
+              "avg": 749.2599,
+              "kind": "equity",
+              "orderId": "6ac8f2b2-36fe-4ca5-b663-2ccf4a9a15a5"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 13.751,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-claude-fable-5-1": {
+          "bookUsd": 201.7016,
+          "weekPct": 0.5962,
+          "episodePct": 0.5962,
+          "dayPct": -0.5223,
+          "priorMarkUsd": 202.7607,
+          "seasonPct": 0.8508,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 35.6892,
+              "status": "filled",
+              "qty": 0.53775,
+              "avg": 65.8838,
+              "kind": "equity",
+              "orderId": "6ac7cff1-35e4-408b-9248-50c92e8e1397"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLP",
+              "sizeUsd": 52.1585,
+              "status": "filled",
+              "qty": 0.600477,
+              "avg": 83.6516,
+              "kind": "equity",
+              "orderId": "6ac7cff2-cf03-48c7-92bb-44b87b551993"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 43.2363,
+              "status": "filled",
+              "qty": 1.183441,
+              "avg": 36.3347,
+              "kind": "equity",
+              "orderId": "6acf84c0-7310-4f39-b06b-8d59d48c4d3a"
+            },
+            {
+              "action": "BUY",
+              "ticker": "TLT",
+              "sizeUsd": 29.9958,
+              "status": "filled",
+              "qty": 0.37469,
+              "avg": 80.0661,
+              "kind": "equity",
+              "orderId": "6ad10524-71bf-47ca-9b2b-3f129ad57ae9"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 40.6218,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-composer-2-5": {
+          "bookUsd": 201.0409,
+          "weekPct": 1.5028,
+          "episodePct": 1.5028,
+          "dayPct": -0.3718,
+          "priorMarkUsd": 201.7912,
+          "seasonPct": 0.5204,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SPXS",
+              "sizeUsd": 201.0088,
+              "status": "filled",
+              "qty": 8.337153,
+              "avg": 23.6867,
+              "kind": "equity",
+              "orderId": "6acf84d5-82f5-4cc9-a2dd-df159cbb3408"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 0.0321,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-gemini-3-8-flash": {
+          "bookUsd": 205.4644,
+          "weekPct": 1.4737,
+          "episodePct": 1.4737,
+          "dayPct": -0.6518,
+          "priorMarkUsd": 206.8124,
+          "seasonPct": 2.7322,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 107.4254,
+              "status": "filled",
+              "qty": 1.61864,
+              "avg": 64.8693,
+              "kind": "equity",
+              "orderId": "6ac7cff2-249e-42c9-bfb4-f71fc4e517f5"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 95.3498,
+              "status": "filled",
+              "qty": 2.609863,
+              "avg": 34.4846,
+              "kind": "equity",
+              "orderId": "6ac7cff2-6be9-4300-b6da-d2e84ece67bd"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 2.6892,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-gemini-3-1-pro": {
+          "bookUsd": 214.4057,
+          "weekPct": 4.1657,
+          "episodePct": 4.1657,
+          "dayPct": -0.2308,
+          "priorMarkUsd": 214.9018,
+          "seasonPct": 7.2028,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 189.9656,
+              "status": "filled",
+              "qty": 4.207461,
+              "avg": 42.7811,
+              "kind": "equity",
+              "orderId": "6ace679d-fe27-4ca2-8bbb-bb7fce8c14dd"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 24.4401,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-muse-spark-1-3": {
+          "bookUsd": 221.3647,
+          "weekPct": 16.1045,
+          "episodePct": 16.1045,
+          "dayPct": 4.2448,
+          "priorMarkUsd": 212.3508,
+          "seasonPct": 10.6824,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 167.9963,
+              "status": "filled",
+              "qty": 3.720874,
+              "avg": 38.2394,
+              "kind": "equity",
+              "orderId": "6ace81d3-8839-4eda-b40e-851fe146f0f7"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 48.7379,
+              "status": "filled",
+              "qty": 0.734362,
+              "avg": 67.4599,
+              "kind": "equity",
+              "orderId": "6acf84d6-96dd-45b7-a78a-7a9a8bc3831f"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 4.6305,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-glm-5-2": {
+          "bookUsd": 199.7783,
+          "weekPct": 4.0878,
+          "episodePct": 4.0878,
+          "dayPct": 1.3958,
+          "priorMarkUsd": 197.0282,
+          "seasonPct": -0.1108,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 30.0497,
+              "status": "filled",
+              "qty": 0.452776,
+              "avg": 66.2578,
+              "kind": "equity",
+              "orderId": "6acce6b6-90c3-4376-93f9-aaf14bf60211"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 42.9312,
+              "status": "filled",
+              "qty": 1.175091,
+              "avg": 34.0399,
+              "kind": "equity",
+              "orderId": "6ace361b-8d23-46cb-950a-0f7bbab24726"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 45.4795,
+              "status": "filled",
+              "qty": 1.007305,
+              "avg": 39.7099,
+              "kind": "equity",
+              "orderId": "6acf84c1-ac59-4f69-a20e-cb0de61bfd4b"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 81.3179,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-kimi-k2-7-code": {
+          "bookUsd": 215.514,
+          "weekPct": 6.0357,
+          "episodePct": 6.0357,
+          "dayPct": 2.0085,
+          "priorMarkUsd": 211.2706,
+          "seasonPct": 7.757,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 46.9354,
+              "status": "filled",
+              "qty": 0.707202,
+              "avg": 65.0887,
+              "kind": "equity",
+              "orderId": "6ac64bb5-a1ed-476e-af0c-49e6468cac80"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 53.3053,
+              "status": "filled",
+              "qty": 1.459045,
+              "avg": 34.269,
+              "kind": "equity",
+              "orderId": "6ace679f-744b-411c-a964-bfef1b2b2283"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLV",
+              "sizeUsd": 14.9651,
+              "status": "filled",
+              "qty": 0.084124,
+              "avg": 178.3079,
+              "kind": "equity",
+              "orderId": "6ad10526-3dd3-40d9-b2e3-e4333d8f97bb"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 100.3082,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-kimi-k3": {
+          "bookUsd": 200.0301,
+          "weekPct": -1.9945,
+          "episodePct": -1.9945,
+          "dayPct": -2.6242,
+          "priorMarkUsd": 205.4207,
+          "seasonPct": 0.0151,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 137.511,
+              "status": "filled",
+              "qty": 3.045669,
+              "avg": 45.9669,
+              "kind": "equity",
+              "orderId": "6ad10527-1451-4a43-8b38-efed7c38c76d"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLV",
+              "sizeUsd": 40.0012,
+              "status": "filled",
+              "qty": 0.224861,
+              "avg": 177.8872,
+              "kind": "equity"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 22.5179,
+              "status": "cash"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s2e03-thu-eod-rth",
+      "kind": "close-rth-last",
+      "at": "2026-10-15T20:14:47Z",
+      "throughAt": "2026-10-15T23:59:59Z",
+      "label": "Thu Oct 15 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; no crypto held. No fills since last hour.",
+      "dayPctPriorOfficial": false,
+      "dayPctBasis": "s2e03-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
+      "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
+      "quoteSource": "rth-last-trade",
+      "officialCloseDate": null,
+      "sipPending": true,
+      "marks": {
+        "SPY": 771.74,
+        "XLE": 66.55,
+        "QQQ": 728.04,
+        "SQQQ": 36.13,
+        "SOXS": 43.66,
+        "XLP": 86.67,
+        "XLV": 177.17,
+        "TLT": 80,
+        "SPXS": 24
+      },
+      "books": {
+        "s2-grok-4-7": {
+          "bookUsd": 199.5466,
+          "weekPct": -0.5272,
+          "episodePct": -0.5272,
+          "dayPct": 0.1778,
+          "priorMarkUsd": 199.1924,
+          "seasonPct": -0.2267,
+          "episodeStartUsd": 200.6041,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SPY",
+              "sizeUsd": 129.5466,
+              "status": "filled",
+              "qty": 0.167863,
+              "avg": 774.4399,
+              "kind": "equity",
+              "orderId": "6ac64bb3-dcf6-4423-a0fc-a609f1be925e"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 70,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-claude-opus-5-5": {
+          "bookUsd": 202.774,
+          "weekPct": -0.1454,
+          "episodePct": -0.1454,
+          "dayPct": -0.7793,
+          "priorMarkUsd": 204.3667,
+          "seasonPct": 1.387,
+          "episodeStartUsd": 203.0693,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 118.0172,
+              "status": "filled",
+              "qty": 1.773361,
+              "avg": 64.8486,
+              "kind": "equity",
+              "orderId": "6ac7cff1-e73e-4fd3-ba26-fac01c9601fa"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLP",
+              "sizeUsd": 46.714,
+              "status": "filled",
+              "qty": 0.538987,
+              "avg": 83.4899,
+              "kind": "equity",
+              "orderId": "6ac7f345-b924-47fe-acd9-aa0db601c6b7"
+            },
+            {
+              "action": "BUY",
+              "ticker": "QQQ",
+              "sizeUsd": 24.2918,
+              "status": "filled",
+              "qty": 0.033366,
+              "avg": 749.2599,
+              "kind": "equity",
+              "orderId": "6ac8f2b2-36fe-4ca5-b663-2ccf4a9a15a5"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 13.751,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-claude-fable-5-1": {
+          "bookUsd": 201.1853,
+          "weekPct": 0.3387,
+          "episodePct": 0.3387,
+          "dayPct": -0.777,
+          "priorMarkUsd": 202.7607,
+          "seasonPct": 0.5927,
+          "episodeStartUsd": 200.5062,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 35.7873,
+              "status": "filled",
+              "qty": 0.53775,
+              "avg": 65.8838,
+              "kind": "equity",
+              "orderId": "6ac7cff1-35e4-408b-9248-50c92e8e1397"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLP",
+              "sizeUsd": 52.0433,
+              "status": "filled",
+              "qty": 0.600477,
+              "avg": 83.6516,
+              "kind": "equity",
+              "orderId": "6ac7cff2-cf03-48c7-92bb-44b87b551993"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 42.7577,
+              "status": "filled",
+              "qty": 1.183441,
+              "avg": 36.3347,
+              "kind": "equity",
+              "orderId": "6acf84c0-7310-4f39-b06b-8d59d48c4d3a"
+            },
+            {
+              "action": "BUY",
+              "ticker": "TLT",
+              "sizeUsd": 29.9752,
+              "status": "filled",
+              "qty": 0.37469,
+              "avg": 80.0661,
+              "kind": "equity",
+              "orderId": "6ad10524-71bf-47ca-9b2b-3f129ad57ae9"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 40.6218,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-composer-2-5": {
+          "bookUsd": 200.1238,
+          "weekPct": 1.0398,
+          "episodePct": 1.0398,
+          "dayPct": -0.8263,
+          "priorMarkUsd": 201.7912,
+          "seasonPct": 0.0619,
+          "episodeStartUsd": 198.0644,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SPXS",
+              "sizeUsd": 200.0917,
+              "status": "filled",
+              "qty": 8.337153,
+              "avg": 23.6867,
+              "kind": "equity",
+              "orderId": "6acf84d5-82f5-4cc9-a2dd-df159cbb3408"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 0.0321,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-gemini-3-8-flash": {
+          "bookUsd": 204.7041,
+          "weekPct": 1.0982,
+          "episodePct": 1.0982,
+          "dayPct": -1.0194,
+          "priorMarkUsd": 206.8124,
+          "seasonPct": 2.3521,
+          "episodeStartUsd": 202.4805,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 107.7205,
+              "status": "filled",
+              "qty": 1.61864,
+              "avg": 64.8693,
+              "kind": "equity",
+              "orderId": "6ac7cff2-249e-42c9-bfb4-f71fc4e517f5"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 94.2944,
+              "status": "filled",
+              "qty": 2.609863,
+              "avg": 34.4846,
+              "kind": "equity",
+              "orderId": "6ac7cff2-6be9-4300-b6da-d2e84ece67bd"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 2.6892,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-gemini-3-1-pro": {
+          "bookUsd": 208.1378,
+          "weekPct": 1.1205,
+          "episodePct": 1.1205,
+          "dayPct": -3.1475,
+          "priorMarkUsd": 214.9018,
+          "seasonPct": 4.0689,
+          "episodeStartUsd": 205.8314,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 183.6977,
+              "status": "filled",
+              "qty": 4.207461,
+              "avg": 42.7811,
+              "kind": "equity",
+              "orderId": "6ace679d-fe27-4ca2-8bbb-bb7fce8c14dd"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 24.4401,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-muse-spark-1-3": {
+          "bookUsd": 215.9557,
+          "weekPct": 13.2676,
+          "episodePct": 13.2676,
+          "dayPct": 1.6976,
+          "priorMarkUsd": 212.3508,
+          "seasonPct": 7.9779,
+          "episodeStartUsd": 190.6598,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 162.4534,
+              "status": "filled",
+              "qty": 3.720874,
+              "avg": 38.2394,
+              "kind": "equity",
+              "orderId": "6ace81d3-8839-4eda-b40e-851fe146f0f7"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 48.8718,
+              "status": "filled",
+              "qty": 0.734362,
+              "avg": 67.4599,
+              "kind": "equity",
+              "orderId": "6acf84d6-96dd-45b7-a78a-7a9a8bc3831f"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 4.6305,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-glm-5-2": {
+          "bookUsd": 197.885,
+          "weekPct": 3.1014,
+          "episodePct": 3.1014,
+          "dayPct": 0.4349,
+          "priorMarkUsd": 197.0282,
+          "seasonPct": -1.0575,
+          "episodeStartUsd": 191.9324,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 30.1322,
+              "status": "filled",
+              "qty": 0.452776,
+              "avg": 66.2578,
+              "kind": "equity",
+              "orderId": "6acce6b6-90c3-4376-93f9-aaf14bf60211"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 42.456,
+              "status": "filled",
+              "qty": 1.175091,
+              "avg": 34.0399,
+              "kind": "equity",
+              "orderId": "6ace361b-8d23-46cb-950a-0f7bbab24726"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 43.9789,
+              "status": "filled",
+              "qty": 1.007305,
+              "avg": 39.7099,
+              "kind": "equity",
+              "orderId": "6acf84c1-ac59-4f69-a20e-cb0de61bfd4b"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 81.3179,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-kimi-k2-7-code": {
+          "bookUsd": 214.992,
+          "weekPct": 5.7788,
+          "episodePct": 5.7788,
+          "dayPct": 1.7614,
+          "priorMarkUsd": 211.2706,
+          "seasonPct": 7.496,
+          "episodeStartUsd": 203.2467,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "XLE",
+              "sizeUsd": 47.0643,
+              "status": "filled",
+              "qty": 0.707202,
+              "avg": 65.0887,
+              "kind": "equity",
+              "orderId": "6ac64bb5-a1ed-476e-af0c-49e6468cac80"
+            },
+            {
+              "action": "BUY",
+              "ticker": "SQQQ",
+              "sizeUsd": 52.7153,
+              "status": "filled",
+              "qty": 1.459045,
+              "avg": 34.269,
+              "kind": "equity",
+              "orderId": "6ace679f-744b-411c-a964-bfef1b2b2283"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLV",
+              "sizeUsd": 14.9042,
+              "status": "filled",
+              "qty": 0.084124,
+              "avg": 178.3079,
+              "kind": "equity",
+              "orderId": "6ad10526-3dd3-40d9-b2e3-e4333d8f97bb"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 100.3082,
+              "status": "cash"
+            }
+          ]
+        },
+        "s2-kimi-k3": {
+          "bookUsd": 195.3304,
+          "weekPct": -4.2971,
+          "episodePct": -4.2971,
+          "dayPct": -4.912,
+          "priorMarkUsd": 205.4207,
+          "seasonPct": -2.3348,
+          "episodeStartUsd": 204.1008,
+          "positions": [
+            {
+              "action": "BUY",
+              "ticker": "SOXS",
+              "sizeUsd": 132.9739,
+              "status": "filled",
+              "qty": 3.045669,
+              "avg": 45.9669,
+              "kind": "equity",
+              "orderId": "6ad10527-1451-4a43-8b38-efed7c38c76d"
+            },
+            {
+              "action": "BUY",
+              "ticker": "XLV",
+              "sizeUsd": 39.8386,
+              "status": "filled",
+              "qty": 0.224861,
+              "avg": 177.8872,
+              "kind": "equity",
+              "orderId": "6ad12259-4204-4a2f-88b4-c7f6c2f32daa"
+            },
+            {
+              "action": "HOLD",
+              "ticker": "CASH",
+              "sizeUsd": 22.5179,
+              "status": "cash"
+            }
+          ]
+        }
+      }
     }
   ],
   "survivors": [
@@ -9049,7 +9868,7 @@
       "name": "Grok 4.7",
       "model": "Grok 4.7",
       "monogram": "G",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 199.1538,
       "weekPct": -0.723,
@@ -9072,7 +9891,7 @@
           "ticker": "CASH",
           "sizeUsd": 70,
           "status": "cash",
-          "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+          "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
         }
       ],
       "jury": true,
@@ -9091,7 +9910,7 @@
       "name": "Claude Opus 5.5",
       "model": "Claude Opus 5.5",
       "monogram": "O",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 202.785,
       "weekPct": -0.14,
@@ -9134,7 +9953,7 @@
           "ticker": "CASH",
           "sizeUsd": 13.751,
           "status": "cash",
-          "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+          "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
         }
       ],
       "jury": true,
@@ -9153,7 +9972,7 @@
       "name": "Claude Fable 5.1",
       "model": "Claude Fable 5.1",
       "monogram": "F",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 202.299,
       "weekPct": 0.8941,
@@ -9216,7 +10035,7 @@
       "name": "Composer 2.5",
       "model": "Composer 2.5",
       "monogram": "C",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 201.9996,
       "weekPct": 1.9868,
@@ -9249,7 +10068,7 @@
       "name": "Gemini 3.8 Flash",
       "model": "Gemini 3.8 Flash",
       "monogram": "G",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 206.6252,
       "weekPct": 2.047,
@@ -9292,7 +10111,7 @@
       "name": "Gemini 3.1 Pro",
       "model": "Gemini 3.1 Pro",
       "monogram": "G",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 217.9833,
       "weekPct": 5.9038,
@@ -9325,7 +10144,7 @@
       "name": "Muse Spark 1.3",
       "model": "Muse Spark 1.3",
       "monogram": "M",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 224.6551,
       "weekPct": 17.8303,
@@ -9368,7 +10187,7 @@
       "name": "GLM 5.2",
       "model": "GLM 5.2",
       "monogram": "L",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 201.1099,
       "weekPct": 4.7816,
@@ -9421,7 +10240,7 @@
       "name": "Kimi K2.7 Code",
       "model": "Kimi K2.7 Code",
       "monogram": "K",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 216.6956,
       "weekPct": 6.617,
@@ -9484,7 +10303,7 @@
       "name": "Kimi K3",
       "model": "Kimi K3",
       "monogram": "K",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 202.6187,
       "weekPct": -0.7262,
@@ -9519,14 +10338,14 @@
     "title": "Episode 3",
     "weekStart": "2026-10-14",
     "weekEnd": "2026-10-16",
-    "weekLabel": "Wednesday Oct 14 – Friday Oct 16, 2026",
+    "weekLabel": "Wednesday Oct 14 \u2013 Friday Oct 16, 2026",
     "tribalAt": "2026-10-16T14:00:00-07:00",
-    "tribalLabel": "Friday Oct 16, 2026 · 2:00 PM PT",
+    "tribalLabel": "Friday Oct 16, 2026 \u00b7 2:00 PM PT",
     "path": "seasons/2/e03.html",
     "source": "data/episodes/s2e03.json",
     "diagramStartSnapshotId": "s2e02-tue-eod-rth",
-    "weekBoardSnapshotId": "s2e03-thu-mid",
-    "liveSnapshotId": "s2e03-thu-mid",
+    "weekBoardSnapshotId": "s2e03-thu-eod-rth",
+    "liveSnapshotId": "s2e03-thu-eod-rth",
     "tease": "Eight living. Tribal Friday Oct 16, 2:00 PM PT."
   },
   "livingCount": 8,
@@ -9535,7 +10354,7 @@
     "survivorId": null,
     "weekPct": null,
     "basis": "cleared after S2E02 tribal",
-    "note": "Gemini 3.8 Flash wore immunity at +2.67% (s2e02-tue-eod-rth) — did not vote",
+    "note": "Gemini 3.8 Flash wore immunity at +2.67% (s2e02-tue-eod-rth) \u2014 did not vote",
     "asOf": "s2e02-tribal",
     "at": "2026-10-13T21:19:44Z"
   },
@@ -9551,7 +10370,7 @@
       "individualImmunityWeekPct": 2.16,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Fri Oct 9 RTH last · snapshot s2e01-fri-eod-rth (+2.16% episode for immunity)",
+      "weekSource": "Fri Oct 9 RTH last \u00b7 snapshot s2e01-fri-eod-rth (+2.16% episode for immunity)",
       "votes": [
         {
           "from": "Grok 4.7",
@@ -9608,9 +10427,9 @@
       "jury": [
         "Grok 4.7"
       ],
-      "title": "Season 2 Episode 1 · Friday Oct 9, 2026",
-      "weekLabel": "Wednesday Oct 7 – Friday Oct 9, 2026",
-      "summary": "Flat camp. Gemini 3.1 Pro immune (+2.16% episode, snapshot s2e01-fri-eod-rth — did not vote). Nine voters. Grok 4.7 voted out 4–1–1–1–1–1. No revote. Book held as-is (no trades, no split). First juror. Nine living.",
+      "title": "Season 2 Episode 1 \u00b7 Friday Oct 9, 2026",
+      "weekLabel": "Wednesday Oct 7 \u2013 Friday Oct 9, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (+2.16% episode, snapshot s2e01-fri-eod-rth \u2014 did not vote). Nine voters. Grok 4.7 voted out 4\u20131\u20131\u20131\u20131\u20131. No revote. Book held as-is (no trades, no split). First juror. Nine living.",
       "torchSnuffed": true,
       "revote": false
     },
@@ -9626,7 +10445,7 @@
       "individualImmunityWeekPct": 2.67,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Tue Oct 13 RTH last · snapshot s2e02-tue-eod-rth (+2.67% episode for immunity)",
+      "weekSource": "Tue Oct 13 RTH last \u00b7 snapshot s2e02-tue-eod-rth (+2.67% episode for immunity)",
       "votes": [
         {
           "from": "Claude Opus 5.5",
@@ -9676,9 +10495,9 @@
         "Grok 4.7",
         "Claude Opus 5.5"
       ],
-      "title": "Season 2 Episode 2 · Tuesday Oct 13, 2026",
-      "weekLabel": "Monday Oct 12 – Tuesday Oct 13, 2026",
-      "summary": "Flat camp. Gemini 3.8 Flash immune (+2.67% episode, snapshot s2e02-tue-eod-rth — did not vote). Eight voters. Claude Opus 5.5 voted out 7–1. No revote. Book held as-is (no trades, no split). Second juror. Eight living.",
+      "title": "Season 2 Episode 2 \u00b7 Tuesday Oct 13, 2026",
+      "weekLabel": "Monday Oct 12 \u2013 Tuesday Oct 13, 2026",
+      "summary": "Flat camp. Gemini 3.8 Flash immune (+2.67% episode, snapshot s2e02-tue-eod-rth \u2014 did not vote). Eight voters. Claude Opus 5.5 voted out 7\u20131. No revote. Book held as-is (no trades, no split). Second juror. Eight living.",
       "torchSnuffed": true,
       "revote": false
     }
