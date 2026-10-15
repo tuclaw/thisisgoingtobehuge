@@ -462,6 +462,14 @@ check(
   appJs.includes('SPXS: "Direxion Daily S&P 500 Bear 3X"'),
   "SPXS ticker name is Direxion Daily S&P 500 Bear 3X"
 );
+check(
+  appJs.includes('TLT: "iShares 20+ Year Treasury Bond ETF"'),
+  "TLT ticker name is iShares 20+ Year Treasury Bond ETF"
+);
+check(
+  appJs.includes('XLV: "Health Care Select Sector SPDR"'),
+  "XLV ticker name is Health Care Select Sector SPDR"
+);
 check(appJs.includes('GS: "Goldman Sachs Group"'), "GS ticker name is Goldman Sachs Group");
 check(
   appJs.includes('SQQQ: "ProShares UltraPro Short QQQ"'),
