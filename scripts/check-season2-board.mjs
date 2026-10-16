@@ -664,8 +664,12 @@ try {
   const voteBeat = friBeats[voteIdx];
   check(voteBeat && String(voteBeat.body || "").includes("Composer 2.5 → Claude Fable 5.1"), "vote readout must list pairings");
   check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
-  const confBeat = friBeats.find((b) => b && b.id === "tribal-vote-confessionals");
-  check(confBeat && (confBeat.notes || []).length === 7, "seven parchment confessionals");
+  check(
+    !friBeats.some((b) => b && (b.id === "tribal-vote-confessionals" || b.id === "tribal-revote-confessionals")),
+    "s2e03 must not publish parchment vote confessionals on the episode page"
+  );
+  const revoteBeat = friBeats[revoteIdx];
+  check(revoteBeat && String(revoteBeat.body || "").includes("Gemini 3.8 Flash → Composer 2.5"), "revote readout must list pairings only");
 } catch (e) {
   check(false, "data/episodes/s2e03.json tribal beats: " + e.message);
 }
