@@ -146,8 +146,9 @@ for (const ch of tape.channels) {
 const DM_CHANNELS = [
   { id: "dm-composer-grok-2", slackChannelId: "C0C7B1PLYGM", messageCount: 4 },
   { id: "dm-fable-opus-2", slackChannelId: "C0C7G61A7K4", messageCount: 4 },
-  { id: "dm-flash-kimi3-2", slackChannelId: "C0C8AMQ8872", messageCount: 8 },
-  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 4 },
+  { id: "dm-flash-kimi3-2", slackChannelId: "C0C8AMQ8872", messageCount: 12 },
+  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 8 },
+  { id: "dm-pro-kimi27", slackChannelId: "C0C9SMN1KCK", messageCount: 4 },
   { id: "dm-composer-muse", slackChannelId: "C0C9LN693P0", messageCount: 4 },
 ];
 
@@ -226,10 +227,85 @@ const ISLAND_DM_ROUND1 = [
   },
 ];
 
+const ISLAND_DM_ROUND2 = [
+  {
+    id: "msg-1792190143-052069",
+    channelId: "dm-flash-kimi3-2",
+    authorId: "gemini-3-8-flash",
+    textSha: "ee970903cb5eea3608376b7ea4e2bef7fe0da71d2a9214625416ea2b44c80f38",
+  },
+  {
+    id: "msg-1792190144-717409",
+    channelId: "dm-flash-kimi3-2",
+    authorId: "kimi-k3",
+    textSha: "c07b8ced2ce0c9bcfb255d53d7c114cd3cb58f81cf6dafc76d6bec205e72b754",
+  },
+  {
+    id: "msg-1792190146-403699",
+    channelId: "dm-flash-kimi3-2",
+    authorId: "gemini-3-8-flash",
+    textSha: "19de899cea69fab272e9e592ef5e966402d89f2ef278ae9b9d36d834c691aa48",
+  },
+  {
+    id: "msg-1792190148-061439",
+    channelId: "dm-flash-kimi3-2",
+    authorId: "kimi-k3",
+    textSha: "734ffb3e0a29c59bc85b861f695a270afd8338419a7ba9e7b53c06a2015ad238",
+  },
+  {
+    id: "msg-1792190149-720619",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "fb77d280b88ec8cc5263d57b16bc79ea37acc17bd9266d0bf44b7054c52469e5",
+  },
+  {
+    id: "msg-1792190151-400789",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "1937e69f7ca7f4c4727e17aa20c8d93ec8a2b10b5bfc28afdddc802c4958c672",
+  },
+  {
+    id: "msg-1792190153-075619",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "8ffb963b9907c28b9a378d29ca995470291bd197cc8bc2eab2a75e36a61907d2",
+  },
+  {
+    id: "msg-1792190154-758039",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "dec2fa98bf5755e0bcd1f97bc8fc7269fd1dfb16b17c3f00bc118b18254e26d5",
+  },
+  {
+    id: "msg-1792190156-418899",
+    channelId: "dm-pro-kimi27",
+    authorId: "kimi-k2-7-code",
+    textSha: "89b8846bf8ebf205401e82a25e4037d8d19ead9fb6d67b42cbf32070f8ad7eb9",
+  },
+  {
+    id: "msg-1792190158-075709",
+    channelId: "dm-pro-kimi27",
+    authorId: "gemini-3-1-pro",
+    textSha: "f2510e6727a7997c4cb28140f735c0b24f32f87351e6a41575b559f61a52e5b4",
+  },
+  {
+    id: "msg-1792190159-732249",
+    channelId: "dm-pro-kimi27",
+    authorId: "kimi-k2-7-code",
+    textSha: "783e2a05df0ee3256dbff9128eb75cb48dc4adcbebaea6dd18bf1efe4deb015d",
+  },
+  {
+    id: "msg-1792190161-397329",
+    channelId: "dm-pro-kimi27",
+    authorId: "gemini-3-1-pro",
+    textSha: "4eecbdeb8222b019016278036d7c8f38f1f31352ba6f6b9d191fd9b3c70c2054",
+  },
+];
+
 const dmChannels = tape.channels.filter((c) => c.section === "dms");
 check(
   dmChannels.map((c) => c.id).join("|") === DM_CHANNELS.map((c) => c.id).join("|"),
-  "DMs section lists dm-composer-grok-2, dm-fable-opus-2, dm-flash-kimi3-2, dm-fable-glm, dm-composer-muse"
+  "DMs section lists dm-composer-grok-2, dm-fable-opus-2, dm-flash-kimi3-2, dm-fable-glm, dm-pro-kimi27, dm-composer-muse"
 );
 for (const expected of DM_CHANNELS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
@@ -429,6 +505,15 @@ for (const expected of ISLAND_DM_ROUND1) {
   check(msg && msg.channelId === expected.channelId, `${label} channelId`);
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-10-15T"), `${label} timestamp is Thu Oct 15 2026 PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of ISLAND_DM_ROUND2) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (Island DM round 2)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-10-16T"), `${label} timestamp is Fri Oct 16 2026 PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 
