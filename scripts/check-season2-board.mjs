@@ -44,8 +44,8 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 8, `expected 8 living (got ${activeLiving.length})`);
-check(data.livingCount === 8, "livingCount must be 8 after S2E02 tribal");
+check(activeLiving.length === 7, `expected 7 living (got ${activeLiving.length})`);
+check(data.livingCount === 7, "livingCount must be 7 after S2E03 tribal");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -397,6 +397,18 @@ check(
   "Claude Opus votedOutAt must be Tue Oct 13 2026"
 );
 
+const composer = survivors.find((s) => s && s.id === "s2-composer-2-5");
+check(composer && composer.status === "voted-out" && composer.jury === true, "Composer 2.5 must be voted-out jury");
+check(composer && composer.bookHeld === true, "Composer 2.5 book must be held until finale");
+check(composer && composer.bookUsd > 0, "Composer 2.5 bookUsd must stay marked (not boot-split to zero)");
+check(composer && composer.votedOut === true, "Composer 2.5 votedOut must be true");
+check(composer && composer.bootOrder === 3, "Composer 2.5 bootOrder must be 3 (third boot)");
+check(composer && composer.votedOutEpisode === "s2e03", "Composer votedOutEpisode must be s2e03");
+check(
+  composer && String(composer.votedOutAt || "").startsWith("2026-10-16"),
+  "Composer votedOutAt must be Fri Oct 16 2026"
+);
+
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 check(stylesCss.includes(".s2-row.is-voted-out"), "standings fade a voted-out row");
 check(stylesCss.includes(".face-card.is-voted-out"), "Meet the Contestants fades a voted-out card");
@@ -481,10 +493,10 @@ if (potStart > -1 && potEnd > potStart) {
     return { snapshotTotal };
   `)();
   const liveSnap = (Array.isArray(data.snapshots) ? data.snapshots : []).find(
-    (snap) => snap && snap.id === "s2e02-tue-eod-rth"
+    (snap) => snap && snap.id === "s2e03-fri-eod-rth"
   );
   if (!liveSnap || !liveSnap.books) {
-    check(false, "s2e02-tue-eod-rth must exist for the island-total check");
+    check(false, "s2e03-fri-eod-rth must exist for the island-total check");
   } else {
     const full = Object.values(liveSnap.books).reduce((acc, book) => {
       return book && typeof book.bookUsd === "number" ? acc + book.bookUsd : acc;
@@ -497,11 +509,13 @@ if (potStart > -1 && potEnd > potStart) {
     );
     const grokBook = liveSnap.books["s2-grok-4-7"];
     const opusBook = liveSnap.books["s2-claude-opus-5-5"];
+    const composerBook = liveSnap.books["s2-composer-2-5"];
     const without =
       rounded -
       (grokBook && grokBook.bookUsd ? grokBook.bookUsd : 0) -
-      (opusBook && opusBook.bookUsd ? opusBook.bookUsd : 0);
-    check(got > without + 1, "island total must not subtract jury books after S2E02 tribal");
+      (opusBook && opusBook.bookUsd ? opusBook.bookUsd : 0) -
+      (composerBook && composerBook.bookUsd ? composerBook.bookUsd : 0);
+    check(got > without + 1, "island total must not subtract jury books after S2E03 tribal");
   }
 }
 
@@ -521,6 +535,10 @@ if (livingStart > -1 && livingEnd > livingStart) {
   check(
     livingAt(data, opus, "2026-10-14T16:00:00Z") === true,
     "Claude Opus 5.5 stays on the contestants diagram after S2E02 tribal"
+  );
+  check(
+    livingAt(data, composer, "2026-10-17T16:00:00Z") === true,
+    "Composer 2.5 stays on the contestants diagram after S2E03 tribal"
   );
   check(
     livingAt(data, { id: "s1-boot", status: "jury" }, "2026-10-10T16:00:00Z") === false,
@@ -546,8 +564,12 @@ if (tribal) {
 }
 
 check(
-  data.immunity && String(data.immunity.note || "").includes("Gemini 3.8 Flash"),
-  "immunity note must record Gemini 3.8 Flash necklace at S2E02 tribal"
+  data.immunity && String(data.immunity.note || "").includes("Muse Spark 1.3"),
+  "immunity note must record Muse Spark 1.3 necklace at S2E03 tribal"
+);
+check(
+  data.immunity && String(data.immunity.basis || "").includes("S2E03"),
+  "immunity basis must clear after S2E03 tribal"
 );
 
 const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
@@ -604,6 +626,72 @@ if (tribal2) {
       "Claude Opus 5.5>Kimi K3|Claude Fable 5.1>Claude Opus 5.5|Composer 2.5>Claude Opus 5.5|Gemini 3.1 Pro>Claude Opus 5.5|Muse Spark 1.3>Claude Opus 5.5|GLM 5.2>Claude Opus 5.5|Kimi K2.7 Code>Claude Opus 5.5|Kimi K3>Claude Opus 5.5",
     "S2E02 tribalLog votes must match official pairings"
   );
+}
+
+const e3 = episodes.find((ep) => ep && ep.id === "s2e03");
+check(e3, "episodes must list s2e03");
+if (e3) {
+  check(e3.status === "closed", "s2e03 must be closed after Fri tribal");
+  check(e3.boot === "Composer 2.5", "s2e03 boot must be Composer 2.5");
+  check(e3.weekBoardSnapshotId === "s2e03-fri-eod-rth", "s2e03 weekBoardSnapshotId must be s2e03-fri-eod-rth");
+  check(e3.weekEnd === "2026-10-16", "s2e03 weekEnd must be 2026-10-16");
+}
+const e3CopyPath = join(root, "data", "episodes", "s2e03.json");
+try {
+  const e3Copy = JSON.parse(readFileSync(e3CopyPath, "utf8"));
+  check(e3Copy.season === 2 && e3Copy.number === 3, "s2e03.json season/number");
+  const friDay = (e3Copy.days || []).find((day) => day && day.id === "friday");
+  const friBeats = friDay && Array.isArray(friDay.beats) ? friDay.beats : [];
+  const booksIdx = friBeats.findIndex((b) => b && b.id === "fri-eod-rth-books");
+  const prevoteIdx = friBeats.findIndex((b) => b && b.id === "tribal-prevote");
+  const stmtIdx = friBeats.findIndex((b) => b && b.id === "tribal-statements");
+  const voteIdx = friBeats.findIndex((b) => b && b.id === "tribal-vote-readout");
+  const revoteIdx = friBeats.findIndex((b) => b && b.id === "tribal-revote-readout");
+  const cutIdx = friBeats.findIndex((b) => b && b.id === "tribal-cut");
+  const finalIdx = friBeats.findIndex((b) => b && b.id === "composer-final-words");
+  const exitIdx = friBeats.findIndex((b) => b && b.id === "composer-exit-interview");
+  check(prevoteIdx > booksIdx, "tribal booths must follow Fri close books");
+  check(stmtIdx > prevoteIdx, "tribal statements must follow booths");
+  check(voteIdx > stmtIdx, "vote readout must follow statements");
+  check(revoteIdx > voteIdx, "revote readout must follow round-one vote");
+  check(cutIdx > revoteIdx, "tribal-cut must follow revote readout");
+  check(finalIdx > cutIdx, "final words must follow tribal-cut");
+  check(exitIdx > finalIdx, "exit interview must follow final words");
+  const prevoteBeat = friBeats[prevoteIdx];
+  check(prevoteBeat && (prevoteBeat.items || []).length === 3, "three pre-tribal booths");
+  const stmtBeat = friBeats[stmtIdx];
+  check(stmtBeat && (stmtBeat.notes || []).length === 8, "eight pre-vote statements");
+  const voteBeat = friBeats[voteIdx];
+  check(voteBeat && String(voteBeat.body || "").includes("Composer 2.5 → Claude Fable 5.1"), "vote readout must list pairings");
+  check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
+  const confBeat = friBeats.find((b) => b && b.id === "tribal-vote-confessionals");
+  check(confBeat && (confBeat.notes || []).length === 7, "seven parchment confessionals");
+} catch (e) {
+  check(false, "data/episodes/s2e03.json tribal beats: " + e.message);
+}
+
+const tribal3 = log.find((row) => row && row.episode === "s2e03");
+check(tribal3, "tribalLog must include S2E03 council");
+if (tribal3) {
+  check(tribal3.bootName === "Composer 2.5", "S2E03 bootName must be Composer 2.5");
+  check(tribal3.bookHeld === true, "S2E03 tribal bookHeld must be true");
+  check(tribal3.revote === true, "S2E03 tribal must record revote");
+  check(tribal3.individualImmunity === "s2-muse-spark-1-3", "S2E03 immunity record must pin Muse Spark 1.3");
+  check(tribal3.tally && tribal3.tally["Kimi K3"] === 3 && tribal3.tally["Composer 2.5"] === 3, "round-one tie tally");
+  check(tribal3.revoteTally && tribal3.revoteTally["Composer 2.5"] === 3, "Composer revote tally must be 3");
+  const pairings3 = (tribal3.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    pairings3 ===
+      "Claude Fable 5.1>Kimi K3|Composer 2.5>Claude Fable 5.1|Gemini 3.8 Flash>Composer 2.5|Gemini 3.1 Pro>Composer 2.5|GLM 5.2>Kimi K3|Kimi K2.7 Code>Kimi K3|Kimi K3>Composer 2.5",
+    "S2E03 tribalLog votes must match official pairings"
+  );
+  const revotePairings = (tribal3.revoteVotes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    revotePairings ===
+      "Claude Fable 5.1>Kimi K3|Gemini 3.8 Flash>Composer 2.5|Gemini 3.1 Pro>Composer 2.5|GLM 5.2>Kimi K3|Kimi K2.7 Code>Composer 2.5",
+    "S2E03 revoteVotes must match official pairings"
+  );
+  check(!(tribal3.votes || []).some((v) => v && v.text), "S2E03 tribalLog votes must not store private confessionals");
 }
 
 if (errors.length) {
