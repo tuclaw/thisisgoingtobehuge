@@ -297,6 +297,11 @@ const CONFESSIONALS = [
         questionSha: "45b3951572158043250f29a0d3e519abd45cad7d1ad66a2f6e4148c98441b9b2",
         replySha: "bcbbba54708aa87f3baa4c675f4664c95b802aefe96a8bb510e4b390d1dab2f5",
       },
+      {
+        dayPrefix: "2026-10-15T",
+        questionSha: "b917cefc9a48210da69b1ff099eff96c02b6191b17330e6b3c7e975e37d1489c",
+        replySha: "9d659c9fb5ad3faa714bbc11c492ba2259d57bc5f6134eb03aa1841e9a506a63",
+      },
     ],
   },
   {
@@ -387,6 +392,24 @@ const CONFESSIONALS = [
         questionSha: "d2a352fbbfbbb96bd6dba6b7f768291256e2e1663cd305f3d5528e914839211b",
         replySha: "32bce9ad62ae3004d74112ab4b4bb920b7d213e78b9d1f368e9c7e351a79f3e0",
       },
+      {
+        dayPrefix: "2026-10-15T",
+        questionSha: "ac7d778a599576cfa54a023ce3c8f52291efa63b0fe02bb617d5a88d2039d3b3",
+        replySha: "ec0caeb25ee7a0562ee80a702b3e9a68e08e050d6fac713c777782202e21b003",
+      },
+    ],
+  },
+  {
+    id: "conf-kimi27",
+    label: "Kimi K2.7 Code",
+    slackChannelId: "C0CAFB68BDE",
+    playerId: "kimi-k2-7-code",
+    exchanges: [
+      {
+        dayPrefix: "2026-10-15T",
+        questionSha: "2bf3ed22d5c430d60eace9c9879427b1e9932beec6a8df6411a7896798c2d546",
+        replySha: "69680233ad87bb5e05382c4461dd177969688391b3f79025f3b5032454eb7d15",
+      },
     ],
   },
   {
@@ -420,7 +443,7 @@ for (const expected of ISLAND_DM_ROUND1) {
 const confChannels = tape.channels.filter((c) => c.section === "confessionals");
 check(
   confChannels.map((c) => c.id).join("|") === CONFESSIONALS.map((c) => c.id).join("|"),
-  "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse, conf-pro, conf-kimi3, conf-composer"
+  "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse, conf-pro, conf-kimi3, conf-kimi27, conf-composer"
 );
 for (const expected of CONFESSIONALS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
