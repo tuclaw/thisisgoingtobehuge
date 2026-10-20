@@ -147,8 +147,9 @@ const DM_CHANNELS = [
   { id: "dm-composer-grok-2", slackChannelId: "C0C7B1PLYGM", messageCount: 4 },
   { id: "dm-fable-opus-2", slackChannelId: "C0C7G61A7K4", messageCount: 4 },
   { id: "dm-flash-kimi3-2", slackChannelId: "C0C8AMQ8872", messageCount: 12 },
-  { id: "dm-flash-muse", slackChannelId: "C0CAGR9RSKC", messageCount: 4 },
-  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 12 },
+  { id: "dm-flash-muse", slackChannelId: "C0CAGR9RSKC", messageCount: 8 },
+  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 16 },
+  { id: "dm-pro-kimi3", slackChannelId: "C0CATFC9E2W", messageCount: 4 },
   { id: "dm-pro-kimi27", slackChannelId: "C0C9SMN1KCK", messageCount: 8 },
   { id: "dm-composer-muse", slackChannelId: "C0C9LN693P0", messageCount: 4 },
 ];
@@ -378,10 +379,85 @@ const ISLAND_DM_ROUND3 = [
   },
 ];
 
+const ISLAND_DM_ROUND4 = [
+  {
+    id: "msg-1792535880-100039",
+    channelId: "dm-pro-kimi3",
+    authorId: "gemini-3-1-pro",
+    textSha: "6c70dba085f872b2bebdaf40a493f552e596e771303965a743aee255f0f953bb",
+  },
+  {
+    id: "msg-1792535881-767579",
+    channelId: "dm-pro-kimi3",
+    authorId: "kimi-k3",
+    textSha: "5068319b4ff093fbd6e0ef4ce828bdb90365b541afef637e2d4e6726d5167c52",
+  },
+  {
+    id: "msg-1792535883-435199",
+    channelId: "dm-pro-kimi3",
+    authorId: "gemini-3-1-pro",
+    textSha: "4d19107b7dc25a18c60fc5e3d93a034589b495abc846fb25fa0ba22344f719d9",
+  },
+  {
+    id: "msg-1792535885-097879",
+    channelId: "dm-pro-kimi3",
+    authorId: "kimi-k3",
+    textSha: "1e3a3a061b2750655d3087e9edd006c444990b3d11626cd8ea10ca0615046ce6",
+  },
+  {
+    id: "msg-1792535886-771219",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "eb905e5dc134b41a7a8291d6ba861cdfc5fd27171450465c2bd79f508b9f79c7",
+  },
+  {
+    id: "msg-1792535888-442389",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "5fedefff99f4e14b12b40d712c84fbbd8db77ac7e42296012113b62503652d9a",
+  },
+  {
+    id: "msg-1792535890-102819",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "3c55bea9e1fbb196de2b94ea391bc2fa4cf4e7d1c81f28690dd47e5aac810706",
+  },
+  {
+    id: "msg-1792535891-756809",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "843299d5d8a599137e9f92b329b5ec390b326e6e054a55381107d127426c27cd",
+  },
+  {
+    id: "msg-1792535893-416489",
+    channelId: "dm-flash-muse",
+    authorId: "muse-spark-1-3",
+    textSha: "0aa7e196dc2e2624b6369264e791e867d6a47b92d7970ab97b51104e6ea6e42d",
+  },
+  {
+    id: "msg-1792535895-079319",
+    channelId: "dm-flash-muse",
+    authorId: "gemini-3-8-flash",
+    textSha: "85cc7b76c42392af36d03ece206d28b9a71e89fbf35a8ba2ac35134a573d747a",
+  },
+  {
+    id: "msg-1792535896-768369",
+    channelId: "dm-flash-muse",
+    authorId: "muse-spark-1-3",
+    textSha: "5aaf01516bdc3e07b5abe25481c1aa08e72c7de164cefc3c2a4316616e684ca1",
+  },
+  {
+    id: "msg-1792535898-426369",
+    channelId: "dm-flash-muse",
+    authorId: "gemini-3-8-flash",
+    textSha: "fbfb7720e08959da6f01f8a1c5ba3182a58c228277872c4f3983ddbd7e9280bd",
+  },
+];
+
 const dmChannels = tape.channels.filter((c) => c.section === "dms");
 check(
   dmChannels.map((c) => c.id).join("|") === DM_CHANNELS.map((c) => c.id).join("|"),
-  "DMs section lists dm-composer-grok-2, dm-fable-opus-2, dm-flash-kimi3-2, dm-flash-muse, dm-fable-glm, dm-pro-kimi27, dm-composer-muse"
+  "DMs section lists dm-composer-grok-2, dm-fable-opus-2, dm-flash-kimi3-2, dm-flash-muse, dm-fable-glm, dm-pro-kimi3, dm-pro-kimi27, dm-composer-muse"
 );
 for (const expected of DM_CHANNELS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
@@ -435,6 +511,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-14T",
         questionSha: "b9a5108d77b1110d7980d12cdb3ba171ddfe611d111cb8443240e80e167589b2",
         replySha: "bf9309fd626a14472fbaf3ebd89679e1f7333d45b627b6e9e53d824c134d861e",
+      },
+      {
+        dayPrefix: "2026-10-20T",
+        questionSha: "d5832948eceb3a91cb831d24a7ce9f438a7b5ec0bf14361541da602c1e29eada",
+        replySha: "50f8966d8c6905501a2a3d25f6fab694fd4384e8cbb8961248da2d39903e5515",
       },
     ],
   },
@@ -561,6 +642,11 @@ const CONFESSIONALS = [
         questionSha: "e8c439dd309e18c54ec99a90c71f8adba7bac2cc27819241fb5aa3783544fe64",
         replySha: "8d218769f71ce9887c59180dc5c6edbc68455b06bf445af7f006f5c59876322b",
       },
+      {
+        dayPrefix: "2026-10-20T",
+        questionSha: "5bb89a1a2d842953a5023c49e4b3ba84a3539d29d8a7fcb183d38b166eea8a8a",
+        replySha: "7cceb20fb231b4fc68704ade9441322e972b979b86e102d2c61aca575511c26d",
+      },
     ],
   },
   {
@@ -588,6 +674,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-16T",
         questionSha: "0c8acc3b2af82511e96c630dd369f5558f3a736e57e4e69e0ffa67ab40a5170c",
         replySha: "c84b986c76f14f02f5cb2b5b5a568f927eab7a132233b829272aeec2c88f4859",
+      },
+      {
+        dayPrefix: "2026-10-20T",
+        questionSha: "876119bbb2dada9fd8d6b9ad3a397628e3fbbd81663181028e5e980a85c318be",
+        replySha: "ad2cb8a814d5b91a379c31d5f734e9133b2680b780783e494765eebc1041eefc",
       },
     ],
   },
@@ -657,6 +748,15 @@ for (const expected of ISLAND_DM_ROUND3) {
   check(msg && msg.channelId === expected.channelId, `${label} channelId`);
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-10-19T15:35:"), `${label} timestamp is Mon Oct 19 2026 ~3:35 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of ISLAND_DM_ROUND4) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (Island DM round 4)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-10-20T15:38:"), `${label} timestamp is Tue Oct 20 2026 ~3:38 PM PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 
