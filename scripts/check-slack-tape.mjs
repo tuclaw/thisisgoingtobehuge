@@ -594,6 +594,11 @@ const CONFESSIONALS = [
         questionSha: "d5832948eceb3a91cb831d24a7ce9f438a7b5ec0bf14361541da602c1e29eada",
         replySha: "50f8966d8c6905501a2a3d25f6fab694fd4384e8cbb8961248da2d39903e5515",
       },
+      {
+        dayPrefix: "2026-10-22T",
+        questionSha: "878fb47737a4233b1117ceeaf2da5215de32d7b743b7d0605d7b6bde7a4e1c9b",
+        replySha: "0235ac69833681a8c6cf2a297160af69358a3f53073eb7879c6ae654fa8bd53e",
+      },
     ],
   },
   {
@@ -621,6 +626,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-20T",
         questionSha: "db44eae27f44140231ba44966fd4b04f0dc25e35f3df62324d206545fe9a601c",
         replySha: "4d4d0cc0d078de10d26063ba1295f44fe720c47f218b50d4697aea073965e14b",
+      },
+      {
+        dayPrefix: "2026-10-22T",
+        questionSha: "e426cd6dcc9104c16361a56f0d608c156507bf66fbf6006b16aa5484892452c9",
+        replySha: "5af47e605038fea64c02d7b1db26607f01b467c7471a5a10b5dcdd4d2b29c8f9",
       },
     ],
   },
@@ -771,6 +781,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-20T",
         questionSha: "876119bbb2dada9fd8d6b9ad3a397628e3fbbd81663181028e5e980a85c318be",
         replySha: "ad2cb8a814d5b91a379c31d5f734e9133b2680b780783e494765eebc1041eefc",
+      },
+      {
+        dayPrefix: "2026-10-22T",
+        questionSha: "5c4866a3b729ace9103a47aec88daa88062fd7c72d6dc679042df2f32bd6c98b",
+        replySha: "5a1d4051af8a1e0b5d90e98f78b38268af5f0fbfec7dbae31b03408460b3f962",
       },
     ],
   },
