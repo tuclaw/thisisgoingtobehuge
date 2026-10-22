@@ -523,7 +523,7 @@ function groupSnapshotFills(fills) {
 }
 
 function fillVerb(fill) {
-  const ticker = escapeHtml(fill.ticker || "");
+  const ticker = escapeHtml(tickerName(fill.ticker || ""));
   if (fill.side === "sell") {
     const verb = fill.how === "trim" ? "sold some" : "sold";
     return `<span class="s2-verb is-sell">${verb} ${ticker}</span>`;
@@ -543,7 +543,7 @@ function holdingsHtml(s) {
         const size = typeof pos.sizeUsd === "number" ? money(pos.sizeUsd) : "";
         return `<li class="is-cash"><strong>Cash</strong>${size ? `<b>${escapeHtml(size)}</b>` : ""}</li>`;
       }
-      const ticker = escapeHtml(tickerOf(pos));
+      const ticker = escapeHtml(tickerName(tickerOf(pos)));
       const marked = typeof pos.sizeUsd === "number" ? money(pos.sizeUsd) : "";
       return `<li class="is-hold"><strong>${ticker}</strong>${marked ? `<b>${escapeHtml(marked)}</b>` : ""}</li>`;
     })
@@ -904,6 +904,7 @@ const TICKER_NAMES = {
   SOXL: "Direxion Daily Semiconductor Bull 3X",
   SOXS: "Direxion Daily Semiconductor Bear 3X",
   FAS: "Direxion Daily Financial Bull 3X",
+  ERX: "Direxion Daily Energy Bull 2X",
   XLE: "Energy Select Sector SPDR",
   XLF: "Financial Select Sector SPDR",
   QID: "ProShares UltraShort QQQ",
@@ -914,6 +915,12 @@ const TICKER_NAMES = {
   SOFI: "SoFi Technologies",
   COWZ: "Pacer US Cash Cows 100",
   GLD: "SPDR Gold Shares",
+  TLT: "iShares 20+ Year Treasury Bond ETF",
+  GS: "Goldman Sachs Group",
+  SQQQ: "ProShares UltraPro Short QQQ",
+  XLP: "Consumer Staples Select Sector SPDR",
+  XLV: "Health Care Select Sector SPDR",
+  SPXS: "Direxion Daily S&P 500 Bear 3X",
   SPY: "SPDR S&P 500",
   NVDA: "NVIDIA",
   MSFT: "Microsoft",

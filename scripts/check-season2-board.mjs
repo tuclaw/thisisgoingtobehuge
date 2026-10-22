@@ -492,6 +492,35 @@ check(appJs.includes('FAS: "Direxion Daily Financial Bull 3X"'), "FAS ticker nam
 check(appJs.includes('XLE: "Energy Select Sector SPDR"'), "XLE ticker name is Energy Select Sector SPDR");
 check(appJs.includes('XLF: "Financial Select Sector SPDR"'), "XLF ticker name is Financial Select Sector SPDR");
 check(appJs.includes('SOXS: "Direxion Daily Semiconductor Bear 3X"'), "SOXS ticker name is Direxion Daily Semiconductor Bear 3X");
+check(
+  appJs.includes('ERX: "Direxion Daily Energy Bull 2X"'),
+  "ERX ticker name is Direxion Daily Energy Bull 2X"
+);
+check(
+  appJs.includes('SPXS: "Direxion Daily S&P 500 Bear 3X"'),
+  "SPXS ticker name is Direxion Daily S&P 500 Bear 3X"
+);
+check(
+  appJs.includes('TLT: "iShares 20+ Year Treasury Bond ETF"'),
+  "TLT ticker name is iShares 20+ Year Treasury Bond ETF"
+);
+check(
+  appJs.includes('XLV: "Health Care Select Sector SPDR"'),
+  "XLV ticker name is Health Care Select Sector SPDR"
+);
+check(appJs.includes('GS: "Goldman Sachs Group"'), "GS ticker name is Goldman Sachs Group");
+check(
+  appJs.includes('SQQQ: "ProShares UltraPro Short QQQ"'),
+  "SQQQ ticker name is ProShares UltraPro Short QQQ"
+);
+check(
+  appJs.includes('XLP: "Consumer Staples Select Sector SPDR"'),
+  "XLP ticker name is Consumer Staples Select Sector SPDR"
+);
+check(
+  /function holdingsHtml[\s\S]*?tickerName\(tickerOf\(pos\)\)/.test(appJs),
+  "S2 holdings must print fund names via tickerName"
+);
 
 const potStart = appJs.indexOf("function survivorInIslandPotAt");
 const potEnd = appJs.indexOf("function pacificDayLabel");
