@@ -44,8 +44,8 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 6, `expected 6 living (got ${activeLiving.length})`);
-check(data.livingCount === 6, "livingCount must be 6 after S2E04 tribal");
+check(activeLiving.length === 5, `expected 5 living (got ${activeLiving.length})`);
+check(data.livingCount === 5, "livingCount must be 5 after S2E05 tribal");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -422,6 +422,19 @@ check(
 );
 check(kimi27 && kimi27.bootBookUsd === 216.6803, "Kimi K2.7 Code bootBookUsd must match s2e04-tue-eod-rth");
 
+const flash = survivors.find((s) => s && s.id === "s2-gemini-3-8-flash");
+check(flash && flash.status === "voted-out" && flash.jury === true, "Gemini 3.8 Flash must be voted-out jury");
+check(flash && flash.bookHeld === true, "Gemini 3.8 Flash book must be held until finale");
+check(flash && flash.bookUsd > 0, "Gemini 3.8 Flash bookUsd must stay marked (not boot-split to zero)");
+check(flash && flash.votedOut === true, "Gemini 3.8 Flash votedOut must be true");
+check(flash && flash.bootOrder === 5, "Gemini 3.8 Flash bootOrder must be 5 (fifth boot)");
+check(flash && flash.votedOutEpisode === "s2e05", "Gemini 3.8 Flash votedOutEpisode must be s2e05");
+check(
+  flash && String(flash.votedOutAt || "").startsWith("2026-10-23"),
+  "Gemini 3.8 Flash votedOutAt must be Fri Oct 23 2026"
+);
+check(flash && flash.bootBookUsd === 203.2133, "Gemini 3.8 Flash bootBookUsd must match s2e05-fri-eod-rth");
+
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 check(stylesCss.includes(".s2-row.is-voted-out"), "standings fade a voted-out row");
 check(stylesCss.includes(".face-card.is-voted-out"), "Meet the Contestants fades a voted-out card");
@@ -444,8 +457,11 @@ if (ordStart > -1 && ordEnd > ordStart) {
     "boot 1 must read Voted out · 1st"
   );
   check(
-    labels.bootOrdinal(2) === "2nd" && labels.bootOrdinal(3) === "3rd" && labels.bootOrdinal(4) === "4th",
-    "later boots use 2nd, 3rd, and 4th"
+    labels.bootOrdinal(2) === "2nd" &&
+      labels.bootOrdinal(3) === "3rd" &&
+      labels.bootOrdinal(4) === "4th" &&
+      labels.bootOrdinal(5) === "5th",
+    "later boots use 2nd through 5th"
   );
   check(labels.bootOrdinal(11) === "11th" && labels.bootOrdinal(12) === "12th", "teen ordinals stay th");
   check(
@@ -509,10 +525,10 @@ if (potStart > -1 && potEnd > potStart) {
     return { snapshotTotal };
   `)();
   const liveSnap = (Array.isArray(data.snapshots) ? data.snapshots : []).find(
-    (snap) => snap && snap.id === "s2e04-tue-eod-rth"
+    (snap) => snap && snap.id === "s2e05-fri-eod-rth"
   );
   if (!liveSnap || !liveSnap.books) {
-    check(false, "s2e04-tue-eod-rth must exist for the island-total check");
+    check(false, "s2e05-fri-eod-rth must exist for the island-total check");
   } else {
     const full = Object.values(liveSnap.books).reduce((acc, book) => {
       return book && typeof book.bookUsd === "number" ? acc + book.bookUsd : acc;
@@ -527,13 +543,15 @@ if (potStart > -1 && potEnd > potStart) {
     const opusBook = liveSnap.books["s2-claude-opus-5-5"];
     const composerBook = liveSnap.books["s2-composer-2-5"];
     const kimi27Book = liveSnap.books["s2-kimi-k2-7-code"];
+    const flashBook = liveSnap.books["s2-gemini-3-8-flash"];
     const without =
       rounded -
       (grokBook && grokBook.bookUsd ? grokBook.bookUsd : 0) -
       (opusBook && opusBook.bookUsd ? opusBook.bookUsd : 0) -
       (composerBook && composerBook.bookUsd ? composerBook.bookUsd : 0) -
-      (kimi27Book && kimi27Book.bookUsd ? kimi27Book.bookUsd : 0);
-    check(got > without + 1, "island total must not subtract jury books after S2E04 tribal");
+      (kimi27Book && kimi27Book.bookUsd ? kimi27Book.bookUsd : 0) -
+      (flashBook && flashBook.bookUsd ? flashBook.bookUsd : 0);
+    check(got > without + 1, "island total must not subtract jury books after S2E05 tribal");
   }
 }
 
@@ -563,6 +581,10 @@ if (livingStart > -1 && livingEnd > livingStart) {
     "Kimi K2.7 Code stays on the contestants diagram after S2E04 tribal"
   );
   check(
+    livingAt(data, flash, "2026-10-24T16:00:00Z") === true,
+    "Gemini 3.8 Flash stays on the contestants diagram after S2E05 tribal"
+  );
+  check(
     livingAt(data, { id: "s1-boot", status: "jury" }, "2026-10-10T16:00:00Z") === false,
     "a boot without a held book still drops off the diagram after tribal"
   );
@@ -586,12 +608,12 @@ if (tribal) {
 }
 
 check(
-  data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
-  "immunity note must record Gemini 3.1 Pro necklace at S2E04 tribal"
+  data.immunity && String(data.immunity.note || "").includes("Kimi K3"),
+  "immunity note must record Kimi K3 necklace at S2E05 tribal"
 );
 check(
-  data.immunity && String(data.immunity.basis || "").includes("S2E04"),
-  "immunity basis must clear after S2E04 tribal"
+  data.immunity && String(data.immunity.basis || "").includes("S2E05"),
+  "immunity basis must clear after S2E05 tribal"
 );
 
 const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
@@ -783,6 +805,77 @@ if (tribal4) {
     "S2E04 tribalLog votes must match official pairings"
   );
   check(!(tribal4.votes || []).some((v) => v && v.text), "S2E04 tribalLog votes must not store private confessionals");
+}
+
+const e5 = episodes.find((ep) => ep && ep.id === "s2e05");
+check(e5, "episodes must list s2e05");
+if (e5) {
+  check(e5.status === "closed", "s2e05 must be closed after Fri tribal");
+  check(e5.boot === "Gemini 3.8 Flash", "s2e05 boot must be Gemini 3.8 Flash");
+  check(e5.weekBoardSnapshotId === "s2e05-fri-eod-rth", "s2e05 weekBoardSnapshotId must be s2e05-fri-eod-rth");
+  check(e5.liveSnapshotId === "s2e05-fri-eod-rth", "s2e05 liveSnapshotId must be s2e05-fri-eod-rth");
+  check(e5.weekEnd === "2026-10-23", "s2e05 weekEnd must be 2026-10-23");
+}
+const e5CopyPath = join(root, "data", "episodes", "s2e05.json");
+try {
+  const e5Copy = JSON.parse(readFileSync(e5CopyPath, "utf8"));
+  check(e5Copy.season === 2 && e5Copy.number === 5, "s2e05.json season/number");
+  const friDay = (e5Copy.days || []).find((day) => day && day.id === "friday");
+  const friBeats = friDay && Array.isArray(friDay.beats) ? friDay.beats : [];
+  const booksIdx = friBeats.findIndex((b) => b && b.id === "fri-eod-rth-books");
+  const boothIdx = friBeats.findIndex((b) => b && b.id === "tribal-prevote");
+  const stmtIdx = friBeats.findIndex((b) => b && b.id === "tribal-statements");
+  const voteIdx = friBeats.findIndex((b) => b && b.id === "tribal-vote-readout");
+  const confIdx = friBeats.findIndex((b) => b && b.id === "tribal-vote-confessionals");
+  const cutIdx = friBeats.findIndex((b) => b && b.id === "tribal-cut");
+  const finalIdx = friBeats.findIndex((b) => b && b.id === "gemini-3-8-flash-final-words");
+  const exitIdx = friBeats.findIndex((b) => b && b.id === "gemini-3-8-flash-exit-interview");
+  check(boothIdx > booksIdx, "pre-tribal booths must follow Fri close books");
+  check(stmtIdx > boothIdx, "tribal statements must follow pre-tribal booths");
+  check(voteIdx > stmtIdx, "vote readout must follow statements");
+  check(confIdx > voteIdx, "vote confessionals must follow vote readout");
+  check(cutIdx > confIdx, "tribal-cut must follow vote confessionals");
+  check(finalIdx > cutIdx, "final words must follow tribal-cut");
+  check(exitIdx > finalIdx, "exit interview must follow final words");
+  const boothBeat = friBeats[boothIdx];
+  check(boothBeat && (boothBeat.items || []).length === 3, "three pre-tribal booths");
+  const stmtBeat = friBeats[stmtIdx];
+  check(stmtBeat && (stmtBeat.notes || []).length === 6, "six pre-vote statements");
+  const voteBeat = friBeats[voteIdx];
+  check(
+    voteBeat && String(voteBeat.body || "").includes("Claude Fable 5.1 → Gemini 3.8 Flash"),
+    "vote readout must list pairings"
+  );
+  check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
+  const confBeat = friBeats[confIdx];
+  check(confBeat && (confBeat.items || []).length === 5, "five vote parchment confessionals");
+  const exitBeat = friBeats[exitIdx];
+  check(
+    exitBeat && String(exitBeat.body || "").includes("either GLM or Muse broke our quiet trust"),
+    "Gemini 3.8 Flash exit interview must be verbatim audience copy"
+  );
+} catch (e) {
+  check(false, "data/episodes/s2e05.json tribal beats: " + e.message);
+}
+
+const tribal5 = log.find((row) => row && row.episode === "s2e05");
+check(tribal5, "tribalLog must include S2E05 council");
+if (tribal5) {
+  check(tribal5.bootName === "Gemini 3.8 Flash", "S2E05 bootName must be Gemini 3.8 Flash");
+  check(tribal5.bookHeld === true, "S2E05 tribal bookHeld must be true");
+  check(tribal5.revote === false, "S2E05 tribal must not record revote");
+  check(tribal5.individualImmunity === "s2-kimi-k3", "S2E05 immunity record must pin Kimi K3");
+  check(
+    tribal5.tally && tribal5.tally["Gemini 3.8 Flash"] === 3 && tribal5.tally["Gemini 3.1 Pro"] === 2,
+    "S2E05 tally must be 3–2"
+  );
+  const pairings5 = (tribal5.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    pairings5 ===
+      "Claude Fable 5.1>Gemini 3.8 Flash|Gemini 3.8 Flash>Gemini 3.1 Pro|Gemini 3.1 Pro>Gemini 3.8 Flash|Muse Spark 1.3>Gemini 3.1 Pro|GLM 5.2>Gemini 3.8 Flash",
+    "S2E05 tribalLog votes must match official pairings"
+  );
+  check(!(tribal5.votes || []).some((v) => v && v.text), "S2E05 tribalLog votes must not store private confessionals");
 }
 
 if (errors.length) {
