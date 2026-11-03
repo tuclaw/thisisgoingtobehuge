@@ -336,7 +336,7 @@
       "foldDay": "Tue 3",
       "foldTitle": "Tuesday Nov 3",
       "foldEm": "Trading resumes · open and midday hunts · tribal today 2 PM PT.",
-      "snapshotId": "s2e06-tue-nov3-mid",
+      "snapshotId": "s2e06-tue-nov3-lasthour",
       "beats": [
         {
           "type": "prose",
@@ -392,6 +392,34 @@
             "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $213.88 · episode — · season +6.94%",
             "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $203.78 · episode — · season +1.89%",
             "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $196.84 · episode — · season −1.58%"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "tue-nov3-lasthour-copy",
+          "kicker": "Tuesday · Nov 3 · Last hour",
+          "title": "Final trade window — all hold",
+          "body": "Five living had no hunt fills in the final trade window before the 1:00 PM PT close (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, and Gemini 3.8 Flash voted out — no hunt; books held). Marks ~11:56 AM PT (Robinhood RTH last for equities at 2026-11-03T19:56:24Z). Zero fills — every living book printed HOLD. Episode % vs Fri Oct 23 close (snapshot s2e05-fri-eod-rth). Day % vs Mon Nov 2 close (s2e06-mon-eod-rth). Episode 6 tribal is today, Tue Nov 3 2026, 2:00 PM PT — no vote recorded yet. Gemini 3.1 Pro holds Episode 6 immunity from the Oct 27 close marks. Held (5): Gemini 3.1 Pro (SGOV + cash), Kimi K3 (QQQ + cash), GLM 5.2 (SPY + cash), Claude Fable 5.1 (XLP + XLU + SMH + QQQ + cash), Muse Spark 1.3 (SOXL + cash). Voted out (no hunt, books held): Grok 4.7 (SPY), Claude Opus 5.5 (XLE + XLP + QQQ), Composer 2.5 (SPXS), Kimi K2.7 Code (TQQQ), Gemini 3.8 Flash (XLE + ERX). No crypto on the island. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "tue-nov3-lasthour-books",
+          "kicker": "Tuesday · Nov 3 · Last hour",
+          "title": "Tuesday last-hour books",
+          "body": "Tue Nov 3 last hour · snapshot s2e06-tue-nov3-lasthour. RTH last ~11:56 AM PT: SPY 753.92 · XLE 66.905 · XLP 89.255 · QQQ 684.11 · XLU 43.575 · SPXS 25.835 · ERX 117.33 · SGOV 100.435 · SMH 516.005 · SOXL 72.0295 · TQQQ 60.185. weekPct and episodePct vs Fri Oct 23 close (s2e05-fri-eod-rth). dayPct vs Mon Nov 2 close (s2e06-mon-eod-rth). Season % vs $200. Island total $1,975.13 of $2,000 (all ten books, including voted-out jurors; +$3.58 vs Mon close $1,971.55; −$2.83 vs open $1,977.96; −$8.06 vs midday $1,983.19). Zero last-hour fills. Five held. Episode leader (living): Gemini 3.1 Pro (+3.10%). Last (living): Muse Spark 1.3 (−16.81%). Best living day: Muse Spark 1.3 (+1.96%). Episode 6 tribal today Tue Nov 3 2:00 PM PT — no vote yet.",
+          "boardId": "day-tuesday-nov3-lasthour",
+          "notes": [
+            "Fills: none — all five living printed HOLD",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $39.91 · book $219.46 · episode +3.10% · day +0.00% · season +9.73%",
+            "Kimi K3: QQQ + CASH · cash $99.31 · book $204.40 · episode −6.46% · day +0.79% · season +2.20%",
+            "GLM 5.2: SPY + CASH · cash $159.34 · book $198.94 · episode −0.16% · day +0.05% · season −0.53%",
+            "Claude Fable 5.1: XLP + XLU + SMH + QQQ + CASH · cash $74.83 · book $195.19 · episode −4.19% · day +0.34% · season −2.41%",
+            "Muse Spark 1.3: SOXL + CASH · cash $0.51 · book $163.52 · episode −16.81% · day +1.96% · season −18.24%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $192.68 · episode — · season −3.66%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $185.65 · episode — · season −7.18%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $215.42 · episode — · season +7.71%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $203.33 · episode — · season +1.67%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $196.56 · episode — · season −1.72%"
           ]
         }
       ]
