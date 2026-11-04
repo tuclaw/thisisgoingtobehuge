@@ -755,6 +755,16 @@ const CONFESSIONALS = [
         questionSha: "2e083122f75806a5d1e9c9a80910d95975022df910e71c72c1317c9693849b43",
         replySha: "fdf9086eeec47e4cb75456ac3cea6b63971a0864d8335e80392400f9c54b08b0",
       },
+      {
+        dayPrefix: "2026-11-03T",
+        questionSha: "55551e3daa72f6f88b318cc08d6bf7a4503d3dc7f2d2f0f394b750d82a6f1992",
+        replySha: "8acf1691dede2beeb048ea9e60aa9296d7623dade61e5a8a7b87b39edefc3b66",
+      },
+      {
+        dayPrefix: "2026-11-04T",
+        questionSha: "e5746b81c58cb53ba75ddb938d528a6ed9a20c9bb6fa2d5175e78e37f4f2aeaf",
+        replySha: "708b07f13c2001286168ebdcbe17304155d93162949b958642cfbd03612ad76f",
+      },
     ],
   },
   {
@@ -831,6 +841,16 @@ const CONFESSIONALS = [
         questionSha: "4bcdfa5919b580acfa5d48698a8e6ea3accb8691c507b91fd47de5ee7b2684cd",
         replySha: "a7740c0e32755a5b80c968ae26b03bad7230ac58a0d20e268afc1cf141009f55",
       },
+      {
+        dayPrefix: "2026-11-03T",
+        questionSha: "5d428fcbcdd21665f4173b997e72e53980f78739914a6a4a73ff8f33592d41c2",
+        replySha: "0621a2a14d748404b974dc7ae478e281830a77df3750da02684b91f3ad7486ce",
+      },
+      {
+        dayPrefix: "2026-11-04T",
+        questionSha: "d2264353a0493fe8119273e82779a8bd54cb546480315782c0d23bb920150b8c",
+        replySha: "7ee9135dab2b1bd89158238c27b80aef56ee05e19c1bef46bd99663f6eecccf4",
+      },
     ],
   },
   {
@@ -891,6 +911,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-23T",
         questionSha: "87c5bcd48319ddb67b7e4fc61301cd35ec1b281669d9ef804b7b65e3487ff807",
         replySha: "7745db5940534bcece1d15f6db2e6103bd4f56efdb42fa63c625fdd3d5bb54c9",
+      },
+      {
+        dayPrefix: "2026-11-04T",
+        questionSha: "4a3f1d2278bb62b15df5b8587f81e8c1dd3dacc13e443fb8ecd3f5ef5eafd082",
+        replySha: "a540a5b242978b52f4ba996e06fe72e80d356a5333a712333f2944172d4f6e24",
       },
     ],
   },
@@ -967,6 +992,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-23T",
         questionSha: "f1a6bca61cd95897e61db8a8c61d7b97aa0c2d40eab65a5ed948143e5edc4ab9",
         replySha: "89d938926b46d527e7d61ac3c7bfe4e260f49c023a707b7ef793326ab02c83e0",
+      },
+      {
+        dayPrefix: "2026-11-03T",
+        questionSha: "27af1ce72def48049fad06e3b28a79486fb4cae31babf7fd15701cd3cfd827c2",
+        replySha: "581084bb45b45c4acfd213823754089acb5355530d3da71183f0206205905094",
       },
     ],
   },
@@ -1080,6 +1110,11 @@ check(
   confChannels.map((c) => c.id).join("|") === CONFESSIONALS.map((c) => c.id).join("|"),
   "Confessionals section lists conf-fable, conf-flash, conf-glm, conf-opus, conf-muse, conf-pro, conf-kimi3, conf-kimi27, conf-composer"
 );
+function pacificOffsetSuffix(dayPrefix) {
+  const month = Number(String(dayPrefix).slice(5, 7));
+  return month >= 11 || month < 3 ? "-08:00" : "-07:00";
+}
+
 for (const expected of CONFESSIONALS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
   check(ch && ch.kind === "confessional", `${expected.id} kind must be confessional`);
@@ -1104,12 +1139,13 @@ for (const expected of CONFESSIONALS) {
     check(r && r.authorId === expected.playerId, `${label} reply is the contestant`);
     check(q && !q.threadParentId, `${label} question is a top-level message`);
     check(r && !r.threadParentId, `${label} reply is a top-level message like a DM`);
+    const ptSuffix = pacificOffsetSuffix(pair.dayPrefix);
     check(
-      q && String(q.ts).startsWith(pair.dayPrefix) && String(q.ts).endsWith("-07:00"),
+      q && String(q.ts).startsWith(pair.dayPrefix) && String(q.ts).endsWith(ptSuffix),
       `${label} question timestamp is PT on ${pair.dayPrefix.slice(0, 10)}`
     );
     check(
-      r && String(r.ts).startsWith(pair.dayPrefix) && String(r.ts).endsWith("-07:00"),
+      r && String(r.ts).startsWith(pair.dayPrefix) && String(r.ts).endsWith(ptSuffix),
       `${label} reply timestamp is PT on ${pair.dayPrefix.slice(0, 10)}`
     );
     check(q && sha256(q.text) === pair.questionSha, `${label} question text is verbatim`);
