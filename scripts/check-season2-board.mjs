@@ -44,8 +44,8 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 5, `expected 5 living (got ${activeLiving.length})`);
-check(data.livingCount === 5, "livingCount must be 5 after S2E05 tribal");
+check(activeLiving.length === 4, `expected 4 living (got ${activeLiving.length})`);
+check(data.livingCount === 4, "livingCount must be 4 after S2E06 tribal");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -524,11 +524,13 @@ if (potStart > -1 && potEnd > potStart) {
     ${appJs.slice(potStart, potEnd)}
     return { snapshotTotal };
   `)();
+  const liveSnapId =
+    (data.episode && data.episode.liveSnapshotId) || "s2e07-wed-nov4-open";
   const liveSnap = (Array.isArray(data.snapshots) ? data.snapshots : []).find(
-    (snap) => snap && snap.id === "s2e05-fri-eod-rth"
+    (snap) => snap && snap.id === liveSnapId
   );
   if (!liveSnap || !liveSnap.books) {
-    check(false, "s2e05-fri-eod-rth must exist for the island-total check");
+    check(false, `${liveSnapId} must exist for the island-total check`);
   } else {
     const full = Object.values(liveSnap.books).reduce((acc, book) => {
       return book && typeof book.bookUsd === "number" ? acc + book.bookUsd : acc;
@@ -544,14 +546,16 @@ if (potStart > -1 && potEnd > potStart) {
     const composerBook = liveSnap.books["s2-composer-2-5"];
     const kimi27Book = liveSnap.books["s2-kimi-k2-7-code"];
     const flashBook = liveSnap.books["s2-gemini-3-8-flash"];
+    const k3Book = liveSnap.books["s2-kimi-k3"];
     const without =
       rounded -
       (grokBook && grokBook.bookUsd ? grokBook.bookUsd : 0) -
       (opusBook && opusBook.bookUsd ? opusBook.bookUsd : 0) -
       (composerBook && composerBook.bookUsd ? composerBook.bookUsd : 0) -
       (kimi27Book && kimi27Book.bookUsd ? kimi27Book.bookUsd : 0) -
-      (flashBook && flashBook.bookUsd ? flashBook.bookUsd : 0);
-    check(got > without + 1, "island total must not subtract jury books after S2E05 tribal");
+      (flashBook && flashBook.bookUsd ? flashBook.bookUsd : 0) -
+      (k3Book && k3Book.bookUsd ? k3Book.bookUsd : 0);
+    check(got > without + 1, "island total must not subtract jury books after S2E06 tribal");
   }
 }
 
@@ -608,12 +612,12 @@ if (tribal) {
 }
 
 check(
-  data.immunity && String(data.immunity.note || "").includes("Kimi K3"),
-  "immunity note must record Kimi K3 necklace at S2E05 tribal"
+  data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
+  "immunity note must record Gemini 3.1 Pro Episode 6 necklace at S2E06 tribal"
 );
 check(
-  data.immunity && String(data.immunity.basis || "").includes("S2E05"),
-  "immunity basis must clear after S2E05 tribal"
+  data.immunity && String(data.immunity.basis || "").includes("S2E06"),
+  "immunity basis must clear after S2E06 tribal"
 );
 
 const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
