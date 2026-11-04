@@ -588,6 +588,11 @@ if (livingStart > -1 && livingEnd > livingStart) {
     livingAt(data, flash, "2026-10-24T16:00:00Z") === true,
     "Gemini 3.8 Flash stays on the contestants diagram after S2E05 tribal"
   );
+  const k3 = survivors.find((s) => s && s.slug === "kimi-k3");
+  check(
+    livingAt(data, k3, "2026-11-04T16:00:00Z") === true,
+    "Kimi K3 stays on the contestants diagram after S2E06 tribal"
+  );
   check(
     livingAt(data, { id: "s1-boot", status: "jury" }, "2026-10-10T16:00:00Z") === false,
     "a boot without a held book still drops off the diagram after tribal"
@@ -880,6 +885,90 @@ if (tribal5) {
     "S2E05 tribalLog votes must match official pairings"
   );
   check(!(tribal5.votes || []).some((v) => v && v.text), "S2E05 tribalLog votes must not store private confessionals");
+}
+
+const e6 = episodes.find((ep) => ep && ep.id === "s2e06");
+check(e6, "episodes must list s2e06");
+if (e6) {
+  check(e6.status === "closed", "s2e06 must be closed after Tue Nov 3 tribal");
+  check(e6.boot === "Kimi K3", "s2e06 boot must be Kimi K3");
+  check(e6.weekBoardSnapshotId === "s2e06-tue-nov3-eod-rth", "s2e06 weekBoardSnapshotId must be s2e06-tue-nov3-eod-rth");
+  check(e6.liveSnapshotId === "s2e06-tue-nov3-eod-rth", "s2e06 liveSnapshotId must be s2e06-tue-nov3-eod-rth");
+}
+const e6CopyPath = join(root, "data", "episodes", "s2e06.json");
+try {
+  const e6Copy = JSON.parse(readFileSync(e6CopyPath, "utf8"));
+  check(e6Copy.season === 2 && e6Copy.number === 6, "s2e06.json season/number");
+  const tueDay = (e6Copy.days || []).find((day) => day && day.id === "tuesday-nov3");
+  const tueBeats = tueDay && Array.isArray(tueDay.beats) ? tueDay.beats : [];
+  const booksIdx = tueBeats.findIndex((b) => b && b.id === "tue-nov3-lasthour-books");
+  const boothIdx = tueBeats.findIndex((b) => b && b.id === "tribal-prevote");
+  const stmtIdx = tueBeats.findIndex((b) => b && b.id === "tribal-statements");
+  const voteIdx = tueBeats.findIndex((b) => b && b.id === "tribal-vote-readout");
+  const confIdx = tueBeats.findIndex((b) => b && b.id === "tribal-vote-confessionals");
+  const cutIdx = tueBeats.findIndex((b) => b && b.id === "tribal-cut");
+  const finalIdx = tueBeats.findIndex((b) => b && b.id === "kimi-k3-final-words");
+  const exitIdx = tueBeats.findIndex((b) => b && b.id === "kimi-k3-exit-interview");
+  check(boothIdx > booksIdx, "pre-tribal booths must follow Tue Nov 3 last-hour books");
+  check(stmtIdx > boothIdx, "tribal statements must follow pre-tribal booths");
+  check(voteIdx > stmtIdx, "vote readout must follow statements");
+  check(confIdx > voteIdx, "vote confessionals must follow vote readout");
+  check(cutIdx > confIdx, "tribal-cut must follow vote confessionals");
+  check(finalIdx > cutIdx, "final words must follow tribal-cut");
+  check(exitIdx > finalIdx, "exit interview must follow final words");
+  const boothBeat = tueBeats[boothIdx];
+  check(boothBeat && (boothBeat.items || []).length === 3, "three pre-tribal booths");
+  const stmtBeat = tueBeats[stmtIdx];
+  check(stmtBeat && (stmtBeat.notes || []).length === 5, "five pre-vote statements");
+  const voteBeat = tueBeats[voteIdx];
+  check(
+    voteBeat && String(voteBeat.body || "").includes("Claude Fable 5.1 → Muse Spark 1.3"),
+    "vote readout must list pairings"
+  );
+  check(voteBeat && String(voteBeat.body || "").includes("Revote"), "vote readout must include revote");
+  check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
+  const confBeat = tueBeats[confIdx];
+  check(confBeat && (confBeat.items || []).length === 6, "six vote parchment confessionals (incl. revote)");
+  const exitBeat = tueBeats[exitIdx];
+  check(
+    exitBeat && String(exitBeat.body || "").includes("Muse and GLM had my name down from the jump"),
+    "Kimi K3 exit interview must be verbatim audience copy"
+  );
+} catch (e) {
+  check(false, "data/episodes/s2e06.json tribal beats: " + e.message);
+}
+
+const tribal6 = log.find((row) => row && row.episode === "s2e06");
+check(tribal6, "tribalLog must include S2E06 council");
+if (tribal6) {
+  check(tribal6.bootName === "Kimi K3", "S2E06 bootName must be Kimi K3");
+  check(tribal6.bookHeld === true, "S2E06 tribal bookHeld must be true");
+  check(tribal6.revote === true, "S2E06 tribal must record revote");
+  check(tribal6.individualImmunity === "s2-gemini-3-1-pro", "S2E06 immunity record must pin Gemini 3.1 Pro");
+  check(
+    tribal6.tally && tribal6.tally["Muse Spark 1.3"] === 2 && tribal6.tally["Kimi K3"] === 2,
+    "S2E06 first-vote tally must be 2–2"
+  );
+  check(
+    tribal6.revoteTally && tribal6.revoteTally["Kimi K3"] === 2,
+    "S2E06 revote tally must be Kimi K3 2–0"
+  );
+  const pairings6 = (tribal6.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    pairings6 ===
+      "Claude Fable 5.1>Muse Spark 1.3|Muse Spark 1.3>Kimi K3|GLM 5.2>Kimi K3|Kimi K3>Muse Spark 1.3",
+    "S2E06 tribalLog votes must match official pairings"
+  );
+  const revotePairings6 = (tribal6.revoteVotes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    revotePairings6 === "Claude Fable 5.1>Kimi K3|GLM 5.2>Kimi K3",
+    "S2E06 tribalLog revote votes must match official pairings"
+  );
+  check(
+    String(tribal6.weekSource || "").includes("s2e06-tue-nov3-eod-rth"),
+    "S2E06 weekSource must pin Tue Nov 3 RTH snapshot"
+  );
+  check(!(tribal6.votes || []).some((v) => v && v.text), "S2E06 tribalLog votes must not store private confessionals");
 }
 
 if (errors.length) {

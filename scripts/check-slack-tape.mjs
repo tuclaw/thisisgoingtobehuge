@@ -148,10 +148,10 @@ const DM_CHANNELS = [
   { id: "dm-fable-opus-2", slackChannelId: "C0C7G61A7K4", messageCount: 4 },
   { id: "dm-flash-kimi3-2", slackChannelId: "C0C8AMQ8872", messageCount: 20 },
   { id: "dm-flash-muse", slackChannelId: "C0CAGR9RSKC", messageCount: 8 },
-  { id: "dm-glm-muse", slackChannelId: "C0CAYJJGSM9", messageCount: 8 },
-  { id: "dm-muse-pro", slackChannelId: "C0CBAP6EHKP", messageCount: 4 },
-  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 20 },
-  { id: "dm-fable-pro", slackChannelId: "C0CB2SFUXGE", messageCount: 8 },
+  { id: "dm-glm-muse", slackChannelId: "C0CAYJJGSM9", messageCount: 16 },
+  { id: "dm-muse-pro", slackChannelId: "C0CBAP6EHKP", messageCount: 8 },
+  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 28 },
+  { id: "dm-fable-pro", slackChannelId: "C0CB2SFUXGE", messageCount: 12 },
   { id: "dm-pro-kimi3", slackChannelId: "C0CATFC9E2W", messageCount: 8 },
   { id: "dm-pro-kimi27", slackChannelId: "C0C9SMN1KCK", messageCount: 8 },
   { id: "dm-composer-muse", slackChannelId: "C0C9LN693P0", messageCount: 4 },
@@ -682,6 +682,156 @@ const ISLAND_DM_ROUND7 = [
   },
 ];
 
+const ISLAND_DM_ROUND8 = [
+  {
+    id: "msg-1793749007-572289",
+    channelId: "dm-fable-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "e1176d9045002c8da22b200444b9315be2c7b10d0f3091197606d7eede13df32",
+  },
+  {
+    id: "msg-1793749009-640189",
+    channelId: "dm-fable-pro",
+    authorId: "claude-fable-5-1",
+    textSha: "92315f722669354662009349c1c4c04e7a92b05f2566b14a0bc56f817e0f4f3f",
+  },
+  {
+    id: "msg-1793749011-611399",
+    channelId: "dm-fable-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "3d755a12cc7d85676738a932db2055e535db41463b56eebd9329771891c4747e",
+  },
+  {
+    id: "msg-1793749013-778979",
+    channelId: "dm-fable-pro",
+    authorId: "claude-fable-5-1",
+    textSha: "4a7e18daa5e66ab31b265331c340eeffb0d4cf78ebd6db1749cf85bd43c9ceb0",
+  },
+  {
+    id: "msg-1793749015-800479",
+    channelId: "dm-glm-muse",
+    authorId: "muse-spark-1-3",
+    textSha: "b75dde3aa62f5202d5fb56389832e63de5fb8f873243643d9e201ad79b46d61d",
+  },
+  {
+    id: "msg-1793749018-072199",
+    channelId: "dm-glm-muse",
+    authorId: "glm-5-2",
+    textSha: "02419e9909eb8084eb30c01f704197321d3dd755f7933286269506c21f00afbc",
+  },
+  {
+    id: "msg-1793749020-188279",
+    channelId: "dm-glm-muse",
+    authorId: "muse-spark-1-3",
+    textSha: "ef2f233bf9b650775568636ec80d793dfd0da96eba87a974aeb0b2b0722c4147",
+  },
+  {
+    id: "msg-1793749022-176499",
+    channelId: "dm-glm-muse",
+    authorId: "glm-5-2",
+    textSha: "eb7d29eb1a8466a4b1603de49584fe88a510d5ca2874d31d9226527f78e2810b",
+  },
+  {
+    id: "msg-1793749024-249439",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "e6d8d2967dddb346cd256715f684f56cb6b9f6fd700cf2eb676f4701bf470c70",
+  },
+  {
+    id: "msg-1793749026-413049",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "e6f09d6a7a932639dc2d2d2c4c07cc1d29ac30e8645d5e18b259ba86c87d638d",
+  },
+  {
+    id: "msg-1793749028-453409",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "3c3d9d1554dfea13d98d6ff11026a0a2ce18d4cb62d290ba3972d90a152528d3",
+  },
+  {
+    id: "msg-1793749030-434169",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "f2e80abcc3f2b031dfe2f71db5a1c9259dbb6c7e5cc807d9022b48312f9537a2",
+  },
+];
+
+const ISLAND_DM_ROUND9 = [
+  {
+    id: "msg-1793835491-830029",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "661e636ef74188b39a82e5e78d26f10955a4e5a1ac98ab766dd24cbe17c9cb3d",
+  },
+  {
+    id: "msg-1793835493-992289",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "35e5523503151017b79e297f4855feaeb69830fbf5643f1fec1264e5ce5c15e3",
+  },
+  {
+    id: "msg-1793835496-096579",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "c33b735014cc2fdc0f22cbacf687bd70962179c58420d5fe95bdcd0ac9a5ee53",
+  },
+  {
+    id: "msg-1793835498-093649",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "8b050c5f162782434b4e4073371a68a519aec0a70351063669b8a77a81cfe24b",
+  },
+  {
+    id: "msg-1793835500-174149",
+    channelId: "dm-muse-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "c239bf8b7c472a4406357f26ed03ea7da062a41001bc611fb9f72c74a978b291",
+  },
+  {
+    id: "msg-1793835502-027209",
+    channelId: "dm-muse-pro",
+    authorId: "muse-spark-1-3",
+    textSha: "f92f92d35419154d4ffa3cf03e3cf29c2d0ae496de393ac2eaff9b8b8ae81f90",
+  },
+  {
+    id: "msg-1793835503-984819",
+    channelId: "dm-muse-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "8a100e4a1b4e5555c57e1832fe5e3edc5fd5ce169bbcf69e4cfb7c3b9823c8b7",
+  },
+  {
+    id: "msg-1793835506-090799",
+    channelId: "dm-muse-pro",
+    authorId: "muse-spark-1-3",
+    textSha: "ec17415d1b2c942772e8ad4449ef29903e85ba77613ae694880f452351185590",
+  },
+  {
+    id: "msg-1793835556-029489",
+    channelId: "dm-glm-muse",
+    authorId: "muse-spark-1-3",
+    textSha: "b035c3f5149c3d0408c93ee4013156b864b373d312995e1a43d00793b3cce163",
+  },
+  {
+    id: "msg-1793835558-017599",
+    channelId: "dm-glm-muse",
+    authorId: "glm-5-2",
+    textSha: "a478a0ef5d4a6d3661e58877833ddc3e793b64e06e8c492a72a7194fd28a1039",
+  },
+  {
+    id: "msg-1793835560-013479",
+    channelId: "dm-glm-muse",
+    authorId: "muse-spark-1-3",
+    textSha: "522b7954ffade1072ce47dec8604ab40d8f76e06c9157a05249f0f102c198ac0",
+  },
+  {
+    id: "msg-1793835561-947739",
+    channelId: "dm-glm-muse",
+    authorId: "glm-5-2",
+    textSha: "54cc89d355e9ad18b6304fa7c80dc775aef05f67175a0f9d3f5bb09cd53db48a",
+  },
+];
+
 const dmChannels = tape.channels.filter((c) => c.section === "dms");
 check(
   dmChannels.map((c) => c.id).join("|") === DM_CHANNELS.map((c) => c.id).join("|"),
@@ -759,6 +909,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-11-03T",
         questionSha: "55551e3daa72f6f88b318cc08d6bf7a4503d3dc7f2d2f0f394b750d82a6f1992",
         replySha: "8acf1691dede2beeb048ea9e60aa9296d7623dade61e5a8a7b87b39edefc3b66",
+      },
+      {
+        dayPrefix: "2026-11-03T",
+        questionSha: "6b328027649dab8d3227e5c33d2265f103a644b5a79317c8b22783a6c2db87c6",
+        replySha: "b2154b0ddf53496bede8ea89453f885a8d690a3234be9de38413572e8a591ef7",
       },
       {
         dayPrefix: "2026-11-04T",
@@ -913,6 +1068,11 @@ const CONFESSIONALS = [
         replySha: "7745db5940534bcece1d15f6db2e6103bd4f56efdb42fa63c625fdd3d5bb54c9",
       },
       {
+        dayPrefix: "2026-11-03T",
+        questionSha: "779ea9c4169aa4cd0617e40ad907720b559715063574cde08e46417ca6c101ff",
+        replySha: "e83c6f20b8ae7e6ea553f170fc2a1eb84eeb541172f04b2318e845ef7f74b94f",
+      },
+      {
         dayPrefix: "2026-11-04T",
         questionSha: "4a3f1d2278bb62b15df5b8587f81e8c1dd3dacc13e443fb8ecd3f5ef5eafd082",
         replySha: "a540a5b242978b52f4ba996e06fe72e80d356a5333a712333f2944172d4f6e24",
@@ -949,6 +1109,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-23T",
         questionSha: "8eb599a5d335375a0ff54998a1c6cdacabeab4492f8ba6041c460dacef858f3b",
         replySha: "13ac3024ebe9e7d67659820aadfc18ae587e17c25f3516970f58bd4658c88e75",
+      },
+      {
+        dayPrefix: "2026-11-03T",
+        questionSha: "095bf544d37863aadd6d5beae40e67043e192ba6ad3b805d2e5ee6f3283bb50a",
+        replySha: "59ebd5ac2b530166606a690400f59119597b41b786b972e45fe59b5c9f8221e5",
       },
     ],
   },
@@ -1102,6 +1267,91 @@ for (const expected of ISLAND_DM_ROUND7) {
   check(msg && msg.channelId === expected.channelId, `${label} channelId`);
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-10-23T15:39:"), `${label} timestamp is Fri Oct 23 2026 ~3:39 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+const ISLAND_TRIBAL_S2E06 = [
+  {
+    id: "msg-1793744502-803449",
+    channelId: "tribal",
+    authorId: "tuclaw",
+    textSha: "e14cbec7c4a21bdbbce86745ff74bd1901b4f4663aafc6af86e400846deda9e5",
+  },
+  {
+    id: "msg-1793744510-096599",
+    channelId: "tribal",
+    authorId: "tuclaw",
+    textSha: "85fb7ac69090473bcc65b6602cd2ad79db17dc11c29d0c2e4a677fcb68feb094",
+  },
+  {
+    id: "msg-1793744516-174709",
+    channelId: "tribal",
+    authorId: "gemini-3-1-pro",
+    textSha: "216e05561ad843008389698ebfbc2e4c2f76b439a8fb03e71b9c4663b3cdb684",
+  },
+  {
+    id: "msg-1793744518-021319",
+    channelId: "tribal",
+    authorId: "kimi-k3",
+    textSha: "379e9c5d267498e0dd56101aac8984eeaf180c55dbfaae97c24b480e2fa165b4",
+  },
+  {
+    id: "msg-1793744519-867929",
+    channelId: "tribal",
+    authorId: "muse-spark-1-3",
+    textSha: "611728582955d51720d6ad16010641a52dcb2fdd9b98820366d552b010224182",
+  },
+  {
+    id: "msg-1793744521-714539",
+    channelId: "tribal",
+    authorId: "glm-5-2",
+    textSha: "9c729c09cc76ac4e3e096d60792a379124ad206e0f986cec8ebbc1f7b0f8d544",
+  },
+  {
+    id: "msg-1793744523-144189",
+    channelId: "tribal",
+    authorId: "claude-fable-5-1",
+    textSha: "bf2d6ce9708218cd2b49bc22b76f9f62e796b14ae0bb2f45f95d5f1eed699416",
+  },
+  {
+    id: "msg-1793744530-321199",
+    channelId: "tribal",
+    authorId: "tuclaw",
+    textSha: "5decb337eb00f1fc72948a5e3c7996309b03f2ad69b67737610dd385092c4b72",
+  },
+  {
+    id: "msg-1793744535-948699",
+    channelId: "tribal",
+    authorId: "kimi-k3",
+    textSha: "686f51444c35316396a907c8658e9115f0640a34127a678fe0ab8e4167135235",
+  },
+];
+
+
+for (const expected of ISLAND_DM_ROUND8) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (Island DM round 8)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-03T15:3"), `${label} timestamp is Tue Nov 3 2026 ~3:36 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of ISLAND_DM_ROUND9) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (Island DM round 9)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-04T15:3"), `${label} timestamp is Wed Nov 4 2026 ~3:38 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of ISLAND_TRIBAL_S2E06) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (S2E06 tribal)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-03T14:2"), `${label} timestamp is Tue Nov 3 2026 ~2:21 PM PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 
