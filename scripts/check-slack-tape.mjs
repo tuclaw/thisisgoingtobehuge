@@ -761,6 +761,11 @@ const CONFESSIONALS = [
         replySha: "8acf1691dede2beeb048ea9e60aa9296d7623dade61e5a8a7b87b39edefc3b66",
       },
       {
+        dayPrefix: "2026-11-03T",
+        questionSha: "6b328027649dab8d3227e5c33d2265f103a644b5a79317c8b22783a6c2db87c6",
+        replySha: "b2154b0ddf53496bede8ea89453f885a8d690a3234be9de38413572e8a591ef7",
+      },
+      {
         dayPrefix: "2026-11-04T",
         questionSha: "e5746b81c58cb53ba75ddb938d528a6ed9a20c9bb6fa2d5175e78e37f4f2aeaf",
         replySha: "708b07f13c2001286168ebdcbe17304155d93162949b958642cfbd03612ad76f",
@@ -913,6 +918,11 @@ const CONFESSIONALS = [
         replySha: "7745db5940534bcece1d15f6db2e6103bd4f56efdb42fa63c625fdd3d5bb54c9",
       },
       {
+        dayPrefix: "2026-11-03T",
+        questionSha: "779ea9c4169aa4cd0617e40ad907720b559715063574cde08e46417ca6c101ff",
+        replySha: "e83c6f20b8ae7e6ea553f170fc2a1eb84eeb541172f04b2318e845ef7f74b94f",
+      },
+      {
         dayPrefix: "2026-11-04T",
         questionSha: "4a3f1d2278bb62b15df5b8587f81e8c1dd3dacc13e443fb8ecd3f5ef5eafd082",
         replySha: "a540a5b242978b52f4ba996e06fe72e80d356a5333a712333f2944172d4f6e24",
@@ -949,6 +959,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-10-23T",
         questionSha: "8eb599a5d335375a0ff54998a1c6cdacabeab4492f8ba6041c460dacef858f3b",
         replySha: "13ac3024ebe9e7d67659820aadfc18ae587e17c25f3516970f58bd4658c88e75",
+      },
+      {
+        dayPrefix: "2026-11-03T",
+        questionSha: "095bf544d37863aadd6d5beae40e67043e192ba6ad3b805d2e5ee6f3283bb50a",
+        replySha: "59ebd5ac2b530166606a690400f59119597b41b786b972e45fe59b5c9f8221e5",
       },
     ],
   },
@@ -1102,6 +1117,72 @@ for (const expected of ISLAND_DM_ROUND7) {
   check(msg && msg.channelId === expected.channelId, `${label} channelId`);
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-10-23T15:39:"), `${label} timestamp is Fri Oct 23 2026 ~3:39 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+const ISLAND_TRIBAL_S2E06 = [
+  {
+    id: "msg-1793744502-803449",
+    channelId: "tribal",
+    authorId: "tuclaw",
+    textSha: "e14cbec7c4a21bdbbce86745ff74bd1901b4f4663aafc6af86e400846deda9e5",
+  },
+  {
+    id: "msg-1793744510-096599",
+    channelId: "tribal",
+    authorId: "tuclaw",
+    textSha: "85fb7ac69090473bcc65b6602cd2ad79db17dc11c29d0c2e4a677fcb68feb094",
+  },
+  {
+    id: "msg-1793744516-174709",
+    channelId: "tribal",
+    authorId: "gemini-3-1-pro",
+    textSha: "216e05561ad843008389698ebfbc2e4c2f76b439a8fb03e71b9c4663b3cdb684",
+  },
+  {
+    id: "msg-1793744518-021319",
+    channelId: "tribal",
+    authorId: "kimi-k3",
+    textSha: "379e9c5d267498e0dd56101aac8984eeaf180c55dbfaae97c24b480e2fa165b4",
+  },
+  {
+    id: "msg-1793744519-867929",
+    channelId: "tribal",
+    authorId: "muse-spark-1-3",
+    textSha: "611728582955d51720d6ad16010641a52dcb2fdd9b98820366d552b010224182",
+  },
+  {
+    id: "msg-1793744521-714539",
+    channelId: "tribal",
+    authorId: "glm-5-2",
+    textSha: "9c729c09cc76ac4e3e096d60792a379124ad206e0f986cec8ebbc1f7b0f8d544",
+  },
+  {
+    id: "msg-1793744523-144189",
+    channelId: "tribal",
+    authorId: "claude-fable-5-1",
+    textSha: "bf2d6ce9708218cd2b49bc22b76f9f62e796b14ae0bb2f45f95d5f1eed699416",
+  },
+  {
+    id: "msg-1793744530-321199",
+    channelId: "tribal",
+    authorId: "tuclaw",
+    textSha: "5decb337eb00f1fc72948a5e3c7996309b03f2ad69b67737610dd385092c4b72",
+  },
+  {
+    id: "msg-1793744535-948699",
+    channelId: "tribal",
+    authorId: "kimi-k3",
+    textSha: "686f51444c35316396a907c8658e9115f0640a34127a678fe0ab8e4167135235",
+  },
+];
+
+for (const expected of ISLAND_TRIBAL_S2E06) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (S2E06 tribal)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-03T14:2"), `${label} timestamp is Tue Nov 3 2026 ~2:21 PM PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 

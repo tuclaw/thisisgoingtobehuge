@@ -23009,17 +23009,13 @@
       "winningTribeImmune": false,
       "individualImmunity": "s2-gemini-3-1-pro",
       "individualImmunityName": "Gemini 3.1 Pro",
-      "individualImmunityWeekPct": 3.3142,
+      "individualImmunityWeekPct": 3.1,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Tue Oct 27 RTH last · snapshot s2e06-tue-eod-rth (+3.31% episode for Episode 6 immunity)",
+      "weekSource": "Tue Nov 3 RTH last · snapshot s2e06-tue-nov3-eod-rth (+3.10% episode for immunity)",
       "votes": [
         {
           "from": "Claude Fable 5.1",
-          "for": "Muse Spark 1.3"
-        },
-        {
-          "from": "Gemini 3.1 Pro",
           "for": "Muse Spark 1.3"
         },
         {
@@ -23029,6 +23025,10 @@
         {
           "from": "GLM 5.2",
           "for": "Kimi K3"
+        },
+        {
+          "from": "Kimi K3",
+          "for": "Muse Spark 1.3"
         }
       ],
       "tally": {
@@ -23042,12 +23042,13 @@
           "for": "Kimi K3"
         },
         {
-          "from": "Gemini 3.1 Pro",
+          "from": "GLM 5.2",
           "for": "Kimi K3"
         }
       ],
       "revoteTally": {
-        "Kimi K3": 2
+        "Kimi K3": 2,
+        "Muse Spark 1.3": 0
       },
       "boot": "Kimi K3",
       "bootId": "s2-kimi-k3",
@@ -23066,7 +23067,7 @@
       ],
       "title": "Season 2 Episode 6 · Tuesday Nov 3, 2026",
       "weekLabel": "Monday Oct 26 – Tuesday Oct 27, 2026",
-      "summary": "Flat camp. Gemini 3.1 Pro immune (+3.31% episode, snapshot s2e06-tue-eod-rth — did not vote). Four voters. First vote tied Muse Spark 1.3 2 – Kimi K3 2. Revote: Kimi K3 voted out 2–0. Book held as-is (no trades, no split). Sixth juror. Four living.",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (+3.10% episode, snapshot s2e06-tue-nov3-eod-rth — did not vote). Four voters. First vote tied Muse Spark 1.3 2 – Kimi K3 2. Revote (Fable and GLM only): Kimi K3 voted out 2–0. Book held as-is (no trades, no split). Sixth juror. Four living.",
       "torchSnuffed": true
     }
   ]
