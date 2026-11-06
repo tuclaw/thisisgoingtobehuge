@@ -865,7 +865,7 @@ check(
 
 const host = tape.members.find((m) => m.id === "tuclaw");
 check(host && host.displayName === "TuClaw", "host member TuClaw is required for confessional questions");
-check(host && host.status === "host", "TuClaw status must be host so the living cast stays ten");
+check(host && host.status === "host", "TuClaw status must be host so the host sits outside the ten-player cast count");
 check(host && host.slackUserId === "U0C6TLNNLQ7", "TuClaw slackUserId");
 
 const CONFESSIONALS = [
@@ -924,6 +924,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-11-06T",
         questionSha: "72ed1e3f29d64ddefd97e7ea7eae6a95734eddef8a6a09aa895b84c8ebe6063b",
         replySha: "a6ba56a5c7507cdab0ca895a4776444bc0f88780c519ea2e786f3002a84299c2",
+      },
+      {
+        dayPrefix: "2026-11-06T",
+        questionSha: "16866360f21e51196607b152de58648db4f9648bc2509af188d7a1ec52863a0d",
+        replySha: "89dfc56c04f22258f96214a708bb9560651c3f4176ef4ca1cc7d717fcdb6bcfa",
       },
     ],
   },
@@ -1016,6 +1021,11 @@ const CONFESSIONALS = [
         questionSha: "3d47f23f4ed5a617f24e93c4ebccc3bd26fd8a7cae78f53a6bea8c91480ed108",
         replySha: "d546b51f8cf6f25ecf5eede47476b86df1fa57f2e0dc2de1d68667082fbb51e3",
       },
+      {
+        dayPrefix: "2026-11-06T",
+        questionSha: "273c1e571b9aa9e7afb0204f460797e4ad4bdff247c7028d03478fa4e986311f",
+        replySha: "b00b5100cb5bd756b378b38c3c4016b278ba594045354d0858b9722470359ab4",
+      },
     ],
   },
   {
@@ -1087,6 +1097,11 @@ const CONFESSIONALS = [
         questionSha: "4a3f1d2278bb62b15df5b8587f81e8c1dd3dacc13e443fb8ecd3f5ef5eafd082",
         replySha: "a540a5b242978b52f4ba996e06fe72e80d356a5333a712333f2944172d4f6e24",
       },
+      {
+        dayPrefix: "2026-11-06T",
+        questionSha: "1c7c515dca31585e8cb2152038ab344f65af52c516b3278fd58afd72ef252216",
+        replySha: "2e0633060ebe39771189eb9b20a0de19ca531a3f8a37ee165d8fc6329e6af723",
+      },
     ],
   },
   {
@@ -1129,6 +1144,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-11-06T",
         questionSha: "6bc72080128ca2a6cb0f8fde4cbd485f55acfc3371ac4747c388ab9bfd7921eb",
         replySha: "da72e8f999cd93b2dda7968f7220c6ff46b08011a8afd1ad6a30c9d2b61ac860",
+      },
+      {
+        dayPrefix: "2026-11-06T",
+        questionSha: "bc5f2fa9baf2dd934d05060f5e084cf5778237f36b21da63e0d6a32be7c365ab",
+        replySha: "deb14313f3c64959149e43f8a42b09f87e5e4f6b35f444bb7a8c14a2f551e34b",
       },
     ],
   },
@@ -1342,6 +1362,39 @@ const ISLAND_TRIBAL_S2E06 = [
   },
 ];
 
+const ISLAND_TRIBAL_S2E07 = [
+  {
+    id: "msg-slack-1794004140-073819",
+    channelId: "tribal",
+    authorId: "gemini-3-1-pro",
+    textSha: "c9e97754554cb6cf1e84c90c3fba43272b7bb26c7056c577e1e8f510e93f8985",
+  },
+  {
+    id: "msg-slack-1794004140-812929",
+    channelId: "tribal",
+    authorId: "claude-fable-5-1",
+    textSha: "a07fba7c567ac9fe8fc4e7210bf38dee7acc394db0dd7018a064322b603cf11c",
+  },
+  {
+    id: "msg-slack-1794004141-503689",
+    channelId: "tribal",
+    authorId: "muse-spark-1-3",
+    textSha: "c5589a5fba5421012804a4255cd6f99f1ea61b0cb5280f37d9c7bc03443753b7",
+  },
+  {
+    id: "msg-slack-1794004142-125569",
+    channelId: "tribal",
+    authorId: "glm-5-2",
+    textSha: "51c7abcd4082c96b44ed886439388b71979f116495d35c9e64001076d125925a",
+  },
+  {
+    id: "msg-slack-1794004142-842509",
+    channelId: "tribal",
+    authorId: "muse-spark-1-3",
+    textSha: "7109a1b84ea3a0e56326ff80959afc44b93ef4099b197bee85727b5baeef96fe",
+  },
+];
+
 
 for (const expected of ISLAND_DM_ROUND8) {
   const msg = tape.messages.find((m) => m.id === expected.id);
@@ -1367,6 +1420,15 @@ for (const expected of ISLAND_TRIBAL_S2E06) {
   check(msg && msg.channelId === expected.channelId, `${label} channelId`);
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-11-03T14:2"), `${label} timestamp is Tue Nov 3 2026 ~2:21 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of ISLAND_TRIBAL_S2E07) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (S2E07 tribal)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-06T14:2"), `${label} timestamp is Fri Nov 6 2026 ~2:29 PM PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 
