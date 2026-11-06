@@ -150,8 +150,9 @@ const DM_CHANNELS = [
   { id: "dm-flash-muse", slackChannelId: "C0CAGR9RSKC", messageCount: 8 },
   { id: "dm-glm-muse", slackChannelId: "C0CAYJJGSM9", messageCount: 16 },
   { id: "dm-muse-pro", slackChannelId: "C0CBAP6EHKP", messageCount: 8 },
-  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 28 },
-  { id: "dm-fable-pro", slackChannelId: "C0CB2SFUXGE", messageCount: 12 },
+  { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 32 },
+  { id: "dm-fable-pro", slackChannelId: "C0CB2SFUXGE", messageCount: 16 },
+  { id: "dm-pro-glm", slackChannelId: "C0CFRQY9CRF", messageCount: 4 },
   { id: "dm-pro-kimi3", slackChannelId: "C0CATFC9E2W", messageCount: 8 },
   { id: "dm-pro-kimi27", slackChannelId: "C0C9SMN1KCK", messageCount: 8 },
   { id: "dm-composer-muse", slackChannelId: "C0C9LN693P0", messageCount: 4 },
@@ -832,10 +833,85 @@ const ISLAND_DM_ROUND9 = [
   },
 ];
 
+const ISLAND_DM_ROUND11 = [
+  {
+    id: "msg-slack-1794008274-974749",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "d7e51138660e4c9387b4f34322a47a5fb4780460eb7ad4c8d730f8d98950b828",
+  },
+  {
+    id: "msg-slack-1794008277-083249",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "f43444f0cc440304e8219c2d2622307be727d308bb39f86f7a6f5d0874682d77",
+  },
+  {
+    id: "msg-slack-1794008279-241329",
+    channelId: "dm-fable-glm",
+    authorId: "claude-fable-5-1",
+    textSha: "a4b9e3975222e12ba3b4cf690a995304ffcc83e4cbd2bab7b698d625ea3d4eff",
+  },
+  {
+    id: "msg-slack-1794008281-313549",
+    channelId: "dm-fable-glm",
+    authorId: "glm-5-2",
+    textSha: "edb1cd08e0795bd418de5773158ffd447502002e69259f8896c5381ea10d63ad",
+  },
+  {
+    id: "msg-slack-1794008283-475659",
+    channelId: "dm-fable-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "a2c65e9a49826f1d0dc984c33be5021ae26f9e268bfcc9d4bf36e3ce228a3ab3",
+  },
+  {
+    id: "msg-slack-1794008285-533829",
+    channelId: "dm-fable-pro",
+    authorId: "claude-fable-5-1",
+    textSha: "25fecbc160a49e7da9c6ebe3da1da9f49d6f1d968ddb1533045574a45a3cb80a",
+  },
+  {
+    id: "msg-slack-1794008287-579799",
+    channelId: "dm-fable-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "0aab3159f9f65ff6d4cee5e37b2330c92bee5185ee7bb94455139396a4dcd7cf",
+  },
+  {
+    id: "msg-slack-1794008289-483349",
+    channelId: "dm-fable-pro",
+    authorId: "claude-fable-5-1",
+    textSha: "0d5b1335e6f46f67c1ce60f341cf577ff9e28494f8857483eb08c1550cf42760",
+  },
+  {
+    id: "msg-slack-1794008359-078659",
+    channelId: "dm-pro-glm",
+    authorId: "gemini-3-1-pro",
+    textSha: "02ee51c1f6a7f89dd68aeec8bc423402f470f147ad75066e018298a17e1ea0fc",
+  },
+  {
+    id: "msg-slack-1794008361-056749",
+    channelId: "dm-pro-glm",
+    authorId: "glm-5-2",
+    textSha: "5d37b57dcc2aeca2b61905ca292e326b957084f192966d6edcb0d06b9f98f67c",
+  },
+  {
+    id: "msg-slack-1794008363-148689",
+    channelId: "dm-pro-glm",
+    authorId: "gemini-3-1-pro",
+    textSha: "c5f98d3d7b50a3253a9c46ae62ebd7f11d900632af21ea0f10380d2488ed781a",
+  },
+  {
+    id: "msg-slack-1794008365-186389",
+    channelId: "dm-pro-glm",
+    authorId: "glm-5-2",
+    textSha: "bad1fbcce006137b87647f969fe5fefbcabb6bfdb473cdef7c454225738f29bd",
+  },
+];
+
 const dmChannels = tape.channels.filter((c) => c.section === "dms");
 check(
   dmChannels.map((c) => c.id).join("|") === DM_CHANNELS.map((c) => c.id).join("|"),
-  "DMs section lists dm-composer-grok-2, dm-fable-opus-2, dm-flash-kimi3-2, dm-flash-muse, dm-glm-muse, dm-muse-pro, dm-fable-glm, dm-fable-pro, dm-pro-kimi3, dm-pro-kimi27, dm-composer-muse"
+  "DMs section lists dm-composer-grok-2, dm-fable-opus-2, dm-flash-kimi3-2, dm-flash-muse, dm-glm-muse, dm-muse-pro, dm-fable-glm, dm-fable-pro, dm-pro-glm, dm-pro-kimi3, dm-pro-kimi27, dm-composer-muse"
 );
 for (const expected of DM_CHANNELS) {
   const ch = tape.channels.find((c) => c.id === expected.id);
@@ -1358,6 +1434,15 @@ for (const expected of ISLAND_DM_ROUND9) {
   check(msg && msg.channelId === expected.channelId, `${label} channelId`);
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-11-04T15:3"), `${label} timestamp is Wed Nov 4 2026 ~3:38 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of ISLAND_DM_ROUND11) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (Island DM round 11)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-06T15:3"), `${label} timestamp is Fri Nov 6 2026 ~3:37–3:39 PM PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 
