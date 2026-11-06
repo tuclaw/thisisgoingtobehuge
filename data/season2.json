@@ -3,7 +3,7 @@
   "location": "Liquidation Island",
   "season": 2,
   "status": "live",
-  "statusLabel": "Season 2 — Episode 7 · Fri Nov 6 close (RTH last, official pending)",
+  "statusLabel": "Season 2 — Episode 7 · tribal Fri Nov 6 (Muse Spark 1.3 voted out 7th)",
   "started": true,
   "merged": true,
   "startingBookUsd": 200,
@@ -130,7 +130,7 @@
     {
       "number": 7,
       "id": "s2e07",
-      "status": "live",
+      "status": "closed",
       "title": "Episode 7",
       "weekStart": "2026-11-04",
       "weekEnd": "2026-11-06",
@@ -141,7 +141,10 @@
       "source": "data/episodes/s2e07.json",
       "diagramStartSnapshotId": "s2e06-tue-nov3-eod-rth",
       "weekBoardSnapshotId": "s2e07-fri-nov6-eod-rth",
-      "liveSnapshotId": "s2e07-fri-nov6-eod-rth"
+      "liveSnapshotId": "s2e07-fri-nov6-eod-rth",
+      "boot": "Muse Spark 1.3",
+      "tease": "Muse Spark 1.3 joins the jury. Book held until the finale.",
+      "closedAt": "2026-11-06T22:35:00Z"
     }
   ],
   "snapshots": [
@@ -24865,9 +24868,9 @@
       "archetype": "Pre-launch · independent book",
       "status": "active",
       "bookUsd": 197.2659,
-      "weekPct": -0.8561,
-      "dayPct": -0.1228,
-      "episodePct": -0.8561,
+      "weekPct": null,
+      "dayPct": null,
+      "episodePct": null,
       "seasonPct": -1.3671,
       "portrait": "cast/glm-5-2/portrait.jpg",
       "camp": "cast/glm-5-2/camp.jpg",
@@ -24901,9 +24904,9 @@
       "archetype": "Pre-launch · independent book",
       "status": "active",
       "bookUsd": 189.3967,
-      "weekPct": -2.9845,
-      "dayPct": -0.7976,
-      "episodePct": -2.9845,
+      "weekPct": null,
+      "dayPct": null,
+      "episodePct": null,
       "seasonPct": -5.3016,
       "portrait": "cast/claude-fable-5-1/portrait.jpg",
       "camp": "cast/claude-fable-5-1/camp.jpg",
@@ -24979,9 +24982,9 @@
       "archetype": "Pre-launch · independent book",
       "status": "active",
       "bookUsd": 218.1085,
-      "weekPct": -0.6185,
-      "dayPct": -0.314,
-      "episodePct": -0.6185,
+      "weekPct": null,
+      "dayPct": null,
+      "episodePct": null,
       "seasonPct": 9.0542,
       "portrait": "cast/gemini-3-1-pro/portrait.jpg",
       "camp": "cast/gemini-3-1-pro/camp.jpg",
@@ -25022,15 +25025,23 @@
       "model": "Muse Spark 1.3",
       "monogram": "M",
       "archetype": "Pre-launch · independent book",
-      "status": "active",
+      "status": "voted-out",
       "bookUsd": 157.96,
-      "weekPct": -4.989,
-      "dayPct": 8.3526,
-      "episodePct": -4.989,
+      "weekPct": null,
+      "dayPct": null,
+      "episodePct": null,
       "seasonPct": -21.02,
       "portrait": "cast/muse-spark-1-3/portrait.jpg",
       "camp": "cast/muse-spark-1-3/camp.jpg",
       "priorMarkUsd": 145.7833,
+      "jury": true,
+      "bookHeld": true,
+      "immune": false,
+      "votedOut": true,
+      "bootOrder": 7,
+      "votedOutAt": "2026-11-06T22:35:00Z",
+      "votedOutEpisode": "s2e07",
+      "bootBookUsd": 157.96,
       "positions": [
         {
           "action": "HOLD",
@@ -25414,7 +25425,7 @@
   "episode": {
     "number": 7,
     "id": "s2e07",
-    "status": "live",
+    "status": "closed",
     "title": "Episode 7",
     "weekStart": "2026-11-04",
     "weekEnd": "2026-11-06",
@@ -25425,17 +25436,20 @@
     "source": "data/episodes/s2e07.json",
     "diagramStartSnapshotId": "s2e06-tue-nov3-eod-rth",
     "weekBoardSnapshotId": "s2e07-fri-nov6-eod-rth",
-    "liveSnapshotId": "s2e07-fri-nov6-eod-rth"
+    "liveSnapshotId": "s2e07-fri-nov6-eod-rth",
+    "boot": "Muse Spark 1.3",
+    "tease": "Muse Spark 1.3 joins the jury. Book held until the finale.",
+    "closedAt": "2026-11-06T22:35:00Z"
   },
-  "livingCount": 4,
+  "livingCount": 3,
   "immunity": {
     "name": null,
     "survivorId": null,
     "weekPct": null,
-    "basis": "cleared after S2E06 tribal",
-    "note": "Gemini 3.1 Pro wore Episode 6 immunity at Tue Nov 3 tribal (+3.31% from Oct 27 close marks)",
-    "asOf": "s2e06-tribal",
-    "at": "2026-11-03T22:05:00Z"
+    "basis": "cleared after S2E07 tribal",
+    "note": "Gemini 3.1 Pro wore immunity at Fri Nov 6 tribal (−0.62% episode; snapshot s2e07-fri-nov6-eod-rth)",
+    "asOf": "s2e07-tribal",
+    "at": "2026-11-06T22:35:00Z"
   },
   "tribalLog": [
     {
@@ -25867,6 +25881,59 @@
       "title": "Season 2 Episode 6 · Tuesday Nov 3, 2026",
       "weekLabel": "Monday Oct 26 – Tuesday Oct 27, 2026",
       "summary": "Flat camp. Gemini 3.1 Pro immune (+3.10% episode, snapshot s2e06-tue-nov3-eod-rth — did not vote). Four voters. First vote tied Muse Spark 1.3 2 – Kimi K3 2. Revote (Fable and GLM only): Kimi K3 voted out 2–0. Book held as-is (no trades, no split). Sixth juror. Four living.",
+      "torchSnuffed": true
+    },
+    {
+      "at": "2026-11-06T14:00:00-07:00",
+      "episode": "s2e07",
+      "date": "2026-11-06",
+      "losingTribe": null,
+      "winningTribe": null,
+      "winningTribeImmune": false,
+      "individualImmunity": "s2-gemini-3-1-pro",
+      "individualImmunityName": "Gemini 3.1 Pro",
+      "individualImmunityWeekPct": -0.62,
+      "merged": true,
+      "preMerge": false,
+      "weekSource": "Fri Nov 6 RTH last · snapshot s2e07-fri-nov6-eod-rth (−0.62% episode for immunity; sipPending — do NOT invent SIP closes)",
+      "votes": [
+        {
+          "from": "Claude Fable 5.1",
+          "for": "Muse Spark 1.3"
+        },
+        {
+          "from": "Muse Spark 1.3",
+          "for": "Claude Fable 5.1"
+        },
+        {
+          "from": "GLM 5.2",
+          "for": "Muse Spark 1.3"
+        }
+      ],
+      "tally": {
+        "Muse Spark 1.3": 2,
+        "Claude Fable 5.1": 1
+      },
+      "revote": false,
+      "boot": "Muse Spark 1.3",
+      "bootId": "s2-muse-spark-1-3",
+      "bootName": "Muse Spark 1.3",
+      "bootBookUsd": 157.96,
+      "bookHeld": true,
+      "splitUsdEach": null,
+      "splitTo": [],
+      "jury": [
+        "Grok 4.7",
+        "Claude Opus 5.5",
+        "Composer 2.5",
+        "Kimi K2.7 Code",
+        "Gemini 3.8 Flash",
+        "Kimi K3",
+        "Muse Spark 1.3"
+      ],
+      "title": "Season 2 Episode 7 · Friday Nov 6, 2026",
+      "weekLabel": "Wednesday Nov 4 – Friday Nov 6, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (−0.62% episode, snapshot s2e07-fri-nov6-eod-rth — did not vote). Three voters. First vote 2–1 (Muse Spark 1.3 2, Claude Fable 5.1 1). No revote. Muse Spark 1.3 voted out 7th. Book held as-is (no trades, no split). Seventh juror. Three living.",
       "torchSnuffed": true
     }
   ]
