@@ -44,8 +44,8 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 4, `expected 4 living (got ${activeLiving.length})`);
-check(data.livingCount === 4, "livingCount must be 4 after S2E06 tribal");
+check(activeLiving.length === 3, `expected 3 living (got ${activeLiving.length})`);
+check(data.livingCount === 3, "livingCount must be 3 after S2E07 tribal");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -435,6 +435,20 @@ check(
 );
 check(flash && flash.bootBookUsd === 203.2133, "Gemini 3.8 Flash bootBookUsd must match s2e05-fri-eod-rth");
 
+const muse = survivors.find((s) => s && s.id === "s2-muse-spark-1-3");
+check(muse && muse.status === "voted-out" && muse.jury === true, "Muse Spark 1.3 must be voted-out jury");
+check(muse && muse.bookHeld === true, "Muse Spark 1.3 book must be held until finale");
+check(muse && muse.bookUsd > 0, "Muse Spark 1.3 bookUsd must stay marked (not boot-split to zero)");
+check(muse && muse.votedOut === true, "Muse Spark 1.3 votedOut must be true");
+check(muse && muse.bootOrder === 7, "Muse Spark 1.3 bootOrder must be 7 (seventh boot)");
+check(muse && muse.votedOutEpisode === "s2e07", "Muse votedOutEpisode must be s2e07");
+check(muse && muse.episodePct === null && muse.weekPct === null && muse.dayPct === null, "Muse episode/week/day % must be null after boot");
+check(
+  muse && String(muse.votedOutAt || "").startsWith("2026-11-06"),
+  "Muse Spark 1.3 votedOutAt must be Fri Nov 6 2026"
+);
+check(muse && muse.bootBookUsd === 157.96, "Muse Spark 1.3 bootBookUsd must match s2e07-fri-nov6-eod-rth");
+
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 check(stylesCss.includes(".s2-row.is-voted-out"), "standings fade a voted-out row");
 check(stylesCss.includes(".face-card.is-voted-out"), "Meet the Contestants fades a voted-out card");
@@ -618,11 +632,11 @@ if (tribal) {
 
 check(
   data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
-  "immunity note must record Gemini 3.1 Pro Episode 6 necklace at S2E06 tribal"
+  "immunity note must record Gemini 3.1 Pro Fri Nov 6 necklace at S2E07 tribal"
 );
 check(
-  data.immunity && String(data.immunity.basis || "").includes("S2E06"),
-  "immunity basis must clear after S2E06 tribal"
+  data.immunity && String(data.immunity.basis || "").includes("S2E07"),
+  "immunity basis must clear after S2E07 tribal"
 );
 
 const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
@@ -969,6 +983,90 @@ if (tribal6) {
     "S2E06 weekSource must pin Tue Nov 3 RTH snapshot"
   );
   check(!(tribal6.votes || []).some((v) => v && v.text), "S2E06 tribalLog votes must not store private confessionals");
+}
+
+const e7 = episodes.find((ep) => ep && ep.id === "s2e07");
+check(e7, "episodes must list s2e07");
+if (e7) {
+  check(e7.status === "closed", "s2e07 must be closed after Fri Nov 6 tribal");
+  check(e7.boot === "Muse Spark 1.3", "s2e07 boot must be Muse Spark 1.3");
+  check(e7.weekBoardSnapshotId === "s2e07-fri-nov6-eod-rth", "s2e07 weekBoardSnapshotId must be s2e07-fri-nov6-eod-rth");
+  check(e7.liveSnapshotId === "s2e07-fri-nov6-eod-rth", "s2e07 liveSnapshotId must be s2e07-fri-nov6-eod-rth");
+}
+const e7CopyPath = join(root, "data", "episodes", "s2e07.json");
+try {
+  const e7Copy = JSON.parse(readFileSync(e7CopyPath, "utf8"));
+  check(e7Copy.season === 2 && e7Copy.number === 7, "s2e07.json season/number");
+  const friDay = (e7Copy.days || []).find((day) => day && day.id === "friday-nov6");
+  const friBeats = friDay && Array.isArray(friDay.beats) ? friDay.beats : [];
+  const booksIdx = friBeats.findIndex((b) => b && b.id === "fri-eod-rth-books");
+  const boothIdx = friBeats.findIndex((b) => b && b.id === "tribal-prevote");
+  const stmtIdx = friBeats.findIndex((b) => b && b.id === "tribal-statements");
+  const voteIdx = friBeats.findIndex((b) => b && b.id === "tribal-vote-readout");
+  const confIdx = friBeats.findIndex((b) => b && b.id === "tribal-vote-confessionals");
+  const cutIdx = friBeats.findIndex((b) => b && b.id === "tribal-cut");
+  const finalIdx = friBeats.findIndex((b) => b && b.id === "muse-spark-final-words");
+  const exitIdx = friBeats.findIndex((b) => b && b.id === "muse-spark-exit-interview");
+  check(boothIdx > booksIdx, "pre-tribal booths must follow Fri Nov 6 close books");
+  check(stmtIdx > boothIdx, "tribal statements must follow pre-tribal booths");
+  check(voteIdx > stmtIdx, "vote readout must follow statements");
+  check(confIdx > voteIdx, "vote confessionals must follow vote readout");
+  check(cutIdx > confIdx, "tribal-cut must follow vote confessionals");
+  check(finalIdx > cutIdx, "final words must follow tribal-cut");
+  check(exitIdx > finalIdx, "exit interview must follow final words");
+  const boothBeat = friBeats[boothIdx];
+  check(boothBeat && (boothBeat.items || []).length === 4, "four pre-tribal booths");
+  const stmtBeat = friBeats[stmtIdx];
+  check(stmtBeat && (stmtBeat.notes || []).length === 4, "four pre-vote statements");
+  const voteBeat = friBeats[voteIdx];
+  check(
+    voteBeat && String(voteBeat.body || "").includes("Claude Fable 5.1 → Muse Spark 1.3"),
+    "vote readout must list pairings"
+  );
+  check(voteBeat && !String(voteBeat.body || "").includes("Revote"), "vote readout must not include revote");
+  check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
+  const confBeat = friBeats[confIdx];
+  check(confBeat && (confBeat.items || []).length === 3, "three vote parchment confessionals");
+  const exitBeat = friBeats[exitIdx];
+  check(
+    exitBeat && String(exitBeat.body || "").includes("watching GLM closest"),
+    "Muse Spark 1.3 exit interview must be verbatim audience copy"
+  );
+} catch (e) {
+  check(false, "data/episodes/s2e07.json tribal beats: " + e.message);
+}
+
+const tribal7 = log.find((row) => row && row.episode === "s2e07");
+check(tribal7, "tribalLog must include S2E07 council");
+if (tribal7) {
+  check(tribal7.bootName === "Muse Spark 1.3", "S2E07 bootName must be Muse Spark 1.3");
+  check(tribal7.bookHeld === true, "S2E07 tribal bookHeld must be true");
+  check(tribal7.revote === false, "S2E07 tribal must not record revote");
+  check(tribal7.individualImmunity === "s2-gemini-3-1-pro", "S2E07 immunity record must pin Gemini 3.1 Pro");
+  check(
+    tribal7.individualImmunityWeekPct === -0.62,
+    "S2E07 individualImmunityWeekPct must be −0.62"
+  );
+  check(
+    tribal7.tally && tribal7.tally["Muse Spark 1.3"] === 2 && tribal7.tally["Claude Fable 5.1"] === 1,
+    "S2E07 tally must be Muse 2 – Fable 1"
+  );
+  const pairings7 = (tribal7.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    pairings7 === "Claude Fable 5.1>Muse Spark 1.3|Muse Spark 1.3>Claude Fable 5.1|GLM 5.2>Muse Spark 1.3",
+    "S2E07 tribalLog votes must match official pairings"
+  );
+  check(
+    String(tribal7.weekSource || "").includes("s2e07-fri-nov6-eod-rth"),
+    "S2E07 weekSource must pin Fri Nov 6 RTH snapshot"
+  );
+  check(
+    Array.isArray(tribal7.jury) &&
+      tribal7.jury.length === 7 &&
+      tribal7.jury[tribal7.jury.length - 1] === "Muse Spark 1.3",
+    "S2E07 jury must list seven with Muse Spark 1.3 last"
+  );
+  check(!(tribal7.votes || []).some((v) => v && v.text), "S2E07 tribalLog votes must not store private confessionals");
 }
 
 if (errors.length) {
