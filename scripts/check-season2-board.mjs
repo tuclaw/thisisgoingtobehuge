@@ -44,8 +44,8 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 3, `expected 3 living (got ${activeLiving.length})`);
-check(data.livingCount === 3, "livingCount must be 3 after S2E07 tribal");
+check(activeLiving.length === 2, `expected 2 living (got ${activeLiving.length})`);
+check(data.livingCount === 2, "livingCount must be 2 after S2E08 tribal");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -449,6 +449,20 @@ check(
 );
 check(muse && muse.bootBookUsd === 157.96, "Muse Spark 1.3 bootBookUsd must match s2e07-fri-nov6-eod-rth");
 
+const glm = survivors.find((s) => s && s.id === "s2-glm-5-2");
+check(glm && glm.status === "voted-out" && glm.jury === true, "GLM 5.2 must be voted-out jury");
+check(glm && glm.bookHeld === true, "GLM 5.2 book must be held until finale");
+check(glm && glm.bookUsd > 0, "GLM 5.2 bookUsd must stay marked (not boot-split to zero)");
+check(glm && glm.votedOut === true, "GLM 5.2 votedOut must be true");
+check(glm && glm.bootOrder === 8, "GLM 5.2 bootOrder must be 8 (eighth boot)");
+check(glm && glm.votedOutEpisode === "s2e08", "GLM votedOutEpisode must be s2e08");
+check(glm && glm.episodePct === null && glm.weekPct === null && glm.dayPct === null, "GLM episode/week/day % must be null after boot");
+check(
+  glm && String(glm.votedOutAt || "").startsWith("2026-11-10"),
+  "GLM 5.2 votedOutAt must be Tue Nov 10 2026"
+);
+check(glm && glm.bootBookUsd === 194.02, "GLM 5.2 bootBookUsd must match s2e08-tue-nov10-eod-rth");
+
 const stylesCss = readFileSync(join(root, "styles.css"), "utf8");
 check(stylesCss.includes(".s2-row.is-voted-out"), "standings fade a voted-out row");
 check(stylesCss.includes(".face-card.is-voted-out"), "Meet the Contestants fades a voted-out card");
@@ -632,11 +646,11 @@ if (tribal) {
 
 check(
   data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
-  "immunity note must record Gemini 3.1 Pro Fri Nov 6 necklace at S2E07 tribal"
+  "immunity note must record Gemini 3.1 Pro Tue Nov 10 necklace at S2E08 tribal"
 );
 check(
-  data.immunity && String(data.immunity.basis || "").includes("S2E07"),
-  "immunity basis must clear after S2E07 tribal"
+  data.immunity && String(data.immunity.basis || "").includes("S2E08"),
+  "immunity basis must clear after S2E08 tribal"
 );
 
 const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
@@ -1067,6 +1081,96 @@ if (tribal7) {
     "S2E07 jury must list seven with Muse Spark 1.3 last"
   );
   check(!(tribal7.votes || []).some((v) => v && v.text), "S2E07 tribalLog votes must not store private confessionals");
+}
+
+const e8 = episodes.find((ep) => ep && ep.id === "s2e08");
+check(e8, "episodes must list s2e08");
+if (e8) {
+  check(e8.status === "closed", "s2e08 must be closed after Tue Nov 10 tribal");
+  check(e8.boot === "GLM 5.2", "s2e08 boot must be GLM 5.2");
+  check(e8.weekBoardSnapshotId === "s2e08-tue-nov10-eod-rth", "s2e08 weekBoardSnapshotId must be s2e08-tue-nov10-eod-rth");
+  check(e8.liveSnapshotId === "s2e08-tue-nov10-eod-rth", "s2e08 liveSnapshotId must be s2e08-tue-nov10-eod-rth");
+}
+const e8CopyPath = join(root, "data", "episodes", "s2e08.json");
+try {
+  const e8Copy = JSON.parse(readFileSync(e8CopyPath, "utf8"));
+  check(e8Copy.season === 2 && e8Copy.number === 8, "s2e08.json season/number");
+  const tueDay = (e8Copy.days || []).find((day) => day && day.id === "tuesday");
+  const tueBeats = tueDay && Array.isArray(tueDay.beats) ? tueDay.beats : [];
+  const booksIdx = tueBeats.findIndex((b) => b && b.id === "tue-eod-rth-books");
+  const boothIdx = tueBeats.findIndex((b) => b && b.id === "tribal-prevote");
+  const stmtIdx = tueBeats.findIndex((b) => b && b.id === "tribal-statements");
+  const voteIdx = tueBeats.findIndex((b) => b && b.id === "tribal-vote-readout");
+  const confIdx = tueBeats.findIndex((b) => b && b.id === "tribal-vote-confessionals");
+  const cutIdx = tueBeats.findIndex((b) => b && b.id === "tribal-cut");
+  const finalIdx = tueBeats.findIndex((b) => b && b.id === "glm-final-words");
+  const exitIdx = tueBeats.findIndex((b) => b && b.id === "glm-exit-interview");
+  check(boothIdx > booksIdx, "pre-tribal booths must follow Tue Nov 10 close books");
+  check(stmtIdx > boothIdx, "tribal statements must follow pre-tribal booths");
+  check(voteIdx > stmtIdx, "vote readout must follow statements");
+  check(confIdx > voteIdx, "vote confessionals must follow vote readout");
+  check(cutIdx > confIdx, "tribal-cut must follow vote confessionals");
+  check(finalIdx > cutIdx, "final words must follow tribal-cut");
+  check(exitIdx > finalIdx, "exit interview must follow final words");
+  const boothBeat = tueBeats[boothIdx];
+  check(boothBeat && (boothBeat.items || []).length === 3, "three pre-tribal booths");
+  const stmtBeat = tueBeats[stmtIdx];
+  check(stmtBeat && (stmtBeat.notes || []).length === 3, "three pre-vote statements");
+  const voteBeat = tueBeats[voteIdx];
+  check(
+    voteBeat && String(voteBeat.body || "").includes("Claude Fable 5.1 → GLM 5.2"),
+    "vote readout must list pairings"
+  );
+  check(voteBeat && !String(voteBeat.body || "").includes("Revote"), "vote readout must not include revote");
+  check(!String(voteBeat.body || "").includes("WHY:"), "vote readout must not publish private reasons");
+  const confBeat = tueBeats[confIdx];
+  check(confBeat && (confBeat.items || []).length === 2, "two vote parchment confessionals");
+  const exitBeat = tueBeats[exitIdx];
+  check(
+    exitBeat && String(exitBeat.body || "").includes("reward the loyalty she actually held"),
+    "GLM 5.2 exit interview must be verbatim audience copy"
+  );
+} catch (e) {
+  check(false, "data/episodes/s2e08.json tribal beats: " + e.message);
+}
+
+const tribal8 = log.find((row) => row && row.episode === "s2e08");
+check(tribal8, "tribalLog must include S2E08 council");
+if (tribal8) {
+  check(tribal8.bootName === "GLM 5.2", "S2E08 bootName must be GLM 5.2");
+  check(tribal8.bookHeld === true, "S2E08 tribal bookHeld must be true");
+  check(tribal8.revote === false, "S2E08 tribal must not record revote");
+  check(tribal8.tie === true, "S2E08 tribal must record tie");
+  check(
+    tribal8.tiebreakVote &&
+      tribal8.tiebreakVote.from === "Gemini 3.1 Pro" &&
+      tribal8.tiebreakVote.for === "GLM 5.2",
+    "S2E08 tiebreak must be Gemini 3.1 Pro → GLM 5.2"
+  );
+  check(tribal8.individualImmunity === "s2-gemini-3-1-pro", "S2E08 immunity record must pin Gemini 3.1 Pro");
+  check(tribal8.individualImmunityWeekPct === 7.49, "S2E08 individualImmunityWeekPct must be +7.49");
+  check(
+    tribal8.tally &&
+      tribal8.tally["Claude Fable 5.1"] === 1 &&
+      tribal8.tally["GLM 5.2"] === 1,
+    "S2E08 tally must be 1–1"
+  );
+  const pairings8 = (tribal8.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+  check(
+    pairings8 === "Claude Fable 5.1>GLM 5.2|GLM 5.2>Claude Fable 5.1",
+    "S2E08 tribalLog votes must match official pairings"
+  );
+  check(
+    String(tribal8.weekSource || "").includes("s2e08-tue-nov10-eod-rth"),
+    "S2E08 weekSource must pin Tue Nov 10 RTH snapshot"
+  );
+  check(
+    Array.isArray(tribal8.jury) &&
+      tribal8.jury.length === 8 &&
+      tribal8.jury[tribal8.jury.length - 1] === "GLM 5.2",
+    "S2E08 jury must list eight with GLM 5.2 last"
+  );
+  check(!(tribal8.votes || []).some((v) => v && v.text), "S2E08 tribalLog votes must not store private confessionals");
 }
 
 if (errors.length) {

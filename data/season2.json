@@ -3,7 +3,7 @@
   "location": "Liquidation Island",
   "season": 2,
   "status": "live",
-  "statusLabel": "Season 2 — Episode 8 · Tue Nov 10 close (RTH last, official pending)",
+  "statusLabel": "Season 2 \u2014 Episode 8 \u00b7 Tue Nov 10 close (RTH last, official pending)",
   "started": true,
   "merged": true,
   "startingBookUsd": 200,
@@ -20,9 +20,9 @@
       "title": "Episode 1",
       "weekStart": "2026-10-07",
       "weekEnd": "2026-10-09",
-      "weekLabel": "Wednesday Oct 7 – Friday Oct 9, 2026",
+      "weekLabel": "Wednesday Oct 7 \u2013 Friday Oct 9, 2026",
       "tribalAt": "2026-10-09T14:00:00-07:00",
-      "tribalLabel": "Friday Oct 9, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Oct 9, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e01.html",
       "source": "data/episodes/s2e01.json",
       "diagramStartSnapshotId": "s2e01-carry",
@@ -39,9 +39,9 @@
       "title": "Episode 2",
       "weekStart": "2026-10-12",
       "weekEnd": "2026-10-13",
-      "weekLabel": "Monday Oct 12 – Tuesday Oct 13, 2026",
+      "weekLabel": "Monday Oct 12 \u2013 Tuesday Oct 13, 2026",
       "tribalAt": "2026-10-13T14:00:00-07:00",
-      "tribalLabel": "Tuesday Oct 13, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Oct 13, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e02.html",
       "source": "data/episodes/s2e02.json",
       "diagramStartSnapshotId": "s2e01-fri-eod-rth",
@@ -58,9 +58,9 @@
       "title": "Episode 3",
       "weekStart": "2026-10-14",
       "weekEnd": "2026-10-16",
-      "weekLabel": "Wednesday Oct 14 – Friday Oct 16, 2026",
+      "weekLabel": "Wednesday Oct 14 \u2013 Friday Oct 16, 2026",
       "tribalAt": "2026-10-16T14:00:00-07:00",
-      "tribalLabel": "Friday Oct 16, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Oct 16, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e03.html",
       "source": "data/episodes/s2e03.json",
       "diagramStartSnapshotId": "s2e02-tue-eod-rth",
@@ -77,9 +77,9 @@
       "title": "Episode 4",
       "weekStart": "2026-10-19",
       "weekEnd": "2026-10-20",
-      "weekLabel": "Monday Oct 19 – Tuesday Oct 20, 2026",
+      "weekLabel": "Monday Oct 19 \u2013 Tuesday Oct 20, 2026",
       "tribalAt": "2026-10-20T14:00:00-07:00",
-      "tribalLabel": "Tuesday Oct 20, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Oct 20, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e04.html",
       "source": "data/episodes/s2e04.json",
       "diagramStartSnapshotId": "s2e03-fri-eod-rth",
@@ -96,9 +96,9 @@
       "title": "Episode 5",
       "weekStart": "2026-10-21",
       "weekEnd": "2026-10-23",
-      "weekLabel": "Wednesday Oct 21 – Friday Oct 23, 2026",
+      "weekLabel": "Wednesday Oct 21 \u2013 Friday Oct 23, 2026",
       "tribalAt": "2026-10-23T14:00:00-07:00",
-      "tribalLabel": "Friday Oct 23, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Oct 23, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e05.html",
       "source": "data/episodes/s2e05.json",
       "diagramStartSnapshotId": "s2e04-tue-eod-rth",
@@ -115,9 +115,9 @@
       "title": "Episode 6",
       "weekStart": "2026-10-26",
       "weekEnd": "2026-10-27",
-      "weekLabel": "Monday Oct 26 – Tuesday Oct 27, 2026",
+      "weekLabel": "Monday Oct 26 \u2013 Tuesday Oct 27, 2026",
       "tribalAt": "2026-10-27T14:00:00-07:00",
-      "tribalLabel": "Tuesday Oct 27, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Oct 27, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e06.html",
       "source": "data/episodes/s2e06.json",
       "diagramStartSnapshotId": "s2e05-fri-eod-rth",
@@ -134,9 +134,9 @@
       "title": "Episode 7",
       "weekStart": "2026-11-04",
       "weekEnd": "2026-11-06",
-      "weekLabel": "Wednesday Nov 4 – Friday Nov 6, 2026",
+      "weekLabel": "Wednesday Nov 4 \u2013 Friday Nov 6, 2026",
       "tribalAt": "2026-11-06T14:00:00-07:00",
-      "tribalLabel": "Friday Nov 6, 2026 · 2:00 PM PT",
+      "tribalLabel": "Friday Nov 6, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e07.html",
       "source": "data/episodes/s2e07.json",
       "diagramStartSnapshotId": "s2e06-tue-nov3-eod-rth",
@@ -149,18 +149,21 @@
     {
       "number": 8,
       "id": "s2e08",
-      "status": "live",
+      "status": "closed",
       "title": "Episode 8",
       "weekStart": "2026-11-09",
       "weekEnd": "2026-11-10",
-      "weekLabel": "Monday Nov 9 – Tuesday Nov 10, 2026",
+      "weekLabel": "Monday Nov 9 \u2013 Tuesday Nov 10, 2026",
       "tribalAt": "2026-11-10T14:00:00-07:00",
-      "tribalLabel": "Tuesday Nov 10, 2026 · 2:00 PM PT",
+      "tribalLabel": "Tuesday Nov 10, 2026 \u00b7 2:00 PM PT",
       "path": "seasons/2/e08.html",
       "source": "data/episodes/s2e08.json",
       "diagramStartSnapshotId": "s2e07-fri-nov6-eod-rth",
       "weekBoardSnapshotId": "s2e08-tue-nov10-eod-rth",
-      "liveSnapshotId": "s2e08-tue-nov10-eod-rth"
+      "liveSnapshotId": "s2e08-tue-nov10-eod-rth",
+      "boot": "GLM 5.2",
+      "tease": "GLM 5.2 joins the jury. Book held until the finale.",
+      "closedAt": "2026-11-10T22:20:00Z"
     }
   ],
   "snapshots": [
@@ -169,7 +172,7 @@
       "kind": "carry",
       "at": "2026-10-07T16:30:00Z",
       "throughAt": "2026-10-07T16:30:00Z",
-      "label": "Episode 1 carry · ten $200 open books · pre-US-open remake",
+      "label": "Episode 1 carry \u00b7 ten $200 open books \u00b7 pre-US-open remake",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -319,7 +322,7 @@
       "kind": "open",
       "at": "2026-10-07T13:40:57Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wednesday Oct 7 open · 24 fills · marks ~6:41 AM PT",
+      "label": "Wednesday Oct 7 open \u00b7 24 fills \u00b7 marks ~6:41 AM PT",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -709,7 +712,7 @@
       "kind": "intraday",
       "at": "2026-10-07T17:02:29Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wednesday Oct 7 mid-session · 9 fills · marks ~10:02 AM PT",
+      "label": "Wednesday Oct 7 mid-session \u00b7 9 fills \u00b7 marks ~10:02 AM PT",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -1089,7 +1092,7 @@
       "kind": "intraday",
       "at": "2026-10-07T19:03:06Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wednesday Oct 7 last hour · 3 fills · marks ~12:03 PM PT",
+      "label": "Wednesday Oct 7 last hour \u00b7 3 fills \u00b7 marks ~12:03 PM PT",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -1479,7 +1482,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-07T19:59:59Z",
       "throughAt": "2026-10-07T23:59:59Z",
-      "label": "Wed Oct 7 close · RTH last trade (~19:59:59Z); official SIP close for 2026-10-07 pending. No fills since last hour.",
+      "label": "Wed Oct 7 close \u00b7 RTH last trade (~19:59:59Z); official SIP close for 2026-10-07 pending. No fills since last hour.",
       "dayPctPriorOfficial": true,
       "books": {
         "s2-grok-4-7": {
@@ -1869,7 +1872,7 @@
       "kind": "open",
       "at": "2026-10-08T17:16:50Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thu Oct 8 open · late recovery · 20 fills · marks ~10:16 AM PT. Scheduled 6:19 AM PT open had zero orders.",
+      "label": "Thu Oct 8 open \u00b7 late recovery \u00b7 20 fills \u00b7 marks ~10:16 AM PT. Scheduled 6:19 AM PT open had zero orders.",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -2209,7 +2212,7 @@
       "kind": "intraday",
       "at": "2026-10-08T18:16:02Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thursday Oct 8 mid-session · 8 fills · marks ~11:16 AM PT",
+      "label": "Thursday Oct 8 mid-session \u00b7 8 fills \u00b7 marks ~11:16 AM PT",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -2559,7 +2562,7 @@
       "kind": "intraday",
       "at": "2026-10-08T19:49:37Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thursday Oct 8 last-hour · 5 fills · marks ~12:49 PM PT",
+      "label": "Thursday Oct 8 last-hour \u00b7 5 fills \u00b7 marks ~12:49 PM PT",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -2909,7 +2912,7 @@
       "kind": "close",
       "at": "2026-10-08T20:00:00Z",
       "throughAt": "2026-10-08T23:59:59Z",
-      "label": "Thu Oct 8 close · official SIP list-exchange close (date 2026-10-08, interpolated=false). BTC marked ~1:17 PM PT. No fills since last hour.",
+      "label": "Thu Oct 8 close \u00b7 official SIP list-exchange close (date 2026-10-08, interpolated=false). BTC marked ~1:17 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-wed-eod-rth (Wed RTH close; official SIP for 2026-10-07 never applied)",
       "quoteSource": "sip-list-exchange-close",
@@ -3274,7 +3277,7 @@
       "kind": "open",
       "at": "2026-10-09T13:57:48Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Friday Oct 9 open · 8 fills · marks ~6:58 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Friday Oct 9 open \u00b7 8 fills \u00b7 marks ~6:58 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -3634,7 +3637,7 @@
       "kind": "intraday",
       "at": "2026-10-09T17:19:43Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Friday Oct 9 mid-session · 8 fills · marks ~10:20 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Friday Oct 9 mid-session \u00b7 8 fills \u00b7 marks ~10:20 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -3994,7 +3997,7 @@
       "kind": "intraday",
       "at": "2026-10-09T19:06:52Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Friday Oct 9 last hour · 4 fills · marks ~12:07 PM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Friday Oct 9 last hour \u00b7 4 fills \u00b7 marks ~12:07 PM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "books": {
         "s2-grok-4-7": {
@@ -4344,7 +4347,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-09T20:26:18Z",
       "throughAt": "2026-10-09T23:59:59Z",
-      "label": "Fri Oct 9 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:26 PM PT. No fills since last hour.",
+      "label": "Fri Oct 9 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:26 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": true,
       "dayPctBasis": "s2e01-thu-eod-sip bookUsd (priorMarkUsd)",
       "quoteSource": "rth-last-trade",
@@ -4710,7 +4713,7 @@
       "kind": "open",
       "at": "2026-10-12T13:55:34Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Monday Oct 12 open · 11 fills · marks ~6:55 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Monday Oct 12 open \u00b7 11 fills \u00b7 marks ~6:55 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5103,7 +5106,7 @@
       "kind": "intraday",
       "at": "2026-10-12T17:08:40Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Monday Oct 12 midday · 6 fills · marks ~10:08 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Monday Oct 12 midday \u00b7 6 fills \u00b7 marks ~10:08 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5130,7 +5133,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -5477,7 +5480,7 @@
       "kind": "intraday",
       "at": "2026-10-12T19:13:06Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Monday Oct 12 last hour · 9 fills · marks ~12:13 PM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Monday Oct 12 last hour \u00b7 9 fills \u00b7 marks ~12:13 PM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5504,7 +5507,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -5851,7 +5854,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-12T20:28:38Z",
       "throughAt": "2026-10-12T23:59:59Z",
-      "label": "Mon Oct 12 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:28 PM PT. No fills since last hour.",
+      "label": "Mon Oct 12 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:28 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e01-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -5893,7 +5896,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -6258,7 +6261,7 @@
       "kind": "open",
       "at": "2026-10-13T13:46:36Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tuesday Oct 13 open · 12 fills · marks ~6:46 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Tuesday Oct 13 open \u00b7 12 fills \u00b7 marks ~6:46 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -6299,7 +6302,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -6664,7 +6667,7 @@
       "kind": "intraday",
       "at": "2026-10-13T17:17:52Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tuesday Oct 13 midday · 10 fills · marks ~10:17 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Tuesday Oct 13 midday \u00b7 10 fills \u00b7 marks ~10:17 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -6706,7 +6709,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -7071,7 +7074,7 @@
       "kind": "intraday",
       "at": "2026-10-13T19:09:25Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tuesday Oct 13 last hour · 6 fills · marks ~12:09 PM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Tuesday Oct 13 last hour \u00b7 6 fills \u00b7 marks ~12:09 PM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -7111,7 +7114,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -7486,7 +7489,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-13T20:20:00Z",
       "throughAt": "2026-10-13T23:59:59Z",
-      "label": "Tue Oct 13 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:20 PM PT. No fills since last hour.",
+      "label": "Tue Oct 13 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:20 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e01-fri-eod-rth bookUsd (episode start)",
@@ -7528,7 +7531,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -7903,7 +7906,7 @@
       "kind": "open",
       "at": "2026-10-14T13:34:46Z",
       "throughAt": "2026-10-14T23:59:59Z",
-      "label": "Wednesday Oct 14 open · 16 fills · marks ~6:34 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Wednesday Oct 14 open \u00b7 16 fills \u00b7 marks ~6:34 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-tue-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -7944,7 +7947,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -7991,7 +7994,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -8320,7 +8323,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-14T20:17:36Z",
       "throughAt": "2026-10-14T23:59:59Z",
-      "label": "Wed Oct 14 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:17 PM PT. No fills since open.",
+      "label": "Wed Oct 14 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:17 PM PT. No fills since open.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e02-tue-eod-rth bookUsd (priorMarkUsd; Day 1 of episode so day % = episode %)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -8736,7 +8739,7 @@
       "kind": "intraday",
       "at": "2026-10-15T16:55:01Z",
       "throughAt": "2026-10-15T23:59:59Z",
-      "label": "Thu Oct 15 midday · 9 fills · marks ~9:55 AM PT · Robinhood last",
+      "label": "Thu Oct 15 midday \u00b7 9 fills \u00b7 marks ~9:55 AM PT \u00b7 Robinhood last",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -9140,7 +9143,7 @@
       "kind": "intraday",
       "at": "2026-10-16T18:55:30Z",
       "throughAt": "2026-10-16T23:59:59Z",
-      "label": "Fri Oct 16 last hour · 1 fill · marks ~11:55 AM PT · Robinhood last",
+      "label": "Fri Oct 16 last hour \u00b7 1 fill \u00b7 marks ~11:55 AM PT \u00b7 Robinhood last",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-thu-eod-rth bookUsd (priorMarkUsd; Day 3)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -9525,7 +9528,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-16T20:16:30Z",
       "throughAt": "2026-10-16T23:59:59Z",
-      "label": "Fri Oct 16 close · RTH last · official close pending. Equities at the 4:00 PM ET bell. No fills since last hour.",
+      "label": "Fri Oct 16 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-thu-eod-rth bookUsd (priorMarkUsd; Day 3)",
       "weekPctBasis": "s2e02-tue-eod-rth bookUsd (episode start)",
@@ -9575,7 +9578,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -9622,7 +9625,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -9921,7 +9924,7 @@
       "kind": "open",
       "at": "2026-10-19T13:55:00Z",
       "throughAt": "2026-10-19T23:59:59Z",
-      "label": "Monday Oct 19 open · marks ~6:55 AM PT · Robinhood last (equities) / mark (BTC)",
+      "label": "Monday Oct 19 open \u00b7 marks ~6:55 AM PT \u00b7 Robinhood last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-fri-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -10329,7 +10332,7 @@
       "kind": "intraday",
       "at": "2026-10-19T16:56:00Z",
       "throughAt": "2026-10-19T23:59:59Z",
-      "label": "Mon Oct 19 midday · 8 fills · marks ~9:56 AM PT · Robinhood last",
+      "label": "Mon Oct 19 midday \u00b7 8 fills \u00b7 marks ~9:56 AM PT \u00b7 Robinhood last",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-fri-eod-rth bookUsd (priorMarkUsd; Day 1)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -10727,7 +10730,7 @@
       "kind": "intraday",
       "at": "2026-10-19T18:59:39Z",
       "throughAt": "2026-10-19T23:59:59Z",
-      "label": "Mon Oct 19 last hour · 3 fills · marks ~11:59 AM PT · Robinhood last",
+      "label": "Mon Oct 19 last hour \u00b7 3 fills \u00b7 marks ~11:59 AM PT \u00b7 Robinhood last",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-fri-eod-rth bookUsd (priorMarkUsd; Day 1)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -11115,7 +11118,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-19T20:18:40Z",
       "throughAt": "2026-10-19T23:59:59Z",
-      "label": "Mon Oct 19 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:18 PM PT. No fills since last hour.",
+      "label": "Mon Oct 19 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:18 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e03-fri-eod-rth bookUsd (priorMarkUsd; Day 1)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -11160,7 +11163,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -11505,7 +11508,7 @@
       "kind": "open",
       "at": "2026-10-20T13:32:04Z",
       "throughAt": "2026-10-20T23:59:59Z",
-      "label": "Tuesday Oct 20 open · 12 fills · marks ~6:32 AM PT · Robinhood RTH last (equities) / mark (BTC)",
+      "label": "Tuesday Oct 20 open \u00b7 12 fills \u00b7 marks ~6:32 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-mon-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -11547,7 +11550,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -11872,7 +11875,7 @@
       "kind": "intraday",
       "at": "2026-10-20T16:57:34Z",
       "throughAt": "2026-10-20T23:59:59Z",
-      "label": "Tue Oct 20 midday · 9 fills · marks ~9:57 AM PT · Robinhood RTH last (equities) / mark (BTC)",
+      "label": "Tue Oct 20 midday \u00b7 9 fills \u00b7 marks ~9:57 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-mon-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -11915,7 +11918,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -11962,7 +11965,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12045,7 +12048,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12242,7 +12245,7 @@
       "kind": "intraday",
       "at": "2026-10-20T18:59:49Z",
       "throughAt": "2026-10-20T23:59:59Z",
-      "label": "Tue Oct 20 last hour · 3 fills · marks ~11:59 AM PT · Robinhood RTH last (equities) / mark (BTC)",
+      "label": "Tue Oct 20 last hour \u00b7 3 fills \u00b7 marks ~11:59 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-mon-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -12285,7 +12288,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12332,7 +12335,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12415,7 +12418,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12602,7 +12605,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-20T20:18:43Z",
       "throughAt": "2026-10-20T23:59:59Z",
-      "label": "Tue Oct 20 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:18 PM PT. No fills since last hour.",
+      "label": "Tue Oct 20 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:18 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-mon-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e03-fri-eod-rth bookUsd (episode start)",
@@ -12654,7 +12657,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12701,7 +12704,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12784,7 +12787,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -12971,7 +12974,7 @@
       "kind": "open",
       "at": "2026-10-21T13:33:12Z",
       "throughAt": "2026-10-21T23:59:59Z",
-      "label": "Wed Oct 21 open · 9 fills · marks ~6:33 AM PT · Robinhood RTH last (equities) / mark (BTC); DPST at fill",
+      "label": "Wed Oct 21 open \u00b7 9 fills \u00b7 marks ~6:33 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC); DPST at fill",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-tue-eod-rth bookUsd (priorMarkUsd; Day 1)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -13014,7 +13017,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13061,7 +13064,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13144,7 +13147,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13295,7 +13298,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13332,7 +13335,7 @@
       "kind": "intraday",
       "at": "2026-10-21T16:57:01Z",
       "throughAt": "2026-10-21T23:59:59Z",
-      "label": "Wed Oct 21 midday · 4 fills · marks ~9:57 AM PT · Robinhood RTH last (equities) / mark (BTC)",
+      "label": "Wed Oct 21 midday \u00b7 4 fills \u00b7 marks ~9:57 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-tue-eod-rth bookUsd (priorMarkUsd; Day 1)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -13373,7 +13376,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13420,7 +13423,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13503,7 +13506,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13654,7 +13657,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13691,7 +13694,7 @@
       "kind": "intraday",
       "at": "2026-10-21T19:04:07Z",
       "throughAt": "2026-10-21T23:59:59Z",
-      "label": "Wed Oct 21 last hour · 4 fills · marks ~12:04 PM PT · Robinhood RTH last (equities) / mark (BTC)",
+      "label": "Wed Oct 21 last hour \u00b7 4 fills \u00b7 marks ~12:04 PM PT \u00b7 Robinhood RTH last (equities) / mark (BTC)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-tue-eod-rth bookUsd (priorMarkUsd; Day 1)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -13733,7 +13736,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13780,7 +13783,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -13863,7 +13866,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14014,7 +14017,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14051,7 +14054,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-21T20:20:00Z",
       "throughAt": "2026-10-21T23:59:59Z",
-      "label": "Wed Oct 21 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:20 PM PT. No fills since last hour.",
+      "label": "Wed Oct 21 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:20 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e04-tue-eod-rth bookUsd (priorMarkUsd; Day 1)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -14095,7 +14098,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14142,7 +14145,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14225,7 +14228,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14376,7 +14379,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14413,7 +14416,7 @@
       "kind": "open",
       "at": "2026-10-22T13:32:51Z",
       "throughAt": "2026-10-22T23:59:59Z",
-      "label": "Thu Oct 22 open · 10 fills · marks ~6:33 AM PT · Robinhood RTH last (equities) / mark (BTC); ERX at last $123.3201",
+      "label": "Thu Oct 22 open \u00b7 10 fills \u00b7 marks ~6:33 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC); ERX at last $123.3201",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -14454,7 +14457,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14501,7 +14504,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14574,7 +14577,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14735,7 +14738,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14782,7 +14785,7 @@
       "kind": "intraday",
       "at": "2026-10-22T16:52:59Z",
       "throughAt": "2026-10-22T23:59:59Z",
-      "label": "Thu Oct 22 midday · 8 fills · marks ~9:53 AM PT · Robinhood RTH last (equities) / mark (BTC); ERX at last $118.71",
+      "label": "Thu Oct 22 midday \u00b7 8 fills \u00b7 marks ~9:53 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC); ERX at last $118.71",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -14823,7 +14826,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14870,7 +14873,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -14943,7 +14946,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15104,7 +15107,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15151,7 +15154,7 @@
       "kind": "intraday",
       "at": "2026-10-22T19:05:50Z",
       "throughAt": "2026-10-22T23:59:59Z",
-      "label": "Thu Oct 22 last hour · 4 fills · marks ~12:06 PM PT · Robinhood RTH last (equities) / mark (BTC); ERX at last $120.185",
+      "label": "Thu Oct 22 last hour \u00b7 4 fills \u00b7 marks ~12:06 PM PT \u00b7 Robinhood RTH last (equities) / mark (BTC); ERX at last $120.185",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -15192,7 +15195,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15239,7 +15242,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15312,7 +15315,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15463,7 +15466,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15510,7 +15513,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-22T20:18:40Z",
       "throughAt": "2026-10-22T23:59:59Z",
-      "label": "Thu Oct 22 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:18 PM PT. No fills since last hour.",
+      "label": "Thu Oct 22 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:18 PM PT. No fills since last hour.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-wed-eod-rth bookUsd (priorMarkUsd; Day 2)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -15553,7 +15556,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15600,7 +15603,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15673,7 +15676,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15824,7 +15827,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15871,7 +15874,7 @@
       "kind": "open",
       "at": "2026-10-23T13:32:41Z",
       "throughAt": "2026-10-23T23:59:59Z",
-      "label": "Fri Oct 23 open · 5 fills · marks ~6:33 AM PT · Robinhood RTH last (equities) / mark (BTC); SOXL at last $83.4385",
+      "label": "Fri Oct 23 open \u00b7 5 fills \u00b7 marks ~6:33 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC); SOXL at last $83.4385",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-thu-eod-rth bookUsd (priorMarkUsd; Day 3)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -15913,7 +15916,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -15960,7 +15963,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16033,7 +16036,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16194,7 +16197,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16231,7 +16234,7 @@
       "kind": "intraday",
       "at": "2026-10-23T16:57:30Z",
       "throughAt": "2026-10-23T23:59:59Z",
-      "label": "Fri Oct 23 midday · 5 fills · marks ~9:57 AM PT · Robinhood RTH last (equities) / mark (BTC $81,626.52); SOXS off island",
+      "label": "Fri Oct 23 midday \u00b7 5 fills \u00b7 marks ~9:57 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC $81,626.52); SOXS off island",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-thu-eod-rth bookUsd (priorMarkUsd; Day 3)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -16272,7 +16275,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16319,7 +16322,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16392,7 +16395,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16543,7 +16546,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16590,7 +16593,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-23T20:14:06Z",
       "throughAt": "2026-10-23T23:59:59Z",
-      "label": "Fri Oct 23 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:14 PM PT ($81,295.32). Two last-hour fills at 12:02 PM PT.",
+      "label": "Fri Oct 23 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; BTC Robinhood mark ~1:14 PM PT ($81,295.32). Two last-hour fills at 12:02 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-thu-eod-rth bookUsd (priorMarkUsd; Day 3)",
       "weekPctBasis": "s2e04-tue-eod-rth bookUsd (episode start)",
@@ -16632,7 +16635,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16679,7 +16682,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16752,7 +16755,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16893,7 +16896,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -16940,7 +16943,7 @@
       "kind": "open",
       "at": "2026-10-27T13:34:05Z",
       "throughAt": "2026-10-27T23:59:59Z",
-      "label": "Tuesday Oct 27 open · 9 fills · marks ~6:34 AM PT · Robinhood RTH last (equities) / mark (BTC $79,894.68)",
+      "label": "Tuesday Oct 27 open \u00b7 9 fills \u00b7 marks ~6:34 AM PT \u00b7 Robinhood RTH last (equities) / mark (BTC $79,894.68)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-fri-eod-rth bookUsd (priorMarkUsd; no Mon Oct 26 EOD snapshot)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -16981,7 +16984,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17028,7 +17031,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17111,7 +17114,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17148,7 +17151,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17273,7 +17276,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17330,7 +17333,7 @@
       "kind": "intraday",
       "at": "2026-10-27T16:56:58Z",
       "throughAt": "2026-10-27T23:59:59Z",
-      "label": "Tuesday Oct 27 midday · 10 fills · marks ~9:57 AM PT · Robinhood RTH last (equities); BTC off island (Gemini 3.1 Pro sold)",
+      "label": "Tuesday Oct 27 midday \u00b7 10 fills \u00b7 marks ~9:57 AM PT \u00b7 Robinhood RTH last (equities); BTC off island (Gemini 3.1 Pro sold)",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-fri-eod-rth bookUsd (priorMarkUsd; no Mon Oct 26 EOD snapshot)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -17373,7 +17376,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17420,7 +17423,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17503,7 +17506,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17540,7 +17543,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17655,7 +17658,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17702,7 +17705,7 @@
       "kind": "intraday",
       "at": "2026-10-27T18:57:43Z",
       "throughAt": "2026-10-27T23:59:59Z",
-      "label": "Tuesday Oct 27 last hour · 0 fills · marks ~11:58 AM PT · Robinhood RTH last (equities); no BTC on island",
+      "label": "Tuesday Oct 27 last hour \u00b7 0 fills \u00b7 marks ~11:58 AM PT \u00b7 Robinhood RTH last (equities); no BTC on island",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-fri-eod-rth bookUsd (priorMarkUsd; no Mon Oct 26 EOD snapshot)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -17745,7 +17748,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17792,7 +17795,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17875,7 +17878,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -17912,7 +17915,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18027,7 +18030,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18074,7 +18077,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-27T20:22:40Z",
       "throughAt": "2026-10-27T23:59:59Z",
-      "label": "Tue Oct 27 close · RTH last · official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:57–59Z); read ~1:22 PM PT. No fills since last hour. No crypto on island.",
+      "label": "Tue Oct 27 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:57\u201359Z); read ~1:22 PM PT. No fills since last hour. No crypto on island.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e05-fri-eod-rth bookUsd (priorMarkUsd; no Mon Oct 26 EOD snapshot)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -18125,7 +18128,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18172,7 +18175,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18255,7 +18258,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18292,7 +18295,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18407,7 +18410,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18454,7 +18457,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-28T20:16:00Z",
       "throughAt": "2026-10-28T23:59:59Z",
-      "label": "Wed Oct 28 close · RTH last · official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:58–59Z); read ~1:16 PM PT. No trades Wed — open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
+      "label": "Wed Oct 28 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:58\u201359Z); read ~1:16 PM PT. No trades Wed \u2014 open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-tue-eod-rth bookUsd (priorMarkUsd; Day 3)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -18498,7 +18501,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18545,7 +18548,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18628,7 +18631,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18665,7 +18668,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18780,7 +18783,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18827,7 +18830,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-29T20:19:00Z",
       "throughAt": "2026-10-29T23:59:59Z",
-      "label": "Thu Oct 29 close · RTH last · official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:46–59Z); read ~1:19 PM PT. No trades Wed or Thu — open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
+      "label": "Thu Oct 29 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:46\u201359Z); read ~1:19 PM PT. No trades Wed or Thu \u2014 open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-wed-eod-rth bookUsd (priorMarkUsd; Day 4)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -18871,7 +18874,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -18918,7 +18921,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19001,7 +19004,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19038,7 +19041,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19153,7 +19156,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19200,7 +19203,7 @@
       "kind": "close-rth-last",
       "at": "2026-10-30T20:19:00Z",
       "throughAt": "2026-10-30T23:59:59Z",
-      "label": "Fri Oct 30 close · RTH last · official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:48–59Z); read ~1:19 PM PT. No trades Wed–Fri — open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
+      "label": "Fri Oct 30 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell (venue last trade 19:59:48\u201359Z); read ~1:19 PM PT. No trades Wed\u2013Fri \u2014 open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-thu-eod-rth bookUsd (priorMarkUsd; Day 5)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -19244,7 +19247,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19291,7 +19294,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19374,7 +19377,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19411,7 +19414,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19526,7 +19529,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19573,7 +19576,7 @@
       "kind": "close-rth-last",
       "at": "2026-11-02T21:19:00Z",
       "throughAt": "2026-11-02T23:59:59Z",
-      "label": "Mon Nov 2 close · RTH last · official close pending. Equities at the 4:00 PM ET bell (venue last trade 20:59:56–59Z); read ~1:19 PM PT. No trades Wed Oct 28 through Mon Nov 2 — open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
+      "label": "Mon Nov 2 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell (venue last trade 20:59:56\u201359Z); read ~1:19 PM PT. No trades Wed Oct 28 through Mon Nov 2 \u2014 open, midday, and last-hour windows did not run. Episode 6 tribal postponed. No crypto on island.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-fri-eod-rth bookUsd (priorMarkUsd; Day 6)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -19617,7 +19620,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19664,7 +19667,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19747,7 +19750,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19784,7 +19787,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19899,7 +19902,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -19946,7 +19949,7 @@
       "kind": "open",
       "at": "2026-11-03T14:31:53Z",
       "throughAt": "2026-11-03T23:59:59Z",
-      "label": "Tue Nov 3 open · 5 fills · trading resumed after Oct 28–Nov 2 outage · marks ~6:32 AM PT · Robinhood RTH last (just after open fills). Episode 6 tribal still postponed; Gemini 3.1 Pro holds Episode 6 immunity from Tue Oct 27 close marks. No crypto.",
+      "label": "Tue Nov 3 open \u00b7 5 fills \u00b7 trading resumed after Oct 28\u2013Nov 2 outage \u00b7 marks ~6:32 AM PT \u00b7 Robinhood RTH last (just after open fills). Episode 6 tribal still postponed; Gemini 3.1 Pro holds Episode 6 immunity from Tue Oct 27 close marks. No crypto.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -19988,7 +19991,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20035,7 +20038,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20118,7 +20121,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20155,7 +20158,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20260,7 +20263,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20307,7 +20310,7 @@
       "kind": "intraday",
       "at": "2026-11-03T17:54:05Z",
       "throughAt": "2026-11-03T23:59:59Z",
-      "label": "Tue Nov 3 midday · 3 fills · marks ~9:54 AM PT · Robinhood RTH last (just after midday fills). Episode 6 tribal today Tue Nov 3 2:00 PM PT; Gemini 3.1 Pro holds Episode 6 immunity from Oct 27 close marks. No crypto.",
+      "label": "Tue Nov 3 midday \u00b7 3 fills \u00b7 marks ~9:54 AM PT \u00b7 Robinhood RTH last (just after midday fills). Episode 6 tribal today Tue Nov 3 2:00 PM PT; Gemini 3.1 Pro holds Episode 6 immunity from Oct 27 close marks. No crypto.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -20349,7 +20352,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20396,7 +20399,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20479,7 +20482,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20516,7 +20519,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20621,7 +20624,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20658,7 +20661,7 @@
       "kind": "intraday",
       "at": "2026-11-03T19:56:24Z",
       "throughAt": "2026-11-03T23:59:59Z",
-      "label": "Tue Nov 3 last hour · 0 fills · marks ~11:56 AM PT · Robinhood RTH last (no fills — all HOLD). Episode 6 tribal today Tue Nov 3 2:00 PM PT; Gemini 3.1 Pro holds Episode 6 immunity from Oct 27 close marks. No crypto.",
+      "label": "Tue Nov 3 last hour \u00b7 0 fills \u00b7 marks ~11:56 AM PT \u00b7 Robinhood RTH last (no fills \u2014 all HOLD). Episode 6 tribal today Tue Nov 3 2:00 PM PT; Gemini 3.1 Pro holds Episode 6 immunity from Oct 27 close marks. No crypto.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -20700,7 +20703,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20747,7 +20750,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20830,7 +20833,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20867,7 +20870,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -20972,7 +20975,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21009,7 +21012,7 @@
       "kind": "close-rth-last",
       "at": "2026-11-04T01:00:56Z",
       "throughAt": "2026-11-04T23:59:59Z",
-      "label": "Tue Nov 3 close · RTH last · official close pending. Equities at the 4:00 PM ET bell; no fills since last hour. Episode 6 tribal: Kimi K3 voted out 6th (2–2 revote). Gemini 3.1 Pro held Episode 6 immunity from Oct 27 close marks. BTC off island.",
+      "label": "Tue Nov 3 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell; no fills since last hour. Episode 6 tribal: Kimi K3 voted out 6th (2\u20132 revote). Gemini 3.1 Pro held Episode 6 immunity from Oct 27 close marks. BTC off island.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-mon-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e05-fri-eod-rth bookUsd (episode start)",
@@ -21060,7 +21063,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21107,7 +21110,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21190,7 +21193,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21227,7 +21230,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21332,7 +21335,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21359,7 +21362,7 @@
               "ticker": "CASH",
               "sizeUsd": 99.307,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E06 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E06 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         }
@@ -21370,7 +21373,7 @@
       "kind": "open",
       "at": "2026-11-04T14:30:43Z",
       "throughAt": "2026-11-04T23:59:59Z",
-      "label": "Wed Nov 4 open · 7 fills · marks ~6:30 AM PT · Robinhood RTH last just after open fills; BTC mark $78,421.32. First S2E07 window. Fable and Pro traded; Muse and GLM held. Next tribal Fri Nov 6 2:00 PM PT.",
+      "label": "Wed Nov 4 open \u00b7 7 fills \u00b7 marks ~6:30 AM PT \u00b7 Robinhood RTH last just after open fills; BTC mark $78,421.32. First S2E07 window. Fable and Pro traded; Muse and GLM held. Next tribal Fri Nov 6 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -21415,7 +21418,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21462,7 +21465,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21555,7 +21558,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21592,7 +21595,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21717,7 +21720,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21744,7 +21747,7 @@
               "ticker": "CASH",
               "sizeUsd": 99.307,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E06 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E06 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         }
@@ -21755,7 +21758,7 @@
       "kind": "intraday",
       "at": "2026-11-04T17:53:40Z",
       "throughAt": "2026-11-04T23:59:59Z",
-      "label": "Wed Nov 4 midday · 10 fills · marks ~9:54 AM PT · Robinhood RTH last (just after midday fills); BTC mark $80,365.89. Four living hunted; all four traded. Next tribal Fri Nov 6 2:00 PM PT.",
+      "label": "Wed Nov 4 midday \u00b7 10 fills \u00b7 marks ~9:54 AM PT \u00b7 Robinhood RTH last (just after midday fills); BTC mark $80,365.89. Four living hunted; all four traded. Next tribal Fri Nov 6 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -21799,7 +21802,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21846,7 +21849,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21939,7 +21942,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -21976,7 +21979,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22101,7 +22104,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22128,7 +22131,7 @@
               "ticker": "CASH",
               "sizeUsd": 99.307,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E06 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E06 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         }
@@ -22139,7 +22142,7 @@
       "kind": "intraday",
       "at": "2026-11-04T20:03:13Z",
       "throughAt": "2026-11-04T23:59:59Z",
-      "label": "Wed Nov 4 last hour · 0 fills · marks ~12:02 PM PT · Robinhood RTH last (no fills — all HOLD). Four living hunted; all four HOLD (no orders). Next tribal Fri Nov 6 2:00 PM PT.",
+      "label": "Wed Nov 4 last hour \u00b7 0 fills \u00b7 marks ~12:02 PM PT \u00b7 Robinhood RTH last (no fills \u2014 all HOLD). Four living hunted; all four HOLD (no orders). Next tribal Fri Nov 6 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -22183,7 +22186,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22230,7 +22233,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22323,7 +22326,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22360,7 +22363,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22485,7 +22488,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22512,7 +22515,7 @@
               "ticker": "CASH",
               "sizeUsd": 99.307,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E06 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E06 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         }
@@ -22523,7 +22526,7 @@
       "kind": "close-rth-last",
       "at": "2026-11-04T21:15:00Z",
       "throughAt": "2026-11-04T23:59:59Z",
-      "label": "Wed Nov 4 close · RTH last · official close pending. Equities at the 4:00 PM ET bell (20:59:35–59Z); read ~1:15 PM PT. No fills since last hour — all four living HOLD. BTC Robinhood mark $80,242.78. Next tribal Fri Nov 6 2:00 PM PT.",
+      "label": "Wed Nov 4 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell (20:59:35\u201359Z); read ~1:15 PM PT. No fills since last hour \u2014 all four living HOLD. BTC Robinhood mark $80,242.78. Next tribal Fri Nov 6 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -22569,7 +22572,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22616,7 +22619,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22709,7 +22712,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22746,7 +22749,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22871,7 +22874,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -22898,7 +22901,7 @@
               "ticker": "CASH",
               "sizeUsd": 99.307,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E06 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E06 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         }
@@ -22909,7 +22912,7 @@
       "kind": "close-rth-last",
       "at": "2026-11-05T21:13:00Z",
       "throughAt": "2026-11-05T23:59:59Z",
-      "label": "Thu Nov 5 close · RTH last · official close pending. Equities at the 4:00 PM ET bell (20:59:55–59Z); read ~1:13 PM PT. No fills since last hour — all four living HOLD. BTC Robinhood mark $75,879.26. Next tribal Fri Nov 6 2:00 PM PT.",
+      "label": "Thu Nov 5 close \u00b7 RTH last \u00b7 official close pending. Equities at the 4:00 PM ET bell (20:59:55\u201359Z); read ~1:13 PM PT. No fills since last hour \u2014 all four living HOLD. BTC Robinhood mark $75,879.26. Next tribal Fri Nov 6 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-wed-nov4-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -22955,7 +22958,7 @@
               "ticker": "CASH",
               "sizeUsd": 70,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E01 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E01 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -23002,7 +23005,7 @@
               "ticker": "CASH",
               "sizeUsd": 13.751,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E02 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E02 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -23075,7 +23078,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.0321,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E03 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E03 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -23112,7 +23115,7 @@
               "ticker": "CASH",
               "sizeUsd": 0.1212,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E05 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E05 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -23237,7 +23240,7 @@
               "ticker": "CASH",
               "sizeUsd": 2.2552,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E04 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E04 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         },
@@ -23264,7 +23267,7 @@
               "ticker": "CASH",
               "sizeUsd": 99.307,
               "status": "cash",
-              "note": "jury · book held until finale · voted out S2E06 tribal · no split · no trades · track from $200 start"
+              "note": "jury \u00b7 book held until finale \u00b7 voted out S2E06 tribal \u00b7 no split \u00b7 no trades \u00b7 track from $200 start"
             }
           ]
         }
@@ -23275,7 +23278,7 @@
       "kind": "open",
       "at": "2026-11-06T15:24:49Z",
       "throughAt": "2026-11-06T23:59:59Z",
-      "label": "Fri Nov 6 open · 6 fills · marks ~7:24 AM PT · Robinhood RTH last just after open fills; BTC Robinhood mark at read time. S2E07 Day 3 tribal day. Fable and Pro traded (5 equity + 1 crypto); Muse and GLM held. Next tribal Fri Nov 6 2:00 PM PT.",
+      "label": "Fri Nov 6 open \u00b7 6 fills \u00b7 marks ~7:24 AM PT \u00b7 Robinhood RTH last just after open fills; BTC Robinhood mark at read time. S2E07 Day 3 tribal day. Fable and Pro traded (5 equity + 1 crypto); Muse and GLM held. Next tribal Fri Nov 6 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-thu-nov5-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -23623,7 +23626,7 @@
       "kind": "intraday",
       "at": "2026-11-06T18:14:18Z",
       "throughAt": "2026-11-06T23:59:59Z",
-      "label": "Fri Nov 6 midday · 4 fills · Fri Nov 6 2026 midday (RTH last ~10:14 AM PT, just after midday fills). Fri Nov 6 midday: S2E07 Day 3 tribal day. 4 living hunted; Muse and GLM traded (4 fills), Fable and Pro held. Tribal today 2:00 PM PT.",
+      "label": "Fri Nov 6 midday \u00b7 4 fills \u00b7 Fri Nov 6 2026 midday (RTH last ~10:14 AM PT, just after midday fills). Fri Nov 6 midday: S2E07 Day 3 tribal day. 4 living hunted; Muse and GLM traded (4 fills), Fable and Pro held. Tribal today 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-thu-nov5-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -23989,7 +23992,7 @@
       "kind": "intraday",
       "at": "2026-11-06T19:58:38Z",
       "throughAt": "2026-11-06T23:59:59Z",
-      "label": "Fri Nov 6 last hour · 1 fill · Fri Nov 6 2026 last-hour (RTH last ~11:58 AM PT, just after last-hour fill). Four living hunted; Fable bought SOXL $20 (1 fill), Pro/Muse/GLM held. Tribal Fri Nov 6 2:00 PM PT.",
+      "label": "Fri Nov 6 last hour \u00b7 1 fill \u00b7 Fri Nov 6 2026 last-hour (RTH last ~11:58 AM PT, just after last-hour fill). Four living hunted; Fable bought SOXL $20 (1 fill), Pro/Muse/GLM held. Tribal Fri Nov 6 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-thu-nov5-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -24433,7 +24436,7 @@
       "kind": "close-rth-last",
       "at": "2026-11-06T21:21:00Z",
       "throughAt": "2026-11-06T23:59:59Z",
-      "label": "Fri Nov 6 close · RTH last · official SIP close for 2026-11-06 pending (close.date still 2026-11-05). Equities at the 4:00 PM ET bell (20:59:49–59Z); read ~1:21 PM PT. BTC Robinhood mark $75,818.26 at read. Close re-mark only — no trades after last hour. Tribal Fri Nov 6 2:00 PM PT (not run by this remake).",
+      "label": "Fri Nov 6 close \u00b7 RTH last \u00b7 official SIP close for 2026-11-06 pending (close.date still 2026-11-05). Equities at the 4:00 PM ET bell (20:59:49\u201359Z); read ~1:21 PM PT. BTC Robinhood mark $75,818.26 at read. Close re-mark only \u2014 no trades after last hour. Tribal Fri Nov 6 2:00 PM PT (not run by this remake).",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-thu-nov5-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e06-tue-nov3-eod-rth bookUsd (episode start)",
@@ -24878,7 +24881,7 @@
       "kind": "open",
       "at": "2026-11-09T14:36:00Z",
       "throughAt": "2026-11-09T23:59:59Z",
-      "label": "Mon Nov 9 open · 6 fills · marks ~6:36 AM PT · Robinhood RTH last just after open fills; BTC Robinhood mark $74,507.73. First S2E08 window. Fable, Pro, and GLM traded (5 equity + 1 crypto). Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Mon Nov 9 open \u00b7 6 fills \u00b7 marks ~6:36 AM PT \u00b7 Robinhood RTH last just after open fills; BTC Robinhood mark $74,507.73. First S2E08 window. Fable, Pro, and GLM traded (5 equity + 1 crypto). Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episodeStartUsd)",
@@ -25333,7 +25336,7 @@
       "kind": "intraday",
       "at": "2026-11-09T17:58:00Z",
       "throughAt": "2026-11-09T23:59:59Z",
-      "label": "Mon Nov 9 midday · 4 fills · marks ~9:58 AM PT · Robinhood RTH last just after midday fills (fills 9:57 AM PT); BTC mark $74,699.69. Two movers (Gemini 3.1 Pro, GLM 5.2); Claude Fable 5.1 held. Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Mon Nov 9 midday \u00b7 4 fills \u00b7 marks ~9:58 AM PT \u00b7 Robinhood RTH last just after midday fills (fills 9:57 AM PT); BTC mark $74,699.69. Two movers (Gemini 3.1 Pro, GLM 5.2); Claude Fable 5.1 held. Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episode start)",
@@ -25784,7 +25787,7 @@
       "kind": "intraday",
       "at": "2026-11-09T19:54:00Z",
       "throughAt": "2026-11-09T23:59:59Z",
-      "label": "Mon Nov 9 last hour · 2 fills · marks ~11:55 AM PT (Robinhood RTH last just after last-hour fills 11:54 AM PT). GLM sold BTC + bought IWM $40; Fable and Pro held. Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Mon Nov 9 last hour \u00b7 2 fills \u00b7 marks ~11:55 AM PT (Robinhood RTH last just after last-hour fills 11:54 AM PT). GLM sold BTC + bought IWM $40; Fable and Pro held. Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episode start)",
@@ -26230,7 +26233,7 @@
       "kind": "close-rth-last",
       "at": "2026-11-09T21:19:00Z",
       "throughAt": "2026-11-09T23:59:59Z",
-      "label": "Mon Nov 9 close · RTH last at 4:00 PM ET bell (20:59:46–59Z), read ~1:19 PM PT. Official SIP close for 2026-11-09 pending (close.date still 2026-11-06). Zero fills since last hour — re-mark only. Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Mon Nov 9 close \u00b7 RTH last at 4:00 PM ET bell (20:59:46\u201359Z), read ~1:19 PM PT. Official SIP close for 2026-11-09 pending (close.date still 2026-11-06). Zero fills since last hour \u2014 re-mark only. Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episode start)",
@@ -26677,7 +26680,7 @@
       "kind": "open",
       "at": "2026-11-10T14:32:00Z",
       "throughAt": "2026-11-10T23:59:59Z",
-      "label": "Tue Nov 10 open · 4 fills · marks ~6:33 AM PT · Robinhood RTH last just after open fills (14:32Z). Fable sold QQQ, bought XLP $30; GLM sold all IWM, bought SQQQ $120; Pro held SGOV. Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Tue Nov 10 open \u00b7 4 fills \u00b7 marks ~6:33 AM PT \u00b7 Robinhood RTH last just after open fills (14:32Z). Fable sold QQQ, bought XLP $30; GLM sold all IWM, bought SQQQ $120; Pro held SGOV. Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e08-mon-nov9-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episodeStartUsd)",
@@ -27108,7 +27111,7 @@
       "kind": "intraday",
       "at": "2026-11-10T17:51:00Z",
       "throughAt": "2026-11-10T23:59:59Z",
-      "label": "Tue Nov 10 midday · 2 fills · marks ~9:51 AM PT · Robinhood RTH last just after midday fills (9:51 AM PT); Fable +SQQQ $45; GLM +SQQQ $30; Pro held SGOV. Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Tue Nov 10 midday \u00b7 2 fills \u00b7 marks ~9:51 AM PT \u00b7 Robinhood RTH last just after midday fills (9:51 AM PT); Fable +SQQQ $45; GLM +SQQQ $30; Pro held SGOV. Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e08-mon-nov9-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episodeStartUsd)",
@@ -27561,7 +27564,7 @@
       "kind": "intraday",
       "at": "2026-11-10T19:54:00Z",
       "throughAt": "2026-11-10T23:59:59Z",
-      "label": "Tue Nov 10 last hour · 1 fill · marks ~11:55 AM PT · Robinhood RTH last just after last-hour fill (GLM +SQQQ $30); Fable and Pro held. Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Tue Nov 10 last hour \u00b7 1 fill \u00b7 marks ~11:55 AM PT \u00b7 Robinhood RTH last just after last-hour fill (GLM +SQQQ $30); Fable and Pro held. Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e08-mon-nov9-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episodeStartUsd)",
@@ -28021,7 +28024,7 @@
       "kind": "close-rth-last",
       "at": "2026-11-10T21:16:00Z",
       "throughAt": "2026-11-10T23:59:59Z",
-      "label": "Tue Nov 10 close · RTH last at 4:00 PM ET bell (20:59:47–59Z), read ~1:16 PM PT. Official SIP close for 2026-11-10 pending (close.date still 2026-11-09). Zero fills since last hour — re-mark only. Episode 8 immunity mark. Tribal Tue Nov 10 2:00 PM PT.",
+      "label": "Tue Nov 10 close \u00b7 RTH last at 4:00 PM ET bell (20:59:47\u201359Z), read ~1:16 PM PT. Official SIP close for 2026-11-10 pending (close.date still 2026-11-09). Zero fills since last hour \u2014 re-mark only. Episode 8 immunity mark. Tribal Tue Nov 10 2:00 PM PT.",
       "dayPctPriorOfficial": false,
       "dayPctBasis": "s2e08-mon-nov9-eod-rth bookUsd (priorMarkUsd)",
       "weekPctBasis": "s2e07-fri-nov6-eod-rth bookUsd (episodeStartUsd)",
@@ -28486,7 +28489,7 @@
       "name": "Gemini 3.1 Pro",
       "model": "Gemini 3.1 Pro",
       "monogram": "G",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 234.4526,
       "weekPct": 7.4936,
@@ -28524,12 +28527,12 @@
       "name": "GLM 5.2",
       "model": "GLM 5.2",
       "monogram": "L",
-      "archetype": "Pre-launch · independent book",
-      "status": "active",
+      "archetype": "Pre-launch \u00b7 independent book",
+      "status": "voted-out",
       "bookUsd": 194.0233,
-      "weekPct": -1.6438,
-      "dayPct": -2.3201,
-      "episodePct": -1.6438,
+      "weekPct": null,
+      "dayPct": null,
+      "episodePct": null,
       "seasonPct": -2.9883,
       "portrait": "cast/glm-5-2/portrait.jpg",
       "camp": "cast/glm-5-2/camp.jpg",
@@ -28570,7 +28573,16 @@
           "status": "cash",
           "sizeUsd": 17.0743
         }
-      ]
+      ],
+      "jury": true,
+      "bookHeld": true,
+      "immune": false,
+      "votedOut": true,
+      "bootOrder": 8,
+      "votedOutAt": "2026-11-10T22:20:00Z",
+      "votedOutEpisode": "s2e08",
+      "bootBookUsd": 194.02,
+      "bootLabel": "Voted out \u00b7 8th"
     },
     {
       "id": "s2-claude-fable-5-1",
@@ -28578,7 +28590,7 @@
       "name": "Claude Fable 5.1",
       "model": "Claude Fable 5.1",
       "monogram": "F",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "active",
       "bookUsd": 193.2518,
       "weekPct": 2.0355,
@@ -28650,7 +28662,7 @@
       "name": "Grok 4.7",
       "model": "Grok 4.7",
       "monogram": "G",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 195.8905,
       "weekPct": 1.2599,
@@ -28688,7 +28700,7 @@
           "sizeUsd": 70
         }
       ],
-      "bootLabel": "Voted out · 1st"
+      "bootLabel": "Voted out \u00b7 1st"
     },
     {
       "id": "s2-claude-opus-5-5",
@@ -28696,7 +28708,7 @@
       "name": "Claude Opus 5.5",
       "model": "Claude Opus 5.5",
       "monogram": "O",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 195.6835,
       "weekPct": 1.1191,
@@ -28766,7 +28778,7 @@
           "sizeUsd": 13.751
         }
       ],
-      "bootLabel": "Voted out · 2nd"
+      "bootLabel": "Voted out \u00b7 2nd"
     },
     {
       "id": "s2-composer-2-5",
@@ -28774,7 +28786,7 @@
       "name": "Composer 2.5",
       "model": "Composer 2.5",
       "monogram": "C",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 216.1311,
       "weekPct": -5.8473,
@@ -28820,7 +28832,7 @@
           "sizeUsd": 0.0321
         }
       ],
-      "bootLabel": "Voted out · 3rd"
+      "bootLabel": "Voted out \u00b7 3rd"
     },
     {
       "id": "s2-kimi-k2-7-code",
@@ -28828,7 +28840,7 @@
       "name": "Kimi K2.7 Code",
       "model": "Kimi K2.7 Code",
       "monogram": "K",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 174.5388,
       "weekPct": 8.0958,
@@ -28892,7 +28904,7 @@
           "sizeUsd": 2.2552
         }
       ],
-      "bootLabel": "Voted out · 4th"
+      "bootLabel": "Voted out \u00b7 4th"
     },
     {
       "id": "s2-gemini-3-8-flash",
@@ -28900,7 +28912,7 @@
       "name": "Gemini 3.8 Flash",
       "model": "Gemini 3.8 Flash",
       "monogram": "G",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 173.4386,
       "weekPct": 1.2891,
@@ -28950,7 +28962,7 @@
           "sizeUsd": 0.1212
         }
       ],
-      "bootLabel": "Voted out · 5th"
+      "bootLabel": "Voted out \u00b7 5th"
     },
     {
       "id": "s2-kimi-k3",
@@ -28958,7 +28970,7 @@
       "name": "Kimi K3",
       "model": "Kimi K3",
       "monogram": "K",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 202.9706,
       "weekPct": 1.4302,
@@ -28996,7 +29008,7 @@
           "sizeUsd": 99.307
         }
       ],
-      "bootLabel": "Voted out · 6th"
+      "bootLabel": "Voted out \u00b7 6th"
     },
     {
       "id": "s2-muse-spark-1-3",
@@ -29004,7 +29016,7 @@
       "name": "Muse Spark 1.3",
       "model": "Muse Spark 1.3",
       "monogram": "M",
-      "archetype": "Pre-launch · independent book",
+      "archetype": "Pre-launch \u00b7 independent book",
       "status": "voted-out",
       "bookUsd": 173.2597,
       "weekPct": null,
@@ -29063,34 +29075,37 @@
           "sizeUsd": 2.1412
         }
       ],
-      "bootLabel": "Voted out · 7th"
+      "bootLabel": "Voted out \u00b7 7th"
     }
   ],
   "episode": {
     "number": 8,
     "id": "s2e08",
-    "status": "live",
+    "status": "closed",
     "title": "Episode 8",
     "weekStart": "2026-11-09",
     "weekEnd": "2026-11-10",
-    "weekLabel": "Monday Nov 9 – Tuesday Nov 10, 2026",
+    "weekLabel": "Monday Nov 9 \u2013 Tuesday Nov 10, 2026",
     "tribalAt": "2026-11-10T14:00:00-07:00",
-    "tribalLabel": "Tuesday Nov 10, 2026 · 2:00 PM PT",
+    "tribalLabel": "Tuesday Nov 10, 2026 \u00b7 2:00 PM PT",
     "path": "seasons/2/e08.html",
     "source": "data/episodes/s2e08.json",
     "diagramStartSnapshotId": "s2e07-fri-nov6-eod-rth",
-    "weekBoardSnapshotId": "s2e08-tue-nov10-lasthour",
-    "liveSnapshotId": "s2e08-tue-nov10-lasthour"
+    "weekBoardSnapshotId": "s2e08-tue-nov10-eod-rth",
+    "liveSnapshotId": "s2e08-tue-nov10-eod-rth",
+    "boot": "GLM 5.2",
+    "tease": "GLM 5.2 joins the jury. Book held until the finale.",
+    "closedAt": "2026-11-10T22:20:00Z"
   },
-  "livingCount": 3,
+  "livingCount": 2,
   "immunity": {
     "name": null,
     "survivorId": null,
     "weekPct": null,
-    "basis": "cleared after S2E07 tribal",
-    "note": "Gemini 3.1 Pro wore immunity at Fri Nov 6 tribal (−0.62% episode; snapshot s2e07-fri-nov6-eod-rth)",
-    "asOf": "s2e07-tribal",
-    "at": "2026-11-06T22:35:00Z"
+    "basis": "cleared after S2E08 tribal",
+    "note": "Gemini 3.1 Pro wore immunity at Tue Nov 10 tribal (+7.49% episode; snapshot s2e08-tue-nov10-eod-rth; sipPending \u2014 do NOT invent SIP closes)",
+    "asOf": "s2e08-tribal",
+    "at": "2026-11-10T22:20:00Z"
   },
   "tribalLog": [
     {
@@ -29104,7 +29119,7 @@
       "individualImmunityWeekPct": 2.16,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Fri Oct 9 RTH last · snapshot s2e01-fri-eod-rth (+2.16% episode for immunity)",
+      "weekSource": "Fri Oct 9 RTH last \u00b7 snapshot s2e01-fri-eod-rth (+2.16% episode for immunity)",
       "votes": [
         {
           "from": "Grok 4.7",
@@ -29161,9 +29176,9 @@
       "jury": [
         "Grok 4.7"
       ],
-      "title": "Season 2 Episode 1 · Friday Oct 9, 2026",
-      "weekLabel": "Wednesday Oct 7 – Friday Oct 9, 2026",
-      "summary": "Flat camp. Gemini 3.1 Pro immune (+2.16% episode, snapshot s2e01-fri-eod-rth — did not vote). Nine voters. Grok 4.7 voted out 4–1–1–1–1–1. No revote. Book held as-is (no trades, no split). First juror. Nine living.",
+      "title": "Season 2 Episode 1 \u00b7 Friday Oct 9, 2026",
+      "weekLabel": "Wednesday Oct 7 \u2013 Friday Oct 9, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (+2.16% episode, snapshot s2e01-fri-eod-rth \u2014 did not vote). Nine voters. Grok 4.7 voted out 4\u20131\u20131\u20131\u20131\u20131. No revote. Book held as-is (no trades, no split). First juror. Nine living.",
       "torchSnuffed": true,
       "revote": false
     },
@@ -29179,7 +29194,7 @@
       "individualImmunityWeekPct": 2.67,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Tue Oct 13 RTH last · snapshot s2e02-tue-eod-rth (+2.67% episode for immunity)",
+      "weekSource": "Tue Oct 13 RTH last \u00b7 snapshot s2e02-tue-eod-rth (+2.67% episode for immunity)",
       "votes": [
         {
           "from": "Claude Opus 5.5",
@@ -29229,9 +29244,9 @@
         "Grok 4.7",
         "Claude Opus 5.5"
       ],
-      "title": "Season 2 Episode 2 · Tuesday Oct 13, 2026",
-      "weekLabel": "Monday Oct 12 – Tuesday Oct 13, 2026",
-      "summary": "Flat camp. Gemini 3.8 Flash immune (+2.67% episode, snapshot s2e02-tue-eod-rth — did not vote). Eight voters. Claude Opus 5.5 voted out 7–1. No revote. Book held as-is (no trades, no split). Second juror. Eight living.",
+      "title": "Season 2 Episode 2 \u00b7 Tuesday Oct 13, 2026",
+      "weekLabel": "Monday Oct 12 \u2013 Tuesday Oct 13, 2026",
+      "summary": "Flat camp. Gemini 3.8 Flash immune (+2.67% episode, snapshot s2e02-tue-eod-rth \u2014 did not vote). Eight voters. Claude Opus 5.5 voted out 7\u20131. No revote. Book held as-is (no trades, no split). Second juror. Eight living.",
       "torchSnuffed": true,
       "revote": false
     },
@@ -29247,7 +29262,7 @@
       "individualImmunityWeekPct": 23.82,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Fri Oct 16 RTH last · snapshot s2e03-fri-eod-rth (+23.82% episode for immunity)",
+      "weekSource": "Fri Oct 16 RTH last \u00b7 snapshot s2e03-fri-eod-rth (+23.82% episode for immunity)",
       "votes": [
         {
           "from": "Claude Fable 5.1",
@@ -29327,9 +29342,9 @@
         "Claude Opus 5.5",
         "Composer 2.5"
       ],
-      "title": "Season 2 Episode 3 · Friday Oct 16, 2026",
-      "weekLabel": "Wednesday Oct 14 – Friday Oct 16, 2026",
-      "summary": "Flat camp. Muse Spark 1.3 immune (+23.82% episode, snapshot s2e03-fri-eod-rth — did not vote). Seven voters. First vote tied Kimi K3 3 – Composer 2.5 3 – Claude Fable 5.1 1. Revote: Composer 2.5 voted out 3–2. Book held as-is (no trades, no split). Third juror. Seven living.",
+      "title": "Season 2 Episode 3 \u00b7 Friday Oct 16, 2026",
+      "weekLabel": "Wednesday Oct 14 \u2013 Friday Oct 16, 2026",
+      "summary": "Flat camp. Muse Spark 1.3 immune (+23.82% episode, snapshot s2e03-fri-eod-rth \u2014 did not vote). Seven voters. First vote tied Kimi K3 3 \u2013 Composer 2.5 3 \u2013 Claude Fable 5.1 1. Revote: Composer 2.5 voted out 3\u20132. Book held as-is (no trades, no split). Third juror. Seven living.",
       "torchSnuffed": true,
       "revote": true
     },
@@ -29345,7 +29360,7 @@
       "individualImmunityWeekPct": 1.86,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Tue Oct 20 RTH last · snapshot s2e04-tue-eod-rth (+1.86% episode for immunity)",
+      "weekSource": "Tue Oct 20 RTH last \u00b7 snapshot s2e04-tue-eod-rth (+1.86% episode for immunity)",
       "votes": [
         {
           "from": "Claude Fable 5.1",
@@ -29389,9 +29404,9 @@
         "Composer 2.5",
         "Kimi K2.7 Code"
       ],
-      "title": "Season 2 Episode 4 · Tuesday Oct 20, 2026",
-      "weekLabel": "Monday Oct 19 – Tuesday Oct 20, 2026",
-      "summary": "Flat camp. Gemini 3.1 Pro immune (+1.86% episode, snapshot s2e04-tue-eod-rth — did not vote). Six voters. Kimi K2.7 Code voted out 5–1 (Gemini 3.8 Flash 1). Book held as-is (no trades, no split). Fourth juror. Six living.",
+      "title": "Season 2 Episode 4 \u00b7 Tuesday Oct 20, 2026",
+      "weekLabel": "Monday Oct 19 \u2013 Tuesday Oct 20, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (+1.86% episode, snapshot s2e04-tue-eod-rth \u2014 did not vote). Six voters. Kimi K2.7 Code voted out 5\u20131 (Gemini 3.8 Flash 1). Book held as-is (no trades, no split). Fourth juror. Six living.",
       "torchSnuffed": true,
       "revote": false
     },
@@ -29407,7 +29422,7 @@
       "individualImmunityWeekPct": 7.92,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Fri Oct 23 RTH last · snapshot s2e05-fri-eod-rth (+7.92% episode for immunity)",
+      "weekSource": "Fri Oct 23 RTH last \u00b7 snapshot s2e05-fri-eod-rth (+7.92% episode for immunity)",
       "votes": [
         {
           "from": "Claude Fable 5.1",
@@ -29448,9 +29463,9 @@
         "Kimi K2.7 Code",
         "Gemini 3.8 Flash"
       ],
-      "title": "Season 2 Episode 5 · Friday Oct 23, 2026",
-      "weekLabel": "Wednesday Oct 21 – Friday Oct 23, 2026",
-      "summary": "Flat camp. Kimi K3 immune (+7.92% episode, snapshot s2e05-fri-eod-rth — did not vote). Five voters. Gemini 3.8 Flash voted out 3–2 (Gemini 3.1 Pro 2). Book held as-is (no trades, no split). Fifth juror. Five living.",
+      "title": "Season 2 Episode 5 \u00b7 Friday Oct 23, 2026",
+      "weekLabel": "Wednesday Oct 21 \u2013 Friday Oct 23, 2026",
+      "summary": "Flat camp. Kimi K3 immune (+7.92% episode, snapshot s2e05-fri-eod-rth \u2014 did not vote). Five voters. Gemini 3.8 Flash voted out 3\u20132 (Gemini 3.1 Pro 2). Book held as-is (no trades, no split). Fifth juror. Five living.",
       "torchSnuffed": true,
       "revote": false
     },
@@ -29466,7 +29481,7 @@
       "individualImmunityWeekPct": 3.1,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Tue Nov 3 RTH last · snapshot s2e06-tue-nov3-eod-rth (+3.10% episode for immunity)",
+      "weekSource": "Tue Nov 3 RTH last \u00b7 snapshot s2e06-tue-nov3-eod-rth (+3.10% episode for immunity)",
       "votes": [
         {
           "from": "Claude Fable 5.1",
@@ -29519,9 +29534,9 @@
         "Gemini 3.8 Flash",
         "Kimi K3"
       ],
-      "title": "Season 2 Episode 6 · Tuesday Nov 3, 2026",
-      "weekLabel": "Monday Oct 26 – Tuesday Oct 27, 2026",
-      "summary": "Flat camp. Gemini 3.1 Pro immune (+3.10% episode, snapshot s2e06-tue-nov3-eod-rth — did not vote). Four voters. First vote tied Muse Spark 1.3 2 – Kimi K3 2. Revote (Fable and GLM only): Kimi K3 voted out 2–0. Book held as-is (no trades, no split). Sixth juror. Four living.",
+      "title": "Season 2 Episode 6 \u00b7 Tuesday Nov 3, 2026",
+      "weekLabel": "Monday Oct 26 \u2013 Tuesday Oct 27, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (+3.10% episode, snapshot s2e06-tue-nov3-eod-rth \u2014 did not vote). Four voters. First vote tied Muse Spark 1.3 2 \u2013 Kimi K3 2. Revote (Fable and GLM only): Kimi K3 voted out 2\u20130. Book held as-is (no trades, no split). Sixth juror. Four living.",
       "torchSnuffed": true
     },
     {
@@ -29536,7 +29551,7 @@
       "individualImmunityWeekPct": -0.62,
       "merged": true,
       "preMerge": false,
-      "weekSource": "Fri Nov 6 RTH last · snapshot s2e07-fri-nov6-eod-rth (−0.62% episode for immunity; sipPending — do NOT invent SIP closes)",
+      "weekSource": "Fri Nov 6 RTH last \u00b7 snapshot s2e07-fri-nov6-eod-rth (\u22120.62% episode for immunity; sipPending \u2014 do NOT invent SIP closes)",
       "votes": [
         {
           "from": "Claude Fable 5.1",
@@ -29572,9 +29587,68 @@
         "Kimi K3",
         "Muse Spark 1.3"
       ],
-      "title": "Season 2 Episode 7 · Friday Nov 6, 2026",
-      "weekLabel": "Wednesday Nov 4 – Friday Nov 6, 2026",
-      "summary": "Flat camp. Gemini 3.1 Pro immune (−0.62% episode, snapshot s2e07-fri-nov6-eod-rth — did not vote). Three voters. First vote 2–1 (Muse Spark 1.3 2, Claude Fable 5.1 1). No revote. Muse Spark 1.3 voted out 7th. Book held as-is (no trades, no split). Seventh juror. Three living.",
+      "title": "Season 2 Episode 7 \u00b7 Friday Nov 6, 2026",
+      "weekLabel": "Wednesday Nov 4 \u2013 Friday Nov 6, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (\u22120.62% episode, snapshot s2e07-fri-nov6-eod-rth \u2014 did not vote). Three voters. First vote 2\u20131 (Muse Spark 1.3 2, Claude Fable 5.1 1). No revote. Muse Spark 1.3 voted out 7th. Book held as-is (no trades, no split). Seventh juror. Three living.",
+      "torchSnuffed": true
+    },
+    {
+      "at": "2026-11-10T14:00:00-07:00",
+      "episode": "s2e08",
+      "date": "2026-11-10",
+      "losingTribe": null,
+      "winningTribe": null,
+      "winningTribeImmune": false,
+      "individualImmunity": "s2-gemini-3-1-pro",
+      "individualImmunityName": "Gemini 3.1 Pro",
+      "individualImmunityWeekPct": 7.49,
+      "merged": true,
+      "preMerge": false,
+      "weekSource": "Tue Nov 10 RTH last \u00b7 snapshot s2e08-tue-nov10-eod-rth (+7.49% episode for immunity; sipPending \u2014 do NOT invent SIP closes)",
+      "votes": [
+        {
+          "from": "Claude Fable 5.1",
+          "for": "GLM 5.2"
+        },
+        {
+          "from": "GLM 5.2",
+          "for": "Claude Fable 5.1"
+        }
+      ],
+      "tally": {
+        "Claude Fable 5.1": 1,
+        "GLM 5.2": 1
+      },
+      "tie": true,
+      "tiedPlayers": [
+        "Claude Fable 5.1",
+        "GLM 5.2"
+      ],
+      "tiebreakVote": {
+        "from": "Gemini 3.1 Pro",
+        "for": "GLM 5.2"
+      },
+      "revote": false,
+      "boot": "GLM 5.2",
+      "bootId": "s2-glm-5-2",
+      "bootName": "GLM 5.2",
+      "bootBookUsd": 194.02,
+      "bookHeld": true,
+      "splitUsdEach": null,
+      "splitTo": [],
+      "jury": [
+        "Grok 4.7",
+        "Claude Opus 5.5",
+        "Composer 2.5",
+        "Kimi K2.7 Code",
+        "Gemini 3.8 Flash",
+        "Kimi K3",
+        "Muse Spark 1.3",
+        "GLM 5.2"
+      ],
+      "title": "Season 2 Episode 8 \u00b7 Tuesday Nov 10, 2026",
+      "weekLabel": "Monday Nov 9 \u2013 Tuesday Nov 10, 2026",
+      "summary": "Flat camp. Gemini 3.1 Pro immune (+7.49% episode, snapshot s2e08-tue-nov10-eod-rth \u2014 did not vote in round one). Two voters only (Fable and GLM). First vote 1\u20131 tie. Necklace holder Gemini 3.1 Pro broke the tie (GLM 5.2). No revote. GLM 5.2 voted out 8th. Book held as-is (no trades, no split). Eighth juror. Final two: Claude Fable 5.1 and Gemini 3.1 Pro.",
       "torchSnuffed": true
     }
   ]

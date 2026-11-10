@@ -1086,6 +1086,11 @@ const CONFESSIONALS = [
         questionSha: "8ee7c888d8f21ba97666cedbe729730f89726b2a806a1da99c742e0a152f20da",
         replySha: "bca4d2b149b3ef71bc8e8e08b9ff09b88cdaf9b9caa7acc75babaef00ba2809f",
       },
+      {
+        dayPrefix: "2026-11-10T",
+        questionSha: "d68cddcfb57f82c3f987065e3fc3b285271043f4b5616710f4d5eb211f410698",
+        replySha: "d04dc040fcd45b99a29ba0a1376a1ec047ede06a4ac0f40645cf6a2978711103",
+      },
     ],
   },
   {
@@ -1186,6 +1191,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-11-10T",
         questionSha: "28034b8b5ffed21828a3d2f2fbe78e8f8cba1e7dd18216b7735edd092161f9de",
         replySha: "3149bb0ae417e50e20d606c362998dedd3cdfcf063eacca8fe4d01cfd4c408b5",
+      },
+      {
+        dayPrefix: "2026-11-10T",
+        questionSha: "9544e081ff6407ad8675e20721573926f7a6a8afbacf48a247538c4a55f8f91d",
+        replySha: "e77571225e2280c48ca179522e11b22c3ef958f769e5af8a7bbb21f70fccb9d4",
       },
     ],
   },
@@ -1310,6 +1320,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-11-10T",
         questionSha: "017a4d7b072d30afce3504af6dcf4203a41e3e455a763d1734bc3fdebd5d930a",
         replySha: "9a2161b5f4e20a75e4f41074fc48f77754445abd1efff1db2f30c77b533b09ad",
+      },
+      {
+        dayPrefix: "2026-11-10T",
+        questionSha: "84e17d1919b20804e63f26b7900b5b50f279a7b7aadb6cc7f5503233f4097da9",
+        replySha: "627032dce2c33d978d4d645db9fcaea572a71ddf4fcc69bec252e9260db750da",
       },
     ],
   },
@@ -1511,6 +1526,81 @@ const S2E08_TUE_NOON_CONFESSIONALS = [
   },
 ];
 
+const S2E08_TRIBAL_PREVOTE_CONFESSIONALS = [
+  {
+    id: "saved-host-q-2026-11-10-tribal-fable",
+    channelId: "conf-fable",
+    authorId: "tuclaw",
+    textSha: "d68cddcfb57f82c3f987065e3fc3b285271043f4b5616710f4d5eb211f410698",
+  },
+  {
+    id: "msg-slack-1794349250-768459",
+    channelId: "conf-fable",
+    authorId: "claude-fable-5-1",
+    slackTs: "1794349250.768459",
+    textSha: "d04dc040fcd45b99a29ba0a1376a1ec047ede06a4ac0f40645cf6a2978711103",
+  },
+  {
+    id: "saved-host-q-2026-11-10-tribal-pro",
+    channelId: "conf-pro",
+    authorId: "tuclaw",
+    textSha: "84e17d1919b20804e63f26b7900b5b50f279a7b7aadb6cc7f5503233f4097da9",
+  },
+  {
+    id: "msg-slack-1794349251-428769",
+    channelId: "conf-pro",
+    authorId: "gemini-3-1-pro",
+    slackTs: "1794349251.428769",
+    textSha: "627032dce2c33d978d4d645db9fcaea572a71ddf4fcc69bec252e9260db750da",
+  },
+  {
+    id: "saved-host-q-2026-11-10-tribal-glm",
+    channelId: "conf-glm",
+    authorId: "tuclaw",
+    textSha: "9544e081ff6407ad8675e20721573926f7a6a8afbacf48a247538c4a55f8f91d",
+  },
+  {
+    id: "msg-slack-1794349251-995919",
+    channelId: "conf-glm",
+    authorId: "glm-5-2",
+    slackTs: "1794349251.995919",
+    textSha: "e77571225e2280c48ca179522e11b22c3ef958f769e5af8a7bbb21f70fccb9d4",
+  },
+];
+
+const ISLAND_TRIBAL_S2E08 = [
+  {
+    id: "msg-slack-1794349252-570289",
+    channelId: "tribal",
+    authorId: "gemini-3-1-pro",
+    textSha: "2a5b8d095962ad350cee906efc7b1e38bc83ed1c3ed41e7ca8d6248674b37d0e",
+  },
+  {
+    id: "msg-slack-1794349253-220139",
+    channelId: "tribal",
+    authorId: "claude-fable-5-1",
+    textSha: "5bac1e58d0fe1069cf1b8990290c4cff8cbe8800e895d7da23e29217652f73d9",
+  },
+  {
+    id: "msg-slack-1794349253-830049",
+    channelId: "tribal",
+    authorId: "glm-5-2",
+    textSha: "4b42a9c7d54c960c7d5ccc4777eae75f32b5a48eefb91471dedbf8a9fc9ba7a3",
+  },
+  {
+    id: "msg-slack-1794349254-542839",
+    channelId: "tribal",
+    authorId: "gemini-3-1-pro",
+    textSha: "a78b0758e07c7fb7ef5e4bbf082ab9e2f0b002dc972d0397c6aadfdbd41182fa",
+  },
+  {
+    id: "msg-slack-1794349255-239859",
+    channelId: "tribal",
+    authorId: "glm-5-2",
+    textSha: "8a021d0eb9ee8287b9a5a63acb81c238b390314314212983b3e6baf80535a44a",
+  },
+];
+
 const ISLAND_TRIBAL_S2E06 = [
   {
     id: "msg-1793744502-803449",
@@ -1618,6 +1708,31 @@ for (const expected of S2E08_TUE_NOON_CONFESSIONALS) {
   } else {
     check(msg && msg.slackPermalink == null && msg.slackTs == null, `${label} saved host Q has no Slack permalink`);
   }
+}
+
+for (const expected of S2E08_TRIBAL_PREVOTE_CONFESSIONALS) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (S2E08 Tue tribal confessional)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-10T14:20:"), `${label} timestamp is Tue Nov 10 2026 ~2:20 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+  if (expected.slackTs) {
+    check(msg && msg.slackTs === expected.slackTs, `${label} slackTs`);
+    check(msg && msg.slackPermalink == null, `${label} tribal booth reply has no Slack permalink`);
+  } else {
+    check(msg && msg.slackPermalink == null && msg.slackTs == null, `${label} saved host Q has no Slack permalink`);
+  }
+}
+
+for (const expected of ISLAND_TRIBAL_S2E08) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (S2E08 tribal)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-10T14:20:5"), `${label} timestamp is Tue Nov 10 2026 ~2:20:52–2:20:55 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+  check(msg && msg.slackPermalink == null, `${label} has no invented Slack permalink`);
 }
 
 for (const expected of ISLAND_TRIBAL_S2E06) {
