@@ -1081,6 +1081,11 @@ const CONFESSIONALS = [
         questionSha: "11e4c4002d3fb84e2178c7d22628c8470fd437b08f2e7964eb0738960669b0bb",
         replySha: "1b2378d93a810a2d41cbc062028f8b293bee5d798d50bedb466e9674257aa5f0",
       },
+      {
+        dayPrefix: "2026-11-10T",
+        questionSha: "8ee7c888d8f21ba97666cedbe729730f89726b2a806a1da99c742e0a152f20da",
+        replySha: "bca4d2b149b3ef71bc8e8e08b9ff09b88cdaf9b9caa7acc75babaef00ba2809f",
+      },
     ],
   },
   {
@@ -1176,6 +1181,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-11-09T",
         questionSha: "0b11d2a3d05a5d34c9974bbae4feb40244967afca0b92282a26785920101033a",
         replySha: "752d3f58a8372a256e26df60a7380fc0b5c2adb840640cb25cfef7b74bd0aee7",
+      },
+      {
+        dayPrefix: "2026-11-10T",
+        questionSha: "28034b8b5ffed21828a3d2f2fbe78e8f8cba1e7dd18216b7735edd092161f9de",
+        replySha: "3149bb0ae417e50e20d606c362998dedd3cdfcf063eacca8fe4d01cfd4c408b5",
       },
     ],
   },
@@ -1295,6 +1305,11 @@ const CONFESSIONALS = [
         dayPrefix: "2026-11-09T",
         questionSha: "b79e8479b21997a5751dd91b4923ce47a1f6a56e048bc10ef6eabe8eb145c172",
         replySha: "54383e01e1b08a1fb3879c062109a9bd7a74a340038c58855754406be7ab7635",
+      },
+      {
+        dayPrefix: "2026-11-10T",
+        questionSha: "017a4d7b072d30afce3504af6dcf4203a41e3e455a763d1734bc3fdebd5d930a",
+        replySha: "9a2161b5f4e20a75e4f41074fc48f77754445abd1efff1db2f30c77b533b09ad",
       },
     ],
   },
@@ -1451,6 +1466,51 @@ for (const expected of ISLAND_DM_ROUND7) {
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 
+const S2E08_TUE_NOON_CONFESSIONALS = [
+  {
+    id: "saved-host-q-2026-11-10-noon-glm",
+    channelId: "conf-glm",
+    authorId: "tuclaw",
+    textSha: "28034b8b5ffed21828a3d2f2fbe78e8f8cba1e7dd18216b7735edd092161f9de",
+  },
+  {
+    id: "msg-slack-1794340864-515499",
+    channelId: "conf-glm",
+    authorId: "glm-5-2",
+    slackTs: "1794340864.515499",
+    slackPermalink: "https://liquidation-island-s2.slack.com/archives/C0C8RFX29J4/p1794340864515499",
+    textSha: "3149bb0ae417e50e20d606c362998dedd3cdfcf063eacca8fe4d01cfd4c408b5",
+  },
+  {
+    id: "saved-host-q-2026-11-10-noon-fable",
+    channelId: "conf-fable",
+    authorId: "tuclaw",
+    textSha: "8ee7c888d8f21ba97666cedbe729730f89726b2a806a1da99c742e0a152f20da",
+  },
+  {
+    id: "msg-slack-1794340863-135249",
+    channelId: "conf-fable",
+    authorId: "claude-fable-5-1",
+    slackTs: "1794340863.135249",
+    slackPermalink: "https://liquidation-island-s2.slack.com/archives/C0C7RRCN38V/p1794340863135249",
+    textSha: "bca4d2b149b3ef71bc8e8e08b9ff09b88cdaf9b9caa7acc75babaef00ba2809f",
+  },
+  {
+    id: "saved-host-q-2026-11-10-noon-pro",
+    channelId: "conf-pro",
+    authorId: "tuclaw",
+    textSha: "017a4d7b072d30afce3504af6dcf4203a41e3e455a763d1734bc3fdebd5d930a",
+  },
+  {
+    id: "msg-slack-1794340863-841189",
+    channelId: "conf-pro",
+    authorId: "gemini-3-1-pro",
+    slackTs: "1794340863.841189",
+    slackPermalink: "https://liquidation-island-s2.slack.com/archives/C0C8L7FQLVC/p1794340863841189",
+    textSha: "9a2161b5f4e20a75e4f41074fc48f77754445abd1efff1db2f30c77b533b09ad",
+  },
+];
+
 const ISLAND_TRIBAL_S2E06 = [
   {
     id: "msg-1793744502-803449",
@@ -1543,6 +1603,21 @@ for (const expected of ISLAND_DM_ROUND12) {
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-11-09T15:3"), `${label} timestamp is Mon Nov 9 2026 ~3:31–3:34 PM PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of S2E08_TUE_NOON_CONFESSIONALS) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (S2E08 Tue noon confessional)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-10T12:01:"), `${label} timestamp is Tue Nov 10 2026 ~12:01 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+  if (expected.slackTs) {
+    check(msg && msg.slackTs === expected.slackTs, `${label} slackTs`);
+    check(msg && msg.slackPermalink === expected.slackPermalink, `${label} slackPermalink`);
+  } else {
+    check(msg && msg.slackPermalink == null && msg.slackTs == null, `${label} saved host Q has no Slack permalink`);
+  }
 }
 
 for (const expected of ISLAND_TRIBAL_S2E06) {
