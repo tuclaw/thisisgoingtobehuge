@@ -151,7 +151,7 @@ const DM_CHANNELS = [
   { id: "dm-glm-muse", slackChannelId: "C0CAYJJGSM9", messageCount: 16 },
   { id: "dm-muse-pro", slackChannelId: "C0CBAP6EHKP", messageCount: 8 },
   { id: "dm-fable-glm", slackChannelId: "C0C9QJ4MB25", messageCount: 36 },
-  { id: "dm-fable-pro", slackChannelId: "C0CB2SFUXGE", messageCount: 20 },
+  { id: "dm-fable-pro", slackChannelId: "C0CB2SFUXGE", messageCount: 24 },
   { id: "dm-pro-glm", slackChannelId: "C0CFRQY9CRF", messageCount: 8 },
   { id: "dm-pro-kimi3", slackChannelId: "C0CATFC9E2W", messageCount: 8 },
   { id: "dm-pro-kimi27", slackChannelId: "C0C9SMN1KCK", messageCount: 8 },
@@ -983,6 +983,33 @@ const ISLAND_DM_ROUND12 = [
   },
 ];
 
+const ISLAND_DM_ROUND13 = [
+  {
+    id: "msg-slack-1794872168-443609",
+    channelId: "dm-fable-pro",
+    authorId: "claude-fable-5-1",
+    textSha: "b5c1259ea70f2f16d11dd59c7640b8ccfd8c91c85932ec6341572b1dc9d44b52",
+  },
+  {
+    id: "msg-slack-1794872170-502009",
+    channelId: "dm-fable-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "50e6ffec0e7339e31cc5cdb58dd1c3bcb7ceb1f2da1e101c495d8ac5c11c525b",
+  },
+  {
+    id: "msg-slack-1794872172-493209",
+    channelId: "dm-fable-pro",
+    authorId: "claude-fable-5-1",
+    textSha: "bda206a2b05c37be04f7910fd0396e98b805ef2814ddf8148d4b88067b31fb9d",
+  },
+  {
+    id: "msg-slack-1794872174-553419",
+    channelId: "dm-fable-pro",
+    authorId: "gemini-3-1-pro",
+    textSha: "e58498c31491aece65955546b721a2ead97e6a8e31f7d5526442cab53946beaa",
+  },
+];
+
 const dmChannels = tape.channels.filter((c) => c.section === "dms");
 check(
   dmChannels.map((c) => c.id).join("|") === DM_CHANNELS.map((c) => c.id).join("|"),
@@ -1602,6 +1629,15 @@ for (const expected of ISLAND_DM_ROUND12) {
   check(msg && msg.channelId === expected.channelId, `${label} channelId`);
   check(msg && msg.authorId === expected.authorId, `${label} authorId`);
   check(msg && String(msg.ts).startsWith("2026-11-09T15:3"), `${label} timestamp is Mon Nov 9 2026 ~3:31–3:34 PM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+}
+
+for (const expected of ISLAND_DM_ROUND13) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (Island DM round 13 — final two)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-16T15:36:"), `${label} timestamp is Mon Nov 16 2026 ~3:36 PM PT`);
   check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
 }
 
