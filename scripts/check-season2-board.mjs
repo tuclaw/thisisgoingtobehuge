@@ -44,8 +44,9 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 4, `expected 4 living (got ${activeLiving.length})`);
-check(data.livingCount === 4, "livingCount must be 4 after S2E06 tribal");
+const expectedLiving = typeof data.livingCount === "number" ? data.livingCount : 4;
+check(activeLiving.length === expectedLiving, `expected ${expectedLiving} living (got ${activeLiving.length})`);
+check(data.livingCount === activeLiving.length, "livingCount must match active survivors");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -616,14 +617,33 @@ if (tribal) {
   check(!(tribal.votes || []).some((v) => v && v.text), "tribalLog votes must not store private confessionals");
 }
 
-check(
-  data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
-  "immunity note must record Gemini 3.1 Pro Episode 6 necklace at S2E06 tribal"
-);
-check(
-  data.immunity && String(data.immunity.basis || "").includes("S2E06"),
-  "immunity basis must clear after S2E06 tribal"
-);
+const seasonEnded = data.status === "ended" && data.winnerId === "s2-claude-fable-5-1";
+const liveEpisodeId = data.episode && data.episode.id;
+const finalTwo = !seasonEnded && (liveEpisodeId === "s2e09" || expectedLiving === 2);
+if (finalTwo) {
+  check(
+    data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
+    "final-two immunity note must mention Episode 8 necklace holder Gemini 3.1 Pro"
+  );
+  check(
+    !data.immunity || data.immunity.survivorId == null,
+    "final two must not pin an active immunity wearer"
+  );
+} else if (!seasonEnded) {
+  check(
+    data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
+    "immunity note must record Gemini 3.1 Pro Episode 6 necklace at S2E06 tribal"
+  );
+  check(
+    data.immunity && String(data.immunity.basis || "").includes("S2E06"),
+    "immunity basis must clear after S2E06 tribal"
+  );
+} else {
+  check(
+    data.immunity && String(data.immunity.note || "").includes("Series finale"),
+    "ended season immunity note must mark series finale"
+  );
+}
 
 const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
 check(e2, "episodes must list s2e02");
@@ -969,6 +989,37 @@ if (tribal6) {
     "S2E06 weekSource must pin Tue Nov 3 RTH snapshot"
   );
   check(!(tribal6.votes || []).some((v) => v && v.text), "S2E06 tribalLog votes must not store private confessionals");
+}
+
+if (seasonEnded) {
+  check(data.statusLabel && data.statusLabel.includes("Claude Fable 5.1"), "ended statusLabel must name winner");
+  check(data.runnerUp === "Gemini 3.1 Pro", "runnerUp must be Gemini 3.1 Pro");
+  check(data.finalePath === "seasons/2/finale.html", "finalePath must be seasons/2/finale.html");
+  const e9 = episodes.find((ep) => ep && ep.id === "s2e09");
+  check(e9 && e9.status === "closed", "s2e09 must be closed after finale");
+  check(e9 && e9.winner === "Claude Fable 5.1", "s2e09 winner must be Claude Fable 5.1");
+  const finale = episodes.find((ep) => ep && ep.id === "s2-finale");
+  check(finale && finale.path === "seasons/2/finale.html", "s2-finale episode must be listed");
+  const finaleCopy = JSON.parse(readFileSync(join(root, "data", "episodes", "s2-finale.json"), "utf8"));
+  check(finaleCopy.finale === true, "s2-finale.json must set finale");
+  check(existsSync(join(root, "data", "episodes", "s2-finale.json")), "s2-finale.json must exist");
+  const finalTribal = log.find((row) => row && row.kind === "final-tribal");
+  check(finalTribal, "tribalLog must include Final Tribal");
+  if (finalTribal) {
+    check(finalTribal.winnerName === "Claude Fable 5.1", "final tribal winnerName");
+    check(finalTribal.runnerUp === "Gemini 3.1 Pro", "final tribal runnerUp");
+    check(finalTribal.tally && finalTribal.tally["Claude Fable 5.1"] === 7, "final tally Fable 7");
+    check(finalTribal.tally && finalTribal.tally["Gemini 3.1 Pro"] === 1, "final tally Pro 1");
+    check(finalTribal.individualImmunity == null, "final tribal must have no immunity");
+    check((finalTribal.votes || []).length === 8, "final tribal must have 8 jury votes");
+    const votePairings = (finalTribal.votes || []).map((v) => `${v.from}>${v.for}`).join("|");
+    check(
+      votePairings ===
+        "Grok 4.7>Claude Fable 5.1|Claude Opus 5.5>Claude Fable 5.1|Composer 2.5>Claude Fable 5.1|Kimi K2.7 Code>Claude Fable 5.1|Gemini 3.8 Flash>Claude Fable 5.1|Kimi K3>Claude Fable 5.1|Muse Spark 1.3>Gemini 3.1 Pro|GLM 5.2>Claude Fable 5.1",
+      "final tribal vote pairings"
+    );
+    check((finalTribal.votes || []).every((v) => v && typeof v.text === "string" && v.text.length > 20), "final jury votes must include public reasons");
+  }
 }
 
 if (errors.length) {

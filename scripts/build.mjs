@@ -165,10 +165,14 @@ function boothsHtml(items, base) {
   return `<div class="booths">${items
     .map((item) => {
       const mark = labMarkHtml(item.slug, base);
-      return `<article class="booth ${escapeHtml(item.tribeId)}">
+      const tribeLine = item.tribeId
+        ? `<p class="booth-tribe">${item.tribeId === "askara" ? "The Askara tribe" : "The Bidu tribe"}</p>`
+        : "";
+      const tribeClass = item.tribeId ? escapeHtml(item.tribeId) : "no-tribe";
+      return `<article class="booth ${tribeClass}">
               <div class="buff-strip" aria-hidden="true"></div>
               <img class="booth-portrait" src="${portraitFor(item.slug, base)}" alt="${escapeHtml(item.name)}" />
-              <p class="booth-tribe">${item.tribeId === "askara" ? "The Askara tribe" : "The Bidu tribe"}</p>
+              ${tribeLine}
               <h3>${mark}<span class="booth-name">${escapeHtml(item.name)}</span></h3>
               <blockquote>
                 ${boothQuoteHtml(item.quote)}
@@ -272,6 +276,63 @@ function tribalFocusHtml(episode, base) {
     </article>`;
 }
 
+function finaleWinnerBanner(episode, base) {
+  const w = episode.finaleWinner || {};
+  const name = w.name || "";
+  const slug = w.slug || "";
+  const portrait = portraitFor(slug, base);
+  return `<div class="finale-winner-banner" id="finale-winner">
+      <div class="finale-winner-glow" aria-hidden="true"></div>
+      <img class="finale-winner-portrait" src="${portrait}" alt="${escapeHtml(name)}" width="168" height="168" />
+      <svg class="necklace finale-necklace" viewBox="0 0 280 96" aria-hidden="true" focusable="false">
+        <path fill="none" stroke="rgba(212,160,23,0.85)" stroke-width="3" d="M24 58 C70 12, 210 12, 256 58" />
+        <circle cx="140" cy="72" r="18" fill="url(#finaleGem)" stroke="#f0c14b" stroke-width="2" />
+        <defs>
+          <radialGradient id="finaleGem" cx="0.35" cy="0.35">
+            <stop offset="0" stop-color="#fff6d6" />
+            <stop offset="0.55" stop-color="#f0c14b" />
+            <stop offset="1" stop-color="#c45a12" />
+          </radialGradient>
+        </defs>
+      </svg>
+      <p class="finale-winner-kicker">Sole Survivor · Season 2</p>
+      <h2 class="finale-winner-name">${escapeHtml(name)}</h2>
+      <p class="finale-winner-tally">Jury ${escapeHtml(w.tallyLabel || "")} · Runner-up ${escapeHtml(w.runnerUp || "")}</p>
+      <p class="finale-archive-line">${escapeHtml(episode.location || "Series finale. Last Trader Standing ends here.")}</p>
+    </div>`;
+}
+
+function finaleNetBoardHtml(beat, base) {
+  const kicker = beat.kicker ? `<p class="section-kicker">${escapeHtml(beat.kicker)}</p>` : "";
+  const title = beat.title ? `<h2>${escapeHtml(beat.title)}</h2>` : "";
+  const body = beat.body ? `<p>${escapeHtml(beat.body)}</p>` : "";
+  const rows = (beat.rows || [])
+    .map((row) => {
+      const net = Number(row.netUsd);
+      const pct = Number(row.seasonPct);
+      const usdSign = net >= 0 ? "+" : "−";
+      const pctSign = pct >= 0 ? "+" : "−";
+      const portrait = portraitFor(row.slug, base);
+      return `<article class="finale-net-row ${net >= 0 ? "up" : "down"}">
+        <img class="finale-net-portrait" src="${portrait}" alt="" width="80" height="80" />
+        <div class="finale-net-copy">
+          <h3>${escapeHtml(row.name)}</h3>
+          <p class="finale-net-role">${escapeHtml(row.role || "")}</p>
+          <p class="finale-net-nums"><span class="finale-net-usd">${usdSign}$${Math.abs(net).toFixed(2)}</span> <span class="finale-net-pct">(${pctSign}${Math.abs(pct).toFixed(2)}%)</span></p>
+          <p class="finale-net-basis">Season net vs $200 start</p>
+        </div>
+      </article>`;
+    })
+    .join("\n");
+  const id = beat.id ? ` id="${escapeHtml(beat.id)}"` : "";
+  return `<article class="beat beat-finale-board"${id}>
+        ${kicker}
+        ${title}
+        ${body}
+        <div class="finale-net-grid">${rows}</div>
+      </article>`;
+}
+
 function beatHtml(beat, base, opts = {}) {
   const id = beat.id ? ` id="${escapeHtml(beat.id)}"` : "";
   const kicker = beat.kicker ? `<p class="section-kicker">${escapeHtml(beat.kicker)}</p>` : "";
@@ -301,6 +362,9 @@ function beatHtml(beat, base, opts = {}) {
             </article>
           </div>
         </article>`;
+  }
+  if (beat.type === "finale-net-board") {
+    return finaleNetBoardHtml(beat, base);
   }
   if (beat.type === "books") {
     const tribes = beat.tribesId ? `<div class="tribe-totals" id="${escapeHtml(beat.tribesId)}"></div>` : "";
@@ -422,11 +486,12 @@ function episodeWantsCamp(episode) {
 function renderEpisodePage(episode, season, base, opts = {}) {
   const fallbackScript = opts.fallbackScript || "season.fallback.js";
   const votePosted = episodeVotePosted(season, episode);
-  const focusHref = "#week-board";
+  const isFinale = Boolean(episode.finale);
+  const focusHref = isFinale ? "#final-tribal" : "#week-board";
   const wantsCamp = episodeWantsCamp(episode);
   const wantsWhisperFeed = wantsCamp && episode.conversationFeed !== false;
   const seasonNum = Number(episode.season || season.season) || 1;
-  const wantsIslandChatter = wantsWhisperFeed || seasonNum === 2;
+  const wantsIslandChatter = !isFinale && (wantsWhisperFeed || seasonNum === 2);
   const lunchCss = "";
   const seasonDir = join(root, "seasons/1");
   const manifest = loadTapeManifest(root);
@@ -445,7 +510,8 @@ function renderEpisodePage(episode, season, base, opts = {}) {
       // Vote posted: tribal fold only held spoiler + prevote — both moved above books.
       if (!beatChunks.length) return "";
       const beats = beatChunks.join("\n\n        ");
-      return `<details class="day-fold${dark}" id="${escapeHtml(day.id)}">
+      const foldOpen = isFinale && day.id === "final-tribal" ? " open" : "";
+      return `<details class="day-fold${dark}" id="${escapeHtml(day.id)}"${foldOpen}>
       <summary>
         <span class="fold-day">${escapeHtml(day.foldDay)}</span>
         <span class="fold-copy">
@@ -478,7 +544,7 @@ function renderEpisodePage(episode, season, base, opts = {}) {
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   ${chatterPingHtml()}
 </head>
-<body class="episode-page${votePosted ? " episode-vote-posted" : ""}">
+<body class="episode-page${isFinale ? " episode-finale-page" : ""}${votePosted ? " episode-vote-posted" : ""}">
   <a class="skip" href="${focusHref}">Skip to episode</a>
   ${siteNavHtml(base, "")}
 
@@ -492,6 +558,7 @@ function renderEpisodePage(episode, season, base, opts = {}) {
     <div class="hero-head">
       <p class="eyebrow">${escapeHtml(episode.kicker)}</p>
       <h1>${escapeHtml(episode.title)}<span>${escapeHtml(episode.subhead)}</span></h1>
+      ${isFinale ? finaleWinnerBanner(episode, base) : ""}
       <a class="scroll-cue" href="${focusHref}" aria-label="Continue into the episode">
         <span></span>
       </a>
@@ -510,7 +577,10 @@ function renderEpisodePage(episode, season, base, opts = {}) {
   </section>
 
   <div class="wrap" id="episode-root">
-    <article class="beat beat-gold" id="week-board">
+    ${
+      isFinale
+        ? ""
+        : `<article class="beat beat-gold" id="week-board">
       <section class="money-ticker reveal" id="money-ticker" aria-label="Island percentage playback"></section>
       <div class="money-ticker-ctas reveal">
         <a class="btn ember pot-fuel" href="https://donate.stripe.com/5kQ14m9uv3VJ61m7It0oM00" target="_blank" rel="noopener noreferrer">Add Fuel</a>
@@ -538,7 +608,8 @@ function renderEpisodePage(episode, season, base, opts = {}) {
         <div id="trade-tape-root"></div>
       </div>
       <p class="json-miss hidden" id="json-miss"></p>
-    </article>
+    </article>`
+    }
 
     ${wantsIslandChatter ? `<article class="beat beat-camp" id="island-chatter">
       <p class="section-kicker">Island Chatter</p>
@@ -565,7 +636,19 @@ function renderEpisodePage(episode, season, base, opts = {}) {
   <script src="${base}lab-logos.js"></script>
   <script src="${base}campfire-open.js"></script>${tapeGlobalTag}${lunchScripts}
   <script src="${base}episode-campfire.js"></script>
-  <script src="${base}app.js"></script>
+  <script src="${base}app.js"></script>${
+    isFinale
+      ? `
+  <script>
+    (function () {
+      var hero = document.querySelector(".episode-campfire-hero");
+      if (hero) hero.classList.add("is-copy-in");
+      var fold = document.getElementById("final-tribal");
+      if (fold) fold.open = true;
+    })();
+  </script>`
+      : ""
+  }
 </body>
 </html>
 `;

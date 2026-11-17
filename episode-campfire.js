@@ -399,6 +399,12 @@
     const canvas = document.getElementById("campfire-canvas");
     if (!canvas) return;
 
+    if (document.body.classList.contains("episode-finale-page")) {
+      const hero = theater.closest(".episode-campfire-hero") || theater.closest(".episode-hero");
+      if (hero) hero.classList.add("is-copy-in");
+      return;
+    }
+
     const mode = theater.getAttribute("data-mode") || "feed";
     if (mode === "fire" || !document.getElementById("campfire-pings")) {
       initEpisodeCampfireFireOnly(theater, canvas);
