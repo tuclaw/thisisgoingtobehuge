@@ -1645,6 +1645,14 @@ function initDayFolds() {
   window.addEventListener("hashchange", openFoldForHash);
 }
 
+function initFinalePage() {
+  if (!document.body.classList.contains("episode-finale-page")) return;
+  const hero = document.querySelector(".episode-campfire-hero");
+  if (hero) hero.classList.add("is-copy-in");
+  const fold = document.getElementById("final-tribal");
+  if (fold && !fold.open) fold.open = true;
+}
+
 function totemSvg(survivor, tribe) {
   const ink = tribe && tribe.id === "askara" ? "#C45A12" : "#0E6B6B";
   const gold = "#d4a017";
@@ -5343,6 +5351,7 @@ function render(season, sourceNote) {
   renderHomeTorches(season);
   renderNavWatch(season);
   initArchifyEmbedFlow();
+  initFinalePage();
   initDayFolds();
   initReveals();
   const miss = document.getElementById("json-miss");

@@ -510,7 +510,8 @@ function renderEpisodePage(episode, season, base, opts = {}) {
       // Vote posted: tribal fold only held spoiler + prevote — both moved above books.
       if (!beatChunks.length) return "";
       const beats = beatChunks.join("\n\n        ");
-      return `<details class="day-fold${dark}" id="${escapeHtml(day.id)}">
+      const foldOpen = isFinale && day.id === "final-tribal" ? " open" : "";
+      return `<details class="day-fold${dark}" id="${escapeHtml(day.id)}"${foldOpen}>
       <summary>
         <span class="fold-day">${escapeHtml(day.foldDay)}</span>
         <span class="fold-copy">
@@ -635,7 +636,19 @@ function renderEpisodePage(episode, season, base, opts = {}) {
   <script src="${base}lab-logos.js"></script>
   <script src="${base}campfire-open.js"></script>${tapeGlobalTag}${lunchScripts}
   <script src="${base}episode-campfire.js"></script>
-  <script src="${base}app.js"></script>
+  <script src="${base}app.js"></script>${
+    isFinale
+      ? `
+  <script>
+    (function () {
+      var hero = document.querySelector(".episode-campfire-hero");
+      if (hero) hero.classList.add("is-copy-in");
+      var fold = document.getElementById("final-tribal");
+      if (fold) fold.open = true;
+    })();
+  </script>`
+      : ""
+  }
 </body>
 </html>
 `;

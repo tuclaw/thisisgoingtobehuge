@@ -8450,6 +8450,39 @@ body.castaway-sheet-open {
   text-align: center;
 }
 
+body.episode-finale-page section.episode-campfire-hero {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 4.2rem 1.25rem 1.25rem;
+}
+
+.episode-finale-page.episode-campfire-hero .hero-head {
+  opacity: 1;
+  transform: none;
+  max-width: 44rem;
+}
+
+.episode-finale-page.episode-campfire-hero .campfire-theater {
+  display: none;
+}
+
+.episode-finale-page.episode-campfire-hero .campfire-light-spill {
+  opacity: 0.35;
+}
+
+.episode-finale-page .finale-necklace {
+  display: block;
+}
+
+.episode-finale-page .finale-winner-banner {
+  position: relative;
+  z-index: 3;
+}
+
+.episode-finale-page .day-fold#final-tribal {
+  margin-top: 0.5rem;
+}
+
 .episode-finale-page .hero-head {
   padding-bottom: 1.5rem;
 }
