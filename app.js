@@ -794,6 +794,17 @@ function renderSeason2Performance(season) {
   if (!root) return;
   const banner = document.getElementById("season-banner");
   if (banner && season.statusLabel) banner.textContent = season.statusLabel;
+  const finaleCta = document.getElementById("s2-finale-cta");
+  if (finaleCta) {
+    if (season.winnerId && (season.finalePath || season.winner)) {
+      const href = assetBase() + (season.finalePath || "seasons/2/finale.html");
+      finaleCta.href = href;
+      finaleCta.textContent = "Series finale · " + (season.winner || "Winner") + " →";
+      finaleCta.hidden = false;
+    } else {
+      finaleCta.hidden = true;
+    }
+  }
   const kicker = document.getElementById("s2-standings-kicker");
   const start = typeof season.startingBookUsd === "number" ? season.startingBookUsd : 200;
   const given =
@@ -5097,6 +5108,14 @@ function episodeLiveWatchable(season, episode) {
 }
 
 function watchEpisode(season) {
+  if (season && season.winnerId) {
+    const listed = Array.isArray(season.episodes) ? season.episodes : [];
+    const finale = listed.find((ep) => ep && ep.id === "s2-finale" && ep.path);
+    if (finale) return finale;
+    if (season.finalePath) {
+      return { path: season.finalePath, status: "closed", title: "Series finale" };
+    }
+  }
   const listed = Array.isArray(season && season.episodes) ? season.episodes : [];
   const live = getLiveEpisode(season);
   if (live && episodeLiveWatchable(season, live)) return live;
@@ -5141,10 +5160,12 @@ function renderNavWatch(season) {
 
   document.querySelectorAll("[data-nav-watch]").forEach((link) => {
     link.href = href;
-    if (!link.querySelector(".nav-watch-icon")) {
+    if (season.winnerId) {
+      link.innerHTML = watchIconHtml() + '<span class="nav-watch-label">Series finale</span>';
+    } else if (!link.querySelector(".nav-watch-icon")) {
       link.insertAdjacentHTML("afterbegin", watchIconHtml());
     }
-    if (live && live.status === "live" && !link.querySelector(".live-badge")) {
+    if (live && live.status === "live" && !season.winnerId && !link.querySelector(".live-badge")) {
       link.insertAdjacentHTML("beforeend", " " + liveIndicatorHtml());
     }
     if (onLiveEpisode) {
