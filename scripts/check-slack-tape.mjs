@@ -1086,6 +1086,11 @@ const CONFESSIONALS = [
         questionSha: "8ee7c888d8f21ba97666cedbe729730f89726b2a806a1da99c742e0a152f20da",
         replySha: "bca4d2b149b3ef71bc8e8e08b9ff09b88cdaf9b9caa7acc75babaef00ba2809f",
       },
+      {
+        dayPrefix: "2026-11-17T",
+        questionSha: "f1c782fe764d9f0a1a0ed9c0d9e6f993658f1fd97a4dbda8c869a1977039345a",
+        replySha: "04e747e2e3001348023d3c4636eb2273098b66d1d78412e8a35b3eda190719b6",
+      },
     ],
   },
   {
@@ -1311,6 +1316,11 @@ const CONFESSIONALS = [
         questionSha: "017a4d7b072d30afce3504af6dcf4203a41e3e455a763d1734bc3fdebd5d930a",
         replySha: "9a2161b5f4e20a75e4f41074fc48f77754445abd1efff1db2f30c77b533b09ad",
       },
+      {
+        dayPrefix: "2026-11-17T",
+        questionSha: "e7a9a48940c00cb631dd481e52286cb03908b01086da81ce3992c6822457a6b2",
+        replySha: "38f253fcbb3a89984207c83c8d1ba50fba047e4af2f800d838a16663e5747cd9",
+      },
     ],
   },
   {
@@ -1511,6 +1521,37 @@ const S2E08_TUE_NOON_CONFESSIONALS = [
   },
 ];
 
+const S2E09_TUE_NOON_CONFESSIONALS = [
+  {
+    id: "saved-host-q-2026-11-17-noon-fable",
+    channelId: "conf-fable",
+    authorId: "tuclaw",
+    textSha: "f1c782fe764d9f0a1a0ed9c0d9e6f993658f1fd97a4dbda8c869a1977039345a",
+  },
+  {
+    id: "msg-slack-1794945313-059689",
+    channelId: "conf-fable",
+    authorId: "claude-fable-5-1",
+    slackTs: "1794945313.059689",
+    slackPermalink: "https://liquidation-island-s2.slack.com/archives/C0C7RRCN38V/p1794945313059689",
+    textSha: "04e747e2e3001348023d3c4636eb2273098b66d1d78412e8a35b3eda190719b6",
+  },
+  {
+    id: "saved-host-q-2026-11-17-noon-pro",
+    channelId: "conf-pro",
+    authorId: "tuclaw",
+    textSha: "e7a9a48940c00cb631dd481e52286cb03908b01086da81ce3992c6822457a6b2",
+  },
+  {
+    id: "msg-slack-1794945313-678069",
+    channelId: "conf-pro",
+    authorId: "gemini-3-1-pro",
+    slackTs: "1794945313.678069",
+    slackPermalink: "https://liquidation-island-s2.slack.com/archives/C0C8L7FQLVC/p1794945313678069",
+    textSha: "38f253fcbb3a89984207c83c8d1ba50fba047e4af2f800d838a16663e5747cd9",
+  },
+];
+
 const ISLAND_TRIBAL_S2E06 = [
   {
     id: "msg-1793744502-803449",
@@ -1619,6 +1660,24 @@ for (const expected of S2E08_TUE_NOON_CONFESSIONALS) {
     check(msg && msg.slackPermalink == null && msg.slackTs == null, `${label} saved host Q has no Slack permalink`);
   }
 }
+
+for (const expected of S2E09_TUE_NOON_CONFESSIONALS) {
+  const msg = tape.messages.find((m) => m.id === expected.id);
+  const label = `${expected.id} (S2E09 Tue noon confessional)`;
+  check(msg && msg.channelId === expected.channelId, `${label} channelId`);
+  check(msg && msg.authorId === expected.authorId, `${label} authorId`);
+  check(msg && String(msg.ts).startsWith("2026-11-17T11:55:13"), `${label} timestamp is Tue Nov 17 2026 ~11:55 AM PT`);
+  check(msg && sha256(msg.text) === expected.textSha, `${label} text is verbatim`);
+  if (expected.slackTs) {
+    check(msg && msg.slackTs === expected.slackTs, `${label} slackTs`);
+    check(msg && msg.slackPermalink === expected.slackPermalink, `${label} slackPermalink`);
+  } else {
+    check(msg && msg.slackPermalink == null && msg.slackTs == null, `${label} saved host Q has no Slack permalink`);
+  }
+}
+
+check(tape.updatedAt === "2026-11-17T11:55:13.678-08:00", "mirror updatedAt is Tue Nov 17 2026 final Pro confessional reply PT");
+check(tape.audienceDay === "2026-11-17", "mirror audienceDay is 2026-11-17");
 
 for (const expected of ISLAND_TRIBAL_S2E06) {
   const msg = tape.messages.find((m) => m.id === expected.id);
