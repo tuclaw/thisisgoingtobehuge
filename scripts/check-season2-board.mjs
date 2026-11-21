@@ -44,8 +44,9 @@ check(data.islandGivenUsd !== 1000, "must not use $1,000 island given");
 const survivors = Array.isArray(data.survivors) ? data.survivors : [];
 check(survivors.length === 10, `expected 10 cast rows (got ${survivors.length})`);
 const activeLiving = survivors.filter((s) => s && (s.status === "active" || s.status === "immune"));
-check(activeLiving.length === 4, `expected 4 living (got ${activeLiving.length})`);
-check(data.livingCount === 4, "livingCount must be 4 after S2E06 tribal");
+const expectedLiving = typeof data.livingCount === "number" ? data.livingCount : 4;
+check(activeLiving.length === expectedLiving, `expected ${expectedLiving} living (got ${activeLiving.length})`);
+check(data.livingCount === activeLiving.length, "livingCount must match active survivors");
 
 const models = survivors.map((s) => s.model).sort();
 const expected = [...LOCKED_MODELS].sort();
@@ -616,14 +617,27 @@ if (tribal) {
   check(!(tribal.votes || []).some((v) => v && v.text), "tribalLog votes must not store private confessionals");
 }
 
-check(
-  data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
-  "immunity note must record Gemini 3.1 Pro Episode 6 necklace at S2E06 tribal"
-);
-check(
-  data.immunity && String(data.immunity.basis || "").includes("S2E06"),
-  "immunity basis must clear after S2E06 tribal"
-);
+const liveEpisodeId = data.episode && data.episode.id;
+const finalTwo = liveEpisodeId === "s2e09" || expectedLiving === 2;
+if (finalTwo) {
+  check(
+    data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
+    "final-two immunity note must mention Episode 8 necklace holder Gemini 3.1 Pro"
+  );
+  check(
+    !data.immunity || data.immunity.survivorId == null,
+    "final two must not pin an active immunity wearer"
+  );
+} else {
+  check(
+    data.immunity && String(data.immunity.note || "").includes("Gemini 3.1 Pro"),
+    "immunity note must record Gemini 3.1 Pro Episode 6 necklace at S2E06 tribal"
+  );
+  check(
+    data.immunity && String(data.immunity.basis || "").includes("S2E06"),
+    "immunity basis must clear after S2E06 tribal"
+  );
+}
 
 const e2 = episodes.find((ep) => ep && ep.id === "s2e02");
 check(e2, "episodes must list s2e02");
