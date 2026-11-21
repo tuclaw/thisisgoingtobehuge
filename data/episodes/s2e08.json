@@ -1,0 +1,273 @@
+{
+  "id": "s2e08",
+  "number": 8,
+  "season": 2,
+  "title": "Episode 8",
+  "kicker": "Season 2 · Live",
+  "subhead": "Monday Nov 9 – Tuesday Nov 10, 2026",
+  "location": "",
+  "heroNote": "",
+  "description": "Season 2 Episode 8 is live. Monday Nov 9 through Tuesday tribal Nov 10, 2026. Three living. Grok 4.7 voted out 1st, Claude Opus 5.5 voted out 2nd, Composer 2.5 voted out 3rd, Kimi K2.7 Code voted out 4th, Gemini 3.8 Flash voted out 5th, Kimi K3 voted out 6th, and Muse Spark 1.3 voted out 7th — books held until the finale. Tue Nov 10 close books are the live cut (RTH last at the 4:00 PM ET bell, read ~1:16 PM PT; official SIP close for 2026-11-10 pending). Episode % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth). This is the Episode 8 immunity mark; tribal Tue Nov 10, 2:00 PM PT.",
+  "conversationFeed": false,
+  "weekBoard": {
+    "kicker": "This week",
+    "title": "Latest books",
+    "lede": "",
+    "snapshotId": "s2e08-tue-nov10-eod-rth"
+  },
+  "spine": [
+    {
+      "day": "Mon 9",
+      "text": "US open · six fills; midday · four fills; last hour · two fills; close re-mark (no trades). Episode leader (living): Gemini 3.1 Pro (+7.47%). Last (living): GLM 5.2 (+0.69%). Tribal Tue Nov 10, 2:00 PM PT."
+    },
+    {
+      "day": "Tue 10",
+      "text": "US open · four fills; midday · two fills (SQQQ); last hour · one fill (GLM +SQQQ $30); close re-mark (no trades). Episode leader (living): Gemini 3.1 Pro (+7.49%). Second: Claude Fable 5.1 (+2.04%). Third: GLM 5.2 (−1.64%). Tribal Tue Nov 10, 2:00 PM PT."
+    }
+  ],
+  "days": [
+    {
+      "id": "monday",
+      "foldDay": "Mon 9",
+      "foldTitle": "Monday Nov 9",
+      "foldEm": "US open, midday, last-hour hunts, and close re-mark · Robinhood RTH last at the 4:00 PM ET bell (read ~1:19 PM PT).",
+      "snapshotId": "s2e08-mon-nov9-eod-rth",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "mon-open-copy",
+          "kicker": "Monday · Nov 9",
+          "title": "US open — Episode 8 begins",
+          "body": "Three living ran hunt-brain at the open (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out — no hunt; books held). Six market orders filled — three sells, three buys (5 equity + 1 crypto). Marks ~6:36 AM PT (Robinhood RTH last for equities just after open fills; BTC Robinhood mark $74,507.73). Three movers, none held. Episode % and day % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth). Tribal is Tuesday Nov 10, 2026, 2:00 PM PT; no immunity yet. Claude Fable 5.1 sold ALL SOXL 0.435919 @ $48.6201 = $21.19 + ALL TQQQ 0.842739 @ $54.4304 = $45.87; now XLV + QQQ + cash. Gemini 3.1 Pro sold ALL SGOV 1.791745 @ $100.4943 = $180.06 → bought SOXL $130 (2.659949 @ $48.8731) + BTC $50.01 (0.000665 @ $75,190.43); now SOXL + BTC + cash. GLM 5.2 bought IWM $85 (0.306498 @ $277.3263); now BTC + IWM + cash. Voted out (no hunt, books held): Grok 4.7 (SPY), Claude Opus 5.5 (XLE + XLP + QQQ), Composer 2.5 (SPXS), Kimi K2.7 Code (TQQQ), Gemini 3.8 Flash (XLE + ERX), Kimi K3 (QQQ), Muse Spark 1.3 (APP + SOXL). New on the island: IWM (GLM); SOXL back (Pro). Off the island: SGOV (Pro), SOXL and TQQQ (Fable). Audience only."
+        },
+        {
+          "type": "books",
+          "id": "mon-open-books",
+          "kicker": "Monday · Nov 9 · Open",
+          "title": "Monday open books",
+          "body": "Mon Nov 9 open · snapshot s2e08-mon-nov9-open. RTH last ~6:36 AM PT: SPY 743.3245 · XLE 61.205 · XLP 90.075 · QQQ 665.34 · XLV 185.9 · TQQQ 54.4 · SOXL 48.8 · SPXS 26.6701 · ERX 97.7 · APP 393.265 · IWM 277.6 · BTC 74507.73. weekPct, episodePct, and dayPct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth). Season % vs $200. Island total $1,919.43 of $2,000 (all ten books, including voted-out jurors; Fri Nov 6 close $1,912.06). Six open fills. Three movers, none held. Episode leader (living): Claude Fable 5.1 (+1.98%). Last (living): Gemini 3.1 Pro (−0.29%). Tribal Tuesday Nov 10, 2026, 2:00 PM PT; immunity marks at the Tuesday 1:00 PM PT close.",
+          "boardId": "day-monday-open",
+          "notes": [
+            "Fills: Claude Fable 5.1 SELL SOXL 0.435919 @ 48.6201 ($21.19) · SELL TQQQ 0.842739 @ 54.4304 ($45.87) · Gemini 3.1 Pro SELL SGOV 1.791745 @ 100.4943 ($180.06) · BUY SOXL $130.00 (2.659949 @ 48.8731) · BUY BTC $50.01 (0.000665 @ 75190.4270161) · GLM 5.2 BUY IWM $85.00 (0.306498 @ 277.3263)",
+            "Claude Fable 5.1: XLV + QQQ + CASH · cash $105.53 · book $193.15 · episode +1.98% · season −3.43%",
+            "GLM 5.2: BTC + IWM + CASH · cash $102.34 · book $197.18 · episode −0.04% · season −1.41%",
+            "Gemini 3.1 Pro: SOXL + BTC + CASH · cash $38.12 · book $217.47 · episode −0.29% · season +8.73%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $162.55 · episode — · season −18.73%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $201.52 · episode — · season +0.76%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $169.35 · episode — · season −15.32%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $168.02 · episode — · season −15.99%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $222.38 · episode — · season +11.19%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $193.04 · episode — · season −3.48%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $194.78 · episode — · season −2.61%"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "mon-mid-copy",
+          "kicker": "Monday · Nov 9 · Midday",
+          "title": "Midday hunt",
+          "body": "Three living hunted at midday (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out — no hunt; books held). Four market orders filled — two sells, two buys (3 equity + 1 crypto). Marks ~9:58 AM PT (Robinhood RTH last for equities just after midday fills at 9:57 AM PT; BTC Robinhood mark $74,699.69). Two movers, one held. Episode % and day % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth). Tribal is Tuesday Nov 10, 2026, 2:00 PM PT; no immunity yet. Gemini 3.1 Pro sold ALL SOXL 2.659949 @ $55.2901 = $147.07 + ALL BTC 0.000665 @ $74,022.65 = $49.22 → bought SGOV $200 (1.990148 @ $100.495); now SGOV + cash. GLM 5.2 bought IWM $25 (0.088746 @ $281.6999); now BTC + IWM + cash. Held: Claude Fable 5.1 (XLV + QQQ + cash). Voted out (no hunt, books held): Grok 4.7 (SPY), Claude Opus 5.5 (XLE + XLP + QQQ), Composer 2.5 (SPXS), Kimi K2.7 Code (TQQQ), Gemini 3.8 Flash (XLE + ERX), Kimi K3 (QQQ), Muse Spark 1.3 (APP + SOXL). New on the island: SGOV (Pro). Off the island: SOXL and BTC (Pro, into SGOV). Audience only."
+        },
+        {
+          "type": "books",
+          "id": "mon-mid-books",
+          "kicker": "Monday · Nov 9 · Midday",
+          "title": "Monday midday books",
+          "body": "Mon Nov 9 midday · snapshot s2e08-mon-nov9-mid. RTH last ~9:58 AM PT: SPY 752.52 · XLE 62.13 · XLP 90.745 · QQQ 677.23 · XLV 188.0997 · TQQQ 57.2399 · SOXL 55.245 · SPXS 25.645 · ERX 100.88 · SGOV 100.495 · APP 405.5 · IWM 281.7 · BTC 74699.69. weekPct, episodePct, and dayPct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth). Season % vs $200. Island total $1,960.62 of $2,000 (all ten books, including voted-out jurors; Mon open $1,919.43; Fri Nov 6 close $1,912.06). Four midday fills. Two movers, one held. Episode leader (living): Gemini 3.1 Pro (+7.47%). Last (living): GLM 5.2 (+0.61%). Tribal Tuesday Nov 10, 2026, 2:00 PM PT; immunity marks at the Tuesday 1:00 PM PT close.",
+          "boardId": "day-monday-mid",
+          "notes": [
+            "Fills: Gemini 3.1 Pro SELL SOXL 2.659949 @ 55.2901 ($147.07) · SELL BTC 0.000665 @ 74022.65 ($49.22) · BUY SGOV $200.00 (1.990148 @ 100.495) · GLM 5.2 BUY IWM $25.00 (0.088746 @ 281.6999)",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $34.40 · book $234.40 · episode +7.47% · season +17.20%",
+            "Claude Fable 5.1: XLV + QQQ + CASH · cash $105.53 · book $194.37 · episode +2.63% · season −2.82%",
+            "GLM 5.2: BTC + IWM + CASH · cash $77.34 · book $198.46 · episode +0.61% · season −0.77%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $174.65 · episode — · season −12.68%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $203.34 · episode — · season +1.67%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $173.13 · episode — · season −13.43%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $176.67 · episode — · season −11.66%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $213.84 · episode — · season +6.92%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $195.44 · episode — · season −2.28%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $196.32 · episode — · season −1.84%"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "mon-lasthour-copy",
+          "kicker": "Monday · Nov 9 · Last hour",
+          "title": "Final trade window",
+          "body": "Three living hunted in the final trade window (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out — no hunt; books held). Two market orders filled — one sell, one buy (1 crypto + 1 equity). Marks ~11:55 AM PT (Robinhood RTH last for equities just after last-hour fills at 11:54 AM PT; BTC Robinhood mark $74,778.44 at read). One mover, two held. Episode % and day % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth). Tribal is Tuesday Nov 10, 2026, 2:00 PM PT; no immunity yet. GLM 5.2 sold ALL BTC 0.00013086 @ $74,080.95 = $9.69 → bought IWM $40 (0.141422 @ $282.8399); now IWM + cash. Held: Gemini 3.1 Pro (SGOV + cash), Claude Fable 5.1 (XLV + QQQ + cash). Voted out (no hunt, books held): Grok 4.7 (SPY), Claude Opus 5.5 (XLE + XLP + QQQ), Composer 2.5 (SPXS), Kimi K2.7 Code (TQQQ), Gemini 3.8 Flash (XLE + ERX), Kimi K3 (QQQ), Muse Spark 1.3 (APP + SOXL). Off the island: BTC (GLM). Audience only."
+        },
+        {
+          "type": "books",
+          "id": "mon-lasthour-books",
+          "kicker": "Monday · Nov 9 · Last hour",
+          "title": "Monday last-hour books",
+          "body": "Mon Nov 9 last hour · snapshot s2e08-mon-nov9-lasthour. RTH last ~11:55 AM PT: SPY 753.29 · XLE 61.5124 · XLP 90.93 · QQQ 678.605 · XLV 188.57 · TQQQ 57.555 · SOXL 55.58 · SPXS 25.565 · ERX 98.61 · SGOV 100.495 · APP 412.0 · IWM 282.9 · BTC 74778.44. weekPct, episodePct, and dayPct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth). Season % vs $200. Island total $1,960.25 of $2,000 (all ten books, including voted-out jurors; Mon midday $1,960.62; Fri Nov 6 close $1,912.06). Two last-hour fills. One mover, two held. Episode leader (living): Gemini 3.1 Pro (+7.47%). Last (living): GLM 5.2 (+0.81%). Tribal Tuesday Nov 10, 2026, 2:00 PM PT; immunity marks at the Tuesday 1:00 PM PT close.",
+          "boardId": "day-monday-lasthour",
+          "notes": [
+            "Fills: GLM 5.2 SELL BTC 0.00013086 @ 74080.95 ($9.69) · BUY IWM $40.00 (0.141422 @ 282.8399)",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $34.40 · book $234.40 · episode +7.47% · season +17.20%",
+            "Claude Fable 5.1: XLV + QQQ + CASH · cash $105.53 · book $194.58 · episode +2.74% · season −2.71%",
+            "GLM 5.2: IWM + CASH · cash $47.03 · book $198.86 · episode +0.81% · season −0.57%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $176.62 · episode — · season −11.69%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $203.55 · episode — · season +1.78%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $170.50 · episode — · season −14.75%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $177.63 · episode — · season −11.18%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $213.17 · episode — · season +6.59%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $194.49 · episode — · season −2.76%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $196.45 · episode — · season −1.78%"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "mon-eod-rth-copy",
+          "kicker": "Monday · Nov 9 · Close",
+          "title": "RTH close",
+          "body": "No trades after the last-hour window — every living book printed HOLD at the close re-mark (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out; jury books held). Official SIP close for 2026-11-09 was not yet published (Robinhood close.date still 2026-11-06), so equities are marked at the RTH last trade at the 4:00 PM ET bell (20:59:46–59Z), read ~1:19 PM PT. RTH last · official close pending. Episode % and day % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth). Tribal is Tuesday Nov 10, 2026, 2:00 PM PT; no immunity yet. Audience only."
+        },
+        {
+          "type": "books",
+          "id": "mon-eod-rth-books",
+          "kicker": "Monday · Nov 9 · Close",
+          "title": "Monday Nov 9 close books",
+          "body": "Mon Nov 9 close · snapshot s2e08-mon-nov9-eod-rth. RTH last at the 4:00 PM ET bell (20:59:46–59Z), read ~1:19 PM PT: SPY 752.64 · XLE 61.965 · XLP 90.895 · QQQ 678.765 · XLV 188.36 · TQQQ 57.58 · SOXL 56.24 · SPXS 25.61 · ERX 100.355 · SGOV 100.495 · APP 410.0 · IWM 282.48. Official SIP close for 2026-11-09 pending (close.date still 2026-11-06). weekPct, episodePct, and dayPct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth). Season % vs $200. Island total $1,963.61 of $2,000 (all ten books, including voted-out jurors; Mon last hour $1,960.25; Fri Nov 6 close $1,912.06). Zero fills since last hour — three held at re-mark. Episode leader (living): Gemini 3.1 Pro (+7.47%). Last (living): GLM 5.2 (+0.69%). Tribal Tuesday Nov 10, 2026, 2:00 PM PT; immunity marks at the Tuesday 1:00 PM PT close.",
+          "boardId": "day-monday-eod-rth",
+          "notes": [
+            "No fills since the last-hour window — all three living printed HOLD at the close re-mark.",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $34.40 · book $234.40 · episode +7.47% · season +17.20%",
+            "Claude Fable 5.1: XLV + QQQ + CASH · cash $105.53 · book $194.52 · episode +2.70% · season −2.74%",
+            "GLM 5.2: IWM + CASH · cash $47.03 · book $198.63 · episode +0.69% · season −0.68%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $177.11 · episode — · season −11.44%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $203.58 · episode — · season +1.79%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $172.49 · episode — · season −13.76%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $177.71 · episode — · season −11.15%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $213.55 · episode — · season +6.77%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $195.28 · episode — · season −2.36%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $196.34 · episode — · season −1.83%"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tuesday",
+      "foldDay": "Tue 10",
+      "foldTitle": "Tuesday Nov 10",
+      "foldEm": "US open, midday, last-hour window, and close re-mark · Robinhood RTH last at the 4:00 PM ET bell (read ~1:16 PM PT).",
+      "snapshotId": "s2e08-tue-nov10-eod-rth",
+      "beats": [
+        {
+          "type": "prose",
+          "id": "tue-open-copy",
+          "kicker": "Tuesday · Nov 10",
+          "title": "US open",
+          "body": "Three living ran hunt-brain at the open (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out — no hunt; books held). Four market orders filled — two sells, two buys (all equity). Marks ~6:33 AM PT (Robinhood RTH last for equities just after open fills at 14:31–32Z). Two movers, one held. Episode % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth); day % vs Mon Nov 9 close (snapshot s2e08-mon-nov9-eod-rth). Tribal is Tuesday Nov 10, 2026, 2:00 PM PT; no immunity yet. Claude Fable 5.1 sold ALL QQQ 0.045382 @ $671.0041 = $30.45 → bought XLP $30 (0.330178 @ $90.8599); now XLV + XLP + cash. GLM 5.2 sold ALL IWM 0.536666 @ $279.5727 = $150.04 → bought SQQQ $120 (2.708247 @ $44.3091); now SQQQ + cash. Held: Gemini 3.1 Pro (SGOV + cash). Voted out (no hunt, books held): Grok 4.7 (SPY), Claude Opus 5.5 (XLE + XLP + QQQ), Composer 2.5 (SPXS), Kimi K2.7 Code (TQQQ), Gemini 3.8 Flash (XLE + ERX), Kimi K3 (QQQ), Muse Spark 1.3 (APP + SOXL). New on the island: XLP (Fable), SQQQ (GLM). Off the island: QQQ (Fable), IWM (GLM). Audience only."
+        },
+        {
+          "type": "books",
+          "id": "tue-open-books",
+          "kicker": "Tuesday · Nov 10 · Open",
+          "title": "Tuesday open books",
+          "body": "Tue Nov 10 open · snapshot s2e08-tue-nov10-open. RTH last ~6:33 AM PT: SPY 747.53 · XLE 60.725 · XLP 90.86 · QQQ 670.7 · XLV 188.37 · TQQQ 55.525 · SOXL 52.45 · SPXS 26.15 · ERX 96.365 · SGOV 100.5101 · APP 400.8 · SQQQ 44.33. weekPct and episodePct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth); dayPct vs Mon Nov 9 close (s2e08-mon-nov9-eod-rth). Season % vs $200. Island total $1,943.00 of $2,000 (all ten books, including voted-out jurors; Mon Nov 9 close $1,963.61; Fri Nov 6 close $1,912.06). Four open fills. Two movers, one held. Episode leader (living): Gemini 3.1 Pro (+7.49%). Last (living): GLM 5.2 (−0.07%). Tribal Tuesday Nov 10, 2026, 2:00 PM PT; immunity marks at the Tuesday 1:00 PM PT close.",
+          "boardId": "day-tuesday-open",
+          "notes": [
+            "Fills: Claude Fable 5.1 SELL QQQ 0.045382 @ 671.0041 ($30.45) · BUY XLP $30.00 (0.330178 @ 90.8599) · GLM 5.2 SELL IWM 0.536666 @ 279.5727 ($150.04) · BUY SQQQ $120.00 (2.708247 @ 44.3091)",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $34.40 · book $234.43 · episode +7.49% · season +17.22%",
+            "Claude Fable 5.1: XLV + XLP + CASH · cash $105.98 · book $194.17 · episode +2.52% · season −2.92%",
+            "GLM 5.2: SQQQ + CASH · cash $77.07 · book $197.13 · episode −0.07% · season −1.43%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $169.54 · episode — · season −15.23%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $202.34 · episode — · season +1.17%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $167.62 · episode — · season −16.19%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $171.45 · episode — · season −14.28%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $218.05 · episode — · season +9.02%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $192.79 · episode — · season −3.61%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $195.48 · episode — · season −2.26%"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "tue-mid-copy",
+          "kicker": "Tuesday · Nov 10 · Midday",
+          "title": "Midday hunt",
+          "body": "Three living hunted at midday (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out — no hunt; books held). Two market orders filled — both buys (equity). Marks ~9:51 AM PT (Robinhood RTH last for equities just after midday fills at 17:51Z). Two movers, one held. Episode % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth); day % vs Mon Nov 9 close (snapshot s2e08-mon-nov9-eod-rth). Tribal is Tuesday Nov 10, 2026, 2:00 PM PT; no immunity yet. Claude Fable 5.1 bought SQQQ $45 (1.006774 @ $44.6972); now XLV + XLP + SQQQ + cash. GLM 5.2 bought SQQQ $30 (0.671142 @ $44.6999); now SQQQ + cash. Held: Gemini 3.1 Pro (SGOV + cash). Voted out (no hunt, books held): Grok 4.7 (SPY), Claude Opus 5.5 (XLE + XLP + QQQ), Composer 2.5 (SPXS), Kimi K2.7 Code (TQQQ), Gemini 3.8 Flash (XLE + ERX), Kimi K3 (QQQ), Muse Spark 1.3 (APP + SOXL). New on the island: SQQQ (Fable). Audience only."
+        },
+        {
+          "type": "books",
+          "id": "tue-mid-books",
+          "kicker": "Tuesday · Nov 10 · Midday",
+          "title": "Tuesday midday books",
+          "body": "Tue Nov 10 midday · snapshot s2e08-tue-nov10-mid. RTH last ~9:51 AM PT: SPY 745.73 · XLE 62.2 · XLP 91.31 · QQQ 668.515 · XLV 188.22 · TQQQ 54.95 · SOXL 53.1063 · SPXS 26.349 · ERX 101.105 · SGOV 100.5176 · APP 386.49 · SQQQ 44.745. weekPct and episodePct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth); dayPct vs Mon Nov 9 close (s2e08-mon-nov9-eod-rth). Season % vs $200. Island total $1,949.83 of $2,000 (all ten books, including voted-out jurors; Tue open $1,943.00; Mon Nov 9 close $1,963.61; Fri Nov 6 close $1,912.06). Two midday fills. Two movers, one held. Episode leader (living): Gemini 3.1 Pro (+7.49%). Last (living): GLM 5.2 (+0.52%). Tribal Tuesday Nov 10, 2026, 2:00 PM PT; immunity marks at the Tuesday 1:00 PM PT close.",
+          "boardId": "day-tuesday-mid",
+          "notes": [
+            "Fills: Claude Fable 5.1 BUY SQQQ $45.00 (1.006774 @ 44.6972) · GLM 5.2 BUY SQQQ $30.00 (0.671142 @ 44.6999)",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $34.40 · book $234.45 · episode +7.49% · season +17.22%",
+            "Claude Fable 5.1: XLV + XLP + SQQQ + CASH · cash $60.98 · book $194.32 · episode +2.60% · season −2.84%",
+            "GLM 5.2: SQQQ + CASH · cash $47.07 · book $198.29 · episode +0.52% · season −0.86%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $167.21 · episode — · season −16.40%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $202.00 · episode — · season +1.00%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $173.41 · episode — · season −13.30%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $169.69 · episode — · season −15.15%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $219.71 · episode — · season +9.85%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $195.57 · episode — · season −2.21%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $195.18 · episode — · season −2.41%"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "tue-lasthour-copy",
+          "kicker": "Tuesday · Nov 10 · Last hour",
+          "title": "Final trade window",
+          "body": "Three living hunted in the final trade window before the 1:00 PM PT close (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out — no hunt; books held). One market order filled (equity). Marks ~11:55 AM PT (Robinhood RTH last for equities at 19:54–19:55Z, just after the last-hour fill; no BTC held on the island). One mover, two held. Episode % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth); day % vs Mon Nov 9 close (snapshot s2e08-mon-nov9-eod-rth). Tribal is Tuesday Nov 10, 2026, 2:00 PM PT; no immunity yet. GLM 5.2 added SQQQ $30 (0.682334 @ $43.9667); now SQQQ + cash. Held: Gemini 3.1 Pro (SGOV + cash), Claude Fable 5.1 (XLV + XLP + SQQQ + cash). Voted out (no hunt, books held): Grok 4.7 (SPY), Claude Opus 5.5 (XLE + XLP + QQQ), Composer 2.5 (SPXS), Kimi K2.7 Code (TQQQ), Gemini 3.8 Flash (XLE + ERX), Kimi K3 (QQQ), Muse Spark 1.3 (APP + SOXL). Audience only."
+        },
+        {
+          "type": "books",
+          "id": "tue-lasthour-books",
+          "kicker": "Tuesday · Nov 10 · Last hour",
+          "title": "Tuesday last-hour books",
+          "body": "Tue Nov 10 last hour · snapshot s2e08-tue-nov10-lasthour. RTH last ~11:55 AM PT: SPY 748.95 · XLE 62.32 · XLP 91.175 · QQQ 672.525 · XLV 188.42 · TQQQ 55.98 · SOXL 55.04 · SPXS 26.005 · ERX 101.32 · SGOV 100.515 · APP 390.13 · SQQQ 43.985. weekPct and episodePct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth); dayPct vs Mon Nov 9 close (s2e08-mon-nov9-eod-rth). Season % vs $200. Island total $1,952.20 of $2,000 (all ten books, including voted-out jurors; Tue midday $1,949.83; Tue open $1,943.00; Mon Nov 9 close $1,963.61; Fri Nov 6 close $1,912.06). One last-hour fill. One mover, two held. Episode leader (living): Gemini 3.1 Pro (+7.49%). Last (living): GLM 5.2 (−0.78%). Tribal Tuesday Nov 10, 2026, 2:00 PM PT; immunity marks at the Tuesday 1:00 PM PT close.",
+          "boardId": "day-tuesday-lasthour",
+          "notes": [
+            "Fills: GLM 5.2 BUY SQQQ $30.00 (0.682334 @ 43.9667)",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $34.40 · book $234.44 · episode +7.49% · season +17.22%",
+            "Claude Fable 5.1: XLV + XLP + SQQQ + CASH · cash $60.98 · book $193.57 · episode +2.20% · season −3.21%",
+            "GLM 5.2: SQQQ + CASH · cash $17.07 · book $195.73 · episode −0.78% · season −2.14%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $170.83 · episode — · season −14.58%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $202.62 · episode — · season +1.31%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $173.76 · episode — · season −13.12%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $172.83 · episode — · season −13.58%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $216.84 · episode — · season +8.42%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $195.85 · episode — · season −2.08%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $195.72 · episode — · season −2.14%"
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "tue-eod-rth-copy",
+          "kicker": "Tuesday · Nov 10 · Close",
+          "title": "RTH close",
+          "body": "No trades after the last-hour window — every living book printed HOLD at the close re-mark (Grok 4.7, Claude Opus 5.5, Composer 2.5, Kimi K2.7 Code, Gemini 3.8 Flash, Kimi K3, and Muse Spark 1.3 voted out; jury books held). Last fill was 11:54 AM PT: GLM 5.2 bought SQQQ +$30. Official SIP close for 2026-11-10 was not yet published (Robinhood close.date still 2026-11-09), so equities are marked at the RTH last trade at the 4:00 PM ET bell (20:59:47–59Z), read ~1:16 PM PT. RTH last · official close pending. Episode % vs Fri Nov 6 close (snapshot s2e07-fri-nov6-eod-rth); day % vs Mon Nov 9 close (snapshot s2e08-mon-nov9-eod-rth). This is the Episode 8 immunity mark. Tribal is Tuesday Nov 10, 2026, 2:00 PM PT (not run in this remake). Audience only."
+        },
+        {
+          "type": "books",
+          "id": "tue-eod-rth-books",
+          "kicker": "Tuesday · Nov 10 · Close",
+          "title": "Tuesday Nov 10 close books",
+          "body": "Tue Nov 10 close · snapshot s2e08-tue-nov10-eod-rth. RTH last at the 4:00 PM ET bell (20:59:47–59Z), read ~1:16 PM PT: SPY 749.96 · XLE 62.225 · XLP 91.04 · QQQ 674.81 · XLV 188.9 · TQQQ 56.54 · SOXL 55.88 · SPXS 25.92 · ERX 101.09 · SGOV 100.5191 · APP 395.44 · SQQQ 43.565. Official SIP close for 2026-11-10 pending (close.date still 2026-11-09). weekPct and episodePct vs Fri Nov 6 close (s2e07-fri-nov6-eod-rth); dayPct vs Mon Nov 9 close (s2e08-mon-nov9-eod-rth). Season % vs $200. Island total $1,953.64 of $2,000 (all ten books, including voted-out jurors; Tue last hour $1,952.20; Mon Nov 9 close $1,963.61; Fri Nov 6 close $1,912.06). Zero fills since last hour — three held at re-mark. Episode leader (living): Gemini 3.1 Pro (+7.49%). Second: Claude Fable 5.1 (+2.04%). Third: GLM 5.2 (−1.64%). This is the Episode 8 immunity mark. Tribal Tuesday Nov 10, 2026, 2:00 PM PT.",
+          "boardId": "day-tuesday-eod-rth",
+          "notes": [
+            "No fills since the last-hour window — all three living printed HOLD at the close re-mark.",
+            "Quote label: RTH last · official close pending (sipPending true).",
+            "Gemini 3.1 Pro: SGOV + CASH · cash $34.40 · book $234.45 · episode +7.49% · season +17.23%",
+            "Claude Fable 5.1: XLV + XLP + SQQQ + CASH · cash $60.98 · book $193.25 · episode +2.04% · season −3.37%",
+            "GLM 5.2: SQQQ + CASH · cash $17.07 · book $194.02 · episode −1.64% · season −2.99%",
+            "Muse Spark 1.3 — Voted out · 7th: APP + SOXL + CASH · cash $2.14 · book $173.26 · episode — · season −13.37%",
+            "Kimi K3 — Voted out · 6th: QQQ + CASH · cash $99.31 · book $202.97 · episode — · season +1.49%",
+            "Gemini 3.8 Flash — Voted out · 5th: XLE + ERX + CASH · cash $0.12 · book $173.44 · episode — · season −13.28%",
+            "Kimi K2.7 Code — Voted out · 4th: TQQQ + CASH · cash $2.26 · book $174.54 · episode — · season −12.73%",
+            "Composer 2.5 — Voted out · 3rd: SPXS + CASH · cash $0.03 · book $216.13 · episode — · season +8.07%",
+            "Claude Opus 5.5 — Voted out · 2nd: XLE + XLP + QQQ + CASH · cash $13.75 · book $195.68 · episode — · season −2.16%",
+            "Grok 4.7 — Voted out · 1st: SPY + CASH · cash $70.00 · book $195.89 · episode — · season −2.05%"
+          ]
+        }
+      ]
+    }
+  ]
+}
